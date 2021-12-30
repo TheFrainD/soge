@@ -15,7 +15,7 @@ typedef float f32;
 typedef double f64;
 
 typedef int b32;
-typedef _Bool b8;
+typedef char b8;
 
 #define TRUE 1
 #define FALSE 0

@@ -1,9 +1,9 @@
-#include "window.h"
+#include <core/window.h>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "logger.h"
+#include <core/logger.h>
 
 static GLFWwindow *window;
 
