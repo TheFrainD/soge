@@ -2,16 +2,19 @@ UNAME_S=$(shell uname -s)
 
 LIB_EXT=dll
 LIB_PREFIX=
-CMAKE_COMMAND=cmake . -G "MinGW Makefiles" && cmake --build .
+CMAKE_CONFIG=cmake -S . -B ./build
+CMAKE_GENERATOR=-G "MinGW Makefiles"
+CMAKE_MAKE=cmake --build ./build
 ifeq ($(UNAME_S), Linux)
 	LIB_EXT=so
 	LIB_PREFIX=lib
-	CMAKE_COMMAND=cmake . && make
+	CMAKE_GENERATOR=
+	CMAKE_MAKE=cd build && make
 endif
 
 CC=gcc
 CFLAGS=-g -Wvarargs -Wall -Werror -D_DEBUG -DSOGE_EXPORT -D_CRT_SECURE_NO_WARNINGS
-LDFLAGS=-shared ../vendor/glfw/src/libglfw3.a ../vendor/glad/src/glad.o ../vendor/log/src/log.o
+LDFLAGS=-shared ../vendor/glfw/build/src/libglfw3.a ../vendor/glad/src/glad.o ../vendor/log/src/log.o
 ifeq ($(UNAME_S), Linux)
 	LDFLAGS+=-ldl -lpthread -lm
 else
@@ -28,9 +31,9 @@ BIN=../bin/$(LIB_PREFIX)soge.$(LIB_EXT)
 all: dirs libs $(BIN)
 
 libs:
-	cd ../vendor/glfw && $(CMAKE_COMMAND)
+	cd ../vendor/glfw && $(CMAKE_CONFIG) $(CMAKE_GENERATOR) -D GLFW_BUILD_EXAMPLES=OFF -D GLFW_BUILD_TESTS=OFF -D GLFW_BUILD_DOCS=OFF && $(CMAKE_MAKE)
 	cd ../vendor/glad && $(CC) -o src/glad.o -Iinclude -c src/glad.c -fPIC
-	cd ../vendor/log && $(CC) -o src/log.o -Isrc -c src/log.c -fPIC 
+	cd ../vendor/log && $(CC) -o src/log.o -Isrc -c src/log.c -fPIC -DLOG_USE_COLOR
 
 dirs:
 	mkdir -p ../bin
@@ -43,4 +46,7 @@ $(BIN): $(OBJ)
 
 clean:
 	$(RM) -rf $(OBJ) $(BIN)
+	$(RM) -rf ../vendor/glfw/build
+	$(RM) ../vendor/glad/src/glad.o
+	$(RM) ../vendor/log/src/log.o
 
