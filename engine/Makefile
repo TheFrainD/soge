@@ -12,8 +12,8 @@ ifeq ($(UNAME_S), Linux)
 	CMAKE_MAKE=cd build && make
 endif
 
-CC=gcc
-CFLAGS=-g -Wvarargs -Wall -Werror -D_DEBUG -DSOGE_EXPORT -D_CRT_SECURE_NO_WARNINGS
+CC=clang
+CFLAGS=-g -Wvarargs -Wall -Werror -fPIC -D_DEBUG -DSOGE_EXPORT -D_CRT_SECURE_NO_WARNINGS
 LDFLAGS=-shared ../vendor/glfw/build/src/libglfw3.a ../vendor/glad/src/glad.o ../vendor/log/src/log.o
 ifeq ($(UNAME_S), Linux)
 	LDFLAGS+=-ldl -lpthread -lm
