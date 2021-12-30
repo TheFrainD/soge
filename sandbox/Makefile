@@ -1,7 +1,13 @@
+UNAME_S=$(shell uname -s)
+
 CC=gcc
 CFLAGS=-g -D_DEBUG -DSOGE_IMPORT
 LDFLAGS=-L../bin/ -lsoge
 INCLUDES=-Isrc -I../engine/src
+
+ifeq ($(UNAME_S), Linux)
+	LDFLAGS+=-Wl,-rpath=./
+endif
 
 SRC=$(wildcard src/**/*.c) $(wildcard src/*.c) $(wildcard src/**/**/*.c) $(wildcard src/**/**/**/*.c)
 OBJ=$(SRC:.c=.o)

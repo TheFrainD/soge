@@ -1,7 +1,7 @@
 #ifndef SOGE_CORE_LOGGER_H_
 #define SOGE_CORE_LOGGER_H_
 
-#include <log/log.h>
+#include <log.h>
 
 #include "defines.h"
 
