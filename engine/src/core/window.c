@@ -41,6 +41,10 @@ b8 window_poll_events() {
   return !glfwWindowShouldClose(window);
 }
 
+void window_swap_buffers() {
+  glfwSwapBuffers(window);
+}
+
 void window_terminate() {
   glfwDestroyWindow(window);
   glfwTerminate();

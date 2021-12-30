@@ -7,6 +7,8 @@ b8 window_create(i32 width, i32 height, const char* title);
 
 b8 window_poll_events();
 
+void window_swap_buffers();
+
 void window_terminate();
 
 #endif // !SOGE_CORE_WINDOW_H_
