@@ -18,7 +18,7 @@ b8 window_create(i32 width, i32 height, const char* title) {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-  window = glfwCreateWindow(640, 480, "soge", NULL, NULL);
+  window = glfwCreateWindow(width, height, title, NULL, NULL);
   if (!window) {
     SOGE_FATAL("Could not create window!");
     return FALSE;
@@ -32,6 +32,8 @@ b8 window_create(i32 width, i32 height, const char* title) {
     return FALSE;
   }
   SOGE_TRACE("glad initialized");
+
+  glViewport(0, 0, width, height);
 
   return TRUE;
 }
