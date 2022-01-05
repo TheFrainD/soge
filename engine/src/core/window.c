@@ -9,10 +9,10 @@ static GLFWwindow *window;
 
 b8 window_create(i32 width, i32 height, const char* title) {
   if (!glfwInit()) {
-    SOGE_FATAL("Could not initialize GLFW!");
+    VALLY_FATAL("Could not initialize GLFW!");
     return FALSE;
   }
-  SOGE_TRACE("GLFW initialized");
+  VALLY_TRACE("GLFW initialized");
 
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -20,18 +20,18 @@ b8 window_create(i32 width, i32 height, const char* title) {
 
   window = glfwCreateWindow(width, height, title, NULL, NULL);
   if (!window) {
-    SOGE_FATAL("Could not create window!");
+    VALLY_FATAL("Could not create window!");
     return FALSE;
   }
-  SOGE_TRACE("Window created");
+  VALLY_TRACE("Window created");
   glfwMakeContextCurrent(window);
   glfwSwapInterval(1);
 
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-    SOGE_FATAL("Could not initialize glad!");
+    VALLY_FATAL("Could not initialize glad!");
     return FALSE;
   }
-  SOGE_TRACE("glad initialized");
+  VALLY_TRACE("glad initialized");
 
   glViewport(0, 0, width, height);
 
@@ -50,4 +50,5 @@ void window_swap_buffers() {
 void window_terminate() {
   glfwDestroyWindow(window);
   glfwTerminate();
+  VALLY_TRACE("Window subsystem terminated");
 }

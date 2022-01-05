@@ -3,9 +3,12 @@
 // TODO: remove
 #include <glad/glad.h>
 
+#include <cvec.h>
+
 #include "assertions.h"
 #include "logger.h"
 #include "window.h"
+#include "event.h"
 
 typedef struct {
   b8 is_runing;
@@ -25,14 +28,14 @@ static engine_state _engine_state;
 
 b8 engine_create(i16 width, i16 height, const char *title) {
   if (initialized) {
-    SOGE_ERROR("engine_create cannot be called more than once");
+    VALLY_ERROR("engine_create cannot be called more than once");
     return FALSE;
   }
 
   // Init subsystems
   logger_init();
 
-  SOGE_INFO("SOGE starts");
+  VALLY_INFO("VALLY starts");
 
   _engine_state.is_runing = TRUE;
   _engine_state.is_suspended = FALSE;
@@ -43,6 +46,11 @@ b8 engine_create(i16 width, i16 height, const char *title) {
     return FALSE;
   }
 
+  if (!event_init()) {
+    VALLY_ERROR("Could not initialize the event system!");
+    return FALSE;
+  }
+
   initialized = TRUE;
 
   return TRUE;
@@ -50,7 +58,7 @@ b8 engine_create(i16 width, i16 height, const char *title) {
 
 b8 engine_run(engine_start start, engine_update update, engine_render render) {
   if (!start || !update || !render) {
-    SOGE_FATAL("Could not run the engine! Functions must not be NULL!");
+    VALLY_FATAL("Could not run the engine! Functions must not be NULL!");
     return FALSE;
   }
 
@@ -71,7 +79,8 @@ b8 engine_run(engine_start start, engine_update update, engine_render render) {
   _engine_state.is_runing = FALSE;
 
   window_terminate();
-  SOGE_INFO("Shutting down");
+  event_terminate();
+  VALLY_INFO("Shutting down");
 
   return TRUE;
 }

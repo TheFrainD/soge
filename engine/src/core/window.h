@@ -1,5 +1,5 @@
-#ifndef SOGE_CORE_WINDOW_H_
-#define SOGE_CORE_WINDOW_H_
+#ifndef VALLY_CORE_WINDOW_H_
+#define VALLY_CORE_WINDOW_H_
 
 #include "defines.h"
 
@@ -11,4 +11,4 @@ void window_swap_buffers();
 
 void window_terminate();
 
-#endif // !SOGE_CORE_WINDOW_H_
+#endif // !VALLY_CORE_WINDOW_H_

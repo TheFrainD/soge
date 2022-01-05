@@ -1,7 +1,7 @@
 #include "logger.h"
 
 b8 logger_init() {
-  FILE *file = fopen("logs/soge.log", "w+");
+  FILE *file = fopen("logs/vally.log", "w+");
   if (!file) {
     log_error("Could not open log file!");
     return FALSE;

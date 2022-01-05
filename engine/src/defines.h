@@ -1,5 +1,5 @@
-#ifndef SOGE_DEFINES_H_
-#define SOGE_DEFINES_H_
+#ifndef VALLY_DEFINES_H_
+#define VALLY_DEFINES_H_
 
 typedef unsigned char u8;
 typedef unsigned short u16;
@@ -20,20 +20,20 @@ typedef char b8;
 #define TRUE 1
 #define FALSE 0
 
-#ifdef SOGE_EXPORT
+#ifdef VALLY_EXPORT
 // Exports
 #ifdef _MSC_VER
-#define SAPI __declspec(dllexport)
+#define VALLY_DLL __declspec(dllexport)
 #else
-#define SAPI __attribute__((visibility("default")))
+#define VALLY_DLL __attribute__((visibility("default")))
 #endif
 #else
 // Imports
 #ifdef _MSC_VER
-#define SAPI __declspec(dllimport)
+#define VALLY_DLL __declspec(dllimport)
 #else
-#define SAPI
+#define VALLY_DLL
 #endif
 #endif
 
-#endif  // !SOGE_DEFINES_H_
+#endif  // !VALLY_DEFINES_H_

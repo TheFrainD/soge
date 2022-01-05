@@ -13,18 +13,18 @@ ifeq ($(UNAME_S), Linux)
 endif
 
 CC=clang
-CFLAGS=-g -Wvarargs -Wall -Werror -fPIC -D_DEBUG -DSOGE_EXPORT -D_CRT_SECURE_NO_WARNINGS
-LDFLAGS=-shared ../vendor/glfw/build/src/libglfw3.a ../vendor/glad/src/glad.o ../vendor/log/src/log.o
+CFLAGS=-g -Wvarargs -Wall -fPIC -D_DEBUG -DVALLY_EXPORT -D_CRT_SECURE_NO_WARNINGS
+LDFLAGS=-shared ../vendor/glfw/build/src/libglfw3.a ../vendor/glad/src/glad.o ../vendor/log/src/log.o ../vendor/cvec/src/cvec.o
 ifeq ($(UNAME_S), Linux)
 	LDFLAGS+=-ldl -lpthread -lm
 else
 	LDFLAGS+=-lglu32 -lopengl32 -luser32 -lgdi32 -lws2_32 -lkernel32 
 endif
-INCLUDES=-Isrc -I../vendor/glfw/include -I../vendor/glad/include -I../vendor/log/src
+INCLUDES=-Isrc -I../vendor/glfw/include -I../vendor/glad/include -I../vendor/log/src -I../vendor/cvec/src
 
 SRC=$(wildcard src/**/*.c) $(wildcard src/*.c) $(wildcard src/**/**/*.c) $(wildcard src/**/**/**/*.c)
 OBJ=$(SRC:.c=.o)
-BIN=../bin/$(LIB_PREFIX)soge.$(LIB_EXT)
+BIN=../bin/$(LIB_PREFIX)vally.$(LIB_EXT)
 
 .PHONY: all libs clean
 
@@ -34,6 +34,7 @@ libs:
 	cd ../vendor/glfw && $(CMAKE_CONFIG) $(CMAKE_GENERATOR) -D GLFW_BUILD_EXAMPLES=OFF -D GLFW_BUILD_TESTS=OFF -D GLFW_BUILD_DOCS=OFF && $(CMAKE_MAKE)
 	cd ../vendor/glad && $(CC) -o src/glad.o -Iinclude -c src/glad.c -fPIC
 	cd ../vendor/log && $(CC) -o src/log.o -Isrc -c src/log.c -fPIC -DLOG_USE_COLOR
+	cd ../vendor/cvec && $(CC) -o src/cvec.o -Isrc -c src/cvec.c -fPIC
 
 dirs:
 	mkdir -p ../bin
@@ -49,4 +50,5 @@ clean:
 	$(RM) -rf ../vendor/glfw/build
 	$(RM) ../vendor/glad/src/glad.o
 	$(RM) ../vendor/log/src/log.o
+	$(RM) ../vendor/cvec/src/cvec.o
 
