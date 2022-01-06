@@ -52,3 +52,15 @@ void window_terminate() {
   glfwTerminate();
   VALLY_TRACE("Window subsystem terminated");
 }
+
+void window_set_key_callback(void *callback) {
+  glfwSetKeyCallback(window, callback);
+}
+
+void window_set_mouse_button_callback(void *callback) {
+  glfwSetMouseButtonCallback(window, callback);
+}
+
+void window_set_cursor_position_callback(void *callback) {
+  glfwSetCursorPosCallback(window, callback);
+}

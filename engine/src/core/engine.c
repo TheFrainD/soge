@@ -3,12 +3,11 @@
 // TODO: remove
 #include <glad/glad.h>
 
-#include <cvec.h>
-
 #include "assertions.h"
 #include "logger.h"
 #include "window.h"
 #include "event.h"
+#include "input.h"
 
 typedef struct {
   b8 is_runing;
@@ -51,6 +50,8 @@ b8 engine_create(i16 width, i16 height, const char *title) {
     return FALSE;
   }
 
+  input_init();
+
   initialized = TRUE;
 
   return TRUE;
@@ -80,6 +81,7 @@ b8 engine_run(engine_start start, engine_update update, engine_render render) {
 
   window_terminate();
   event_terminate();
+  input_terminate();
   VALLY_INFO("Shutting down");
 
   return TRUE;

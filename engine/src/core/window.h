@@ -11,4 +11,10 @@ void window_swap_buffers();
 
 void window_terminate();
 
+void window_set_key_callback(void *callback);
+
+void window_set_mouse_button_callback(void *callback);
+
+void window_set_cursor_position_callback(void *callback);
+
 #endif // !VALLY_CORE_WINDOW_H_
