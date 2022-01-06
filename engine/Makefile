@@ -20,7 +20,7 @@ ifeq ($(UNAME_S), Linux)
 else
 	LDFLAGS+=-lglu32 -lopengl32 -luser32 -lgdi32 -lws2_32 -lkernel32 
 endif
-INCLUDES=-Isrc -I../vendor/glfw/include -I../vendor/glad/include -I../vendor/log/src -I../vendor/cvec/src
+INCLUDES=-Isrc -I../vendor/glfw/include -I../vendor/glad/include -I../vendor/log/src -I../vendor/cvec/src -I../vendor/stb
 
 SRC=$(wildcard src/**/*.c) $(wildcard src/*.c) $(wildcard src/**/**/*.c) $(wildcard src/**/**/**/*.c)
 OBJ=$(SRC:.c=.o)
