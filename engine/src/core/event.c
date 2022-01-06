@@ -44,7 +44,7 @@ void event_terminate() {
       state.registered[i].events = NULL;
     }
   }
-  VALLY_TRACE("Event system termianted");
+  VALLY_TRACE("Event system terminated");
 }
 
 b8 event_subscribe(u16 code, void *listener, on_event_fun callback) {
