@@ -1,9 +1,7 @@
 #include "renderer.h"
 
-#include <stdlib.h>
-#include <string.h>
-
 #include <glad/glad.h>
+#include <cvec.h>
 
 #include "core/event.h"
 #include "core/logger.h"
@@ -13,25 +11,16 @@
 #include "renderer/camera.h"
 #include "renderer/buffer.h"
 
-#define RENDERER_MAX_QUADS 1000
-#define RENDERER_MAX_VERTEX RENDERER_MAX_QUADS * 4
-#define RENDERER_MAX_INDEX RENDERER_MAX_QUADS * 6
-#define RENDERER_MAX_TEXTURES 16
-
 typedef struct {
   shader shader_;
-  
-  u32 vao;
-  u32 vbo;
-  u32 ebo;
+  buffer *buffer_;
 
   texture tex_white;
   texture *textures[RENDERER_MAX_TEXTURES];
   u32 sampler[RENDERER_MAX_TEXTURES];
   u32 tex_slot;
 
-  vertex quad_buffer[RENDERER_MAX_VERTEX];
-  vertex *quad_buffer_ptr;
+  cvec vertices;
 
   u32 index_count;
 } renderer_state;
@@ -54,54 +43,16 @@ b8 renderer_init() {
     return FALSE;
   }
 
+  state.vertices = cvec_create(vertex);
+
   state.shader_ = shader_create("../assets/shaders/vertex.glsl", "../assets/shaders/fragment.glsl");
-
-  glGenVertexArrays(1, &state.vao);
-  glGenBuffers(1, &state.vbo);
-  glGenBuffers(1, &state.ebo);
-  glBindVertexArray(state.vao);
-
-  glBindBuffer(GL_ARRAY_BUFFER, state.vbo);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertex) * RENDERER_MAX_VERTEX, NULL, GL_DYNAMIC_DRAW);
-
-  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (const void*)offsetof(vertex, pos));
-  glEnableVertexAttribArray(0);
-
-  glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(vertex), (const void*)offsetof(vertex, color));
-  glEnableVertexAttribArray(1);
-
-  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (const void*)offsetof(vertex, uv));
-  glEnableVertexAttribArray(2);
-
-  glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(vertex), (const void*)offsetof(vertex, tex_id));
-  glEnableVertexAttribArray(3);
-
-  u32 indices[RENDERER_MAX_INDEX];
-  f32 offset = 0;
-  for (i32 i = 0; i < RENDERER_MAX_INDEX; i += 6) {
-    indices[i + 0] = 0 + offset;
-    indices[i + 1] = 1 + offset;
-    indices[i + 2] = 2 + offset;
-
-    indices[i + 3] = 2 + offset;
-    indices[i + 4] = 3 + offset;
-    indices[i + 5] = 0 + offset;
-
-    offset += 4;
-  }
-
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, state.ebo);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
-  glBindVertexArray(0);
+  state.buffer_ = buffer_create();
 
   for (i32 i = 0; i < RENDERER_MAX_TEXTURES; i++) {
     state.sampler[i] = i;
   }
 
   state.tex_white = texture_white_create();
-  memset(state.textures, 0, sizeof(state.textures));
   state.textures[0] = &state.tex_white;
   
   state.tex_slot = 1;
@@ -126,8 +77,6 @@ void renderer_begin_batch() {
   if (!initialized) {
     return;
   }
-
-  state.quad_buffer_ptr = state.quad_buffer;
 }
 
 void renderer_end_batch() {
@@ -135,9 +84,7 @@ void renderer_end_batch() {
     return;
   }
 
-  glBindBuffer(GL_ARRAY_BUFFER, state.vbo);
-  i32 size = (u8 *)state.quad_buffer_ptr - (u8 *)state.quad_buffer;
-  glBufferSubData(GL_ARRAY_BUFFER, 0, size, state.quad_buffer);
+  buffer_set_data(state.buffer_, cvec_size(state.vertices) * sizeof(vertex), cvec_raw(state.vertices, vertex));
 }
 
 void renderer_flush() {
@@ -145,14 +92,12 @@ void renderer_flush() {
     return;
   }
 
-  VALLY_TRACE("Renderer system: rendering - %d indices", state.index_count);
-
   for (i32 i = 0; i < state.tex_slot; i++) {
     texture_bind(i, state.textures[i]);
   }
 
   shader_attach(&state.shader_);
-  glBindVertexArray(state.vao);
+  buffer_bind(state.buffer_);
 
   glDrawElements(GL_TRIANGLES, state.index_count, GL_UNSIGNED_INT, NULL);
 
@@ -165,9 +110,7 @@ void renderer_terminate() {
     return;
   }
 
-  glDeleteVertexArrays(1, &state.vao);
-  glDeleteBuffers(1, &state.vbo);
-  glDeleteBuffers(1, &state.ebo);
+  cvec_destroy(state.vertices);
 
   initialized = FALSE;
 
@@ -219,49 +162,50 @@ void renderer_draw_quad(texture *tex, vec2s pos) {
     state.tex_slot++;
   }
 
-  state.quad_buffer_ptr->pos[0] = pos.x;
-  state.quad_buffer_ptr->pos[1] = pos.y;
-  state.quad_buffer_ptr->color[0] = color.x;
-  state.quad_buffer_ptr->color[1] = color.y;
-  state.quad_buffer_ptr->color[2] = color.z;
-  state.quad_buffer_ptr->color[3] = color.w;
-  state.quad_buffer_ptr->uv[0] = 0.0f;
-  state.quad_buffer_ptr->uv[1] = 0.0f;
-  state.quad_buffer_ptr->tex_id = tex_id;
-  state.quad_buffer_ptr++;
+  vertex ver;
+  ver.pos[0] = pos.x;
+  ver.pos[1] = pos.y;
+  ver.color[0] = color.x;
+  ver.color[1] = color.y;
+  ver.color[2] = color.z;
+  ver.color[3] = color.w;
+  ver.uv[0] = 0.0f;
+  ver.uv[1] = 0.0f;
+  ver.tex_id = tex_id;
+  cvec_push_back(state.vertices, ver);
 
-  state.quad_buffer_ptr->pos[0] = pos.x + 64.0f;
-  state.quad_buffer_ptr->pos[1] = pos.y;
-  state.quad_buffer_ptr->color[0] = color.x;
-  state.quad_buffer_ptr->color[1] = color.y;
-  state.quad_buffer_ptr->color[2] = color.z;
-  state.quad_buffer_ptr->color[3] = color.w;
-  state.quad_buffer_ptr->uv[0] = 1.0f;
-  state.quad_buffer_ptr->uv[1] = 0.0f;
-  state.quad_buffer_ptr->tex_id = tex_id;
-  state.quad_buffer_ptr++;
+  ver.pos[0] = pos.x + tex->width;
+  ver.pos[1] = pos.y;
+  ver.color[0] = color.x;
+  ver.color[1] = color.y;
+  ver.color[2] = color.z;
+  ver.color[3] = color.w;
+  ver.uv[0] = 1.0f;
+  ver.uv[1] = 0.0f;
+  ver.tex_id = tex_id;
+  cvec_push_back(state.vertices, ver);
 
-  state.quad_buffer_ptr->pos[0] = pos.x + 64.0f;
-  state.quad_buffer_ptr->pos[1] = pos.y + 64.0f;
-  state.quad_buffer_ptr->color[0] = color.x;
-  state.quad_buffer_ptr->color[1] = color.y;
-  state.quad_buffer_ptr->color[2] = color.z;
-  state.quad_buffer_ptr->color[3] = color.w;
-  state.quad_buffer_ptr->uv[0] = 1.0f;
-  state.quad_buffer_ptr->uv[1] = 1.0f;
-  state.quad_buffer_ptr->tex_id = tex_id;
-  state.quad_buffer_ptr++;
+  ver.pos[0] = pos.x + tex->width;
+  ver.pos[1] = pos.y + tex->height;
+  ver.color[0] = color.x;
+  ver.color[1] = color.y;
+  ver.color[2] = color.z;
+  ver.color[3] = color.w;
+  ver.uv[0] = 1.0f;
+  ver.uv[1] = 1.0f;
+  ver.tex_id = tex_id;
+  cvec_push_back(state.vertices, ver);
 
-  state.quad_buffer_ptr->pos[0] = pos.x;
-  state.quad_buffer_ptr->pos[1] = pos.y + 64.0f;
-  state.quad_buffer_ptr->color[0] = color.x;
-  state.quad_buffer_ptr->color[1] = color.y;
-  state.quad_buffer_ptr->color[2] = color.z;
-  state.quad_buffer_ptr->color[3] = color.w;
-  state.quad_buffer_ptr->uv[0] = 0.0f;
-  state.quad_buffer_ptr->uv[1] = 1.0f;
-  state.quad_buffer_ptr->tex_id = tex_id;
-  state.quad_buffer_ptr++;
+  ver.pos[0] = pos.x;
+  ver.pos[1] = pos.y + tex->height;
+  ver.color[0] = color.x;
+  ver.color[1] = color.y;
+  ver.color[2] = color.z;
+  ver.color[3] = color.w;
+  ver.uv[0] = 0.0f;
+  ver.uv[1] = 1.0f;
+  ver.tex_id = tex_id;
+  cvec_push_back(state.vertices, ver);
 
   state.index_count += 6;
 }

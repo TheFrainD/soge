@@ -1,6 +1,11 @@
 #ifndef VALLY_RENDERER_RENDERER_H_
 #define VALLY_RENDERER_RENDERER_H_
 
+#define RENDERER_MAX_QUADS 1000
+#define RENDERER_MAX_VERTEX RENDERER_MAX_QUADS * 4
+#define RENDERER_MAX_INDEX RENDERER_MAX_QUADS * 6
+#define RENDERER_MAX_TEXTURES 16
+
 #include <cglm/cglm.h>
 #include <cglm/struct.h>
 
