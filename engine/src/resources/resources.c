@@ -1,5 +1,7 @@
 #include "resources.h"
 
+#include <stdlib.h>
+
 #include <cvec.h>
 
 #include "resource_types.h"
@@ -17,6 +19,7 @@ b8 resources_init() {
     return FALSE;
   }
 
+  initalized = TRUE;
   state.resources = cvec_create(resource);
 
   VALLY_TRACE("Resource system initialized");
@@ -37,7 +40,7 @@ void resources_add(void *data, destructor_fun destructor) {
 void resources_terminate() {
   if (!initalized) {
     return;
-  }
+  } 
 
   for (int i = 0; i < cvec_size(state.resources); i++) {
     resource res = cvec_at(state.resources, i, resource);

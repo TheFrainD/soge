@@ -6,7 +6,7 @@
 typedef void (*destructor_fun)(void *);
 
 typedef struct {
-  char *buffer;
+  i8 *buffer;
   i32 width;
   i32 height;
   i32 channels;
@@ -16,6 +16,5 @@ typedef struct {
   void *data;
   destructor_fun destructor;
 } resource;
-
 
 #endif // !VALLY_RESOURCES_RECOURCE_TYPES_H_

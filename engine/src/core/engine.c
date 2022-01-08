@@ -1,14 +1,12 @@
 #include "engine.h"
 
-// TODO: remove
-#include <glad/glad.h>
-
-#include "assertions.h"
-#include "logger.h"
-#include "window.h"
-#include "event.h"
-#include "input.h"
-#include "../resources/resources.h"
+#include "core/assertions.h"
+#include "core/logger.h"
+#include "core/window.h"
+#include "core/event.h"
+#include "core/input.h"
+#include "resources/resources.h"
+#include "renderer/renderer.h"
 
 typedef struct {
   b8 is_runing;
@@ -58,6 +56,11 @@ b8 engine_create(i16 width, i16 height, const char *title) {
     return FALSE;
   }
 
+  if (!renderer_init()) {
+    VALLY_ERROR("Could not initialize the renderer system!");
+    return FALSE;
+  }
+
   initialized = TRUE;
 
   return TRUE;
@@ -78,17 +81,22 @@ b8 engine_run(engine_start start, engine_update update, engine_render render) {
 
     update((f32)0);
 
-    glClear(GL_COLOR_BUFFER_BIT);
+    renderer_clear_screen();
+    renderer_begin_batch();
     render((f32)0);
+    renderer_end_batch();
+    renderer_flush();
+
     window_swap_buffers();
   }
 
   _engine_state.is_runing = FALSE;
 
-  window_terminate();
   event_terminate();
   input_terminate();
+  renderer_terminate();
   resources_terminate();
+  window_terminate();
   VALLY_INFO("Shutting down");
 
   return TRUE;

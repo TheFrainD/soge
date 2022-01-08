@@ -6,15 +6,15 @@
 #include "resources.h"
 #include "core/logger.h"
 
-image load_image(const char *path) {
-  image img;
-  img.buffer = stbi_load(path, &img.width, &img.height, &img.channels, STBI_rgb_alpha);
-  if (!img.buffer) {
+image *load_image(const char *path) {
+  image *img = (image *)malloc(sizeof(image));
+  img->buffer = stbi_load(path, &img->width, &img->height, &img->channels, STBI_rgb_alpha);
+  if (!img->buffer) {
     VALLY_ERROR("Could not load image at \"%s\"!", path);
-    return (image){0, 0, 0, 0};
+    return NULL;
   }
 
-  resources_add(&img, unload_image);
+  resources_add(img, unload_image);
   return img;
 }
 

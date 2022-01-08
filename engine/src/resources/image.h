@@ -4,7 +4,7 @@
 #include "resource_types.h"
 #include "defines.h"
 
-image load_image(const char *path);
+image *load_image(const char *path);
 
 void unload_image(void *img);
 
