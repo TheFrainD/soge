@@ -36,4 +36,16 @@ typedef char b8;
 #endif
 #endif
 
+// Inlining
+#if defined(__clang__) || defined(__gcc__)
+#define VALLY_INLINE __attribute__((always_inline)) inline
+#define VALLY_NOINLINE __attribute__((noinline))
+#elif defined(_MSC_VER)
+#define VALLY_INLINE __forceinline
+#define VALLY_NOINLINE __declspec(noinline)
+#else
+#define VALLY_INLINE static inline
+#define VALLY_NOINLINE
+#endif
+
 #endif  // !VALLY_DEFINES_H_

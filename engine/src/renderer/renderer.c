@@ -137,7 +137,7 @@ void renderer_clear_screen() {
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void renderer_draw_quad(texture *tex, vec2s pos) {
+void renderer_draw_quad(texture *tex, vector2f pos) {
   if (!initialized) {
     return;
   }

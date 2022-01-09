@@ -2,8 +2,8 @@ UNAME_S=$(shell uname -s)
 
 CC=clang
 CFLAGS=-g -D_DEBUG -DVALLY_IMPORT
-LDFLAGS=-L../bin/ -lvally
-INCLUDES=-Isrc -I../engine/src -I../vendor/cglm/include
+LDFLAGS=-L../bin/ -lvally -mwindows
+INCLUDES=-Isrc -I../engine/src
 
 ifeq ($(UNAME_S), Linux)
 	LDFLAGS+=-Wl,-rpath=./

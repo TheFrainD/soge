@@ -6,18 +6,16 @@
 #define RENDERER_MAX_INDEX RENDERER_MAX_QUADS * 6
 #define RENDERER_MAX_TEXTURES 16
 
-#include <cglm/cglm.h>
-#include <cglm/struct.h>
-
 #include "defines.h"
 
 #include "renderer/texture.h"
+#include "math/vmath.h"
 
 b8 renderer_init();
 void renderer_terminate();
 
 void renderer_clear_screen();
-VALLY_DLL void renderer_draw_quad(texture *tex, vec2s pos);
+VALLY_DLL void renderer_draw_quad(texture *tex, vector2f pos);
 
 void renderer_begin_batch();
 void renderer_end_batch();
