@@ -12,7 +12,7 @@ typedef struct {
 
 texture texture_create(image *img);
 texture texture_white_create();
-void texture_destroy(void *tex);
+void texture_destroy(texture *tex);
 
 void texture_bind(u32 unit, texture *tex);
 void texture_unbind();

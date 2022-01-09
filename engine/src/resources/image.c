@@ -6,7 +6,7 @@
 #include "resources.h"
 #include "core/logger.h"
 
-image *load_image(const char *path) {
+image *image_load(const char *path) {
   image *img = (image *)malloc(sizeof(image));
   img->buffer = stbi_load(path, &img->width, &img->height, &img->channels, STBI_rgb_alpha);
   if (!img->buffer) {
@@ -14,11 +14,10 @@ image *load_image(const char *path) {
     return NULL;
   }
 
-  resources_add(img, unload_image);
+  resources_add(img, image_unload);
   return img;
 }
 
-void unload_image(void *img) {
-  image *i = (image *)img;
-  stbi_image_free(i->buffer);
+void image_unload(image *img) {
+  stbi_image_free(img->buffer);
 }

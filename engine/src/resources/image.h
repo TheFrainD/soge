@@ -4,9 +4,9 @@
 #include "resource_types.h"
 #include "defines.h"
 
-image *load_image(const char *path);
+image *image_load(const char *path);
 
-void unload_image(void *img);
+void image_unload(image *img);
 
 
 #endif // !VALLY_RESOURCES_IMAGE_H_

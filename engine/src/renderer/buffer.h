@@ -18,7 +18,7 @@ typedef struct {
 } buffer;
 
 buffer *buffer_create();
-void buffer_destroy(void *buf);
+void buffer_destroy(buffer *buf);
 
 void buffer_bind(buffer *buf);
 void buffer_unbind();

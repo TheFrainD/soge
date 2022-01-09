@@ -4,9 +4,16 @@
 #include <cglm/struct.h>
 
 texture mario;
+texture toad;
 
 void start() {
-  mario = texture_create(load_image("../assets/textures/mario.png"));
+  mario = texture_create(image_load("../assets/textures/mario.png"));
+  mario.width = 128;
+  mario.height = 128;
+
+  toad = texture_create(image_load("../assets/textures/toad.png"));
+  toad.width = 128;
+  toad.height = 128;
 }
 
 b8 update(f32 dt) {
@@ -15,6 +22,7 @@ b8 update(f32 dt) {
 
 b8 render(f32 dt) {
   renderer_draw_quad(&mario, (vec2s){64.0f, 64.0f});
+  renderer_draw_quad(&toad, (vec2s){96.0f, 64.0f});
 }
 
 int main(void) {

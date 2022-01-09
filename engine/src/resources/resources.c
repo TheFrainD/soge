@@ -4,8 +4,8 @@
 
 #include <cvec.h>
 
-#include "resource_types.h"
 #include "core/logger.h"
+#include "resources/resource_types.h"
 
 typedef struct {
   cvec resources;
@@ -47,6 +47,7 @@ void resources_terminate() {
     res.destructor(res.data);
   }
 
+  VALLY_INFO("Resource system: %d objects destroyed", cvec_size(state.resources));
   cvec_destroy(state.resources);
 
   VALLY_TRACE("Resource system terminated");

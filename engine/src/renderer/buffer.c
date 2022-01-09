@@ -53,15 +53,15 @@ buffer *buffer_create() {
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindVertexArray(0);
 
-  resources_add((void *)buf, buffer_destroy);
+  resources_add(buf, buffer_destroy);
 
   return buf;
 }
 
-void buffer_destroy(void *buf) {
-  glDeleteVertexArrays(1, &((buffer *)buf)->vao);
-  glDeleteBuffers(1, &((buffer *)buf)->vbo);
-  glDeleteBuffers(1, &((buffer *)buf)->ebo);
+void buffer_destroy(buffer *buf) {
+  glDeleteVertexArrays(1, &buf->vao);
+  glDeleteBuffers(1, &buf->vbo);
+  glDeleteBuffers(1, &buf->ebo);
 }
 
 void buffer_bind(buffer *buf) {

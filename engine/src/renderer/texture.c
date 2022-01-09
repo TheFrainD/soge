@@ -45,8 +45,8 @@ texture texture_white_create() {
   return tex;
 }
 
-void texture_destroy(void *tex) {
-  glDeleteTextures(1, ((texture *)tex)->id);
+void texture_destroy(texture *tex) {
+  glDeleteTextures(1, &tex->id);
 }
 
 void texture_bind(u32 unit, texture *tex) {
