@@ -77,6 +77,8 @@ void renderer_begin_batch() {
   if (!initialized) {
     return;
   }
+
+  state.vertices = cvec_create(vertex);
 }
 
 void renderer_end_batch() {

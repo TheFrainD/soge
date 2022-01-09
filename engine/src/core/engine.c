@@ -5,6 +5,7 @@
 #include "core/window.h"
 #include "core/event.h"
 #include "core/input.h"
+#include "core/vtime.h"
 #include "resources/resources.h"
 #include "renderer/renderer.h"
 
@@ -22,7 +23,7 @@ typedef struct {
 } engine_state;
 
 static b8 initialized = FALSE;
-static engine_state _engine_state;
+static engine_state state;
 
 b8 engine_create(i16 width, i16 height, const char *title) {
   if (initialized) {
@@ -35,11 +36,11 @@ b8 engine_create(i16 width, i16 height, const char *title) {
 
   VALLY_INFO("VALLY starts");
 
-  _engine_state.is_runing = TRUE;
-  _engine_state.is_suspended = FALSE;
+  state.is_runing = TRUE;
+  state.is_suspended = FALSE;
 
-  _engine_state.width = width;
-  _engine_state.height = height;
+  state.width = width;
+  state.height = height;
   if (!window_create(width, height, title)) {
     return FALSE;
   }
@@ -61,6 +62,8 @@ b8 engine_create(i16 width, i16 height, const char *title) {
     return FALSE;
   }
 
+  state.last_time = time_now();
+
   initialized = TRUE;
 
   return TRUE;
@@ -74,23 +77,28 @@ b8 engine_run(engine_start start, engine_update update, engine_render render) {
 
   start();
 
-  while (_engine_state.is_runing) {
+  while (state.is_runing) {
+    f64 current_time = time_now();
+    f64 delta_time = current_time - state.last_time;
+
     if (!window_poll_events()) {
-      _engine_state.is_runing = FALSE;
+      state.is_runing = FALSE;
     }
 
-    update((f32)0);
+    update(delta_time);
 
     renderer_clear_screen();
     renderer_begin_batch();
-    render((f32)0);
+    render(delta_time);
     renderer_end_batch();
     renderer_flush();
 
     window_swap_buffers();
+
+    state.last_time = current_time;
   }
 
-  _engine_state.is_runing = FALSE;
+  state.is_runing = FALSE;
 
   event_terminate();
   input_terminate();

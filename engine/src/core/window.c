@@ -63,6 +63,16 @@ b8 window_create(i32 width, i32 height, const char* title) {
 
   glViewport(0, 0, width, height);
 
+  VALLY_INFO("====System Info====");
+  VALLY_INFO("Vendor: %s", glGetString(GL_VENDOR));
+  VALLY_INFO("Renderer: %s,", glGetString(GL_RENDERER));
+  i32 major, minor;
+  glGetIntegerv(GL_MAJOR_VERSION, &major);
+  glGetIntegerv(GL_MINOR_VERSION, &minor);
+  VALLY_INFO("OpenGl version: %d.%d", major, minor);
+  VALLY_INFO("===================");
+
+
   return TRUE;
 }
 
