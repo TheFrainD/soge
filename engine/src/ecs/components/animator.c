@@ -15,7 +15,7 @@ void ecs_animator_add(entity entity) {
     return;
   }
 
-  state.components[entity] = (animator){NULL, 0, 0.0f};
+  state.components[entity] = (animator){FALSE, NULL, 0, 0.0f};
   ecs_component_add(entity, ECS_ANIMATOR_COMPONENT);
 }
 
@@ -24,12 +24,15 @@ void ecs_animator_play(entity entity, animation *animation) {
     return;
   }
 
-  state.components[entity].animation = animation;
-  state.components[entity].current_frame = animation->first_frame;
-  state.components[entity].time = 0.0f;
+  if (!(state.components[entity].playing && state.components[entity].animation == animation)) {
+    state.components[entity].playing = TRUE;
+    state.components[entity].animation = animation;
+    state.components[entity].current_frame = animation->first_frame;
+    state.components[entity].time = 0.0f;
 
-  ecs_spriterenderer_add_from_atlas(entity, animation->texture, animation->tiling);
-  ecs_spriterenderer_atlas_select(entity, animation->first_frame);
+    ecs_spriterenderer_add_from_atlas(entity, animation->texture, animation->tiling);
+    ecs_spriterenderer_atlas_select(entity, animation->first_frame);
+  }
 }
 
 void ecs_animator_stop(entity entity) {
@@ -37,6 +40,10 @@ void ecs_animator_stop(entity entity) {
     return;
   }
 
+  state.components[entity].playing = FALSE;
+  if (state.components[entity].animation != NULL) {
+    ecs_spriterenderer_atlas_select(entity, state.components[entity].animation->first_frame);
+  }
   state.components[entity].animation = NULL;
 }
 

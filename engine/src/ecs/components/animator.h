@@ -15,6 +15,7 @@ typedef struct {
 } animation;
 
 typedef struct {
+  b8 playing;
   animation *animation;
   u32 current_frame;
   f32 time;
