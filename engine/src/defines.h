@@ -20,6 +20,12 @@ typedef char b8;
 #define TRUE 1
 #define FALSE 0
 
+#define NULL ((void *)0)
+
+#define BIT_MASK(n) (1 << n)
+#define MIN(a,b) (((a)<(b))?(a):(b))
+#define MAX(a,b) (((a)>(b))?(a):(b))
+
 #ifdef VALLY_EXPORT
 // Exports
 #ifdef _MSC_VER

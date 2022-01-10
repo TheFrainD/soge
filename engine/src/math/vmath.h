@@ -18,12 +18,12 @@
 #define vector2i_create(x, y) ((vector2i){x, y})
 #define vector3i_create(x, y, z) ((vector3i){x, y, z})
 
-#define vector2f_zero() vector2f_create(0.0f, 0.0f)
-#define vector2f_one() vector2f_create(1.0f, 1.0f)
-#define vector2f_right() vector2f_create(1.0f, 0.0f)
-#define vector2f_left() vector2f_create(-1.0f, 0.0f)
-#define vector2f_up() vector2f_create(0.0f, 1.0f)
-#define vector2f_down() vector2f_create(0.0f, -1.0f)
+#define vector2f_zero vector2f_create(0.0f, 0.0f)
+#define vector2f_one vector2f_create(1.0f, 1.0f)
+#define vector2f_right vector2f_create(1.0f, 0.0f)
+#define vector2f_left vector2f_create(-1.0f, 0.0f)
+#define vector2f_up vector2f_create(0.0f, 1.0f)
+#define vector2f_down vector2f_create(0.0f, -1.0f)
 
 VALLY_DLL f32 vsin(f32 x);
 VALLY_DLL f32 vcos(f32 x);

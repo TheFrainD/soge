@@ -26,6 +26,11 @@ static void window_size_callback(GLFWwindow *window, i32 width, i32 height) {
   event_publish(EVENT_CODE_WINDOW_RESIZED, &state, context);
 }
 
+static void window_error_callback(i32 id, const char *description) {
+  VALLY_ERROR("GLFW error: %s", description);
+}
+
+
 b8 window_create(i32 width, i32 height, const char* title) {
   if (initialized) {
     return FALSE;
@@ -34,14 +39,15 @@ b8 window_create(i32 width, i32 height, const char* title) {
   state.height = height;
   state.title = title;
 
+  glfwSetErrorCallback(window_error_callback);
   if (!glfwInit()) {
     VALLY_FATAL("Could not initialize GLFW!");
     return FALSE;
   }
   VALLY_TRACE("GLFW initialized");
 
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
   state.window = glfwCreateWindow(width, height, title, NULL, NULL);
@@ -69,7 +75,7 @@ b8 window_create(i32 width, i32 height, const char* title) {
   i32 major, minor;
   glGetIntegerv(GL_MAJOR_VERSION, &major);
   glGetIntegerv(GL_MINOR_VERSION, &minor);
-  VALLY_INFO("OpenGl version: %d.%d", major, minor);
+  VALLY_INFO("OpenGL version: %d.%d", major, minor);
   VALLY_INFO("===================");
 
 

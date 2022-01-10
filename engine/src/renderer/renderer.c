@@ -10,12 +10,14 @@
 #include "renderer/shader.h"
 #include "renderer/camera.h"
 #include "renderer/buffer.h"
+#include "ecs/components/spriterenderer.h"
+#include "ecs/components/transform.h"
 
 typedef struct {
   shader shader_;
   buffer *buffer_;
 
-  texture tex_white;
+  texture *tex_white;
   texture *textures[RENDERER_MAX_TEXTURES];
   u32 sampler[RENDERER_MAX_TEXTURES];
   u32 tex_slot;
@@ -53,8 +55,8 @@ b8 renderer_init() {
   }
 
   state.tex_white = texture_white_create();
-  state.textures[0] = &state.tex_white;
-  
+  state.textures[0] = state.tex_white;
+
   state.tex_slot = 1;
   state.index_count = 0;
 
@@ -137,7 +139,7 @@ void renderer_clear_screen() {
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void renderer_draw_quad(texture *tex, vector2f pos) {
+void renderer_draw(spriterenderer *sprite) {
   if (!initialized) {
     return;
   }
@@ -148,8 +150,10 @@ void renderer_draw_quad(texture *tex, vector2f pos) {
     renderer_begin_batch();
   }
 
+  texture *tex = sprite->texture;
+  transform *transform = ecs_transform_get(sprite->entity);
   vec4s color = GLMS_VEC4_ONE;
-  
+
   f32 tex_id = 0.0f;
   for (i32 i = 1; i < state.tex_slot; i++) {
     if (state.textures[i] == tex) {
@@ -165,47 +169,47 @@ void renderer_draw_quad(texture *tex, vector2f pos) {
   }
 
   vertex ver;
-  ver.pos[0] = pos.x;
-  ver.pos[1] = pos.y;
+  ver.pos[0] = transform->position.x;
+  ver.pos[1] = transform->position.y;
   ver.color[0] = color.x;
   ver.color[1] = color.y;
   ver.color[2] = color.z;
   ver.color[3] = color.w;
-  ver.uv[0] = 0.0f;
-  ver.uv[1] = 0.0f;
+  ver.uv[0] = sprite->uvs.uv[0].x;
+  ver.uv[1] = sprite->uvs.uv[0].y;
   ver.tex_id = tex_id;
   cvec_push_back(state.vertices, ver);
 
-  ver.pos[0] = pos.x + tex->width;
-  ver.pos[1] = pos.y;
+  ver.pos[0] = transform->position.x + (sprite->size.x * transform->scale.x);
+  ver.pos[1] = transform->position.y;
   ver.color[0] = color.x;
   ver.color[1] = color.y;
   ver.color[2] = color.z;
   ver.color[3] = color.w;
-  ver.uv[0] = 1.0f;
-  ver.uv[1] = 0.0f;
+  ver.uv[0] = sprite->uvs.uv[1].x;
+  ver.uv[1] = sprite->uvs.uv[1].y;
   ver.tex_id = tex_id;
   cvec_push_back(state.vertices, ver);
 
-  ver.pos[0] = pos.x + tex->width;
-  ver.pos[1] = pos.y + tex->height;
+  ver.pos[0] = transform->position.x + (sprite->size.x * transform->scale.x);
+  ver.pos[1] = transform->position.y + (sprite->size.y * transform->scale.y);
   ver.color[0] = color.x;
   ver.color[1] = color.y;
   ver.color[2] = color.z;
   ver.color[3] = color.w;
-  ver.uv[0] = 1.0f;
-  ver.uv[1] = 1.0f;
+  ver.uv[0] = sprite->uvs.uv[2].x;
+  ver.uv[1] = sprite->uvs.uv[2].y;
   ver.tex_id = tex_id;
   cvec_push_back(state.vertices, ver);
 
-  ver.pos[0] = pos.x;
-  ver.pos[1] = pos.y + tex->height;
+  ver.pos[0] = transform->position.x;
+  ver.pos[1] = transform->position.y + (sprite->size.y * transform->scale.y);
   ver.color[0] = color.x;
   ver.color[1] = color.y;
   ver.color[2] = color.z;
   ver.color[3] = color.w;
-  ver.uv[0] = 0.0f;
-  ver.uv[1] = 1.0f;
+  ver.uv[0] = sprite->uvs.uv[3].x;
+  ver.uv[1] = sprite->uvs.uv[3].y;
   ver.tex_id = tex_id;
   cvec_push_back(state.vertices, ver);
 

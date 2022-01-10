@@ -2,38 +2,43 @@
 
 #include <glad/glad.h>
 
+#include "core/logger.h"
 #include "resources/resources.h"
 
-texture texture_create(image *img) {
-  texture tex;
 
-  glGenTextures(1, &tex.id);
-  glBindTexture(GL_TEXTURE_2D, tex.id);
+texture *texture_create(image *img) {
+  texture *tex = (texture *)malloc(sizeof(texture));
+  if (!tex) {
+    VALLY_ERROR("Could not create texture");
+  }
+
+  glGenTextures(1, &tex->id);
+  glBindTexture(GL_TEXTURE_2D, tex->id);
 
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE); 
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-  tex.width = img->width;
-  tex.height = img->height;
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex.width, tex.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img->buffer);
+  tex->width = img->width;
+  tex->height = img->height;
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex->width, tex->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img->buffer);
 
   glBindTexture(GL_TEXTURE_2D, 0);
 
-  resources_add(&tex, texture_destroy);
+  resources_add(tex, texture_destroy);
 
   return tex;
 }
 
-texture texture_white_create() {
-  texture tex;
-  tex.width = 1;
-  tex.height = 1;
+texture *texture_white_create() {
+  texture *tex;
+  tex->width = 1;
+  tex->height = 1;
 
   // generate white texture
-  glGenTextures(1, &tex.id);
-  glBindTexture(GL_TEXTURE_2D, tex.id);
+  glGenTextures(1, &tex->id);
+  glBindTexture(GL_TEXTURE_2D, tex->id);
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE); 
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -47,6 +52,7 @@ texture texture_white_create() {
 
 void texture_destroy(texture *tex) {
   glDeleteTextures(1, &tex->id);
+  free(tex);
 }
 
 void texture_bind(u32 unit, texture *tex) {

@@ -9,13 +9,15 @@
 #include "defines.h"
 
 #include "renderer/texture.h"
+#include "ecs/components/spriterenderer.h"
 #include "math/vmath.h"
 
 b8 renderer_init();
 void renderer_terminate();
 
 void renderer_clear_screen();
-VALLY_DLL void renderer_draw_quad(texture *tex, vector2f pos);
+
+void renderer_draw(spriterenderer *sprite);
 
 void renderer_begin_batch();
 void renderer_end_batch();

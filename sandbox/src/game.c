@@ -1,42 +1,36 @@
 #include <core/engine.h>
 #include <core/input.h>
-#include <renderer/renderer.h>
-#include <cglm/cglm.h>
-#include <cglm/struct.h>
+#include <ecs/ecs.h>
+#include <ecs/components/spriterenderer.h>
+#include <ecs/components/transform.h>
+#include <math/vmath.h>
 
-texture mario;
-texture toad;
-
-vec2s mario_pos = GLMS_VEC2_ZERO;
-f32 speed = 100;
+entity mario;
+entity toad;
+entity stone;
 
 void start() {
-  mario = texture_create(image_load("../assets/textures/mario.png"));
-  mario.width = 128;
-  mario.height = 128;
+  mario = ecs_entity_create();
+  ecs_spriterenderer_add(mario, texture_create(image_load("../assets/textures/mario.png")));
+  ecs_transform_get(mario)->scale = vector2f_create(0.25f, 0.25f);
 
-  toad = texture_create(image_load("../assets/textures/toad.png"));
-  toad.width = 128;
-  toad.height = 128;
+  toad = ecs_entity_create();
+  ecs_spriterenderer_add(toad, texture_create(image_load("../assets/textures/toad.png")));
+  ecs_transform_get(toad)->scale = vector2f_create(0.1f, 0.1f);
+
+  stone = ecs_entity_create();
+  ecs_spriterenderer_add_from_atlas(stone, texture_create(image_load("../assets/textures/terrain.png")), vector2f_create(16.0f, 16.0f));
+  ecs_spriterenderer_atlas_select(stone, 4);
+  ecs_transform_get(stone)->scale = vector2f_create(8.0f, 8.0f);
+  ecs_transform_get(stone)->position = vector2f_create(64.0f, 64.0f);
 }
 
 b8 update(f32 dt) {
-  if (input_key_pressed(KEY_W)) {
-    mario_pos.y -= speed * dt;
-  } else if (input_key_pressed(KEY_S)) {
-    mario_pos.y += speed * dt;
-  }
-
-  if (input_key_pressed(KEY_A)) {
-    mario_pos.x -= speed * dt;
-  } else if (input_key_pressed(KEY_D)) {
-    mario_pos.x += speed * dt;
-  }
+  ecs_transform_get(mario)->position.x += 20.0f * dt;
 }
 
 b8 render(f32 dt) {
-  renderer_draw_quad(&mario, mario_pos);
-  renderer_draw_quad(&toad, (vec2s){96.0f, 64.0f});
+
 }
 
 int main(void) {

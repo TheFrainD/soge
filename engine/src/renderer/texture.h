@@ -10,8 +10,8 @@ typedef struct {
   i32 height;
 } texture;
 
-texture texture_create(image *img);
-texture texture_white_create();
+texture *texture_create(image *img);
+texture *texture_white_create();
 void texture_destroy(texture *tex);
 
 void texture_bind(u32 unit, texture *tex);
