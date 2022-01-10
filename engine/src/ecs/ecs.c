@@ -40,7 +40,15 @@ void ecs_component_add(entity entity, component_mask mask) {
     return;
   }
 
-  state.masks[entity] = state.masks[entity] | mask;
+  state.masks[entity] |= mask;
+}
+
+void ecs_component_remove(entity entity, component_mask mask) {
+  if (!initialized || entity == ECS_NULL_ENTITY) {
+    return;
+  }
+
+  state.masks[entity] &= ~mask;
 }
 
 b8 ecs_component_has(entity entity, component_mask mask) {

@@ -9,8 +9,6 @@
 #include "resources/resources.h"
 #include "renderer/renderer.h"
 #include "ecs/ecs.h"
-#include "ecs/components/spriterenderer.h"
-#include "ecs/components/transform.h"
 
 typedef struct {
   b8 is_runing;
@@ -91,6 +89,8 @@ b8 engine_run(engine_start start, engine_update update, engine_render render) {
     }
 
     update(delta_time);
+
+    ecs_animator_update(delta_time);
 
     renderer_clear_screen();
     renderer_begin_batch();

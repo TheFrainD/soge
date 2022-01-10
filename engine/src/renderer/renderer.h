@@ -9,7 +9,7 @@
 #include "defines.h"
 
 #include "renderer/texture.h"
-#include "ecs/components/spriterenderer.h"
+#include "ecs/ecs.h"
 #include "math/vmath.h"
 
 b8 renderer_init();

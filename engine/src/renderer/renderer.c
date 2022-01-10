@@ -10,8 +10,6 @@
 #include "renderer/shader.h"
 #include "renderer/camera.h"
 #include "renderer/buffer.h"
-#include "ecs/components/spriterenderer.h"
-#include "ecs/components/transform.h"
 
 typedef struct {
   shader shader_;
