@@ -1,0 +1,163 @@
+\hypertarget{texture_8c}{}\doxysection{src/vally/renderer/texture.c File Reference}
+\label{texture_8c}\index{src/vally/renderer/texture.c@{src/vally/renderer/texture.c}}
+{\ttfamily \#include $<$vally/renderer/texture.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$glad/glad.\+h$>$}\newline
+{\ttfamily \#include $<$vally/core/logger.\+h$>$}\newline
+{\ttfamily \#include $<$vally/resources/resources.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structtexture}{texture}} $\ast$ \mbox{\hyperlink{texture_8c_ad20edeb7c077c9c1461b553d57af4b49}{texture\+\_\+create}} (\mbox{\hyperlink{structimage}{image}} $\ast$\mbox{\hyperlink{structimage}{image}})
+\begin{DoxyCompactList}\small\item\em Creates new texture from image. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structtexture}{texture}} $\ast$ \mbox{\hyperlink{texture_8c_a5626ff0130bef85d611f4b9da0915bac}{texture\+\_\+white\+\_\+create}} ()
+\item 
+void \mbox{\hyperlink{texture_8c_aa6ec5f9134f98a38d901418656e43499}{texture\+\_\+destroy}} (\mbox{\hyperlink{structtexture}{texture}} $\ast$\mbox{\hyperlink{structtexture}{texture}})
+\item 
+void \mbox{\hyperlink{texture_8c_ad2cb3b0ccaa6894880ef2ac785705f29}{texture\+\_\+bind}} (\mbox{\hyperlink{config_8h_afaa62991928fb9fb18ff0db62a040aba}{u32}} unit, \mbox{\hyperlink{structtexture}{texture}} $\ast$\mbox{\hyperlink{structtexture}{texture}})
+\item 
+void \mbox{\hyperlink{texture_8c_a18f570cb1aaaaaf21d0a61216a35fdb5}{texture\+\_\+unbind}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{texture_8c_ad2cb3b0ccaa6894880ef2ac785705f29}\label{texture_8c_ad2cb3b0ccaa6894880ef2ac785705f29}} 
+\index{texture.c@{texture.c}!texture\_bind@{texture\_bind}}
+\index{texture\_bind@{texture\_bind}!texture.c@{texture.c}}
+\doxysubsubsection{\texorpdfstring{texture\_bind()}{texture\_bind()}}
+{\footnotesize\ttfamily void texture\+\_\+bind (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{config_8h_afaa62991928fb9fb18ff0db62a040aba}{u32}}}]{unit,  }\item[{\mbox{\hyperlink{structtexture}{texture}} $\ast$}]{texture }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8c_source_l00088}{88}} of file \mbox{\hyperlink{texture_8c_source}{texture.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00088                                               \{}
+\DoxyCodeLine{00089   glActiveTexture(GL\_TEXTURE0 + unit);}
+\DoxyCodeLine{00090   glBindTexture(GL\_TEXTURE\_2D, \mbox{\hyperlink{structtexture}{texture}}-\/>\mbox{\hyperlink{structtexture_a80d0e2a9d244ce65a29cb87e5db5c695}{id}});}
+\DoxyCodeLine{00091 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{texture_8c_ad20edeb7c077c9c1461b553d57af4b49}\label{texture_8c_ad20edeb7c077c9c1461b553d57af4b49}} 
+\index{texture.c@{texture.c}!texture\_create@{texture\_create}}
+\index{texture\_create@{texture\_create}!texture.c@{texture.c}}
+\doxysubsubsection{\texorpdfstring{texture\_create()}{texture\_create()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structtexture}{texture}} $\ast$ texture\+\_\+create (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structimage}{image}} $\ast$}]{image }\end{DoxyParamCaption})}
+
+
+
+Creates new texture from image. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em img} & image source \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+textureS 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{texture_8c_source_l00034}{34}} of file \mbox{\hyperlink{texture_8c_source}{texture.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00034                                       \{}
+\DoxyCodeLine{00035   \mbox{\hyperlink{structtexture}{texture}} *\_texture = (\mbox{\hyperlink{structtexture}{texture}} *)malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structtexture}{texture}}));}
+\DoxyCodeLine{00036   \textcolor{keywordflow}{if} (!\_texture) \{}
+\DoxyCodeLine{00037     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}Could not create texture"{}});}
+\DoxyCodeLine{00038   \}}
+\DoxyCodeLine{00039 }
+\DoxyCodeLine{00040   \textcolor{comment}{// Generate OpenGL Texture}}
+\DoxyCodeLine{00041   glGenTextures(1, \&\_texture-\/>\mbox{\hyperlink{structtexture_a80d0e2a9d244ce65a29cb87e5db5c695}{id}});}
+\DoxyCodeLine{00042   glBindTexture(GL\_TEXTURE\_2D, \_texture-\/>\mbox{\hyperlink{structtexture_a80d0e2a9d244ce65a29cb87e5db5c695}{id}});}
+\DoxyCodeLine{00043 }
+\DoxyCodeLine{00044   \textcolor{comment}{// Configure texture parameters}}
+\DoxyCodeLine{00045   glTexParameteri(GL\_TEXTURE\_2D, GL\_TEXTURE\_WRAP\_S, GL\_CLAMP\_TO\_EDGE);  }
+\DoxyCodeLine{00046   glTexParameteri(GL\_TEXTURE\_2D, GL\_TEXTURE\_WRAP\_T, GL\_CLAMP\_TO\_EDGE); }
+\DoxyCodeLine{00047   glTexParameteri(GL\_TEXTURE\_2D, GL\_TEXTURE\_MIN\_FILTER, GL\_NEAREST);}
+\DoxyCodeLine{00048   glTexParameteri(GL\_TEXTURE\_2D, GL\_TEXTURE\_MAG\_FILTER, GL\_NEAREST);}
+\DoxyCodeLine{00049 }
+\DoxyCodeLine{00050   \_texture-\/>\mbox{\hyperlink{structtexture_af1c60d7f83164b192685cc53a15ebd6b}{width}} = \mbox{\hyperlink{structimage}{image}}-\/>\mbox{\hyperlink{structimage_a42ecfe2675278f6b7e70033e3ff89e4a}{width}};}
+\DoxyCodeLine{00051   \_texture-\/>\mbox{\hyperlink{structtexture_a6c617792e2e0312db7ef3e475ac4b635}{height}} = \mbox{\hyperlink{structimage}{image}}-\/>\mbox{\hyperlink{structimage_aa478e4be0fe527274f9233cc11ec71e9}{height}};  \textcolor{comment}{// Binding image to the texture}}
+\DoxyCodeLine{00052   glTexImage2D(GL\_TEXTURE\_2D, 0, GL\_RGBA, \_texture-\/>\mbox{\hyperlink{structtexture_af1c60d7f83164b192685cc53a15ebd6b}{width}}, \_texture-\/>\mbox{\hyperlink{structtexture_a6c617792e2e0312db7ef3e475ac4b635}{height}}, 0, GL\_RGBA, GL\_UNSIGNED\_BYTE, \mbox{\hyperlink{structimage}{image}}-\/>\mbox{\hyperlink{structimage_aecf7dbb8a46058432c245ff52e4fce82}{buffer}});}
+\DoxyCodeLine{00053 }
+\DoxyCodeLine{00054   glBindTexture(GL\_TEXTURE\_2D, 0);}
+\DoxyCodeLine{00055 }
+\DoxyCodeLine{00056   \mbox{\hyperlink{resources_8c_a16641af0e8abb4648df5964f32f30adb}{resources\_add}}(\_texture, \mbox{\hyperlink{texture_8c_aa6ec5f9134f98a38d901418656e43499}{texture\_destroy}});}
+\DoxyCodeLine{00057 }
+\DoxyCodeLine{00058   \textcolor{keywordflow}{return} \_texture;}
+\DoxyCodeLine{00059 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{texture_8c_aa6ec5f9134f98a38d901418656e43499}\label{texture_8c_aa6ec5f9134f98a38d901418656e43499}} 
+\index{texture.c@{texture.c}!texture\_destroy@{texture\_destroy}}
+\index{texture\_destroy@{texture\_destroy}!texture.c@{texture.c}}
+\doxysubsubsection{\texorpdfstring{texture\_destroy()}{texture\_destroy()}}
+{\footnotesize\ttfamily void texture\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structtexture}{texture}} $\ast$}]{texture }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8c_source_l00083}{83}} of file \mbox{\hyperlink{texture_8c_source}{texture.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00083                                        \{}
+\DoxyCodeLine{00084   glDeleteTextures(1, \&\mbox{\hyperlink{structtexture}{texture}}-\/>\mbox{\hyperlink{structtexture_a80d0e2a9d244ce65a29cb87e5db5c695}{id}});}
+\DoxyCodeLine{00085   free(\mbox{\hyperlink{structtexture}{texture}});}
+\DoxyCodeLine{00086 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{texture_8c_a18f570cb1aaaaaf21d0a61216a35fdb5}\label{texture_8c_a18f570cb1aaaaaf21d0a61216a35fdb5}} 
+\index{texture.c@{texture.c}!texture\_unbind@{texture\_unbind}}
+\index{texture\_unbind@{texture\_unbind}!texture.c@{texture.c}}
+\doxysubsubsection{\texorpdfstring{texture\_unbind()}{texture\_unbind()}}
+{\footnotesize\ttfamily void texture\+\_\+unbind (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8c_source_l00093}{93}} of file \mbox{\hyperlink{texture_8c_source}{texture.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00093                       \{}
+\DoxyCodeLine{00094   glBindTexture(GL\_TEXTURE\_2D, 0);}
+\DoxyCodeLine{00095 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{texture_8c_a5626ff0130bef85d611f4b9da0915bac}\label{texture_8c_a5626ff0130bef85d611f4b9da0915bac}} 
+\index{texture.c@{texture.c}!texture\_white\_create@{texture\_white\_create}}
+\index{texture\_white\_create@{texture\_white\_create}!texture.c@{texture.c}}
+\doxysubsubsection{\texorpdfstring{texture\_white\_create()}{texture\_white\_create()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structtexture}{texture}} $\ast$ texture\+\_\+white\+\_\+create (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{texture_8c_source_l00061}{61}} of file \mbox{\hyperlink{texture_8c_source}{texture.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00061                                 \{}
+\DoxyCodeLine{00062   \mbox{\hyperlink{structtexture}{texture}} *\_texture = (\mbox{\hyperlink{structtexture}{texture}} *)malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structtexture}{texture}}));}
+\DoxyCodeLine{00063   \textcolor{keywordflow}{if} (!\_texture) \{}
+\DoxyCodeLine{00064     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}Could not create texture"{}});}
+\DoxyCodeLine{00065   \}}
+\DoxyCodeLine{00066   \_texture-\/>\mbox{\hyperlink{structtexture_af1c60d7f83164b192685cc53a15ebd6b}{width}} = 1;}
+\DoxyCodeLine{00067   \_texture-\/>\mbox{\hyperlink{structtexture_a6c617792e2e0312db7ef3e475ac4b635}{height}} = 1;}
+\DoxyCodeLine{00068 }
+\DoxyCodeLine{00069   \textcolor{comment}{// generate white texture}}
+\DoxyCodeLine{00070   glGenTextures(1, \&\_texture-\/>\mbox{\hyperlink{structtexture_a80d0e2a9d244ce65a29cb87e5db5c695}{id}});}
+\DoxyCodeLine{00071   glBindTexture(GL\_TEXTURE\_2D, \_texture-\/>\mbox{\hyperlink{structtexture_a80d0e2a9d244ce65a29cb87e5db5c695}{id}});}
+\DoxyCodeLine{00072   glTexParameteri( GL\_TEXTURE\_2D, GL\_TEXTURE\_WRAP\_S, GL\_CLAMP\_TO\_EDGE); }
+\DoxyCodeLine{00073   glTexParameteri( GL\_TEXTURE\_2D, GL\_TEXTURE\_WRAP\_T, GL\_CLAMP\_TO\_EDGE); }
+\DoxyCodeLine{00074   glTexParameteri(GL\_TEXTURE\_2D, GL\_TEXTURE\_MIN\_FILTER, GL\_NEAREST);}
+\DoxyCodeLine{00075   glTexParameteri(GL\_TEXTURE\_2D, GL\_TEXTURE\_MAG\_FILTER, GL\_NEAREST);}
+\DoxyCodeLine{00076   \mbox{\hyperlink{config_8h_afaa62991928fb9fb18ff0db62a040aba}{u32}} color = 0xffffffff; \textcolor{comment}{// white color}}
+\DoxyCodeLine{00077   glTexImage2D(GL\_TEXTURE\_2D, 0, GL\_RGBA, 1, 1, 0, GL\_RGBA, GL\_UNSIGNED\_BYTE, \&color);}
+\DoxyCodeLine{00078   glBindTexture(GL\_TEXTURE\_2D, 0);}
+\DoxyCodeLine{00079 }
+\DoxyCodeLine{00080   \textcolor{keywordflow}{return} \_texture;}
+\DoxyCodeLine{00081 \}}
+
+\end{DoxyCode}

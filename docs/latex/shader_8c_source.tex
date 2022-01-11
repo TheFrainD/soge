@@ -1,0 +1,158 @@
+\hypertarget{shader_8c_source}{}\doxysection{shader.\+c}
+\label{shader_8c_source}\index{src/vally/renderer/shader.c@{src/vally/renderer/shader.c}}
+\mbox{\hyperlink{shader_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00001}00001 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{shader_8h}{vally/renderer/shader.h}}>}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00003}00003 \textcolor{preprocessor}{\#include <glad/glad.h>}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00005}00005 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{text__loader_8h}{vally/resources/text\_loader.h}}>}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00006}00006 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{logger_8h}{vally/core/logger.h}}>}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00008}00008 \textcolor{keyword}{static} \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} check\_gl\_errors() \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00009}00009   \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} error = \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00010}00010   \mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} glerr = glGetError();}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00011}00011   \textcolor{keywordflow}{while} (glerr != GL\_NO\_ERROR) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00012}00012     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}OpenGL error: \%d"{}}, glerr);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00013}00013     error = \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00014}00014     glerr = glGetError();}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00015}00015   \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00017}00017   \textcolor{keywordflow}{return} error;}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00018}00018 \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00020}00020 \textcolor{keyword}{static} \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} shader\_err\_log(GLuint handle, GLenum shader\_type) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00021}00021   \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} error = \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00022}00022   \mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} len;}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00023}00023   \mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} ch;}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00024}00024   \textcolor{keywordtype}{char} *log;}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00025}00025   glGetShaderiv(handle, GL\_INFO\_LOG\_LENGTH, \&len);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00026}00026   \textcolor{keywordflow}{if} (len > 0) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00027}00027     error = \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00028}00028     log = (\textcolor{keywordtype}{char} *)malloc(len);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00029}00029     glGetShaderInfoLog(handle, len, \&ch, log);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00030}00030     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}\%s shader log: \%s"{}}, shader\_type == GL\_VERTEX\_SHADER ? \textcolor{stringliteral}{"{}Vertex"{}} : \textcolor{stringliteral}{"{}Fragment"{}}, log);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00031}00031     free(log);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00032}00032   \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00033}00033   \textcolor{keywordflow}{return} error;}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00034}00034 \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00036}00036 \textcolor{keyword}{static} \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} program\_err\_log(\mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} program) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00037}00037   \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} error = \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00038}00038   \mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} len;}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00039}00039   \mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} ch;}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00040}00040   \textcolor{keywordtype}{char} *log;}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00041}00041   glGetProgramiv(program, GL\_INFO\_LOG\_LENGTH, \&len);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00042}00042   \textcolor{keywordflow}{if} (len > 0) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00043}00043     error = \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00044}00044     log = (\textcolor{keywordtype}{char} *)malloc(len);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00045}00045     glGetProgramInfoLog(program, len, \&ch, log);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00046}00046     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}Shader program log: \%s"{}}, log);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00047}00047     free(log);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00048}00048   \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00049}00049   \textcolor{keywordflow}{return} error;}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00050}00050 \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00052}00052 \textcolor{keyword}{static} GLuint compile\_shader(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *source, GLenum shader\_type) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00053}00053   GLuint handle = glCreateShader(shader\_type);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00054}00054   glShaderSource(handle, 1, (\textcolor{keyword}{const} GLchar *\textcolor{keyword}{const} *)\&source, 0);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00056}00056   GLuint compiled;}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00057}00057   glCompileShader(handle);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00058}00058   check\_gl\_errors();}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00059}00059   glGetShaderiv(handle, GL\_COMPILE\_STATUS, \&compiled);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00060}00060   \textcolor{keywordflow}{if} (!compiled) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00061}00061     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}\%s shader compilation failed!"{}}, shader\_type == GL\_VERTEX\_SHADER ? \textcolor{stringliteral}{"{}Vertex"{}} : \textcolor{stringliteral}{"{}Fragment"{}});}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00062}00062     shader\_err\_log(handle, shader\_type);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00063}00063     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}Source code: \%s"{}}, source);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00064}00064   \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00066}00066   \textcolor{keywordflow}{return} handle;}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00067}00067 \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00069}\mbox{\hyperlink{shader_8c_ae1fba54dbd47f6e955d8bdd481a4d993}{00069}} \mbox{\hyperlink{structshader}{shader}} \mbox{\hyperlink{shader_8c_ae1fba54dbd47f6e955d8bdd481a4d993}{shader\_create}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *vertex\_path, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *fragment\_path) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00070}00070   \mbox{\hyperlink{structshader}{shader}} shdr;}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00071}00071   shdr.\mbox{\hyperlink{structshader_a751371b801adb08d919f7fc9a6cc31fb}{attached}} = \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00073}00073   \textcolor{keyword}{const} \textcolor{keywordtype}{char}* vsource = \mbox{\hyperlink{text__loader_8c_a0288aab1293bca79a1e50b5a5674fe24}{load\_text\_file}}(vertex\_path);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00074}00074   \textcolor{keyword}{const} \textcolor{keywordtype}{char}* fsource = \mbox{\hyperlink{text__loader_8c_a0288aab1293bca79a1e50b5a5674fe24}{load\_text\_file}}(fragment\_path);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00075}00075 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00076}00076   GLuint vshader = compile\_shader(vsource, GL\_VERTEX\_SHADER);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00077}00077   GLuint fshader = compile\_shader(fsource, GL\_FRAGMENT\_SHADER);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00079}00079   GLuint linked;}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00080}00080   shdr.\mbox{\hyperlink{structshader_a1e35b56847400058723c74f30b4bdec3}{id}} = glCreateProgram();}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00081}00081   glAttachShader(shdr.\mbox{\hyperlink{structshader_a1e35b56847400058723c74f30b4bdec3}{id}}, vshader);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00082}00082   glAttachShader(shdr.\mbox{\hyperlink{structshader_a1e35b56847400058723c74f30b4bdec3}{id}}, fshader);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00083}00083 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00084}00084   glLinkProgram(shdr.\mbox{\hyperlink{structshader_a1e35b56847400058723c74f30b4bdec3}{id}});}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00085}00085   check\_gl\_errors();}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00086}00086   glGetProgramiv(shdr.\mbox{\hyperlink{structshader_a1e35b56847400058723c74f30b4bdec3}{id}}, GL\_LINK\_STATUS, \&linked);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00087}00087   \textcolor{keywordflow}{if} (!linked) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00088}00088     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}Shader program linking failed!"{}});}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00089}00089     program\_err\_log(shdr.\mbox{\hyperlink{structshader_a1e35b56847400058723c74f30b4bdec3}{id}});}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00090}00090   \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00091}00091 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00092}00092   glDeleteShader(vshader);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00093}00093   glDeleteShader(fshader);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00095}00095   \textcolor{keywordflow}{return} shdr;}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00096}00096 \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00097}00097 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00098}\mbox{\hyperlink{shader_8c_a3ffc8ae5f949380bf9972469b1f4de21}{00098}} \textcolor{keywordtype}{void} \mbox{\hyperlink{shader_8c_a3ffc8ae5f949380bf9972469b1f4de21}{shader\_attach}}(\mbox{\hyperlink{structshader}{shader}} *shdr) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00099}00099   \textcolor{keywordflow}{if} (!shdr-\/>\mbox{\hyperlink{structshader_a751371b801adb08d919f7fc9a6cc31fb}{attached}}) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00100}00100     glUseProgram(shdr-\/>\mbox{\hyperlink{structshader_a1e35b56847400058723c74f30b4bdec3}{id}});}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00101}00101     shdr-\/>\mbox{\hyperlink{structshader_a751371b801adb08d919f7fc9a6cc31fb}{attached}} = \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00102}00102   \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00103}00103 \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00104}00104 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00105}\mbox{\hyperlink{shader_8c_a1f05473f92734ad6c83b05f4ada6c432}{00105}} \textcolor{keywordtype}{void} \mbox{\hyperlink{shader_8c_a1f05473f92734ad6c83b05f4ada6c432}{shader\_deattach}}(\mbox{\hyperlink{structshader}{shader}} *shdr) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00106}00106   glUseProgram(0);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00107}00107   shdr-\/>\mbox{\hyperlink{structshader_a751371b801adb08d919f7fc9a6cc31fb}{attached}} = \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00108}00108 \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00110}\mbox{\hyperlink{shader_8c_a4856e06bf8dadd9be92e52bd4cd24f92}{00110}} \textcolor{keywordtype}{void} \mbox{\hyperlink{shader_8c_a4856e06bf8dadd9be92e52bd4cd24f92}{shader\_destroy}}(\mbox{\hyperlink{structshader}{shader}} *shdr) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00111}00111   glDeleteProgram(shdr-\/>\mbox{\hyperlink{structshader_a1e35b56847400058723c74f30b4bdec3}{id}});}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00112}00112 \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00113}00113 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00114}\mbox{\hyperlink{shader_8c_ac5b30137b63c743b1f79172e5df3e985}{00114}} \textcolor{keywordtype}{void} \mbox{\hyperlink{shader_8c_ac5b30137b63c743b1f79172e5df3e985}{shader\_send\_float}}(\mbox{\hyperlink{structshader}{shader}} *shdr, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *name, \mbox{\hyperlink{config_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} value) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00115}00115   \mbox{\hyperlink{shader_8c_a3ffc8ae5f949380bf9972469b1f4de21}{shader\_attach}}(shdr);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00116}00116   glUniform1f(glGetUniformLocation(shdr-\/>\mbox{\hyperlink{structshader_a1e35b56847400058723c74f30b4bdec3}{id}}, name), value);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00117}00117 \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00118}00118 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00119}\mbox{\hyperlink{shader_8c_ad9c0aeb4311157463ccef1ca951311a1}{00119}} \textcolor{keywordtype}{void} \mbox{\hyperlink{shader_8c_ad9c0aeb4311157463ccef1ca951311a1}{shader\_send\_float\_array}}(\mbox{\hyperlink{structshader}{shader}} *shdr, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *name, \mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} count, \textcolor{keyword}{const} \mbox{\hyperlink{config_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} *array) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00120}00120   \mbox{\hyperlink{shader_8c_a3ffc8ae5f949380bf9972469b1f4de21}{shader\_attach}}(shdr);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00121}00121   glUniform1fv(glGetUniformLocation(shdr-\/>\mbox{\hyperlink{structshader_a1e35b56847400058723c74f30b4bdec3}{id}}, name), count, array);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00122}00122 \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00123}00123 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00124}\mbox{\hyperlink{shader_8c_ab1e5bbd2a944da7dacc48b02ba97597a}{00124}} \textcolor{keywordtype}{void} \mbox{\hyperlink{shader_8c_ab1e5bbd2a944da7dacc48b02ba97597a}{shader\_send\_vec2}}(\mbox{\hyperlink{structshader}{shader}} *shdr, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *name, vec2s vector) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00125}00125   \mbox{\hyperlink{shader_8c_a3ffc8ae5f949380bf9972469b1f4de21}{shader\_attach}}(shdr);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00126}00126   glUniform2f(glGetUniformLocation(shdr-\/>\mbox{\hyperlink{structshader_a1e35b56847400058723c74f30b4bdec3}{id}}, name), vector.x, vector.y);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00127}00127 \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00128}00128 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00129}\mbox{\hyperlink{shader_8c_a64851a31e767f1962d56cf887600a73f}{00129}} \textcolor{keywordtype}{void} \mbox{\hyperlink{shader_8c_a64851a31e767f1962d56cf887600a73f}{shader\_send\_vec3}}(\mbox{\hyperlink{structshader}{shader}} *shdr, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *name, vec3s vector) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00130}00130   \mbox{\hyperlink{shader_8c_a3ffc8ae5f949380bf9972469b1f4de21}{shader\_attach}}(shdr);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00131}00131   glUniform3f(glGetUniformLocation(shdr-\/>\mbox{\hyperlink{structshader_a1e35b56847400058723c74f30b4bdec3}{id}}, name), vector.x, vector.y, vector.z);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00132}00132 \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00133}00133 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00134}\mbox{\hyperlink{shader_8c_aa137db9dbc9ad1b12539585ffdb79783}{00134}} \textcolor{keywordtype}{void} \mbox{\hyperlink{shader_8c_aa137db9dbc9ad1b12539585ffdb79783}{shader\_send\_vec4}}(\mbox{\hyperlink{structshader}{shader}} *shdr, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *name, vec4s vector) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00135}00135   \mbox{\hyperlink{shader_8c_a3ffc8ae5f949380bf9972469b1f4de21}{shader\_attach}}(shdr);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00136}00136   glUniform4f(glGetUniformLocation(shdr-\/>\mbox{\hyperlink{structshader_a1e35b56847400058723c74f30b4bdec3}{id}}, name), vector.x, vector.y, vector.z, vector.w);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00137}00137 \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00138}00138 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00139}\mbox{\hyperlink{shader_8c_a53bc342ddbdcc7fd125e3657fa5e967d}{00139}} \textcolor{keywordtype}{void} \mbox{\hyperlink{shader_8c_a53bc342ddbdcc7fd125e3657fa5e967d}{shader\_send\_int}}(\mbox{\hyperlink{structshader}{shader}} *shdr, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *name, \textcolor{keywordtype}{int} value) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00140}00140   \mbox{\hyperlink{shader_8c_a3ffc8ae5f949380bf9972469b1f4de21}{shader\_attach}}(shdr);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00141}00141   glUniform1i(glGetUniformLocation(shdr-\/>\mbox{\hyperlink{structshader_a1e35b56847400058723c74f30b4bdec3}{id}}, name), value);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00142}00142 \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00143}00143 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00144}\mbox{\hyperlink{shader_8c_ac5fb5545ce898dd4882bc315bd8ef7f2}{00144}} \textcolor{keywordtype}{void} \mbox{\hyperlink{shader_8c_ac5fb5545ce898dd4882bc315bd8ef7f2}{shader\_send\_int\_array}}(\mbox{\hyperlink{structshader}{shader}} *shdr, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *name, \mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} count, \textcolor{keyword}{const} \mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} *array) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00145}00145   \mbox{\hyperlink{shader_8c_a3ffc8ae5f949380bf9972469b1f4de21}{shader\_attach}}(shdr);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00146}00146   glUniform1iv(glGetUniformLocation(shdr-\/>\mbox{\hyperlink{structshader_a1e35b56847400058723c74f30b4bdec3}{id}}, name), count, array);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00147}00147 \}}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00148}00148 }
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00149}\mbox{\hyperlink{shader_8c_a4b48272a73624a09c1c8f990f8243ce5}{00149}} \textcolor{keywordtype}{void} \mbox{\hyperlink{shader_8c_a4b48272a73624a09c1c8f990f8243ce5}{shader\_send\_mat4}}(\mbox{\hyperlink{structshader}{shader}} *shdr, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *name, mat4s matrix) \{}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00150}00150   \mbox{\hyperlink{shader_8c_a3ffc8ae5f949380bf9972469b1f4de21}{shader\_attach}}(shdr);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00151}00151   glUniformMatrix4fv(glGetUniformLocation(shdr-\/>\mbox{\hyperlink{structshader_a1e35b56847400058723c74f30b4bdec3}{id}}, name), 1, GL\_FALSE, (\mbox{\hyperlink{config_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}}*)matrix.raw);}
+\DoxyCodeLine{\Hypertarget{shader_8c_source_l00152}00152 \}}
+
+\end{DoxyCode}

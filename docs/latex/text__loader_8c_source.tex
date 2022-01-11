@@ -1,0 +1,44 @@
+\hypertarget{text__loader_8c_source}{}\doxysection{text\+\_\+loader.\+c}
+\label{text__loader_8c_source}\index{src/vally/resources/text\_loader.c@{src/vally/resources/text\_loader.c}}
+\mbox{\hyperlink{text__loader_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00001}00001 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{text__loader_8h}{vally/resources/text\_loader.h}}>}}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00003}00003 \textcolor{preprocessor}{\#include <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00004}00004 \textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00006}00006 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{logger_8h}{vally/core/logger.h}}>}}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00008}\mbox{\hyperlink{text__loader_8c_a0288aab1293bca79a1e50b5a5674fe24}{00008}} \textcolor{keywordtype}{char} *\mbox{\hyperlink{text__loader_8c_a0288aab1293bca79a1e50b5a5674fe24}{load\_text\_file}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* path) \{}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00009}00009   FILE *file;}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00010}00010   \textcolor{keywordtype}{long} length;}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00011}00011   \textcolor{keywordtype}{char} *\mbox{\hyperlink{structbuffer}{buffer}};}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00013}00013   \textcolor{comment}{// Open the file}}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00014}00014   file = fopen(path, \textcolor{stringliteral}{"{}rb"{}});}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00015}00015   \textcolor{keywordflow}{if} (!file) \{}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00016}00016     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}Could not load file at \(\backslash\)"{}\%s\(\backslash\)"{}!"{}}, path);}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00017}00017     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00018}00018   \}}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00020}00020   \textcolor{comment}{// Calculate buffer's length}}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00021}00021   fseek(file, 0, SEEK\_END);}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00022}00022   length = ftell(file);}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00023}00023   rewind(file);}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00025}00025   \textcolor{comment}{// Allocate memory for the buffer}}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00026}00026   \mbox{\hyperlink{structbuffer}{buffer}} = calloc(1, length + 1);}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00027}00027   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{structbuffer}{buffer}}) \{}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00028}00028     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}Could not lallocate memory for buffer \(\backslash\)"{}\%s\(\backslash\)"{}!"{}}, path);}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00029}00029     fclose(file);}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00030}00030     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00031}00031   \}}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00033}00033   \textcolor{comment}{// Read the file into the buffer}}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00034}00034   fread(\mbox{\hyperlink{structbuffer}{buffer}}, 1, length, file);}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00035}00035   fclose(file);}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00037}00037   \textcolor{keywordflow}{return} \mbox{\hyperlink{structbuffer}{buffer}};}
+\DoxyCodeLine{\Hypertarget{text__loader_8c_source_l00038}00038 \}}
+
+\end{DoxyCode}

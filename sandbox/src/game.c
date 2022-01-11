@@ -1,8 +1,4 @@
-#include <core/engine.h>
-#include <core/input.h>
-#include <ecs/ecs.h>
-#include <math/vmath.h>
-#include <renderer/camera.h>
+#include <vally/vally.h>
 
 entity knight;
 animation run_right;
@@ -12,7 +8,7 @@ entity stones[16];
 
 f32 speed = 120.0f;
 
-void start() {
+b8 start() {
   run_right = animation_create(texture_create(image_load("../assets/textures/knight_right.png")), 
   vector2f_create(16.0f, 16.0f), 0, 5, 12);
 
@@ -33,6 +29,8 @@ void start() {
   ecs_animator_add(knight);
   ecs_transform_get(knight)->position = vector2f_create(640.0f / 2.0f - 32.0f, 126.0f);
   ecs_transform_get(knight)->scale = vector2f_create(4.0f, 4.0f);
+
+  return TRUE;
 }
 
 b8 update(f32 dt) {
@@ -48,14 +46,13 @@ b8 update(f32 dt) {
     ecs_animator_stop(knight);
   }
 
-  ecs_transform_get(knight)->position.x += translation;
-  if (translation != 0.0f) {
-    camera_translate((vec2s){translation, 0.0f});
-  }
+  ecs_transform_get(knight)->position.x += translation;\
+
+  return TRUE;
 }
 
 b8 render(f32 dt) {
-
+  return TRUE;
 }
 
 int main(void) {

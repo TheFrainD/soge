@@ -1,17 +1,19 @@
 UNAME_S=$(shell uname -s)
 
-CC=clang
-CFLAGS=-g -D_DEBUG -DVALLY_IMPORT
+CC=gcc
+CFLAGS=-g -DVALLY_DEBUG -O3
 LDFLAGS=-L../bin/ -lvally -mwindows
-INCLUDES=-Isrc -I../engine/src -I../vendor/cglm/include
+INCLUDES=-Isrc -I../include
 
 ifeq ($(UNAME_S), Linux)
 	LDFLAGS+=-Wl,-rpath=./
+else
+	LDFLAGS+=-static-libgcc
 endif
 
 SRC=$(wildcard src/**/*.c) $(wildcard src/*.c) $(wildcard src/**/**/*.c) $(wildcard src/**/**/**/*.c)
 OBJ=$(SRC:.c=.o)
-BIN=../bin/game
+BIN=bin/game
 
 .PHONY: all clean
 
@@ -22,7 +24,8 @@ dirs:
 	mkdir -p ../bin/logs
 
 engine:
-	cd ../$@ && make
+	cd .. && make
+	cp -a ../bin/. bin
 
 $(BIN): $(OBJ)
 	$(CC) $^ -o $@ $(LDFLAGS)
@@ -31,5 +34,4 @@ $(BIN): $(OBJ)
 	$(CC) $(CFLAGS) -o $@ -c $<  $(INCLUDES)
 
 clean:
-	cd ../engine && make clean
-	$(RM) -rf $(OBJ) ../bin
+	$(RM) -rf $(OBJ) bin

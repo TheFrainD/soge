@@ -1,0 +1,101 @@
+\hypertarget{texture_8c_source}{}\doxysection{texture.\+c}
+\label{texture_8c_source}\index{src/vally/renderer/texture.c@{src/vally/renderer/texture.c}}
+\mbox{\hyperlink{texture_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00001}00001 \textcolor{comment}{//================================================================================}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00002}00002 \textcolor{comment}{// Vally 0.1indev}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00003}00003 \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00004}00004 \textcolor{comment}{// Copyright (c) 2022 Dmytro Zykov}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00006}00006 \textcolor{comment}{// Permission is hereby granted, free of charge, to any person obtaining a copy}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00007}00007 \textcolor{comment}{// of this software and associated documentation files (the "{}Software"{}), to deal}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00008}00008 \textcolor{comment}{// in the Software without restriction, including without limitation the rights}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00009}00009 \textcolor{comment}{// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00010}00010 \textcolor{comment}{// copies of the Software, and to permit persons to whom the Software is}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00011}00011 \textcolor{comment}{// furnished to do so, subject to the following conditions:}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00013}00013 \textcolor{comment}{// The above copyright notice and this permission notice shall be included in all}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00014}00014 \textcolor{comment}{// copies or substantial portions of the Software.}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00016}00016 \textcolor{comment}{// THE SOFTWARE IS PROVIDED "{}AS IS"{}, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00017}00017 \textcolor{comment}{// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00018}00018 \textcolor{comment}{// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00019}00019 \textcolor{comment}{// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00020}00020 \textcolor{comment}{// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00021}00021 \textcolor{comment}{// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00022}00022 \textcolor{comment}{// SOFTWARE.}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00023}00023 \textcolor{comment}{//=================================================================================}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00025}00025 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{texture_8h}{vally/renderer/texture.h}}>}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00027}00027 \textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00029}00029 \textcolor{preprocessor}{\#include <glad/glad.h>}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00031}00031 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{logger_8h}{vally/core/logger.h}}>}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00032}00032 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{resources_8h}{vally/resources/resources.h}}>}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00034}\mbox{\hyperlink{texture_8c_ad20edeb7c077c9c1461b553d57af4b49}{00034}} \mbox{\hyperlink{structtexture}{texture}} *\mbox{\hyperlink{texture_8c_ad20edeb7c077c9c1461b553d57af4b49}{texture\_create}}(\mbox{\hyperlink{structimage}{image}} *\mbox{\hyperlink{structimage}{image}}) \{}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00035}00035   \mbox{\hyperlink{structtexture}{texture}} *\_texture = (\mbox{\hyperlink{structtexture}{texture}} *)malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structtexture}{texture}}));}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00036}00036   \textcolor{keywordflow}{if} (!\_texture) \{}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00037}00037     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}Could not create texture"{}});}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00038}00038   \}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00040}00040   \textcolor{comment}{// Generate OpenGL Texture}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00041}00041   glGenTextures(1, \&\_texture-\/>\mbox{\hyperlink{structtexture_a80d0e2a9d244ce65a29cb87e5db5c695}{id}});}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00042}00042   glBindTexture(GL\_TEXTURE\_2D, \_texture-\/>\mbox{\hyperlink{structtexture_a80d0e2a9d244ce65a29cb87e5db5c695}{id}});}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00044}00044   \textcolor{comment}{// Configure texture parameters}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00045}00045   glTexParameteri(GL\_TEXTURE\_2D, GL\_TEXTURE\_WRAP\_S, GL\_CLAMP\_TO\_EDGE);  }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00046}00046   glTexParameteri(GL\_TEXTURE\_2D, GL\_TEXTURE\_WRAP\_T, GL\_CLAMP\_TO\_EDGE); }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00047}00047   glTexParameteri(GL\_TEXTURE\_2D, GL\_TEXTURE\_MIN\_FILTER, GL\_NEAREST);}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00048}00048   glTexParameteri(GL\_TEXTURE\_2D, GL\_TEXTURE\_MAG\_FILTER, GL\_NEAREST);}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00050}00050   \_texture-\/>\mbox{\hyperlink{structtexture_af1c60d7f83164b192685cc53a15ebd6b}{width}} = \mbox{\hyperlink{structimage}{image}}-\/>\mbox{\hyperlink{structimage_a42ecfe2675278f6b7e70033e3ff89e4a}{width}};}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00051}00051   \_texture-\/>\mbox{\hyperlink{structtexture_a6c617792e2e0312db7ef3e475ac4b635}{height}} = \mbox{\hyperlink{structimage}{image}}-\/>\mbox{\hyperlink{structimage_aa478e4be0fe527274f9233cc11ec71e9}{height}};  \textcolor{comment}{// Binding image to the texture}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00052}00052   glTexImage2D(GL\_TEXTURE\_2D, 0, GL\_RGBA, \_texture-\/>\mbox{\hyperlink{structtexture_af1c60d7f83164b192685cc53a15ebd6b}{width}}, \_texture-\/>\mbox{\hyperlink{structtexture_a6c617792e2e0312db7ef3e475ac4b635}{height}}, 0, GL\_RGBA, GL\_UNSIGNED\_BYTE, \mbox{\hyperlink{structimage}{image}}-\/>\mbox{\hyperlink{structimage_aecf7dbb8a46058432c245ff52e4fce82}{buffer}});}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00053}00053 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00054}00054   glBindTexture(GL\_TEXTURE\_2D, 0);}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00056}00056   \mbox{\hyperlink{resources_8c_a16641af0e8abb4648df5964f32f30adb}{resources\_add}}(\_texture, \mbox{\hyperlink{texture_8c_aa6ec5f9134f98a38d901418656e43499}{texture\_destroy}});}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00058}00058   \textcolor{keywordflow}{return} \_texture;}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00059}00059 \}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00061}\mbox{\hyperlink{texture_8c_a5626ff0130bef85d611f4b9da0915bac}{00061}} \mbox{\hyperlink{structtexture}{texture}} *\mbox{\hyperlink{texture_8c_a5626ff0130bef85d611f4b9da0915bac}{texture\_white\_create}}() \{}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00062}00062   \mbox{\hyperlink{structtexture}{texture}} *\_texture = (\mbox{\hyperlink{structtexture}{texture}} *)malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structtexture}{texture}}));}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00063}00063   \textcolor{keywordflow}{if} (!\_texture) \{}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00064}00064     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}Could not create texture"{}});}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00065}00065   \}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00066}00066   \_texture-\/>\mbox{\hyperlink{structtexture_af1c60d7f83164b192685cc53a15ebd6b}{width}} = 1;}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00067}00067   \_texture-\/>\mbox{\hyperlink{structtexture_a6c617792e2e0312db7ef3e475ac4b635}{height}} = 1;}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00069}00069   \textcolor{comment}{// generate white texture}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00070}00070   glGenTextures(1, \&\_texture-\/>\mbox{\hyperlink{structtexture_a80d0e2a9d244ce65a29cb87e5db5c695}{id}});}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00071}00071   glBindTexture(GL\_TEXTURE\_2D, \_texture-\/>\mbox{\hyperlink{structtexture_a80d0e2a9d244ce65a29cb87e5db5c695}{id}});}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00072}00072   glTexParameteri( GL\_TEXTURE\_2D, GL\_TEXTURE\_WRAP\_S, GL\_CLAMP\_TO\_EDGE); }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00073}00073   glTexParameteri( GL\_TEXTURE\_2D, GL\_TEXTURE\_WRAP\_T, GL\_CLAMP\_TO\_EDGE); }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00074}00074   glTexParameteri(GL\_TEXTURE\_2D, GL\_TEXTURE\_MIN\_FILTER, GL\_NEAREST);}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00075}00075   glTexParameteri(GL\_TEXTURE\_2D, GL\_TEXTURE\_MAG\_FILTER, GL\_NEAREST);}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00076}00076   \mbox{\hyperlink{config_8h_afaa62991928fb9fb18ff0db62a040aba}{u32}} color = 0xffffffff; \textcolor{comment}{// white color}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00077}00077   glTexImage2D(GL\_TEXTURE\_2D, 0, GL\_RGBA, 1, 1, 0, GL\_RGBA, GL\_UNSIGNED\_BYTE, \&color);}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00078}00078   glBindTexture(GL\_TEXTURE\_2D, 0);}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00080}00080   \textcolor{keywordflow}{return} \_texture;}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00081}00081 \}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00083}\mbox{\hyperlink{texture_8c_aa6ec5f9134f98a38d901418656e43499}{00083}} \textcolor{keywordtype}{void} \mbox{\hyperlink{texture_8c_aa6ec5f9134f98a38d901418656e43499}{texture\_destroy}}(\mbox{\hyperlink{structtexture}{texture}} *\mbox{\hyperlink{structtexture}{texture}}) \{}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00084}00084   glDeleteTextures(1, \&\mbox{\hyperlink{structtexture}{texture}}-\/>\mbox{\hyperlink{structtexture_a80d0e2a9d244ce65a29cb87e5db5c695}{id}});}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00085}00085   free(\mbox{\hyperlink{structtexture}{texture}});}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00086}00086 \}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00088}\mbox{\hyperlink{texture_8c_ad2cb3b0ccaa6894880ef2ac785705f29}{00088}} \textcolor{keywordtype}{void} \mbox{\hyperlink{texture_8c_ad2cb3b0ccaa6894880ef2ac785705f29}{texture\_bind}}(\mbox{\hyperlink{config_8h_afaa62991928fb9fb18ff0db62a040aba}{u32}} unit, \mbox{\hyperlink{structtexture}{texture}} *\mbox{\hyperlink{structtexture}{texture}}) \{}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00089}00089   glActiveTexture(GL\_TEXTURE0 + unit);}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00090}00090   glBindTexture(GL\_TEXTURE\_2D, \mbox{\hyperlink{structtexture}{texture}}-\/>\mbox{\hyperlink{structtexture_a80d0e2a9d244ce65a29cb87e5db5c695}{id}});}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00091}00091 \}}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00093}\mbox{\hyperlink{texture_8c_a18f570cb1aaaaaf21d0a61216a35fdb5}{00093}} \textcolor{keywordtype}{void} \mbox{\hyperlink{texture_8c_a18f570cb1aaaaaf21d0a61216a35fdb5}{texture\_unbind}}() \{}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00094}00094   glBindTexture(GL\_TEXTURE\_2D, 0);}
+\DoxyCodeLine{\Hypertarget{texture_8c_source_l00095}00095 \}}
+
+\end{DoxyCode}

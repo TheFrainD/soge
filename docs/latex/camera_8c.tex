@@ -1,0 +1,162 @@
+\hypertarget{camera_8c}{}\doxysection{src/vally/renderer/camera.c File Reference}
+\label{camera_8c}\index{src/vally/renderer/camera.c@{src/vally/renderer/camera.c}}
+{\ttfamily \#include $<$vally/renderer/camera.\+h$>$}\newline
+{\ttfamily \#include $<$vally/core/event.\+h$>$}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcamera__state}{camera\+\_\+state}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} \mbox{\hyperlink{camera_8c_a0e26ce6a304023f597deb5a35c990c49}{camera\+\_\+init}} ()
+\item 
+mat4s \mbox{\hyperlink{camera_8c_ab016d0896b09876b237b0ba4c31d6ddd}{camera\+\_\+update\+\_\+projection}} (\mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} width, \mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} height)
+\item 
+mat4s \mbox{\hyperlink{camera_8c_ad9f3c915323cb46514ed404d5fa45771}{camera\+\_\+update\+\_\+view}} ()
+\item 
+mat4s \mbox{\hyperlink{camera_8c_afb6d8b1bdf63bb262a12686ec0cd8167}{camera\+\_\+get\+\_\+projection}} ()
+\item 
+mat4s \mbox{\hyperlink{camera_8c_a27cecdd897b79aaa2da03253dc192c8b}{camera\+\_\+get\+\_\+view}} ()
+\item 
+void \mbox{\hyperlink{camera_8c_a17617007205905a5e1dbe750f4101182}{camera\+\_\+translate}} (vec2s translation)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{camera_8c_afb6d8b1bdf63bb262a12686ec0cd8167}\label{camera_8c_afb6d8b1bdf63bb262a12686ec0cd8167}} 
+\index{camera.c@{camera.c}!camera\_get\_projection@{camera\_get\_projection}}
+\index{camera\_get\_projection@{camera\_get\_projection}!camera.c@{camera.c}}
+\doxysubsubsection{\texorpdfstring{camera\_get\_projection()}{camera\_get\_projection()}}
+{\footnotesize\ttfamily mat4s camera\+\_\+get\+\_\+projection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{camera_8c_source_l00045}{45}} of file \mbox{\hyperlink{camera_8c_source}{camera.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00045                               \{}
+\DoxyCodeLine{00046   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00047     \textcolor{keywordflow}{return} GLMS\_MAT4\_ZERO;}
+\DoxyCodeLine{00048   \}}
+\DoxyCodeLine{00049   \textcolor{keywordflow}{return} state.\mbox{\hyperlink{structcamera__state_addff7ad170cbd9d956cc209a3d94b390}{projection}};}
+\DoxyCodeLine{00050 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{camera_8c_a27cecdd897b79aaa2da03253dc192c8b}\label{camera_8c_a27cecdd897b79aaa2da03253dc192c8b}} 
+\index{camera.c@{camera.c}!camera\_get\_view@{camera\_get\_view}}
+\index{camera\_get\_view@{camera\_get\_view}!camera.c@{camera.c}}
+\doxysubsubsection{\texorpdfstring{camera\_get\_view()}{camera\_get\_view()}}
+{\footnotesize\ttfamily mat4s camera\+\_\+get\+\_\+view (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{camera_8c_source_l00052}{52}} of file \mbox{\hyperlink{camera_8c_source}{camera.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052                         \{}
+\DoxyCodeLine{00053   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00054     \textcolor{keywordflow}{return} GLMS\_MAT4\_ZERO;}
+\DoxyCodeLine{00055   \}}
+\DoxyCodeLine{00056   \textcolor{keywordflow}{return} state.\mbox{\hyperlink{structcamera__state_a49624d46173893d377bcab7d3ba44e49}{view}};}
+\DoxyCodeLine{00057 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{camera_8c_a0e26ce6a304023f597deb5a35c990c49}\label{camera_8c_a0e26ce6a304023f597deb5a35c990c49}} 
+\index{camera.c@{camera.c}!camera\_init@{camera\_init}}
+\index{camera\_init@{camera\_init}!camera.c@{camera.c}}
+\doxysubsubsection{\texorpdfstring{camera\_init()}{camera\_init()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} camera\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{camera_8c_source_l00014}{14}} of file \mbox{\hyperlink{camera_8c_source}{camera.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00014                  \{}
+\DoxyCodeLine{00015   \textcolor{keywordflow}{if} (initialized) \{}
+\DoxyCodeLine{00016     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{00017   \}}
+\DoxyCodeLine{00018   state.\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}} = GLMS\_VEC2\_ZERO;}
+\DoxyCodeLine{00019   initialized = \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{00020 }
+\DoxyCodeLine{00021   \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{00022 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{camera_8c_a17617007205905a5e1dbe750f4101182}\label{camera_8c_a17617007205905a5e1dbe750f4101182}} 
+\index{camera.c@{camera.c}!camera\_translate@{camera\_translate}}
+\index{camera\_translate@{camera\_translate}!camera.c@{camera.c}}
+\doxysubsubsection{\texorpdfstring{camera\_translate()}{camera\_translate()}}
+{\footnotesize\ttfamily void camera\+\_\+translate (\begin{DoxyParamCaption}\item[{vec2s}]{translation }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{camera_8c_source_l00059}{59}} of file \mbox{\hyperlink{camera_8c_source}{camera.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00059                                          \{}
+\DoxyCodeLine{00060   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00061     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00062   \}}
+\DoxyCodeLine{00063 }
+\DoxyCodeLine{00064   state.\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}} = glms\_vec2\_add(state.\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}}, translation);}
+\DoxyCodeLine{00065   \mbox{\hyperlink{structevent__context}{event\_context}} context;}
+\DoxyCodeLine{00066   context.\mbox{\hyperlink{structevent__context_a37626a2166126e0253acb56f57b38635}{data}}.\mbox{\hyperlink{structevent__context_aecc1d2cac72d7cf178b96163232840cb}{f32}}[0] = state.\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}}.x;}
+\DoxyCodeLine{00067   context.\mbox{\hyperlink{structevent__context_a37626a2166126e0253acb56f57b38635}{data}}.\mbox{\hyperlink{structevent__context_aecc1d2cac72d7cf178b96163232840cb}{f32}}[1] = state.\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}}.y;}
+\DoxyCodeLine{00068   \mbox{\hyperlink{event_8c_a7131032d2f9fc63fda885be905de017f}{event\_publish}}(\mbox{\hyperlink{event_8h_ab1a5ea1b9d3d15f083a6d01c3ab3c2b7a3599e37cddac3749062b20372bedb8b0}{EVENT\_CODE\_CAMERA\_MOVED}}, \&state, context);}
+\DoxyCodeLine{00069 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{camera_8c_ab016d0896b09876b237b0ba4c31d6ddd}\label{camera_8c_ab016d0896b09876b237b0ba4c31d6ddd}} 
+\index{camera.c@{camera.c}!camera\_update\_projection@{camera\_update\_projection}}
+\index{camera\_update\_projection@{camera\_update\_projection}!camera.c@{camera.c}}
+\doxysubsubsection{\texorpdfstring{camera\_update\_projection()}{camera\_update\_projection()}}
+{\footnotesize\ttfamily mat4s camera\+\_\+update\+\_\+projection (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}}}]{width,  }\item[{\mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}}}]{height }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{camera_8c_source_l00024}{24}} of file \mbox{\hyperlink{camera_8c_source}{camera.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00024                                                       \{}
+\DoxyCodeLine{00025   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00026     \textcolor{keywordflow}{return} GLMS\_MAT4\_ZERO;}
+\DoxyCodeLine{00027   \}}
+\DoxyCodeLine{00028 }
+\DoxyCodeLine{00029   state.\mbox{\hyperlink{structcamera__state_addff7ad170cbd9d956cc209a3d94b390}{projection}} = glms\_ortho(0.0f, (\textcolor{keywordtype}{float})width, (\textcolor{keywordtype}{float})height, 0.0f, 0.0f, 100.0f);}
+\DoxyCodeLine{00030   \textcolor{keywordflow}{return} state.\mbox{\hyperlink{structcamera__state_addff7ad170cbd9d956cc209a3d94b390}{projection}};}
+\DoxyCodeLine{00031 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{camera_8c_ad9f3c915323cb46514ed404d5fa45771}\label{camera_8c_ad9f3c915323cb46514ed404d5fa45771}} 
+\index{camera.c@{camera.c}!camera\_update\_view@{camera\_update\_view}}
+\index{camera\_update\_view@{camera\_update\_view}!camera.c@{camera.c}}
+\doxysubsubsection{\texorpdfstring{camera\_update\_view()}{camera\_update\_view()}}
+{\footnotesize\ttfamily mat4s camera\+\_\+update\+\_\+view (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{camera_8c_source_l00033}{33}} of file \mbox{\hyperlink{camera_8c_source}{camera.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00033                            \{}
+\DoxyCodeLine{00034   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00035     \textcolor{keywordflow}{return} GLMS\_MAT4\_ZERO;}
+\DoxyCodeLine{00036   \}}
+\DoxyCodeLine{00037 }
+\DoxyCodeLine{00038   vec3s front = \{0.0f, 0.0f, -\/1.0f\};}
+\DoxyCodeLine{00039   vec3s up = \{0.0f, 1.0f, 0.0f\};}
+\DoxyCodeLine{00040   state.\mbox{\hyperlink{structcamera__state_a49624d46173893d377bcab7d3ba44e49}{view}} = glms\_lookat((vec3s)\{state.\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}}.x, state.\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}}.y, 20.0f\},}
+\DoxyCodeLine{00041     glms\_vec3\_add(front, (vec3s)\{state.\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}}.x, state.\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}}.y, 0.0f\}), up);}
+\DoxyCodeLine{00042   \textcolor{keywordflow}{return} state.\mbox{\hyperlink{structcamera__state_a49624d46173893d377bcab7d3ba44e49}{view}};}
+\DoxyCodeLine{00043 \}}
+
+\end{DoxyCode}

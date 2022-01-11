@@ -1,0 +1,60 @@
+\hypertarget{resources_8c_source}{}\doxysection{resources.\+c}
+\label{resources_8c_source}\index{src/vally/resources/resources.c@{src/vally/resources/resources.c}}
+\mbox{\hyperlink{resources_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00001}00001 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{resources_8h}{vally/resources/resources.h}}>}}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00003}00003 \textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00005}00005 \textcolor{preprocessor}{\#include <cvec.h>}}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00007}00007 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{logger_8h}{vally/core/logger.h}}>}}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00008}00008 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{resource__types_8h}{vally/resources/resource\_types.h}}>}}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00010}\mbox{\hyperlink{structresources__state}{00010}} \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00011}\mbox{\hyperlink{structresources__state_ab7bd90e7ca8afd01f5c0fa54bcf38dab}{00011}}   cvec \mbox{\hyperlink{structresources__state_ab7bd90e7ca8afd01f5c0fa54bcf38dab}{resources}};}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00012}00012 \} \mbox{\hyperlink{structresources__state}{resources\_state}};}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00014}00014 \textcolor{keyword}{static} \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} initalized = \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00015}00015 \textcolor{keyword}{static} \mbox{\hyperlink{structresources__state}{resources\_state}} state;}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00017}\mbox{\hyperlink{resources_8c_a2bdcbd579f013459bcc7f55b7457613b}{00017}} \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} \mbox{\hyperlink{resources_8c_a2bdcbd579f013459bcc7f55b7457613b}{resources\_init}}() \{}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00018}00018   \textcolor{keywordflow}{if} (initalized) \{}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00019}00019     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00020}00020   \}}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00022}00022   initalized = \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00023}00023   state.\mbox{\hyperlink{structresources__state_ab7bd90e7ca8afd01f5c0fa54bcf38dab}{resources}} = cvec\_create(\mbox{\hyperlink{structresource}{resource}});}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00025}00025   \mbox{\hyperlink{logger_8h_af933c6341b0deeb4ee1a540da61b9536}{VALLY\_TRACE}}(\textcolor{stringliteral}{"{}Resource system initialized"{}});}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00026}00026   \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00027}00027 \}}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00029}\mbox{\hyperlink{resources_8c_a16641af0e8abb4648df5964f32f30adb}{00029}} \textcolor{keywordtype}{void} \mbox{\hyperlink{resources_8c_a16641af0e8abb4648df5964f32f30adb}{resources\_add}}(\textcolor{keywordtype}{void} *data, \mbox{\hyperlink{resource__types_8h_aa85b9c7b73d9d573581d08728fff4faa}{destructor\_fun}} destructor) \{}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00030}00030   \textcolor{keywordflow}{if} (!initalized) \{}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00031}00031     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00032}00032   \}}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00034}00034   \mbox{\hyperlink{structresource}{resource}} res;}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00035}00035   res.\mbox{\hyperlink{structresource_a6d2c86769bb2ec68a0087e5a0175d276}{data}} = data;}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00036}00036   res.\mbox{\hyperlink{structresource_ab54c71e8832a15b6a472b15bcf0bb387}{destructor}} = destructor;}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00037}00037   cvec\_push\_back(state.\mbox{\hyperlink{structresources__state_ab7bd90e7ca8afd01f5c0fa54bcf38dab}{resources}}, res);}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00038}00038 \}}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00040}\mbox{\hyperlink{resources_8c_a6105d50e032c659b7403561b1f108195}{00040}} \textcolor{keywordtype}{void} \mbox{\hyperlink{resources_8c_a6105d50e032c659b7403561b1f108195}{resources\_terminate}}() \{}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00041}00041   \textcolor{keywordflow}{if} (!initalized) \{}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00042}00042     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00043}00043   \} }
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00045}00045   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < cvec\_size(state.\mbox{\hyperlink{structresources__state_ab7bd90e7ca8afd01f5c0fa54bcf38dab}{resources}}); i++) \{}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00046}00046     \mbox{\hyperlink{structresource}{resource}} res = cvec\_at(state.\mbox{\hyperlink{structresources__state_ab7bd90e7ca8afd01f5c0fa54bcf38dab}{resources}}, i, \mbox{\hyperlink{structresource}{resource}});}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00047}00047     res.\mbox{\hyperlink{structresource_ab54c71e8832a15b6a472b15bcf0bb387}{destructor}}(res.\mbox{\hyperlink{structresource_a6d2c86769bb2ec68a0087e5a0175d276}{data}});}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00048}00048   \}}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00050}00050   \mbox{\hyperlink{logger_8h_a787875cab0f42571d60be03d1762c00a}{VALLY\_INFO}}(\textcolor{stringliteral}{"{}Resource system: \%d objects destroyed"{}}, cvec\_size(state.\mbox{\hyperlink{structresources__state_ab7bd90e7ca8afd01f5c0fa54bcf38dab}{resources}}));}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00051}00051   cvec\_destroy(state.\mbox{\hyperlink{structresources__state_ab7bd90e7ca8afd01f5c0fa54bcf38dab}{resources}});}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00053}00053   \mbox{\hyperlink{logger_8h_af933c6341b0deeb4ee1a540da61b9536}{VALLY\_TRACE}}(\textcolor{stringliteral}{"{}Resource system terminated"{}});}
+\DoxyCodeLine{\Hypertarget{resources_8c_source_l00054}00054 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,304 @@
+\hypertarget{renderer_8c}{}\doxysection{src/vally/renderer/renderer.c File Reference}
+\label{renderer_8c}\index{src/vally/renderer/renderer.c@{src/vally/renderer/renderer.c}}
+{\ttfamily \#include $<$vally/renderer/renderer.\+h$>$}\newline
+{\ttfamily \#include $<$glad/glad.\+h$>$}\newline
+{\ttfamily \#include $<$cvec.\+h$>$}\newline
+{\ttfamily \#include $<$vally/core/event.\+h$>$}\newline
+{\ttfamily \#include $<$vally/core/logger.\+h$>$}\newline
+{\ttfamily \#include $<$vally/core/window.\+h$>$}\newline
+{\ttfamily \#include $<$vally/renderer/texture.\+h$>$}\newline
+{\ttfamily \#include $<$vally/renderer/shader.\+h$>$}\newline
+{\ttfamily \#include $<$vally/renderer/camera.\+h$>$}\newline
+{\ttfamily \#include $<$vally/renderer/buffer.\+h$>$}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structrenderer__state}{renderer\+\_\+state}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} \mbox{\hyperlink{renderer_8c_a4ae2b9fe0b10687f04b90a3d8b2556bd}{renderer\+\_\+init}} ()
+\item 
+void \mbox{\hyperlink{renderer_8c_aa3cb3b8ee10c8cee851289641a7efe1b}{renderer\+\_\+begin\+\_\+batch}} ()
+\item 
+void \mbox{\hyperlink{renderer_8c_a90ce426230127f65390165eb21e98d67}{renderer\+\_\+end\+\_\+batch}} ()
+\item 
+void \mbox{\hyperlink{renderer_8c_a209ddec86b275bb211896bcf1e7cfafa}{renderer\+\_\+flush}} ()
+\item 
+void \mbox{\hyperlink{renderer_8c_aa1882befd9106950e8c2913cc66b093a}{renderer\+\_\+terminate}} ()
+\item 
+void \mbox{\hyperlink{renderer_8c_a96a061c5050e42b8d179249b2e8a8d3d}{renderer\+\_\+clear\+\_\+screen}} ()
+\item 
+void \mbox{\hyperlink{renderer_8c_ae6e66fdff388a00145c99c774abacd00}{renderer\+\_\+draw}} (\mbox{\hyperlink{structspriterenderer}{spriterenderer}} $\ast$sprite)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{renderer_8c_aa3cb3b8ee10c8cee851289641a7efe1b}\label{renderer_8c_aa3cb3b8ee10c8cee851289641a7efe1b}} 
+\index{renderer.c@{renderer.c}!renderer\_begin\_batch@{renderer\_begin\_batch}}
+\index{renderer\_begin\_batch@{renderer\_begin\_batch}!renderer.c@{renderer.c}}
+\doxysubsubsection{\texorpdfstring{renderer\_begin\_batch()}{renderer\_begin\_batch()}}
+{\footnotesize\ttfamily void renderer\+\_\+begin\+\_\+batch (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8c_source_l00076}{76}} of file \mbox{\hyperlink{renderer_8c_source}{renderer.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00076                             \{}
+\DoxyCodeLine{00077   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00078     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00079   \}}
+\DoxyCodeLine{00080 }
+\DoxyCodeLine{00081   state.\mbox{\hyperlink{structrenderer__state_a964796b33fd1d5cd4078855b943db680}{vertices}} = cvec\_create(\mbox{\hyperlink{structvertex}{vertex}});}
+\DoxyCodeLine{00082 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{renderer_8c_a96a061c5050e42b8d179249b2e8a8d3d}\label{renderer_8c_a96a061c5050e42b8d179249b2e8a8d3d}} 
+\index{renderer.c@{renderer.c}!renderer\_clear\_screen@{renderer\_clear\_screen}}
+\index{renderer\_clear\_screen@{renderer\_clear\_screen}!renderer.c@{renderer.c}}
+\doxysubsubsection{\texorpdfstring{renderer\_clear\_screen()}{renderer\_clear\_screen()}}
+{\footnotesize\ttfamily void renderer\+\_\+clear\+\_\+screen (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8c_source_l00122}{122}} of file \mbox{\hyperlink{renderer_8c_source}{renderer.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00122                              \{}
+\DoxyCodeLine{00123   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00124     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00125   \}}
+\DoxyCodeLine{00126 }
+\DoxyCodeLine{00127   \textcolor{comment}{// clear screen}}
+\DoxyCodeLine{00128   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);}
+\DoxyCodeLine{00129   glClear(GL\_COLOR\_BUFFER\_BIT | GL\_DEPTH\_BUFFER\_BIT);}
+\DoxyCodeLine{00130 }
+\DoxyCodeLine{00131   \textcolor{comment}{// enable depth test}}
+\DoxyCodeLine{00132   glEnable(GL\_DEPTH\_TEST);}
+\DoxyCodeLine{00133   glDepthFunc(GL\_ALWAYS);}
+\DoxyCodeLine{00134 }
+\DoxyCodeLine{00135   \textcolor{comment}{// enable blending}}
+\DoxyCodeLine{00136   glEnable(GL\_BLEND);}
+\DoxyCodeLine{00137   glBlendFunc(GL\_SRC\_ALPHA, GL\_ONE\_MINUS\_SRC\_ALPHA);}
+\DoxyCodeLine{00138 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{renderer_8c_ae6e66fdff388a00145c99c774abacd00}\label{renderer_8c_ae6e66fdff388a00145c99c774abacd00}} 
+\index{renderer.c@{renderer.c}!renderer\_draw@{renderer\_draw}}
+\index{renderer\_draw@{renderer\_draw}!renderer.c@{renderer.c}}
+\doxysubsubsection{\texorpdfstring{renderer\_draw()}{renderer\_draw()}}
+{\footnotesize\ttfamily void renderer\+\_\+draw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structspriterenderer}{spriterenderer}} $\ast$}]{sprite }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8c_source_l00140}{140}} of file \mbox{\hyperlink{renderer_8c_source}{renderer.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00140                                            \{}
+\DoxyCodeLine{00141   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00142     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00143   \}}
+\DoxyCodeLine{00144 }
+\DoxyCodeLine{00145   \textcolor{keywordflow}{if} (state.\mbox{\hyperlink{structrenderer__state_a6d1da0e3e0b96bceea69cb3ac0d99673}{index\_count}} >= \mbox{\hyperlink{renderer_8h_a01df4bd065557a795f6bccb267484ec3}{RENDERER\_MAX\_INDEX}} || state.\mbox{\hyperlink{structrenderer__state_a86920bd2beb4c2214165e7f572ca236d}{tex\_slot}} > \mbox{\hyperlink{renderer_8h_ae75908ca75c33867e70fcbb7f01fc1a9}{RENDERER\_MAX\_TEXTURES}} -\/ 1) \{}
+\DoxyCodeLine{00146     \mbox{\hyperlink{renderer_8c_a90ce426230127f65390165eb21e98d67}{renderer\_end\_batch}}();}
+\DoxyCodeLine{00147     \mbox{\hyperlink{renderer_8c_a209ddec86b275bb211896bcf1e7cfafa}{renderer\_flush}}();}
+\DoxyCodeLine{00148     \mbox{\hyperlink{renderer_8c_aa3cb3b8ee10c8cee851289641a7efe1b}{renderer\_begin\_batch}}();}
+\DoxyCodeLine{00149   \}}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151   \mbox{\hyperlink{structtexture}{texture}} *tex = sprite-\/>\mbox{\hyperlink{structspriterenderer_aaea0426bf2e05815ff8715ffb93a3d5b}{texture}};}
+\DoxyCodeLine{00152   \mbox{\hyperlink{structtransform}{transform}} *\mbox{\hyperlink{structtransform}{transform}} = \mbox{\hyperlink{transform_8c_a67eb19cd875c00510841a16301c0abbb}{ecs\_transform\_get}}(sprite-\/>\mbox{\hyperlink{structspriterenderer_a0593fa06c4d365d80c8202c32acc240d}{entity}});}
+\DoxyCodeLine{00153   vec4s color = GLMS\_VEC4\_ONE;}
+\DoxyCodeLine{00154 }
+\DoxyCodeLine{00155   \mbox{\hyperlink{config_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} tex\_id = 0.0f;}
+\DoxyCodeLine{00156   \textcolor{keywordflow}{for} (\mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} i = 1; i < state.\mbox{\hyperlink{structrenderer__state_a86920bd2beb4c2214165e7f572ca236d}{tex\_slot}}; i++) \{}
+\DoxyCodeLine{00157     \textcolor{keywordflow}{if} (state.\mbox{\hyperlink{structrenderer__state_aa2f8467eb878f606284a9fbe15c08d38}{textures}}[i] == tex) \{}
+\DoxyCodeLine{00158       tex\_id = (float)i;}
+\DoxyCodeLine{00159       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00160     \}}
+\DoxyCodeLine{00161   \}}
+\DoxyCodeLine{00162 }
+\DoxyCodeLine{00163   \textcolor{keywordflow}{if} (tex\_id == 0.0f) \{}
+\DoxyCodeLine{00164     tex\_id = (float)state.\mbox{\hyperlink{structrenderer__state_a86920bd2beb4c2214165e7f572ca236d}{tex\_slot}};}
+\DoxyCodeLine{00165     state.\mbox{\hyperlink{structrenderer__state_aa2f8467eb878f606284a9fbe15c08d38}{textures}}[state.\mbox{\hyperlink{structrenderer__state_a86920bd2beb4c2214165e7f572ca236d}{tex\_slot}}] = tex;}
+\DoxyCodeLine{00166     state.\mbox{\hyperlink{structrenderer__state_a86920bd2beb4c2214165e7f572ca236d}{tex\_slot}}++;}
+\DoxyCodeLine{00167   \}}
+\DoxyCodeLine{00168 }
+\DoxyCodeLine{00169   \mbox{\hyperlink{structvertex}{vertex}} ver;}
+\DoxyCodeLine{00170   ver.\mbox{\hyperlink{structvertex_a204f64b02daa2c49cfeb036192e6c0f4}{pos}}[0] = \mbox{\hyperlink{structtransform}{transform}}-\/>\mbox{\hyperlink{structtransform_aca5f2f1120ff401216dc0ea843860e59}{position}}.\mbox{\hyperlink{structvector2f_a20dc1efc39913c2f1dbdad416acc8719}{x}};}
+\DoxyCodeLine{00171   ver.\mbox{\hyperlink{structvertex_a204f64b02daa2c49cfeb036192e6c0f4}{pos}}[1] = \mbox{\hyperlink{structtransform}{transform}}-\/>\mbox{\hyperlink{structtransform_aca5f2f1120ff401216dc0ea843860e59}{position}}.\mbox{\hyperlink{structvector2f_a54628be95c6efcc45c1e1c49a83dc0df}{y}};}
+\DoxyCodeLine{00172   ver.\mbox{\hyperlink{structvertex_abbcddcee08587af413cb798fbfea2eb5}{color}}[0] = color.x;}
+\DoxyCodeLine{00173   ver.\mbox{\hyperlink{structvertex_abbcddcee08587af413cb798fbfea2eb5}{color}}[1] = color.y;}
+\DoxyCodeLine{00174   ver.\mbox{\hyperlink{structvertex_abbcddcee08587af413cb798fbfea2eb5}{color}}[2] = color.z;}
+\DoxyCodeLine{00175   ver.\mbox{\hyperlink{structvertex_abbcddcee08587af413cb798fbfea2eb5}{color}}[3] = color.w;}
+\DoxyCodeLine{00176   ver.\mbox{\hyperlink{structvertex_a3ff9ddea106ee82f2dc37d8acd8faff9}{uv}}[0] = sprite-\/>\mbox{\hyperlink{structspriterenderer_af97cc2ae8d89f35067ee0689b6405ed8}{uvs}}.\mbox{\hyperlink{structuvs_acb1974c4327344146f48827261f0ac71}{uv}}[0].\mbox{\hyperlink{structvector2f_a20dc1efc39913c2f1dbdad416acc8719}{x}};}
+\DoxyCodeLine{00177   ver.\mbox{\hyperlink{structvertex_a3ff9ddea106ee82f2dc37d8acd8faff9}{uv}}[1] = sprite-\/>\mbox{\hyperlink{structspriterenderer_af97cc2ae8d89f35067ee0689b6405ed8}{uvs}}.\mbox{\hyperlink{structuvs_acb1974c4327344146f48827261f0ac71}{uv}}[0].\mbox{\hyperlink{structvector2f_a54628be95c6efcc45c1e1c49a83dc0df}{y}};}
+\DoxyCodeLine{00178   ver.\mbox{\hyperlink{structvertex_a4e84fe2b12b6b69bb72d6d0e76385e79}{tex\_id}} = tex\_id;}
+\DoxyCodeLine{00179   cvec\_push\_back(state.\mbox{\hyperlink{structrenderer__state_a964796b33fd1d5cd4078855b943db680}{vertices}}, ver);}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00181   ver.\mbox{\hyperlink{structvertex_a204f64b02daa2c49cfeb036192e6c0f4}{pos}}[0] = \mbox{\hyperlink{structtransform}{transform}}-\/>\mbox{\hyperlink{structtransform_aca5f2f1120ff401216dc0ea843860e59}{position}}.\mbox{\hyperlink{structvector2f_a20dc1efc39913c2f1dbdad416acc8719}{x}} + (sprite-\/>\mbox{\hyperlink{structspriterenderer_af311dd14ea5c2f52bf7ff15ec00c3c7f}{size}}.\mbox{\hyperlink{structvector2f_a20dc1efc39913c2f1dbdad416acc8719}{x}} * \mbox{\hyperlink{structtransform}{transform}}-\/>\mbox{\hyperlink{structtransform_a90cdde0e5c0820ce7dc0d1cd6e633250}{scale}}.\mbox{\hyperlink{structvector2f_a20dc1efc39913c2f1dbdad416acc8719}{x}});}
+\DoxyCodeLine{00182   ver.\mbox{\hyperlink{structvertex_a204f64b02daa2c49cfeb036192e6c0f4}{pos}}[1] = \mbox{\hyperlink{structtransform}{transform}}-\/>\mbox{\hyperlink{structtransform_aca5f2f1120ff401216dc0ea843860e59}{position}}.\mbox{\hyperlink{structvector2f_a54628be95c6efcc45c1e1c49a83dc0df}{y}};}
+\DoxyCodeLine{00183   ver.\mbox{\hyperlink{structvertex_abbcddcee08587af413cb798fbfea2eb5}{color}}[0] = color.x;}
+\DoxyCodeLine{00184   ver.\mbox{\hyperlink{structvertex_abbcddcee08587af413cb798fbfea2eb5}{color}}[1] = color.y;}
+\DoxyCodeLine{00185   ver.\mbox{\hyperlink{structvertex_abbcddcee08587af413cb798fbfea2eb5}{color}}[2] = color.z;}
+\DoxyCodeLine{00186   ver.\mbox{\hyperlink{structvertex_abbcddcee08587af413cb798fbfea2eb5}{color}}[3] = color.w;}
+\DoxyCodeLine{00187   ver.\mbox{\hyperlink{structvertex_a3ff9ddea106ee82f2dc37d8acd8faff9}{uv}}[0] = sprite-\/>\mbox{\hyperlink{structspriterenderer_af97cc2ae8d89f35067ee0689b6405ed8}{uvs}}.\mbox{\hyperlink{structuvs_acb1974c4327344146f48827261f0ac71}{uv}}[1].\mbox{\hyperlink{structvector2f_a20dc1efc39913c2f1dbdad416acc8719}{x}};}
+\DoxyCodeLine{00188   ver.\mbox{\hyperlink{structvertex_a3ff9ddea106ee82f2dc37d8acd8faff9}{uv}}[1] = sprite-\/>\mbox{\hyperlink{structspriterenderer_af97cc2ae8d89f35067ee0689b6405ed8}{uvs}}.\mbox{\hyperlink{structuvs_acb1974c4327344146f48827261f0ac71}{uv}}[1].\mbox{\hyperlink{structvector2f_a54628be95c6efcc45c1e1c49a83dc0df}{y}};}
+\DoxyCodeLine{00189   ver.\mbox{\hyperlink{structvertex_a4e84fe2b12b6b69bb72d6d0e76385e79}{tex\_id}} = tex\_id;}
+\DoxyCodeLine{00190   cvec\_push\_back(state.\mbox{\hyperlink{structrenderer__state_a964796b33fd1d5cd4078855b943db680}{vertices}}, ver);}
+\DoxyCodeLine{00191 }
+\DoxyCodeLine{00192   ver.\mbox{\hyperlink{structvertex_a204f64b02daa2c49cfeb036192e6c0f4}{pos}}[0] = \mbox{\hyperlink{structtransform}{transform}}-\/>\mbox{\hyperlink{structtransform_aca5f2f1120ff401216dc0ea843860e59}{position}}.\mbox{\hyperlink{structvector2f_a20dc1efc39913c2f1dbdad416acc8719}{x}} + (sprite-\/>\mbox{\hyperlink{structspriterenderer_af311dd14ea5c2f52bf7ff15ec00c3c7f}{size}}.\mbox{\hyperlink{structvector2f_a20dc1efc39913c2f1dbdad416acc8719}{x}} * \mbox{\hyperlink{structtransform}{transform}}-\/>\mbox{\hyperlink{structtransform_a90cdde0e5c0820ce7dc0d1cd6e633250}{scale}}.\mbox{\hyperlink{structvector2f_a20dc1efc39913c2f1dbdad416acc8719}{x}});}
+\DoxyCodeLine{00193   ver.\mbox{\hyperlink{structvertex_a204f64b02daa2c49cfeb036192e6c0f4}{pos}}[1] = \mbox{\hyperlink{structtransform}{transform}}-\/>\mbox{\hyperlink{structtransform_aca5f2f1120ff401216dc0ea843860e59}{position}}.\mbox{\hyperlink{structvector2f_a54628be95c6efcc45c1e1c49a83dc0df}{y}} + (sprite-\/>\mbox{\hyperlink{structspriterenderer_af311dd14ea5c2f52bf7ff15ec00c3c7f}{size}}.\mbox{\hyperlink{structvector2f_a54628be95c6efcc45c1e1c49a83dc0df}{y}} * \mbox{\hyperlink{structtransform}{transform}}-\/>\mbox{\hyperlink{structtransform_a90cdde0e5c0820ce7dc0d1cd6e633250}{scale}}.\mbox{\hyperlink{structvector2f_a54628be95c6efcc45c1e1c49a83dc0df}{y}});}
+\DoxyCodeLine{00194   ver.\mbox{\hyperlink{structvertex_abbcddcee08587af413cb798fbfea2eb5}{color}}[0] = color.x;}
+\DoxyCodeLine{00195   ver.\mbox{\hyperlink{structvertex_abbcddcee08587af413cb798fbfea2eb5}{color}}[1] = color.y;}
+\DoxyCodeLine{00196   ver.\mbox{\hyperlink{structvertex_abbcddcee08587af413cb798fbfea2eb5}{color}}[2] = color.z;}
+\DoxyCodeLine{00197   ver.\mbox{\hyperlink{structvertex_abbcddcee08587af413cb798fbfea2eb5}{color}}[3] = color.w;}
+\DoxyCodeLine{00198   ver.\mbox{\hyperlink{structvertex_a3ff9ddea106ee82f2dc37d8acd8faff9}{uv}}[0] = sprite-\/>\mbox{\hyperlink{structspriterenderer_af97cc2ae8d89f35067ee0689b6405ed8}{uvs}}.\mbox{\hyperlink{structuvs_acb1974c4327344146f48827261f0ac71}{uv}}[2].\mbox{\hyperlink{structvector2f_a20dc1efc39913c2f1dbdad416acc8719}{x}};}
+\DoxyCodeLine{00199   ver.\mbox{\hyperlink{structvertex_a3ff9ddea106ee82f2dc37d8acd8faff9}{uv}}[1] = sprite-\/>\mbox{\hyperlink{structspriterenderer_af97cc2ae8d89f35067ee0689b6405ed8}{uvs}}.\mbox{\hyperlink{structuvs_acb1974c4327344146f48827261f0ac71}{uv}}[2].\mbox{\hyperlink{structvector2f_a54628be95c6efcc45c1e1c49a83dc0df}{y}};}
+\DoxyCodeLine{00200   ver.\mbox{\hyperlink{structvertex_a4e84fe2b12b6b69bb72d6d0e76385e79}{tex\_id}} = tex\_id;}
+\DoxyCodeLine{00201   cvec\_push\_back(state.\mbox{\hyperlink{structrenderer__state_a964796b33fd1d5cd4078855b943db680}{vertices}}, ver);}
+\DoxyCodeLine{00202 }
+\DoxyCodeLine{00203   ver.\mbox{\hyperlink{structvertex_a204f64b02daa2c49cfeb036192e6c0f4}{pos}}[0] = \mbox{\hyperlink{structtransform}{transform}}-\/>\mbox{\hyperlink{structtransform_aca5f2f1120ff401216dc0ea843860e59}{position}}.\mbox{\hyperlink{structvector2f_a20dc1efc39913c2f1dbdad416acc8719}{x}};}
+\DoxyCodeLine{00204   ver.\mbox{\hyperlink{structvertex_a204f64b02daa2c49cfeb036192e6c0f4}{pos}}[1] = \mbox{\hyperlink{structtransform}{transform}}-\/>\mbox{\hyperlink{structtransform_aca5f2f1120ff401216dc0ea843860e59}{position}}.\mbox{\hyperlink{structvector2f_a54628be95c6efcc45c1e1c49a83dc0df}{y}} + (sprite-\/>\mbox{\hyperlink{structspriterenderer_af311dd14ea5c2f52bf7ff15ec00c3c7f}{size}}.\mbox{\hyperlink{structvector2f_a54628be95c6efcc45c1e1c49a83dc0df}{y}} * \mbox{\hyperlink{structtransform}{transform}}-\/>\mbox{\hyperlink{structtransform_a90cdde0e5c0820ce7dc0d1cd6e633250}{scale}}.\mbox{\hyperlink{structvector2f_a54628be95c6efcc45c1e1c49a83dc0df}{y}});}
+\DoxyCodeLine{00205   ver.\mbox{\hyperlink{structvertex_abbcddcee08587af413cb798fbfea2eb5}{color}}[0] = color.x;}
+\DoxyCodeLine{00206   ver.\mbox{\hyperlink{structvertex_abbcddcee08587af413cb798fbfea2eb5}{color}}[1] = color.y;}
+\DoxyCodeLine{00207   ver.\mbox{\hyperlink{structvertex_abbcddcee08587af413cb798fbfea2eb5}{color}}[2] = color.z;}
+\DoxyCodeLine{00208   ver.\mbox{\hyperlink{structvertex_abbcddcee08587af413cb798fbfea2eb5}{color}}[3] = color.w;}
+\DoxyCodeLine{00209   ver.\mbox{\hyperlink{structvertex_a3ff9ddea106ee82f2dc37d8acd8faff9}{uv}}[0] = sprite-\/>\mbox{\hyperlink{structspriterenderer_af97cc2ae8d89f35067ee0689b6405ed8}{uvs}}.\mbox{\hyperlink{structuvs_acb1974c4327344146f48827261f0ac71}{uv}}[3].\mbox{\hyperlink{structvector2f_a20dc1efc39913c2f1dbdad416acc8719}{x}};}
+\DoxyCodeLine{00210   ver.\mbox{\hyperlink{structvertex_a3ff9ddea106ee82f2dc37d8acd8faff9}{uv}}[1] = sprite-\/>\mbox{\hyperlink{structspriterenderer_af97cc2ae8d89f35067ee0689b6405ed8}{uvs}}.\mbox{\hyperlink{structuvs_acb1974c4327344146f48827261f0ac71}{uv}}[3].\mbox{\hyperlink{structvector2f_a54628be95c6efcc45c1e1c49a83dc0df}{y}};}
+\DoxyCodeLine{00211   ver.\mbox{\hyperlink{structvertex_a4e84fe2b12b6b69bb72d6d0e76385e79}{tex\_id}} = tex\_id;}
+\DoxyCodeLine{00212   cvec\_push\_back(state.\mbox{\hyperlink{structrenderer__state_a964796b33fd1d5cd4078855b943db680}{vertices}}, ver);}
+\DoxyCodeLine{00213 }
+\DoxyCodeLine{00214   state.\mbox{\hyperlink{structrenderer__state_a6d1da0e3e0b96bceea69cb3ac0d99673}{index\_count}} += 6;}
+\DoxyCodeLine{00215 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{renderer_8c_a90ce426230127f65390165eb21e98d67}\label{renderer_8c_a90ce426230127f65390165eb21e98d67}} 
+\index{renderer.c@{renderer.c}!renderer\_end\_batch@{renderer\_end\_batch}}
+\index{renderer\_end\_batch@{renderer\_end\_batch}!renderer.c@{renderer.c}}
+\doxysubsubsection{\texorpdfstring{renderer\_end\_batch()}{renderer\_end\_batch()}}
+{\footnotesize\ttfamily void renderer\+\_\+end\+\_\+batch (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8c_source_l00084}{84}} of file \mbox{\hyperlink{renderer_8c_source}{renderer.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00084                           \{}
+\DoxyCodeLine{00085   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00086     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00087   \}}
+\DoxyCodeLine{00088 }
+\DoxyCodeLine{00089   \mbox{\hyperlink{buffer_8c_a1167efc273616c5dc7541d68a5488ed4}{buffer\_set\_data}}(state.\mbox{\hyperlink{structrenderer__state_a935ee54670aeda6e77a6944e3789c2df}{buffer\_}}, cvec\_size(state.\mbox{\hyperlink{structrenderer__state_a964796b33fd1d5cd4078855b943db680}{vertices}}) * \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structvertex}{vertex}}), cvec\_raw(state.\mbox{\hyperlink{structrenderer__state_a964796b33fd1d5cd4078855b943db680}{vertices}}, \mbox{\hyperlink{structvertex}{vertex}}));}
+\DoxyCodeLine{00090 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{renderer_8c_a209ddec86b275bb211896bcf1e7cfafa}\label{renderer_8c_a209ddec86b275bb211896bcf1e7cfafa}} 
+\index{renderer.c@{renderer.c}!renderer\_flush@{renderer\_flush}}
+\index{renderer\_flush@{renderer\_flush}!renderer.c@{renderer.c}}
+\doxysubsubsection{\texorpdfstring{renderer\_flush()}{renderer\_flush()}}
+{\footnotesize\ttfamily void renderer\+\_\+flush (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8c_source_l00092}{92}} of file \mbox{\hyperlink{renderer_8c_source}{renderer.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00092                       \{}
+\DoxyCodeLine{00093   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00094     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00095   \}}
+\DoxyCodeLine{00096 }
+\DoxyCodeLine{00097   \textcolor{keywordflow}{for} (\mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} i = 0; i < state.\mbox{\hyperlink{structrenderer__state_a86920bd2beb4c2214165e7f572ca236d}{tex\_slot}}; i++) \{}
+\DoxyCodeLine{00098     \mbox{\hyperlink{texture_8c_ad2cb3b0ccaa6894880ef2ac785705f29}{texture\_bind}}(i, state.\mbox{\hyperlink{structrenderer__state_aa2f8467eb878f606284a9fbe15c08d38}{textures}}[i]);}
+\DoxyCodeLine{00099   \}}
+\DoxyCodeLine{00100 }
+\DoxyCodeLine{00101   \mbox{\hyperlink{shader_8c_a3ffc8ae5f949380bf9972469b1f4de21}{shader\_attach}}(\&state.\mbox{\hyperlink{structrenderer__state_ad700bcf5404901c1b330eae9da10e14c}{shader\_}});}
+\DoxyCodeLine{00102   \mbox{\hyperlink{buffer_8c_a271c0cbf852a1bf93af8d27b78bc2d5c}{buffer\_bind}}(state.\mbox{\hyperlink{structrenderer__state_a935ee54670aeda6e77a6944e3789c2df}{buffer\_}});}
+\DoxyCodeLine{00103 }
+\DoxyCodeLine{00104   glDrawElements(GL\_TRIANGLES, state.\mbox{\hyperlink{structrenderer__state_a6d1da0e3e0b96bceea69cb3ac0d99673}{index\_count}}, GL\_UNSIGNED\_INT, \mbox{\hyperlink{config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{00105 }
+\DoxyCodeLine{00106   state.\mbox{\hyperlink{structrenderer__state_a6d1da0e3e0b96bceea69cb3ac0d99673}{index\_count}} = 0;}
+\DoxyCodeLine{00107   state.\mbox{\hyperlink{structrenderer__state_a86920bd2beb4c2214165e7f572ca236d}{tex\_slot}} = 1;}
+\DoxyCodeLine{00108 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{renderer_8c_a4ae2b9fe0b10687f04b90a3d8b2556bd}\label{renderer_8c_a4ae2b9fe0b10687f04b90a3d8b2556bd}} 
+\index{renderer.c@{renderer.c}!renderer\_init@{renderer\_init}}
+\index{renderer\_init@{renderer\_init}!renderer.c@{renderer.c}}
+\doxysubsubsection{\texorpdfstring{renderer\_init()}{renderer\_init()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} renderer\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8c_source_l00041}{41}} of file \mbox{\hyperlink{renderer_8c_source}{renderer.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00041                    \{}
+\DoxyCodeLine{00042   \textcolor{keywordflow}{if} (initialized) \{}
+\DoxyCodeLine{00043     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{00044   \}}
+\DoxyCodeLine{00045 }
+\DoxyCodeLine{00046   state.\mbox{\hyperlink{structrenderer__state_a964796b33fd1d5cd4078855b943db680}{vertices}} = cvec\_create(\mbox{\hyperlink{structvertex}{vertex}});}
+\DoxyCodeLine{00047 }
+\DoxyCodeLine{00048   state.\mbox{\hyperlink{structrenderer__state_ad700bcf5404901c1b330eae9da10e14c}{shader\_}} = \mbox{\hyperlink{shader_8c_ae1fba54dbd47f6e955d8bdd481a4d993}{shader\_create}}(\textcolor{stringliteral}{"{}../assets/shaders/vertex.glsl"{}}, \textcolor{stringliteral}{"{}../assets/shaders/fragment.glsl"{}});}
+\DoxyCodeLine{00049   state.\mbox{\hyperlink{structrenderer__state_a935ee54670aeda6e77a6944e3789c2df}{buffer\_}} = \mbox{\hyperlink{buffer_8c_a4908d6a875c8f88eaee75cdc8dc25a06}{buffer\_create}}();}
+\DoxyCodeLine{00050 }
+\DoxyCodeLine{00051   \textcolor{keywordflow}{for} (\mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} i = 0; i < \mbox{\hyperlink{renderer_8h_ae75908ca75c33867e70fcbb7f01fc1a9}{RENDERER\_MAX\_TEXTURES}}; i++) \{}
+\DoxyCodeLine{00052     state.\mbox{\hyperlink{structrenderer__state_a4bbaaca9df08d684eba26bc8a1bae25e}{sampler}}[i] = i;}
+\DoxyCodeLine{00053   \}}
+\DoxyCodeLine{00054 }
+\DoxyCodeLine{00055   state.\mbox{\hyperlink{structrenderer__state_a520b0b119222f03db6939f267b336b35}{tex\_white}} = \mbox{\hyperlink{texture_8c_a5626ff0130bef85d611f4b9da0915bac}{texture\_white\_create}}();}
+\DoxyCodeLine{00056   state.\mbox{\hyperlink{structrenderer__state_aa2f8467eb878f606284a9fbe15c08d38}{textures}}[0] = state.\mbox{\hyperlink{structrenderer__state_a520b0b119222f03db6939f267b336b35}{tex\_white}};}
+\DoxyCodeLine{00057 }
+\DoxyCodeLine{00058   state.\mbox{\hyperlink{structrenderer__state_a86920bd2beb4c2214165e7f572ca236d}{tex\_slot}} = 1;}
+\DoxyCodeLine{00059   state.\mbox{\hyperlink{structrenderer__state_a6d1da0e3e0b96bceea69cb3ac0d99673}{index\_count}} = 0;}
+\DoxyCodeLine{00060 }
+\DoxyCodeLine{00061   \mbox{\hyperlink{camera_8c_a0e26ce6a304023f597deb5a35c990c49}{camera\_init}}();}
+\DoxyCodeLine{00062 }
+\DoxyCodeLine{00063   \mbox{\hyperlink{shader_8c_ac5fb5545ce898dd4882bc315bd8ef7f2}{shader\_send\_int\_array}}(\&state.\mbox{\hyperlink{structrenderer__state_ad700bcf5404901c1b330eae9da10e14c}{shader\_}}, \textcolor{stringliteral}{"{}u\_image"{}}, \mbox{\hyperlink{renderer_8h_ae75908ca75c33867e70fcbb7f01fc1a9}{RENDERER\_MAX\_TEXTURES}}, state.\mbox{\hyperlink{structrenderer__state_a4bbaaca9df08d684eba26bc8a1bae25e}{sampler}});}
+\DoxyCodeLine{00064   \mbox{\hyperlink{shader_8c_a4b48272a73624a09c1c8f990f8243ce5}{shader\_send\_mat4}}(\&state.\mbox{\hyperlink{structrenderer__state_ad700bcf5404901c1b330eae9da10e14c}{shader\_}}, \textcolor{stringliteral}{"{}u\_proj"{}}, \mbox{\hyperlink{camera_8c_ab016d0896b09876b237b0ba4c31d6ddd}{camera\_update\_projection}}(\mbox{\hyperlink{window_8c_a9a21878f1f3853f872975886cfad042b}{window\_get\_width}}(), \mbox{\hyperlink{window_8c_ae62e808d1beb9de3228ada76016843a4}{window\_get\_height}}()));}
+\DoxyCodeLine{00065   \mbox{\hyperlink{shader_8c_a4b48272a73624a09c1c8f990f8243ce5}{shader\_send\_mat4}}(\&state.\mbox{\hyperlink{structrenderer__state_ad700bcf5404901c1b330eae9da10e14c}{shader\_}}, \textcolor{stringliteral}{"{}u\_view"{}}, \mbox{\hyperlink{camera_8c_ad9f3c915323cb46514ed404d5fa45771}{camera\_update\_view}}());}
+\DoxyCodeLine{00066 }
+\DoxyCodeLine{00067   \mbox{\hyperlink{event_8c_aaa4dcb88a77bd7acfae9c3c0589da891}{event\_subscribe}}(\mbox{\hyperlink{event_8h_ab1a5ea1b9d3d15f083a6d01c3ab3c2b7a3599e37cddac3749062b20372bedb8b0}{EVENT\_CODE\_CAMERA\_MOVED}}, \&state, renderer\_update\_view);}
+\DoxyCodeLine{00068   \mbox{\hyperlink{event_8c_aaa4dcb88a77bd7acfae9c3c0589da891}{event\_subscribe}}(\mbox{\hyperlink{event_8h_ab1a5ea1b9d3d15f083a6d01c3ab3c2b7a6122b167e91f9b3e96223b9458a02ad2}{EVENT\_CODE\_WINDOW\_RESIZED}}, \&state, renderer\_update\_projection);}
+\DoxyCodeLine{00069 }
+\DoxyCodeLine{00070   initialized = \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{00071   \mbox{\hyperlink{logger_8h_af933c6341b0deeb4ee1a540da61b9536}{VALLY\_TRACE}}(\textcolor{stringliteral}{"{}Renderer system initialized"{}});}
+\DoxyCodeLine{00072 }
+\DoxyCodeLine{00073   \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{00074 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{renderer_8c_aa1882befd9106950e8c2913cc66b093a}\label{renderer_8c_aa1882befd9106950e8c2913cc66b093a}} 
+\index{renderer.c@{renderer.c}!renderer\_terminate@{renderer\_terminate}}
+\index{renderer\_terminate@{renderer\_terminate}!renderer.c@{renderer.c}}
+\doxysubsubsection{\texorpdfstring{renderer\_terminate()}{renderer\_terminate()}}
+{\footnotesize\ttfamily void renderer\+\_\+terminate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{renderer_8c_source_l00110}{110}} of file \mbox{\hyperlink{renderer_8c_source}{renderer.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00110                           \{}
+\DoxyCodeLine{00111   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00112     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00113   \}}
+\DoxyCodeLine{00114 }
+\DoxyCodeLine{00115   cvec\_destroy(state.\mbox{\hyperlink{structrenderer__state_a964796b33fd1d5cd4078855b943db680}{vertices}});}
+\DoxyCodeLine{00116 }
+\DoxyCodeLine{00117   initialized = \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{00118 }
+\DoxyCodeLine{00119   \mbox{\hyperlink{logger_8h_af933c6341b0deeb4ee1a540da61b9536}{VALLY\_TRACE}}(\textcolor{stringliteral}{"{}Renderer system terminated"{}});}
+\DoxyCodeLine{00120 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,75 @@
+\hypertarget{camera_8c_source}{}\doxysection{camera.\+c}
+\label{camera_8c_source}\index{src/vally/renderer/camera.c@{src/vally/renderer/camera.c}}
+\mbox{\hyperlink{camera_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00001}00001 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{camera_8h}{vally/renderer/camera.h}}>}}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00003}00003 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{event_8h}{vally/core/event.h}}>}}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00005}\mbox{\hyperlink{structcamera__state}{00005}} \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00006}\mbox{\hyperlink{structcamera__state_addff7ad170cbd9d956cc209a3d94b390}{00006}}   mat4s \mbox{\hyperlink{structcamera__state_addff7ad170cbd9d956cc209a3d94b390}{projection}};}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00007}\mbox{\hyperlink{structcamera__state_a49624d46173893d377bcab7d3ba44e49}{00007}}   mat4s \mbox{\hyperlink{structcamera__state_a49624d46173893d377bcab7d3ba44e49}{view}};}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00008}\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{00008}}   vec2s \mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}};}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00009}00009 \} \mbox{\hyperlink{structcamera__state}{camera\_state}};}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00011}00011 \textcolor{keyword}{static} \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} initialized = \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00012}00012 \textcolor{keyword}{static} \mbox{\hyperlink{structcamera__state}{camera\_state}} state;}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00014}\mbox{\hyperlink{camera_8c_a0e26ce6a304023f597deb5a35c990c49}{00014}} \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} \mbox{\hyperlink{camera_8c_a0e26ce6a304023f597deb5a35c990c49}{camera\_init}}() \{}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00015}00015   \textcolor{keywordflow}{if} (initialized) \{}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00016}00016     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00017}00017   \}}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00018}00018   state.\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}} = GLMS\_VEC2\_ZERO;}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00019}00019   initialized = \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00021}00021   \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00022}00022 \}}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00024}\mbox{\hyperlink{camera_8c_ab016d0896b09876b237b0ba4c31d6ddd}{00024}} mat4s \mbox{\hyperlink{camera_8c_ab016d0896b09876b237b0ba4c31d6ddd}{camera\_update\_projection}}(\mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} width, \mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} height) \{}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00025}00025   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00026}00026     \textcolor{keywordflow}{return} GLMS\_MAT4\_ZERO;}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00027}00027   \}}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00029}00029   state.\mbox{\hyperlink{structcamera__state_addff7ad170cbd9d956cc209a3d94b390}{projection}} = glms\_ortho(0.0f, (\textcolor{keywordtype}{float})width, (\textcolor{keywordtype}{float})height, 0.0f, 0.0f, 100.0f);}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00030}00030   \textcolor{keywordflow}{return} state.\mbox{\hyperlink{structcamera__state_addff7ad170cbd9d956cc209a3d94b390}{projection}};}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00031}00031 \}}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00033}\mbox{\hyperlink{camera_8c_ad9f3c915323cb46514ed404d5fa45771}{00033}} mat4s \mbox{\hyperlink{camera_8c_ad9f3c915323cb46514ed404d5fa45771}{camera\_update\_view}}() \{}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00034}00034   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00035}00035     \textcolor{keywordflow}{return} GLMS\_MAT4\_ZERO;}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00036}00036   \}}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00038}00038   vec3s front = \{0.0f, 0.0f, -\/1.0f\};}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00039}00039   vec3s up = \{0.0f, 1.0f, 0.0f\};}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00040}00040   state.\mbox{\hyperlink{structcamera__state_a49624d46173893d377bcab7d3ba44e49}{view}} = glms\_lookat((vec3s)\{state.\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}}.x, state.\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}}.y, 20.0f\},}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00041}00041     glms\_vec3\_add(front, (vec3s)\{state.\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}}.x, state.\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}}.y, 0.0f\}), up);}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00042}00042   \textcolor{keywordflow}{return} state.\mbox{\hyperlink{structcamera__state_a49624d46173893d377bcab7d3ba44e49}{view}};}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00043}00043 \}}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00045}\mbox{\hyperlink{camera_8c_afb6d8b1bdf63bb262a12686ec0cd8167}{00045}} mat4s \mbox{\hyperlink{camera_8c_afb6d8b1bdf63bb262a12686ec0cd8167}{camera\_get\_projection}}() \{}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00046}00046   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00047}00047     \textcolor{keywordflow}{return} GLMS\_MAT4\_ZERO;}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00048}00048   \}}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00049}00049   \textcolor{keywordflow}{return} state.\mbox{\hyperlink{structcamera__state_addff7ad170cbd9d956cc209a3d94b390}{projection}};}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00050}00050 \}}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00052}\mbox{\hyperlink{camera_8c_a27cecdd897b79aaa2da03253dc192c8b}{00052}} mat4s \mbox{\hyperlink{camera_8c_a27cecdd897b79aaa2da03253dc192c8b}{camera\_get\_view}}() \{}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00053}00053   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00054}00054     \textcolor{keywordflow}{return} GLMS\_MAT4\_ZERO;}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00055}00055   \}}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00056}00056   \textcolor{keywordflow}{return} state.\mbox{\hyperlink{structcamera__state_a49624d46173893d377bcab7d3ba44e49}{view}};}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00057}00057 \}}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00059}\mbox{\hyperlink{camera_8c_a17617007205905a5e1dbe750f4101182}{00059}} \textcolor{keywordtype}{void} \mbox{\hyperlink{camera_8c_a17617007205905a5e1dbe750f4101182}{camera\_translate}}(vec2s translation) \{}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00060}00060   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00061}00061     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00062}00062   \}}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00063}00063 }
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00064}00064   state.\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}} = glms\_vec2\_add(state.\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}}, translation);}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00065}00065   \mbox{\hyperlink{structevent__context}{event\_context}} context;}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00066}00066   context.\mbox{\hyperlink{structevent__context_a37626a2166126e0253acb56f57b38635}{data}}.\mbox{\hyperlink{structevent__context_aecc1d2cac72d7cf178b96163232840cb}{f32}}[0] = state.\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}}.x;}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00067}00067   context.\mbox{\hyperlink{structevent__context_a37626a2166126e0253acb56f57b38635}{data}}.\mbox{\hyperlink{structevent__context_aecc1d2cac72d7cf178b96163232840cb}{f32}}[1] = state.\mbox{\hyperlink{structcamera__state_a92c4046efa90e58eda3f902a14ab1ae9}{position}}.y;}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00068}00068   \mbox{\hyperlink{event_8c_a7131032d2f9fc63fda885be905de017f}{event\_publish}}(\mbox{\hyperlink{event_8h_ab1a5ea1b9d3d15f083a6d01c3ab3c2b7a3599e37cddac3749062b20372bedb8b0}{EVENT\_CODE\_CAMERA\_MOVED}}, \&state, context);}
+\DoxyCodeLine{\Hypertarget{camera_8c_source_l00069}00069 \}}
+
+\end{DoxyCode}

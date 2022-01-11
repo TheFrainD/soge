@@ -1,0 +1,29 @@
+\hypertarget{image_8c_source}{}\doxysection{image.\+c}
+\label{image_8c_source}\index{src/vally/resources/image.c@{src/vally/resources/image.c}}
+\mbox{\hyperlink{image_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00001}00001 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{image_8h}{vally/resources/image.h}}>}}
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00003}\mbox{\hyperlink{image_8c_a18372412ad2fc3ce1e3240b3cf0efe78}{00003}} \textcolor{preprocessor}{\#define STB\_IMAGE\_IMPLEMENTATION}}
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00004}00004 \textcolor{preprocessor}{\#include <stb\_image.h>}}
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00006}00006 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{resources_8h}{vally/resources/resources.h}}>}}
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00007}00007 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{logger_8h}{vally/core/logger.h}}>}}
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00009}\mbox{\hyperlink{image_8c_afdccd9af8639562bfdb629c00cd4f99e}{00009}} \mbox{\hyperlink{structimage}{image}} *\mbox{\hyperlink{image_8c_afdccd9af8639562bfdb629c00cd4f99e}{image\_load}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *path) \{}
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00010}00010   \mbox{\hyperlink{structimage}{image}} *img = (\mbox{\hyperlink{structimage}{image}} *)malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structimage}{image}}));}
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00011}00011   img-\/>\mbox{\hyperlink{structimage_aecf7dbb8a46058432c245ff52e4fce82}{buffer}} = stbi\_load(path, \&img-\/>\mbox{\hyperlink{structimage_a42ecfe2675278f6b7e70033e3ff89e4a}{width}}, \&img-\/>\mbox{\hyperlink{structimage_aa478e4be0fe527274f9233cc11ec71e9}{height}}, \&img-\/>\mbox{\hyperlink{structimage_aa2e495097328a39bdb0db0ec353d07ba}{channels}}, STBI\_rgb\_alpha);}
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00012}00012   \textcolor{keywordflow}{if} (!img-\/>\mbox{\hyperlink{structimage_aecf7dbb8a46058432c245ff52e4fce82}{buffer}}) \{}
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00013}00013     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}Could not load image at \(\backslash\)"{}\%s\(\backslash\)"{}!"{}}, path);}
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00014}00014     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00015}00015   \}}
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00017}00017   \mbox{\hyperlink{resources_8c_a16641af0e8abb4648df5964f32f30adb}{resources\_add}}(img, \mbox{\hyperlink{image_8c_a731021d773212b9b2e1291e5bd0def46}{image\_unload}});}
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00018}00018   \textcolor{keywordflow}{return} img;}
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00019}00019 \}}
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00021}\mbox{\hyperlink{image_8c_a731021d773212b9b2e1291e5bd0def46}{00021}} \textcolor{keywordtype}{void} \mbox{\hyperlink{image_8c_a731021d773212b9b2e1291e5bd0def46}{image\_unload}}(\mbox{\hyperlink{structimage}{image}} *img) \{}
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00022}00022   stbi\_image\_free(img-\/>\mbox{\hyperlink{structimage_aecf7dbb8a46058432c245ff52e4fce82}{buffer}});}
+\DoxyCodeLine{\Hypertarget{image_8c_source_l00023}00023 \}}
+
+\end{DoxyCode}

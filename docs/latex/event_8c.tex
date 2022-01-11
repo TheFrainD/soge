@@ -1,0 +1,203 @@
+\hypertarget{event_8c}{}\doxysection{src/vally/core/event.c File Reference}
+\label{event_8c}\index{src/vally/core/event.c@{src/vally/core/event.c}}
+{\ttfamily \#include $<$vally/core/event.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$cvec.\+h$>$}\newline
+{\ttfamily \#include $<$vally/core/logger.\+h$>$}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structregistered__event}{registered\+\_\+event}}
+\item 
+struct \mbox{\hyperlink{structevent__code__entry}{event\+\_\+code\+\_\+entry}}
+\item 
+struct \mbox{\hyperlink{structevent__system__state}{event\+\_\+system\+\_\+state}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{event_8c_a59db8f883e31171b78490d26c0251f64}{MAX\+\_\+\+MESSAGE\+\_\+\+CODES}}~16384
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} \mbox{\hyperlink{event_8c_a5b0f78273328aee6d4f9ce3949a6b727}{event\+\_\+init}} ()
+\item 
+void \mbox{\hyperlink{event_8c_af5c0fd0bca4f543c61042cf947de7ef9}{event\+\_\+terminate}} ()
+\item 
+\mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} \mbox{\hyperlink{event_8c_aaa4dcb88a77bd7acfae9c3c0589da891}{event\+\_\+subscribe}} (\mbox{\hyperlink{config_8h_ace9d960e74685e2cd84b36132dbbf8aa}{u16}} code, void $\ast$listener, \mbox{\hyperlink{event_8h_a0510ba71fcdd70efda521389ea14e7a5}{on\+\_\+event\+\_\+fun}} callback)
+\item 
+\mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} \mbox{\hyperlink{event_8c_a8393ea3aa1cf5939fc961b02788ef360}{event\+\_\+unsubscribe}} (\mbox{\hyperlink{config_8h_ace9d960e74685e2cd84b36132dbbf8aa}{u16}} code, void $\ast$listener, \mbox{\hyperlink{event_8h_a0510ba71fcdd70efda521389ea14e7a5}{on\+\_\+event\+\_\+fun}} callback)
+\item 
+\mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} \mbox{\hyperlink{event_8c_a7131032d2f9fc63fda885be905de017f}{event\+\_\+publish}} (\mbox{\hyperlink{config_8h_ace9d960e74685e2cd84b36132dbbf8aa}{u16}} code, void $\ast$sender, \mbox{\hyperlink{structevent__context}{event\+\_\+context}} context)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{event_8c_a59db8f883e31171b78490d26c0251f64}\label{event_8c_a59db8f883e31171b78490d26c0251f64}} 
+\index{event.c@{event.c}!MAX\_MESSAGE\_CODES@{MAX\_MESSAGE\_CODES}}
+\index{MAX\_MESSAGE\_CODES@{MAX\_MESSAGE\_CODES}!event.c@{event.c}}
+\doxysubsubsection{\texorpdfstring{MAX\_MESSAGE\_CODES}{MAX\_MESSAGE\_CODES}}
+{\footnotesize\ttfamily \#define MAX\+\_\+\+MESSAGE\+\_\+\+CODES~16384}
+
+
+
+Definition at line \mbox{\hyperlink{event_8c_source_l00019}{19}} of file \mbox{\hyperlink{event_8c_source}{event.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{event_8c_a5b0f78273328aee6d4f9ce3949a6b727}\label{event_8c_a5b0f78273328aee6d4f9ce3949a6b727}} 
+\index{event.c@{event.c}!event\_init@{event\_init}}
+\index{event\_init@{event\_init}!event.c@{event.c}}
+\doxysubsubsection{\texorpdfstring{event\_init()}{event\_init()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} event\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{event_8c_source_l00028}{28}} of file \mbox{\hyperlink{event_8c_source}{event.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00028                 \{}
+\DoxyCodeLine{00029   \textcolor{keywordflow}{if} (initialized) \{}
+\DoxyCodeLine{00030     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{00031   \}}
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033   memset(\&state, 0, \textcolor{keyword}{sizeof}(state));}
+\DoxyCodeLine{00034   initialized = \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{00035   \mbox{\hyperlink{logger_8h_af933c6341b0deeb4ee1a540da61b9536}{VALLY\_TRACE}}(\textcolor{stringliteral}{"{}Event system initialized"{}});}
+\DoxyCodeLine{00036 }
+\DoxyCodeLine{00037   \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{00038 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{event_8c_a7131032d2f9fc63fda885be905de017f}\label{event_8c_a7131032d2f9fc63fda885be905de017f}} 
+\index{event.c@{event.c}!event\_publish@{event\_publish}}
+\index{event\_publish@{event\_publish}!event.c@{event.c}}
+\doxysubsubsection{\texorpdfstring{event\_publish()}{event\_publish()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} event\+\_\+publish (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{config_8h_ace9d960e74685e2cd84b36132dbbf8aa}{u16}}}]{code,  }\item[{void $\ast$}]{sender,  }\item[{\mbox{\hyperlink{structevent__context}{event\+\_\+context}}}]{context }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{event_8c_source_l00096}{96}} of file \mbox{\hyperlink{event_8c_source}{event.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00096                                                                 \{}
+\DoxyCodeLine{00097   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00098     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{00099   \}}
+\DoxyCodeLine{00100 }
+\DoxyCodeLine{00101   \textcolor{keywordflow}{if} (state.\mbox{\hyperlink{structevent__system__state_a20a86f05bfac98ca3c7d82ab3a5d293a}{registered}}[code].\mbox{\hyperlink{structevent__code__entry_af9e6e5bd1d2970b193d0aba78a865283}{events}} == \mbox{\hyperlink{config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}) \{}
+\DoxyCodeLine{00102     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{00103   \}}
+\DoxyCodeLine{00104 }
+\DoxyCodeLine{00105   \mbox{\hyperlink{config_8h_a3f7e2bcbb0b4c338f3c4f6c937cd4234}{u64}} registered\_count = cvec\_size(state.\mbox{\hyperlink{structevent__system__state_a20a86f05bfac98ca3c7d82ab3a5d293a}{registered}}[code].\mbox{\hyperlink{structevent__code__entry_af9e6e5bd1d2970b193d0aba78a865283}{events}});}
+\DoxyCodeLine{00106   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < registered\_count; i++) \{}
+\DoxyCodeLine{00107     \mbox{\hyperlink{structregistered__event}{registered\_event}} \textcolor{keyword}{event} = cvec\_at(state.\mbox{\hyperlink{structevent__system__state_a20a86f05bfac98ca3c7d82ab3a5d293a}{registered}}[code].\mbox{\hyperlink{structevent__code__entry_af9e6e5bd1d2970b193d0aba78a865283}{events}}, i, \mbox{\hyperlink{structregistered__event}{registered\_event}});}
+\DoxyCodeLine{00108     \textcolor{keywordflow}{if} (event.callback(code, sender, event.listener, context)) \{}
+\DoxyCodeLine{00109       \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{00110     \}}
+\DoxyCodeLine{00111   \}}
+\DoxyCodeLine{00112 }
+\DoxyCodeLine{00113   \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{00114 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{event_8c_aaa4dcb88a77bd7acfae9c3c0589da891}\label{event_8c_aaa4dcb88a77bd7acfae9c3c0589da891}} 
+\index{event.c@{event.c}!event\_subscribe@{event\_subscribe}}
+\index{event\_subscribe@{event\_subscribe}!event.c@{event.c}}
+\doxysubsubsection{\texorpdfstring{event\_subscribe()}{event\_subscribe()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} event\+\_\+subscribe (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{config_8h_ace9d960e74685e2cd84b36132dbbf8aa}{u16}}}]{code,  }\item[{void $\ast$}]{listener,  }\item[{\mbox{\hyperlink{event_8h_a0510ba71fcdd70efda521389ea14e7a5}{on\+\_\+event\+\_\+fun}}}]{callback }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{event_8c_source_l00050}{50}} of file \mbox{\hyperlink{event_8c_source}{event.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00050                                                                     \{}
+\DoxyCodeLine{00051   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00052     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{00053   \}}
+\DoxyCodeLine{00054 }
+\DoxyCodeLine{00055   \textcolor{keywordflow}{if} (state.\mbox{\hyperlink{structevent__system__state_a20a86f05bfac98ca3c7d82ab3a5d293a}{registered}}[code].\mbox{\hyperlink{structevent__code__entry_af9e6e5bd1d2970b193d0aba78a865283}{events}} == \mbox{\hyperlink{config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}) \{}
+\DoxyCodeLine{00056     state.\mbox{\hyperlink{structevent__system__state_a20a86f05bfac98ca3c7d82ab3a5d293a}{registered}}[code].\mbox{\hyperlink{structevent__code__entry_af9e6e5bd1d2970b193d0aba78a865283}{events}} = cvec\_create(\mbox{\hyperlink{structregistered__event}{registered\_event}});}
+\DoxyCodeLine{00057   \}}
+\DoxyCodeLine{00058 }
+\DoxyCodeLine{00059   \mbox{\hyperlink{config_8h_a3f7e2bcbb0b4c338f3c4f6c937cd4234}{u64}} registered\_count = cvec\_size(state.\mbox{\hyperlink{structevent__system__state_a20a86f05bfac98ca3c7d82ab3a5d293a}{registered}}[code].\mbox{\hyperlink{structevent__code__entry_af9e6e5bd1d2970b193d0aba78a865283}{events}});}
+\DoxyCodeLine{00060   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < registered\_count; i++) \{}
+\DoxyCodeLine{00061     \textcolor{keywordflow}{if} (cvec\_at(state.\mbox{\hyperlink{structevent__system__state_a20a86f05bfac98ca3c7d82ab3a5d293a}{registered}}[code].\mbox{\hyperlink{structevent__code__entry_af9e6e5bd1d2970b193d0aba78a865283}{events}}, i, \mbox{\hyperlink{structregistered__event}{registered\_event}}).listener == listener) \{}
+\DoxyCodeLine{00062       \textcolor{comment}{// TODO: warn}}
+\DoxyCodeLine{00063       \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{00064     \}}
+\DoxyCodeLine{00065   \}}
+\DoxyCodeLine{00066 }
+\DoxyCodeLine{00067   \mbox{\hyperlink{structregistered__event}{registered\_event}} event;}
+\DoxyCodeLine{00068   \textcolor{keyword}{event}.\mbox{\hyperlink{structregistered__event_a8baaf13de842035b82f17465e592fe19}{listener}} = listener;}
+\DoxyCodeLine{00069   \textcolor{keyword}{event}.callback = callback;}
+\DoxyCodeLine{00070   cvec\_push\_back(state.\mbox{\hyperlink{structevent__system__state_a20a86f05bfac98ca3c7d82ab3a5d293a}{registered}}[code].\mbox{\hyperlink{structevent__code__entry_af9e6e5bd1d2970b193d0aba78a865283}{events}}, event);}
+\DoxyCodeLine{00071 }
+\DoxyCodeLine{00072   \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{00073 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{event_8c_af5c0fd0bca4f543c61042cf947de7ef9}\label{event_8c_af5c0fd0bca4f543c61042cf947de7ef9}} 
+\index{event.c@{event.c}!event\_terminate@{event\_terminate}}
+\index{event\_terminate@{event\_terminate}!event.c@{event.c}}
+\doxysubsubsection{\texorpdfstring{event\_terminate()}{event\_terminate()}}
+{\footnotesize\ttfamily void event\+\_\+terminate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{event_8c_source_l00040}{40}} of file \mbox{\hyperlink{event_8c_source}{event.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00040                        \{}
+\DoxyCodeLine{00041   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < \mbox{\hyperlink{event_8c_a59db8f883e31171b78490d26c0251f64}{MAX\_MESSAGE\_CODES}}; i++) \{}
+\DoxyCodeLine{00042     \textcolor{keywordflow}{if} (state.\mbox{\hyperlink{structevent__system__state_a20a86f05bfac98ca3c7d82ab3a5d293a}{registered}}[i].\mbox{\hyperlink{structevent__code__entry_af9e6e5bd1d2970b193d0aba78a865283}{events}} != \mbox{\hyperlink{config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}) \{}
+\DoxyCodeLine{00043       cvec\_destroy(state.\mbox{\hyperlink{structevent__system__state_a20a86f05bfac98ca3c7d82ab3a5d293a}{registered}}[i].\mbox{\hyperlink{structevent__code__entry_af9e6e5bd1d2970b193d0aba78a865283}{events}});}
+\DoxyCodeLine{00044       state.\mbox{\hyperlink{structevent__system__state_a20a86f05bfac98ca3c7d82ab3a5d293a}{registered}}[i].\mbox{\hyperlink{structevent__code__entry_af9e6e5bd1d2970b193d0aba78a865283}{events}} = \mbox{\hyperlink{config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{00045     \}}
+\DoxyCodeLine{00046   \}}
+\DoxyCodeLine{00047   \mbox{\hyperlink{logger_8h_af933c6341b0deeb4ee1a540da61b9536}{VALLY\_TRACE}}(\textcolor{stringliteral}{"{}Event system terminated"{}});}
+\DoxyCodeLine{00048 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{event_8c_a8393ea3aa1cf5939fc961b02788ef360}\label{event_8c_a8393ea3aa1cf5939fc961b02788ef360}} 
+\index{event.c@{event.c}!event\_unsubscribe@{event\_unsubscribe}}
+\index{event\_unsubscribe@{event\_unsubscribe}!event.c@{event.c}}
+\doxysubsubsection{\texorpdfstring{event\_unsubscribe()}{event\_unsubscribe()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} event\+\_\+unsubscribe (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{config_8h_ace9d960e74685e2cd84b36132dbbf8aa}{u16}}}]{code,  }\item[{void $\ast$}]{listener,  }\item[{\mbox{\hyperlink{event_8h_a0510ba71fcdd70efda521389ea14e7a5}{on\+\_\+event\+\_\+fun}}}]{callback }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{event_8c_source_l00075}{75}} of file \mbox{\hyperlink{event_8c_source}{event.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00075                                                                       \{}
+\DoxyCodeLine{00076   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00077     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{00078   \}}
+\DoxyCodeLine{00079 }
+\DoxyCodeLine{00080   \textcolor{keywordflow}{if} (state.\mbox{\hyperlink{structevent__system__state_a20a86f05bfac98ca3c7d82ab3a5d293a}{registered}}[code].\mbox{\hyperlink{structevent__code__entry_af9e6e5bd1d2970b193d0aba78a865283}{events}} == \mbox{\hyperlink{config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}) \{}
+\DoxyCodeLine{00081     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{00082   \}}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084   \mbox{\hyperlink{config_8h_a3f7e2bcbb0b4c338f3c4f6c937cd4234}{u64}} registered\_count = cvec\_size(state.\mbox{\hyperlink{structevent__system__state_a20a86f05bfac98ca3c7d82ab3a5d293a}{registered}}[code].\mbox{\hyperlink{structevent__code__entry_af9e6e5bd1d2970b193d0aba78a865283}{events}});}
+\DoxyCodeLine{00085   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < registered\_count; i++) \{}
+\DoxyCodeLine{00086     \mbox{\hyperlink{structregistered__event}{registered\_event}} \textcolor{keyword}{event} = cvec\_at(state.\mbox{\hyperlink{structevent__system__state_a20a86f05bfac98ca3c7d82ab3a5d293a}{registered}}[code].\mbox{\hyperlink{structevent__code__entry_af9e6e5bd1d2970b193d0aba78a865283}{events}}, i, \mbox{\hyperlink{structregistered__event}{registered\_event}});}
+\DoxyCodeLine{00087     \textcolor{keywordflow}{if} (event.listener == listener \&\& event.callback == callback) \{}
+\DoxyCodeLine{00088       cvec\_erase(state.\mbox{\hyperlink{structevent__system__state_a20a86f05bfac98ca3c7d82ab3a5d293a}{registered}}[code].\mbox{\hyperlink{structevent__code__entry_af9e6e5bd1d2970b193d0aba78a865283}{events}}, i);}
+\DoxyCodeLine{00089       \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{00090     \}}
+\DoxyCodeLine{00091   \}}
+\DoxyCodeLine{00092 }
+\DoxyCodeLine{00093   \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{00094 \}}
+
+\end{DoxyCode}

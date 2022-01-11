@@ -1,0 +1,35 @@
+\hypertarget{transform_8c_source}{}\doxysection{transform.\+c}
+\label{transform_8c_source}\index{src/vally/ecs/components/transform.c@{src/vally/ecs/components/transform.c}}
+\mbox{\hyperlink{transform_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00001}00001 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{transform_8h}{vally/ecs/components/transform.h}}>}}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00003}\mbox{\hyperlink{structtransform__system}{00003}} \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00004}\mbox{\hyperlink{structtransform__system_a870c56af3366a04162cbb79db71ebf2e}{00004}}   \mbox{\hyperlink{structtransform}{transform}} components[\mbox{\hyperlink{ecs_8h_a65434fc37a4b1d895e5a1eb9119018b9}{ECS\_MAX\_COMPONENTS}}];}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00005}00005 \} \mbox{\hyperlink{structtransform__system}{transform\_system}};}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00007}00007 \textcolor{keyword}{static} \mbox{\hyperlink{structtransform__system}{transform\_system}} system;}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00009}\mbox{\hyperlink{transform_8c_ad88de159bb7ccff0b5e423fdb29d4515}{00009}} \textcolor{keywordtype}{void} \mbox{\hyperlink{transform_8c_ad88de159bb7ccff0b5e423fdb29d4515}{ecs\_transform\_add}}(\mbox{\hyperlink{ecs__types_8h_a4ea73a010095ca6cbf39e33b1c31c42f}{entity}} \mbox{\hyperlink{ecs__types_8h_a4ea73a010095ca6cbf39e33b1c31c42f}{entity}}, \mbox{\hyperlink{structvector2f}{vector2f}} position, \mbox{\hyperlink{structvector2f}{vector2f}} scale) \{}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00010}00010   \textcolor{keywordflow}{if} (\mbox{\hyperlink{ecs__types_8h_a4ea73a010095ca6cbf39e33b1c31c42f}{entity}} == \mbox{\hyperlink{ecs_8h_a590682d0c22ffe315650ba42fae2b231}{ECS\_NULL\_ENTITY}}) \{}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00011}00011     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00012}00012   \}}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00014}00014   \mbox{\hyperlink{structtransform}{transform}} component;}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00015}00015   component.\mbox{\hyperlink{structtransform_a87255977c168389786210448fbc0e3c3}{entity}} = \mbox{\hyperlink{ecs__types_8h_a4ea73a010095ca6cbf39e33b1c31c42f}{entity}};}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00016}00016   component.\mbox{\hyperlink{structtransform_aca5f2f1120ff401216dc0ea843860e59}{position}} = position;}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00017}00017   component.\mbox{\hyperlink{structtransform_a90cdde0e5c0820ce7dc0d1cd6e633250}{scale}} = scale;}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00019}00019   system.\mbox{\hyperlink{structtransform__system_a870c56af3366a04162cbb79db71ebf2e}{components}}[\mbox{\hyperlink{ecs__types_8h_a4ea73a010095ca6cbf39e33b1c31c42f}{entity}}] = component;}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00020}00020   \mbox{\hyperlink{ecs_8c_add5748693481e3179ea4f501252e1584}{ecs\_component\_add}}(\mbox{\hyperlink{ecs__types_8h_a4ea73a010095ca6cbf39e33b1c31c42f}{entity}}, \mbox{\hyperlink{ecs__types_8h_a7cdfb55f8f02e044ad6ab3f8c6cec352af0c45d171057b512b8e404b6e9b2e08c}{ECS\_TRANSFORM\_COMPONENT}});}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00021}00021 \}}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00023}\mbox{\hyperlink{transform_8c_a67eb19cd875c00510841a16301c0abbb}{00023}} \mbox{\hyperlink{structtransform}{transform}} *\mbox{\hyperlink{transform_8c_a67eb19cd875c00510841a16301c0abbb}{ecs\_transform\_get}}(\mbox{\hyperlink{ecs__types_8h_a4ea73a010095ca6cbf39e33b1c31c42f}{entity}} \mbox{\hyperlink{ecs__types_8h_a4ea73a010095ca6cbf39e33b1c31c42f}{entity}}) \{}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00024}00024   \textcolor{keywordflow}{if} (\mbox{\hyperlink{ecs__types_8h_a4ea73a010095ca6cbf39e33b1c31c42f}{entity}} == \mbox{\hyperlink{ecs_8h_a590682d0c22ffe315650ba42fae2b231}{ECS\_NULL\_ENTITY}} || !\mbox{\hyperlink{ecs_8c_a8558da821ae97171a28630f8da7414c4}{ecs\_component\_has}}(\mbox{\hyperlink{ecs__types_8h_a4ea73a010095ca6cbf39e33b1c31c42f}{entity}}, \mbox{\hyperlink{ecs__types_8h_a7cdfb55f8f02e044ad6ab3f8c6cec352af0c45d171057b512b8e404b6e9b2e08c}{ECS\_TRANSFORM\_COMPONENT}})) \{}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00025}00025     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00026}00026   \}}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00028}00028   \textcolor{keywordflow}{return} \&system.\mbox{\hyperlink{structtransform__system_a870c56af3366a04162cbb79db71ebf2e}{components}}[\mbox{\hyperlink{ecs__types_8h_a4ea73a010095ca6cbf39e33b1c31c42f}{entity}}];}
+\DoxyCodeLine{\Hypertarget{transform_8c_source_l00029}00029 \}}
+
+\end{DoxyCode}

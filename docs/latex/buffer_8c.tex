@@ -1,0 +1,158 @@
+\hypertarget{buffer_8c}{}\doxysection{src/vally/renderer/buffer.c File Reference}
+\label{buffer_8c}\index{src/vally/renderer/buffer.c@{src/vally/renderer/buffer.c}}
+{\ttfamily \#include $<$vally/renderer/buffer.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$glad/glad.\+h$>$}\newline
+{\ttfamily \#include $<$vally/core/logger.\+h$>$}\newline
+{\ttfamily \#include $<$vally/renderer/renderer.\+h$>$}\newline
+{\ttfamily \#include $<$vally/resources/resources.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structbuffer}{buffer}} $\ast$ \mbox{\hyperlink{buffer_8c_a4908d6a875c8f88eaee75cdc8dc25a06}{buffer\+\_\+create}} ()
+\item 
+void \mbox{\hyperlink{buffer_8c_a537219af5df0e5eda574b334834490c5}{buffer\+\_\+destroy}} (\mbox{\hyperlink{structbuffer}{buffer}} $\ast$buf)
+\item 
+void \mbox{\hyperlink{buffer_8c_a271c0cbf852a1bf93af8d27b78bc2d5c}{buffer\+\_\+bind}} (\mbox{\hyperlink{structbuffer}{buffer}} $\ast$buf)
+\item 
+void \mbox{\hyperlink{buffer_8c_a819e182a31edeb87b39af26beb49f24e}{buffer\+\_\+unbind}} ()
+\item 
+void \mbox{\hyperlink{buffer_8c_a1167efc273616c5dc7541d68a5488ed4}{buffer\+\_\+set\+\_\+data}} (\mbox{\hyperlink{structbuffer}{buffer}} $\ast$buf, \mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}} size, const void $\ast$data)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{buffer_8c_a271c0cbf852a1bf93af8d27b78bc2d5c}\label{buffer_8c_a271c0cbf852a1bf93af8d27b78bc2d5c}} 
+\index{buffer.c@{buffer.c}!buffer\_bind@{buffer\_bind}}
+\index{buffer\_bind@{buffer\_bind}!buffer.c@{buffer.c}}
+\doxysubsubsection{\texorpdfstring{buffer\_bind()}{buffer\_bind()}}
+{\footnotesize\ttfamily void buffer\+\_\+bind (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structbuffer}{buffer}} $\ast$}]{buf }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{buffer_8c_source_l00067}{67}} of file \mbox{\hyperlink{buffer_8c_source}{buffer.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00067                               \{}
+\DoxyCodeLine{00068   glBindVertexArray(buf-\/>\mbox{\hyperlink{structbuffer_a9e7abafd663daccb948dc1e02ef69b05}{vao}});}
+\DoxyCodeLine{00069 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{buffer_8c_a4908d6a875c8f88eaee75cdc8dc25a06}\label{buffer_8c_a4908d6a875c8f88eaee75cdc8dc25a06}} 
+\index{buffer.c@{buffer.c}!buffer\_create@{buffer\_create}}
+\index{buffer\_create@{buffer\_create}!buffer.c@{buffer.c}}
+\doxysubsubsection{\texorpdfstring{buffer\_create()}{buffer\_create()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structbuffer}{buffer}} $\ast$ buffer\+\_\+create (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{buffer_8c_source_l00012}{12}} of file \mbox{\hyperlink{buffer_8c_source}{buffer.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00012                         \{}
+\DoxyCodeLine{00013   \mbox{\hyperlink{structbuffer}{buffer}} *buf = (\mbox{\hyperlink{structbuffer}{buffer}} *)malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structbuffer}{buffer}}));}
+\DoxyCodeLine{00014 }
+\DoxyCodeLine{00015   glGenVertexArrays(1, \&buf-\/>\mbox{\hyperlink{structbuffer_a9e7abafd663daccb948dc1e02ef69b05}{vao}});}
+\DoxyCodeLine{00016   glGenBuffers(1, \&buf-\/>\mbox{\hyperlink{structbuffer_a00f6df46c2691ef2c1c4259f6b1e0c1d}{vbo}});}
+\DoxyCodeLine{00017   glGenBuffers(1, \&buf-\/>\mbox{\hyperlink{structbuffer_a328ff05eb70d2db8ccc9dfa9573ce80d}{ebo}});}
+\DoxyCodeLine{00018 }
+\DoxyCodeLine{00019   glBindVertexArray(buf-\/>\mbox{\hyperlink{structbuffer_a9e7abafd663daccb948dc1e02ef69b05}{vao}});}
+\DoxyCodeLine{00020 }
+\DoxyCodeLine{00021   glBindBuffer(GL\_ARRAY\_BUFFER, buf-\/>\mbox{\hyperlink{structbuffer_a00f6df46c2691ef2c1c4259f6b1e0c1d}{vbo}});}
+\DoxyCodeLine{00022   glBufferData(GL\_ARRAY\_BUFFER, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structvertex}{vertex}}) * \mbox{\hyperlink{renderer_8h_aa16efc18b3000ebdeae4569d87d9fae7}{RENDERER\_MAX\_VERTEX}}, \mbox{\hyperlink{config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}, GL\_DYNAMIC\_DRAW);}
+\DoxyCodeLine{00023 }
+\DoxyCodeLine{00024   glVertexAttribPointer(0, 2, GL\_FLOAT, GL\_FALSE, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structvertex}{vertex}}), (\textcolor{keyword}{const} \textcolor{keywordtype}{void}*)offsetof(\mbox{\hyperlink{structvertex}{vertex}}, pos));}
+\DoxyCodeLine{00025   glEnableVertexAttribArray(0);}
+\DoxyCodeLine{00026 }
+\DoxyCodeLine{00027   glVertexAttribPointer(1, 4, GL\_FLOAT, GL\_FALSE, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structvertex}{vertex}}), (\textcolor{keyword}{const} \textcolor{keywordtype}{void}*)offsetof(\mbox{\hyperlink{structvertex}{vertex}}, color));}
+\DoxyCodeLine{00028   glEnableVertexAttribArray(1);}
+\DoxyCodeLine{00029 }
+\DoxyCodeLine{00030   glVertexAttribPointer(2, 2, GL\_FLOAT, GL\_FALSE, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structvertex}{vertex}}), (\textcolor{keyword}{const} \textcolor{keywordtype}{void}*)offsetof(\mbox{\hyperlink{structvertex}{vertex}}, uv));}
+\DoxyCodeLine{00031   glEnableVertexAttribArray(2);}
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033   glVertexAttribPointer(3, 1, GL\_FLOAT, GL\_FALSE, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structvertex}{vertex}}), (\textcolor{keyword}{const} \textcolor{keywordtype}{void}*)offsetof(\mbox{\hyperlink{structvertex}{vertex}}, tex\_id));}
+\DoxyCodeLine{00034   glEnableVertexAttribArray(3);}
+\DoxyCodeLine{00035 }
+\DoxyCodeLine{00036   \mbox{\hyperlink{config_8h_afaa62991928fb9fb18ff0db62a040aba}{u32}} indices[\mbox{\hyperlink{renderer_8h_a01df4bd065557a795f6bccb267484ec3}{RENDERER\_MAX\_INDEX}}];}
+\DoxyCodeLine{00037   \mbox{\hyperlink{config_8h_afaa62991928fb9fb18ff0db62a040aba}{u32}} offset = 0;}
+\DoxyCodeLine{00038   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < \mbox{\hyperlink{renderer_8h_a01df4bd065557a795f6bccb267484ec3}{RENDERER\_MAX\_INDEX}}; i += 6) \{}
+\DoxyCodeLine{00039     indices[i + 0] = 0 + offset;}
+\DoxyCodeLine{00040     indices[i + 1] = 1 + offset;}
+\DoxyCodeLine{00041     indices[i + 2] = 2 + offset;}
+\DoxyCodeLine{00042 }
+\DoxyCodeLine{00043     indices[i + 3] = 2 + offset;}
+\DoxyCodeLine{00044     indices[i + 4] = 3 + offset;}
+\DoxyCodeLine{00045     indices[i + 5] = 0 + offset;}
+\DoxyCodeLine{00046 }
+\DoxyCodeLine{00047     offset += 4;}
+\DoxyCodeLine{00048   \}}
+\DoxyCodeLine{00049 }
+\DoxyCodeLine{00050   glBindBuffer(GL\_ELEMENT\_ARRAY\_BUFFER, buf-\/>\mbox{\hyperlink{structbuffer_a328ff05eb70d2db8ccc9dfa9573ce80d}{ebo}});}
+\DoxyCodeLine{00051   glBufferData(GL\_ELEMENT\_ARRAY\_BUFFER, \textcolor{keyword}{sizeof}(indices), indices, GL\_STATIC\_DRAW);}
+\DoxyCodeLine{00052 }
+\DoxyCodeLine{00053   glBindBuffer(GL\_ARRAY\_BUFFER, 0);}
+\DoxyCodeLine{00054   glBindVertexArray(0);}
+\DoxyCodeLine{00055 }
+\DoxyCodeLine{00056   \mbox{\hyperlink{resources_8c_a16641af0e8abb4648df5964f32f30adb}{resources\_add}}(buf, \mbox{\hyperlink{buffer_8c_a537219af5df0e5eda574b334834490c5}{buffer\_destroy}});}
+\DoxyCodeLine{00057 }
+\DoxyCodeLine{00058   \textcolor{keywordflow}{return} buf;}
+\DoxyCodeLine{00059 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{buffer_8c_a537219af5df0e5eda574b334834490c5}\label{buffer_8c_a537219af5df0e5eda574b334834490c5}} 
+\index{buffer.c@{buffer.c}!buffer\_destroy@{buffer\_destroy}}
+\index{buffer\_destroy@{buffer\_destroy}!buffer.c@{buffer.c}}
+\doxysubsubsection{\texorpdfstring{buffer\_destroy()}{buffer\_destroy()}}
+{\footnotesize\ttfamily void buffer\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structbuffer}{buffer}} $\ast$}]{buf }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{buffer_8c_source_l00061}{61}} of file \mbox{\hyperlink{buffer_8c_source}{buffer.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00061                                  \{}
+\DoxyCodeLine{00062   glDeleteVertexArrays(1, \&buf-\/>\mbox{\hyperlink{structbuffer_a9e7abafd663daccb948dc1e02ef69b05}{vao}});}
+\DoxyCodeLine{00063   glDeleteBuffers(1, \&buf-\/>\mbox{\hyperlink{structbuffer_a00f6df46c2691ef2c1c4259f6b1e0c1d}{vbo}});}
+\DoxyCodeLine{00064   glDeleteBuffers(1, \&buf-\/>\mbox{\hyperlink{structbuffer_a328ff05eb70d2db8ccc9dfa9573ce80d}{ebo}});}
+\DoxyCodeLine{00065 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{buffer_8c_a1167efc273616c5dc7541d68a5488ed4}\label{buffer_8c_a1167efc273616c5dc7541d68a5488ed4}} 
+\index{buffer.c@{buffer.c}!buffer\_set\_data@{buffer\_set\_data}}
+\index{buffer\_set\_data@{buffer\_set\_data}!buffer.c@{buffer.c}}
+\doxysubsubsection{\texorpdfstring{buffer\_set\_data()}{buffer\_set\_data()}}
+{\footnotesize\ttfamily void buffer\+\_\+set\+\_\+data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structbuffer}{buffer}} $\ast$}]{buf,  }\item[{\mbox{\hyperlink{config_8h_a48d6cd8e4135fb2ff7e7f2dac84089ec}{i32}}}]{size,  }\item[{const void $\ast$}]{data }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{buffer_8c_source_l00074}{74}} of file \mbox{\hyperlink{buffer_8c_source}{buffer.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00074                                                               \{}
+\DoxyCodeLine{00075   glBindBuffer(GL\_ARRAY\_BUFFER, buf-\/>\mbox{\hyperlink{structbuffer_a00f6df46c2691ef2c1c4259f6b1e0c1d}{vbo}});}
+\DoxyCodeLine{00076   glBufferSubData(GL\_ARRAY\_BUFFER, 0, size, data);}
+\DoxyCodeLine{00077 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{buffer_8c_a819e182a31edeb87b39af26beb49f24e}\label{buffer_8c_a819e182a31edeb87b39af26beb49f24e}} 
+\index{buffer.c@{buffer.c}!buffer\_unbind@{buffer\_unbind}}
+\index{buffer\_unbind@{buffer\_unbind}!buffer.c@{buffer.c}}
+\doxysubsubsection{\texorpdfstring{buffer\_unbind()}{buffer\_unbind()}}
+{\footnotesize\ttfamily void buffer\+\_\+unbind (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{buffer_8c_source_l00071}{71}} of file \mbox{\hyperlink{buffer_8c_source}{buffer.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00071                      \{}
+\DoxyCodeLine{00072   glBindVertexArray(0);}
+\DoxyCodeLine{00073 \}}
+
+\end{DoxyCode}

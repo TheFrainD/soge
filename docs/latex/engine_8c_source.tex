@@ -1,0 +1,162 @@
+\hypertarget{engine_8c_source}{}\doxysection{engine.\+c}
+\label{engine_8c_source}\index{src/vally/core/engine.c@{src/vally/core/engine.c}}
+\mbox{\hyperlink{engine_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00001}00001 \textcolor{comment}{//================================================================================}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00002}00002 \textcolor{comment}{// Vally 0.1indev}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00003}00003 \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00004}00004 \textcolor{comment}{// Copyright (c) 2022 Dmytro Zykov}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00006}00006 \textcolor{comment}{// Permission is hereby granted, free of charge, to any person obtaining a copy}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00007}00007 \textcolor{comment}{// of this software and associated documentation files (the "{}Software"{}), to deal}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00008}00008 \textcolor{comment}{// in the Software without restriction, including without limitation the rights}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00009}00009 \textcolor{comment}{// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00010}00010 \textcolor{comment}{// copies of the Software, and to permit persons to whom the Software is}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00011}00011 \textcolor{comment}{// furnished to do so, subject to the following conditions:}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00013}00013 \textcolor{comment}{// The above copyright notice and this permission notice shall be included in all}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00014}00014 \textcolor{comment}{// copies or substantial portions of the Software.}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00016}00016 \textcolor{comment}{// THE SOFTWARE IS PROVIDED "{}AS IS"{}, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00017}00017 \textcolor{comment}{// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00018}00018 \textcolor{comment}{// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00019}00019 \textcolor{comment}{// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00020}00020 \textcolor{comment}{// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00021}00021 \textcolor{comment}{// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00022}00022 \textcolor{comment}{// SOFTWARE.}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00023}00023 \textcolor{comment}{//=================================================================================}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00025}00025 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{engine_8h}{vally/core/engine.h}}>}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00027}00027 \textcolor{comment}{//-\/-\/-\/-\/-\/Internal includes-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00028}00028 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{assertions_8h}{vally/core/assertions.h}}>}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00029}00029 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{logger_8h}{vally/core/logger.h}}>}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00030}00030 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{window_8h}{vally/core/window.h}}>}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00031}00031 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{event_8h}{vally/core/event.h}}>}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00032}00032 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{input_8h}{vally/core/input.h}}>}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00033}00033 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{time_8h}{vally/core/time.h}}>}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00034}00034 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{resources_8h}{vally/resources/resources.h}}>}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00035}00035 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{renderer_8h}{vally/renderer/renderer.h}}>}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00036}00036 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{ecs_8h}{vally/ecs/ecs.h}}>}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00037}00037 \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00039}00039 \textcolor{comment}{// Engine state struct.}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00040}00040 \textcolor{comment}{// Contains all vital data}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00041}\mbox{\hyperlink{structengine__state}{00041}} \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00042}\mbox{\hyperlink{structengine__state_a35f38473e4e944a16d7e830f74b1d1b1}{00042}}   \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} \mbox{\hyperlink{structengine__state_a35f38473e4e944a16d7e830f74b1d1b1}{is\_runing}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00043}\mbox{\hyperlink{structengine__state_a7b1ea0b42d5a04b5fb07e6a8a1cbe83a}{00043}}   \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} \mbox{\hyperlink{structengine__state_a7b1ea0b42d5a04b5fb07e6a8a1cbe83a}{is\_suspended}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00044}\mbox{\hyperlink{structengine__state_ac7ea088daa6ed7e9cac891fba8bfd0c2}{00044}}   \mbox{\hyperlink{config_8h_ad309dbcaeea13aa602d686964156ea0b}{i16}} \mbox{\hyperlink{structengine__state_ac7ea088daa6ed7e9cac891fba8bfd0c2}{width}};  \textcolor{comment}{/* Not sure that it's needed */}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00045}\mbox{\hyperlink{structengine__state_a8decb36466adee4bf95034ac45bf3451}{00045}}   \mbox{\hyperlink{config_8h_ad309dbcaeea13aa602d686964156ea0b}{i16}} \mbox{\hyperlink{structengine__state_a8decb36466adee4bf95034ac45bf3451}{height}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00046}\mbox{\hyperlink{structengine__state_a709037bcaa8d22ce5422328794f1aa65}{00046}}   \mbox{\hyperlink{config_8h_a94dab5770726ccbef8c7d026cfbdf8e5}{f64}} \mbox{\hyperlink{structengine__state_a709037bcaa8d22ce5422328794f1aa65}{last\_time}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00048}00048   \textcolor{comment}{// Functions}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00049}\mbox{\hyperlink{structengine__state_a006557bf3a34f341cb945ad8e271ed20}{00049}}   \mbox{\hyperlink{engine_8h_a08ecdce65eb5571457cdb141ec5aa149}{engine\_start}} \mbox{\hyperlink{structengine__state_a006557bf3a34f341cb945ad8e271ed20}{start}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00050}\mbox{\hyperlink{structengine__state_a90a1cd6699fa5c5aac316eff9d061e4d}{00050}}   \mbox{\hyperlink{engine_8h_ae089957072efde72d93b362604bae8d4}{engine\_update}} \mbox{\hyperlink{structengine__state_a90a1cd6699fa5c5aac316eff9d061e4d}{update}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00051}\mbox{\hyperlink{structengine__state_a558beeb206a3aeab18c1b4717ca7170b}{00051}}   \mbox{\hyperlink{engine_8h_a7b3c70f336a7dd1de171c3a23ed65a08}{engine\_render}} \mbox{\hyperlink{structengine__state_a558beeb206a3aeab18c1b4717ca7170b}{render}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00052}00052 \} \mbox{\hyperlink{structengine__state}{engine\_state}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00053}00053 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00054}00054 \textcolor{comment}{// Initialized flag}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00055}00055 \textcolor{keyword}{static} \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} initialized = \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00056}00056 \textcolor{keyword}{static} \mbox{\hyperlink{structengine__state}{engine\_state}} state;}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00058}\mbox{\hyperlink{engine_8c_ac1dbeec1d859459d5730ebcade62ef97}{00058}} \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} \mbox{\hyperlink{engine_8c_ac1dbeec1d859459d5730ebcade62ef97}{engine\_create}}(\mbox{\hyperlink{config_8h_ad309dbcaeea13aa602d686964156ea0b}{i16}} width, \mbox{\hyperlink{config_8h_ad309dbcaeea13aa602d686964156ea0b}{i16}} height, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *title) \{}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00059}00059   \textcolor{keywordflow}{if} (initialized) \{}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00060}00060     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}engine\_create cannot be called more than once"{}});}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00061}00061     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00062}00062   \}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00063}00063 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00064}00064   state.\mbox{\hyperlink{structengine__state_a35f38473e4e944a16d7e830f74b1d1b1}{is\_runing}} = \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00065}00065   state.\mbox{\hyperlink{structengine__state_a7b1ea0b42d5a04b5fb07e6a8a1cbe83a}{is\_suspended}} = \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00067}00067   \textcolor{comment}{//=======Initialze subsystems===========}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00068}00068   \mbox{\hyperlink{logger_8c_af983bb4c29c37e2ef965bef699dde16d}{logger\_init}}();}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00069}00069 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00070}00070   \mbox{\hyperlink{logger_8h_a787875cab0f42571d60be03d1762c00a}{VALLY\_INFO}}(\textcolor{stringliteral}{"{}VALLY starts"{}});}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00072}00072   state.\mbox{\hyperlink{structengine__state_ac7ea088daa6ed7e9cac891fba8bfd0c2}{width}} = width;}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00073}00073   state.\mbox{\hyperlink{structengine__state_a8decb36466adee4bf95034ac45bf3451}{height}} = height;}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00074}00074   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{window_8c_aa9e11f3c895eb9257a996d77d280c520}{window\_create}}(width, height, title)) \{}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00075}00075     \mbox{\hyperlink{logger_8h_ab2601211ce77503ba5fac7c144dbfa89}{VALLY\_FATAL}}(\textcolor{stringliteral}{"{}Could not initialize the window system!"{}});}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00076}00076     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00077}00077   \}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00079}00079   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{event_8c_a5b0f78273328aee6d4f9ce3949a6b727}{event\_init}}()) \{}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00080}00080     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}Could not initialize the event system!"{}});}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00081}00081     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00082}00082   \}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00083}00083 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00084}00084   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{input_8c_a593bcbbd513523292f792c80ee8f9e43}{input\_init}}()) \{}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00085}00085     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}Could not initialize the input system!"{}});}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00086}00086     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00087}00087   \}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00089}00089   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{resources_8c_a2bdcbd579f013459bcc7f55b7457613b}{resources\_init}}()) \{}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00090}00090     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}Could not initialize the resource system!"{}});}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00091}00091     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00092}00092   \}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00093}00093 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00094}00094   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{renderer_8c_a4ae2b9fe0b10687f04b90a3d8b2556bd}{renderer\_init}}()) \{}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00095}00095     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}Could not initialize the renderer system!"{}});}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00096}00096     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00097}00097   \}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00098}00098 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00099}00099   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{ecs_8c_ab40fd1fa64a61a9cc15240e9a5864316}{ecs\_init}}()) \{}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00100}00100     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}Could not initialize ECS!"{}});}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00101}00101     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00102}00102   \}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00103}00103   \textcolor{comment}{//=====================================}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00104}00104 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00105}00105 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00106}00106   state.\mbox{\hyperlink{structengine__state_a709037bcaa8d22ce5422328794f1aa65}{last\_time}} = \mbox{\hyperlink{time_8c_a40c527fa3a4dfe786ce3f977c78e653a}{time\_now}}();}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00107}00107 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00108}00108   initialized = \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00110}00110   \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00111}00111 \}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00112}00112 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00113}\mbox{\hyperlink{engine_8c_ab5083309035e25d580da3da3748bb70e}{00113}} \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} \mbox{\hyperlink{engine_8c_ab5083309035e25d580da3da3748bb70e}{engine\_run}}(\mbox{\hyperlink{engine_8h_a08ecdce65eb5571457cdb141ec5aa149}{engine\_start}} start, \mbox{\hyperlink{engine_8h_ae089957072efde72d93b362604bae8d4}{engine\_update}} update, \mbox{\hyperlink{engine_8h_a7b3c70f336a7dd1de171c3a23ed65a08}{engine\_render}} render) \{}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00114}00114   \textcolor{keywordflow}{if} (!start || !update || !render) \{}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00115}00115     \mbox{\hyperlink{logger_8h_ab2601211ce77503ba5fac7c144dbfa89}{VALLY\_FATAL}}(\textcolor{stringliteral}{"{}Could not run the engine! Functions must not be NULL!"{}});}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00116}00116     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00117}00117   \}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00118}00118 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00119}00119   start();}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00120}00120 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00121}00121   \textcolor{keywordflow}{while} (state.\mbox{\hyperlink{structengine__state_a35f38473e4e944a16d7e830f74b1d1b1}{is\_runing}}) \{}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00122}00122     \mbox{\hyperlink{config_8h_a94dab5770726ccbef8c7d026cfbdf8e5}{f64}} current\_time = \mbox{\hyperlink{time_8c_a40c527fa3a4dfe786ce3f977c78e653a}{time\_now}}();}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00123}00123     \mbox{\hyperlink{config_8h_a94dab5770726ccbef8c7d026cfbdf8e5}{f64}} delta\_time = current\_time -\/ state.\mbox{\hyperlink{structengine__state_a709037bcaa8d22ce5422328794f1aa65}{last\_time}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00124}00124 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00125}00125     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{window_8c_a8eef3112ffc6da9114150e5debc62ea7}{window\_poll\_events}}()) \{}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00126}00126       state.\mbox{\hyperlink{structengine__state_a35f38473e4e944a16d7e830f74b1d1b1}{is\_runing}} = \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00127}00127     \}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00128}00128 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00129}00129     update(delta\_time);}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00130}00130 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00131}00131     \mbox{\hyperlink{animator_8c_a15f32963c1ac3b6fe5afbc4cdc14b996}{ecs\_animator\_update}}(delta\_time);}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00132}00132 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00133}00133     \mbox{\hyperlink{renderer_8c_a96a061c5050e42b8d179249b2e8a8d3d}{renderer\_clear\_screen}}();}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00134}00134     \mbox{\hyperlink{renderer_8c_aa3cb3b8ee10c8cee851289641a7efe1b}{renderer\_begin\_batch}}();}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00135}00135     \mbox{\hyperlink{spriterenderer_8c_ab4ff416b9b83f7e3988b60652cc479b4}{ecs\_spriterenderer\_update}}();}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00136}00136     render(delta\_time);}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00137}00137     \mbox{\hyperlink{renderer_8c_a90ce426230127f65390165eb21e98d67}{renderer\_end\_batch}}();}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00138}00138     \mbox{\hyperlink{renderer_8c_a209ddec86b275bb211896bcf1e7cfafa}{renderer\_flush}}();}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00139}00139 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00140}00140     \mbox{\hyperlink{window_8c_a7a456564f5873a0c7d7809278ffc7fed}{window\_swap\_buffers}}();}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00141}00141 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00142}00142     state.\mbox{\hyperlink{structengine__state_a709037bcaa8d22ce5422328794f1aa65}{last\_time}} = current\_time;}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00143}00143   \}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00144}00144 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00145}00145   state.\mbox{\hyperlink{structengine__state_a35f38473e4e944a16d7e830f74b1d1b1}{is\_runing}} = \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00146}00146 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00147}00147   \textcolor{comment}{// Termiante all systems}}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00148}00148   \mbox{\hyperlink{event_8c_af5c0fd0bca4f543c61042cf947de7ef9}{event\_terminate}}();}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00149}00149   \mbox{\hyperlink{input_8c_a95fa09da1f1bf6a0fdd462b0d4ae2d8b}{input\_terminate}}();}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00150}00150   \mbox{\hyperlink{renderer_8c_aa1882befd9106950e8c2913cc66b093a}{renderer\_terminate}}();}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00151}00151   \mbox{\hyperlink{resources_8c_a6105d50e032c659b7403561b1f108195}{resources\_terminate}}();}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00152}00152   \mbox{\hyperlink{window_8c_a01212a4a8353016a1350ee152faeebd3}{window\_terminate}}();}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00153}00153   \mbox{\hyperlink{logger_8h_a787875cab0f42571d60be03d1762c00a}{VALLY\_INFO}}(\textcolor{stringliteral}{"{}Shutting down"{}});}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00154}00154 }
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00155}00155   \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{\Hypertarget{engine_8c_source_l00156}00156 \}}
+
+\end{DoxyCode}

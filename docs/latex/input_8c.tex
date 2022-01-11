@@ -1,0 +1,216 @@
+\hypertarget{input_8c}{}\doxysection{src/vally/core/input.c File Reference}
+\label{input_8c}\index{src/vally/core/input.c@{src/vally/core/input.c}}
+{\ttfamily \#include $<$vally/core/input.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$GLFW/glfw3.\+h$>$}\newline
+{\ttfamily \#include $<$vally/core/window.\+h$>$}\newline
+{\ttfamily \#include $<$vally/core/event.\+h$>$}\newline
+{\ttfamily \#include $<$vally/core/logger.\+h$>$}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structkeyboard__state}{keyboard\+\_\+state}}
+\item 
+struct \mbox{\hyperlink{structmouse__state}{mouse\+\_\+state}}
+\item 
+struct \mbox{\hyperlink{structinput__state}{input\+\_\+state}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} \mbox{\hyperlink{input_8c_a593bcbbd513523292f792c80ee8f9e43}{input\+\_\+init}} ()
+\item 
+void \mbox{\hyperlink{input_8c_a95fa09da1f1bf6a0fdd462b0d4ae2d8b}{input\+\_\+terminate}} ()
+\item 
+\mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} \mbox{\hyperlink{input_8c_a9ce915e642243d80af0f5829a0bc28f0}{input\+\_\+key\+\_\+pressed}} (\mbox{\hyperlink{config_8h_ace9d960e74685e2cd84b36132dbbf8aa}{u16}} key)
+\item 
+\mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} \mbox{\hyperlink{input_8c_a5e745aef905fe5c1218b333e0fc50dd9}{input\+\_\+key\+\_\+released}} (\mbox{\hyperlink{config_8h_ace9d960e74685e2cd84b36132dbbf8aa}{u16}} key)
+\item 
+\mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} \mbox{\hyperlink{input_8c_ab7f53def87a73581c28ae7c5bb19f9cf}{input\+\_\+mouse\+\_\+button\+\_\+pressed}} (\mbox{\hyperlink{config_8h_ace9d960e74685e2cd84b36132dbbf8aa}{u16}} button)
+\item 
+\mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} \mbox{\hyperlink{input_8c_a9b1f0bcdcf39e9a9f38d97192eb58f3a}{input\+\_\+mouse\+\_\+button\+\_\+released}} (\mbox{\hyperlink{config_8h_ace9d960e74685e2cd84b36132dbbf8aa}{u16}} button)
+\item 
+void \mbox{\hyperlink{input_8c_a54314e90b3adb3288a8625e72f442d16}{input\+\_\+mouse\+\_\+position}} (\mbox{\hyperlink{config_8h_a94dab5770726ccbef8c7d026cfbdf8e5}{f64}} $\ast$x, \mbox{\hyperlink{config_8h_a94dab5770726ccbef8c7d026cfbdf8e5}{f64}} $\ast$y)
+\item 
+void \mbox{\hyperlink{input_8c_a836ca347d344d06eada42c28cc4556a3}{input\+\_\+mouse\+\_\+prev\+\_\+position}} (\mbox{\hyperlink{config_8h_a94dab5770726ccbef8c7d026cfbdf8e5}{f64}} $\ast$x, \mbox{\hyperlink{config_8h_a94dab5770726ccbef8c7d026cfbdf8e5}{f64}} $\ast$y)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{input_8c_a593bcbbd513523292f792c80ee8f9e43}\label{input_8c_a593bcbbd513523292f792c80ee8f9e43}} 
+\index{input.c@{input.c}!input\_init@{input\_init}}
+\index{input\_init@{input\_init}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{input\_init()}{input\_init()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} input\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{input_8c_source_l00065}{65}} of file \mbox{\hyperlink{input_8c_source}{input.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00065                 \{}
+\DoxyCodeLine{00066   memset(state.\mbox{\hyperlink{structinput__state_acb662b3dbc0324f207e2ea56368065a4}{keyboard}}.\mbox{\hyperlink{structkeyboard__state_a8a462aa5d2f2e017f3ad6362ab2f95df}{keys}}, \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}}, \textcolor{keyword}{sizeof}(state.\mbox{\hyperlink{structinput__state_acb662b3dbc0324f207e2ea56368065a4}{keyboard}}.\mbox{\hyperlink{structkeyboard__state_a8a462aa5d2f2e017f3ad6362ab2f95df}{keys}}));}
+\DoxyCodeLine{00067   memset(state.\mbox{\hyperlink{structinput__state_aa8fff3ca3d9870f560be016f02888490}{mouse}}.\mbox{\hyperlink{structmouse__state_a71411d9a32ce5842e5b5d65b4ca54bd7}{buttons}}, \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}}, \textcolor{keyword}{sizeof}(state.\mbox{\hyperlink{structinput__state_aa8fff3ca3d9870f560be016f02888490}{mouse}}.\mbox{\hyperlink{structmouse__state_a71411d9a32ce5842e5b5d65b4ca54bd7}{buttons}}));}
+\DoxyCodeLine{00068 }
+\DoxyCodeLine{00069   \mbox{\hyperlink{window_8c_a22abffc596cdf4662e42a888bf0f4ae7}{window\_set\_key\_callback}}(key\_callback);}
+\DoxyCodeLine{00070   \mbox{\hyperlink{window_8c_a5a2328a25f9e25e6959db3d2000490cb}{window\_set\_mouse\_button\_callback}}(mouse\_button\_callback);}
+\DoxyCodeLine{00071   \mbox{\hyperlink{window_8c_a98c8dab3eaabc474c6c190329340e92e}{window\_set\_cursor\_position\_callback}}(cursor\_position\_callback);}
+\DoxyCodeLine{00072 }
+\DoxyCodeLine{00073   initialized = \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{00074   \mbox{\hyperlink{logger_8h_af933c6341b0deeb4ee1a540da61b9536}{VALLY\_TRACE}}(\textcolor{stringliteral}{"{}Input system initialized"{}});}
+\DoxyCodeLine{00075 }
+\DoxyCodeLine{00076   \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}};}
+\DoxyCodeLine{00077 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{input_8c_a9ce915e642243d80af0f5829a0bc28f0}\label{input_8c_a9ce915e642243d80af0f5829a0bc28f0}} 
+\index{input.c@{input.c}!input\_key\_pressed@{input\_key\_pressed}}
+\index{input\_key\_pressed@{input\_key\_pressed}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{input\_key\_pressed()}{input\_key\_pressed()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} input\+\_\+key\+\_\+pressed (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{config_8h_ace9d960e74685e2cd84b36132dbbf8aa}{u16}}}]{key }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{input_8c_source_l00083}{83}} of file \mbox{\hyperlink{input_8c_source}{input.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00083                               \{}
+\DoxyCodeLine{00084   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00085     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{00086   \}}
+\DoxyCodeLine{00087 }
+\DoxyCodeLine{00088   \textcolor{keywordflow}{return} state.\mbox{\hyperlink{structinput__state_acb662b3dbc0324f207e2ea56368065a4}{keyboard}}.\mbox{\hyperlink{structkeyboard__state_a8a462aa5d2f2e017f3ad6362ab2f95df}{keys}}[key];}
+\DoxyCodeLine{00089 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{input_8c_a5e745aef905fe5c1218b333e0fc50dd9}\label{input_8c_a5e745aef905fe5c1218b333e0fc50dd9}} 
+\index{input.c@{input.c}!input\_key\_released@{input\_key\_released}}
+\index{input\_key\_released@{input\_key\_released}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{input\_key\_released()}{input\_key\_released()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} input\+\_\+key\+\_\+released (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{config_8h_ace9d960e74685e2cd84b36132dbbf8aa}{u16}}}]{key }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{input_8c_source_l00091}{91}} of file \mbox{\hyperlink{input_8c_source}{input.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00091                                \{}
+\DoxyCodeLine{00092   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00093     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{00094   \}}
+\DoxyCodeLine{00095   }
+\DoxyCodeLine{00096   \textcolor{keywordflow}{return} !state.\mbox{\hyperlink{structinput__state_acb662b3dbc0324f207e2ea56368065a4}{keyboard}}.\mbox{\hyperlink{structkeyboard__state_a8a462aa5d2f2e017f3ad6362ab2f95df}{keys}}[key];}
+\DoxyCodeLine{00097 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{input_8c_ab7f53def87a73581c28ae7c5bb19f9cf}\label{input_8c_ab7f53def87a73581c28ae7c5bb19f9cf}} 
+\index{input.c@{input.c}!input\_mouse\_button\_pressed@{input\_mouse\_button\_pressed}}
+\index{input\_mouse\_button\_pressed@{input\_mouse\_button\_pressed}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{input\_mouse\_button\_pressed()}{input\_mouse\_button\_pressed()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} input\+\_\+mouse\+\_\+button\+\_\+pressed (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{config_8h_ace9d960e74685e2cd84b36132dbbf8aa}{u16}}}]{button }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{input_8c_source_l00099}{99}} of file \mbox{\hyperlink{input_8c_source}{input.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00099                                           \{}
+\DoxyCodeLine{00100   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00101     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{00102   \}}
+\DoxyCodeLine{00103   }
+\DoxyCodeLine{00104   \textcolor{keywordflow}{return} state.\mbox{\hyperlink{structinput__state_aa8fff3ca3d9870f560be016f02888490}{mouse}}.\mbox{\hyperlink{structmouse__state_a71411d9a32ce5842e5b5d65b4ca54bd7}{buttons}}[button];}
+\DoxyCodeLine{00105 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{input_8c_a9b1f0bcdcf39e9a9f38d97192eb58f3a}\label{input_8c_a9b1f0bcdcf39e9a9f38d97192eb58f3a}} 
+\index{input.c@{input.c}!input\_mouse\_button\_released@{input\_mouse\_button\_released}}
+\index{input\_mouse\_button\_released@{input\_mouse\_button\_released}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{input\_mouse\_button\_released()}{input\_mouse\_button\_released()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{config_8h_a4d99477750540df819f904cf665cbfb4}{b8}} input\+\_\+mouse\+\_\+button\+\_\+released (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{config_8h_ace9d960e74685e2cd84b36132dbbf8aa}{u16}}}]{button }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{input_8c_source_l00107}{107}} of file \mbox{\hyperlink{input_8c_source}{input.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00107                                            \{}
+\DoxyCodeLine{00108   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00109     \textcolor{keywordflow}{return} \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{00110   \}}
+\DoxyCodeLine{00111   }
+\DoxyCodeLine{00112   \textcolor{keywordflow}{return} !state.\mbox{\hyperlink{structinput__state_aa8fff3ca3d9870f560be016f02888490}{mouse}}.\mbox{\hyperlink{structmouse__state_a71411d9a32ce5842e5b5d65b4ca54bd7}{buttons}}[button];}
+\DoxyCodeLine{00113 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{input_8c_a54314e90b3adb3288a8625e72f442d16}\label{input_8c_a54314e90b3adb3288a8625e72f442d16}} 
+\index{input.c@{input.c}!input\_mouse\_position@{input\_mouse\_position}}
+\index{input\_mouse\_position@{input\_mouse\_position}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{input\_mouse\_position()}{input\_mouse\_position()}}
+{\footnotesize\ttfamily void input\+\_\+mouse\+\_\+position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{config_8h_a94dab5770726ccbef8c7d026cfbdf8e5}{f64}} $\ast$}]{x,  }\item[{\mbox{\hyperlink{config_8h_a94dab5770726ccbef8c7d026cfbdf8e5}{f64}} $\ast$}]{y }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{input_8c_source_l00115}{115}} of file \mbox{\hyperlink{input_8c_source}{input.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00115                                           \{}
+\DoxyCodeLine{00116   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00117     *x = 0;}
+\DoxyCodeLine{00118     *y = 0;}
+\DoxyCodeLine{00119     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00120   \}}
+\DoxyCodeLine{00121   }
+\DoxyCodeLine{00122   *x = state.\mbox{\hyperlink{structinput__state_aa8fff3ca3d9870f560be016f02888490}{mouse}}.\mbox{\hyperlink{structmouse__state_a39b5b62aa0aaad2546fa9c674027cca0}{x}};}
+\DoxyCodeLine{00123   *y = state.\mbox{\hyperlink{structinput__state_aa8fff3ca3d9870f560be016f02888490}{mouse}}.\mbox{\hyperlink{structmouse__state_adf039f7a6973dc6d155cf572409321bd}{y}};}
+\DoxyCodeLine{00124 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{input_8c_a836ca347d344d06eada42c28cc4556a3}\label{input_8c_a836ca347d344d06eada42c28cc4556a3}} 
+\index{input.c@{input.c}!input\_mouse\_prev\_position@{input\_mouse\_prev\_position}}
+\index{input\_mouse\_prev\_position@{input\_mouse\_prev\_position}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{input\_mouse\_prev\_position()}{input\_mouse\_prev\_position()}}
+{\footnotesize\ttfamily void input\+\_\+mouse\+\_\+prev\+\_\+position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{config_8h_a94dab5770726ccbef8c7d026cfbdf8e5}{f64}} $\ast$}]{x,  }\item[{\mbox{\hyperlink{config_8h_a94dab5770726ccbef8c7d026cfbdf8e5}{f64}} $\ast$}]{y }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{input_8c_source_l00125}{125}} of file \mbox{\hyperlink{input_8c_source}{input.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00125                                                \{}
+\DoxyCodeLine{00126   \textcolor{keywordflow}{if} (!initialized) \{}
+\DoxyCodeLine{00127     *x = 0;}
+\DoxyCodeLine{00128     *y = 0;}
+\DoxyCodeLine{00129     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00130   \}}
+\DoxyCodeLine{00131 }
+\DoxyCodeLine{00132   *x = state.\mbox{\hyperlink{structinput__state_aa8fff3ca3d9870f560be016f02888490}{mouse}}.\mbox{\hyperlink{structmouse__state_aae47f9452e5e0c0e5a997ded0f8b2810}{prev\_x}};}
+\DoxyCodeLine{00133   *y = state.\mbox{\hyperlink{structinput__state_aa8fff3ca3d9870f560be016f02888490}{mouse}}.\mbox{\hyperlink{structmouse__state_a5529ef4e68ce069fd99f8e3109d84467}{prev\_y}};}
+\DoxyCodeLine{00134 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{input_8c_a95fa09da1f1bf6a0fdd462b0d4ae2d8b}\label{input_8c_a95fa09da1f1bf6a0fdd462b0d4ae2d8b}} 
+\index{input.c@{input.c}!input\_terminate@{input\_terminate}}
+\index{input\_terminate@{input\_terminate}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{input\_terminate()}{input\_terminate()}}
+{\footnotesize\ttfamily void input\+\_\+terminate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{input_8c_source_l00078}{78}} of file \mbox{\hyperlink{input_8c_source}{input.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00078                        \{}
+\DoxyCodeLine{00079   initialized = \mbox{\hyperlink{config_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}};}
+\DoxyCodeLine{00080   \mbox{\hyperlink{logger_8h_af933c6341b0deeb4ee1a540da61b9536}{VALLY\_TRACE}}(\textcolor{stringliteral}{"{}Input system terminated"{}});}
+\DoxyCodeLine{00081 \}}
+
+\end{DoxyCode}
