@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_image__write__test_8c">
+<title>deps/stb/tests/image_write_test.c File Reference</title>
+<indexterm><primary>deps/stb/tests/image_write_test.c</primary></indexterm>
+<programlisting>#include &quot;stb_image_write.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_image__write__test_8c_1af453f0874b279a4e019b538c84cc8587">STB_IMAGE_WRITE_STATIC</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_image__write__test_8c_1aefe397a94e8feddc652f92ef40ce9597">STB_IMAGE_WRITE_IMPLEMENTATION</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_image__write__test_8c_1a4089b2e1b62709836196b7b2e2dd5d49">image_write_test</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_image__write__test_8c_1aefe397a94e8feddc652f92ef40ce9597"/>    <section>
+    <title>STB_IMAGE_WRITE_IMPLEMENTATION</title>
+<indexterm><primary>STB_IMAGE_WRITE_IMPLEMENTATION</primary><secondary>image_write_test.c</secondary></indexterm>
+<indexterm><primary>image_write_test.c</primary><secondary>STB_IMAGE_WRITE_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define STB_IMAGE_WRITE_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 5 of file image_write_test.c.</para>
+    </section><anchor xml:id="_image__write__test_8c_1af453f0874b279a4e019b538c84cc8587"/>    <section>
+    <title>STB_IMAGE_WRITE_STATIC</title>
+<indexterm><primary>STB_IMAGE_WRITE_STATIC</primary><secondary>image_write_test.c</secondary></indexterm>
+<indexterm><primary>image_write_test.c</primary><secondary>STB_IMAGE_WRITE_STATIC</secondary></indexterm>
+<para><computeroutput>#define STB_IMAGE_WRITE_STATIC</computeroutput></para><para>
+Definition at line 4 of file image_write_test.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_image__write__test_8c_1a4089b2e1b62709836196b7b2e2dd5d49"/>    <section>
+    <title>image_write_test()</title>
+<indexterm><primary>image_write_test</primary><secondary>image_write_test.c</secondary></indexterm>
+<indexterm><primary>image_write_test.c</primary><secondary>image_write_test</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> image_write_test (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 20 of file image_write_test.c.</para>
+<programlisting>21 {
+22 &#32;&#32;&#32;<emphasis role="comment">//&#32;make&#32;a&#32;RGB&#32;version&#32;of&#32;the&#32;template&#32;image</emphasis>
+23 &#32;&#32;&#32;<emphasis role="comment">//&#32;use&#32;red&#32;on&#32;blue&#32;to&#32;detect&#32;R&lt;-&gt;B&#32;swaps</emphasis>
+24 &#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;img6x5_rgb[6*5*3];
+25 &#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;img6x5_rgbf[6*5*3];
+26 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+27 
+28 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;i&#32;&lt;&#32;6*5;&#32;i++)&#32;{
+29 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;on&#32;=&#32;img6x5_template[i]&#32;==&#32;<emphasis role="charliteral">&apos;*&apos;</emphasis>;
+30 &#32;&#32;&#32;&#32;&#32;&#32;img6x5_rgb[i*3&#32;+&#32;0]&#32;=&#32;on&#32;?&#32;255&#32;:&#32;0;
+31 &#32;&#32;&#32;&#32;&#32;&#32;img6x5_rgb[i*3&#32;+&#32;1]&#32;=&#32;0;
+32 &#32;&#32;&#32;&#32;&#32;&#32;img6x5_rgb[i*3&#32;+&#32;2]&#32;=&#32;on&#32;?&#32;0&#32;:&#32;255;
+33 
+34 &#32;&#32;&#32;&#32;&#32;&#32;img6x5_rgbf[i*3&#32;+&#32;0]&#32;=&#32;on&#32;?&#32;1.0f&#32;:&#32;0.0f;
+35 &#32;&#32;&#32;&#32;&#32;&#32;img6x5_rgbf[i*3&#32;+&#32;1]&#32;=&#32;0.0f;
+36 &#32;&#32;&#32;&#32;&#32;&#32;img6x5_rgbf[i*3&#32;+&#32;2]&#32;=&#32;on&#32;?&#32;0.0f&#32;:&#32;1.0f;
+37 &#32;&#32;&#32;}
+38 
+39 &#32;&#32;&#32;<link linkend="_glfw_2deps_2stb__image__write_8h_1a9c03e5171f6aea47fde6dafcf3249ccf">stbi_write_png</link>(<emphasis role="stringliteral">&quot;output/wr6x5_regular.png&quot;</emphasis>,&#32;6,&#32;5,&#32;3,&#32;img6x5_rgb,&#32;6*3);
+40 &#32;&#32;&#32;<link linkend="_glfw_2deps_2stb__image__write_8h_1a4f63ec842984e5db3edf2da89f16038e">stbi_write_bmp</link>(<emphasis role="stringliteral">&quot;output/wr6x5_regular.bmp&quot;</emphasis>,&#32;6,&#32;5,&#32;3,&#32;img6x5_rgb);
+41 &#32;&#32;&#32;<link linkend="_glfw_2deps_2stb__image__write_8h_1ab7a84427c6d7e894090fbeae3bc8f6da">stbi_write_tga</link>(<emphasis role="stringliteral">&quot;output/wr6x5_regular.tga&quot;</emphasis>,&#32;6,&#32;5,&#32;3,&#32;img6x5_rgb);
+42 &#32;&#32;&#32;<link linkend="_stb_2stb__image__write_8h_1a41048e8f918179d2788284ef9cc2590c">stbi_write_jpg</link>(<emphasis role="stringliteral">&quot;output/wr6x5_regular.jpg&quot;</emphasis>,&#32;6,&#32;5,&#32;3,&#32;img6x5_rgb,&#32;95);
+43 &#32;&#32;&#32;<link linkend="_glfw_2deps_2stb__image__write_8h_1a21f22be0194761e08b682ed543ef6161">stbi_write_hdr</link>(<emphasis role="stringliteral">&quot;output/wr6x5_regular.hdr&quot;</emphasis>,&#32;6,&#32;5,&#32;3,&#32;img6x5_rgbf);
+44 
+45 &#32;&#32;&#32;<link linkend="_stb_2stb__image__write_8h_1a5c41a5d16dc665edd2489b982ba29b85">stbi_flip_vertically_on_write</link>(1);
+46 
+47 &#32;&#32;&#32;<link linkend="_glfw_2deps_2stb__image__write_8h_1a9c03e5171f6aea47fde6dafcf3249ccf">stbi_write_png</link>(<emphasis role="stringliteral">&quot;output/wr6x5_flip.png&quot;</emphasis>,&#32;6,&#32;5,&#32;3,&#32;img6x5_rgb,&#32;6*3);
+48 &#32;&#32;&#32;<link linkend="_glfw_2deps_2stb__image__write_8h_1a4f63ec842984e5db3edf2da89f16038e">stbi_write_bmp</link>(<emphasis role="stringliteral">&quot;output/wr6x5_flip.bmp&quot;</emphasis>,&#32;6,&#32;5,&#32;3,&#32;img6x5_rgb);
+49 &#32;&#32;&#32;<link linkend="_glfw_2deps_2stb__image__write_8h_1ab7a84427c6d7e894090fbeae3bc8f6da">stbi_write_tga</link>(<emphasis role="stringliteral">&quot;output/wr6x5_flip.tga&quot;</emphasis>,&#32;6,&#32;5,&#32;3,&#32;img6x5_rgb);
+50 &#32;&#32;&#32;<link linkend="_stb_2stb__image__write_8h_1a41048e8f918179d2788284ef9cc2590c">stbi_write_jpg</link>(<emphasis role="stringliteral">&quot;output/wr6x5_flip.jpg&quot;</emphasis>,&#32;6,&#32;5,&#32;3,&#32;img6x5_rgb,&#32;95);
+51 &#32;&#32;&#32;<link linkend="_glfw_2deps_2stb__image__write_8h_1a21f22be0194761e08b682ed543ef6161">stbi_write_hdr</link>(<emphasis role="stringliteral">&quot;output/wr6x5_flip.hdr&quot;</emphasis>,&#32;6,&#32;5,&#32;3,&#32;img6x5_rgbf);
+52 }
+</programlisting></section>
+</section>
+</section>

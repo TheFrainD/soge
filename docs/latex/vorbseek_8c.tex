@@ -1,0 +1,214 @@
+\hypertarget{vorbseek_8c}{}\doxysection{deps/stb/tests/vorbseek/vorbseek.c File Reference}
+\label{vorbseek_8c}\index{deps/stb/tests/vorbseek/vorbseek.c@{deps/stb/tests/vorbseek/vorbseek.c}}
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}stb\+\_\+vorbis.\+c\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{vorbseek_8c_a18995c0b9e97a05eeeab2fbd4c97e92e}{S\+T\+B\+\_\+\+V\+O\+R\+B\+I\+S\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+O\+N\+LY}}
+\item 
+\#define \mbox{\hyperlink{vorbseek_8c_a27531e21430e184380049b67027e6110}{S\+A\+M\+P\+L\+E\+S\+\_\+\+T\+O\+\_\+\+T\+E\+ST}}~3000
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{vorbseek_8c_af200cdea9c5fbc81b686a05091f389cf}{try\+\_\+seeking}} (\mbox{\hyperlink{structstb__vorbis}{stb\+\_\+vorbis}} $\ast$\mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}, unsigned int pos, short $\ast$\mbox{\hyperlink{structoutput}{output}}, unsigned int num\+\_\+samples)
+\item 
+int \mbox{\hyperlink{vorbseek_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{vorbseek_8c_a061de03a27e77fc8813602e3ef18604c}{test\+\_\+count}} \mbox{[}5\mbox{]} = \{ 5000, 3000, 2000, 50000, 50000 \}
+\item 
+int \mbox{\hyperlink{vorbseek_8c_a8a23674399b083cd337c0f6038d13969}{test\+\_\+spacing}} \mbox{[}5\mbox{]} = \{ 1, 111, 3337, 7779, 72717 \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{vorbseek_8c_a27531e21430e184380049b67027e6110}\label{vorbseek_8c_a27531e21430e184380049b67027e6110}} 
+\index{vorbseek.c@{vorbseek.c}!SAMPLES\_TO\_TEST@{SAMPLES\_TO\_TEST}}
+\index{SAMPLES\_TO\_TEST@{SAMPLES\_TO\_TEST}!vorbseek.c@{vorbseek.c}}
+\doxysubsubsection{\texorpdfstring{SAMPLES\_TO\_TEST}{SAMPLES\_TO\_TEST}}
+{\footnotesize\ttfamily \#define S\+A\+M\+P\+L\+E\+S\+\_\+\+T\+O\+\_\+\+T\+E\+ST~3000}
+
+
+
+Definition at line 9 of file vorbseek.\+c.
+
+\mbox{\Hypertarget{vorbseek_8c_a18995c0b9e97a05eeeab2fbd4c97e92e}\label{vorbseek_8c_a18995c0b9e97a05eeeab2fbd4c97e92e}} 
+\index{vorbseek.c@{vorbseek.c}!STB\_VORBIS\_HEADER\_ONLY@{STB\_VORBIS\_HEADER\_ONLY}}
+\index{STB\_VORBIS\_HEADER\_ONLY@{STB\_VORBIS\_HEADER\_ONLY}!vorbseek.c@{vorbseek.c}}
+\doxysubsubsection{\texorpdfstring{STB\_VORBIS\_HEADER\_ONLY}{STB\_VORBIS\_HEADER\_ONLY}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+V\+O\+R\+B\+I\+S\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+O\+N\+LY}
+
+
+
+Definition at line 6 of file vorbseek.\+c.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{vorbseek_8c_a3c04138a5bfe5d72780bb7e82a18e627}\label{vorbseek_8c_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{vorbseek.c@{vorbseek.c}!main@{main}}
+\index{main@{main}!vorbseek.c@{vorbseek.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+Definition at line 55 of file vorbseek.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{56 \{}
+\DoxyCodeLine{57    \textcolor{keywordtype}{int} num\_chan, samprate;}
+\DoxyCodeLine{58    \textcolor{keywordtype}{int} i, j, test, phase;}
+\DoxyCodeLine{59    \textcolor{keywordtype}{short} *\mbox{\hyperlink{structoutput}{output}};}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61    \textcolor{keywordflow}{if} (argc == 1) \{}
+\DoxyCodeLine{62       fprintf(stderr, \textcolor{stringliteral}{"Usage: vorbseek \{vorbisfile\} [\{vorbisfile]*]\(\backslash\)n"});}
+\DoxyCodeLine{63       fprintf(stderr, \textcolor{stringliteral}{"Tests various seek offsets to make sure they're sample exact.\(\backslash\)n"});}
+\DoxyCodeLine{64       \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{65    \}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67 \textcolor{preprocessor}{   \#if 0}}
+\DoxyCodeLine{68    \{}
+\DoxyCodeLine{69       \textcolor{comment}{// check that outofmem occurs correctly}}
+\DoxyCodeLine{70       \mbox{\hyperlink{structstb__vorbis__alloc}{stb\_vorbis\_alloc}} va;}
+\DoxyCodeLine{71       va.\mbox{\hyperlink{structstb__vorbis__alloc_a0bb516f56fb154f942d7c8641d33a26e}{alloc\_buffer}} = \mbox{\hyperlink{stb__leakcheck_8h_ac71ce303a4b993665ae00f1e1293ba8b}{malloc}}(1024*1024);}
+\DoxyCodeLine{72       \textcolor{keywordflow}{for} (i=0; i < 1024*1024; i += 10) \{}
+\DoxyCodeLine{73          \textcolor{keywordtype}{int} \mbox{\hyperlink{cave__main_8c_a42c6b1edc1bd763019f0eb5edce18793}{error}}=0;}
+\DoxyCodeLine{74          \mbox{\hyperlink{structstb__vorbis}{stb\_vorbis}} *\mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}};}
+\DoxyCodeLine{75          va.\mbox{\hyperlink{structstb__vorbis__alloc_a04baf605f33de80c7161b27fb2ec5d86}{alloc\_buffer\_length\_in\_bytes}} = i;}
+\DoxyCodeLine{76          \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}} = \mbox{\hyperlink{stb__vorbis_8c_ae32061695d3dca3f5aa042793ef30329}{stb\_vorbis\_open\_filename}}(argv[1], \&\mbox{\hyperlink{cave__main_8c_a42c6b1edc1bd763019f0eb5edce18793}{error}}, \&va);}
+\DoxyCodeLine{77          \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}} != \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}})}
+\DoxyCodeLine{78             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{79          printf(\textcolor{stringliteral}{"Error \%d at \%d\(\backslash\)n"}, \mbox{\hyperlink{cave__main_8c_a42c6b1edc1bd763019f0eb5edce18793}{error}}, i);}
+\DoxyCodeLine{80       \}}
+\DoxyCodeLine{81    \}}
+\DoxyCodeLine{82 \textcolor{preprocessor}{   \#endif}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84    \textcolor{keywordflow}{for} (j=1; j < argc; ++j) \{}
+\DoxyCodeLine{85       \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} successes=0, attempts = 0;}
+\DoxyCodeLine{86       \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} num\_samples = \mbox{\hyperlink{stb__vorbis_8c_a690147b6b125eb33e5f77d8f8453e97f}{stb\_vorbis\_decode\_filename}}(argv[j], \&num\_chan, \&samprate, \&\mbox{\hyperlink{structoutput}{output}});}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90       \textcolor{keywordflow}{if} (num\_samples == 0xffffffff) \{}
+\DoxyCodeLine{91          fprintf(stderr, \textcolor{stringliteral}{"Error: couldn't open file or not vorbis file: \%s\(\backslash\)n"}, argv[j]);}
+\DoxyCodeLine{92          \textcolor{keywordflow}{goto} fail;}
+\DoxyCodeLine{93       \}}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95       \textcolor{keywordflow}{if} (num\_chan != 2) \{}
+\DoxyCodeLine{96          fprintf(stderr, \textcolor{stringliteral}{"vorbseek testing only works with files with 2 channels, \%s has \%d\(\backslash\)n"}, argv[j], num\_chan);}
+\DoxyCodeLine{97          \textcolor{keywordflow}{goto} fail;}
+\DoxyCodeLine{98       \}}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100       \textcolor{keywordflow}{for} (test=0; test < 5; ++test) \{}
+\DoxyCodeLine{101          \textcolor{keywordtype}{int} \mbox{\hyperlink{cave__main_8c_a42c6b1edc1bd763019f0eb5edce18793}{error}};}
+\DoxyCodeLine{102          \mbox{\hyperlink{structstb__vorbis}{stb\_vorbis}} *\mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}} = \mbox{\hyperlink{stb__vorbis_8c_ae32061695d3dca3f5aa042793ef30329}{stb\_vorbis\_open\_filename}}(argv[j], \&\mbox{\hyperlink{cave__main_8c_a42c6b1edc1bd763019f0eb5edce18793}{error}}, \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{103          \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}} == \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}) \{}
+\DoxyCodeLine{104             fprintf(stderr, \textcolor{stringliteral}{"Couldn't re-\/open \%s for test \#\%d\(\backslash\)n"}, argv[j], test);}
+\DoxyCodeLine{105             \textcolor{keywordflow}{goto} fail;}
+\DoxyCodeLine{106          \}}
+\DoxyCodeLine{107          \textcolor{keywordflow}{for} (phase=0; phase < 3; ++phase) \{}
+\DoxyCodeLine{108             \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} base = phase == 0 ? 0 : phase == 1 ? num\_samples -\/ \mbox{\hyperlink{vorbseek_8c_a061de03a27e77fc8813602e3ef18604c}{test\_count}}[test]*\mbox{\hyperlink{vorbseek_8c_a8a23674399b083cd337c0f6038d13969}{test\_spacing}}[test] : num\_samples/3;}
+\DoxyCodeLine{109             \textcolor{keywordflow}{for} (i=0; i < \mbox{\hyperlink{vorbseek_8c_a061de03a27e77fc8813602e3ef18604c}{test\_count}}[test]; ++i) \{}
+\DoxyCodeLine{110                \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos = base + i*\mbox{\hyperlink{vorbseek_8c_a8a23674399b083cd337c0f6038d13969}{test\_spacing}}[test];}
+\DoxyCodeLine{111                \textcolor{keywordflow}{if} (pos > num\_samples) \textcolor{comment}{// this also catches underflows}}
+\DoxyCodeLine{112                   \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{113                successes += \mbox{\hyperlink{vorbseek_8c_af200cdea9c5fbc81b686a05091f389cf}{try\_seeking}}(\mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}, pos, \mbox{\hyperlink{structoutput}{output}}, num\_samples);}
+\DoxyCodeLine{114                attempts += 1;}
+\DoxyCodeLine{115             \}}
+\DoxyCodeLine{116          \}}
+\DoxyCodeLine{117          \mbox{\hyperlink{stb__vorbis_8c_ac4dca2244a6db648d2e6f3cbf6961e3e}{stb\_vorbis\_close}}(\mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}});}
+\DoxyCodeLine{118       \}}
+\DoxyCodeLine{119       printf(\textcolor{stringliteral}{"\%d of \%d seeks failed in \%s (\%d samples)\(\backslash\)n"}, attempts-\/successes, attempts, argv[j], num\_samples);}
+\DoxyCodeLine{120       \mbox{\hyperlink{stb__leakcheck_8h_a9d4b5df3530d1bc733070a4669ba6ebc}{free}}(\mbox{\hyperlink{structoutput}{output}});}
+\DoxyCodeLine{121    \}}
+\DoxyCodeLine{122    \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{123   fail:}
+\DoxyCodeLine{124    \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{125 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{vorbseek_8c_af200cdea9c5fbc81b686a05091f389cf}\label{vorbseek_8c_af200cdea9c5fbc81b686a05091f389cf}} 
+\index{vorbseek.c@{vorbseek.c}!try\_seeking@{try\_seeking}}
+\index{try\_seeking@{try\_seeking}!vorbseek.c@{vorbseek.c}}
+\doxysubsubsection{\texorpdfstring{try\_seeking()}{try\_seeking()}}
+{\footnotesize\ttfamily int try\+\_\+seeking (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structstb__vorbis}{stb\+\_\+vorbis}} $\ast$}]{v,  }\item[{unsigned int}]{pos,  }\item[{short $\ast$}]{output,  }\item[{unsigned int}]{num\+\_\+samples }\end{DoxyParamCaption})}
+
+
+
+Definition at line 14 of file vorbseek.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{15 \{}
+\DoxyCodeLine{16    \textcolor{keywordtype}{int} \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}};}
+\DoxyCodeLine{17    \textcolor{keywordtype}{short} \mbox{\hyperlink{glad_8h_a1d93829fc44881966fb3b59a0241947f}{samples}}[\mbox{\hyperlink{vorbseek_8c_a27531e21430e184380049b67027e6110}{SAMPLES\_TO\_TEST}}*2];}
+\DoxyCodeLine{18    assert(pos <= num\_samples);}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20    \textcolor{keywordflow}{if} (!\mbox{\hyperlink{stb__vorbis_8c_a2a1f6add009ac3e63ed57cabf9941566}{stb\_vorbis\_seek}}(\mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}, pos)) \{}
+\DoxyCodeLine{21       fprintf(stderr, \textcolor{stringliteral}{"Seek to \%u returned error from stb\_vorbis\(\backslash\)n"}, pos);}
+\DoxyCodeLine{22       \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{23    \}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25    \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}} = \mbox{\hyperlink{stb__vorbis_8c_ade776d535501af37f599e05ff289f3fe}{stb\_vorbis\_get\_samples\_short\_interleaved}}(\mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}, 2, \mbox{\hyperlink{glad_8h_a1d93829fc44881966fb3b59a0241947f}{samples}}, \mbox{\hyperlink{vorbseek_8c_a27531e21430e184380049b67027e6110}{SAMPLES\_TO\_TEST}}*2);}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27    \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}} > (\textcolor{keywordtype}{int}) (num\_samples -\/ pos)) \{}
+\DoxyCodeLine{28       fprintf(stderr, \textcolor{stringliteral}{"Seek to \%u allowed decoding \%d samples when only \%d should have been valid.\(\backslash\)n"},}
+\DoxyCodeLine{29             pos, \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}}, (\textcolor{keywordtype}{int}) (num\_samples -\/ pos));}
+\DoxyCodeLine{30       \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{31    \}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33    \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}} < \mbox{\hyperlink{vorbseek_8c_a27531e21430e184380049b67027e6110}{SAMPLES\_TO\_TEST}} \&\& \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}} < (\textcolor{keywordtype}{int}) (num\_samples -\/ pos)) \{}
+\DoxyCodeLine{34       fprintf(stderr, \textcolor{stringliteral}{"Seek to \%u only decoded \%d samples of \%d attempted when at least \%d should have been valid.\(\backslash\)n"},}
+\DoxyCodeLine{35          pos, \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}}, \mbox{\hyperlink{vorbseek_8c_a27531e21430e184380049b67027e6110}{SAMPLES\_TO\_TEST}}, num\_samples -\/ pos);}
+\DoxyCodeLine{36       \textcolor{keywordflow}{return} 0;                      }
+\DoxyCodeLine{37    \}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39    \textcolor{keywordflow}{if} (0 != memcmp(\mbox{\hyperlink{glad_8h_a1d93829fc44881966fb3b59a0241947f}{samples}}, \mbox{\hyperlink{structoutput}{output}} + pos*2, \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}}*2)) \{}
+\DoxyCodeLine{40       \textcolor{keywordtype}{int} k;}
+\DoxyCodeLine{41       \textcolor{keywordflow}{for} (k=0; k < \mbox{\hyperlink{vorbseek_8c_a27531e21430e184380049b67027e6110}{SAMPLES\_TO\_TEST}}*2; ++k) \{}
+\DoxyCodeLine{42          \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a1d93829fc44881966fb3b59a0241947f}{samples}}[k] != \mbox{\hyperlink{structoutput}{output}}[k]) \{}
+\DoxyCodeLine{43             fprintf(stderr, \textcolor{stringliteral}{"Seek to \%u produced incorrect samples starting at sample \%u (short \#\%d in buffer).\(\backslash\)n"},}
+\DoxyCodeLine{44                     pos, pos + (k/2), k);}
+\DoxyCodeLine{45             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{46          \}}
+\DoxyCodeLine{47       \}}
+\DoxyCodeLine{48       assert(k != \mbox{\hyperlink{vorbseek_8c_a27531e21430e184380049b67027e6110}{SAMPLES\_TO\_TEST}}*2);}
+\DoxyCodeLine{49       \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{50    \}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52    \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{53 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{vorbseek_8c_a061de03a27e77fc8813602e3ef18604c}\label{vorbseek_8c_a061de03a27e77fc8813602e3ef18604c}} 
+\index{vorbseek.c@{vorbseek.c}!test\_count@{test\_count}}
+\index{test\_count@{test\_count}!vorbseek.c@{vorbseek.c}}
+\doxysubsubsection{\texorpdfstring{test\_count}{test\_count}}
+{\footnotesize\ttfamily int test\+\_\+count\mbox{[}5\mbox{]} = \{ 5000, 3000, 2000, 50000, 50000 \}}
+
+
+
+Definition at line 11 of file vorbseek.\+c.
+
+\mbox{\Hypertarget{vorbseek_8c_a8a23674399b083cd337c0f6038d13969}\label{vorbseek_8c_a8a23674399b083cd337c0f6038d13969}} 
+\index{vorbseek.c@{vorbseek.c}!test\_spacing@{test\_spacing}}
+\index{test\_spacing@{test\_spacing}!vorbseek.c@{vorbseek.c}}
+\doxysubsubsection{\texorpdfstring{test\_spacing}{test\_spacing}}
+{\footnotesize\ttfamily int test\+\_\+spacing\mbox{[}5\mbox{]} = \{ 1, 111, 3337, 7779, 72717 \}}
+
+
+
+Definition at line 12 of file vorbseek.\+c.
+

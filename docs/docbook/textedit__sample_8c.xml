@@ -1,0 +1,351 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_textedit__sample_8c">
+<title>deps/stb/tests/textedit_sample.c File Reference</title>
+<indexterm><primary>deps/stb/tests/textedit_sample.c</primary></indexterm>
+<programlisting>#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;ctype.h&gt;
+#include &quot;stb_textedit.h&quot;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structtext__control">text_control</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1a6e64031a061922e3a48d88fd8623f4c3">STB_TEXTEDIT_CHARTYPE</link>   char</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1ab58b961887715e3f06f0a60a773c6de1">STB_TEXTEDIT_STRING</link>   <link linkend="_structtext__control">text_control</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link>   0x80000000</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1a7a2dfcd72ddf88946c61dd211cfebc29">STB_TEXTEDIT_STRINGLEN</link>(<link linkend="_glext_8h_1a45e774067520be559b8e78373132a9ec">tc</link>)   ((<link linkend="_glext_8h_1a45e774067520be559b8e78373132a9ec">tc</link>)-&gt;<link linkend="_glext_8h_1a0fa7e7ab44d05aec9b9988630e42a820">stringlen</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1ac881dfa6b09fe6ded1c7bce53026183e">STB_TEXTEDIT_LAYOUTROW</link>   <link linkend="_textedit__sample_8c_1a9cf8755d5364c9766d8dba8309670a1d">layout_func</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1ae696f0d4a714a9410eda06888bc06588">STB_TEXTEDIT_GETWIDTH</link>(<link linkend="_glext_8h_1a45e774067520be559b8e78373132a9ec">tc</link>,  <link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  i)   (1)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1ab8311ae6b6ce2c9cadfc176331945eca">STB_TEXTEDIT_KEYTOTEXT</link>(<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>)   (((<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>) &amp; <link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link>) ? 0 : (<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1ae3ca31117527780ae203e0e8a040d11f">STB_TEXTEDIT_GETCHAR</link>(<link linkend="_glext_8h_1a45e774067520be559b8e78373132a9ec">tc</link>,  i)   ((<link linkend="_glext_8h_1a45e774067520be559b8e78373132a9ec">tc</link>)-&gt;<link linkend="_glad_8h_1ae84541b4f3d8e1ea24ec0f466a8c568b">string</link>[i])</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1abb17caa71f7b09773848f8ddcbeb0be0">STB_TEXTEDIT_NEWLINE</link>   &apos;\<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&apos;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1aee5f80efacf21dd92b5b3dee06c73807">STB_TEXTEDIT_IS_SPACE</link>(ch)   isspace(ch)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1a0e9782080bc2f211e9b2c7b534611f9f">STB_TEXTEDIT_DELETECHARS</link>   <link linkend="_textedit__sample_8c_1a9f737629af524b3be93960610bf6653f">delete_chars</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1afbf5b1efdc094bccaddc6d4c3b6b5a2a">STB_TEXTEDIT_INSERTCHARS</link>   <link linkend="_textedit__sample_8c_1ad02cd3f3823ec835f8fd3d86447d1a7e">insert_chars</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1a295377d91a81714e475c3675142944aa">STB_TEXTEDIT_K_SHIFT</link>   0x40000000</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1ab62487ccaf090818d712c8bcd2a0c0ea">STB_TEXTEDIT_K_CONTROL</link>   0x20000000</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1ab78e75643116b67f27faa253997d6bf4">STB_TEXTEDIT_K_LEFT</link>   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 1)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1a2372bf34dbfe9ee393e5e893a59519ff">STB_TEXTEDIT_K_RIGHT</link>   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 2)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1a579019adb9b5fbb8432121dc10d59755">STB_TEXTEDIT_K_UP</link>   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 3)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1a1b0a25c8debb2e6b33d5b9678ff31eb6">STB_TEXTEDIT_K_DOWN</link>   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 4)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1ae5c188433685fd5694d9323078e7faa4">STB_TEXTEDIT_K_LINESTART</link>   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 5)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1a86649bcd5a713ef6ebc40271b8d33448">STB_TEXTEDIT_K_LINEEND</link>   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 6)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1adb6231fb52ce1b5fe340d158db4fa113">STB_TEXTEDIT_K_TEXTSTART</link>   (<link linkend="_textedit__sample_8c_1ae5c188433685fd5694d9323078e7faa4">STB_TEXTEDIT_K_LINESTART</link> | <link linkend="_textedit__sample_8c_1ab62487ccaf090818d712c8bcd2a0c0ea">STB_TEXTEDIT_K_CONTROL</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1a74b070e036f6ac29eb876a94cb856600">STB_TEXTEDIT_K_TEXTEND</link>   (<link linkend="_textedit__sample_8c_1a86649bcd5a713ef6ebc40271b8d33448">STB_TEXTEDIT_K_LINEEND</link>   | <link linkend="_textedit__sample_8c_1ab62487ccaf090818d712c8bcd2a0c0ea">STB_TEXTEDIT_K_CONTROL</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1a1e7e825b3df67f64a15b84c548e51c26">STB_TEXTEDIT_K_DELETE</link>   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 7)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1a436a147e85256c7a3e2fee4a69e3aa72">STB_TEXTEDIT_K_BACKSPACE</link>   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 8)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1aabfc2cec24f396fb94d03d9f103a910e">STB_TEXTEDIT_K_UNDO</link>   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | <link linkend="_textedit__sample_8c_1ab62487ccaf090818d712c8bcd2a0c0ea">STB_TEXTEDIT_K_CONTROL</link> | &apos;<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>&apos;)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1a349b079acfb7872afca79e1db09c5d6d">STB_TEXTEDIT_K_REDO</link>   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | <link linkend="_textedit__sample_8c_1ab62487ccaf090818d712c8bcd2a0c0ea">STB_TEXTEDIT_K_CONTROL</link> | &apos;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&apos;)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1a112200f1032a74b1c4d95775258307d6">STB_TEXTEDIT_K_INSERT</link>   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 9)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1acbb30e32121ef025272892af98f2ac58">STB_TEXTEDIT_K_WORDLEFT</link>   (<link linkend="_textedit__sample_8c_1ab78e75643116b67f27faa253997d6bf4">STB_TEXTEDIT_K_LEFT</link>  | <link linkend="_textedit__sample_8c_1ab62487ccaf090818d712c8bcd2a0c0ea">STB_TEXTEDIT_K_CONTROL</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1a4ac168018b20e53285d76c46aa24a122">STB_TEXTEDIT_K_WORDRIGHT</link>   (<link linkend="_textedit__sample_8c_1a2372bf34dbfe9ee393e5e893a59519ff">STB_TEXTEDIT_K_RIGHT</link> | <link linkend="_textedit__sample_8c_1ab62487ccaf090818d712c8bcd2a0c0ea">STB_TEXTEDIT_K_CONTROL</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1ac4c3f430bf4d3264b9555e8fdf0fdef9">STB_TEXTEDIT_K_PGUP</link>   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 10)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1aff21d9af1b439f88b59765b52de1df51">STB_TEXTEDIT_K_PGDOWN</link>   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 11)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_textedit__sample_8c_1ade8f1a617b962d4405a2492cc3ed0468">STB_TEXTEDIT_IMPLEMENTATION</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_textedit__sample_8c_1a9cf8755d5364c9766d8dba8309670a1d">layout_func</link> (<link linkend="_struct_stb_textedit_row">StbTexteditRow</link> *<link linkend="_glad_8h_1a90d3e7e4182a9630993f640fa0443b0b">row</link>, <link linkend="_textedit__sample_8c_1ab58b961887715e3f06f0a60a773c6de1">STB_TEXTEDIT_STRING</link> *str, int start_i)</para>
+</listitem>
+            <listitem><para>int <link linkend="_textedit__sample_8c_1a9f737629af524b3be93960610bf6653f">delete_chars</link> (<link linkend="_textedit__sample_8c_1ab58b961887715e3f06f0a60a773c6de1">STB_TEXTEDIT_STRING</link> *str, int pos, int <link linkend="_glext_8h_1abb50fc1ead3a02a46fb52daa2045f95c">num</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_textedit__sample_8c_1ad02cd3f3823ec835f8fd3d86447d1a7e">insert_chars</link> (<link linkend="_textedit__sample_8c_1ab58b961887715e3f06f0a60a773c6de1">STB_TEXTEDIT_STRING</link> *str, int pos, <link linkend="_textedit__sample_8c_1a6e64031a061922e3a48d88fd8623f4c3">STB_TEXTEDIT_CHARTYPE</link> *newtext, int <link linkend="_glext_8h_1abb50fc1ead3a02a46fb52daa2045f95c">num</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_textedit__sample_8c_1afe31529d85579422267dcc8fc1370b75">dummy3</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942"/>    <section>
+    <title>KEYDOWN_BIT</title>
+<indexterm><primary>KEYDOWN_BIT</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>KEYDOWN_BIT</secondary></indexterm>
+<para><computeroutput>#define KEYDOWN_BIT   0x80000000</computeroutput></para><para>
+Definition at line 51 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1a6e64031a061922e3a48d88fd8623f4c3"/>    <section>
+    <title>STB_TEXTEDIT_CHARTYPE</title>
+<indexterm><primary>STB_TEXTEDIT_CHARTYPE</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_CHARTYPE</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_CHARTYPE   char</computeroutput></para><para>
+Definition at line 7 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1a0e9782080bc2f211e9b2c7b534611f9f"/>    <section>
+    <title>STB_TEXTEDIT_DELETECHARS</title>
+<indexterm><primary>STB_TEXTEDIT_DELETECHARS</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_DELETECHARS</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_DELETECHARS   <link linkend="_textedit__sample_8c_1a9f737629af524b3be93960610bf6653f">delete_chars</link></computeroutput></para><para>
+Definition at line 60 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1ae3ca31117527780ae203e0e8a040d11f"/>    <section>
+    <title>STB_TEXTEDIT_GETCHAR</title>
+<indexterm><primary>STB_TEXTEDIT_GETCHAR</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_GETCHAR</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_GETCHAR( <link linkend="_glext_8h_1a45e774067520be559b8e78373132a9ec">tc</link>,  i)   ((<link linkend="_glext_8h_1a45e774067520be559b8e78373132a9ec">tc</link>)-&gt;<link linkend="_glad_8h_1ae84541b4f3d8e1ea24ec0f466a8c568b">string</link>[i])</computeroutput></para><para>
+Definition at line 57 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1ae696f0d4a714a9410eda06888bc06588"/>    <section>
+    <title>STB_TEXTEDIT_GETWIDTH</title>
+<indexterm><primary>STB_TEXTEDIT_GETWIDTH</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_GETWIDTH</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_GETWIDTH( <link linkend="_glext_8h_1a45e774067520be559b8e78373132a9ec">tc</link>,  <link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  i)   (1)</computeroutput></para><para>
+Definition at line 55 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1ade8f1a617b962d4405a2492cc3ed0468"/>    <section>
+    <title>STB_TEXTEDIT_IMPLEMENTATION</title>
+<indexterm><primary>STB_TEXTEDIT_IMPLEMENTATION</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 83 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1afbf5b1efdc094bccaddc6d4c3b6b5a2a"/>    <section>
+    <title>STB_TEXTEDIT_INSERTCHARS</title>
+<indexterm><primary>STB_TEXTEDIT_INSERTCHARS</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_INSERTCHARS</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_INSERTCHARS   <link linkend="_textedit__sample_8c_1ad02cd3f3823ec835f8fd3d86447d1a7e">insert_chars</link></computeroutput></para><para>
+Definition at line 61 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1aee5f80efacf21dd92b5b3dee06c73807"/>    <section>
+    <title>STB_TEXTEDIT_IS_SPACE</title>
+<indexterm><primary>STB_TEXTEDIT_IS_SPACE</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_IS_SPACE</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_IS_SPACE( ch)   isspace(ch)</computeroutput></para><para>
+Definition at line 59 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1a436a147e85256c7a3e2fee4a69e3aa72"/>    <section>
+    <title>STB_TEXTEDIT_K_BACKSPACE</title>
+<indexterm><primary>STB_TEXTEDIT_K_BACKSPACE</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_BACKSPACE</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_BACKSPACE   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 8)</computeroutput></para><para>
+Definition at line 74 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1ab62487ccaf090818d712c8bcd2a0c0ea"/>    <section>
+    <title>STB_TEXTEDIT_K_CONTROL</title>
+<indexterm><primary>STB_TEXTEDIT_K_CONTROL</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_CONTROL</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_CONTROL   0x20000000</computeroutput></para><para>
+Definition at line 64 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1a1e7e825b3df67f64a15b84c548e51c26"/>    <section>
+    <title>STB_TEXTEDIT_K_DELETE</title>
+<indexterm><primary>STB_TEXTEDIT_K_DELETE</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_DELETE</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_DELETE   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 7)</computeroutput></para><para>
+Definition at line 73 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1a1b0a25c8debb2e6b33d5b9678ff31eb6"/>    <section>
+    <title>STB_TEXTEDIT_K_DOWN</title>
+<indexterm><primary>STB_TEXTEDIT_K_DOWN</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_DOWN</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_DOWN   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 4)</computeroutput></para><para>
+Definition at line 68 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1a112200f1032a74b1c4d95775258307d6"/>    <section>
+    <title>STB_TEXTEDIT_K_INSERT</title>
+<indexterm><primary>STB_TEXTEDIT_K_INSERT</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_INSERT</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_INSERT   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 9)</computeroutput></para><para>
+Definition at line 77 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1ab78e75643116b67f27faa253997d6bf4"/>    <section>
+    <title>STB_TEXTEDIT_K_LEFT</title>
+<indexterm><primary>STB_TEXTEDIT_K_LEFT</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_LEFT</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_LEFT   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 1)</computeroutput></para><para>
+Definition at line 65 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1a86649bcd5a713ef6ebc40271b8d33448"/>    <section>
+    <title>STB_TEXTEDIT_K_LINEEND</title>
+<indexterm><primary>STB_TEXTEDIT_K_LINEEND</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_LINEEND</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_LINEEND   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 6)</computeroutput></para><para>
+Definition at line 70 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1ae5c188433685fd5694d9323078e7faa4"/>    <section>
+    <title>STB_TEXTEDIT_K_LINESTART</title>
+<indexterm><primary>STB_TEXTEDIT_K_LINESTART</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_LINESTART</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_LINESTART   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 5)</computeroutput></para><para>
+Definition at line 69 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1aff21d9af1b439f88b59765b52de1df51"/>    <section>
+    <title>STB_TEXTEDIT_K_PGDOWN</title>
+<indexterm><primary>STB_TEXTEDIT_K_PGDOWN</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_PGDOWN</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_PGDOWN   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 11)</computeroutput></para><para>
+Definition at line 81 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1ac4c3f430bf4d3264b9555e8fdf0fdef9"/>    <section>
+    <title>STB_TEXTEDIT_K_PGUP</title>
+<indexterm><primary>STB_TEXTEDIT_K_PGUP</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_PGUP</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_PGUP   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 10)</computeroutput></para><para>
+Definition at line 80 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1a349b079acfb7872afca79e1db09c5d6d"/>    <section>
+    <title>STB_TEXTEDIT_K_REDO</title>
+<indexterm><primary>STB_TEXTEDIT_K_REDO</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_REDO</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_REDO   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | <link linkend="_textedit__sample_8c_1ab62487ccaf090818d712c8bcd2a0c0ea">STB_TEXTEDIT_K_CONTROL</link> | &apos;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&apos;)</computeroutput></para><para>
+Definition at line 76 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1a2372bf34dbfe9ee393e5e893a59519ff"/>    <section>
+    <title>STB_TEXTEDIT_K_RIGHT</title>
+<indexterm><primary>STB_TEXTEDIT_K_RIGHT</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_RIGHT</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_RIGHT   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 2)</computeroutput></para><para>
+Definition at line 66 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1a295377d91a81714e475c3675142944aa"/>    <section>
+    <title>STB_TEXTEDIT_K_SHIFT</title>
+<indexterm><primary>STB_TEXTEDIT_K_SHIFT</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_SHIFT</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_SHIFT   0x40000000</computeroutput></para><para>
+Definition at line 63 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1a74b070e036f6ac29eb876a94cb856600"/>    <section>
+    <title>STB_TEXTEDIT_K_TEXTEND</title>
+<indexterm><primary>STB_TEXTEDIT_K_TEXTEND</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_TEXTEND</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_TEXTEND   (<link linkend="_textedit__sample_8c_1a86649bcd5a713ef6ebc40271b8d33448">STB_TEXTEDIT_K_LINEEND</link>   | <link linkend="_textedit__sample_8c_1ab62487ccaf090818d712c8bcd2a0c0ea">STB_TEXTEDIT_K_CONTROL</link>)</computeroutput></para><para>
+Definition at line 72 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1adb6231fb52ce1b5fe340d158db4fa113"/>    <section>
+    <title>STB_TEXTEDIT_K_TEXTSTART</title>
+<indexterm><primary>STB_TEXTEDIT_K_TEXTSTART</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_TEXTSTART</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_TEXTSTART   (<link linkend="_textedit__sample_8c_1ae5c188433685fd5694d9323078e7faa4">STB_TEXTEDIT_K_LINESTART</link> | <link linkend="_textedit__sample_8c_1ab62487ccaf090818d712c8bcd2a0c0ea">STB_TEXTEDIT_K_CONTROL</link>)</computeroutput></para><para>
+Definition at line 71 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1aabfc2cec24f396fb94d03d9f103a910e"/>    <section>
+    <title>STB_TEXTEDIT_K_UNDO</title>
+<indexterm><primary>STB_TEXTEDIT_K_UNDO</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_UNDO</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_UNDO   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | <link linkend="_textedit__sample_8c_1ab62487ccaf090818d712c8bcd2a0c0ea">STB_TEXTEDIT_K_CONTROL</link> | &apos;<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>&apos;)</computeroutput></para><para>
+Definition at line 75 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1a579019adb9b5fbb8432121dc10d59755"/>    <section>
+    <title>STB_TEXTEDIT_K_UP</title>
+<indexterm><primary>STB_TEXTEDIT_K_UP</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_UP</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_UP   (<link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link> | 3)</computeroutput></para><para>
+Definition at line 67 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1acbb30e32121ef025272892af98f2ac58"/>    <section>
+    <title>STB_TEXTEDIT_K_WORDLEFT</title>
+<indexterm><primary>STB_TEXTEDIT_K_WORDLEFT</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_WORDLEFT</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_WORDLEFT   (<link linkend="_textedit__sample_8c_1ab78e75643116b67f27faa253997d6bf4">STB_TEXTEDIT_K_LEFT</link>  | <link linkend="_textedit__sample_8c_1ab62487ccaf090818d712c8bcd2a0c0ea">STB_TEXTEDIT_K_CONTROL</link>)</computeroutput></para><para>
+Definition at line 78 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1a4ac168018b20e53285d76c46aa24a122"/>    <section>
+    <title>STB_TEXTEDIT_K_WORDRIGHT</title>
+<indexterm><primary>STB_TEXTEDIT_K_WORDRIGHT</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_K_WORDRIGHT</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_K_WORDRIGHT   (<link linkend="_textedit__sample_8c_1a2372bf34dbfe9ee393e5e893a59519ff">STB_TEXTEDIT_K_RIGHT</link> | <link linkend="_textedit__sample_8c_1ab62487ccaf090818d712c8bcd2a0c0ea">STB_TEXTEDIT_K_CONTROL</link>)</computeroutput></para><para>
+Definition at line 79 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1ab8311ae6b6ce2c9cadfc176331945eca"/>    <section>
+    <title>STB_TEXTEDIT_KEYTOTEXT</title>
+<indexterm><primary>STB_TEXTEDIT_KEYTOTEXT</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_KEYTOTEXT</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_KEYTOTEXT( <link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>)   (((<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>) &amp; <link linkend="_textedit__sample_8c_1a5f424160d8a298497d42dd94d3ba9942">KEYDOWN_BIT</link>) ? 0 : (<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>))</computeroutput></para><para>
+Definition at line 56 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1ac881dfa6b09fe6ded1c7bce53026183e"/>    <section>
+    <title>STB_TEXTEDIT_LAYOUTROW</title>
+<indexterm><primary>STB_TEXTEDIT_LAYOUTROW</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_LAYOUTROW</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_LAYOUTROW   <link linkend="_textedit__sample_8c_1a9cf8755d5364c9766d8dba8309670a1d">layout_func</link></computeroutput></para><para>
+Definition at line 54 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1abb17caa71f7b09773848f8ddcbeb0be0"/>    <section>
+    <title>STB_TEXTEDIT_NEWLINE</title>
+<indexterm><primary>STB_TEXTEDIT_NEWLINE</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_NEWLINE</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_NEWLINE   &apos;\<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&apos;</computeroutput></para><para>
+Definition at line 58 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1ab58b961887715e3f06f0a60a773c6de1"/>    <section>
+    <title>STB_TEXTEDIT_STRING</title>
+<indexterm><primary>STB_TEXTEDIT_STRING</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_STRING</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_STRING   <link linkend="_structtext__control">text_control</link></computeroutput></para><para>
+Definition at line 8 of file textedit_sample.c.</para>
+    </section><anchor xml:id="_textedit__sample_8c_1a7a2dfcd72ddf88946c61dd211cfebc29"/>    <section>
+    <title>STB_TEXTEDIT_STRINGLEN</title>
+<indexterm><primary>STB_TEXTEDIT_STRINGLEN</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>STB_TEXTEDIT_STRINGLEN</secondary></indexterm>
+<para><computeroutput>#define STB_TEXTEDIT_STRINGLEN( <link linkend="_glext_8h_1a45e774067520be559b8e78373132a9ec">tc</link>)   ((<link linkend="_glext_8h_1a45e774067520be559b8e78373132a9ec">tc</link>)-&gt;<link linkend="_glext_8h_1a0fa7e7ab44d05aec9b9988630e42a820">stringlen</link>)</computeroutput></para><para>
+Definition at line 53 of file textedit_sample.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_textedit__sample_8c_1a9f737629af524b3be93960610bf6653f"/>    <section>
+    <title>delete_chars()</title>
+<indexterm><primary>delete_chars</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>delete_chars</secondary></indexterm>
+<para><computeroutput>int delete_chars (<link linkend="_textedit__sample_8c_1ab58b961887715e3f06f0a60a773c6de1">STB_TEXTEDIT_STRING</link> * str, int pos, int num)</computeroutput></para><para>
+Definition at line 33 of file textedit_sample.c.</para>
+<programlisting>34 {
+35 &#32;&#32;&#32;memmove(&amp;str-&gt;string[pos],&#32;&amp;str-&gt;string[pos+<link linkend="_glext_8h_1abb50fc1ead3a02a46fb52daa2045f95c">num</link>],&#32;str-&gt;stringlen&#32;-&#32;(pos+<link linkend="_glext_8h_1abb50fc1ead3a02a46fb52daa2045f95c">num</link>));
+36 &#32;&#32;&#32;str-&gt;stringlen&#32;-=&#32;<link linkend="_glext_8h_1abb50fc1ead3a02a46fb52daa2045f95c">num</link>;
+37 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;1;&#32;<emphasis role="comment">//&#32;always&#32;succeeds</emphasis>
+38 }
+</programlisting>    </section><anchor xml:id="_textedit__sample_8c_1afe31529d85579422267dcc8fc1370b75"/>    <section>
+    <title>dummy3()</title>
+<indexterm><primary>dummy3</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>dummy3</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> dummy3 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 86 of file textedit_sample.c.</para>
+<programlisting>87 {
+88 &#32;&#32;stb_textedit_click(0,0,0,0);
+89 &#32;&#32;stb_textedit_drag(0,0,0,0);
+90 &#32;&#32;stb_textedit_cut(0,0);
+91 &#32;&#32;stb_textedit_key(0,0,0);
+92 &#32;&#32;stb_textedit_initialize_state(0,0);
+93 &#32;&#32;stb_textedit_paste(0,0,0,0);
+94 }
+</programlisting>    </section><anchor xml:id="_textedit__sample_8c_1ad02cd3f3823ec835f8fd3d86447d1a7e"/>    <section>
+    <title>insert_chars()</title>
+<indexterm><primary>insert_chars</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>insert_chars</secondary></indexterm>
+<para><computeroutput>int insert_chars (<link linkend="_textedit__sample_8c_1ab58b961887715e3f06f0a60a773c6de1">STB_TEXTEDIT_STRING</link> * str, int pos, <link linkend="_textedit__sample_8c_1a6e64031a061922e3a48d88fd8623f4c3">STB_TEXTEDIT_CHARTYPE</link> * newtext, int num)</computeroutput></para><para>
+Definition at line 40 of file textedit_sample.c.</para>
+<programlisting>41 {
+42 &#32;&#32;&#32;str-&gt;string&#32;=&#32;<link linkend="_stb__leakcheck_8h_1a3110046d1aa9a56183099e72074bd982">realloc</link>(str-&gt;string,&#32;str-&gt;stringlen&#32;+&#32;<link linkend="_glext_8h_1abb50fc1ead3a02a46fb52daa2045f95c">num</link>);
+43 &#32;&#32;&#32;memmove(&amp;str-&gt;string[pos+<link linkend="_glext_8h_1abb50fc1ead3a02a46fb52daa2045f95c">num</link>],&#32;&amp;str-&gt;string[pos],&#32;str-&gt;stringlen&#32;-&#32;pos);
+44 &#32;&#32;&#32;memcpy(&amp;str-&gt;string[pos],&#32;newtext,&#32;<link linkend="_glext_8h_1abb50fc1ead3a02a46fb52daa2045f95c">num</link>);
+45 &#32;&#32;&#32;str-&gt;stringlen&#32;+=&#32;<link linkend="_glext_8h_1abb50fc1ead3a02a46fb52daa2045f95c">num</link>;
+46 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;1;&#32;<emphasis role="comment">//&#32;always&#32;succeeds</emphasis>
+47 }
+</programlisting>    </section><anchor xml:id="_textedit__sample_8c_1a9cf8755d5364c9766d8dba8309670a1d"/>    <section>
+    <title>layout_func()</title>
+<indexterm><primary>layout_func</primary><secondary>textedit_sample.c</secondary></indexterm>
+<indexterm><primary>textedit_sample.c</primary><secondary>layout_func</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> layout_func (<link linkend="_struct_stb_textedit_row">StbTexteditRow</link> * row, <link linkend="_textedit__sample_8c_1ab58b961887715e3f06f0a60a773c6de1">STB_TEXTEDIT_STRING</link> * str, int start_i)</computeroutput></para><para>
+Definition at line 22 of file textedit_sample.c.</para>
+<programlisting>23 {
+24 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;remaining_chars&#32;=&#32;str-&gt;stringlen&#32;-&#32;start_i;
+25 &#32;&#32;&#32;<link linkend="_glad_8h_1a90d3e7e4182a9630993f640fa0443b0b">row</link>-&gt;num_chars&#32;=&#32;remaining_chars&#32;&gt;&#32;20&#32;?&#32;20&#32;:&#32;remaining_chars;&#32;<emphasis role="comment">//&#32;should&#32;do&#32;real&#32;word&#32;wrap&#32;here</emphasis>
+26 &#32;&#32;&#32;<link linkend="_glad_8h_1a90d3e7e4182a9630993f640fa0443b0b">row</link>-&gt;x0&#32;=&#32;0;
+27 &#32;&#32;&#32;<link linkend="_glad_8h_1a90d3e7e4182a9630993f640fa0443b0b">row</link>-&gt;x1&#32;=&#32;20;&#32;<emphasis role="comment">//&#32;need&#32;to&#32;account&#32;for&#32;actual&#32;size&#32;of&#32;characters</emphasis>
+28 &#32;&#32;&#32;<link linkend="_glad_8h_1a90d3e7e4182a9630993f640fa0443b0b">row</link>-&gt;baseline_y_delta&#32;=&#32;1.25;
+29 &#32;&#32;&#32;<link linkend="_glad_8h_1a90d3e7e4182a9630993f640fa0443b0b">row</link>-&gt;ymin&#32;=&#32;-1;
+30 &#32;&#32;&#32;<link linkend="_glad_8h_1a90d3e7e4182a9630993f640fa0443b0b">row</link>-&gt;ymax&#32;=&#32;&#32;0;
+31 }
+</programlisting></section>
+</section>
+</section>

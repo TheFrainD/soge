@@ -1,0 +1,1406 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_win32__window_8c">
+<title>deps/glfw/src/win32_window.c File Reference</title>
+<indexterm><primary>deps/glfw/src/win32_window.c</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+#include &lt;limits.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;windowsx.h&gt;
+#include &lt;shellapi.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_win32__window_8c_1a51e8da6667fce5464f07bc810fc780dc">_glfwRegisterWindowClassWin32</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a85fb6be0a27d7f17a5d90eaec5320627">_glfwUnregisterWindowClassWin32</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_win32__window_8c_1a37cb0ccc0788efd9a66af8f32bf5518c">_glfwCreateWindowWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, const <link linkend="_struct___g_l_f_wwndconfig">_GLFWwndconfig</link> *wndconfig, const <link linkend="_struct___g_l_f_wctxconfig">_GLFWctxconfig</link> *ctxconfig, const <link linkend="_struct___g_l_f_wfbconfig">_GLFWfbconfig</link> *fbconfig)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1aa152206c5c520bd0dece9b837b143fa0">_glfwDestroyWindowWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a86d6e8b4e6609cfeba7691e466b21184">_glfwSetWindowTitleWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, const char *title)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a36bc130cc992e12d40e25a6a48e5a53b">_glfwSetWindowIconWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int <link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>, const <link linkend="_struct_g_l_f_wimage">GLFWimage</link> *images)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a11dbd52d555826a65ab903f5967a6c0d">_glfwGetWindowPosWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int *xpos, int *ypos)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a497c96018316ca28c83a6ef2f1461a19">_glfwSetWindowPosWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int xpos, int ypos)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1aa7047fda835205edd1f16fe265829654">_glfwGetWindowSizeWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int *<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>, int *<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a658f42d345f10d3ab52613b030d801c6">_glfwSetWindowSizeWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int <link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>, int <link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1ada7a6afa85a12d7a6ff3efe78e6abe0c">_glfwSetWindowSizeLimitsWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int minwidth, int minheight, int maxwidth, int maxheight)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1ab5e4af472645ebb89e26d1e9c6366aa4">_glfwSetWindowAspectRatioWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int numer, int denom)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a5f58eba94e456b57b09b2cc1841ce4c8">_glfwGetFramebufferSizeWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int *<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>, int *<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a4d10fcc47127623f35696d95b5a14f05">_glfwGetWindowFrameSizeWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int *<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>, int *<link linkend="_glext_8h_1a5ab323daeacf8dfdb8f91132fecdca23">top</link>, int *<link linkend="_glext_8h_1a5ffadbbacc6b89cf6218bc43b384d3fe">right</link>, int *<link linkend="_glad_8h_1a95fc257e5ddf46f7db9d5e898cdf1991">bottom</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a5c8171151c6daa5a7b1f22f45e1c4827">_glfwGetWindowContentScaleWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, float *xscale, float *yscale)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a4608d975b87d98c03adbf753b4ff6976">_glfwIconifyWindowWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a7c516bd818882391fdaeabe7a13eba52">_glfwRestoreWindowWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a1cf6741c3f061de6500770ce5116d14d">_glfwMaximizeWindowWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a02bfef52e9e9352b7cf691434d01ec70">_glfwShowWindowWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a41ff01be90f8280a68455451b1d5cd64">_glfwHideWindowWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a072d8e8fc92daf82e56bf4d615d2cda5">_glfwRequestWindowAttentionWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a5e136a8b748e12c555e0c044c337358f">_glfwFocusWindowWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a20e0a994ae4879caedde480b1dddf948">_glfwSetWindowMonitorWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, <link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, int xpos, int ypos, int <link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>, int <link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>, int refreshRate)</para>
+</listitem>
+            <listitem><para>int <link linkend="_win32__window_8c_1a9b069dba7d331d2cae0ecb3e975b027e">_glfwWindowFocusedWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_win32__window_8c_1a1ef31772bba9bbbb70966126a08778d0">_glfwWindowIconifiedWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_win32__window_8c_1a08f4731441f2215f589dc641eb015bb4">_glfwWindowVisibleWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_win32__window_8c_1a4640f26608b837f9793ef0ee923036eb">_glfwWindowMaximizedWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_win32__window_8c_1a6e0135d2fd5538719c900c41424caa8b">_glfwWindowHoveredWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_win32__window_8c_1a5a02f919a9134279e0d46ce430986dbe">_glfwFramebufferTransparentWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1aa9ba9944e5152d29f1aa551f14d75b2d">_glfwSetWindowResizableWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_glad_8h_1a0455a397ab5468d21c3021f2efa6dd3c">enabled</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a0d35deb7d39352e99fba8fa96013d969">_glfwSetWindowDecoratedWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_glad_8h_1a0455a397ab5468d21c3021f2efa6dd3c">enabled</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a9da5d6290cad503b221e73482b67218e">_glfwSetWindowFloatingWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_glad_8h_1a0455a397ab5468d21c3021f2efa6dd3c">enabled</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a08fda6580fcceccb5465cdb1fe770d7f">_glfwSetWindowMousePassthroughWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_glad_8h_1a0455a397ab5468d21c3021f2efa6dd3c">enabled</link>)</para>
+</listitem>
+            <listitem><para>float <link linkend="_win32__window_8c_1abfdc4284feacb8b35eb527b81b630731">_glfwGetWindowOpacityWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a9428adda957ce508e3041119d670de0f">_glfwSetWindowOpacityWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, float opacity)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1ad52b5863f16d0498407bbb612ea6f378">_glfwSetRawMouseMotionWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_glad_8h_1a0455a397ab5468d21c3021f2efa6dd3c">enabled</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_win32__window_8c_1a87187d130a267838b8565c44603151e5">_glfwRawMouseMotionSupportedWin32</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a8de69356bacf2073a7d4903d2d6ec741">_glfwPollEventsWin32</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a482c57b8e130d21ad68ddf965f74e1a0">_glfwWaitEventsWin32</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a62c585e2432977fa2b9fa4757a0d4cf9">_glfwWaitEventsTimeoutWin32</link> (double <link linkend="_glad_8h_1ad29bb0d8468b264a4e3d9204366cfaab">timeout</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1aaef33130746d9bb932ba1d7d7b51dabd">_glfwPostEmptyEventWin32</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a731aa16e1109aa6963a7902af9b1e290">_glfwGetCursorPosWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, double *xpos, double *ypos)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a7adc955bc72784fdf854cfd6e32ba287">_glfwSetCursorPosWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, double xpos, double ypos)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a0e6560aa1f1fc5f556543bd1dbc954f3">_glfwSetCursorModeWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int <link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>)</para>
+</listitem>
+            <listitem><para>const char * <link linkend="_win32__window_8c_1a7e6687a8499d9bf866660ad394b19750">_glfwGetScancodeNameWin32</link> (int scancode)</para>
+</listitem>
+            <listitem><para>int <link linkend="_win32__window_8c_1a2083a2b904b8909ef96ebe7e34f373c3">_glfwGetKeyScancodeWin32</link> (int <link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_win32__window_8c_1a5b60a1c1d42c9f51b6681afca63a154a">_glfwCreateCursorWin32</link> (<link linkend="_struct___g_l_f_wcursor">_GLFWcursor</link> *cursor, const <link linkend="_struct_g_l_f_wimage">GLFWimage</link> *<link linkend="_structimage">image</link>, int xhot, int yhot)</para>
+</listitem>
+            <listitem><para>int <link linkend="_win32__window_8c_1ab83aeb5b11824c61a09ee83ca90d22e3">_glfwCreateStandardCursorWin32</link> (<link linkend="_struct___g_l_f_wcursor">_GLFWcursor</link> *cursor, int shape)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a17e1a4d5ad34e0e6c9bfd31e78460618">_glfwDestroyCursorWin32</link> (<link linkend="_struct___g_l_f_wcursor">_GLFWcursor</link> *cursor)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1ab5d21e2433ee1d512ae83b39549e49fc">_glfwSetCursorWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, <link linkend="_struct___g_l_f_wcursor">_GLFWcursor</link> *cursor)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1abf1a0ba92102516bdbc00c164edf5017">_glfwSetClipboardStringWin32</link> (const char *<link linkend="_glad_8h_1ae84541b4f3d8e1ea24ec0f466a8c568b">string</link>)</para>
+</listitem>
+            <listitem><para>const char * <link linkend="_win32__window_8c_1af195ff960b1b462d052bfee6c8e64ea6">_glfwGetClipboardStringWin32</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1a3a1da159bbe7bd56490f67d96dce3bf9">EGLenum</link> <link linkend="_win32__window_8c_1afdce1538a8e79a96033a8899db6e09c2">_glfwGetEGLPlatformWin32</link> (<link linkend="_internal_8h_1a97030274d045a36c550fc0d66d26f175">EGLint</link> **<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1a551f78efa88a306d86efa8af0ec94349">EGLNativeDisplayType</link> <link linkend="_win32__window_8c_1a142f59c1c4c9897efbecad74e02698f1">_glfwGetEGLNativeDisplayWin32</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1a858431dc7d9081b52dc734956fd1f563">EGLNativeWindowType</link> <link linkend="_win32__window_8c_1a6c9791d77eda997cb697a353fc77d065">_glfwGetEGLNativeWindowWin32</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__window_8c_1a42b3c1869e809150cfd5c661cf291108">_glfwGetRequiredInstanceExtensionsWin32</link> (char **extensions)</para>
+</listitem>
+            <listitem><para>int <link linkend="_win32__window_8c_1a80c3e9913415584c38f9af75ba2838a5">_glfwGetPhysicalDevicePresentationSupportWin32</link> (<link linkend="_internal_8h_1a25ae5082a7c01af345570ed09d724881">VkInstance</link> instance, <link linkend="_internal_8h_1aa9acbee1e762fde021511a1b47678a38">VkPhysicalDevice</link> device, <link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link> queuefamily)</para>
+</listitem>
+            <listitem><para><link linkend="_vulkan_8h_1abe3614d1bd40772bc2398a4a86ea4a45">VkResult</link> <link linkend="_win32__window_8c_1ae332c39d7d375053b5c56d340fb8acd9">_glfwCreateWindowSurfaceWin32</link> (<link linkend="_internal_8h_1a25ae5082a7c01af345570ed09d724881">VkInstance</link> instance, <link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, const <link linkend="_struct_vk_allocation_callbacks">VkAllocationCallbacks</link> *allocator, <link linkend="_internal_8h_1a09787d7da5f3146095ed80ceccc2d794">VkSurfaceKHR</link> *surface)</para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> HWND <link linkend="_win32__window_8c_1a76a9a33652472f1952aeeac740b90113">glfwGetWin32Window</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_win32__window_8c_1a5b60a1c1d42c9f51b6681afca63a154a"/>    <section>
+    <title>_glfwCreateCursorWin32()</title>
+<indexterm><primary>_glfwCreateCursorWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwCreateCursorWin32</secondary></indexterm>
+<para><computeroutput>int _glfwCreateCursorWin32 (<link linkend="_struct___g_l_f_wcursor">_GLFWcursor</link> * cursor, const <link linkend="_struct_g_l_f_wimage">GLFWimage</link> * image, int xhot, int yhot)</computeroutput></para><para>
+Definition at line 2115 of file win32_window.c.</para>
+<programlisting>2118 {
+2119 &#32;&#32;&#32;&#32;cursor-&gt;win32.handle&#32;=&#32;(HCURSOR)&#32;createIcon(<link linkend="_structimage">image</link>,&#32;xhot,&#32;yhot,&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>);
+2120 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!cursor-&gt;win32.handle)
+2121 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+2122 
+2123 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+2124 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1ab83aeb5b11824c61a09ee83ca90d22e3"/>    <section>
+    <title>_glfwCreateStandardCursorWin32()</title>
+<indexterm><primary>_glfwCreateStandardCursorWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwCreateStandardCursorWin32</secondary></indexterm>
+<para><computeroutput>int _glfwCreateStandardCursorWin32 (<link linkend="_struct___g_l_f_wcursor">_GLFWcursor</link> * cursor, int shape)</computeroutput></para><para>
+Definition at line 2126 of file win32_window.c.</para>
+<programlisting>2127 {
+2128 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<emphasis role="keywordtype">id</emphasis>&#32;=&#32;0;
+2129 
+2130 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(shape)
+2131 &#32;&#32;&#32;&#32;{
+2132 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1ga8ab0e717245b85506cb0eaefdea39d0a">GLFW_ARROW_CURSOR</link>:
+2133 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">id</emphasis>&#32;=&#32;OCR_NORMAL;
+2134 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+2135 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1ga36185f4375eaada1b04e431244774c86">GLFW_IBEAM_CURSOR</link>:
+2136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">id</emphasis>&#32;=&#32;OCR_IBEAM;
+2137 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+2138 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1ga8af88c0ea05ab9e8f9ac1530e8873c22">GLFW_CROSSHAIR_CURSOR</link>:
+2139 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">id</emphasis>&#32;=&#32;OCR_CROSS;
+2140 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+2141 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1gaad01a50929fb515bf27e4462c51f6ed0">GLFW_POINTING_HAND_CURSOR</link>:
+2142 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">id</emphasis>&#32;=&#32;<link linkend="_win32__platform_8h_1a9a96efea829ad3f6577700fd829c8e26">OCR_HAND</link>;
+2143 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+2144 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1ga2010a43dc1050a7c9154148a63cf01ad">GLFW_RESIZE_EW_CURSOR</link>:
+2145 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">id</emphasis>&#32;=&#32;OCR_SIZEWE;
+2146 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+2147 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1gaa59214e8cdc8c8adf08fdf125ed68388">GLFW_RESIZE_NS_CURSOR</link>:
+2148 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">id</emphasis>&#32;=&#32;OCR_SIZENS;
+2149 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+2150 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1gadf2c0a495ec9cef4e1a364cc99aa78da">GLFW_RESIZE_NWSE_CURSOR</link>:
+2151 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">id</emphasis>&#32;=&#32;OCR_SIZENWSE;
+2152 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+2153 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1gab06bba3b407f92807ba9b48de667a323">GLFW_RESIZE_NESW_CURSOR</link>:
+2154 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">id</emphasis>&#32;=&#32;OCR_SIZENESW;
+2155 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+2156 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1ga3a5f4811155f95ccafbbb4c9a899fc1d">GLFW_RESIZE_ALL_CURSOR</link>:
+2157 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">id</emphasis>&#32;=&#32;OCR_SIZEALL;
+2158 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+2159 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1ga297c503095b034bc8891393b637844b1">GLFW_NOT_ALLOWED_CURSOR</link>:
+2160 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">id</emphasis>&#32;=&#32;OCR_NO;
+2161 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+2162 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">default</emphasis>:
+2163 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,&#32;<emphasis role="stringliteral">&quot;Win32:&#32;Unknown&#32;standard&#32;cursor&quot;</emphasis>);
+2164 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+2165 &#32;&#32;&#32;&#32;}
+2166 
+2167 &#32;&#32;&#32;&#32;cursor-&gt;win32.handle&#32;=&#32;LoadImageW(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,
+2168 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;MAKEINTRESOURCEW(<emphasis role="keywordtype">id</emphasis>),&#32;IMAGE_CURSOR,&#32;0,&#32;0,
+2169 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;LR_DEFAULTSIZE&#32;|&#32;LR_SHARED);
+2170 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!cursor-&gt;win32.handle)
+2171 &#32;&#32;&#32;&#32;{
+2172 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__init_8c_1a596868de8858d6d69cc642152a319b24">_glfwInputErrorWin32</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+2173 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Win32:&#32;Failed&#32;to&#32;create&#32;standard&#32;cursor&quot;</emphasis>);
+2174 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+2175 &#32;&#32;&#32;&#32;}
+2176 
+2177 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+2178 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1ae332c39d7d375053b5c56d340fb8acd9"/>    <section>
+    <title>_glfwCreateWindowSurfaceWin32()</title>
+<indexterm><primary>_glfwCreateWindowSurfaceWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwCreateWindowSurfaceWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_vulkan_8h_1abe3614d1bd40772bc2398a4a86ea4a45">VkResult</link> _glfwCreateWindowSurfaceWin32 (<link linkend="_internal_8h_1a25ae5082a7c01af345570ed09d724881">VkInstance</link> instance, <link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, const <link linkend="_struct_vk_allocation_callbacks">VkAllocationCallbacks</link> * allocator, <link linkend="_internal_8h_1a09787d7da5f3146095ed80ceccc2d794">VkSurfaceKHR</link> * surface)</computeroutput></para><para>
+Definition at line 2352 of file win32_window.c.</para>
+<programlisting>2356 {
+2357 &#32;&#32;&#32;&#32;<link linkend="_vulkan_8h_1abe3614d1bd40772bc2398a4a86ea4a45">VkResult</link>&#32;err;
+2358 &#32;&#32;&#32;&#32;<link linkend="_struct_vk_win32_surface_create_info_k_h_r">VkWin32SurfaceCreateInfoKHR</link>&#32;sci;
+2359 &#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1aae09ac436e491e590770b5585cd57874">PFN_vkCreateWin32SurfaceKHR</link>&#32;vkCreateWin32SurfaceKHR;
+2360 
+2361 &#32;&#32;&#32;&#32;vkCreateWin32SurfaceKHR&#32;=&#32;(<link linkend="_win32__platform_8h_1aae09ac436e491e590770b5585cd57874">PFN_vkCreateWin32SurfaceKHR</link>)
+2362 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_vulkan_8h_1ae698fe946e5b75ed4a173e95133cf4f3">vkGetInstanceProcAddr</link>(instance,&#32;<emphasis role="stringliteral">&quot;vkCreateWin32SurfaceKHR&quot;</emphasis>);
+2363 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!vkCreateWin32SurfaceKHR)
+2364 &#32;&#32;&#32;&#32;{
+2365 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga56882b290db23261cc6c053c40c2d08e">GLFW_API_UNAVAILABLE</link>,
+2366 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Win32:&#32;Vulkan&#32;instance&#32;missing&#32;VK_KHR_win32_surface&#32;extension&quot;</emphasis>);
+2367 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_vulkan_8h_1abe3614d1bd40772bc2398a4a86ea4a45a20b80caadaa3175652a04f2658f84b3e">VK_ERROR_EXTENSION_NOT_PRESENT</link>;
+2368 &#32;&#32;&#32;&#32;}
+2369 
+2370 &#32;&#32;&#32;&#32;memset(&amp;sci,&#32;0,&#32;<emphasis role="keyword">sizeof</emphasis>(sci));
+2371 &#32;&#32;&#32;&#32;sci.<link linkend="_struct_vk_win32_surface_create_info_k_h_r_1a84412cd00fdce3a59f9fef14d32e2419">sType</link>&#32;=&#32;<link linkend="_internal_8h_1aff9f2b99398eb80a2b5a146bc5534ce8a14b3050f6b4f27771fee5bd2e5e552fe">VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR</link>;
+2372 &#32;&#32;&#32;&#32;sci.<link linkend="_struct_vk_win32_surface_create_info_k_h_r_1a4931b55db25c4ab97f3efc60d5cb764c">hinstance</link>&#32;=&#32;GetModuleHandle(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+2373 &#32;&#32;&#32;&#32;sci.<link linkend="_struct_vk_win32_surface_create_info_k_h_r_1a5633124f624ab7bbb2bb42ceb65d45dc">hwnd</link>&#32;=&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle;
+2374 
+2375 &#32;&#32;&#32;&#32;err&#32;=&#32;vkCreateWin32SurfaceKHR(instance,&#32;&amp;sci,&#32;allocator,&#32;surface);
+2376 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(err)
+2377 &#32;&#32;&#32;&#32;{
+2378 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+2379 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Win32:&#32;Failed&#32;to&#32;create&#32;Vulkan&#32;surface:&#32;%s&quot;</emphasis>,
+2380 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a512b47c0edcaaf41a4f70bfc8d4d78a7">_glfwGetVulkanResultString</link>(err));
+2381 &#32;&#32;&#32;&#32;}
+2382 
+2383 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;err;
+2384 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a37cb0ccc0788efd9a66af8f32bf5518c"/>    <section>
+    <title>_glfwCreateWindowWin32()</title>
+<indexterm><primary>_glfwCreateWindowWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwCreateWindowWin32</secondary></indexterm>
+<para><computeroutput>int _glfwCreateWindowWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, const <link linkend="_struct___g_l_f_wwndconfig">_GLFWwndconfig</link> * wndconfig, const <link linkend="_struct___g_l_f_wctxconfig">_GLFWctxconfig</link> * ctxconfig, const <link linkend="_struct___g_l_f_wfbconfig">_GLFWfbconfig</link> * fbconfig)</computeroutput></para><para>
+Definition at line 1389 of file win32_window.c.</para>
+<programlisting>1393 {
+1394 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!createNativeWindow(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;wndconfig,&#32;fbconfig))
+1395 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1396 
+1397 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a9d54584dc156b04e39d7567a70e13ef8">client</link>&#32;!=&#32;<link linkend="_glfw3_8h_1a8f6dcdc968d214ff14779564f1389264">GLFW_NO_API</link>)
+1398 &#32;&#32;&#32;&#32;{
+1399 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a725120317549aa1eef2b88af5ac4c409">source</link>&#32;==&#32;<link linkend="_glfw3_8h_1a0494c9bfd3f584ab41e6dbeeaa0e6a19">GLFW_NATIVE_CONTEXT_API</link>)
+1400 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1401 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_wgl__context_8c_1ac60452e7fb9f2b0fdc2050999a889fe1">_glfwInitWGL</link>())
+1402 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1403 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_wgl__context_8c_1a3a91c3b275d47f0fbe923cca11194502">_glfwCreateContextWGL</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;ctxconfig,&#32;fbconfig))
+1404 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1405 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1406 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a725120317549aa1eef2b88af5ac4c409">source</link>&#32;==&#32;<link linkend="_glfw3_8h_1a03cf65c9ab01fc8b872ba58842c531c9">GLFW_EGL_CONTEXT_API</link>)
+1407 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1408 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_egl__context_8c_1ad83def5c7af30c3bfcc9371712ba96ac">_glfwInitEGL</link>())
+1409 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1410 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_egl__context_8c_1adfb1d7aa925810c45a2ef4efc268c2fe">_glfwCreateContextEGL</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;ctxconfig,&#32;fbconfig))
+1411 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1412 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1413 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a725120317549aa1eef2b88af5ac4c409">source</link>&#32;==&#32;<link linkend="_glfw3_8h_1afd34a473af9fa81f317910ea371b19e3">GLFW_OSMESA_CONTEXT_API</link>)
+1414 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1415 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_internal_8h_1a9dd1594b1f8991f90844fbeb4a664163">_glfwInitOSMesa</link>())
+1416 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1417 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_internal_8h_1a59950232b3b545e1fa750f6bd7d46201">_glfwCreateContextOSMesa</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;ctxconfig,&#32;fbconfig))
+1418 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1419 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1420 &#32;&#32;&#32;&#32;}
+1421 
+1422 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;monitor)
+1423 &#32;&#32;&#32;&#32;{
+1424 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__window_8c_1a02bfef52e9e9352b7cf691434d01ec70">_glfwShowWindowWin32</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1425 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__window_8c_1a5e136a8b748e12c555e0c044c337358f">_glfwFocusWindowWin32</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1426 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;acquireMonitor(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1427 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fitToMonitor(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1428 &#32;&#32;&#32;&#32;}
+1429 
+1430 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+1431 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a17e1a4d5ad34e0e6c9bfd31e78460618"/>    <section>
+    <title>_glfwDestroyCursorWin32()</title>
+<indexterm><primary>_glfwDestroyCursorWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwDestroyCursorWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwDestroyCursorWin32 (<link linkend="_struct___g_l_f_wcursor">_GLFWcursor</link> * cursor)</computeroutput></para><para>
+Definition at line 2180 of file win32_window.c.</para>
+<programlisting>2181 {
+2182 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cursor-&gt;win32.handle)
+2183 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;DestroyIcon((HICON)&#32;cursor-&gt;win32.handle);
+2184 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1aa152206c5c520bd0dece9b837b143fa0"/>    <section>
+    <title>_glfwDestroyWindowWin32()</title>
+<indexterm><primary>_glfwDestroyWindowWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwDestroyWindowWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwDestroyWindowWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1433 of file win32_window.c.</para>
+<programlisting>1434 {
+1435 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;monitor)
+1436 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;releaseMonitor(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1437 
+1438 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.destroy)
+1439 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.destroy(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1440 
+1441 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.disabledCursorWindow&#32;==&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)
+1442 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.disabledCursorWindow&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1443 
+1444 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle)
+1445 &#32;&#32;&#32;&#32;{
+1446 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RemovePropW(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link><emphasis role="stringliteral">&quot;GLFW&quot;</emphasis>);
+1447 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;DestroyWindow(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle);
+1448 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1449 &#32;&#32;&#32;&#32;}
+1450 
+1451 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.bigIcon)
+1452 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;DestroyIcon(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.bigIcon);
+1453 
+1454 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.smallIcon)
+1455 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;DestroyIcon(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.smallIcon);
+1456 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a5e136a8b748e12c555e0c044c337358f"/>    <section>
+    <title>_glfwFocusWindowWin32()</title>
+<indexterm><primary>_glfwFocusWindowWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwFocusWindowWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwFocusWindowWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1689 of file win32_window.c.</para>
+<programlisting>1690 {
+1691 &#32;&#32;&#32;&#32;BringWindowToTop(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle);
+1692 &#32;&#32;&#32;&#32;SetForegroundWindow(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle);
+1693 &#32;&#32;&#32;&#32;SetFocus(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle);
+1694 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a5a02f919a9134279e0d46ce430986dbe"/>    <section>
+    <title>_glfwFramebufferTransparentWin32()</title>
+<indexterm><primary>_glfwFramebufferTransparentWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwFramebufferTransparentWin32</secondary></indexterm>
+<para><computeroutput>int _glfwFramebufferTransparentWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1831 of file win32_window.c.</para>
+<programlisting>1832 {
+1833 &#32;&#32;&#32;&#32;BOOL&#32;composition,&#32;opaque;
+1834 &#32;&#32;&#32;&#32;DWORD&#32;<link linkend="_glad_8h_1a3ea846f998d64f079b86052b6c4193a8">color</link>;
+1835 
+1836 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.transparent)
+1837 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1838 
+1839 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_win32__platform_8h_1a4bcb1405eb8c8c83bcb5b3089e6d2547">IsWindowsVistaOrGreater</link>())
+1840 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1841 
+1842 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(FAILED(<link linkend="_win32__platform_8h_1ae42cc8f67518bd76a8ea709b485b0831">DwmIsCompositionEnabled</link>(&amp;composition))&#32;||&#32;!composition)
+1843 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1844 
+1845 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_win32__platform_8h_1a1da7a817f596b4db22524e67ff16aea6">IsWindows8OrGreater</link>())
+1846 &#32;&#32;&#32;&#32;{
+1847 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;HACK:&#32;Disable&#32;framebuffer&#32;transparency&#32;on&#32;Windows&#32;7&#32;when&#32;the</emphasis>
+1848 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;colorization&#32;color&#32;is&#32;opaque,&#32;because&#32;otherwise&#32;the&#32;window</emphasis>
+1849 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;contents&#32;is&#32;blended&#32;additively&#32;with&#32;the&#32;previous&#32;frame&#32;instead</emphasis>
+1850 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;of&#32;replacing&#32;it</emphasis>
+1851 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(FAILED(<link linkend="_win32__platform_8h_1a5e9ecbf435db8026186482a6ec574bff">DwmGetColorizationColor</link>(&amp;<link linkend="_glad_8h_1a3ea846f998d64f079b86052b6c4193a8">color</link>,&#32;&amp;opaque))&#32;||&#32;opaque)
+1852 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1853 &#32;&#32;&#32;&#32;}
+1854 
+1855 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+1856 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1af195ff960b1b462d052bfee6c8e64ea6"/>    <section>
+    <title>_glfwGetClipboardStringWin32()</title>
+<indexterm><primary>_glfwGetClipboardStringWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwGetClipboardStringWin32</secondary></indexterm>
+<para><computeroutput>const char* _glfwGetClipboardStringWin32 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 2235 of file win32_window.c.</para>
+<programlisting>2236 {
+2237 &#32;&#32;&#32;&#32;HANDLE&#32;<link linkend="_glext_8h_1ab49790263c78300fbf05719e38246198">object</link>;
+2238 &#32;&#32;&#32;&#32;WCHAR*&#32;<link linkend="_glad_8h_1a76461e97a098d2c9ae20ac193d3825ae">buffer</link>;
+2239 
+2240 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!OpenClipboard(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.helperWindowHandle))
+2241 &#32;&#32;&#32;&#32;{
+2242 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__init_8c_1a596868de8858d6d69cc642152a319b24">_glfwInputErrorWin32</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+2243 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Win32:&#32;Failed&#32;to&#32;open&#32;clipboard&quot;</emphasis>);
+2244 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+2245 &#32;&#32;&#32;&#32;}
+2246 
+2247 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">object</emphasis>&#32;=&#32;GetClipboardData(CF_UNICODETEXT);
+2248 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<emphasis role="keywordtype">object</emphasis>)
+2249 &#32;&#32;&#32;&#32;{
+2250 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__init_8c_1a596868de8858d6d69cc642152a319b24">_glfwInputErrorWin32</link>(<link linkend="_group__errors_1ga196e125ef261d94184e2b55c05762f14">GLFW_FORMAT_UNAVAILABLE</link>,
+2251 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Win32:&#32;Failed&#32;to&#32;convert&#32;clipboard&#32;to&#32;string&quot;</emphasis>);
+2252 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CloseClipboard();
+2253 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+2254 &#32;&#32;&#32;&#32;}
+2255 
+2256 &#32;&#32;&#32;&#32;<link linkend="_structbuffer">buffer</link>&#32;=&#32;GlobalLock(<emphasis role="keywordtype">object</emphasis>);
+2257 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_structbuffer">buffer</link>)
+2258 &#32;&#32;&#32;&#32;{
+2259 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__init_8c_1a596868de8858d6d69cc642152a319b24">_glfwInputErrorWin32</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+2260 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Win32:&#32;Failed&#32;to&#32;lock&#32;global&#32;handle&quot;</emphasis>);
+2261 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CloseClipboard();
+2262 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+2263 &#32;&#32;&#32;&#32;}
+2264 
+2265 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.clipboardString);
+2266 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.clipboardString&#32;=&#32;<link linkend="_win32__init_8c_1a17207e4093e353bc490b8c23fef40e3e">_glfwCreateUTF8FromWideStringWin32</link>(<link linkend="_structbuffer">buffer</link>);
+2267 
+2268 &#32;&#32;&#32;&#32;GlobalUnlock(<emphasis role="keywordtype">object</emphasis>);
+2269 &#32;&#32;&#32;&#32;CloseClipboard();
+2270 
+2271 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.clipboardString;
+2272 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a731aa16e1109aa6963a7902af9b1e290"/>    <section>
+    <title>_glfwGetCursorPosWin32()</title>
+<indexterm><primary>_glfwGetCursorPosWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwGetCursorPosWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetCursorPosWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, double * xpos, double * ypos)</computeroutput></para><para>
+Definition at line 2058 of file win32_window.c.</para>
+<programlisting>2059 {
+2060 &#32;&#32;&#32;&#32;POINT&#32;pos;
+2061 
+2062 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(GetCursorPos(&amp;pos))
+2063 &#32;&#32;&#32;&#32;{
+2064 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ScreenToClient(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;&amp;pos);
+2065 
+2066 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xpos)
+2067 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*xpos&#32;=&#32;pos.x;
+2068 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ypos)
+2069 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*ypos&#32;=&#32;pos.y;
+2070 &#32;&#32;&#32;&#32;}
+2071 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a142f59c1c4c9897efbecad74e02698f1"/>    <section>
+    <title>_glfwGetEGLNativeDisplayWin32()</title>
+<indexterm><primary>_glfwGetEGLNativeDisplayWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwGetEGLNativeDisplayWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1a551f78efa88a306d86efa8af0ec94349">EGLNativeDisplayType</link> _glfwGetEGLNativeDisplayWin32 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 2315 of file win32_window.c.</para>
+<programlisting>2316 {
+2317 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;GetDC(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.helperWindowHandle);
+2318 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a6c9791d77eda997cb697a353fc77d065"/>    <section>
+    <title>_glfwGetEGLNativeWindowWin32()</title>
+<indexterm><primary>_glfwGetEGLNativeWindowWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwGetEGLNativeWindowWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1a858431dc7d9081b52dc734956fd1f563">EGLNativeWindowType</link> _glfwGetEGLNativeWindowWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 2320 of file win32_window.c.</para>
+<programlisting>2321 {
+2322 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle;
+2323 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1afdce1538a8e79a96033a8899db6e09c2"/>    <section>
+    <title>_glfwGetEGLPlatformWin32()</title>
+<indexterm><primary>_glfwGetEGLPlatformWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwGetEGLPlatformWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1a3a1da159bbe7bd56490f67d96dce3bf9">EGLenum</link> _glfwGetEGLPlatformWin32 (<link linkend="_internal_8h_1a97030274d045a36c550fc0d66d26f175">EGLint</link> ** attribs)</computeroutput></para><para>
+Definition at line 2274 of file win32_window.c.</para>
+<programlisting>2275 {
+2276 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a9fca831c2886082570fa87e2b7a9267e">ANGLE_platform_angle</link>)
+2277 &#32;&#32;&#32;&#32;{
+2278 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>&#32;=&#32;0;
+2279 
+2280 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1afc8f1d5be1e42ae0a8a1ddecd7482d7d">ANGLE_platform_angle_opengl</link>)
+2281 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+2282 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a5146cc5fba43a4706292e0c12d4c4fd0">hints</link>.<link linkend="_struct___g_l_f_wlibrary_1a86550c51bab958a99de2e243e48dd8e8">init</link>.<link linkend="_struct___g_l_f_winitconfig_1a6b47f84f808ef3b893e915bb3ada5fce">angleType</link>&#32;==&#32;<link linkend="_glfw3_8h_1ad8d9e97ed7790811470366b338833623">GLFW_ANGLE_PLATFORM_TYPE_OPENGL</link>)
+2283 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>&#32;=&#32;<link linkend="_internal_8h_1a50a1085aadafafe8bae962043ed5003b">EGL_PLATFORM_ANGLE_TYPE_OPENGL_ANGLE</link>;
+2284 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a5146cc5fba43a4706292e0c12d4c4fd0">hints</link>.<link linkend="_struct___g_l_f_wlibrary_1a86550c51bab958a99de2e243e48dd8e8">init</link>.<link linkend="_struct___g_l_f_winitconfig_1a6b47f84f808ef3b893e915bb3ada5fce">angleType</link>&#32;==&#32;<link linkend="_glfw3_8h_1a0003c089da020cbf957218e70245bb65">GLFW_ANGLE_PLATFORM_TYPE_OPENGLES</link>)
+2285 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>&#32;=&#32;<link linkend="_internal_8h_1a531cd925c0aa5326aa3a361088cee03e">EGL_PLATFORM_ANGLE_TYPE_OPENGLES_ANGLE</link>;
+2286 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+2287 
+2288 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a373fe47d0bde740c7febb8513d9baff9">ANGLE_platform_angle_d3d</link>)
+2289 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+2290 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a5146cc5fba43a4706292e0c12d4c4fd0">hints</link>.<link linkend="_struct___g_l_f_wlibrary_1a86550c51bab958a99de2e243e48dd8e8">init</link>.<link linkend="_struct___g_l_f_winitconfig_1a6b47f84f808ef3b893e915bb3ada5fce">angleType</link>&#32;==&#32;<link linkend="_glfw3_8h_1a6e8fdc83113d247ad792bb5c4e82c894">GLFW_ANGLE_PLATFORM_TYPE_D3D9</link>)
+2291 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>&#32;=&#32;<link linkend="_internal_8h_1a093545b239ca9267c24b2607f3540f90">EGL_PLATFORM_ANGLE_TYPE_D3D9_ANGLE</link>;
+2292 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a5146cc5fba43a4706292e0c12d4c4fd0">hints</link>.<link linkend="_struct___g_l_f_wlibrary_1a86550c51bab958a99de2e243e48dd8e8">init</link>.<link linkend="_struct___g_l_f_winitconfig_1a6b47f84f808ef3b893e915bb3ada5fce">angleType</link>&#32;==&#32;<link linkend="_glfw3_8h_1ad6eae659811a52a5cdc43c362aedfa33">GLFW_ANGLE_PLATFORM_TYPE_D3D11</link>)
+2293 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>&#32;=&#32;<link linkend="_internal_8h_1ab28ef383cc2bf7d68abad243c4b1042a">EGL_PLATFORM_ANGLE_TYPE_D3D11_ANGLE</link>;
+2294 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+2295 
+2296 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1ab843671532e7d8d3fbce804e813b460a">ANGLE_platform_angle_vulkan</link>)
+2297 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+2298 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a5146cc5fba43a4706292e0c12d4c4fd0">hints</link>.<link linkend="_struct___g_l_f_wlibrary_1a86550c51bab958a99de2e243e48dd8e8">init</link>.<link linkend="_struct___g_l_f_winitconfig_1a6b47f84f808ef3b893e915bb3ada5fce">angleType</link>&#32;==&#32;<link linkend="_glfw3_8h_1a579ac83506c7546709dad91960cc7ca1">GLFW_ANGLE_PLATFORM_TYPE_VULKAN</link>)
+2299 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>&#32;=&#32;<link linkend="_internal_8h_1a8b965b212dd1ad4c83e892377f14eab1">EGL_PLATFORM_ANGLE_TYPE_VULKAN_ANGLE</link>;
+2300 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+2301 
+2302 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>)
+2303 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+2304 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>&#32;=&#32;<link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link>(3,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_internal_8h_1a97030274d045a36c550fc0d66d26f175">EGLint</link>));
+2305 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(*attribs)[0]&#32;=&#32;<link linkend="_internal_8h_1a30fbd18d0e6ca218cb9b3a579f56972e">EGL_PLATFORM_ANGLE_TYPE_ANGLE</link>;
+2306 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(*attribs)[1]&#32;=&#32;<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>;
+2307 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(*attribs)[2]&#32;=&#32;<link linkend="_internal_8h_1a6ae1eb8c8ec07b6f5a68f9cd6551691a">EGL_NONE</link>;
+2308 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_internal_8h_1ae585501f87a1353f924098f26084bb7c">EGL_PLATFORM_ANGLE_ANGLE</link>;
+2309 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+2310 &#32;&#32;&#32;&#32;}
+2311 
+2312 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+2313 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a5f58eba94e456b57b09b2cc1841ce4c8"/>    <section>
+    <title>_glfwGetFramebufferSizeWin32()</title>
+<indexterm><primary>_glfwGetFramebufferSizeWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwGetFramebufferSizeWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetFramebufferSizeWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int * width, int * height)</computeroutput></para><para>
+Definition at line 1615 of file win32_window.c.</para>
+<programlisting>1616 {
+1617 &#32;&#32;&#32;&#32;<link linkend="_win32__window_8c_1aa7047fda835205edd1f16fe265829654">_glfwGetWindowSizeWin32</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+1618 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a2083a2b904b8909ef96ebe7e34f373c3"/>    <section>
+    <title>_glfwGetKeyScancodeWin32()</title>
+<indexterm><primary>_glfwGetKeyScancodeWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwGetKeyScancodeWin32</secondary></indexterm>
+<para><computeroutput>int _glfwGetKeyScancodeWin32 (int key)</computeroutput></para><para>
+Definition at line 2110 of file win32_window.c.</para>
+<programlisting>2111 {
+2112 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.scancodes[<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>];
+2113 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a80c3e9913415584c38f9af75ba2838a5"/>    <section>
+    <title>_glfwGetPhysicalDevicePresentationSupportWin32()</title>
+<indexterm><primary>_glfwGetPhysicalDevicePresentationSupportWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwGetPhysicalDevicePresentationSupportWin32</secondary></indexterm>
+<para><computeroutput>int _glfwGetPhysicalDevicePresentationSupportWin32 (<link linkend="_internal_8h_1a25ae5082a7c01af345570ed09d724881">VkInstance</link> instance, <link linkend="_internal_8h_1aa9acbee1e762fde021511a1b47678a38">VkPhysicalDevice</link> device, <link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link> queuefamily)</computeroutput></para><para>
+Definition at line 2334 of file win32_window.c.</para>
+<programlisting>2337 {
+2338 &#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1a91754c61c45a61e9b0858bca669ccf63">PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR</link>
+2339 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;vkGetPhysicalDeviceWin32PresentationSupportKHR&#32;=
+2340 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(<link linkend="_win32__platform_8h_1a91754c61c45a61e9b0858bca669ccf63">PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR</link>)
+2341 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_vulkan_8h_1ae698fe946e5b75ed4a173e95133cf4f3">vkGetInstanceProcAddr</link>(instance,&#32;<emphasis role="stringliteral">&quot;vkGetPhysicalDeviceWin32PresentationSupportKHR&quot;</emphasis>);
+2342 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!vkGetPhysicalDeviceWin32PresentationSupportKHR)
+2343 &#32;&#32;&#32;&#32;{
+2344 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga56882b290db23261cc6c053c40c2d08e">GLFW_API_UNAVAILABLE</link>,
+2345 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Win32:&#32;Vulkan&#32;instance&#32;missing&#32;VK_KHR_win32_surface&#32;extension&quot;</emphasis>);
+2346 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+2347 &#32;&#32;&#32;&#32;}
+2348 
+2349 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;vkGetPhysicalDeviceWin32PresentationSupportKHR(device,&#32;queuefamily);
+2350 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a42b3c1869e809150cfd5c661cf291108"/>    <section>
+    <title>_glfwGetRequiredInstanceExtensionsWin32()</title>
+<indexterm><primary>_glfwGetRequiredInstanceExtensionsWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwGetRequiredInstanceExtensionsWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetRequiredInstanceExtensionsWin32 (char ** extensions)</computeroutput></para><para>
+Definition at line 2325 of file win32_window.c.</para>
+<programlisting>2326 {
+2327 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a9beb6fda2a7600be02831853de896395">vk</link>.<link linkend="_struct___g_l_f_wlibrary_1a5169664f24499b5b82dec093165ca166">KHR_surface</link>&#32;||&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a9beb6fda2a7600be02831853de896395">vk</link>.<link linkend="_struct___g_l_f_wlibrary_1afdbf06087f8a6bc40f7fb687ee16b04c">KHR_win32_surface</link>)
+2328 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+2329 
+2330 &#32;&#32;&#32;&#32;<link linkend="_namespaceconf_1ae475e080536acb271a0a0efe56c3ba42">extensions</link>[0]&#32;=&#32;<emphasis role="stringliteral">&quot;VK_KHR_surface&quot;</emphasis>;
+2331 &#32;&#32;&#32;&#32;<link linkend="_namespaceconf_1ae475e080536acb271a0a0efe56c3ba42">extensions</link>[1]&#32;=&#32;<emphasis role="stringliteral">&quot;VK_KHR_win32_surface&quot;</emphasis>;
+2332 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a7e6687a8499d9bf866660ad394b19750"/>    <section>
+    <title>_glfwGetScancodeNameWin32()</title>
+<indexterm><primary>_glfwGetScancodeNameWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwGetScancodeNameWin32</secondary></indexterm>
+<para><computeroutput>const char* _glfwGetScancodeNameWin32 (int scancode)</computeroutput></para><para>
+Definition at line 2098 of file win32_window.c.</para>
+<programlisting>2099 {
+2100 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(scancode&#32;&lt;&#32;0&#32;||&#32;scancode&#32;&gt;&#32;(KF_EXTENDED&#32;|&#32;0xff)&#32;||
+2101 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.keycodes[scancode]&#32;==&#32;<link linkend="_group__keys_1ga99aacc875b6b27a072552631e13775c7">GLFW_KEY_UNKNOWN</link>)
+2102 &#32;&#32;&#32;&#32;{
+2103 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gaaf2ef9aa8202c2b82ac2d921e554c687">GLFW_INVALID_VALUE</link>,&#32;<emphasis role="stringliteral">&quot;Invalid&#32;scancode&#32;%i&quot;</emphasis>,&#32;scancode);
+2104 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+2105 &#32;&#32;&#32;&#32;}
+2106 
+2107 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.keynames[<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.keycodes[scancode]];
+2108 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a5c8171151c6daa5a7b1f22f45e1c4827"/>    <section>
+    <title>_glfwGetWindowContentScaleWin32()</title>
+<indexterm><primary>_glfwGetWindowContentScaleWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwGetWindowContentScaleWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetWindowContentScaleWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, float * xscale, float * yscale)</computeroutput></para><para>
+Definition at line 1652 of file win32_window.c.</para>
+<programlisting>1653 {
+1654 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;HANDLE&#32;handle&#32;=&#32;MonitorFromWindow(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,
+1655 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;MONITOR_DEFAULTTONEAREST);
+1656 &#32;&#32;&#32;&#32;<link linkend="_win32__monitor_8c_1a666ce7b96d7717b71d8086be7b4e9fb3">_glfwGetHMONITORContentScaleWin32</link>(handle,&#32;xscale,&#32;yscale);
+1657 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a4d10fcc47127623f35696d95b5a14f05"/>    <section>
+    <title>_glfwGetWindowFrameSizeWin32()</title>
+<indexterm><primary>_glfwGetWindowFrameSizeWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwGetWindowFrameSizeWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetWindowFrameSizeWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int * left, int * top, int * right, int * bottom)</computeroutput></para><para>
+Definition at line 1620 of file win32_window.c.</para>
+<programlisting>1623 {
+1624 &#32;&#32;&#32;&#32;RECT&#32;rect;
+1625 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>;
+1626 
+1627 &#32;&#32;&#32;&#32;<link linkend="_win32__window_8c_1aa7047fda835205edd1f16fe265829654">_glfwGetWindowSizeWin32</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;&amp;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;&amp;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+1628 &#32;&#32;&#32;&#32;SetRect(&amp;rect,&#32;0,&#32;0,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+1629 
+1630 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_win32__platform_8h_1a2beecf9b7d4233876e8c0b9214099146">_glfwIsWindows10AnniversaryUpdateOrGreaterWin32</link>())
+1631 &#32;&#32;&#32;&#32;{
+1632 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1a13bab8e489d9ad05951150e27d3a6334">AdjustWindowRectExForDpi</link>(&amp;rect,&#32;getWindowStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>),
+1633 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>,&#32;getWindowExStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>),
+1634 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1adbb79683794601577be49f6ebe606dd0">GetDpiForWindow</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle));
+1635 &#32;&#32;&#32;&#32;}
+1636 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1637 &#32;&#32;&#32;&#32;{
+1638 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;AdjustWindowRectEx(&amp;rect,&#32;getWindowStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>),
+1639 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>,&#32;getWindowExStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>));
+1640 &#32;&#32;&#32;&#32;}
+1641 
+1642 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>)
+1643 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>&#32;=&#32;-rect.left;
+1644 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a5ab323daeacf8dfdb8f91132fecdca23">top</link>)
+1645 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glext_8h_1a5ab323daeacf8dfdb8f91132fecdca23">top</link>&#32;=&#32;-rect.top;
+1646 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a5ffadbbacc6b89cf6218bc43b384d3fe">right</link>)
+1647 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glext_8h_1a5ffadbbacc6b89cf6218bc43b384d3fe">right</link>&#32;=&#32;rect.right&#32;-&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>;
+1648 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a95fc257e5ddf46f7db9d5e898cdf1991">bottom</link>)
+1649 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a95fc257e5ddf46f7db9d5e898cdf1991">bottom</link>&#32;=&#32;rect.bottom&#32;-&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>;
+1650 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1abfdc4284feacb8b35eb527b81b630731"/>    <section>
+    <title>_glfwGetWindowOpacityWin32()</title>
+<indexterm><primary>_glfwGetWindowOpacityWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwGetWindowOpacityWin32</secondary></indexterm>
+<para><computeroutput>float _glfwGetWindowOpacityWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1905 of file win32_window.c.</para>
+<programlisting>1906 {
+1907 &#32;&#32;&#32;&#32;BYTE&#32;<link linkend="_glad_8h_1ac03904b1f7e359bb2acf10a755e97c5a">alpha</link>;
+1908 &#32;&#32;&#32;&#32;DWORD&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>;
+1909 
+1910 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((GetWindowLongW(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;GWL_EXSTYLE)&#32;&amp;&#32;WS_EX_LAYERED)&#32;&amp;&amp;
+1911 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;GetLayeredWindowAttributes(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;&amp;<link linkend="_glad_8h_1ac03904b1f7e359bb2acf10a755e97c5a">alpha</link>,&#32;&amp;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>))
+1912 &#32;&#32;&#32;&#32;{
+1913 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;&amp;&#32;LWA_ALPHA)
+1914 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1ac03904b1f7e359bb2acf10a755e97c5a">alpha</link>&#32;/&#32;255.f;
+1915 &#32;&#32;&#32;&#32;}
+1916 
+1917 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;1.f;
+1918 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a11dbd52d555826a65ab903f5967a6c0d"/>    <section>
+    <title>_glfwGetWindowPosWin32()</title>
+<indexterm><primary>_glfwGetWindowPosWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwGetWindowPosWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetWindowPosWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int * xpos, int * ypos)</computeroutput></para><para>
+Definition at line 1507 of file win32_window.c.</para>
+<programlisting>1508 {
+1509 &#32;&#32;&#32;&#32;POINT&#32;pos&#32;=&#32;{&#32;0,&#32;0&#32;};
+1510 &#32;&#32;&#32;&#32;ClientToScreen(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;&amp;pos);
+1511 
+1512 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xpos)
+1513 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*xpos&#32;=&#32;pos.x;
+1514 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ypos)
+1515 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*ypos&#32;=&#32;pos.y;
+1516 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1aa7047fda835205edd1f16fe265829654"/>    <section>
+    <title>_glfwGetWindowSizeWin32()</title>
+<indexterm><primary>_glfwGetWindowSizeWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwGetWindowSizeWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetWindowSizeWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int * width, int * height)</computeroutput></para><para>
+Definition at line 1538 of file win32_window.c.</para>
+<programlisting>1539 {
+1540 &#32;&#32;&#32;&#32;RECT&#32;area;
+1541 &#32;&#32;&#32;&#32;GetClientRect(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;&amp;area);
+1542 
+1543 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>)
+1544 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>&#32;=&#32;area.right;
+1545 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)
+1546 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>&#32;=&#32;area.bottom;
+1547 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a41ff01be90f8280a68455451b1d5cd64"/>    <section>
+    <title>_glfwHideWindowWin32()</title>
+<indexterm><primary>_glfwHideWindowWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwHideWindowWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwHideWindowWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1679 of file win32_window.c.</para>
+<programlisting>1680 {
+1681 &#32;&#32;&#32;&#32;ShowWindow(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;SW_HIDE);
+1682 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a4608d975b87d98c03adbf753b4ff6976"/>    <section>
+    <title>_glfwIconifyWindowWin32()</title>
+<indexterm><primary>_glfwIconifyWindowWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwIconifyWindowWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwIconifyWindowWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1659 of file win32_window.c.</para>
+<programlisting>1660 {
+1661 &#32;&#32;&#32;&#32;ShowWindow(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;SW_MINIMIZE);
+1662 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a1cf6741c3f061de6500770ce5116d14d"/>    <section>
+    <title>_glfwMaximizeWindowWin32()</title>
+<indexterm><primary>_glfwMaximizeWindowWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwMaximizeWindowWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwMaximizeWindowWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1669 of file win32_window.c.</para>
+<programlisting>1670 {
+1671 &#32;&#32;&#32;&#32;ShowWindow(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;SW_MAXIMIZE);
+1672 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a8de69356bacf2073a7d4903d2d6ec741"/>    <section>
+    <title>_glfwPollEventsWin32()</title>
+<indexterm><primary>_glfwPollEventsWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwPollEventsWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwPollEventsWin32 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 1957 of file win32_window.c.</para>
+<programlisting>1958 {
+1959 &#32;&#32;&#32;&#32;MSG&#32;msg;
+1960 &#32;&#32;&#32;&#32;HWND&#32;handle;
+1961 &#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link>*&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>;
+1962 
+1963 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(PeekMessageW(&amp;msg,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;0,&#32;0,&#32;PM_REMOVE))
+1964 &#32;&#32;&#32;&#32;{
+1965 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(msg.message&#32;==&#32;WM_QUIT)
+1966 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1967 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NOTE:&#32;While&#32;GLFW&#32;does&#32;not&#32;itself&#32;post&#32;WM_QUIT,&#32;other&#32;processes</emphasis>
+1968 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;may&#32;post&#32;it&#32;to&#32;this&#32;one,&#32;for&#32;example&#32;Task&#32;Manager</emphasis>
+1969 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;HACK:&#32;Treat&#32;WM_QUIT&#32;as&#32;a&#32;close&#32;on&#32;all&#32;windows</emphasis>
+1970 
+1971 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7859e386c1ff4ed65e13e6ba1e189cfe">windowListHead</link>;
+1972 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)
+1973 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1974 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ae47e309820934e21c92a3e60faeefe8e">_glfwInputWindowCloseRequest</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1975 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;next;
+1976 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1977 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1978 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1979 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1980 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TranslateMessage(&amp;msg);
+1981 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;DispatchMessageW(&amp;msg);
+1982 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1983 &#32;&#32;&#32;&#32;}
+1984 
+1985 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;HACK:&#32;Release&#32;modifier&#32;keys&#32;that&#32;the&#32;system&#32;did&#32;not&#32;emit&#32;KEYUP&#32;for</emphasis>
+1986 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NOTE:&#32;Shift&#32;keys&#32;on&#32;Windows&#32;tend&#32;to&#32;&quot;stick&quot;&#32;when&#32;both&#32;are&#32;pressed&#32;as</emphasis>
+1987 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;no&#32;key&#32;up&#32;message&#32;is&#32;generated&#32;by&#32;the&#32;first&#32;key&#32;release</emphasis>
+1988 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NOTE:&#32;Windows&#32;key&#32;is&#32;not&#32;reported&#32;as&#32;released&#32;by&#32;the&#32;Win+V&#32;hotkey</emphasis>
+1989 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;Other&#32;Win&#32;hotkeys&#32;are&#32;handled&#32;implicitly&#32;by&#32;_glfwInputWindowFocus</emphasis>
+1990 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;because&#32;they&#32;change&#32;the&#32;input&#32;focus</emphasis>
+1991 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NOTE:&#32;The&#32;other&#32;half&#32;of&#32;this&#32;is&#32;in&#32;the&#32;WM_*KEY*&#32;handler&#32;in&#32;windowProc</emphasis>
+1992 &#32;&#32;&#32;&#32;handle&#32;=&#32;GetActiveWindow();
+1993 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(handle)
+1994 &#32;&#32;&#32;&#32;{
+1995 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;GetPropW(handle,&#32;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link><emphasis role="stringliteral">&quot;GLFW&quot;</emphasis>);
+1996 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)
+1997 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1998 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+1999 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;keys[4][2]&#32;=
+2000 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+2001 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;VK_LSHIFT,&#32;<link linkend="_group__keys_1ga8a530a28a65c44ab5d00b759b756d3f6">GLFW_KEY_LEFT_SHIFT</link>&#32;},
+2002 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;VK_RSHIFT,&#32;<link linkend="_group__keys_1gaffca36b99c9dce1a19cb9befbadce691">GLFW_KEY_RIGHT_SHIFT</link>&#32;},
+2003 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;VK_LWIN,&#32;<link linkend="_group__keys_1gafb1207c91997fc295afd1835fbc5641a">GLFW_KEY_LEFT_SUPER</link>&#32;},
+2004 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;VK_RWIN,&#32;<link linkend="_group__keys_1gad4547a3e8e247594acb60423fe6502db">GLFW_KEY_RIGHT_SUPER</link>&#32;}
+2005 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;};
+2006 
+2007 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;4;&#32;&#32;i++)
+2008 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+2009 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;vk&#32;=&#32;keys[i][0];
+2010 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>&#32;=&#32;keys[i][1];
+2011 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;scancode&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.scancodes[<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>];
+2012 
+2013 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((GetKeyState(vk)&#32;&amp;&#32;0x8000))
+2014 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+2015 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;keys[<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>]&#32;!=&#32;<link linkend="_group__input_1ga2485743d0b59df3791c45951c4195265">GLFW_PRESS</link>)
+2016 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+2017 
+2018 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1aba4a5bf53c475cf2dc3e594c3c5034ab">_glfwInputKey</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>,&#32;scancode,&#32;<link linkend="_group__input_1gada11d965c4da13090ad336e030e4d11f">GLFW_RELEASE</link>,&#32;getKeyMods());
+2019 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+2020 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+2021 &#32;&#32;&#32;&#32;}
+2022 
+2023 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.disabledCursorWindow;
+2024 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)
+2025 &#32;&#32;&#32;&#32;{
+2026 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>;
+2027 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__window_8c_1aa7047fda835205edd1f16fe265829654">_glfwGetWindowSizeWin32</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;&amp;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;&amp;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+2028 
+2029 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NOTE:&#32;Re-center&#32;the&#32;cursor&#32;only&#32;if&#32;it&#32;has&#32;moved&#32;since&#32;the&#32;last&#32;call,</emphasis>
+2030 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;to&#32;avoid&#32;breaking&#32;glfwWaitEvents&#32;with&#32;WM_MOUSEMOVE</emphasis>
+2031 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.lastCursorPosX&#32;!=&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>&#32;/&#32;2&#32;||
+2032 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.lastCursorPosY&#32;!=&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>&#32;/&#32;2)
+2033 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+2034 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__window_8c_1a7adc955bc72784fdf854cfd6e32ba287">_glfwSetCursorPosWin32</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>&#32;/&#32;2,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>&#32;/&#32;2);
+2035 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+2036 &#32;&#32;&#32;&#32;}
+2037 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1aaef33130746d9bb932ba1d7d7b51dabd"/>    <section>
+    <title>_glfwPostEmptyEventWin32()</title>
+<indexterm><primary>_glfwPostEmptyEventWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwPostEmptyEventWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwPostEmptyEventWin32 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 2053 of file win32_window.c.</para>
+<programlisting>2054 {
+2055 &#32;&#32;&#32;&#32;PostMessage(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.helperWindowHandle,&#32;WM_NULL,&#32;0,&#32;0);
+2056 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a87187d130a267838b8565c44603151e5"/>    <section>
+    <title>_glfwRawMouseMotionSupportedWin32()</title>
+<indexterm><primary>_glfwRawMouseMotionSupportedWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwRawMouseMotionSupportedWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwRawMouseMotionSupportedWin32 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 1952 of file win32_window.c.</para>
+<programlisting>1953 {
+1954 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+1955 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a51e8da6667fce5464f07bc810fc780dc"/>    <section>
+    <title>_glfwRegisterWindowClassWin32()</title>
+<indexterm><primary>_glfwRegisterWindowClassWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwRegisterWindowClassWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwRegisterWindowClassWin32 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 1348 of file win32_window.c.</para>
+<programlisting>1349 {
+1350 &#32;&#32;&#32;&#32;WNDCLASSEXW&#32;wc;
+1351 
+1352 &#32;&#32;&#32;&#32;ZeroMemory(&amp;wc,&#32;<emphasis role="keyword">sizeof</emphasis>(wc));
+1353 &#32;&#32;&#32;&#32;wc.cbSize&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;<emphasis role="keyword">sizeof</emphasis>(wc);
+1354 &#32;&#32;&#32;&#32;wc.style&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;CS_HREDRAW&#32;|&#32;CS_VREDRAW&#32;|&#32;CS_OWNDC;
+1355 &#32;&#32;&#32;&#32;wc.lpfnWndProc&#32;&#32;&#32;=&#32;(WNDPROC)&#32;windowProc;
+1356 &#32;&#32;&#32;&#32;wc.hInstance&#32;&#32;&#32;&#32;&#32;=&#32;GetModuleHandleW(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+1357 &#32;&#32;&#32;&#32;wc.hCursor&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;LoadCursorW(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;IDC_ARROW);
+1358 &#32;&#32;&#32;&#32;wc.lpszClassName&#32;=&#32;<link linkend="_win32__platform_8h_1afb084d3ede51d15e5e2ed59b06b61290">_GLFW_WNDCLASSNAME</link>;
+1359 
+1360 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Load&#32;user-provided&#32;icon&#32;if&#32;available</emphasis>
+1361 &#32;&#32;&#32;&#32;wc.hIcon&#32;=&#32;LoadImageW(GetModuleHandleW(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>),
+1362 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link><emphasis role="stringliteral">&quot;GLFW_ICON&quot;</emphasis>,&#32;IMAGE_ICON,
+1363 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0,&#32;0,&#32;LR_DEFAULTSIZE&#32;|&#32;LR_SHARED);
+1364 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!wc.hIcon)
+1365 &#32;&#32;&#32;&#32;{
+1366 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;No&#32;user-provided&#32;icon&#32;found,&#32;load&#32;default&#32;icon</emphasis>
+1367 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wc.hIcon&#32;=&#32;LoadImageW(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,
+1368 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;IDI_APPLICATION,&#32;IMAGE_ICON,
+1369 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0,&#32;0,&#32;LR_DEFAULTSIZE&#32;|&#32;LR_SHARED);
+1370 &#32;&#32;&#32;&#32;}
+1371 
+1372 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!RegisterClassExW(&amp;wc))
+1373 &#32;&#32;&#32;&#32;{
+1374 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__init_8c_1a596868de8858d6d69cc642152a319b24">_glfwInputErrorWin32</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1375 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Win32:&#32;Failed&#32;to&#32;register&#32;window&#32;class&quot;</emphasis>);
+1376 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1377 &#32;&#32;&#32;&#32;}
+1378 
+1379 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+1380 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a072d8e8fc92daf82e56bf4d615d2cda5"/>    <section>
+    <title>_glfwRequestWindowAttentionWin32()</title>
+<indexterm><primary>_glfwRequestWindowAttentionWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwRequestWindowAttentionWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwRequestWindowAttentionWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1684 of file win32_window.c.</para>
+<programlisting>1685 {
+1686 &#32;&#32;&#32;&#32;FlashWindow(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>);
+1687 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a7c516bd818882391fdaeabe7a13eba52"/>    <section>
+    <title>_glfwRestoreWindowWin32()</title>
+<indexterm><primary>_glfwRestoreWindowWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwRestoreWindowWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwRestoreWindowWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1664 of file win32_window.c.</para>
+<programlisting>1665 {
+1666 &#32;&#32;&#32;&#32;ShowWindow(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;SW_RESTORE);
+1667 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1abf1a0ba92102516bdbc00c164edf5017"/>    <section>
+    <title>_glfwSetClipboardStringWin32()</title>
+<indexterm><primary>_glfwSetClipboardStringWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwSetClipboardStringWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetClipboardStringWin32 (const char * string)</computeroutput></para><para>
+Definition at line 2192 of file win32_window.c.</para>
+<programlisting>2193 {
+2194 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;characterCount;
+2195 &#32;&#32;&#32;&#32;HANDLE&#32;<link linkend="_glext_8h_1ab49790263c78300fbf05719e38246198">object</link>;
+2196 &#32;&#32;&#32;&#32;WCHAR*&#32;<link linkend="_glad_8h_1a76461e97a098d2c9ae20ac193d3825ae">buffer</link>;
+2197 
+2198 &#32;&#32;&#32;&#32;characterCount&#32;=&#32;MultiByteToWideChar(CP_UTF8,&#32;0,&#32;<emphasis role="keywordtype">string</emphasis>,&#32;-1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;0);
+2199 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!characterCount)
+2200 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+2201 
+2202 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">object</emphasis>&#32;=&#32;GlobalAlloc(GMEM_MOVEABLE,&#32;characterCount&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(WCHAR));
+2203 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<emphasis role="keywordtype">object</emphasis>)
+2204 &#32;&#32;&#32;&#32;{
+2205 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__init_8c_1a596868de8858d6d69cc642152a319b24">_glfwInputErrorWin32</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+2206 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Win32:&#32;Failed&#32;to&#32;allocate&#32;global&#32;handle&#32;for&#32;clipboard&quot;</emphasis>);
+2207 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+2208 &#32;&#32;&#32;&#32;}
+2209 
+2210 &#32;&#32;&#32;&#32;<link linkend="_structbuffer">buffer</link>&#32;=&#32;GlobalLock(<emphasis role="keywordtype">object</emphasis>);
+2211 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_structbuffer">buffer</link>)
+2212 &#32;&#32;&#32;&#32;{
+2213 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__init_8c_1a596868de8858d6d69cc642152a319b24">_glfwInputErrorWin32</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+2214 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Win32:&#32;Failed&#32;to&#32;lock&#32;global&#32;handle&quot;</emphasis>);
+2215 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;GlobalFree(<emphasis role="keywordtype">object</emphasis>);
+2216 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+2217 &#32;&#32;&#32;&#32;}
+2218 
+2219 &#32;&#32;&#32;&#32;MultiByteToWideChar(CP_UTF8,&#32;0,&#32;<emphasis role="keywordtype">string</emphasis>,&#32;-1,&#32;<link linkend="_structbuffer">buffer</link>,&#32;characterCount);
+2220 &#32;&#32;&#32;&#32;GlobalUnlock(<emphasis role="keywordtype">object</emphasis>);
+2221 
+2222 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!OpenClipboard(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.helperWindowHandle))
+2223 &#32;&#32;&#32;&#32;{
+2224 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__init_8c_1a596868de8858d6d69cc642152a319b24">_glfwInputErrorWin32</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+2225 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Win32:&#32;Failed&#32;to&#32;open&#32;clipboard&quot;</emphasis>);
+2226 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;GlobalFree(<emphasis role="keywordtype">object</emphasis>);
+2227 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+2228 &#32;&#32;&#32;&#32;}
+2229 
+2230 &#32;&#32;&#32;&#32;EmptyClipboard();
+2231 &#32;&#32;&#32;&#32;SetClipboardData(CF_UNICODETEXT,&#32;<emphasis role="keywordtype">object</emphasis>);
+2232 &#32;&#32;&#32;&#32;CloseClipboard();
+2233 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a0e6560aa1f1fc5f556543bd1dbc954f3"/>    <section>
+    <title>_glfwSetCursorModeWin32()</title>
+<indexterm><primary>_glfwSetCursorModeWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwSetCursorModeWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetCursorModeWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int mode)</computeroutput></para><para>
+Definition at line 2085 of file win32_window.c.</para>
+<programlisting>2086 {
+2087 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>&#32;==&#32;<link linkend="_glfw3_8h_1a2315b99a329ce53e6a13a9d46fd5ca88">GLFW_CURSOR_DISABLED</link>)
+2088 &#32;&#32;&#32;&#32;{
+2089 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_win32__window_8c_1a9b069dba7d331d2cae0ecb3e975b027e">_glfwWindowFocusedWin32</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>))
+2090 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;disableCursor(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+2091 &#32;&#32;&#32;&#32;}
+2092 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.disabledCursorWindow&#32;==&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)
+2093 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;enableCursor(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+2094 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cursorInContentArea(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>))
+2095 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;updateCursorImage(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+2096 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a7adc955bc72784fdf854cfd6e32ba287"/>    <section>
+    <title>_glfwSetCursorPosWin32()</title>
+<indexterm><primary>_glfwSetCursorPosWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwSetCursorPosWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetCursorPosWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, double xpos, double ypos)</computeroutput></para><para>
+Definition at line 2073 of file win32_window.c.</para>
+<programlisting>2074 {
+2075 &#32;&#32;&#32;&#32;POINT&#32;pos&#32;=&#32;{&#32;(int)&#32;xpos,&#32;(<emphasis role="keywordtype">int</emphasis>)&#32;ypos&#32;};
+2076 
+2077 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Store&#32;the&#32;new&#32;position&#32;so&#32;it&#32;can&#32;be&#32;recognized&#32;later</emphasis>
+2078 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.lastCursorPosX&#32;=&#32;pos.x;
+2079 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.lastCursorPosY&#32;=&#32;pos.y;
+2080 
+2081 &#32;&#32;&#32;&#32;ClientToScreen(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;&amp;pos);
+2082 &#32;&#32;&#32;&#32;SetCursorPos(pos.x,&#32;pos.y);
+2083 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1ab5d21e2433ee1d512ae83b39549e49fc"/>    <section>
+    <title>_glfwSetCursorWin32()</title>
+<indexterm><primary>_glfwSetCursorWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwSetCursorWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetCursorWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, <link linkend="_struct___g_l_f_wcursor">_GLFWcursor</link> * cursor)</computeroutput></para><para>
+Definition at line 2186 of file win32_window.c.</para>
+<programlisting>2187 {
+2188 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cursorInContentArea(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>))
+2189 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;updateCursorImage(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+2190 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1ad52b5863f16d0498407bbb612ea6f378"/>    <section>
+    <title>_glfwSetRawMouseMotionWin32()</title>
+<indexterm><primary>_glfwSetRawMouseMotionWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwSetRawMouseMotionWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetRawMouseMotionWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> enabled)</computeroutput></para><para>
+Definition at line 1941 of file win32_window.c.</para>
+<programlisting>1942 {
+1943 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.disabledCursorWindow&#32;!=&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)
+1944 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+1945 
+1946 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a0455a397ab5468d21c3021f2efa6dd3c">enabled</link>)
+1947 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;enableRawMouseMotion(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1948 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1949 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;disableRawMouseMotion(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1950 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1ab5e4af472645ebb89e26d1e9c6366aa4"/>    <section>
+    <title>_glfwSetWindowAspectRatioWin32()</title>
+<indexterm><primary>_glfwSetWindowAspectRatioWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwSetWindowAspectRatioWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowAspectRatioWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int numer, int denom)</computeroutput></para><para>
+Definition at line 1600 of file win32_window.c.</para>
+<programlisting>1601 {
+1602 &#32;&#32;&#32;&#32;RECT&#32;area;
+1603 
+1604 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(numer&#32;==&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>&#32;||&#32;denom&#32;==&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>)
+1605 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+1606 
+1607 &#32;&#32;&#32;&#32;GetWindowRect(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;&amp;area);
+1608 &#32;&#32;&#32;&#32;applyAspectRatio(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;WMSZ_BOTTOMRIGHT,&#32;&amp;area);
+1609 &#32;&#32;&#32;&#32;MoveWindow(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,
+1610 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;area.left,&#32;area.top,
+1611 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;area.right&#32;-&#32;area.left,
+1612 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;area.bottom&#32;-&#32;area.top,&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>);
+1613 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a0d35deb7d39352e99fba8fa96013d969"/>    <section>
+    <title>_glfwSetWindowDecoratedWin32()</title>
+<indexterm><primary>_glfwSetWindowDecoratedWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwSetWindowDecoratedWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowDecoratedWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> enabled)</computeroutput></para><para>
+Definition at line 1863 of file win32_window.c.</para>
+<programlisting>1864 {
+1865 &#32;&#32;&#32;&#32;updateWindowStyles(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1866 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a9da5d6290cad503b221e73482b67218e"/>    <section>
+    <title>_glfwSetWindowFloatingWin32()</title>
+<indexterm><primary>_glfwSetWindowFloatingWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwSetWindowFloatingWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowFloatingWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> enabled)</computeroutput></para><para>
+Definition at line 1868 of file win32_window.c.</para>
+<programlisting>1869 {
+1870 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;HWND&#32;after&#32;=&#32;<link linkend="_glad_8h_1a0455a397ab5468d21c3021f2efa6dd3c">enabled</link>&#32;?&#32;HWND_TOPMOST&#32;:&#32;HWND_NOTOPMOST;
+1871 &#32;&#32;&#32;&#32;SetWindowPos(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;after,&#32;0,&#32;0,&#32;0,&#32;0,
+1872 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SWP_NOACTIVATE&#32;|&#32;SWP_NOMOVE&#32;|&#32;SWP_NOSIZE);
+1873 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a36bc130cc992e12d40e25a6a48e5a53b"/>    <section>
+    <title>_glfwSetWindowIconWin32()</title>
+<indexterm><primary>_glfwSetWindowIconWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwSetWindowIconWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowIconWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int count, const <link linkend="_struct_g_l_f_wimage">GLFWimage</link> * images)</computeroutput></para><para>
+Definition at line 1468 of file win32_window.c.</para>
+<programlisting>1470 {
+1471 &#32;&#32;&#32;&#32;HICON&#32;bigIcon&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;smallIcon&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1472 
+1473 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>)
+1474 &#32;&#32;&#32;&#32;{
+1475 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_struct_g_l_f_wimage">GLFWimage</link>*&#32;bigImage&#32;=&#32;chooseImage(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>,&#32;images,
+1476 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;GetSystemMetrics(SM_CXICON),
+1477 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;GetSystemMetrics(SM_CYICON));
+1478 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_struct_g_l_f_wimage">GLFWimage</link>*&#32;smallImage&#32;=&#32;chooseImage(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>,&#32;images,
+1479 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;GetSystemMetrics(SM_CXSMICON),
+1480 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;GetSystemMetrics(SM_CYSMICON));
+1481 
+1482 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;bigIcon&#32;=&#32;createIcon(bigImage,&#32;0,&#32;0,&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>);
+1483 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;smallIcon&#32;=&#32;createIcon(smallImage,&#32;0,&#32;0,&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>);
+1484 &#32;&#32;&#32;&#32;}
+1485 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1486 &#32;&#32;&#32;&#32;{
+1487 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;bigIcon&#32;=&#32;(HICON)&#32;GetClassLongPtrW(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;GCLP_HICON);
+1488 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;smallIcon&#32;=&#32;(HICON)&#32;GetClassLongPtrW(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;GCLP_HICONSM);
+1489 &#32;&#32;&#32;&#32;}
+1490 
+1491 &#32;&#32;&#32;&#32;SendMessage(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;WM_SETICON,&#32;ICON_BIG,&#32;(LPARAM)&#32;bigIcon);
+1492 &#32;&#32;&#32;&#32;SendMessage(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;WM_SETICON,&#32;ICON_SMALL,&#32;(LPARAM)&#32;smallIcon);
+1493 
+1494 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.bigIcon)
+1495 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;DestroyIcon(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.bigIcon);
+1496 
+1497 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.smallIcon)
+1498 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;DestroyIcon(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.smallIcon);
+1499 
+1500 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>)
+1501 &#32;&#32;&#32;&#32;{
+1502 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.bigIcon&#32;=&#32;bigIcon;
+1503 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.smallIcon&#32;=&#32;smallIcon;
+1504 &#32;&#32;&#32;&#32;}
+1505 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a20e0a994ae4879caedde480b1dddf948"/>    <section>
+    <title>_glfwSetWindowMonitorWin32()</title>
+<indexterm><primary>_glfwSetWindowMonitorWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwSetWindowMonitorWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowMonitorWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, <link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, int xpos, int ypos, int width, int height, int refreshRate)</computeroutput></para><para>
+Definition at line 1696 of file win32_window.c.</para>
+<programlisting>1701 {
+1702 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;monitor&#32;==&#32;monitor)
+1703 &#32;&#32;&#32;&#32;{
+1704 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(monitor)
+1705 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1706 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(monitor-&gt;<link linkend="_struct___g_l_f_wmonitor_1aa869aae87a7a75ba89211619ba103aa1">window</link>&#32;==&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)
+1707 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1708 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;acquireMonitor(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1709 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fitToMonitor(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1710 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1711 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1712 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1713 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1714 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RECT&#32;rect&#32;=&#32;{&#32;xpos,&#32;ypos,&#32;xpos&#32;+&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;ypos&#32;+&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>&#32;};
+1715 
+1716 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_win32__platform_8h_1a2beecf9b7d4233876e8c0b9214099146">_glfwIsWindows10AnniversaryUpdateOrGreaterWin32</link>())
+1717 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1718 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1a13bab8e489d9ad05951150e27d3a6334">AdjustWindowRectExForDpi</link>(&amp;rect,&#32;getWindowStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>),
+1719 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>,&#32;getWindowExStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>),
+1720 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1adbb79683794601577be49f6ebe606dd0">GetDpiForWindow</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle));
+1721 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1722 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1723 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1724 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;AdjustWindowRectEx(&amp;rect,&#32;getWindowStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>),
+1725 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>,&#32;getWindowExStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>));
+1726 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1727 
+1728 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SetWindowPos(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;HWND_TOP,
+1729 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rect.left,&#32;rect.top,
+1730 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rect.right&#32;-&#32;rect.left,&#32;rect.bottom&#32;-&#32;rect.top,
+1731 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SWP_NOCOPYBITS&#32;|&#32;SWP_NOACTIVATE&#32;|&#32;SWP_NOZORDER);
+1732 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1733 
+1734 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+1735 &#32;&#32;&#32;&#32;}
+1736 
+1737 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;monitor)
+1738 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;releaseMonitor(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1739 
+1740 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a5cfc56e9a5e1e8dd88862c9c7b8a6f7f">_glfwInputWindowMonitor</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;monitor);
+1741 
+1742 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;monitor)
+1743 &#32;&#32;&#32;&#32;{
+1744 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;MONITORINFO&#32;mi&#32;=&#32;{&#32;<emphasis role="keyword">sizeof</emphasis>(mi)&#32;};
+1745 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;UINT&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;=&#32;SWP_SHOWWINDOW&#32;|&#32;SWP_NOACTIVATE&#32;|&#32;SWP_NOCOPYBITS;
+1746 
+1747 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;decorated)
+1748 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1749 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;DWORD&#32;style&#32;=&#32;GetWindowLongW(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;GWL_STYLE);
+1750 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;style&#32;&amp;=&#32;~WS_OVERLAPPEDWINDOW;
+1751 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;style&#32;|=&#32;getWindowStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1752 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SetWindowLongW(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;GWL_STYLE,&#32;style);
+1753 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;|=&#32;SWP_FRAMECHANGED;
+1754 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1755 
+1756 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;acquireMonitor(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1757 
+1758 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;GetMonitorInfo(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;monitor-&gt;win32.handle,&#32;&amp;mi);
+1759 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SetWindowPos(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;HWND_TOPMOST,
+1760 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;mi.rcMonitor.left,
+1761 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;mi.rcMonitor.top,
+1762 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;mi.rcMonitor.right&#32;-&#32;mi.rcMonitor.left,
+1763 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;mi.rcMonitor.bottom&#32;-&#32;mi.rcMonitor.top,
+1764 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>);
+1765 &#32;&#32;&#32;&#32;}
+1766 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1767 &#32;&#32;&#32;&#32;{
+1768 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;HWND&#32;after;
+1769 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RECT&#32;rect&#32;=&#32;{&#32;xpos,&#32;ypos,&#32;xpos&#32;+&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;ypos&#32;+&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>&#32;};
+1770 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;DWORD&#32;style&#32;=&#32;GetWindowLongW(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;GWL_STYLE);
+1771 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;UINT&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;=&#32;SWP_NOACTIVATE&#32;|&#32;SWP_NOCOPYBITS;
+1772 
+1773 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;decorated)
+1774 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1775 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;style&#32;&amp;=&#32;~WS_POPUP;
+1776 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;style&#32;|=&#32;getWindowStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1777 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SetWindowLongW(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;GWL_STYLE,&#32;style);
+1778 
+1779 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;|=&#32;SWP_FRAMECHANGED;
+1780 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1781 
+1782 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;floating)
+1783 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;after&#32;=&#32;HWND_TOPMOST;
+1784 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1785 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;after&#32;=&#32;HWND_NOTOPMOST;
+1786 
+1787 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_win32__platform_8h_1a2beecf9b7d4233876e8c0b9214099146">_glfwIsWindows10AnniversaryUpdateOrGreaterWin32</link>())
+1788 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1789 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1a13bab8e489d9ad05951150e27d3a6334">AdjustWindowRectExForDpi</link>(&amp;rect,&#32;getWindowStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>),
+1790 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>,&#32;getWindowExStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>),
+1791 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1adbb79683794601577be49f6ebe606dd0">GetDpiForWindow</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle));
+1792 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1793 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1794 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1795 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;AdjustWindowRectEx(&amp;rect,&#32;getWindowStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>),
+1796 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>,&#32;getWindowExStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>));
+1797 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1798 
+1799 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SetWindowPos(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;after,
+1800 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rect.left,&#32;rect.top,
+1801 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rect.right&#32;-&#32;rect.left,&#32;rect.bottom&#32;-&#32;rect.top,
+1802 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>);
+1803 &#32;&#32;&#32;&#32;}
+1804 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a08fda6580fcceccb5465cdb1fe770d7f"/>    <section>
+    <title>_glfwSetWindowMousePassthroughWin32()</title>
+<indexterm><primary>_glfwSetWindowMousePassthroughWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwSetWindowMousePassthroughWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowMousePassthroughWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> enabled)</computeroutput></para><para>
+Definition at line 1875 of file win32_window.c.</para>
+<programlisting>1876 {
+1877 &#32;&#32;&#32;&#32;COLORREF&#32;<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>&#32;=&#32;0;
+1878 &#32;&#32;&#32;&#32;BYTE&#32;<link linkend="_glad_8h_1ac03904b1f7e359bb2acf10a755e97c5a">alpha</link>&#32;=&#32;0;
+1879 &#32;&#32;&#32;&#32;DWORD&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;=&#32;0;
+1880 &#32;&#32;&#32;&#32;DWORD&#32;exStyle&#32;=&#32;GetWindowLongW(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;GWL_EXSTYLE);
+1881 
+1882 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(exStyle&#32;&amp;&#32;WS_EX_LAYERED)
+1883 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;GetLayeredWindowAttributes(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;&amp;<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>,&#32;&amp;<link linkend="_glad_8h_1ac03904b1f7e359bb2acf10a755e97c5a">alpha</link>,&#32;&amp;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>);
+1884 
+1885 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a0455a397ab5468d21c3021f2efa6dd3c">enabled</link>)
+1886 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exStyle&#32;|=&#32;(WS_EX_TRANSPARENT&#32;|&#32;WS_EX_LAYERED);
+1887 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1888 &#32;&#32;&#32;&#32;{
+1889 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exStyle&#32;&amp;=&#32;~WS_EX_TRANSPARENT;
+1890 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NOTE:&#32;Window&#32;opacity&#32;also&#32;needs&#32;the&#32;layered&#32;window&#32;style&#32;so&#32;do&#32;not</emphasis>
+1891 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;remove&#32;it&#32;if&#32;the&#32;window&#32;is&#32;alpha&#32;blended</emphasis>
+1892 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(exStyle&#32;&amp;&#32;WS_EX_LAYERED)
+1893 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1894 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!(<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;&amp;&#32;LWA_ALPHA))
+1895 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exStyle&#32;&amp;=&#32;~WS_EX_LAYERED;
+1896 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1897 &#32;&#32;&#32;&#32;}
+1898 
+1899 &#32;&#32;&#32;&#32;SetWindowLongW(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;GWL_EXSTYLE,&#32;exStyle);
+1900 
+1901 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a0455a397ab5468d21c3021f2efa6dd3c">enabled</link>)
+1902 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SetLayeredWindowAttributes(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>,&#32;<link linkend="_glad_8h_1ac03904b1f7e359bb2acf10a755e97c5a">alpha</link>,&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>);
+1903 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a9428adda957ce508e3041119d670de0f"/>    <section>
+    <title>_glfwSetWindowOpacityWin32()</title>
+<indexterm><primary>_glfwSetWindowOpacityWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwSetWindowOpacityWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowOpacityWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, float opacity)</computeroutput></para><para>
+Definition at line 1920 of file win32_window.c.</para>
+<programlisting>1921 {
+1922 &#32;&#32;&#32;&#32;LONG&#32;exStyle&#32;=&#32;GetWindowLongW(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;GWL_EXSTYLE);
+1923 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(opacity&#32;&lt;&#32;1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;||&#32;(exStyle&#32;&amp;&#32;WS_EX_TRANSPARENT))
+1924 &#32;&#32;&#32;&#32;{
+1925 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;BYTE&#32;<link linkend="_glad_8h_1ac03904b1f7e359bb2acf10a755e97c5a">alpha</link>&#32;=&#32;(BYTE)&#32;(255&#32;*&#32;opacity);
+1926 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exStyle&#32;|=&#32;WS_EX_LAYERED;
+1927 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SetWindowLongW(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;GWL_EXSTYLE,&#32;exStyle);
+1928 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SetLayeredWindowAttributes(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;0,&#32;<link linkend="_glad_8h_1ac03904b1f7e359bb2acf10a755e97c5a">alpha</link>,&#32;LWA_ALPHA);
+1929 &#32;&#32;&#32;&#32;}
+1930 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(exStyle&#32;&amp;&#32;WS_EX_TRANSPARENT)
+1931 &#32;&#32;&#32;&#32;{
+1932 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SetLayeredWindowAttributes(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;0,&#32;0,&#32;0);
+1933 &#32;&#32;&#32;&#32;}
+1934 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1935 &#32;&#32;&#32;&#32;{
+1936 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exStyle&#32;&amp;=&#32;~WS_EX_LAYERED;
+1937 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SetWindowLongW(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;GWL_EXSTYLE,&#32;exStyle);
+1938 &#32;&#32;&#32;&#32;}
+1939 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a497c96018316ca28c83a6ef2f1461a19"/>    <section>
+    <title>_glfwSetWindowPosWin32()</title>
+<indexterm><primary>_glfwSetWindowPosWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwSetWindowPosWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowPosWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int xpos, int ypos)</computeroutput></para><para>
+Definition at line 1518 of file win32_window.c.</para>
+<programlisting>1519 {
+1520 &#32;&#32;&#32;&#32;RECT&#32;rect&#32;=&#32;{&#32;xpos,&#32;ypos,&#32;xpos,&#32;ypos&#32;};
+1521 
+1522 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_win32__platform_8h_1a2beecf9b7d4233876e8c0b9214099146">_glfwIsWindows10AnniversaryUpdateOrGreaterWin32</link>())
+1523 &#32;&#32;&#32;&#32;{
+1524 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1a13bab8e489d9ad05951150e27d3a6334">AdjustWindowRectExForDpi</link>(&amp;rect,&#32;getWindowStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>),
+1525 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>,&#32;getWindowExStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>),
+1526 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1adbb79683794601577be49f6ebe606dd0">GetDpiForWindow</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle));
+1527 &#32;&#32;&#32;&#32;}
+1528 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1529 &#32;&#32;&#32;&#32;{
+1530 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;AdjustWindowRectEx(&amp;rect,&#32;getWindowStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>),
+1531 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>,&#32;getWindowExStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>));
+1532 &#32;&#32;&#32;&#32;}
+1533 
+1534 &#32;&#32;&#32;&#32;SetWindowPos(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;rect.left,&#32;rect.top,&#32;0,&#32;0,
+1535 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SWP_NOACTIVATE&#32;|&#32;SWP_NOZORDER&#32;|&#32;SWP_NOSIZE);
+1536 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1aa9ba9944e5152d29f1aa551f14d75b2d"/>    <section>
+    <title>_glfwSetWindowResizableWin32()</title>
+<indexterm><primary>_glfwSetWindowResizableWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwSetWindowResizableWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowResizableWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> enabled)</computeroutput></para><para>
+Definition at line 1858 of file win32_window.c.</para>
+<programlisting>1859 {
+1860 &#32;&#32;&#32;&#32;updateWindowStyles(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1861 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1ada7a6afa85a12d7a6ff3efe78e6abe0c"/>    <section>
+    <title>_glfwSetWindowSizeLimitsWin32()</title>
+<indexterm><primary>_glfwSetWindowSizeLimitsWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwSetWindowSizeLimitsWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowSizeLimitsWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int minwidth, int minheight, int maxwidth, int maxheight)</computeroutput></para><para>
+Definition at line 1581 of file win32_window.c.</para>
+<programlisting>1584 {
+1585 &#32;&#32;&#32;&#32;RECT&#32;area;
+1586 
+1587 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((minwidth&#32;==&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>&#32;||&#32;minheight&#32;==&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>)&#32;&amp;&amp;
+1588 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(maxwidth&#32;==&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>&#32;||&#32;maxheight&#32;==&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>))
+1589 &#32;&#32;&#32;&#32;{
+1590 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+1591 &#32;&#32;&#32;&#32;}
+1592 
+1593 &#32;&#32;&#32;&#32;GetWindowRect(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;&amp;area);
+1594 &#32;&#32;&#32;&#32;MoveWindow(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,
+1595 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;area.left,&#32;area.top,
+1596 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;area.right&#32;-&#32;area.left,
+1597 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;area.bottom&#32;-&#32;area.top,&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>);
+1598 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a658f42d345f10d3ab52613b030d801c6"/>    <section>
+    <title>_glfwSetWindowSizeWin32()</title>
+<indexterm><primary>_glfwSetWindowSizeWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwSetWindowSizeWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowSizeWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int width, int height)</computeroutput></para><para>
+Definition at line 1549 of file win32_window.c.</para>
+<programlisting>1550 {
+1551 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;monitor)
+1552 &#32;&#32;&#32;&#32;{
+1553 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;monitor-&gt;window&#32;==&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)
+1554 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1555 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;acquireMonitor(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1556 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fitToMonitor(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1557 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1558 &#32;&#32;&#32;&#32;}
+1559 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1560 &#32;&#32;&#32;&#32;{
+1561 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RECT&#32;rect&#32;=&#32;{&#32;0,&#32;0,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>&#32;};
+1562 
+1563 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_win32__platform_8h_1a2beecf9b7d4233876e8c0b9214099146">_glfwIsWindows10AnniversaryUpdateOrGreaterWin32</link>())
+1564 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1565 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1a13bab8e489d9ad05951150e27d3a6334">AdjustWindowRectExForDpi</link>(&amp;rect,&#32;getWindowStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>),
+1566 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>,&#32;getWindowExStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>),
+1567 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1adbb79683794601577be49f6ebe606dd0">GetDpiForWindow</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle));
+1568 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1569 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1570 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1571 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;AdjustWindowRectEx(&amp;rect,&#32;getWindowStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>),
+1572 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>,&#32;getWindowExStyle(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>));
+1573 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1574 
+1575 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SetWindowPos(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;HWND_TOP,
+1576 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0,&#32;0,&#32;rect.right&#32;-&#32;rect.left,&#32;rect.bottom&#32;-&#32;rect.top,
+1577 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SWP_NOACTIVATE&#32;|&#32;SWP_NOOWNERZORDER&#32;|&#32;SWP_NOMOVE&#32;|&#32;SWP_NOZORDER);
+1578 &#32;&#32;&#32;&#32;}
+1579 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a86d6e8b4e6609cfeba7691e466b21184"/>    <section>
+    <title>_glfwSetWindowTitleWin32()</title>
+<indexterm><primary>_glfwSetWindowTitleWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwSetWindowTitleWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowTitleWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, const char * title)</computeroutput></para><para>
+Definition at line 1458 of file win32_window.c.</para>
+<programlisting>1459 {
+1460 &#32;&#32;&#32;&#32;WCHAR*&#32;wideTitle&#32;=&#32;<link linkend="_win32__init_8c_1afcf517cf44f0f8a87489860bc9373a54">_glfwCreateWideStringFromUTF8Win32</link>(title);
+1461 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!wideTitle)
+1462 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+1463 
+1464 &#32;&#32;&#32;&#32;SetWindowTextW(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;wideTitle);
+1465 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(wideTitle);
+1466 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a02bfef52e9e9352b7cf691434d01ec70"/>    <section>
+    <title>_glfwShowWindowWin32()</title>
+<indexterm><primary>_glfwShowWindowWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwShowWindowWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwShowWindowWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1674 of file win32_window.c.</para>
+<programlisting>1675 {
+1676 &#32;&#32;&#32;&#32;ShowWindow(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle,&#32;SW_SHOWNA);
+1677 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a85fb6be0a27d7f17a5d90eaec5320627"/>    <section>
+    <title>_glfwUnregisterWindowClassWin32()</title>
+<indexterm><primary>_glfwUnregisterWindowClassWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwUnregisterWindowClassWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwUnregisterWindowClassWin32 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 1384 of file win32_window.c.</para>
+<programlisting>1385 {
+1386 &#32;&#32;&#32;&#32;UnregisterClassW(<link linkend="_win32__platform_8h_1afb084d3ede51d15e5e2ed59b06b61290">_GLFW_WNDCLASSNAME</link>,&#32;GetModuleHandleW(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>));
+1387 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a62c585e2432977fa2b9fa4757a0d4cf9"/>    <section>
+    <title>_glfwWaitEventsTimeoutWin32()</title>
+<indexterm><primary>_glfwWaitEventsTimeoutWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwWaitEventsTimeoutWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwWaitEventsTimeoutWin32 (double timeout)</computeroutput></para><para>
+Definition at line 2046 of file win32_window.c.</para>
+<programlisting>2047 {
+2048 &#32;&#32;&#32;&#32;MsgWaitForMultipleObjects(0,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>,&#32;(DWORD)&#32;(<link linkend="_glad_8h_1ad29bb0d8468b264a4e3d9204366cfaab">timeout</link>&#32;*&#32;1e3),&#32;QS_ALLEVENTS);
+2049 
+2050 &#32;&#32;&#32;&#32;<link linkend="_win32__window_8c_1a8de69356bacf2073a7d4903d2d6ec741">_glfwPollEventsWin32</link>();
+2051 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a482c57b8e130d21ad68ddf965f74e1a0"/>    <section>
+    <title>_glfwWaitEventsWin32()</title>
+<indexterm><primary>_glfwWaitEventsWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwWaitEventsWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwWaitEventsWin32 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 2039 of file win32_window.c.</para>
+<programlisting>2040 {
+2041 &#32;&#32;&#32;&#32;WaitMessage();
+2042 
+2043 &#32;&#32;&#32;&#32;<link linkend="_win32__window_8c_1a8de69356bacf2073a7d4903d2d6ec741">_glfwPollEventsWin32</link>();
+2044 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a9b069dba7d331d2cae0ecb3e975b027e"/>    <section>
+    <title>_glfwWindowFocusedWin32()</title>
+<indexterm><primary>_glfwWindowFocusedWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwWindowFocusedWin32</secondary></indexterm>
+<para><computeroutput>int _glfwWindowFocusedWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1806 of file win32_window.c.</para>
+<programlisting>1807 {
+1808 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle&#32;==&#32;GetActiveWindow();
+1809 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a6e0135d2fd5538719c900c41424caa8b"/>    <section>
+    <title>_glfwWindowHoveredWin32()</title>
+<indexterm><primary>_glfwWindowHoveredWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwWindowHoveredWin32</secondary></indexterm>
+<para><computeroutput>int _glfwWindowHoveredWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1826 of file win32_window.c.</para>
+<programlisting>1827 {
+1828 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;cursorInContentArea(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1829 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a1ef31772bba9bbbb70966126a08778d0"/>    <section>
+    <title>_glfwWindowIconifiedWin32()</title>
+<indexterm><primary>_glfwWindowIconifiedWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwWindowIconifiedWin32</secondary></indexterm>
+<para><computeroutput>int _glfwWindowIconifiedWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1811 of file win32_window.c.</para>
+<programlisting>1812 {
+1813 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;IsIconic(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle);
+1814 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a4640f26608b837f9793ef0ee923036eb"/>    <section>
+    <title>_glfwWindowMaximizedWin32()</title>
+<indexterm><primary>_glfwWindowMaximizedWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwWindowMaximizedWin32</secondary></indexterm>
+<para><computeroutput>int _glfwWindowMaximizedWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1821 of file win32_window.c.</para>
+<programlisting>1822 {
+1823 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;IsZoomed(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle);
+1824 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a08f4731441f2215f589dc641eb015bb4"/>    <section>
+    <title>_glfwWindowVisibleWin32()</title>
+<indexterm><primary>_glfwWindowVisibleWin32</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>_glfwWindowVisibleWin32</secondary></indexterm>
+<para><computeroutput>int _glfwWindowVisibleWin32 (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1816 of file win32_window.c.</para>
+<programlisting>1817 {
+1818 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;IsWindowVisible(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle);
+1819 }
+</programlisting>    </section><anchor xml:id="_win32__window_8c_1a76a9a33652472f1952aeeac740b90113"/>    <section>
+    <title>glfwGetWin32Window()</title>
+<indexterm><primary>glfwGetWin32Window</primary><secondary>win32_window.c</secondary></indexterm>
+<indexterm><primary>win32_window.c</primary><secondary>glfwGetWin32Window</secondary></indexterm>
+<para><computeroutput><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> HWND glfwGetWin32Window (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> * handle)</computeroutput></para><para>
+Definition at line 2386 of file win32_window.c.</para>
+<programlisting>2387 {
+2388 &#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link>*&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;(<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link>*)&#32;handle;
+2389 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a69563c87fe776d416636a4d1b0e9e599">_GLFW_REQUIRE_INIT_OR_RETURN</link>(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+2390 
+2391 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>.<link linkend="_struct___g_l_f_wplatform_1adadc0cac5c197cc28788bc4993a9f6da">platformID</link>&#32;!=&#32;<link linkend="_group__init_1ga8d3d17df2ab57492cef665da52c603a1">GLFW_PLATFORM_WIN32</link>)
+2392 &#32;&#32;&#32;&#32;{
+2393 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga3608c6c29ab7a72f3bf019f4c3a2563d">GLFW_PLATFORM_UNAVAILABLE</link>,
+2394 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Win32:&#32;Platform&#32;not&#32;initialized&quot;</emphasis>);
+2395 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+2396 &#32;&#32;&#32;&#32;}
+2397 
+2398 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle;
+2399 }
+</programlisting></section>
+</section>
+</section>

@@ -1,0 +1,271 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_cocoa__init_8m">
+<title>deps/glfw/src/cocoa_init.m File Reference</title>
+<indexterm><primary>deps/glfw/src/cocoa_init.m</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+#include &lt;sys/param.h&gt;
+#include &lt;crt_externs.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>class <link linkend="_interface_g_l_f_w_helper">GLFWHelper</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_interface_g_l_f_w_application_delegate">GLFWApplicationDelegate</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * <link linkend="_cocoa__init_8m_1ad0bc6d8bc6400dc271eb7f8516a5e145">_glfwLoadLocalVulkanLoaderCocoa</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_cocoa__init_8m_1ae2c18e6b1b4087349db05fc416f94d77">_glfwConnectCocoa</link> (int platformID, <link linkend="_struct___g_l_f_wplatform">_GLFWplatform</link> *platform)</para>
+</listitem>
+            <listitem><para>int <link linkend="_cocoa__init_8m_1a885d16bf2cdbffb8b7e8c96158a574e0">_glfwInitCocoa</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cocoa__init_8m_1af027b11571e08c16239b3a851fd84677">_glfwTerminateCocoa</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_cocoa__init_8m_1ae2c18e6b1b4087349db05fc416f94d77"/>    <section>
+    <title>_glfwConnectCocoa()</title>
+<indexterm><primary>_glfwConnectCocoa</primary><secondary>cocoa_init.m</secondary></indexterm>
+<indexterm><primary>cocoa_init.m</primary><secondary>_glfwConnectCocoa</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwConnectCocoa (int platformID, <link linkend="_struct___g_l_f_wplatform">_GLFWplatform</link> * platform)</computeroutput></para><para>
+Definition at line 483 of file cocoa_init.m.</para>
+<programlisting>484 {
+485 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_struct___g_l_f_wplatform">_GLFWplatform</link>&#32;cocoa&#32;=
+486 &#32;&#32;&#32;&#32;{
+487 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1ga83b18714254f75bc2f0cdbafa0f10b6b">GLFW_PLATFORM_COCOA</link>,
+488 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__init_8m_1a885d16bf2cdbffb8b7e8c96158a574e0">_glfwInitCocoa</link>,
+489 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__init_8m_1af027b11571e08c16239b3a851fd84677">_glfwTerminateCocoa</link>,
+490 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1acfbd56cb05f4ff167536dd27457675c9">_glfwGetCursorPosCocoa</link>,
+491 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a1c1b03cc5d71db889a203e1929e6b7e4">_glfwSetCursorPosCocoa</link>,
+492 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a360d9f80249d179204ff225b720834a0">_glfwSetCursorModeCocoa</link>,
+493 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a387c0c7caba6e2a702db8e3112a99b50">_glfwSetRawMouseMotionCocoa</link>,
+494 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a2ea01006dbd5f5569ca848f938bbc3a7">_glfwRawMouseMotionSupportedCocoa</link>,
+495 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a52824c412b8aa8301ee48ec39fda5eae">_glfwCreateCursorCocoa</link>,
+496 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a2f3ab63b4e0e4007359c0a8f026b0cbc">_glfwCreateStandardCursorCocoa</link>,
+497 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1ae2ff4b18cf7597720aea51f67a211186">_glfwDestroyCursorCocoa</link>,
+498 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a402fc6ab6d2438a38864bb9a77f595cd">_glfwSetCursorCocoa</link>,
+499 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a9610e15d33c01c40263c55680ae9e01a">_glfwGetScancodeNameCocoa</link>,
+500 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1ad9c7faa3f5749d8d02661150761160ce">_glfwGetKeyScancodeCocoa</link>,
+501 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a6a28c007445d95ad4824104ba8eeb47f">_glfwSetClipboardStringCocoa</link>,
+502 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1af2afd8cc56628c0317c7a93326e002d6">_glfwGetClipboardStringCocoa</link>,
+503 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__joystick_8h_1ac8c394752f844948b4582ee0d04106d3">_glfwInitJoysticksCocoa</link>,
+504 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__joystick_8h_1a5a66e720d7aee763c2edef561cc025e6">_glfwTerminateJoysticksCocoa</link>,
+505 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__joystick_8h_1abc598b49388a340c69b8699a15e6d783">_glfwPollJoystickCocoa</link>,
+506 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__joystick_8h_1ab1d60c8a6033cac7370e423c54f9cf66">_glfwGetMappingNameCocoa</link>,
+507 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__joystick_8h_1a87f3fa1e202e7ba6872cae9a5a18accd">_glfwUpdateGamepadGUIDCocoa</link>,
+508 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__monitor_8m_1ad2b565ef77c481ddae2ce38531f7c0e5">_glfwFreeMonitorCocoa</link>,
+509 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__monitor_8m_1a2cc2e4fbb9a17f48b80905185028d656">_glfwGetMonitorPosCocoa</link>,
+510 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__monitor_8m_1a10c59c9ca1e99d2970311eba1cd1fd59">_glfwGetMonitorContentScaleCocoa</link>,
+511 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__monitor_8m_1a03d496951d90707a601f4bd749ba1c4a">_glfwGetMonitorWorkareaCocoa</link>,
+512 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__monitor_8m_1ad7e125ac2d35ad17d79a177ea5a91ceb">_glfwGetVideoModesCocoa</link>,
+513 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__monitor_8m_1ac865ece607a79f692e134ca650443966">_glfwGetVideoModeCocoa</link>,
+514 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__monitor_8m_1a790d13f33c98a3a19f19537e04fd1548">_glfwGetGammaRampCocoa</link>,
+515 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__monitor_8m_1ae7fb22fad6b99d5e7066540a70920c0c">_glfwSetGammaRampCocoa</link>,
+516 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a4cf759e33fef9e781c7074f4322835f1">_glfwCreateWindowCocoa</link>,
+517 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1ad409e6a679e614c699e992147e902a6b">_glfwDestroyWindowCocoa</link>,
+518 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1ae880de076a1a02e9923df492fa797672">_glfwSetWindowTitleCocoa</link>,
+519 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1aca182e29dd28bd99cc074cd195419ce5">_glfwSetWindowIconCocoa</link>,
+520 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a211e5ad52d8510c1ece781a770f45a61">_glfwGetWindowPosCocoa</link>,
+521 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1aa540acdaaa28b994d2de775f7bac44ad">_glfwSetWindowPosCocoa</link>,
+522 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a5335732bb88f0fd0120a4487b57cb3fd">_glfwGetWindowSizeCocoa</link>,
+523 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a986965eda2ae538a0e1b53db37c99102">_glfwSetWindowSizeCocoa</link>,
+524 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a0ccc65ede94e4a9d6262a2244edf0d90">_glfwSetWindowSizeLimitsCocoa</link>,
+525 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a971074eb27b956a56b02fb058180cc6d">_glfwSetWindowAspectRatioCocoa</link>,
+526 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a836e87f467d1c98fed7496ada8d0b0c2">_glfwGetFramebufferSizeCocoa</link>,
+527 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1ad69ef3198e9625bd9bf91971fa83fb6c">_glfwGetWindowFrameSizeCocoa</link>,
+528 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a0fce93f6b24279d112526baaf3850f98">_glfwGetWindowContentScaleCocoa</link>,
+529 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a0849c826f0f3a12a51978f3808da74cb">_glfwIconifyWindowCocoa</link>,
+530 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a572ceaad5ec544e5ef2fbe56b1c90e30">_glfwRestoreWindowCocoa</link>,
+531 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a94d1ac7326e075ece579ffc57fdafae0">_glfwMaximizeWindowCocoa</link>,
+532 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1ab0952778f676e8674cb72d4469c5ef00">_glfwShowWindowCocoa</link>,
+533 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a47ce035c773448e2bcb90d36776bd83b">_glfwHideWindowCocoa</link>,
+534 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a3a4e124a0715ea4bdffef5c5aeb9b81b">_glfwRequestWindowAttentionCocoa</link>,
+535 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1ad25a54706585768bfca31ab0ed4ccb1f">_glfwFocusWindowCocoa</link>,
+536 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a61f5c7e6c2fcb9ad3e6411a6e8357f39">_glfwSetWindowMonitorCocoa</link>,
+537 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a5c4632caeeaab410d330f70bd2b855e6">_glfwWindowFocusedCocoa</link>,
+538 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1ab482ea45110a9866e73ec37544f8a654">_glfwWindowIconifiedCocoa</link>,
+539 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a51446791f1cad9a9d61901fa63396623">_glfwWindowVisibleCocoa</link>,
+540 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a7b2f7e5ca68d3870336b00ed20b2b318">_glfwWindowMaximizedCocoa</link>,
+541 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a8b8c0bd373d9f9d682ce09fd7948c365">_glfwWindowHoveredCocoa</link>,
+542 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1adc15685ffb958b5ad8c56d62d599efe9">_glfwFramebufferTransparentCocoa</link>,
+543 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a9c12b3cf9ca9f66400d483df22d700c2">_glfwGetWindowOpacityCocoa</link>,
+544 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a558cf6151f645e7765d8dd96b6666c94">_glfwSetWindowResizableCocoa</link>,
+545 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1aff784a2b90156ae71ae2c4b9187ccd43">_glfwSetWindowDecoratedCocoa</link>,
+546 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1ac60c438b0379854c3443dda82dc91d0e">_glfwSetWindowFloatingCocoa</link>,
+547 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a510261f18c0ffe2ad7eba0d448d1e5f7">_glfwSetWindowOpacityCocoa</link>,
+548 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a9b21a6f52a81ef48e5d1628b4bc6babf">_glfwSetWindowMousePassthroughCocoa</link>,
+549 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a757a812eed87ea2bccbe05e951b69387">_glfwPollEventsCocoa</link>,
+550 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a35793c039673ec5b2e34f6b87b517eb7">_glfwWaitEventsCocoa</link>,
+551 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1ab81f9e1d123e745f8a4f75f48b7fdd14">_glfwWaitEventsTimeoutCocoa</link>,
+552 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1aeb9015543bf8a7f4a69c90af09fc15ba">_glfwPostEmptyEventCocoa</link>,
+553 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a2150005849bc429d94ec05ebe513b045">_glfwGetEGLPlatformCocoa</link>,
+554 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a8123dd21292eb09feab5008a105b6bd8">_glfwGetEGLNativeDisplayCocoa</link>,
+555 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a97d705d1f2f434b773a9ffb995fa22d0">_glfwGetEGLNativeWindowCocoa</link>,
+556 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a298061a0ab444139235c01cf1203d46c">_glfwGetRequiredInstanceExtensionsCocoa</link>,
+557 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a26f8d8cd038ce35e85898c3eab01517b">_glfwGetPhysicalDevicePresentationSupportCocoa</link>,
+558 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1a6e29d0331970e66436da6fa466b8d411">_glfwCreateWindowSurfaceCocoa</link>,
+559 &#32;&#32;&#32;&#32;};
+560 
+561 &#32;&#32;&#32;&#32;*platform&#32;=&#32;cocoa;
+562 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+563 }
+</programlisting>    </section><anchor xml:id="_cocoa__init_8m_1a885d16bf2cdbffb8b7e8c96158a574e0"/>    <section>
+    <title>_glfwInitCocoa()</title>
+<indexterm><primary>_glfwInitCocoa</primary><secondary>cocoa_init.m</secondary></indexterm>
+<indexterm><primary>cocoa_init.m</primary><secondary>_glfwInitCocoa</secondary></indexterm>
+<para><computeroutput>int _glfwInitCocoa (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 565 of file cocoa_init.m.</para>
+<programlisting>566 {
+567 &#32;&#32;&#32;&#32;@autoreleasepool&#32;{
+568 
+569 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.helper&#32;=&#32;[[<link linkend="_interface_g_l_f_w_helper">GLFWHelper</link>&#32;alloc]&#32;<link linkend="_boing_8c_1a2858154e2009b0e6e616f313177762bc">init</link>];
+570 
+571 &#32;&#32;&#32;&#32;[NSThread&#32;detachNewThreadSelector:<emphasis role="keyword">@selector</emphasis>(doNothing:)
+572 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;toTarget:<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.helper
+573 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;withObject:nil];
+574 
+575 &#32;&#32;&#32;&#32;[NSApplication&#32;sharedApplication];
+576 
+577 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.delegate&#32;=&#32;[[<link linkend="_interface_g_l_f_w_application_delegate">GLFWApplicationDelegate</link>&#32;alloc]&#32;<link linkend="_boing_8c_1a2858154e2009b0e6e616f313177762bc">init</link>];
+578 &#32;&#32;&#32;&#32;if&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.delegate&#32;==&#32;nil)
+579 &#32;&#32;&#32;&#32;{
+580 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+581 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Cocoa:&#32;Failed&#32;to&#32;create&#32;application&#32;delegate&quot;</emphasis>);
+582 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+583 &#32;&#32;&#32;&#32;}
+584 
+585 &#32;&#32;&#32;&#32;[NSApp&#32;setDelegate:<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.delegate];
+586 
+587 &#32;&#32;&#32;&#32;NSEvent*&#32;(^block)(NSEvent*)&#32;=&#32;^&#32;NSEvent*&#32;(NSEvent*&#32;<link linkend="_glext_8h_1a03b04a5a978bad576866339075de01f6">event</link>)
+588 &#32;&#32;&#32;&#32;{
+589 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;([<link linkend="_glext_8h_1a03b04a5a978bad576866339075de01f6">event</link>&#32;modifierFlags]&#32;&amp;&#32;<link linkend="_cocoa__platform_8h_1a38f642d997fbc858a2809c1d0dbeca5b">NSEventModifierFlagCommand</link>)
+590 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;[[NSApp&#32;keyWindow]&#32;sendEvent:<link linkend="_glext_8h_1a03b04a5a978bad576866339075de01f6">event</link>];
+591 
+592 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glext_8h_1a03b04a5a978bad576866339075de01f6">event</link>;
+593 &#32;&#32;&#32;&#32;};
+594 
+595 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.keyUpMonitor&#32;=
+596 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;[NSEvent&#32;addLocalMonitorForEventsMatchingMask:<link linkend="_cocoa__platform_8h_1a0b09299bcc462c68a23bc97696248a69">NSEventMaskKeyUp</link>
+597 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;handler:block];
+598 
+599 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a5146cc5fba43a4706292e0c12d4c4fd0">hints</link>.<link linkend="_struct___g_l_f_wlibrary_1a86550c51bab958a99de2e243e48dd8e8">init</link>.<link linkend="_struct___g_l_f_winitconfig_1ac2f47b2a12635cb2d8972f6690a29021">ns</link>.<link linkend="_struct___g_l_f_winitconfig_1a9a76e6c2480a3e6062947d2e9a0743c6">chdir</link>)
+600 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;changeToResourcesDirectory();
+601 
+602 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Press&#32;and&#32;Hold&#32;prevents&#32;some&#32;keys&#32;from&#32;emitting&#32;repeated&#32;characters</emphasis>
+603 &#32;&#32;&#32;&#32;NSDictionary*&#32;defaults&#32;=&#32;@{<emphasis role="stringliteral">@&quot;ApplePressAndHoldEnabled&quot;</emphasis>:@NO};
+604 &#32;&#32;&#32;&#32;[[NSUserDefaults&#32;standardUserDefaults]&#32;registerDefaults:defaults];
+605 
+606 &#32;&#32;&#32;&#32;[[NSNotificationCenter&#32;defaultCenter]
+607 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;addObserver:<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.helper
+608 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;selector:<emphasis role="keyword">@selector</emphasis>(selectedKeyboardInputSourceChanged:)
+609 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>:NSTextInputContextKeyboardSelectionDidChangeNotification
+610 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">object</emphasis>:nil];
+611 
+612 &#32;&#32;&#32;&#32;createKeyTables();
+613 
+614 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.eventSource&#32;=&#32;CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
+615 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.eventSource)
+616 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+617 
+618 &#32;&#32;&#32;&#32;CGEventSourceSetLocalEventsSuppressionInterval(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.eventSource,&#32;0.0);
+619 
+620 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initializeTIS())
+621 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+622 
+623 &#32;&#32;&#32;&#32;<link linkend="_cocoa__monitor_8m_1a4993d8c0eef61c250c0d4c18a3d86a64">_glfwPollMonitorsCocoa</link>();
+624 
+625 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(![[NSRunningApplication&#32;currentApplication]&#32;isFinishedLaunching])
+626 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;[NSApp&#32;run];
+627 
+628 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;In&#32;case&#32;we&#32;are&#32;unbundled,&#32;make&#32;us&#32;a&#32;proper&#32;UI&#32;application</emphasis>
+629 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a5146cc5fba43a4706292e0c12d4c4fd0">hints</link>.<link linkend="_struct___g_l_f_wlibrary_1a86550c51bab958a99de2e243e48dd8e8">init</link>.<link linkend="_struct___g_l_f_winitconfig_1ac2f47b2a12635cb2d8972f6690a29021">ns</link>.<link linkend="_struct___g_l_f_winitconfig_1aeef44c014800b5e07490919431b446ce">menubar</link>)
+630 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;[NSApp&#32;setActivationPolicy:NSApplicationActivationPolicyRegular];
+631 
+632 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+633 
+634 &#32;&#32;&#32;&#32;}&#32;<emphasis role="comment">//&#32;autoreleasepool</emphasis>
+635 }
+</programlisting>    </section><anchor xml:id="_cocoa__init_8m_1ad0bc6d8bc6400dc271eb7f8516a5e145"/>    <section>
+    <title>_glfwLoadLocalVulkanLoaderCocoa()</title>
+<indexterm><primary>_glfwLoadLocalVulkanLoaderCocoa</primary><secondary>cocoa_init.m</secondary></indexterm>
+<indexterm><primary>cocoa_init.m</primary><secondary>_glfwLoadLocalVulkanLoaderCocoa</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>* _glfwLoadLocalVulkanLoaderCocoa (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 457 of file cocoa_init.m.</para>
+<programlisting>458 {
+459 &#32;&#32;&#32;&#32;CFBundleRef&#32;bundle&#32;=&#32;CFBundleGetMainBundle();
+460 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!bundle)
+461 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+462 
+463 &#32;&#32;&#32;&#32;CFURLRef&#32;url&#32;=
+464 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFBundleCopyAuxiliaryExecutableURL(bundle,&#32;CFSTR(<emphasis role="stringliteral">&quot;libvulkan.1.dylib&quot;</emphasis>));
+465 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!url)
+466 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+467 
+468 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>[PATH_MAX];
+469 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>*&#32;handle&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+470 
+471 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(CFURLGetFileSystemRepresentation(url,&#32;<emphasis role="keyword">true</emphasis>,&#32;(UInt8*)&#32;<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>)&#32;-&#32;1))
+472 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;handle&#32;=&#32;<link linkend="_internal_8h_1a0ca69d860ad190bdb5beab6de9160842">_glfwPlatformLoadModule</link>(<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>);
+473 
+474 &#32;&#32;&#32;&#32;CFRelease(url);
+475 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;handle;
+476 }
+</programlisting>    </section><anchor xml:id="_cocoa__init_8m_1af027b11571e08c16239b3a851fd84677"/>    <section>
+    <title>_glfwTerminateCocoa()</title>
+<indexterm><primary>_glfwTerminateCocoa</primary><secondary>cocoa_init.m</secondary></indexterm>
+<indexterm><primary>cocoa_init.m</primary><secondary>_glfwTerminateCocoa</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwTerminateCocoa (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 637 of file cocoa_init.m.</para>
+<programlisting>638 {
+639 &#32;&#32;&#32;&#32;@autoreleasepool&#32;{
+640 
+641 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.inputSource)
+642 &#32;&#32;&#32;&#32;{
+643 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFRelease(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.inputSource);
+644 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.inputSource&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+645 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.unicodeData&#32;=&#32;nil;
+646 &#32;&#32;&#32;&#32;}
+647 
+648 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.eventSource)
+649 &#32;&#32;&#32;&#32;{
+650 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFRelease(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.eventSource);
+651 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.eventSource&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+652 &#32;&#32;&#32;&#32;}
+653 
+654 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.delegate)
+655 &#32;&#32;&#32;&#32;{
+656 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;[NSApp&#32;setDelegate:nil];
+657 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;[<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.delegate&#32;<link linkend="_namespaceconf_1a325dc746d8bf05c54d26351c35a21d90">release</link>];
+658 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.delegate&#32;=&#32;nil;
+659 &#32;&#32;&#32;&#32;}
+660 
+661 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.helper)
+662 &#32;&#32;&#32;&#32;{
+663 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;[[NSNotificationCenter&#32;defaultCenter]
+664 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;removeObserver:<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.helper
+665 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>:NSTextInputContextKeyboardSelectionDidChangeNotification
+666 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1ab49790263c78300fbf05719e38246198">object</link>:nil];
+667 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;[[NSNotificationCenter&#32;defaultCenter]
+668 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;removeObserver:<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.helper];
+669 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;[<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.helper&#32;<link linkend="_namespaceconf_1a325dc746d8bf05c54d26351c35a21d90">release</link>];
+670 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.helper&#32;=&#32;nil;
+671 &#32;&#32;&#32;&#32;}
+672 
+673 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.keyUpMonitor)
+674 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;[NSEvent&#32;removeMonitor:<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.keyUpMonitor];
+675 
+676 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.clipboardString);
+677 
+678 &#32;&#32;&#32;&#32;<link linkend="_cocoa__platform_8h_1ad104998536aae3e02fa89f78925a9a52">_glfwTerminateNSGL</link>();
+679 
+680 &#32;&#32;&#32;&#32;}&#32;<emphasis role="comment">//&#32;autoreleasepool</emphasis>
+681 }
+</programlisting></section>
+</section>
+</section>

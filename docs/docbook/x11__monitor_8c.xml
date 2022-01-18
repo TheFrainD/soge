@@ -1,0 +1,596 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_x11__monitor_8c">
+<title>deps/glfw/src/x11_monitor.c File Reference</title>
+<indexterm><primary>deps/glfw/src/x11_monitor.c</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+#include &lt;limits.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;math.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_x11__monitor_8c_1ade7b239b6691fb34b66f3022ad97949d">_glfwPollMonitorsX11</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_x11__monitor_8c_1ab4f579e1c8c56307de37875618f947ba">_glfwSetVideoModeX11</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, const <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> *desired)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_x11__monitor_8c_1a6dbff2579e47fcec78b5510d738b70a1">_glfwRestoreVideoModeX11</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_x11__monitor_8c_1a5450ef92b12de637409609e32d0a371f">_glfwFreeMonitorX11</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_x11__monitor_8c_1a5a5996335db505831185dc58da020cfe">_glfwGetMonitorPosX11</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, int *xpos, int *ypos)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_x11__monitor_8c_1a4e16e691c38b20d8996c2067ea9165b0">_glfwGetMonitorContentScaleX11</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, float *xscale, float *yscale)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_x11__monitor_8c_1a4017373b08c7c5941a5789f8ce7ef1fa">_glfwGetMonitorWorkareaX11</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, int *xpos, int *ypos, int *<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>, int *<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> * <link linkend="_x11__monitor_8c_1a3a95b3fd09b98fd39b08ed0287a746e8">_glfwGetVideoModesX11</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, int *<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_x11__monitor_8c_1a448dc823ed0a17ad344e0f483a206a06">_glfwGetVideoModeX11</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> *<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_x11__monitor_8c_1ad0cdfa6cb50ed204c90f2094cae885f0">_glfwGetGammaRampX11</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, <link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> *ramp)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_x11__monitor_8c_1a0c98119b648608e9090d83dd1ee9e1cf">_glfwSetGammaRampX11</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, const <link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> *ramp)</para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> RRCrtc <link linkend="_x11__monitor_8c_1a4cbf83a07f280efda4d13dd309d87b60">glfwGetX11Adapter</link> (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> *handle)</para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> RROutput <link linkend="_x11__monitor_8c_1aec04c3a957e504379dfc25dd8aaad24a">glfwGetX11Monitor</link> (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> *handle)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_x11__monitor_8c_1a5450ef92b12de637409609e32d0a371f"/>    <section>
+    <title>_glfwFreeMonitorX11()</title>
+<indexterm><primary>_glfwFreeMonitorX11</primary><secondary>x11_monitor.c</secondary></indexterm>
+<indexterm><primary>x11_monitor.c</primary><secondary>_glfwFreeMonitorX11</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwFreeMonitorX11 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor)</computeroutput></para><para>
+Definition at line 313 of file x11_monitor.c.</para>
+<programlisting>314 {
+315 }
+</programlisting>    </section><anchor xml:id="_x11__monitor_8c_1ad0cdfa6cb50ed204c90f2094cae885f0"/>    <section>
+    <title>_glfwGetGammaRampX11()</title>
+<indexterm><primary>_glfwGetGammaRampX11</primary><secondary>x11_monitor.c</secondary></indexterm>
+<indexterm><primary>x11_monitor.c</primary><secondary>_glfwGetGammaRampX11</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwGetGammaRampX11 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, <link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> * ramp)</computeroutput></para><para>
+Definition at line 524 of file x11_monitor.c.</para>
+<programlisting>525 {
+526 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.<link linkend="_struct___g_l_f_wlibrary_1a7978c47e7cee32b9d3b89bf787cfebc5">available</link>&#32;&amp;&amp;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.gammaBroken)
+527 &#32;&#32;&#32;&#32;{
+528 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">size_t</emphasis>&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&#32;=&#32;<link linkend="_x11__platform_8h_1a1263156e6a5f2e1c0bd1b30b2d0664a6">XRRGetCrtcGammaSize</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,
+529 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;monitor-&gt;x11.crtc);
+530 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRRCrtcGamma*&#32;gamma&#32;=&#32;<link linkend="_x11__platform_8h_1aab0e09d1538db8816e20c122dced690a">XRRGetCrtcGamma</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,
+531 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;monitor-&gt;x11.crtc);
+532 
+533 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1acb6a8b432b06fd0accdfc0e046785109">_glfwAllocGammaArrays</link>(ramp,&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>);
+534 
+535 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memcpy(ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1a2cce5d968734b685623eef913e635138">red</link>,&#32;&#32;&#32;gamma-&gt;red,&#32;&#32;&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">short</emphasis>));
+536 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memcpy(ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1affccc6f5df47820b6562d709da3a5a3a">green</link>,&#32;gamma-&gt;green,&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">short</emphasis>));
+537 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memcpy(ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1acf0c836d0efe29c392fe8d1a1042744b">blue</link>,&#32;&#32;gamma-&gt;blue,&#32;&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">short</emphasis>));
+538 
+539 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a59cad2179f06c34d1ae55f3171dd49b3">XRRFreeGamma</link>(gamma);
+540 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+541 &#32;&#32;&#32;&#32;}
+542 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.vidmode.<link linkend="_struct___g_l_f_wlibrary_1a7978c47e7cee32b9d3b89bf787cfebc5">available</link>)
+543 &#32;&#32;&#32;&#32;{
+544 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>;
+545 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a6700dbfed1f01bc9325e53aff8eb05ee">XF86VidModeGetGammaRampSize</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.screen,&#32;&amp;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>);
+546 
+547 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1acb6a8b432b06fd0accdfc0e046785109">_glfwAllocGammaArrays</link>(ramp,&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>);
+548 
+549 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a2119ddaa77e4203f56e874475cbce3ba">XF86VidModeGetGammaRamp</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,
+550 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.screen,
+551 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1ad620e1cffbff9a32c51bca46301b59a5">size</link>,&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1a2cce5d968734b685623eef913e635138">red</link>,&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1affccc6f5df47820b6562d709da3a5a3a">green</link>,&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1acf0c836d0efe29c392fe8d1a1042744b">blue</link>);
+552 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+553 &#32;&#32;&#32;&#32;}
+554 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+555 &#32;&#32;&#32;&#32;{
+556 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+557 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;X11:&#32;Gamma&#32;ramp&#32;access&#32;not&#32;supported&#32;by&#32;server&quot;</emphasis>);
+558 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+559 &#32;&#32;&#32;&#32;}
+560 }
+</programlisting>    </section><anchor xml:id="_x11__monitor_8c_1a4e16e691c38b20d8996c2067ea9165b0"/>    <section>
+    <title>_glfwGetMonitorContentScaleX11()</title>
+<indexterm><primary>_glfwGetMonitorContentScaleX11</primary><secondary>x11_monitor.c</secondary></indexterm>
+<indexterm><primary>x11_monitor.c</primary><secondary>_glfwGetMonitorContentScaleX11</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetMonitorContentScaleX11 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, float * xscale, float * yscale)</computeroutput></para><para>
+Definition at line 339 of file x11_monitor.c.</para>
+<programlisting>341 {
+342 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xscale)
+343 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*xscale&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.contentScaleX;
+344 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(yscale)
+345 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*yscale&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.contentScaleY;
+346 }
+</programlisting>    </section><anchor xml:id="_x11__monitor_8c_1a5a5996335db505831185dc58da020cfe"/>    <section>
+    <title>_glfwGetMonitorPosX11()</title>
+<indexterm><primary>_glfwGetMonitorPosX11</primary><secondary>x11_monitor.c</secondary></indexterm>
+<indexterm><primary>x11_monitor.c</primary><secondary>_glfwGetMonitorPosX11</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetMonitorPosX11 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, int * xpos, int * ypos)</computeroutput></para><para>
+Definition at line 317 of file x11_monitor.c.</para>
+<programlisting>318 {
+319 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.<link linkend="_struct___g_l_f_wlibrary_1a7978c47e7cee32b9d3b89bf787cfebc5">available</link>&#32;&amp;&amp;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.monitorBroken)
+320 &#32;&#32;&#32;&#32;{
+321 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRRScreenResources*&#32;sr&#32;=
+322 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a81b377b84134a955b71b1efffb8380e7">XRRGetScreenResourcesCurrent</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.root);
+323 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRRCrtcInfo*&#32;ci&#32;=&#32;<link linkend="_x11__platform_8h_1a163460fc468733ed65a95d1a19197cb2">XRRGetCrtcInfo</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;sr,&#32;monitor-&gt;x11.crtc);
+324 
+325 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ci)
+326 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+327 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xpos)
+328 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*xpos&#32;=&#32;ci-&gt;x;
+329 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ypos)
+330 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*ypos&#32;=&#32;ci-&gt;y;
+331 
+332 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1af079b02e39f592f13414ab0c714a69a8">XRRFreeCrtcInfo</link>(ci);
+333 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+334 
+335 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a227499ad2e417195e18e86d6e4c9684d">XRRFreeScreenResources</link>(sr);
+336 &#32;&#32;&#32;&#32;}
+337 }
+</programlisting>    </section><anchor xml:id="_x11__monitor_8c_1a4017373b08c7c5941a5789f8ce7ef1fa"/>    <section>
+    <title>_glfwGetMonitorWorkareaX11()</title>
+<indexterm><primary>_glfwGetMonitorWorkareaX11</primary><secondary>x11_monitor.c</secondary></indexterm>
+<indexterm><primary>x11_monitor.c</primary><secondary>_glfwGetMonitorWorkareaX11</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetMonitorWorkareaX11 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, int * xpos, int * ypos, int * width, int * height)</computeroutput></para><para>
+Definition at line 348 of file x11_monitor.c.</para>
+<programlisting>351 {
+352 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;areaX&#32;=&#32;0,&#32;areaY&#32;=&#32;0,&#32;areaWidth&#32;=&#32;0,&#32;areaHeight&#32;=&#32;0;
+353 
+354 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.<link linkend="_struct___g_l_f_wlibrary_1a7978c47e7cee32b9d3b89bf787cfebc5">available</link>&#32;&amp;&amp;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.monitorBroken)
+355 &#32;&#32;&#32;&#32;{
+356 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRRScreenResources*&#32;sr&#32;=
+357 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a81b377b84134a955b71b1efffb8380e7">XRRGetScreenResourcesCurrent</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.root);
+358 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRRCrtcInfo*&#32;ci&#32;=&#32;<link linkend="_x11__platform_8h_1a163460fc468733ed65a95d1a19197cb2">XRRGetCrtcInfo</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;sr,&#32;monitor-&gt;x11.crtc);
+359 
+360 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;areaX&#32;=&#32;ci-&gt;x;
+361 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;areaY&#32;=&#32;ci-&gt;y;
+362 
+363 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;XRRModeInfo*&#32;mi&#32;=&#32;getModeInfo(sr,&#32;ci-&gt;mode);
+364 
+365 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ci-&gt;rotation&#32;==&#32;RR_Rotate_90&#32;||&#32;ci-&gt;rotation&#32;==&#32;RR_Rotate_270)
+366 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+367 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;areaWidth&#32;&#32;=&#32;mi-&gt;height;
+368 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;areaHeight&#32;=&#32;mi-&gt;width;
+369 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+370 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+371 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+372 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;areaWidth&#32;&#32;=&#32;mi-&gt;width;
+373 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;areaHeight&#32;=&#32;mi-&gt;height;
+374 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+375 
+376 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1af079b02e39f592f13414ab0c714a69a8">XRRFreeCrtcInfo</link>(ci);
+377 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a227499ad2e417195e18e86d6e4c9684d">XRRFreeScreenResources</link>(sr);
+378 &#32;&#32;&#32;&#32;}
+379 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+380 &#32;&#32;&#32;&#32;{
+381 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;areaWidth&#32;&#32;=&#32;DisplayWidth(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.screen);
+382 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;areaHeight&#32;=&#32;DisplayHeight(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.screen);
+383 &#32;&#32;&#32;&#32;}
+384 
+385 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.NET_WORKAREA&#32;&amp;&amp;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.NET_CURRENT_DESKTOP)
+386 &#32;&#32;&#32;&#32;{
+387 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Atom*&#32;extents&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+388 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Atom*&#32;desktop&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+389 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">long</emphasis>&#32;extentCount&#32;=
+390 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a889b3172437e770a55812b569e1a93bd">_glfwGetWindowPropertyX11</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.root,
+391 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.NET_WORKAREA,
+392 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XA_CARDINAL,
+393 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>**)&#32;&amp;extents);
+394 
+395 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_x11__platform_8h_1a889b3172437e770a55812b569e1a93bd">_glfwGetWindowPropertyX11</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.root,
+396 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.NET_CURRENT_DESKTOP,
+397 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XA_CARDINAL,
+398 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>**)&#32;&amp;desktop)&#32;&gt;&#32;0)
+399 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+400 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(extentCount&#32;&gt;=&#32;4&#32;&amp;&amp;&#32;*desktop&#32;&lt;&#32;extentCount&#32;/&#32;4)
+401 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+402 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;globalX&#32;=&#32;extents[*desktop&#32;*&#32;4&#32;+&#32;0];
+403 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;globalY&#32;=&#32;extents[*desktop&#32;*&#32;4&#32;+&#32;1];
+404 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;globalWidth&#32;&#32;=&#32;extents[*desktop&#32;*&#32;4&#32;+&#32;2];
+405 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;globalHeight&#32;=&#32;extents[*desktop&#32;*&#32;4&#32;+&#32;3];
+406 
+407 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(areaX&#32;&lt;&#32;globalX)
+408 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+409 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;areaWidth&#32;-=&#32;globalX&#32;-&#32;areaX;
+410 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;areaX&#32;=&#32;globalX;
+411 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+412 
+413 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(areaY&#32;&lt;&#32;globalY)
+414 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+415 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;areaHeight&#32;-=&#32;globalY&#32;-&#32;areaY;
+416 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;areaY&#32;=&#32;globalY;
+417 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+418 
+419 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(areaX&#32;+&#32;areaWidth&#32;&gt;&#32;globalX&#32;+&#32;globalWidth)
+420 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;areaWidth&#32;=&#32;globalX&#32;-&#32;areaX&#32;+&#32;globalWidth;
+421 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(areaY&#32;+&#32;areaHeight&#32;&gt;&#32;globalY&#32;+&#32;globalHeight)
+422 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;areaHeight&#32;=&#32;globalY&#32;-&#32;areaY&#32;+&#32;globalHeight;
+423 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+424 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+425 
+426 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(extents)
+427 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1ac5e57c89cd1e963b41f12b3404b42ca8">XFree</link>(extents);
+428 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(desktop)
+429 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1ac5e57c89cd1e963b41f12b3404b42ca8">XFree</link>(desktop);
+430 &#32;&#32;&#32;&#32;}
+431 
+432 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xpos)
+433 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*xpos&#32;=&#32;areaX;
+434 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ypos)
+435 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*ypos&#32;=&#32;areaY;
+436 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>)
+437 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>&#32;=&#32;areaWidth;
+438 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)
+439 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>&#32;=&#32;areaHeight;
+440 }
+</programlisting>    </section><anchor xml:id="_x11__monitor_8c_1a3a95b3fd09b98fd39b08ed0287a746e8"/>    <section>
+    <title>_glfwGetVideoModesX11()</title>
+<indexterm><primary>_glfwGetVideoModesX11</primary><secondary>x11_monitor.c</secondary></indexterm>
+<indexterm><primary>x11_monitor.c</primary><secondary>_glfwGetVideoModesX11</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>* _glfwGetVideoModesX11 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, int * count)</computeroutput></para><para>
+Definition at line 442 of file x11_monitor.c.</para>
+<programlisting>443 {
+444 &#32;&#32;&#32;&#32;<link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>*&#32;<link linkend="_glext_8h_1a321ff419cd5252e54cf95e64dc6687ee">result</link>;
+445 
+446 &#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;=&#32;0;
+447 
+448 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.<link linkend="_struct___g_l_f_wlibrary_1a7978c47e7cee32b9d3b89bf787cfebc5">available</link>&#32;&amp;&amp;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.monitorBroken)
+449 &#32;&#32;&#32;&#32;{
+450 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRRScreenResources*&#32;sr&#32;=
+451 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a81b377b84134a955b71b1efffb8380e7">XRRGetScreenResourcesCurrent</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.root);
+452 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRRCrtcInfo*&#32;ci&#32;=&#32;<link linkend="_x11__platform_8h_1a163460fc468733ed65a95d1a19197cb2">XRRGetCrtcInfo</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;sr,&#32;monitor-&gt;x11.crtc);
+453 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRROutputInfo*&#32;oi&#32;=&#32;<link linkend="_x11__platform_8h_1a1b69e960073c7171a14e9b312d40115a">XRRGetOutputInfo</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;sr,&#32;monitor-&gt;x11.output);
+454 
+455 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structresult">result</link>&#32;=&#32;<link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link>(oi-&gt;nmode,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>));
+456 
+457 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;oi-&gt;nmode;&#32;&#32;i++)
+458 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+459 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;XRRModeInfo*&#32;mi&#32;=&#32;getModeInfo(sr,&#32;oi-&gt;modes[i]);
+460 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!modeIsGood(mi))
+461 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+462 
+463 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>&#32;=&#32;vidmodeFromModeInfo(mi,&#32;ci);
+464 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;j;
+465 
+466 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(j&#32;=&#32;0;&#32;&#32;j&#32;&lt;&#32;*<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>;&#32;&#32;j++)
+467 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+468 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_internal_8h_1aaca82db2d0453cb2895b0aa5e495387f">_glfwCompareVideoModes</link>(<link linkend="_structresult">result</link>&#32;+&#32;j,&#32;&amp;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>)&#32;==&#32;0)
+469 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+470 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+471 
+472 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Skip&#32;duplicate&#32;modes</emphasis>
+473 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(j&#32;&lt;&#32;*<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>)
+474 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+475 
+476 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(*count)++;
+477 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structresult">result</link>[*<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;-&#32;1]&#32;=&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>;
+478 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+479 
+480 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1af7039567d4292985380e5a21462df00a">XRRFreeOutputInfo</link>(oi);
+481 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1af079b02e39f592f13414ab0c714a69a8">XRRFreeCrtcInfo</link>(ci);
+482 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a227499ad2e417195e18e86d6e4c9684d">XRRFreeScreenResources</link>(sr);
+483 &#32;&#32;&#32;&#32;}
+484 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+485 &#32;&#32;&#32;&#32;{
+486 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;=&#32;1;
+487 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structresult">result</link>&#32;=&#32;<link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link>(1,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>));
+488 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__monitor_8c_1a448dc823ed0a17ad344e0f483a206a06">_glfwGetVideoModeX11</link>(monitor,&#32;<link linkend="_structresult">result</link>);
+489 &#32;&#32;&#32;&#32;}
+490 
+491 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glext_8h_1a321ff419cd5252e54cf95e64dc6687ee">result</link>;
+492 }
+</programlisting>    </section><anchor xml:id="_x11__monitor_8c_1a448dc823ed0a17ad344e0f483a206a06"/>    <section>
+    <title>_glfwGetVideoModeX11()</title>
+<indexterm><primary>_glfwGetVideoModeX11</primary><secondary>x11_monitor.c</secondary></indexterm>
+<indexterm><primary>x11_monitor.c</primary><secondary>_glfwGetVideoModeX11</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetVideoModeX11 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> * mode)</computeroutput></para><para>
+Definition at line 494 of file x11_monitor.c.</para>
+<programlisting>495 {
+496 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.<link linkend="_struct___g_l_f_wlibrary_1a7978c47e7cee32b9d3b89bf787cfebc5">available</link>&#32;&amp;&amp;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.monitorBroken)
+497 &#32;&#32;&#32;&#32;{
+498 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRRScreenResources*&#32;sr&#32;=
+499 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a81b377b84134a955b71b1efffb8380e7">XRRGetScreenResourcesCurrent</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.root);
+500 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRRCrtcInfo*&#32;ci&#32;=&#32;<link linkend="_x11__platform_8h_1a163460fc468733ed65a95d1a19197cb2">XRRGetCrtcInfo</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;sr,&#32;monitor-&gt;x11.crtc);
+501 
+502 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ci)
+503 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+504 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;XRRModeInfo*&#32;mi&#32;=&#32;getModeInfo(sr,&#32;ci-&gt;mode);
+505 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(mi)&#32;&#32;<emphasis role="comment">//&#32;mi&#32;can&#32;be&#32;NULL&#32;if&#32;the&#32;monitor&#32;has&#32;been&#32;disconnected</emphasis>
+506 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>&#32;=&#32;vidmodeFromModeInfo(mi,&#32;ci);
+507 
+508 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1af079b02e39f592f13414ab0c714a69a8">XRRFreeCrtcInfo</link>(ci);
+509 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+510 
+511 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a227499ad2e417195e18e86d6e4c9684d">XRRFreeScreenResources</link>(sr);
+512 &#32;&#32;&#32;&#32;}
+513 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+514 &#32;&#32;&#32;&#32;{
+515 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;width&#32;=&#32;DisplayWidth(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.screen);
+516 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;height&#32;=&#32;DisplayHeight(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.screen);
+517 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;refreshRate&#32;=&#32;0;
+518 
+519 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a3f83dfd3a9beffeba9bac74ec15071a0">_glfwSplitBPP</link>(DefaultDepth(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.screen),
+520 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;redBits,&#32;&amp;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;greenBits,&#32;&amp;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;blueBits);
+521 &#32;&#32;&#32;&#32;}
+522 }
+</programlisting>    </section><anchor xml:id="_x11__monitor_8c_1ade7b239b6691fb34b66f3022ad97949d"/>    <section>
+    <title>_glfwPollMonitorsX11()</title>
+<indexterm><primary>_glfwPollMonitorsX11</primary><secondary>x11_monitor.c</secondary></indexterm>
+<indexterm><primary>x11_monitor.c</primary><secondary>_glfwPollMonitorsX11</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwPollMonitorsX11 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 101 of file x11_monitor.c.</para>
+<programlisting>102 {
+103 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.<link linkend="_struct___g_l_f_wlibrary_1a7978c47e7cee32b9d3b89bf787cfebc5">available</link>&#32;&amp;&amp;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.monitorBroken)
+104 &#32;&#32;&#32;&#32;{
+105 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;disconnectedCount,&#32;screenCount&#32;=&#32;0;
+106 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>**&#32;disconnected&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+107 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XineramaScreenInfo*&#32;screens&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+108 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRRScreenResources*&#32;sr&#32;=&#32;<link linkend="_x11__platform_8h_1a81b377b84134a955b71b1efffb8380e7">XRRGetScreenResourcesCurrent</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,
+109 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.root);
+110 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RROutput&#32;primary&#32;=&#32;<link linkend="_x11__platform_8h_1abc464c1cf1d3f982397d77e172f10572">XRRGetOutputPrimary</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,
+111 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.root);
+112 
+113 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xinerama.<link linkend="_struct___g_l_f_wlibrary_1a7978c47e7cee32b9d3b89bf787cfebc5">available</link>)
+114 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;screens&#32;=&#32;<link linkend="_x11__platform_8h_1ab3eab609dc01e6fa7302a611f2297cbb">XineramaQueryScreens</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;&amp;screenCount);
+115 
+116 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;disconnectedCount&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1ae3f408467579cb3fb517fcd39fa23568">monitorCount</link>;
+117 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(disconnectedCount)
+118 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+119 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;disconnected&#32;=&#32;<link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1ae3f408467579cb3fb517fcd39fa23568">monitorCount</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*));
+120 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memcpy(disconnected,
+121 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1acb84371972f4d704deb0cdc649a1f1da">monitors</link>,
+122 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1ae3f408467579cb3fb517fcd39fa23568">monitorCount</link>&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*));
+123 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+124 
+125 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;sr-&gt;noutput;&#32;&#32;i++)
+126 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+127 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;j,&#32;<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>,&#32;widthMM,&#32;heightMM;
+128 
+129 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRROutputInfo*&#32;oi&#32;=&#32;<link linkend="_x11__platform_8h_1a1b69e960073c7171a14e9b312d40115a">XRRGetOutputInfo</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;sr,&#32;sr-&gt;outputs[i]);
+130 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(oi-&gt;connection&#32;!=&#32;RR_Connected&#32;||&#32;oi-&gt;crtc&#32;==&#32;None)
+131 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+132 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1af7039567d4292985380e5a21462df00a">XRRFreeOutputInfo</link>(oi);
+133 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+134 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+135 
+136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(j&#32;=&#32;0;&#32;&#32;j&#32;&lt;&#32;disconnectedCount;&#32;&#32;j++)
+137 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+138 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(disconnected[j]&#32;&amp;&amp;
+139 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;disconnected[j]-&gt;x11.output&#32;==&#32;sr-&gt;outputs[i])
+140 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+141 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;disconnected[j]&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+142 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+143 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+144 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+145 
+146 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(j&#32;&lt;&#32;disconnectedCount)
+147 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+148 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1af7039567d4292985380e5a21462df00a">XRRFreeOutputInfo</link>(oi);
+149 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+150 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+151 
+152 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRRCrtcInfo*&#32;ci&#32;=&#32;<link linkend="_x11__platform_8h_1a163460fc468733ed65a95d1a19197cb2">XRRGetCrtcInfo</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;sr,&#32;oi-&gt;crtc);
+153 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ci-&gt;rotation&#32;==&#32;RR_Rotate_90&#32;||&#32;ci-&gt;rotation&#32;==&#32;RR_Rotate_270)
+154 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+155 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;widthMM&#32;&#32;=&#32;oi-&gt;mm_height;
+156 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;heightMM&#32;=&#32;oi-&gt;mm_width;
+157 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+158 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+159 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+160 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;widthMM&#32;&#32;=&#32;oi-&gt;mm_width;
+161 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;heightMM&#32;=&#32;oi-&gt;mm_height;
+162 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+163 
+164 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(widthMM&#32;&lt;=&#32;0&#32;||&#32;heightMM&#32;&lt;=&#32;0)
+165 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+166 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;HACK:&#32;If&#32;RandR&#32;does&#32;not&#32;provide&#32;a&#32;physical&#32;size,&#32;assume&#32;the</emphasis>
+167 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;X11&#32;default&#32;96&#32;DPI&#32;and&#32;calculate&#32;from&#32;the&#32;CRTC&#32;viewport</emphasis>
+168 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NOTE:&#32;These&#32;members&#32;are&#32;affected&#32;by&#32;rotation,&#32;unlike&#32;the&#32;mode</emphasis>
+169 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;info&#32;and&#32;output&#32;info&#32;members</emphasis>
+170 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;widthMM&#32;&#32;=&#32;(int)&#32;(ci-&gt;width&#32;*&#32;25.4f&#32;/&#32;96.f);
+171 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;heightMM&#32;=&#32;(int)&#32;(ci-&gt;height&#32;*&#32;25.4f&#32;/&#32;96.f);
+172 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+173 
+174 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*&#32;monitor&#32;=&#32;<link linkend="_internal_8h_1aba9010067229bd447389b85b22f15b72">_glfwAllocMonitor</link>(oi-&gt;name,&#32;widthMM,&#32;heightMM);
+175 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;monitor-&gt;x11.output&#32;=&#32;sr-&gt;outputs[i];
+176 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;monitor-&gt;x11.crtc&#32;&#32;&#32;=&#32;oi-&gt;crtc;
+177 
+178 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(j&#32;=&#32;0;&#32;&#32;j&#32;&lt;&#32;screenCount;&#32;&#32;j++)
+179 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+180 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(screens[j].x_org&#32;==&#32;ci-&gt;x&#32;&amp;&amp;
+181 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;screens[j].y_org&#32;==&#32;ci-&gt;y&#32;&amp;&amp;
+182 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;screens[j].width&#32;==&#32;ci-&gt;width&#32;&amp;&amp;
+183 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;screens[j].height&#32;==&#32;ci-&gt;height)
+184 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+185 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;monitor-&gt;x11.index&#32;=&#32;j;
+186 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+187 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+188 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+189 
+190 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(monitor-&gt;x11.output&#32;==&#32;primary)
+191 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>&#32;=&#32;<link linkend="_internal_8h_1a9455a4c5815aa9184abd69811f939496">_GLFW_INSERT_FIRST</link>;
+192 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+193 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>&#32;=&#32;<link linkend="_internal_8h_1abc25b1b7cd5fe7f2fe3d010f0d1867ba">_GLFW_INSERT_LAST</link>;
+194 
+195 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a2a45c0c0677b73011b7364e2cdd9760d">_glfwInputMonitor</link>(monitor,&#32;<link linkend="_glfw3_8h_1abe11513fd1ffbee5bb9b173f06028b9e">GLFW_CONNECTED</link>,&#32;<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>);
+196 
+197 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1af7039567d4292985380e5a21462df00a">XRRFreeOutputInfo</link>(oi);
+198 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1af079b02e39f592f13414ab0c714a69a8">XRRFreeCrtcInfo</link>(ci);
+199 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+200 
+201 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a227499ad2e417195e18e86d6e4c9684d">XRRFreeScreenResources</link>(sr);
+202 
+203 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(screens)
+204 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1ac5e57c89cd1e963b41f12b3404b42ca8">XFree</link>(screens);
+205 
+206 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;disconnectedCount;&#32;&#32;i++)
+207 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+208 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(disconnected[i])
+209 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a2a45c0c0677b73011b7364e2cdd9760d">_glfwInputMonitor</link>(disconnected[i],&#32;<link linkend="_glfw3_8h_1aab64b25921ef21d89252d6f0a71bfc32">GLFW_DISCONNECTED</link>,&#32;0);
+210 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+211 
+212 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(disconnected);
+213 &#32;&#32;&#32;&#32;}
+214 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+215 &#32;&#32;&#32;&#32;{
+216 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;widthMM&#32;=&#32;DisplayWidthMM(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.screen);
+217 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;heightMM&#32;=&#32;DisplayHeightMM(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.screen);
+218 
+219 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a2a45c0c0677b73011b7364e2cdd9760d">_glfwInputMonitor</link>(<link linkend="_internal_8h_1aba9010067229bd447389b85b22f15b72">_glfwAllocMonitor</link>(<emphasis role="stringliteral">&quot;Display&quot;</emphasis>,&#32;widthMM,&#32;heightMM),
+220 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glfw3_8h_1abe11513fd1ffbee5bb9b173f06028b9e">GLFW_CONNECTED</link>,
+221 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a9455a4c5815aa9184abd69811f939496">_GLFW_INSERT_FIRST</link>);
+222 &#32;&#32;&#32;&#32;}
+223 }
+</programlisting>    </section><anchor xml:id="_x11__monitor_8c_1a6dbff2579e47fcec78b5510d738b70a1"/>    <section>
+    <title>_glfwRestoreVideoModeX11()</title>
+<indexterm><primary>_glfwRestoreVideoModeX11</primary><secondary>x11_monitor.c</secondary></indexterm>
+<indexterm><primary>x11_monitor.c</primary><secondary>_glfwRestoreVideoModeX11</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwRestoreVideoModeX11 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor)</computeroutput></para><para>
+Definition at line 281 of file x11_monitor.c.</para>
+<programlisting>282 {
+283 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.<link linkend="_struct___g_l_f_wlibrary_1a7978c47e7cee32b9d3b89bf787cfebc5">available</link>&#32;&amp;&amp;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.monitorBroken)
+284 &#32;&#32;&#32;&#32;{
+285 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(monitor-&gt;x11.oldMode&#32;==&#32;None)
+286 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+287 
+288 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRRScreenResources*&#32;sr&#32;=
+289 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a81b377b84134a955b71b1efffb8380e7">XRRGetScreenResourcesCurrent</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.root);
+290 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRRCrtcInfo*&#32;ci&#32;=&#32;<link linkend="_x11__platform_8h_1a163460fc468733ed65a95d1a19197cb2">XRRGetCrtcInfo</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;sr,&#32;monitor-&gt;x11.crtc);
+291 
+292 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a8a18de031c310e1e981b09cebb89970f">XRRSetCrtcConfig</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,
+293 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;sr,&#32;monitor-&gt;x11.crtc,
+294 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CurrentTime,
+295 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ci-&gt;x,&#32;ci-&gt;y,
+296 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;monitor-&gt;x11.oldMode,
+297 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ci-&gt;rotation,
+298 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ci-&gt;outputs,
+299 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ci-&gt;noutput);
+300 
+301 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1af079b02e39f592f13414ab0c714a69a8">XRRFreeCrtcInfo</link>(ci);
+302 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a227499ad2e417195e18e86d6e4c9684d">XRRFreeScreenResources</link>(sr);
+303 
+304 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;monitor-&gt;x11.oldMode&#32;=&#32;None;
+305 &#32;&#32;&#32;&#32;}
+306 }
+</programlisting>    </section><anchor xml:id="_x11__monitor_8c_1a0c98119b648608e9090d83dd1ee9e1cf"/>    <section>
+    <title>_glfwSetGammaRampX11()</title>
+<indexterm><primary>_glfwSetGammaRampX11</primary><secondary>x11_monitor.c</secondary></indexterm>
+<indexterm><primary>x11_monitor.c</primary><secondary>_glfwSetGammaRampX11</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetGammaRampX11 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, const <link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> * ramp)</computeroutput></para><para>
+Definition at line 562 of file x11_monitor.c.</para>
+<programlisting>563 {
+564 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.<link linkend="_struct___g_l_f_wlibrary_1a7978c47e7cee32b9d3b89bf787cfebc5">available</link>&#32;&amp;&amp;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.gammaBroken)
+565 &#32;&#32;&#32;&#32;{
+566 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_x11__platform_8h_1a1263156e6a5f2e1c0bd1b30b2d0664a6">XRRGetCrtcGammaSize</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;monitor-&gt;x11.crtc)&#32;!=&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1ad620e1cffbff9a32c51bca46301b59a5">size</link>)
+567 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+568 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+569 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;X11:&#32;Gamma&#32;ramp&#32;size&#32;must&#32;match&#32;current&#32;ramp&#32;size&quot;</emphasis>);
+570 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+571 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+572 
+573 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRRCrtcGamma*&#32;gamma&#32;=&#32;<link linkend="_x11__platform_8h_1a87a17c4f5e704cd4bcf06c5049f66350">XRRAllocGamma</link>(ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1ad620e1cffbff9a32c51bca46301b59a5">size</link>);
+574 
+575 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memcpy(gamma-&gt;red,&#32;&#32;&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1a2cce5d968734b685623eef913e635138">red</link>,&#32;&#32;&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1ad620e1cffbff9a32c51bca46301b59a5">size</link>&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">short</emphasis>));
+576 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memcpy(gamma-&gt;green,&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1affccc6f5df47820b6562d709da3a5a3a">green</link>,&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1ad620e1cffbff9a32c51bca46301b59a5">size</link>&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">short</emphasis>));
+577 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memcpy(gamma-&gt;blue,&#32;&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1acf0c836d0efe29c392fe8d1a1042744b">blue</link>,&#32;&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1ad620e1cffbff9a32c51bca46301b59a5">size</link>&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">short</emphasis>));
+578 
+579 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1af4af6286fb934b318c6c0e1eca406d41">XRRSetCrtcGamma</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;monitor-&gt;x11.crtc,&#32;gamma);
+580 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a59cad2179f06c34d1ae55f3171dd49b3">XRRFreeGamma</link>(gamma);
+581 &#32;&#32;&#32;&#32;}
+582 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.vidmode.<link linkend="_struct___g_l_f_wlibrary_1a7978c47e7cee32b9d3b89bf787cfebc5">available</link>)
+583 &#32;&#32;&#32;&#32;{
+584 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a41578e983b45d9acc7b55975aab6e3db">XF86VidModeSetGammaRamp</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,
+585 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.screen,
+586 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1ad620e1cffbff9a32c51bca46301b59a5">size</link>,
+587 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">short</emphasis>*)&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1a2cce5d968734b685623eef913e635138">red</link>,
+588 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">short</emphasis>*)&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1affccc6f5df47820b6562d709da3a5a3a">green</link>,
+589 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">short</emphasis>*)&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1acf0c836d0efe29c392fe8d1a1042744b">blue</link>);
+590 &#32;&#32;&#32;&#32;}
+591 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+592 &#32;&#32;&#32;&#32;{
+593 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+594 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;X11:&#32;Gamma&#32;ramp&#32;access&#32;not&#32;supported&#32;by&#32;server&quot;</emphasis>);
+595 &#32;&#32;&#32;&#32;}
+596 }
+</programlisting>    </section><anchor xml:id="_x11__monitor_8c_1ab4f579e1c8c56307de37875618f947ba"/>    <section>
+    <title>_glfwSetVideoModeX11()</title>
+<indexterm><primary>_glfwSetVideoModeX11</primary><secondary>x11_monitor.c</secondary></indexterm>
+<indexterm><primary>x11_monitor.c</primary><secondary>_glfwSetVideoModeX11</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetVideoModeX11 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, const <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> * desired)</computeroutput></para><para>
+Definition at line 227 of file x11_monitor.c.</para>
+<programlisting>228 {
+229 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.<link linkend="_struct___g_l_f_wlibrary_1a7978c47e7cee32b9d3b89bf787cfebc5">available</link>&#32;&amp;&amp;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.monitorBroken)
+230 &#32;&#32;&#32;&#32;{
+231 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>&#32;current;
+232 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RRMode&#32;native&#32;=&#32;None;
+233 
+234 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>*&#32;best&#32;=&#32;<link linkend="_internal_8h_1acf6b57bbbf447209081a27abdc00465c">_glfwChooseVideoMode</link>(monitor,&#32;desired);
+235 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__monitor_8c_1a448dc823ed0a17ad344e0f483a206a06">_glfwGetVideoModeX11</link>(monitor,&#32;&amp;current);
+236 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_internal_8h_1aaca82db2d0453cb2895b0aa5e495387f">_glfwCompareVideoModes</link>(&amp;current,&#32;best)&#32;==&#32;0)
+237 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+238 
+239 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRRScreenResources*&#32;sr&#32;=
+240 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a81b377b84134a955b71b1efffb8380e7">XRRGetScreenResourcesCurrent</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.root);
+241 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRRCrtcInfo*&#32;ci&#32;=&#32;<link linkend="_x11__platform_8h_1a163460fc468733ed65a95d1a19197cb2">XRRGetCrtcInfo</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;sr,&#32;monitor-&gt;x11.crtc);
+242 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;XRROutputInfo*&#32;oi&#32;=&#32;<link linkend="_x11__platform_8h_1a1b69e960073c7171a14e9b312d40115a">XRRGetOutputInfo</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;sr,&#32;monitor-&gt;x11.output);
+243 
+244 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;oi-&gt;nmode;&#32;&#32;i++)
+245 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+246 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;XRRModeInfo*&#32;mi&#32;=&#32;getModeInfo(sr,&#32;oi-&gt;modes[i]);
+247 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!modeIsGood(mi))
+248 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+249 
+250 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>&#32;=&#32;vidmodeFromModeInfo(mi,&#32;ci);
+251 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_internal_8h_1aaca82db2d0453cb2895b0aa5e495387f">_glfwCompareVideoModes</link>(best,&#32;&amp;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>)&#32;==&#32;0)
+252 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+253 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;native&#32;=&#32;mi-&gt;id;
+254 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+255 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+256 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+257 
+258 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(native)
+259 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+260 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(monitor-&gt;x11.oldMode&#32;==&#32;None)
+261 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;monitor-&gt;x11.oldMode&#32;=&#32;ci-&gt;mode;
+262 
+263 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a8a18de031c310e1e981b09cebb89970f">XRRSetCrtcConfig</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,
+264 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;sr,&#32;monitor-&gt;x11.crtc,
+265 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CurrentTime,
+266 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ci-&gt;x,&#32;ci-&gt;y,
+267 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;native,
+268 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ci-&gt;rotation,
+269 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ci-&gt;outputs,
+270 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ci-&gt;noutput);
+271 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+272 
+273 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1af7039567d4292985380e5a21462df00a">XRRFreeOutputInfo</link>(oi);
+274 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1af079b02e39f592f13414ab0c714a69a8">XRRFreeCrtcInfo</link>(ci);
+275 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a227499ad2e417195e18e86d6e4c9684d">XRRFreeScreenResources</link>(sr);
+276 &#32;&#32;&#32;&#32;}
+277 }
+</programlisting>    </section><anchor xml:id="_x11__monitor_8c_1a4cbf83a07f280efda4d13dd309d87b60"/>    <section>
+    <title>glfwGetX11Adapter()</title>
+<indexterm><primary>glfwGetX11Adapter</primary><secondary>x11_monitor.c</secondary></indexterm>
+<indexterm><primary>x11_monitor.c</primary><secondary>glfwGetX11Adapter</secondary></indexterm>
+<para><computeroutput><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> RRCrtc glfwGetX11Adapter (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> * handle)</computeroutput></para><para>
+Definition at line 603 of file x11_monitor.c.</para>
+<programlisting>604 {
+605 &#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*&#32;monitor&#32;=&#32;(<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*)&#32;handle;
+606 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a69563c87fe776d416636a4d1b0e9e599">_GLFW_REQUIRE_INIT_OR_RETURN</link>(None);
+607 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;monitor-&gt;x11.crtc;
+608 }
+</programlisting>    </section><anchor xml:id="_x11__monitor_8c_1aec04c3a957e504379dfc25dd8aaad24a"/>    <section>
+    <title>glfwGetX11Monitor()</title>
+<indexterm><primary>glfwGetX11Monitor</primary><secondary>x11_monitor.c</secondary></indexterm>
+<indexterm><primary>x11_monitor.c</primary><secondary>glfwGetX11Monitor</secondary></indexterm>
+<para><computeroutput><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> RROutput glfwGetX11Monitor (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> * handle)</computeroutput></para><para>
+Definition at line 610 of file x11_monitor.c.</para>
+<programlisting>611 {
+612 &#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*&#32;monitor&#32;=&#32;(<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*)&#32;handle;
+613 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a69563c87fe776d416636a4d1b0e9e599">_GLFW_REQUIRE_INIT_OR_RETURN</link>(None);
+614 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;monitor-&gt;x11.output;
+615 }
+</programlisting></section>
+</section>
+</section>

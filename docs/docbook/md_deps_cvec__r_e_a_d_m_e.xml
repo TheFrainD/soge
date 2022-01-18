@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_md_deps_cvec__r_e_a_d_m_e">
+
+<para>A simple vector library for C. It has simillar interface to C++ stl vector. <literallayout><computeroutput>#include&#32;&#32;&lt;stdio.h&gt;
+
+#include&#32;&#32;&lt;cvec.h&gt;
+
+int&#32;&#32;main(void)&#32;&#32;{
+&#32;&#32;cvec&#32;&#32;vec&#32;&#32;=&#32;&#32;cvec_create(int);
+
+&#32;&#32;cvec_push_back(vec,&#32;10);
+&#32;&#32;cvec_push_back(vec,&#32;57);
+&#32;&#32;cvec_push_back(vec,&#32;-75);
+&#32;&#32;cvec_push_back(vec,&#32;11);
+&#32;&#32;cvec_push_back(vec,&#32;5);
+&#32;&#32;cvec_pop_back(vec);
+&#32;&#32;cvec_insert(vec,&#32;4,&#32;42);
+
+&#32;&#32;cvec_destroy(vec);
+&#32;&#32;return&#32;&#32;0;
+}
+</computeroutput></literallayout></para>
+<section xml:id="_md_deps_cvec__r_e_a_d_m_e_1autotoc_md38">
+<title>Usage</title>
+<section xml:id="_md_deps_cvec__r_e_a_d_m_e_1autotoc_md39">
+<title>Initializing</title>
+
+<para>You can create vector like this:</para>
+
+<para><literallayout><computeroutput>cvec&#32;vec&#32;=&#32;&#32;cvec_create(int);
+</computeroutput></literallayout></para>
+
+<para>You can create vectors of different type by specifing it as an argument in <computeroutput>cvec_create</computeroutput> : <literallayout><computeroutput>//&#32;int&#32;vector
+cvec&#32;ivec&#32;=&#32;cvec_create(int);
+
+//&#32;float&#32;vector
+cvec&#32;fvec&#32;=&#32;cvec_create(float);
+
+//&#32;char&#32;vector
+cvec&#32;chvec&#32;=&#32;cvec_create(char);
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_md_deps_cvec__r_e_a_d_m_e_1autotoc_md40">
+<title>Destroying</title>
+
+<para>Every vector must be destroy after using with <computeroutput>cvec_destoy</computeroutput> : <literallayout><computeroutput>cvec_destroy(vec);
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_md_deps_cvec__r_e_a_d_m_e_1autotoc_md41">
+<title>Adding and accessing elements</title>
+
+<para>To add element to a vector you need to use <computeroutput>cvec_push_back</computeroutput> or <computeroutput>cvec_insert</computeroutput> and to access element by its index you need to use <computeroutput>cvec_at</computeroutput> : <literallayout><computeroutput>cvec&#32;&#32;vec&#32;&#32;=&#32;&#32;cvec_create(int);
+
+//&#32;simply&#32;adds&#32;an&#32;element&#32;to&#32;vector&apos;s&#32;end
+cvec_push_back(vec,&#32;42);
+cvec_push_back(vec,&#32;3);
+
+//&#32;inserts&#32;an&#32;element&#32;at&#32;specified&#32;index
+cvec_insert(vec,&#32;1,&#32;11);
+
+//&#32;you&#32;also&#32;need&#32;to&#32;specify&#32;type&#32;of&#32;an&#32;element&#32;you&#32;want&#32;to&#32;access
+printf(&quot;%d\n&quot;,&#32;cvec_at(vec,&#32;1,&#32;int));
+
+//&#32;not&#32;a&#32;part&#32;of&#32;a&#32;library
+vec_print(vec);
+
+cvec_destroy(vec);
+</computeroutput></literallayout></para>
+
+<para>Output: <literallayout><computeroutput>42&#32;11&#32;3
+11
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_md_deps_cvec__r_e_a_d_m_e_1autotoc_md42">
+<title>Removing elements</title>
+
+<para>To remove an element you can use <computeroutput>cvec_pop_back</computeroutput> or <computeroutput>cvec_erase</computeroutput>: <literallayout><computeroutput>cvec&#32;&#32;vec&#32;&#32;=&#32;&#32;cvec_create(int);
+
+cvec_push_back(vec,&#32;&#32;42);
+cvec_push_back(vec,&#32;&#32;3);
+cvec_insert(vec,&#32;&#32;1,&#32;&#32;11);
+vec_print(vec);
+
+//&#32;removes&#32;last&#32;element
+cvec_pop_back(vec);
+vec_print(vec);
+
+//&#32;removes&#32;element&#32;at&#32;specified&#32;index
+cvec_erase(vec,&#32;&#32;0);
+vec_print(vec);
+
+cvec_destroy(vec);
+</computeroutput></literallayout></para>
+
+<para>Output: <literallayout><computeroutput>42&#32;11&#32;3&#32;
+42&#32;11&#32;
+11&#32;
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_md_deps_cvec__r_e_a_d_m_e_1autotoc_md43">
+<title>Other</title>
+
+<para><literallayout><computeroutput>//&#32;returns&#32;vector&apos;s&#32;size
+cvec_size(vec);
+
+//&#32;sets&#32;elements&#32;value
+//&#32;works&#32;as&#32;&quot;type[index]&#32;=&#32;value&quot;
+cvec_set_at(vec,&#32;index,&#32;value);
+</computeroutput></literallayout> </para>
+</section>
+</section>
+</section>

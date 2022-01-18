@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_text__loader_8h">
+<title>src/vally/resources/text_loader.h File Reference</title>
+<indexterm><primary>src/vally/resources/text_loader.h</primary></indexterm>
+<programlisting>#include &lt;vally/config.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>char * <link linkend="_text__loader_8h_1a79f5a6a6ebfd1ad9a9d12ee92211ed5a">load_text_file</link> (const char *<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_text__loader_8h_1a79f5a6a6ebfd1ad9a9d12ee92211ed5a"/>    <section>
+    <title>load_text_file()</title>
+<indexterm><primary>load_text_file</primary><secondary>text_loader.h</secondary></indexterm>
+<indexterm><primary>text_loader.h</primary><secondary>load_text_file</secondary></indexterm>
+<para><computeroutput>char* load_text_file (const char * path)</computeroutput></para><para>
+Definition at line 8 of file text_loader.c.</para>
+<programlisting>8 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+9 &#32;&#32;FILE&#32;*file;
+10 &#32;&#32;<emphasis role="keywordtype">long</emphasis>&#32;<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>;
+11 &#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;*<link linkend="_glad_8h_1a76461e97a098d2c9ae20ac193d3825ae">buffer</link>;
+12 
+13 &#32;&#32;<emphasis role="comment">//&#32;Open&#32;the&#32;file</emphasis>
+14 &#32;&#32;file&#32;=&#32;fopen(<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>,&#32;<emphasis role="stringliteral">&quot;rb&quot;</emphasis>);
+15 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!file)&#32;{
+16 &#32;&#32;&#32;&#32;<link linkend="_logger_8h_1ae5066a2e77390ed60a2e2a98c374c520">VALLY_ERROR</link>(<emphasis role="stringliteral">&quot;Could&#32;not&#32;load&#32;file&#32;at&#32;\&quot;%s\&quot;!&quot;</emphasis>,&#32;<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>);
+17 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="stringliteral">&quot;&quot;</emphasis>;
+18 &#32;&#32;}
+19 
+20 &#32;&#32;<emphasis role="comment">//&#32;Calculate&#32;buffer&apos;s&#32;length</emphasis>
+21 &#32;&#32;fseek(file,&#32;0,&#32;SEEK_END);
+22 &#32;&#32;<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>&#32;=&#32;ftell(file);
+23 &#32;&#32;rewind(file);
+24 
+25 &#32;&#32;<emphasis role="comment">//&#32;Allocate&#32;memory&#32;for&#32;the&#32;buffer</emphasis>
+26 &#32;&#32;<link linkend="_structbuffer">buffer</link>&#32;=&#32;calloc(1,&#32;<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>&#32;+&#32;1);
+27 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_structbuffer">buffer</link>)&#32;{
+28 &#32;&#32;&#32;&#32;<link linkend="_logger_8h_1ae5066a2e77390ed60a2e2a98c374c520">VALLY_ERROR</link>(<emphasis role="stringliteral">&quot;Could&#32;not&#32;lallocate&#32;memory&#32;for&#32;buffer&#32;\&quot;%s\&quot;!&quot;</emphasis>,&#32;<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>);
+29 &#32;&#32;&#32;&#32;fclose(file);
+30 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="stringliteral">&quot;&quot;</emphasis>;
+31 &#32;&#32;}
+32 
+33 &#32;&#32;<emphasis role="comment">//&#32;Read&#32;the&#32;file&#32;into&#32;the&#32;buffer</emphasis>
+34 &#32;&#32;fread(<link linkend="_structbuffer">buffer</link>,&#32;1,&#32;<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>,&#32;file);
+35 &#32;&#32;fclose(file);
+36 
+37 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a76461e97a098d2c9ae20ac193d3825ae">buffer</link>;
+38 }
+</programlisting></section>
+</section>
+</section>

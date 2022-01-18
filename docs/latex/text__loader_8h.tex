@@ -4,53 +4,53 @@
 \doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-char $\ast$ \mbox{\hyperlink{text__loader_8h_a0288aab1293bca79a1e50b5a5674fe24}{load\+\_\+text\+\_\+file}} (const char $\ast$path)
+char $\ast$ \mbox{\hyperlink{text__loader_8h_a79f5a6a6ebfd1ad9a9d12ee92211ed5a}{load\+\_\+text\+\_\+file}} (const char $\ast$\mbox{\hyperlink{glext_8h_ab25d8cd967ccbd19b630d7100ff8f67e}{path}})
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Function Documentation}
-\mbox{\Hypertarget{text__loader_8h_a0288aab1293bca79a1e50b5a5674fe24}\label{text__loader_8h_a0288aab1293bca79a1e50b5a5674fe24}} 
+\mbox{\Hypertarget{text__loader_8h_a79f5a6a6ebfd1ad9a9d12ee92211ed5a}\label{text__loader_8h_a79f5a6a6ebfd1ad9a9d12ee92211ed5a}} 
 \index{text\_loader.h@{text\_loader.h}!load\_text\_file@{load\_text\_file}}
 \index{load\_text\_file@{load\_text\_file}!text\_loader.h@{text\_loader.h}}
 \doxysubsubsection{\texorpdfstring{load\_text\_file()}{load\_text\_file()}}
-{\footnotesize\ttfamily char $\ast$ load\+\_\+text\+\_\+file (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily char$\ast$ load\+\_\+text\+\_\+file (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path }\end{DoxyParamCaption})}
 
 
 
-Definition at line \mbox{\hyperlink{text__loader_8c_source_l00008}{8}} of file \mbox{\hyperlink{text__loader_8c_source}{text\+\_\+loader.\+c}}.
+Definition at line 8 of file text\+\_\+loader.\+c.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00008                                        \{}
-\DoxyCodeLine{00009   FILE *file;}
-\DoxyCodeLine{00010   \textcolor{keywordtype}{long} length;}
-\DoxyCodeLine{00011   \textcolor{keywordtype}{char} *\mbox{\hyperlink{structbuffer}{buffer}};}
-\DoxyCodeLine{00012 }
-\DoxyCodeLine{00013   \textcolor{comment}{// Open the file}}
-\DoxyCodeLine{00014   file = fopen(path, \textcolor{stringliteral}{"{}rb"{}});}
-\DoxyCodeLine{00015   \textcolor{keywordflow}{if} (!file) \{}
-\DoxyCodeLine{00016     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}Could not load file at \(\backslash\)"{}\%s\(\backslash\)"{}!"{}}, path);}
-\DoxyCodeLine{00017     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
-\DoxyCodeLine{00018   \}}
-\DoxyCodeLine{00019 }
-\DoxyCodeLine{00020   \textcolor{comment}{// Calculate buffer's length}}
-\DoxyCodeLine{00021   fseek(file, 0, SEEK\_END);}
-\DoxyCodeLine{00022   length = ftell(file);}
-\DoxyCodeLine{00023   rewind(file);}
-\DoxyCodeLine{00024 }
-\DoxyCodeLine{00025   \textcolor{comment}{// Allocate memory for the buffer}}
-\DoxyCodeLine{00026   \mbox{\hyperlink{structbuffer}{buffer}} = calloc(1, length + 1);}
-\DoxyCodeLine{00027   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{structbuffer}{buffer}}) \{}
-\DoxyCodeLine{00028     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"{}Could not lallocate memory for buffer \(\backslash\)"{}\%s\(\backslash\)"{}!"{}}, path);}
-\DoxyCodeLine{00029     fclose(file);}
-\DoxyCodeLine{00030     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
-\DoxyCodeLine{00031   \}}
-\DoxyCodeLine{00032 }
-\DoxyCodeLine{00033   \textcolor{comment}{// Read the file into the buffer}}
-\DoxyCodeLine{00034   fread(\mbox{\hyperlink{structbuffer}{buffer}}, 1, length, file);}
-\DoxyCodeLine{00035   fclose(file);}
-\DoxyCodeLine{00036 }
-\DoxyCodeLine{00037   \textcolor{keywordflow}{return} \mbox{\hyperlink{structbuffer}{buffer}};}
-\DoxyCodeLine{00038 \}}
+\DoxyCodeLine{8                                        \{}
+\DoxyCodeLine{9   FILE *file;}
+\DoxyCodeLine{10   \textcolor{keywordtype}{long} \mbox{\hyperlink{glad_8h_a921fa83f7755f0139c84ba1831417a2e}{length}};}
+\DoxyCodeLine{11   \textcolor{keywordtype}{char} *\mbox{\hyperlink{glad_8h_a76461e97a098d2c9ae20ac193d3825ae}{buffer}};}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13   \textcolor{comment}{// Open the file}}
+\DoxyCodeLine{14   file = fopen(\mbox{\hyperlink{glext_8h_ab25d8cd967ccbd19b630d7100ff8f67e}{path}}, \textcolor{stringliteral}{"rb"});}
+\DoxyCodeLine{15   \textcolor{keywordflow}{if} (!file) \{}
+\DoxyCodeLine{16     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"Could not load file at \(\backslash\)"\%s\(\backslash\)"!"}, \mbox{\hyperlink{glext_8h_ab25d8cd967ccbd19b630d7100ff8f67e}{path}});}
+\DoxyCodeLine{17     \textcolor{keywordflow}{return} \textcolor{stringliteral}{""};}
+\DoxyCodeLine{18   \}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20   \textcolor{comment}{// Calculate buffer's length}}
+\DoxyCodeLine{21   fseek(file, 0, SEEK\_END);}
+\DoxyCodeLine{22   \mbox{\hyperlink{glad_8h_a921fa83f7755f0139c84ba1831417a2e}{length}} = ftell(file);}
+\DoxyCodeLine{23   rewind(file);}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25   \textcolor{comment}{// Allocate memory for the buffer}}
+\DoxyCodeLine{26   \mbox{\hyperlink{structbuffer}{buffer}} = calloc(1, \mbox{\hyperlink{glad_8h_a921fa83f7755f0139c84ba1831417a2e}{length}} + 1);}
+\DoxyCodeLine{27   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{structbuffer}{buffer}}) \{}
+\DoxyCodeLine{28     \mbox{\hyperlink{logger_8h_ae5066a2e77390ed60a2e2a98c374c520}{VALLY\_ERROR}}(\textcolor{stringliteral}{"Could not lallocate memory for buffer \(\backslash\)"\%s\(\backslash\)"!"}, \mbox{\hyperlink{glext_8h_ab25d8cd967ccbd19b630d7100ff8f67e}{path}});}
+\DoxyCodeLine{29     fclose(file);}
+\DoxyCodeLine{30     \textcolor{keywordflow}{return} \textcolor{stringliteral}{""};}
+\DoxyCodeLine{31   \}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33   \textcolor{comment}{// Read the file into the buffer}}
+\DoxyCodeLine{34   fread(\mbox{\hyperlink{structbuffer}{buffer}}, 1, \mbox{\hyperlink{glad_8h_a921fa83f7755f0139c84ba1831417a2e}{length}}, file);}
+\DoxyCodeLine{35   fclose(file);}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37   \textcolor{keywordflow}{return} \mbox{\hyperlink{glad_8h_a76461e97a098d2c9ae20ac193d3825ae}{buffer}};}
+\DoxyCodeLine{38 \}}
 
 \end{DoxyCode}

@@ -1,0 +1,101 @@
+\hypertarget{news_news_34}{}\doxysection{Release notes for version 3.\+4}\label{news_news_34}
+\hypertarget{news_features_34}{}\doxysubsection{New features in version 3.\+4}\label{news_features_34}
+\hypertarget{news_runtime_platform_34}{}\doxysubsubsection{Runtime platform selection}\label{news_runtime_platform_34}
+G\+L\+FW now supports being compiled for multiple backends and selecting between them at runtime with the \mbox{\hyperlink{intro_guide_GLFW_PLATFORM}{G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+RM}} init hint. After initialization the selected platform can be queried with \mbox{\hyperlink{group__init_gac2d1735162a981fcaa8fb386740aa5ce}{glfw\+Get\+Platform}}. You can check if support for a given platform is compiled in with \mbox{\hyperlink{group__init_ga7b57ba0946498e8621f4d969bbcecfba}{glfw\+Platform\+Supported}}.\hypertarget{news_standard_cursors_34}{}\doxysubsubsection{More standard cursors}\label{news_standard_cursors_34}
+G\+L\+FW now provides the standard cursor shapes \mbox{\hyperlink{group__shapes_gadf2c0a495ec9cef4e1a364cc99aa78da}{G\+L\+F\+W\+\_\+\+R\+E\+S\+I\+Z\+E\+\_\+\+N\+W\+S\+E\+\_\+\+C\+U\+R\+S\+OR}} and \mbox{\hyperlink{group__shapes_gab06bba3b407f92807ba9b48de667a323}{G\+L\+F\+W\+\_\+\+R\+E\+S\+I\+Z\+E\+\_\+\+N\+E\+S\+W\+\_\+\+C\+U\+R\+S\+OR}} for diagonal resizing, \mbox{\hyperlink{group__shapes_ga3a5f4811155f95ccafbbb4c9a899fc1d}{G\+L\+F\+W\+\_\+\+R\+E\+S\+I\+Z\+E\+\_\+\+A\+L\+L\+\_\+\+C\+U\+R\+S\+OR}} for omni-\/directional resizing and \mbox{\hyperlink{group__shapes_ga297c503095b034bc8891393b637844b1}{G\+L\+F\+W\+\_\+\+N\+O\+T\+\_\+\+A\+L\+L\+O\+W\+E\+D\+\_\+\+C\+U\+R\+S\+OR}} for showing an action is not allowed.
+
+Unlike the original set, these shapes may not be available everywhere and creation will then fail with the new \mbox{\hyperlink{group__errors_ga09d6943923a70ddef3a085f5baee786c}{G\+L\+F\+W\+\_\+\+C\+U\+R\+S\+O\+R\+\_\+\+U\+N\+A\+V\+A\+I\+L\+A\+B\+LE}} error.
+
+The cursors for horizontal and vertical resizing are now referred to as \mbox{\hyperlink{group__shapes_ga2010a43dc1050a7c9154148a63cf01ad}{G\+L\+F\+W\+\_\+\+R\+E\+S\+I\+Z\+E\+\_\+\+E\+W\+\_\+\+C\+U\+R\+S\+OR}} and \mbox{\hyperlink{group__shapes_gaa59214e8cdc8c8adf08fdf125ed68388}{G\+L\+F\+W\+\_\+\+R\+E\+S\+I\+Z\+E\+\_\+\+N\+S\+\_\+\+C\+U\+R\+S\+OR}}, and the pointing hand cursor is now referred to as \mbox{\hyperlink{group__shapes_gaad01a50929fb515bf27e4462c51f6ed0}{G\+L\+F\+W\+\_\+\+P\+O\+I\+N\+T\+I\+N\+G\+\_\+\+H\+A\+N\+D\+\_\+\+C\+U\+R\+S\+OR}}. The older names are still available.
+
+For more information see \mbox{\hyperlink{input_guide_cursor_standard}{Standard cursor creation}}.\hypertarget{news_mouse_passthrough_34}{}\doxysubsubsection{Mouse event passthrough}\label{news_mouse_passthrough_34}
+G\+L\+FW now provides the \mbox{\hyperlink{window_guide_GLFW_MOUSE_PASSTHROUGH_hint}{G\+L\+F\+W\+\_\+\+M\+O\+U\+S\+E\+\_\+\+P\+A\+S\+S\+T\+H\+R\+O\+U\+GH}} window hint for making a window transparent to mouse input, lettings events pass to whatever window is behind it. This can also be changed after window creation with the matching \mbox{\hyperlink{window_guide_GLFW_MOUSE_PASSTHROUGH_attrib}{window attribute}}.\hypertarget{news_features_34_angle_backend}{}\doxysubsubsection{Support for A\+N\+G\+L\+E rendering backend selection}\label{news_features_34_angle_backend}
+G\+L\+FW now provides the \mbox{\hyperlink{intro_guide_GLFW_ANGLE_PLATFORM_TYPE_hint}{G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+PE}} init hint for requesting a specific rendering backend when using \href{https://chromium.googlesource.com/angle/angle/}{\texttt{ A\+N\+G\+LE}} to create Open\+GL ES contexts.\hypertarget{news_features_34_init_allocator}{}\doxysubsubsection{Support for custom memory allocator}\label{news_features_34_init_allocator}
+G\+L\+FW now supports plugging a custom memory allocator at initialization with \mbox{\hyperlink{group__init_ga0f4c8556a21d9e774a0ba0332da1748e}{glfw\+Init\+Allocator}}. The allocator is a struct of type \mbox{\hyperlink{struct_g_l_f_wallocator}{G\+L\+F\+Wallocator}} with function pointers corresponding to the standard library functions {\ttfamily malloc}, {\ttfamily realloc} and {\ttfamily free}.
+
+For more information see \mbox{\hyperlink{intro_guide_init_allocator}{Custom heap memory allocator}}.\hypertarget{news_features_34_win32_keymenu}{}\doxysubsubsection{Support for keyboard access to Windows window menu}\label{news_features_34_win32_keymenu}
+G\+L\+FW now provides the \mbox{\hyperlink{window_guide_GLFW_WIN32_KEYBOARD_MENU_hint}{G\+L\+F\+W\+\_\+\+W\+I\+N32\+\_\+\+K\+E\+Y\+B\+O\+A\+R\+D\+\_\+\+M\+E\+NU}} window hint for enabling keyboard access to the window menu via the Alt+\+Space and Alt-\/and-\/then-\/\+Space shortcuts. This may be useful for more G\+U\+I-\/oriented applications.\hypertarget{news_caveats}{}\doxysubsection{Caveats for version 3.\+4}\label{news_caveats}
+\hypertarget{news_native_34}{}\doxysubsubsection{Multiple sets of native access functions}\label{news_native_34}
+Because G\+L\+FW now supports runtime selection of platform (window system), a library binary may export native access functions for multiple platforms. Starting with version 3.\+4 you must not assume that G\+L\+FW is running on a platform just because it exports native access functions for it. After initialization you can query the selected platform with \mbox{\hyperlink{group__init_gac2d1735162a981fcaa8fb386740aa5ce}{glfw\+Get\+Platform}}.\hypertarget{news_version_string_34}{}\doxysubsubsection{Version string format has been changed}\label{news_version_string_34}
+Because G\+L\+FW now supports runtime selection of platform (window system), the version string returned by \mbox{\hyperlink{group__init_ga7de7ba982c0cf66b35afdaa8bea071ae}{glfw\+Get\+Version\+String}} has been expanded. It now contains the names of all A\+P\+Is for all the platforms that the library binary supports.\hypertarget{news_joysticks_34}{}\doxysubsubsection{Joystick support is initialized on demand}\label{news_joysticks_34}
+The joystick part of G\+L\+FW is now initialized when first used, primarily to work around faulty Windows drivers that cause Direct\+Input to take up to several seconds to enumerate devices.
+
+This change will usually not be observable. However, if your application waits for events without having first called any joystick function or created any visible windows, the wait may never unblock as G\+L\+FW may not yet have subscribed to joystick related OS events.
+
+To work around this, call any joystick function before waiting for events, for example by setting a \mbox{\hyperlink{input_guide_joystick_event}{joystick callback}}.\hypertarget{news_standalone_34}{}\doxysubsubsection{Tests and examples are disabled when built as a sub-\/project}\label{news_standalone_34}
+G\+L\+FW now does not build the tests and examples when it is added as a subdirectory of another C\+Make project. To enable these, set the \mbox{\hyperlink{compile_guide_GLFW_BUILD_TESTS}{G\+L\+F\+W\+\_\+\+B\+U\+I\+L\+D\+\_\+\+T\+E\+S\+TS}} and \mbox{\hyperlink{compile_guide_GLFW_BUILD_EXAMPLES}{G\+L\+F\+W\+\_\+\+B\+U\+I\+L\+D\+\_\+\+E\+X\+A\+M\+P\+L\+ES}} cache variables before adding the G\+L\+FW subdirectory.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{set(GLFW\_BUILD\_EXAMPLES ON CACHE BOOL "" FORCE)}
+\DoxyCodeLine{set(GLFW\_BUILD\_TESTS ON CACHE BOOL "" FORCE)}
+\DoxyCodeLine{add\_subdirectory(path/to/glfw)}
+\end{DoxyCode}
+\hypertarget{news_initmenu_34}{}\doxysubsubsection{mac\+O\+S main menu now created at initialization}\label{news_initmenu_34}
+G\+L\+FW now creates the main menu and completes the initialization of N\+S\+Application during initialization. Programs that do not want a main menu can disable it with the \mbox{\hyperlink{intro_guide_GLFW_COCOA_MENUBAR_hint}{G\+L\+F\+W\+\_\+\+C\+O\+C\+O\+A\+\_\+\+M\+E\+N\+U\+B\+AR}} init hint.\hypertarget{news_corevideo_34}{}\doxysubsubsection{Core\+Video dependency has been removed}\label{news_corevideo_34}
+G\+L\+FW no longer depends on the Core\+Video framework on mac\+OS and it no longer needs to be specified during compilation or linking.\hypertarget{news_caveat_fbtransparency_34}{}\doxysubsubsection{Framebuffer transparency requires D\+W\+M transparency}\label{news_caveat_fbtransparency_34}
+G\+L\+FW no longer supports framebuffer transparency enabled via \mbox{\hyperlink{group__window_ga60a0578c3b9449027d683a9c6abb9f14}{G\+L\+F\+W\+\_\+\+T\+R\+A\+N\+S\+P\+A\+R\+E\+N\+T\+\_\+\+F\+R\+A\+M\+E\+B\+U\+F\+F\+ER}} on Windows 7 if D\+WM transparency is off (the Transparency setting under Personalization $>$ Window Color).\hypertarget{news_deprecations_34}{}\doxysubsection{Deprecations in version 3.\+4}\label{news_deprecations_34}
+\hypertarget{news_removals_34}{}\doxysubsection{Removals in 3.\+4}\label{news_removals_34}
+\hypertarget{news_vulkan_static_34}{}\doxysubsubsection{G\+L\+F\+W\+\_\+\+V\+U\+L\+K\+A\+N\+\_\+\+S\+T\+A\+T\+I\+C C\+Make option has been removed}\label{news_vulkan_static_34}
+This option was used to compile G\+L\+FW directly linked with the Vulkan loader, instead of using dynamic loading to get hold of {\ttfamily vk\+Get\+Instance\+Proc\+Addr} at initialization. This is now done by calling the \mbox{\hyperlink{init_8c_a1712210f34c339a05adda69e3587ec00}{glfw\+Init\+Vulkan\+Loader}} function before initialization.
+
+If you need backward compatibility, this macro can still be defined for G\+L\+FW 3.\+4 and will have no effect. The call to \mbox{\hyperlink{init_8c_a1712210f34c339a05adda69e3587ec00}{glfw\+Init\+Vulkan\+Loader}} can be conditionally enabled in your code by checking the \mbox{\hyperlink{group__init_ga6337d9ea43b22fc529b2bba066b4a576}{G\+L\+F\+W\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+M\+A\+J\+OR}} and \mbox{\hyperlink{group__init_gaf80d40f0aea7088ff337606e9c48f7a3}{G\+L\+F\+W\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+M\+I\+N\+OR}} macros.\hypertarget{news_osmesa_option_34}{}\doxysubsubsection{G\+L\+F\+W\+\_\+\+U\+S\+E\+\_\+\+O\+S\+M\+E\+S\+A C\+Make option has been removed}\label{news_osmesa_option_34}
+This option was used to compile G\+L\+FW for the Null platform. The Null platform is now always supported. To produce a library binary that only supports this platform, the way this C\+Make option used to do, you will instead need to disable the default platform for the target OS. This means setting the \mbox{\hyperlink{compile_guide_GLFW_BUILD_WIN32}{G\+L\+F\+W\+\_\+\+B\+U\+I\+L\+D\+\_\+\+W\+I\+N32}}, \mbox{\hyperlink{compile_guide_GLFW_BUILD_COCOA}{G\+L\+F\+W\+\_\+\+B\+U\+I\+L\+D\+\_\+\+C\+O\+C\+OA}} or \mbox{\hyperlink{compile_guide_GLFW_BUILD_X11}{G\+L\+F\+W\+\_\+\+B\+U\+I\+L\+D\+\_\+\+X11}} C\+Make option to false.
+
+You can set all of them to false and the ones that don\textquotesingle{}t apply for the target OS will be ignored.\hypertarget{news_wl_shell_34}{}\doxysubsubsection{Support for the wl\+\_\+shell protocol has been removed}\label{news_wl_shell_34}
+Support for the wl\+\_\+shell protocol has been removed and G\+L\+FW now only supports the X\+D\+G-\/\+Shell protocol. If your Wayland compositor does not support X\+D\+G-\/\+Shell then G\+L\+FW will fail to initialize.\hypertarget{news_symbols_34}{}\doxysubsection{New symbols in version 3.\+4}\label{news_symbols_34}
+\hypertarget{news_functions_34}{}\doxysubsubsection{New functions in version 3.\+4}\label{news_functions_34}
+
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{group__init_ga0f4c8556a21d9e774a0ba0332da1748e}{glfw\+Init\+Allocator}}
+\item \mbox{\hyperlink{group__init_gac2d1735162a981fcaa8fb386740aa5ce}{glfw\+Get\+Platform}}
+\item \mbox{\hyperlink{group__init_ga7b57ba0946498e8621f4d969bbcecfba}{glfw\+Platform\+Supported}}
+\item \mbox{\hyperlink{init_8c_a1712210f34c339a05adda69e3587ec00}{glfw\+Init\+Vulkan\+Loader}}
+\end{DoxyItemize}\hypertarget{news_types_34}{}\doxysubsubsection{New types in version 3.\+4}\label{news_types_34}
+
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{struct_g_l_f_wallocator}{G\+L\+F\+Wallocator}}
+\item \mbox{\hyperlink{group__init_gad3ff6f19415d52fbdcf3f0b57d8802aa}{G\+L\+F\+Wallocatefun}}
+\item \mbox{\hyperlink{group__init_gad17723fa35a481b6c8d438a000a8201f}{G\+L\+F\+Wreallocatefun}}
+\item \mbox{\hyperlink{group__init_ga7181615eda94c4b07bd72bdcee39fa28}{G\+L\+F\+Wdeallocatefun}}
+\end{DoxyItemize}\hypertarget{news_constants_34}{}\doxysubsubsection{New constants in version 3.\+4}\label{news_constants_34}
+
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{intro_guide_GLFW_PLATFORM}{G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+RM}}
+\item \mbox{\hyperlink{group__init_ga18b2d37374d0dea28cd69194fa85b859}{G\+L\+F\+W\+\_\+\+A\+N\+Y\+\_\+\+P\+L\+A\+T\+F\+O\+RM}}
+\item \mbox{\hyperlink{group__init_ga8d3d17df2ab57492cef665da52c603a1}{G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+W\+I\+N32}}
+\item \mbox{\hyperlink{group__init_ga83b18714254f75bc2f0cdbafa0f10b6b}{G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+C\+O\+C\+OA}}
+\item \mbox{\hyperlink{group__init_gac4b08906a3cbf26c518a4a543eedd740}{G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+W\+A\+Y\+L\+A\+ND}}
+\item \mbox{\hyperlink{group__init_gaf5333f3933e9c248a00cfda6523f386b}{G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+X11}}
+\item \mbox{\hyperlink{group__init_gac06fad5a4866ae7a1d7b2675fac72d7f}{G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+N\+U\+LL}}
+\item \mbox{\hyperlink{group__errors_ga3608c6c29ab7a72f3bf019f4c3a2563d}{G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+U\+N\+A\+V\+A\+I\+L\+A\+B\+LE}}
+\item \mbox{\hyperlink{group__shapes_gaad01a50929fb515bf27e4462c51f6ed0}{G\+L\+F\+W\+\_\+\+P\+O\+I\+N\+T\+I\+N\+G\+\_\+\+H\+A\+N\+D\+\_\+\+C\+U\+R\+S\+OR}}
+\item \mbox{\hyperlink{group__shapes_ga2010a43dc1050a7c9154148a63cf01ad}{G\+L\+F\+W\+\_\+\+R\+E\+S\+I\+Z\+E\+\_\+\+E\+W\+\_\+\+C\+U\+R\+S\+OR}}
+\item \mbox{\hyperlink{group__shapes_gaa59214e8cdc8c8adf08fdf125ed68388}{G\+L\+F\+W\+\_\+\+R\+E\+S\+I\+Z\+E\+\_\+\+N\+S\+\_\+\+C\+U\+R\+S\+OR}}
+\item \mbox{\hyperlink{group__shapes_gadf2c0a495ec9cef4e1a364cc99aa78da}{G\+L\+F\+W\+\_\+\+R\+E\+S\+I\+Z\+E\+\_\+\+N\+W\+S\+E\+\_\+\+C\+U\+R\+S\+OR}}
+\item \mbox{\hyperlink{group__shapes_gab06bba3b407f92807ba9b48de667a323}{G\+L\+F\+W\+\_\+\+R\+E\+S\+I\+Z\+E\+\_\+\+N\+E\+S\+W\+\_\+\+C\+U\+R\+S\+OR}}
+\item \mbox{\hyperlink{group__shapes_ga3a5f4811155f95ccafbbb4c9a899fc1d}{G\+L\+F\+W\+\_\+\+R\+E\+S\+I\+Z\+E\+\_\+\+A\+L\+L\+\_\+\+C\+U\+R\+S\+OR}}
+\item \mbox{\hyperlink{group__window_ga88981797d29800808ec242274ab5c03a}{G\+L\+F\+W\+\_\+\+M\+O\+U\+S\+E\+\_\+\+P\+A\+S\+S\+T\+H\+R\+O\+U\+GH}}
+\item \mbox{\hyperlink{group__shapes_ga297c503095b034bc8891393b637844b1}{G\+L\+F\+W\+\_\+\+N\+O\+T\+\_\+\+A\+L\+L\+O\+W\+E\+D\+\_\+\+C\+U\+R\+S\+OR}}
+\item \mbox{\hyperlink{group__errors_ga09d6943923a70ddef3a085f5baee786c}{G\+L\+F\+W\+\_\+\+C\+U\+R\+S\+O\+R\+\_\+\+U\+N\+A\+V\+A\+I\+L\+A\+B\+LE}}
+\item \mbox{\hyperlink{group__window_gaf65ea8dafdc0edb07b821b9a336d5043}{G\+L\+F\+W\+\_\+\+W\+I\+N32\+\_\+\+K\+E\+Y\+B\+O\+A\+R\+D\+\_\+\+M\+E\+NU}}
+\item \mbox{\hyperlink{group__window_ga8d55e3afec73c7de0509c3b7ad1d9e3f}{G\+L\+F\+W\+\_\+\+C\+O\+N\+T\+E\+X\+T\+\_\+\+D\+E\+B\+UG}}
+\item \mbox{\hyperlink{group__errors_ga526fba20a01504a8086c763b6ca53ce5}{G\+L\+F\+W\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+U\+N\+A\+V\+A\+I\+L\+A\+B\+LE}}
+\item \mbox{\hyperlink{group__errors_ga5dda77e023e83151e8bd55a6758f946a}{G\+L\+F\+W\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+U\+N\+I\+M\+P\+L\+E\+M\+E\+N\+T\+ED}}
+\item \mbox{\hyperlink{group__init_gaec269b24cf549ab46292c0125d8bbdce}{G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+PE}}
+\item \mbox{\hyperlink{glfw3_8h_ae78e673449c2a2b8c560ca1b1e283228}{G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+N\+O\+NE}}
+\item \mbox{\hyperlink{glfw3_8h_ad8d9e97ed7790811470366b338833623}{G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+O\+P\+E\+N\+GL}}
+\item \mbox{\hyperlink{glfw3_8h_a0003c089da020cbf957218e70245bb65}{G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+O\+P\+E\+N\+G\+L\+ES}}
+\item \mbox{\hyperlink{glfw3_8h_a6e8fdc83113d247ad792bb5c4e82c894}{G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+D3\+D9}}
+\item \mbox{\hyperlink{glfw3_8h_ad6eae659811a52a5cdc43c362aedfa33}{G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+D3\+D11}}
+\item \mbox{\hyperlink{glfw3_8h_a579ac83506c7546709dad91960cc7ca1}{G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+V\+U\+L\+K\+AN}}
+\item \mbox{\hyperlink{glfw3_8h_ab56d91b26cf223dc67590a93a2f8507d}{G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+M\+E\+T\+AL}}
+\item \mbox{\hyperlink{group__init_gaa341e303ebeb8e4199b8ab8be84351f6}{G\+L\+F\+W\+\_\+\+X11\+\_\+\+X\+C\+B\+\_\+\+V\+U\+L\+K\+A\+N\+\_\+\+S\+U\+R\+F\+A\+CE}}
+\end{DoxyItemize}\hypertarget{news_news_archive}{}\doxysection{Release notes for earlier versions}\label{news_news_archive}
+
+\begin{DoxyItemize}
+\item \href{https://www.glfw.org/docs/3.3/news.html}{\texttt{ Release notes for 3.\+3}}
+\item \href{https://www.glfw.org/docs/3.2/news.html}{\texttt{ Release notes for 3.\+2}}
+\item \href{https://www.glfw.org/docs/3.1/news.html}{\texttt{ Release notes for 3.\+1}}
+\item \href{https://www.glfw.org/docs/3.0/news.html}{\texttt{ Release notes for 3.\+0}} 
+\end{DoxyItemize}

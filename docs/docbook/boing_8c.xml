@@ -1,0 +1,974 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_boing_8c">
+<title>deps/glfw/examples/boing.c File Reference</title>
+<indexterm><primary>deps/glfw/examples/boing.c</primary></indexterm>
+<programlisting>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;math.h&gt;
+#include &lt;glad/gl.h&gt;
+#include &lt;GLFW/glfw3.h&gt;
+#include &lt;linmath.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structvertex__t">vertex_t</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_boing_8c_1a09f9c3bf094ecaf707c673924ffd615a">GLAD_GL_IMPLEMENTATION</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_boing_8c_1a088324ad8995e3eb76024e3e79083d48">GLFW_INCLUDE_NONE</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link>   70.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_boing_8c_1a89edea273a0da4bec03abfdd5d46a1df">STEP_LONGITUDE</link>   22.5<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>                   /* 22.5 makes 8 bands like original Boing */</para>
+</listitem>
+            <listitem><para>#define <link linkend="_boing_8c_1ac875967450c7a0306cf05f8e3e455e6c">STEP_LATITUDE</link>   22.5<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_boing_8c_1abc4d2bb2a15f35c55d9b456b452eaa7c">DIST_BALL</link>   (<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link> * 2.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link> + <link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link> * 0.1<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_boing_8c_1a7a2f17659bb77c24edb2bea7a08a19a3">VIEW_SCENE_DIST</link>   (<link linkend="_boing_8c_1abc4d2bb2a15f35c55d9b456b452eaa7c">DIST_BALL</link> * 3.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link> + 200.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)/* <link linkend="_glext_8h_1a744fbed01658cb96bb8ba7e85a86d1dc">distance</link> from viewer to middle of boing area */</para>
+</listitem>
+            <listitem><para>#define <link linkend="_boing_8c_1a08246606c233e7785a497c09672f366f">GRID_SIZE</link>   (<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link> * 4.5<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)          /* <link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link> (<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>) of grid */</para>
+</listitem>
+            <listitem><para>#define <link linkend="_boing_8c_1a9088188b19f0545a1d84e381da09fef0">BOUNCE_HEIGHT</link>   (<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link> * 2.1<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_boing_8c_1adefcd41ddcb236a9bcf6189b5009e59e">BOUNCE_WIDTH</link>   (<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link> * 2.1<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_boing_8c_1adfabb671d0b80adb599e07a018f049d4">SHADOW_OFFSET_X</link>   -20.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_boing_8c_1aee80e1c2e5aa7831fbe28b95948f5dc0">SHADOW_OFFSET_Y</link>   10.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_boing_8c_1a79814e92ed56516db4e8564c2928f86e">SHADOW_OFFSET_Z</link>   0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_boing_8c_1a2ec75166930a7702729980492d09d431">WALL_L_OFFSET</link>   0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_boing_8c_1ae377291d60b194d9d3195822af2cfeff">WALL_R_OFFSET</link>   5.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_boing_8c_1aaa69f89df4c8e47abeb574bfdd11d9f4">ANIMATION_SPEED</link>   50.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_boing_8c_1a82c13b07387b0fa3ab346ad38894e2a7">MAX_DELTA_T</link>   0.02<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_boing_8c_1a690f251553b39fd4f31894826141b61a">RAND_MAX</link>   4095</para>
+</listitem>
+            <listitem><para>#define <link linkend="_boing_8c_1a35261c4af778a5d29263db16687a816b">BOING_DEBUG</link>   0</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Enumerations    </title>
+        <itemizedlist>
+            <listitem><para>enum <link linkend="_boing_8c_1aaff0749849eeb426c1fff01f93f8aa38">DRAW_BALL_ENUM</link> { <link linkend="_boing_8c_1aaff0749849eeb426c1fff01f93f8aa38a6dd224315fa345b43c69670bdd98bde6">DRAW_BALL</link>, 
+<link linkend="_boing_8c_1aaff0749849eeb426c1fff01f93f8aa38a3248eb4cd526dece69034b8913503983">DRAW_BALL_SHADOW</link>
+ }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_boing_8c_1a2858154e2009b0e6e616f313177762bc">init</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_boing_8c_1a4ea013001a5fb47853d0fab8f8de35cd">display</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_boing_8c_1a5272e39ef9d8944cb3f99d656f9f555a">reshape</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int <link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>, int <link linkend="_glad_8h_1afa0fb1b5e976920c0abeff2dca3ed774">h</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_boing_8c_1a286930f4e8ede059b83ff6eafa2ff718">key_callback</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int <link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>, int scancode, int action, int mods)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_boing_8c_1a5515d805e76ce6728de3c0dc5e187c86">mouse_button_callback</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int button, int action, int mods)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_boing_8c_1ab5fb5502317b46f9cecd6379f2ecd210">cursor_position_callback</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, double <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, double <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_boing_8c_1aaf4ab2b37a65ad090f79313713f18731">DrawBoingBall</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_boing_8c_1a5a5cbb3e7786a248a2dcf02777a98df5">BounceBall</link> (double <link linkend="_wave_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_boing_8c_1ad80d1d92135216bb8c1242fcce45545c">DrawBoingBallBand</link> (<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> long_lo, <link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> long_hi)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_boing_8c_1a8e38342e6a8bfcbc67503d2c6383d8e8">DrawGrid</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> <link linkend="_boing_8c_1a080dc55aae439523561bda8b86575b7f">TruncateDeg</link> (<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> deg)</para>
+</listitem>
+            <listitem><para>double <link linkend="_boing_8c_1a8012f8bd66798ffbdd27462c9f593a54">deg2rad</link> (double deg)</para>
+</listitem>
+            <listitem><para>double <link linkend="_boing_8c_1a5b090656aa7eb0a7d1bd2d0f0e7712e2">sin_deg</link> (double deg)</para>
+</listitem>
+            <listitem><para>double <link linkend="_boing_8c_1ae4cbb93841df91680846fe983a6f1835">cos_deg</link> (double deg)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_boing_8c_1ab3fa148322b2d4aaa2ffe1e0008d5e55">CrossProduct</link> (<link linkend="_structvertex__t">vertex_t</link> <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>, <link linkend="_structvertex__t">vertex_t</link> <link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>, <link linkend="_structvertex__t">vertex_t</link> <link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>, <link linkend="_structvertex__t">vertex_t</link> *<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_boing_8c_1a840291bc02cba5474a4cb46a9b9566fe">main</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_boing_8c_1a6511876508d2f65ea8ace8f25d0e4c78">windowed_xpos</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_boing_8c_1adfcf830546ec1f6a64866d3b652a22fd">windowed_ypos</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_boing_8c_1a5371aa3f8486fe48d4878950ee8bd9a3">windowed_width</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_boing_8c_1aa3257f2fd88b76fd6585ba6e679253e0">windowed_height</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_boing_8c_1a2474a5474cbff19523a51eb1de01cda4">width</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_boing_8c_1ad12fc34ce789bce6c8a05d8a17138534">height</link></para>
+</listitem>
+            <listitem><para><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> <link linkend="_boing_8c_1ae721211dff5c00a883879373efad1187">deg_rot_y</link> = 0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> <link linkend="_boing_8c_1abd3eb9bcb0582eaed1be1c789fa9664a">deg_rot_y_inc</link> = 2.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_boing_8c_1a5457032292643cc186a49f3163020555">override_pos</link> = <link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link></para>
+</listitem>
+            <listitem><para><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> <link linkend="_boing_8c_1ad4356335fdb6fdaa6d4b759ac447a41d">cursor_x</link> = 0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> <link linkend="_boing_8c_1a4f59f7e6e37a64caf5bb5b228bce9afd">cursor_y</link> = 0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> <link linkend="_boing_8c_1a66dbc10af7d1d045794549a09999d468">ball_x</link> = -<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link></para>
+</listitem>
+            <listitem><para><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> <link linkend="_boing_8c_1a13df79b6b7f26cc1fc5279a1f12a9d98">ball_y</link> = -<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link></para>
+</listitem>
+            <listitem><para><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> <link linkend="_boing_8c_1a00cc50b4eae810b91ef59463d55cb097">ball_x_inc</link> = 1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> <link linkend="_boing_8c_1adf5ece0dd3b5effeac97071b87e106bd">ball_y_inc</link> = 2.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para><link linkend="_boing_8c_1aaff0749849eeb426c1fff01f93f8aa38">DRAW_BALL_ENUM</link> <link linkend="_boing_8c_1ac1b93fa15ef429f4d5e3a0a9990304cf">drawBallHow</link></para>
+</listitem>
+            <listitem><para>double <link linkend="_boing_8c_1a87accd1af8e0aff4b818d891374f7cec">t</link></para>
+</listitem>
+            <listitem><para>double <link linkend="_boing_8c_1a720c9aaf75c956f8d87132112332da97">t_old</link> = 0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para>double <link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_boing_8c_1aaa69f89df4c8e47abeb574bfdd11d9f4"/>    <section>
+    <title>ANIMATION_SPEED</title>
+<indexterm><primary>ANIMATION_SPEED</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>ANIMATION_SPEED</secondary></indexterm>
+<para><computeroutput>#define ANIMATION_SPEED   50.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 82 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a35261c4af778a5d29263db16687a816b"/>    <section>
+    <title>BOING_DEBUG</title>
+<indexterm><primary>BOING_DEBUG</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>BOING_DEBUG</secondary></indexterm>
+<para><computeroutput>#define BOING_DEBUG   0</computeroutput></para><para>
+Definition at line 176 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a9088188b19f0545a1d84e381da09fef0"/>    <section>
+    <title>BOUNCE_HEIGHT</title>
+<indexterm><primary>BOUNCE_HEIGHT</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>BOUNCE_HEIGHT</secondary></indexterm>
+<para><computeroutput>#define BOUNCE_HEIGHT   (<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link> * 2.1<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</computeroutput></para><para>
+Definition at line 71 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1adefcd41ddcb236a9bcf6189b5009e59e"/>    <section>
+    <title>BOUNCE_WIDTH</title>
+<indexterm><primary>BOUNCE_WIDTH</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>BOUNCE_WIDTH</secondary></indexterm>
+<para><computeroutput>#define BOUNCE_WIDTH   (<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link> * 2.1<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</computeroutput></para><para>
+Definition at line 72 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1abc4d2bb2a15f35c55d9b456b452eaa7c"/>    <section>
+    <title>DIST_BALL</title>
+<indexterm><primary>DIST_BALL</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>DIST_BALL</secondary></indexterm>
+<para><computeroutput>#define DIST_BALL   (<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link> * 2.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link> + <link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link> * 0.1<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</computeroutput></para><para>
+Definition at line 67 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a09f9c3bf094ecaf707c673924ffd615a"/>    <section>
+    <title>GLAD_GL_IMPLEMENTATION</title>
+<indexterm><primary>GLAD_GL_IMPLEMENTATION</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>GLAD_GL_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define GLAD_GL_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 39 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a088324ad8995e3eb76024e3e79083d48"/>    <section>
+    <title>GLFW_INCLUDE_NONE</title>
+<indexterm><primary>GLFW_INCLUDE_NONE</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>GLFW_INCLUDE_NONE</secondary></indexterm>
+<para><computeroutput>#define GLFW_INCLUDE_NONE</computeroutput></para><para>
+Definition at line 41 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a08246606c233e7785a497c09672f366f"/>    <section>
+    <title>GRID_SIZE</title>
+<indexterm><primary>GRID_SIZE</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>GRID_SIZE</secondary></indexterm>
+<para><computeroutput>#define GRID_SIZE   (<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link> * 4.5<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)          /* <link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link> (<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>) of grid */</computeroutput></para><para>
+Definition at line 70 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a82c13b07387b0fa3ab346ad38894e2a7"/>    <section>
+    <title>MAX_DELTA_T</title>
+<indexterm><primary>MAX_DELTA_T</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>MAX_DELTA_T</secondary></indexterm>
+<para><computeroutput>#define MAX_DELTA_T   0.02<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 85 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956"/>    <section>
+    <title>RADIUS</title>
+<indexterm><primary>RADIUS</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>RADIUS</secondary></indexterm>
+<para><computeroutput>#define RADIUS   70.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 63 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a690f251553b39fd4f31894826141b61a"/>    <section>
+    <title>RAND_MAX</title>
+<indexterm><primary>RAND_MAX</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>RAND_MAX</secondary></indexterm>
+<para><computeroutput>#define RAND_MAX   4095</computeroutput></para><para>
+Definition at line 112 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1adfabb671d0b80adb599e07a018f049d4"/>    <section>
+    <title>SHADOW_OFFSET_X</title>
+<indexterm><primary>SHADOW_OFFSET_X</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>SHADOW_OFFSET_X</secondary></indexterm>
+<para><computeroutput>#define SHADOW_OFFSET_X   -20.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 74 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1aee80e1c2e5aa7831fbe28b95948f5dc0"/>    <section>
+    <title>SHADOW_OFFSET_Y</title>
+<indexterm><primary>SHADOW_OFFSET_Y</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>SHADOW_OFFSET_Y</secondary></indexterm>
+<para><computeroutput>#define SHADOW_OFFSET_Y   10.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 75 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a79814e92ed56516db4e8564c2928f86e"/>    <section>
+    <title>SHADOW_OFFSET_Z</title>
+<indexterm><primary>SHADOW_OFFSET_Z</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>SHADOW_OFFSET_Z</secondary></indexterm>
+<para><computeroutput>#define SHADOW_OFFSET_Z   0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 76 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1ac875967450c7a0306cf05f8e3e455e6c"/>    <section>
+    <title>STEP_LATITUDE</title>
+<indexterm><primary>STEP_LATITUDE</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>STEP_LATITUDE</secondary></indexterm>
+<para><computeroutput>#define STEP_LATITUDE   22.5<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 65 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a89edea273a0da4bec03abfdd5d46a1df"/>    <section>
+    <title>STEP_LONGITUDE</title>
+<indexterm><primary>STEP_LONGITUDE</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>STEP_LONGITUDE</secondary></indexterm>
+<para><computeroutput>#define STEP_LONGITUDE   22.5<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>                   /* 22.5 makes 8 bands like original Boing */</computeroutput></para><para>
+Definition at line 64 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a7a2f17659bb77c24edb2bea7a08a19a3"/>    <section>
+    <title>VIEW_SCENE_DIST</title>
+<indexterm><primary>VIEW_SCENE_DIST</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>VIEW_SCENE_DIST</secondary></indexterm>
+<para><computeroutput>#define VIEW_SCENE_DIST   (<link linkend="_boing_8c_1abc4d2bb2a15f35c55d9b456b452eaa7c">DIST_BALL</link> * 3.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link> + 200.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)/* <link linkend="_glext_8h_1a744fbed01658cb96bb8ba7e85a86d1dc">distance</link> from viewer to middle of boing area */</computeroutput></para><para>
+Definition at line 69 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a2ec75166930a7702729980492d09d431"/>    <section>
+    <title>WALL_L_OFFSET</title>
+<indexterm><primary>WALL_L_OFFSET</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>WALL_L_OFFSET</secondary></indexterm>
+<para><computeroutput>#define WALL_L_OFFSET   0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 78 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1ae377291d60b194d9d3195822af2cfeff"/>    <section>
+    <title>WALL_R_OFFSET</title>
+<indexterm><primary>WALL_R_OFFSET</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>WALL_R_OFFSET</secondary></indexterm>
+<para><computeroutput>#define WALL_R_OFFSET   5.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 79 of file boing.c.</para>
+</section>
+</section>
+<section>
+<title>Enumeration Type Documentation</title>
+<anchor xml:id="_boing_8c_1aaff0749849eeb426c1fff01f93f8aa38"/>    <section>
+    <title>DRAW_BALL_ENUM</title>
+<indexterm><primary>DRAW_BALL_ENUM</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>DRAW_BALL_ENUM</secondary></indexterm>
+<para><computeroutput>enum <link linkend="_boing_8c_1aaff0749849eeb426c1fff01f93f8aa38">DRAW_BALL_ENUM</link></computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>DRAW_BALL</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>DRAW_BALL</secondary></indexterm>
+<anchor xml:id="_boing_8c_1aaff0749849eeb426c1fff01f93f8aa38a6dd224315fa345b43c69670bdd98bde6"/>DRAW_BALL</entry><entry></entry></row><row><entry><indexterm><primary>DRAW_BALL_SHADOW</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>DRAW_BALL_SHADOW</secondary></indexterm>
+<anchor xml:id="_boing_8c_1aaff0749849eeb426c1fff01f93f8aa38a3248eb4cd526dece69034b8913503983"/>DRAW_BALL_SHADOW</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 88 of file boing.c.</para>
+<programlisting>88 {&#32;<link linkend="_boing_8c_1aaff0749849eeb426c1fff01f93f8aa38a6dd224315fa345b43c69670bdd98bde6">DRAW_BALL</link>,&#32;<link linkend="_boing_8c_1aaff0749849eeb426c1fff01f93f8aa38a3248eb4cd526dece69034b8913503983">DRAW_BALL_SHADOW</link>&#32;}&#32;<link linkend="_boing_8c_1aaff0749849eeb426c1fff01f93f8aa38">DRAW_BALL_ENUM</link>;
+</programlisting></section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_boing_8c_1a5a5cbb3e7786a248a2dcf02777a98df5"/>    <section>
+    <title>BounceBall()</title>
+<indexterm><primary>BounceBall</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>BounceBall</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> BounceBall (double dt)</computeroutput></para><para>
+Definition at line 386 of file boing.c.</para>
+<programlisting>387 {
+388 &#32;&#32;&#32;<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>&#32;sign;
+389 &#32;&#32;&#32;<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>&#32;deg;
+390 
+391 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(&#32;<link linkend="_boing_8c_1a5457032292643cc186a49f3163020555">override_pos</link>&#32;)
+392 &#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+393 
+394 &#32;&#32;&#32;<emphasis role="comment">/*&#32;Bounce&#32;on&#32;walls&#32;*/</emphasis>
+395 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(&#32;<link linkend="_boing_8c_1a66dbc10af7d1d045794549a09999d468">ball_x</link>&#32;&gt;&#32;&#32;(<link linkend="_boing_8c_1adefcd41ddcb236a9bcf6189b5009e59e">BOUNCE_WIDTH</link>/2&#32;+&#32;<link linkend="_boing_8c_1ae377291d60b194d9d3195822af2cfeff">WALL_R_OFFSET</link>&#32;)&#32;)
+396 &#32;&#32;&#32;{
+397 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1a00cc50b4eae810b91ef59463d55cb097">ball_x_inc</link>&#32;=&#32;-0.5f&#32;-&#32;0.75f&#32;*&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)rand()&#32;/&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)<link linkend="_boing_8c_1a690f251553b39fd4f31894826141b61a">RAND_MAX</link>;
+398 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1abd3eb9bcb0582eaed1be1c789fa9664a">deg_rot_y_inc</link>&#32;=&#32;-<link linkend="_boing_8c_1abd3eb9bcb0582eaed1be1c789fa9664a">deg_rot_y_inc</link>;
+399 &#32;&#32;&#32;}
+400 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(&#32;<link linkend="_boing_8c_1a66dbc10af7d1d045794549a09999d468">ball_x</link>&#32;&lt;&#32;-(<link linkend="_boing_8c_1a9088188b19f0545a1d84e381da09fef0">BOUNCE_HEIGHT</link>/2&#32;+&#32;<link linkend="_boing_8c_1a2ec75166930a7702729980492d09d431">WALL_L_OFFSET</link>)&#32;)
+401 &#32;&#32;&#32;{
+402 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1a00cc50b4eae810b91ef59463d55cb097">ball_x_inc</link>&#32;=&#32;&#32;0.5f&#32;+&#32;0.75f&#32;*&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)rand()&#32;/&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)<link linkend="_boing_8c_1a690f251553b39fd4f31894826141b61a">RAND_MAX</link>;
+403 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1abd3eb9bcb0582eaed1be1c789fa9664a">deg_rot_y_inc</link>&#32;=&#32;-<link linkend="_boing_8c_1abd3eb9bcb0582eaed1be1c789fa9664a">deg_rot_y_inc</link>;
+404 &#32;&#32;&#32;}
+405 
+406 &#32;&#32;&#32;<emphasis role="comment">/*&#32;Bounce&#32;on&#32;floor&#32;/&#32;roof&#32;*/</emphasis>
+407 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(&#32;<link linkend="_boing_8c_1a13df79b6b7f26cc1fc5279a1f12a9d98">ball_y</link>&#32;&gt;&#32;&#32;<link linkend="_boing_8c_1a9088188b19f0545a1d84e381da09fef0">BOUNCE_HEIGHT</link>/2&#32;&#32;&#32;&#32;&#32;&#32;)
+408 &#32;&#32;&#32;{
+409 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1adf5ece0dd3b5effeac97071b87e106bd">ball_y_inc</link>&#32;=&#32;-0.75f&#32;-&#32;1.f&#32;*&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)rand()&#32;/&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)<link linkend="_boing_8c_1a690f251553b39fd4f31894826141b61a">RAND_MAX</link>;
+410 &#32;&#32;&#32;}
+411 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(&#32;<link linkend="_boing_8c_1a13df79b6b7f26cc1fc5279a1f12a9d98">ball_y</link>&#32;&lt;&#32;-<link linkend="_boing_8c_1a9088188b19f0545a1d84e381da09fef0">BOUNCE_HEIGHT</link>/2*0.85&#32;)
+412 &#32;&#32;&#32;{
+413 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1adf5ece0dd3b5effeac97071b87e106bd">ball_y_inc</link>&#32;=&#32;&#32;0.75f&#32;+&#32;1.f&#32;*&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)rand()&#32;/&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)<link linkend="_boing_8c_1a690f251553b39fd4f31894826141b61a">RAND_MAX</link>;
+414 &#32;&#32;&#32;}
+415 
+416 &#32;&#32;&#32;<emphasis role="comment">/*&#32;Update&#32;ball&#32;position&#32;*/</emphasis>
+417 &#32;&#32;&#32;<link linkend="_boing_8c_1a66dbc10af7d1d045794549a09999d468">ball_x</link>&#32;+=&#32;<link linkend="_boing_8c_1a00cc50b4eae810b91ef59463d55cb097">ball_x_inc</link>&#32;*&#32;((float)delta_t*<link linkend="_boing_8c_1aaa69f89df4c8e47abeb574bfdd11d9f4">ANIMATION_SPEED</link>);
+418 &#32;&#32;&#32;<link linkend="_boing_8c_1a13df79b6b7f26cc1fc5279a1f12a9d98">ball_y</link>&#32;+=&#32;<link linkend="_boing_8c_1adf5ece0dd3b5effeac97071b87e106bd">ball_y_inc</link>&#32;*&#32;((float)delta_t*<link linkend="_boing_8c_1aaa69f89df4c8e47abeb574bfdd11d9f4">ANIMATION_SPEED</link>);
+419 
+420 &#32;&#32;<emphasis role="comment">/*</emphasis>
+421 <emphasis role="comment">&#32;&#32;&#32;*&#32;Simulate&#32;the&#32;effects&#32;of&#32;gravity&#32;on&#32;Y&#32;movement.</emphasis>
+422 <emphasis role="comment">&#32;&#32;&#32;*/</emphasis>
+423 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(&#32;<link linkend="_boing_8c_1adf5ece0dd3b5effeac97071b87e106bd">ball_y_inc</link>&#32;&lt;&#32;0&#32;)&#32;sign&#32;=&#32;-1.0;&#32;<emphasis role="keywordflow">else</emphasis>&#32;sign&#32;=&#32;1.0;
+424 
+425 &#32;&#32;&#32;deg&#32;=&#32;(<link linkend="_boing_8c_1a13df79b6b7f26cc1fc5279a1f12a9d98">ball_y</link>&#32;+&#32;<link linkend="_boing_8c_1a9088188b19f0545a1d84e381da09fef0">BOUNCE_HEIGHT</link>/2)&#32;*&#32;90&#32;/&#32;<link linkend="_boing_8c_1a9088188b19f0545a1d84e381da09fef0">BOUNCE_HEIGHT</link>;
+426 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(&#32;deg&#32;&gt;&#32;80&#32;)&#32;deg&#32;=&#32;80;
+427 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(&#32;deg&#32;&lt;&#32;10&#32;)&#32;deg&#32;=&#32;10;
+428 
+429 &#32;&#32;&#32;<link linkend="_boing_8c_1adf5ece0dd3b5effeac97071b87e106bd">ball_y_inc</link>&#32;=&#32;sign&#32;*&#32;4.f&#32;*&#32;(float)&#32;<link linkend="_boing_8c_1a5b090656aa7eb0a7d1bd2d0f0e7712e2">sin_deg</link>(&#32;deg&#32;);
+430 }
+</programlisting>    </section><anchor xml:id="_boing_8c_1ae4cbb93841df91680846fe983a6f1835"/>    <section>
+    <title>cos_deg()</title>
+<indexterm><primary>cos_deg</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>cos_deg</secondary></indexterm>
+<para><computeroutput>double cos_deg (double deg)</computeroutput></para><para>
+Definition at line 147 of file boing.c.</para>
+<programlisting>148 {
+149 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;cos(&#32;<link linkend="_boing_8c_1a8012f8bd66798ffbdd27462c9f593a54">deg2rad</link>(&#32;deg&#32;)&#32;);
+150 }
+</programlisting>    </section><anchor xml:id="_boing_8c_1ab3fa148322b2d4aaa2ffe1e0008d5e55"/>    <section>
+    <title>CrossProduct()</title>
+<indexterm><primary>CrossProduct</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>CrossProduct</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> CrossProduct (<link linkend="_structvertex__t">vertex_t</link> a, <link linkend="_structvertex__t">vertex_t</link> b, <link linkend="_structvertex__t">vertex_t</link> c, <link linkend="_structvertex__t">vertex_t</link> * n)</computeroutput></para><para>
+Definition at line 157 of file boing.c.</para>
+<programlisting>158 {
+159 &#32;&#32;&#32;<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>&#32;<link linkend="_glext_8h_1ab296853c9d55bfdc62cda6c50d1b4781">u1</link>,&#32;<link linkend="_glext_8h_1a1c6bf6fa786a04b729b30e56d68474ef">u2</link>,&#32;u3;
+160 &#32;&#32;&#32;<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>&#32;<link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>,&#32;<link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>,&#32;<link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>;
+161 
+162 &#32;&#32;&#32;<link linkend="_glext_8h_1ab296853c9d55bfdc62cda6c50d1b4781">u1</link>&#32;=&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>.x&#32;-&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.x;
+163 &#32;&#32;&#32;<link linkend="_glext_8h_1a1c6bf6fa786a04b729b30e56d68474ef">u2</link>&#32;=&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>.y&#32;-&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.y;
+164 &#32;&#32;&#32;u3&#32;=&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>.y&#32;-&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.z;
+165 
+166 &#32;&#32;&#32;<link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>&#32;=&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>.x&#32;-&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.x;
+167 &#32;&#32;&#32;<link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>&#32;=&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>.y&#32;-&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.y;
+168 &#32;&#32;&#32;<link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>&#32;=&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>.z&#32;-&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.z;
+169 
+170 &#32;&#32;&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>-&gt;x&#32;=&#32;<link linkend="_glext_8h_1a1c6bf6fa786a04b729b30e56d68474ef">u2</link>&#32;*&#32;<link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>&#32;-&#32;<link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>&#32;*&#32;u3;
+171 &#32;&#32;&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>-&gt;y&#32;=&#32;u3&#32;*&#32;<link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>&#32;-&#32;<link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>&#32;*&#32;<link linkend="_glext_8h_1ab296853c9d55bfdc62cda6c50d1b4781">u1</link>;
+172 &#32;&#32;&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>-&gt;z&#32;=&#32;<link linkend="_glext_8h_1ab296853c9d55bfdc62cda6c50d1b4781">u1</link>&#32;*&#32;<link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>&#32;-&#32;<link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>&#32;*&#32;<link linkend="_glext_8h_1a1c6bf6fa786a04b729b30e56d68474ef">u2</link>;
+173 }
+</programlisting>    </section><anchor xml:id="_boing_8c_1ab5fb5502317b46f9cecd6379f2ecd210"/>    <section>
+    <title>cursor_position_callback()</title>
+<indexterm><primary>cursor_position_callback</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>cursor_position_callback</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> cursor_position_callback (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> * window, double x, double y)</computeroutput></para><para>
+Definition at line 292 of file boing.c.</para>
+<programlisting>293 {
+294 &#32;&#32;&#32;<link linkend="_boing_8c_1ad4356335fdb6fdaa6d4b759ac447a41d">cursor_x</link>&#32;=&#32;(float)&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>;
+295 &#32;&#32;&#32;<link linkend="_boing_8c_1a4f59f7e6e37a64caf5bb5b228bce9afd">cursor_y</link>&#32;=&#32;(float)&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>;
+296 
+297 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(&#32;<link linkend="_boing_8c_1a5457032292643cc186a49f3163020555">override_pos</link>&#32;)
+298 &#32;&#32;&#32;&#32;&#32;&#32;set_ball_pos(<link linkend="_boing_8c_1ad4356335fdb6fdaa6d4b759ac447a41d">cursor_x</link>,&#32;<link linkend="_boing_8c_1a4f59f7e6e37a64caf5bb5b228bce9afd">cursor_y</link>);
+299 }
+</programlisting>    </section><anchor xml:id="_boing_8c_1a8012f8bd66798ffbdd27462c9f593a54"/>    <section>
+    <title>deg2rad()</title>
+<indexterm><primary>deg2rad</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>deg2rad</secondary></indexterm>
+<para><computeroutput>double deg2rad (double deg)</computeroutput></para><para>
+Definition at line 131 of file boing.c.</para>
+<programlisting>132 {
+133 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;deg&#32;/&#32;360&#32;*&#32;(2&#32;*&#32;<link linkend="_stb_8h_1ae71449b1cc6e6250b91f539153a7a0d3">M_PI</link>);
+134 }
+</programlisting>    </section><anchor xml:id="_boing_8c_1a4ea013001a5fb47853d0fab8f8de35cd"/>    <section>
+    <title>display()</title>
+<indexterm><primary>display</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>display</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> display (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 196 of file boing.c.</para>
+<programlisting>197 {
+198 &#32;&#32;&#32;<link linkend="_glad_8h_1afc250a2b6bf11f24bb73534a2f053c0d">glClear</link>(&#32;<link linkend="_glad_8h_1a947db9ff944c4b78e652144c3dd1060c">GL_COLOR_BUFFER_BIT</link>&#32;|&#32;<link linkend="_glad_8h_1aef2a9e9a4b130bc4de57514327847b4f">GL_DEPTH_BUFFER_BIT</link>&#32;);
+199 &#32;&#32;&#32;<link linkend="_gl_8h_1ac15f1d0dd5665e7e1bc76f82799368dd">glPushMatrix</link>();
+200 
+201 &#32;&#32;&#32;<link linkend="_boing_8c_1ac1b93fa15ef429f4d5e3a0a9990304cf">drawBallHow</link>&#32;=&#32;<link linkend="_boing_8c_1aaff0749849eeb426c1fff01f93f8aa38a3248eb4cd526dece69034b8913503983">DRAW_BALL_SHADOW</link>;
+202 &#32;&#32;&#32;<link linkend="_boing_8c_1aaf4ab2b37a65ad090f79313713f18731">DrawBoingBall</link>();
+203 
+204 &#32;&#32;&#32;<link linkend="_boing_8c_1a8e38342e6a8bfcbc67503d2c6383d8e8">DrawGrid</link>();
+205 
+206 &#32;&#32;&#32;<link linkend="_boing_8c_1ac1b93fa15ef429f4d5e3a0a9990304cf">drawBallHow</link>&#32;=&#32;<link linkend="_boing_8c_1aaff0749849eeb426c1fff01f93f8aa38a6dd224315fa345b43c69670bdd98bde6">DRAW_BALL</link>;
+207 &#32;&#32;&#32;<link linkend="_boing_8c_1aaf4ab2b37a65ad090f79313713f18731">DrawBoingBall</link>();
+208 
+209 &#32;&#32;&#32;<link linkend="_gl_8h_1a4efb9a338a8a3db2b20d8ad57283d060">glPopMatrix</link>();
+210 &#32;&#32;&#32;<link linkend="_glad_8h_1acf861c0c475b4cc6d7a46e0d61c8b173">glFlush</link>();
+211 }
+</programlisting>    </section><anchor xml:id="_boing_8c_1aaf4ab2b37a65ad090f79313713f18731"/>    <section>
+    <title>DrawBoingBall()</title>
+<indexterm><primary>DrawBoingBall</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>DrawBoingBall</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> DrawBoingBall (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 309 of file boing.c.</para>
+<programlisting>310 {
+311 &#32;&#32;&#32;<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>&#32;lon_deg;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;degree&#32;of&#32;longitude&#32;*/</emphasis>
+312 &#32;&#32;&#32;<emphasis role="keywordtype">double</emphasis>&#32;dt_total,&#32;dt2;
+313 
+314 &#32;&#32;&#32;<link linkend="_gl_8h_1ac15f1d0dd5665e7e1bc76f82799368dd">glPushMatrix</link>();
+315 &#32;&#32;&#32;<link linkend="_gl_8h_1a984de7349d373e1088d1c31135c3a9fb">glMatrixMode</link>(&#32;<link linkend="_gl_8h_1a8c0f92b5d50914825a1424b1cd4480cd">GL_MODELVIEW</link>&#32;);
+316 
+317 &#32;&#32;<emphasis role="comment">/*</emphasis>
+318 <emphasis role="comment">&#32;&#32;&#32;*&#32;Another&#32;relative&#32;Z&#32;translation&#32;to&#32;separate&#32;objects.</emphasis>
+319 <emphasis role="comment">&#32;&#32;&#32;*/</emphasis>
+320 &#32;&#32;&#32;<link linkend="_gl_8h_1a4b8d59e72147f88dd928f570d9a1713a">glTranslatef</link>(&#32;0.0,&#32;0.0,&#32;<link linkend="_boing_8c_1abc4d2bb2a15f35c55d9b456b452eaa7c">DIST_BALL</link>&#32;);
+321 
+322 &#32;&#32;&#32;<emphasis role="comment">/*&#32;Update&#32;ball&#32;position&#32;and&#32;rotation&#32;(iterate&#32;if&#32;necessary)&#32;*/</emphasis>
+323 &#32;&#32;&#32;dt_total&#32;=&#32;<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>;
+324 &#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>(&#32;dt_total&#32;&gt;&#32;0.0&#32;)
+325 &#32;&#32;&#32;{
+326 &#32;&#32;&#32;&#32;&#32;&#32;&#32;dt2&#32;=&#32;dt_total&#32;&gt;&#32;<link linkend="_boing_8c_1a82c13b07387b0fa3ab346ad38894e2a7">MAX_DELTA_T</link>&#32;?&#32;<link linkend="_boing_8c_1a82c13b07387b0fa3ab346ad38894e2a7">MAX_DELTA_T</link>&#32;:&#32;dt_total;
+327 &#32;&#32;&#32;&#32;&#32;&#32;&#32;dt_total&#32;-=&#32;dt2;
+328 &#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1a5a5cbb3e7786a248a2dcf02777a98df5">BounceBall</link>(&#32;dt2&#32;);
+329 &#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1ae721211dff5c00a883879373efad1187">deg_rot_y</link>&#32;=&#32;<link linkend="_boing_8c_1a080dc55aae439523561bda8b86575b7f">TruncateDeg</link>(&#32;<link linkend="_boing_8c_1ae721211dff5c00a883879373efad1187">deg_rot_y</link>&#32;+&#32;<link linkend="_boing_8c_1abd3eb9bcb0582eaed1be1c789fa9664a">deg_rot_y_inc</link>*((<emphasis role="keywordtype">float</emphasis>)dt2*<link linkend="_boing_8c_1aaa69f89df4c8e47abeb574bfdd11d9f4">ANIMATION_SPEED</link>)&#32;);
+330 &#32;&#32;&#32;}
+331 
+332 &#32;&#32;&#32;<emphasis role="comment">/*&#32;Set&#32;ball&#32;position&#32;*/</emphasis>
+333 &#32;&#32;&#32;<link linkend="_gl_8h_1a4b8d59e72147f88dd928f570d9a1713a">glTranslatef</link>(&#32;<link linkend="_boing_8c_1a66dbc10af7d1d045794549a09999d468">ball_x</link>,&#32;<link linkend="_boing_8c_1a13df79b6b7f26cc1fc5279a1f12a9d98">ball_y</link>,&#32;0.0&#32;);
+334 
+335 &#32;&#32;<emphasis role="comment">/*</emphasis>
+336 <emphasis role="comment">&#32;&#32;&#32;*&#32;Offset&#32;the&#32;shadow.</emphasis>
+337 <emphasis role="comment">&#32;&#32;&#32;*/</emphasis>
+338 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(&#32;<link linkend="_boing_8c_1ac1b93fa15ef429f4d5e3a0a9990304cf">drawBallHow</link>&#32;==&#32;<link linkend="_boing_8c_1aaff0749849eeb426c1fff01f93f8aa38a3248eb4cd526dece69034b8913503983">DRAW_BALL_SHADOW</link>&#32;)
+339 &#32;&#32;&#32;{
+340 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a4b8d59e72147f88dd928f570d9a1713a">glTranslatef</link>(&#32;<link linkend="_boing_8c_1adfabb671d0b80adb599e07a018f049d4">SHADOW_OFFSET_X</link>,
+341 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1aee80e1c2e5aa7831fbe28b95948f5dc0">SHADOW_OFFSET_Y</link>,
+342 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1a79814e92ed56516db4e8564c2928f86e">SHADOW_OFFSET_Z</link>&#32;);
+343 &#32;&#32;&#32;}
+344 
+345 &#32;&#32;<emphasis role="comment">/*</emphasis>
+346 <emphasis role="comment">&#32;&#32;&#32;*&#32;Tilt&#32;the&#32;ball.</emphasis>
+347 <emphasis role="comment">&#32;&#32;&#32;*/</emphasis>
+348 &#32;&#32;&#32;<link linkend="_gl_8h_1a9a0010822b3a45b62142878ad90926e6">glRotatef</link>(&#32;-20.0,&#32;0.0,&#32;0.0,&#32;1.0&#32;);
+349 
+350 &#32;&#32;<emphasis role="comment">/*</emphasis>
+351 <emphasis role="comment">&#32;&#32;&#32;*&#32;Continually&#32;rotate&#32;ball&#32;around&#32;Y&#32;axis.</emphasis>
+352 <emphasis role="comment">&#32;&#32;&#32;*/</emphasis>
+353 &#32;&#32;&#32;<link linkend="_gl_8h_1a9a0010822b3a45b62142878ad90926e6">glRotatef</link>(&#32;<link linkend="_boing_8c_1ae721211dff5c00a883879373efad1187">deg_rot_y</link>,&#32;0.0,&#32;1.0,&#32;0.0&#32;);
+354 
+355 &#32;&#32;<emphasis role="comment">/*</emphasis>
+356 <emphasis role="comment">&#32;&#32;&#32;*&#32;Set&#32;OpenGL&#32;state&#32;for&#32;Boing&#32;ball.</emphasis>
+357 <emphasis role="comment">&#32;&#32;&#32;*/</emphasis>
+358 &#32;&#32;&#32;<link linkend="_glad_8h_1a20d4a8491c6ca041d21096f7567fed20">glCullFace</link>(&#32;<link linkend="_glad_8h_1ad66599a87de5c80f8c174da72080a811">GL_FRONT</link>&#32;);
+359 &#32;&#32;&#32;<link linkend="_glad_8h_1a3f7fa0df22505dd09a24a4e1e74eca09">glEnable</link>(&#32;<link linkend="_glad_8h_1a8c4f153ed20a741aaae952650fec46f0">GL_CULL_FACE</link>&#32;);
+360 &#32;&#32;&#32;<link linkend="_glad_8h_1a3f7fa0df22505dd09a24a4e1e74eca09">glEnable</link>(&#32;<link linkend="_gl_8h_1a53fa16a7187cf3db1768876de5feb16f">GL_NORMALIZE</link>&#32;);
+361 
+362 &#32;&#32;<emphasis role="comment">/*</emphasis>
+363 <emphasis role="comment">&#32;&#32;&#32;*&#32;Build&#32;a&#32;faceted&#32;latitude&#32;slice&#32;of&#32;the&#32;Boing&#32;ball,</emphasis>
+364 <emphasis role="comment">&#32;&#32;&#32;*&#32;stepping&#32;same-sized&#32;vertical&#32;bands&#32;of&#32;the&#32;sphere.</emphasis>
+365 <emphasis role="comment">&#32;&#32;&#32;*/</emphasis>
+366 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(&#32;lon_deg&#32;=&#32;0;
+367 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;lon_deg&#32;&lt;&#32;180;
+368 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;lon_deg&#32;+=&#32;<link linkend="_boing_8c_1a89edea273a0da4bec03abfdd5d46a1df">STEP_LONGITUDE</link>&#32;)
+369 &#32;&#32;&#32;{
+370 &#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*</emphasis>
+371 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*&#32;Draw&#32;a&#32;latitude&#32;circle&#32;at&#32;this&#32;longitude.</emphasis>
+372 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*/</emphasis>
+373 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1ad80d1d92135216bb8c1242fcce45545c">DrawBoingBallBand</link>(&#32;lon_deg,
+374 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;lon_deg&#32;+&#32;<link linkend="_boing_8c_1a89edea273a0da4bec03abfdd5d46a1df">STEP_LONGITUDE</link>&#32;);
+375 &#32;&#32;&#32;}
+376 
+377 &#32;&#32;&#32;<link linkend="_gl_8h_1a4efb9a338a8a3db2b20d8ad57283d060">glPopMatrix</link>();
+378 
+379 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+380 }
+</programlisting>    </section><anchor xml:id="_boing_8c_1ad80d1d92135216bb8c1242fcce45545c"/>    <section>
+    <title>DrawBoingBallBand()</title>
+<indexterm><primary>DrawBoingBallBand</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>DrawBoingBallBand</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> DrawBoingBallBand (<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> long_lo, <link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> long_hi)</computeroutput></para><para>
+Definition at line 439 of file boing.c.</para>
+<programlisting>441 {
+442 &#32;&#32;&#32;<link linkend="_structvertex__t">vertex_t</link>&#32;vert_ne;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;&quot;ne&quot;&#32;means&#32;south-east,&#32;so&#32;on&#32;*/</emphasis>
+443 &#32;&#32;&#32;<link linkend="_structvertex__t">vertex_t</link>&#32;vert_nw;
+444 &#32;&#32;&#32;<link linkend="_structvertex__t">vertex_t</link>&#32;vert_sw;
+445 &#32;&#32;&#32;<link linkend="_structvertex__t">vertex_t</link>&#32;vert_se;
+446 &#32;&#32;&#32;<link linkend="_structvertex__t">vertex_t</link>&#32;vert_norm;
+447 &#32;&#32;&#32;<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>&#32;&#32;lat_deg;
+448 &#32;&#32;&#32;<emphasis role="keyword">static</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;colorToggle&#32;=&#32;0;
+449 
+450 &#32;&#32;<emphasis role="comment">/*</emphasis>
+451 <emphasis role="comment">&#32;&#32;&#32;*&#32;Iterate&#32;through&#32;the&#32;points&#32;of&#32;a&#32;latitude&#32;circle.</emphasis>
+452 <emphasis role="comment">&#32;&#32;&#32;*&#32;A&#32;latitude&#32;circle&#32;is&#32;a&#32;2D&#32;set&#32;of&#32;X,Z&#32;points.</emphasis>
+453 <emphasis role="comment">&#32;&#32;&#32;*/</emphasis>
+454 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(&#32;lat_deg&#32;=&#32;0;
+455 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;lat_deg&#32;&lt;=&#32;(360&#32;-&#32;<link linkend="_boing_8c_1ac875967450c7a0306cf05f8e3e455e6c">STEP_LATITUDE</link>);
+456 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;lat_deg&#32;+=&#32;<link linkend="_boing_8c_1ac875967450c7a0306cf05f8e3e455e6c">STEP_LATITUDE</link>&#32;)
+457 &#32;&#32;&#32;{
+458 &#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*</emphasis>
+459 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*&#32;Color&#32;this&#32;polygon&#32;with&#32;red&#32;or&#32;white.</emphasis>
+460 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*/</emphasis>
+461 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(&#32;colorToggle&#32;)
+462 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a156bc5fbf2770392dd3106c0af412235">glColor3f</link>(&#32;0.8<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.1<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.1<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;);
+463 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+464 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a156bc5fbf2770392dd3106c0af412235">glColor3f</link>(&#32;0.95<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.95<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.95<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;);
+465 <emphasis role="preprocessor">#if&#32;0</emphasis>
+466 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(&#32;lat_deg&#32;&gt;=&#32;180&#32;)
+467 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(&#32;colorToggle&#32;)
+468 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a156bc5fbf2770392dd3106c0af412235">glColor3f</link>(&#32;0.1<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.8<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.1<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;);
+469 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+470 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a156bc5fbf2770392dd3106c0af412235">glColor3f</link>(&#32;0.5<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.5<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.95<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;);
+471 <emphasis role="preprocessor">#endif</emphasis>
+472 &#32;&#32;&#32;&#32;&#32;&#32;colorToggle&#32;=&#32;!&#32;colorToggle;
+473 
+474 &#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*</emphasis>
+475 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*&#32;Change&#32;color&#32;if&#32;drawing&#32;shadow.</emphasis>
+476 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*/</emphasis>
+477 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(&#32;<link linkend="_boing_8c_1ac1b93fa15ef429f4d5e3a0a9990304cf">drawBallHow</link>&#32;==&#32;<link linkend="_boing_8c_1aaff0749849eeb426c1fff01f93f8aa38a3248eb4cd526dece69034b8913503983">DRAW_BALL_SHADOW</link>&#32;)
+478 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a156bc5fbf2770392dd3106c0af412235">glColor3f</link>(&#32;0.35<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.35<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.35<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;);
+479 
+480 &#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*</emphasis>
+481 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*&#32;Assign&#32;each&#32;Y.</emphasis>
+482 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*/</emphasis>
+483 &#32;&#32;&#32;&#32;&#32;&#32;vert_ne.<link linkend="_structvertex__t_1a47978d5bf5e90197879ec37acc63c2a1">y</link>&#32;=&#32;vert_nw.<link linkend="_structvertex__t_1a47978d5bf5e90197879ec37acc63c2a1">y</link>&#32;=&#32;(float)&#32;<link linkend="_boing_8c_1ae4cbb93841df91680846fe983a6f1835">cos_deg</link>(long_hi)&#32;*&#32;<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link>;
+484 &#32;&#32;&#32;&#32;&#32;&#32;vert_sw.<link linkend="_structvertex__t_1a47978d5bf5e90197879ec37acc63c2a1">y</link>&#32;=&#32;vert_se.<link linkend="_structvertex__t_1a47978d5bf5e90197879ec37acc63c2a1">y</link>&#32;=&#32;(float)&#32;<link linkend="_boing_8c_1ae4cbb93841df91680846fe983a6f1835">cos_deg</link>(long_lo)&#32;*&#32;<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link>;
+485 
+486 &#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*</emphasis>
+487 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*&#32;Assign&#32;each&#32;X,Z&#32;with&#32;sin,cos&#32;values&#32;scaled&#32;by&#32;latitude&#32;radius&#32;indexed&#32;by&#32;longitude.</emphasis>
+488 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*&#32;Eg,&#32;long=0&#32;and&#32;long=180&#32;are&#32;at&#32;the&#32;poles,&#32;so&#32;zero&#32;scale&#32;is&#32;sin(longitude),</emphasis>
+489 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*&#32;while&#32;long=90&#32;(sin(90)=1)&#32;is&#32;at&#32;equator.</emphasis>
+490 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*/</emphasis>
+491 &#32;&#32;&#32;&#32;&#32;&#32;vert_ne.<link linkend="_structvertex__t_1a88969dedc4ad7cbb5042a779cab1faa1">x</link>&#32;=&#32;(float)&#32;<link linkend="_boing_8c_1ae4cbb93841df91680846fe983a6f1835">cos_deg</link>(&#32;lat_deg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;)&#32;*&#32;(<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link>&#32;*&#32;(float)&#32;<link linkend="_boing_8c_1a5b090656aa7eb0a7d1bd2d0f0e7712e2">sin_deg</link>(&#32;long_lo&#32;+&#32;<link linkend="_boing_8c_1a89edea273a0da4bec03abfdd5d46a1df">STEP_LONGITUDE</link>&#32;));
+492 &#32;&#32;&#32;&#32;&#32;&#32;vert_se.<link linkend="_structvertex__t_1a88969dedc4ad7cbb5042a779cab1faa1">x</link>&#32;=&#32;(float)&#32;<link linkend="_boing_8c_1ae4cbb93841df91680846fe983a6f1835">cos_deg</link>(&#32;lat_deg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;)&#32;*&#32;(<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link>&#32;*&#32;(float)&#32;<link linkend="_boing_8c_1a5b090656aa7eb0a7d1bd2d0f0e7712e2">sin_deg</link>(&#32;long_lo&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;));
+493 &#32;&#32;&#32;&#32;&#32;&#32;vert_nw.<link linkend="_structvertex__t_1a88969dedc4ad7cbb5042a779cab1faa1">x</link>&#32;=&#32;(float)&#32;<link linkend="_boing_8c_1ae4cbb93841df91680846fe983a6f1835">cos_deg</link>(&#32;lat_deg&#32;+&#32;<link linkend="_boing_8c_1ac875967450c7a0306cf05f8e3e455e6c">STEP_LATITUDE</link>&#32;)&#32;*&#32;(<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link>&#32;*&#32;(float)&#32;<link linkend="_boing_8c_1a5b090656aa7eb0a7d1bd2d0f0e7712e2">sin_deg</link>(&#32;long_lo&#32;+&#32;<link linkend="_boing_8c_1a89edea273a0da4bec03abfdd5d46a1df">STEP_LONGITUDE</link>&#32;));
+494 &#32;&#32;&#32;&#32;&#32;&#32;vert_sw.<link linkend="_structvertex__t_1a88969dedc4ad7cbb5042a779cab1faa1">x</link>&#32;=&#32;(float)&#32;<link linkend="_boing_8c_1ae4cbb93841df91680846fe983a6f1835">cos_deg</link>(&#32;lat_deg&#32;+&#32;<link linkend="_boing_8c_1ac875967450c7a0306cf05f8e3e455e6c">STEP_LATITUDE</link>&#32;)&#32;*&#32;(<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link>&#32;*&#32;(float)&#32;<link linkend="_boing_8c_1a5b090656aa7eb0a7d1bd2d0f0e7712e2">sin_deg</link>(&#32;long_lo&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;));
+495 
+496 &#32;&#32;&#32;&#32;&#32;&#32;vert_ne.<link linkend="_structvertex__t_1ab55b78f5b20d1006b615622d5ca3e320">z</link>&#32;=&#32;(float)&#32;<link linkend="_boing_8c_1a5b090656aa7eb0a7d1bd2d0f0e7712e2">sin_deg</link>(&#32;lat_deg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;)&#32;*&#32;(<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link>&#32;*&#32;(float)&#32;<link linkend="_boing_8c_1a5b090656aa7eb0a7d1bd2d0f0e7712e2">sin_deg</link>(&#32;long_lo&#32;+&#32;<link linkend="_boing_8c_1a89edea273a0da4bec03abfdd5d46a1df">STEP_LONGITUDE</link>&#32;));
+497 &#32;&#32;&#32;&#32;&#32;&#32;vert_se.<link linkend="_structvertex__t_1ab55b78f5b20d1006b615622d5ca3e320">z</link>&#32;=&#32;(float)&#32;<link linkend="_boing_8c_1a5b090656aa7eb0a7d1bd2d0f0e7712e2">sin_deg</link>(&#32;lat_deg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;)&#32;*&#32;(<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link>&#32;*&#32;(float)&#32;<link linkend="_boing_8c_1a5b090656aa7eb0a7d1bd2d0f0e7712e2">sin_deg</link>(&#32;long_lo&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;));
+498 &#32;&#32;&#32;&#32;&#32;&#32;vert_nw.<link linkend="_structvertex__t_1ab55b78f5b20d1006b615622d5ca3e320">z</link>&#32;=&#32;(float)&#32;<link linkend="_boing_8c_1a5b090656aa7eb0a7d1bd2d0f0e7712e2">sin_deg</link>(&#32;lat_deg&#32;+&#32;<link linkend="_boing_8c_1ac875967450c7a0306cf05f8e3e455e6c">STEP_LATITUDE</link>&#32;)&#32;*&#32;(<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link>&#32;*&#32;(float)&#32;<link linkend="_boing_8c_1a5b090656aa7eb0a7d1bd2d0f0e7712e2">sin_deg</link>(&#32;long_lo&#32;+&#32;<link linkend="_boing_8c_1a89edea273a0da4bec03abfdd5d46a1df">STEP_LONGITUDE</link>&#32;));
+499 &#32;&#32;&#32;&#32;&#32;&#32;vert_sw.<link linkend="_structvertex__t_1ab55b78f5b20d1006b615622d5ca3e320">z</link>&#32;=&#32;(float)&#32;<link linkend="_boing_8c_1a5b090656aa7eb0a7d1bd2d0f0e7712e2">sin_deg</link>(&#32;lat_deg&#32;+&#32;<link linkend="_boing_8c_1ac875967450c7a0306cf05f8e3e455e6c">STEP_LATITUDE</link>&#32;)&#32;*&#32;(<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link>&#32;*&#32;(float)&#32;<link linkend="_boing_8c_1a5b090656aa7eb0a7d1bd2d0f0e7712e2">sin_deg</link>(&#32;long_lo&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;));
+500 
+501 &#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*</emphasis>
+502 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*&#32;Draw&#32;the&#32;facet.</emphasis>
+503 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*/</emphasis>
+504 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a18a9548126ac9e9eb00f9cd26cb0ab85">glBegin</link>(&#32;<link linkend="_gl_8h_1abed3bfcbd65f2285c12e96b566668b6f">GL_POLYGON</link>&#32;);
+505 
+506 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1ab3fa148322b2d4aaa2ffe1e0008d5e55">CrossProduct</link>(&#32;vert_ne,&#32;vert_nw,&#32;vert_sw,&#32;&amp;vert_norm&#32;);
+507 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1ac7e2ce42bb5c009a331017a93b24927c">glNormal3f</link>(&#32;vert_norm.<link linkend="_structvertex__t_1a88969dedc4ad7cbb5042a779cab1faa1">x</link>,&#32;vert_norm.<link linkend="_structvertex__t_1a47978d5bf5e90197879ec37acc63c2a1">y</link>,&#32;vert_norm.<link linkend="_structvertex__t_1ab55b78f5b20d1006b615622d5ca3e320">z</link>&#32;);
+508 
+509 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a8b32ed40d834188f6abea5eb5ac7fc07">glVertex3f</link>(&#32;vert_ne.<link linkend="_structvertex__t_1a88969dedc4ad7cbb5042a779cab1faa1">x</link>,&#32;vert_ne.<link linkend="_structvertex__t_1a47978d5bf5e90197879ec37acc63c2a1">y</link>,&#32;vert_ne.<link linkend="_structvertex__t_1ab55b78f5b20d1006b615622d5ca3e320">z</link>&#32;);
+510 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a8b32ed40d834188f6abea5eb5ac7fc07">glVertex3f</link>(&#32;vert_nw.<link linkend="_structvertex__t_1a88969dedc4ad7cbb5042a779cab1faa1">x</link>,&#32;vert_nw.<link linkend="_structvertex__t_1a47978d5bf5e90197879ec37acc63c2a1">y</link>,&#32;vert_nw.<link linkend="_structvertex__t_1ab55b78f5b20d1006b615622d5ca3e320">z</link>&#32;);
+511 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a8b32ed40d834188f6abea5eb5ac7fc07">glVertex3f</link>(&#32;vert_sw.<link linkend="_structvertex__t_1a88969dedc4ad7cbb5042a779cab1faa1">x</link>,&#32;vert_sw.<link linkend="_structvertex__t_1a47978d5bf5e90197879ec37acc63c2a1">y</link>,&#32;vert_sw.<link linkend="_structvertex__t_1ab55b78f5b20d1006b615622d5ca3e320">z</link>&#32;);
+512 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a8b32ed40d834188f6abea5eb5ac7fc07">glVertex3f</link>(&#32;vert_se.<link linkend="_structvertex__t_1a88969dedc4ad7cbb5042a779cab1faa1">x</link>,&#32;vert_se.<link linkend="_structvertex__t_1a47978d5bf5e90197879ec37acc63c2a1">y</link>,&#32;vert_se.<link linkend="_structvertex__t_1ab55b78f5b20d1006b615622d5ca3e320">z</link>&#32;);
+513 
+514 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1acedf7461ab825274c1c407dcc0ddd56b">glEnd</link>();
+515 
+516 <emphasis role="preprocessor">#if&#32;BOING_DEBUG</emphasis>
+517 &#32;&#32;&#32;&#32;&#32;&#32;printf(&#32;<emphasis role="stringliteral">&quot;-----------------------------------------------------------&#32;\n&quot;</emphasis>&#32;);
+518 &#32;&#32;&#32;&#32;&#32;&#32;printf(&#32;<emphasis role="stringliteral">&quot;lat&#32;=&#32;%f&#32;&#32;long_lo&#32;=&#32;%f&#32;&#32;long_hi&#32;=&#32;%f&#32;\n&quot;</emphasis>,&#32;lat_deg,&#32;long_lo,&#32;long_hi&#32;);
+519 &#32;&#32;&#32;&#32;&#32;&#32;printf(&#32;<emphasis role="stringliteral">&quot;vert_ne&#32;&#32;x&#32;=&#32;%.8f&#32;&#32;y&#32;=&#32;%.8f&#32;&#32;z&#32;=&#32;%.8f&#32;\n&quot;</emphasis>,&#32;vert_ne.<link linkend="_structvertex__t_1a88969dedc4ad7cbb5042a779cab1faa1">x</link>,&#32;vert_ne.<link linkend="_structvertex__t_1a47978d5bf5e90197879ec37acc63c2a1">y</link>,&#32;vert_ne.<link linkend="_structvertex__t_1ab55b78f5b20d1006b615622d5ca3e320">z</link>&#32;);
+520 &#32;&#32;&#32;&#32;&#32;&#32;printf(&#32;<emphasis role="stringliteral">&quot;vert_nw&#32;&#32;x&#32;=&#32;%.8f&#32;&#32;y&#32;=&#32;%.8f&#32;&#32;z&#32;=&#32;%.8f&#32;\n&quot;</emphasis>,&#32;vert_nw.<link linkend="_structvertex__t_1a88969dedc4ad7cbb5042a779cab1faa1">x</link>,&#32;vert_nw.<link linkend="_structvertex__t_1a47978d5bf5e90197879ec37acc63c2a1">y</link>,&#32;vert_nw.<link linkend="_structvertex__t_1ab55b78f5b20d1006b615622d5ca3e320">z</link>&#32;);
+521 &#32;&#32;&#32;&#32;&#32;&#32;printf(&#32;<emphasis role="stringliteral">&quot;vert_se&#32;&#32;x&#32;=&#32;%.8f&#32;&#32;y&#32;=&#32;%.8f&#32;&#32;z&#32;=&#32;%.8f&#32;\n&quot;</emphasis>,&#32;vert_se.<link linkend="_structvertex__t_1a88969dedc4ad7cbb5042a779cab1faa1">x</link>,&#32;vert_se.<link linkend="_structvertex__t_1a47978d5bf5e90197879ec37acc63c2a1">y</link>,&#32;vert_se.<link linkend="_structvertex__t_1ab55b78f5b20d1006b615622d5ca3e320">z</link>&#32;);
+522 &#32;&#32;&#32;&#32;&#32;&#32;printf(&#32;<emphasis role="stringliteral">&quot;vert_sw&#32;&#32;x&#32;=&#32;%.8f&#32;&#32;y&#32;=&#32;%.8f&#32;&#32;z&#32;=&#32;%.8f&#32;\n&quot;</emphasis>,&#32;vert_sw.<link linkend="_structvertex__t_1a88969dedc4ad7cbb5042a779cab1faa1">x</link>,&#32;vert_sw.<link linkend="_structvertex__t_1a47978d5bf5e90197879ec37acc63c2a1">y</link>,&#32;vert_sw.<link linkend="_structvertex__t_1ab55b78f5b20d1006b615622d5ca3e320">z</link>&#32;);
+523 <emphasis role="preprocessor">#endif</emphasis>
+524 
+525 &#32;&#32;&#32;}
+526 
+527 &#32;&#32;<emphasis role="comment">/*</emphasis>
+528 <emphasis role="comment">&#32;&#32;&#32;*&#32;Toggle&#32;color&#32;so&#32;that&#32;next&#32;band&#32;will&#32;opposite&#32;red/white&#32;colors&#32;than&#32;this&#32;one.</emphasis>
+529 <emphasis role="comment">&#32;&#32;&#32;*/</emphasis>
+530 &#32;&#32;&#32;colorToggle&#32;=&#32;!&#32;colorToggle;
+531 
+532 &#32;&#32;<emphasis role="comment">/*</emphasis>
+533 <emphasis role="comment">&#32;&#32;&#32;*&#32;This&#32;circular&#32;band&#32;is&#32;done.</emphasis>
+534 <emphasis role="comment">&#32;&#32;&#32;*/</emphasis>
+535 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+536 }
+</programlisting>    </section><anchor xml:id="_boing_8c_1a8e38342e6a8bfcbc67503d2c6383d8e8"/>    <section>
+    <title>DrawGrid()</title>
+<indexterm><primary>DrawGrid</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>DrawGrid</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> DrawGrid (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 543 of file boing.c.</para>
+<programlisting>544 {
+545 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a90d3e7e4182a9630993f640fa0443b0b">row</link>,&#32;col;
+546 &#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rowTotal&#32;&#32;&#32;&#32;=&#32;12;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;must&#32;be&#32;divisible&#32;by&#32;2&#32;*/</emphasis>
+547 &#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;colTotal&#32;&#32;&#32;&#32;=&#32;rowTotal;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;must&#32;be&#32;same&#32;as&#32;rowTotal&#32;*/</emphasis>
+548 &#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>&#32;&#32;&#32;&#32;widthLine&#32;&#32;&#32;=&#32;2.0;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;should&#32;be&#32;divisible&#32;by&#32;2&#32;*/</emphasis>
+549 &#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>&#32;&#32;&#32;&#32;sizeCell&#32;&#32;&#32;&#32;=&#32;<link linkend="_boing_8c_1a08246606c233e7785a497c09672f366f">GRID_SIZE</link>&#32;/&#32;rowTotal;
+550 &#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>&#32;&#32;&#32;&#32;z_offset&#32;&#32;&#32;&#32;=&#32;-40.0;
+551 &#32;&#32;&#32;<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;xl,&#32;xr;
+552 &#32;&#32;&#32;<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;yt,&#32;yb;
+553 
+554 &#32;&#32;&#32;<link linkend="_gl_8h_1ac15f1d0dd5665e7e1bc76f82799368dd">glPushMatrix</link>();
+555 &#32;&#32;&#32;<link linkend="_glad_8h_1adbbb0a7d41b44182b74a9d4f62ca8a63">glDisable</link>(&#32;<link linkend="_glad_8h_1a8c4f153ed20a741aaae952650fec46f0">GL_CULL_FACE</link>&#32;);
+556 
+557 &#32;&#32;<emphasis role="comment">/*</emphasis>
+558 <emphasis role="comment">&#32;&#32;&#32;*&#32;Another&#32;relative&#32;Z&#32;translation&#32;to&#32;separate&#32;objects.</emphasis>
+559 <emphasis role="comment">&#32;&#32;&#32;*/</emphasis>
+560 &#32;&#32;&#32;<link linkend="_gl_8h_1a4b8d59e72147f88dd928f570d9a1713a">glTranslatef</link>(&#32;0.0,&#32;0.0,&#32;<link linkend="_boing_8c_1abc4d2bb2a15f35c55d9b456b452eaa7c">DIST_BALL</link>&#32;);
+561 
+562 &#32;&#32;<emphasis role="comment">/*</emphasis>
+563 <emphasis role="comment">&#32;&#32;&#32;*&#32;Draw&#32;vertical&#32;lines&#32;(as&#32;skinny&#32;3D&#32;rectangles).</emphasis>
+564 <emphasis role="comment">&#32;&#32;&#32;*/</emphasis>
+565 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(&#32;col&#32;=&#32;0;&#32;col&#32;&lt;=&#32;colTotal;&#32;col++&#32;)
+566 &#32;&#32;&#32;{
+567 &#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*</emphasis>
+568 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*&#32;Compute&#32;co-ords&#32;of&#32;line.</emphasis>
+569 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*/</emphasis>
+570 &#32;&#32;&#32;&#32;&#32;&#32;xl&#32;=&#32;-<link linkend="_boing_8c_1a08246606c233e7785a497c09672f366f">GRID_SIZE</link>&#32;/&#32;2&#32;+&#32;col&#32;*&#32;sizeCell;
+571 &#32;&#32;&#32;&#32;&#32;&#32;xr&#32;=&#32;xl&#32;+&#32;widthLine;
+572 
+573 &#32;&#32;&#32;&#32;&#32;&#32;yt&#32;=&#32;&#32;<link linkend="_boing_8c_1a08246606c233e7785a497c09672f366f">GRID_SIZE</link>&#32;/&#32;2;
+574 &#32;&#32;&#32;&#32;&#32;&#32;yb&#32;=&#32;-<link linkend="_boing_8c_1a08246606c233e7785a497c09672f366f">GRID_SIZE</link>&#32;/&#32;2&#32;-&#32;widthLine;
+575 
+576 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a18a9548126ac9e9eb00f9cd26cb0ab85">glBegin</link>(&#32;<link linkend="_gl_8h_1abed3bfcbd65f2285c12e96b566668b6f">GL_POLYGON</link>&#32;);
+577 
+578 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a156bc5fbf2770392dd3106c0af412235">glColor3f</link>(&#32;0.6<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.1<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.6<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;);&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;purple&#32;*/</emphasis>
+579 
+580 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a8b32ed40d834188f6abea5eb5ac7fc07">glVertex3f</link>(&#32;xr,&#32;yt,&#32;z_offset&#32;);&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;NE&#32;*/</emphasis>
+581 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a8b32ed40d834188f6abea5eb5ac7fc07">glVertex3f</link>(&#32;xl,&#32;yt,&#32;z_offset&#32;);&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;NW&#32;*/</emphasis>
+582 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a8b32ed40d834188f6abea5eb5ac7fc07">glVertex3f</link>(&#32;xl,&#32;yb,&#32;z_offset&#32;);&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;SW&#32;*/</emphasis>
+583 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a8b32ed40d834188f6abea5eb5ac7fc07">glVertex3f</link>(&#32;xr,&#32;yb,&#32;z_offset&#32;);&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;SE&#32;*/</emphasis>
+584 
+585 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1acedf7461ab825274c1c407dcc0ddd56b">glEnd</link>();
+586 &#32;&#32;&#32;}
+587 
+588 &#32;&#32;<emphasis role="comment">/*</emphasis>
+589 <emphasis role="comment">&#32;&#32;&#32;*&#32;Draw&#32;horizontal&#32;lines&#32;(as&#32;skinny&#32;3D&#32;rectangles).</emphasis>
+590 <emphasis role="comment">&#32;&#32;&#32;*/</emphasis>
+591 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(&#32;<link linkend="_glad_8h_1a90d3e7e4182a9630993f640fa0443b0b">row</link>&#32;=&#32;0;&#32;<link linkend="_glad_8h_1a90d3e7e4182a9630993f640fa0443b0b">row</link>&#32;&lt;=&#32;rowTotal;&#32;<link linkend="_glad_8h_1a90d3e7e4182a9630993f640fa0443b0b">row</link>++&#32;)
+592 &#32;&#32;&#32;{
+593 &#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*</emphasis>
+594 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*&#32;Compute&#32;co-ords&#32;of&#32;line.</emphasis>
+595 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*/</emphasis>
+596 &#32;&#32;&#32;&#32;&#32;&#32;yt&#32;=&#32;<link linkend="_boing_8c_1a08246606c233e7785a497c09672f366f">GRID_SIZE</link>&#32;/&#32;2&#32;-&#32;<link linkend="_glad_8h_1a90d3e7e4182a9630993f640fa0443b0b">row</link>&#32;*&#32;sizeCell;
+597 &#32;&#32;&#32;&#32;&#32;&#32;yb&#32;=&#32;yt&#32;-&#32;widthLine;
+598 
+599 &#32;&#32;&#32;&#32;&#32;&#32;xl&#32;=&#32;-<link linkend="_boing_8c_1a08246606c233e7785a497c09672f366f">GRID_SIZE</link>&#32;/&#32;2;
+600 &#32;&#32;&#32;&#32;&#32;&#32;xr&#32;=&#32;&#32;<link linkend="_boing_8c_1a08246606c233e7785a497c09672f366f">GRID_SIZE</link>&#32;/&#32;2&#32;+&#32;widthLine;
+601 
+602 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a18a9548126ac9e9eb00f9cd26cb0ab85">glBegin</link>(&#32;<link linkend="_gl_8h_1abed3bfcbd65f2285c12e96b566668b6f">GL_POLYGON</link>&#32;);
+603 
+604 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a156bc5fbf2770392dd3106c0af412235">glColor3f</link>(&#32;0.6<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.1<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.6<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;);&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;purple&#32;*/</emphasis>
+605 
+606 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a8b32ed40d834188f6abea5eb5ac7fc07">glVertex3f</link>(&#32;xr,&#32;yt,&#32;z_offset&#32;);&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;NE&#32;*/</emphasis>
+607 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a8b32ed40d834188f6abea5eb5ac7fc07">glVertex3f</link>(&#32;xl,&#32;yt,&#32;z_offset&#32;);&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;NW&#32;*/</emphasis>
+608 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a8b32ed40d834188f6abea5eb5ac7fc07">glVertex3f</link>(&#32;xl,&#32;yb,&#32;z_offset&#32;);&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;SW&#32;*/</emphasis>
+609 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a8b32ed40d834188f6abea5eb5ac7fc07">glVertex3f</link>(&#32;xr,&#32;yb,&#32;z_offset&#32;);&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;SE&#32;*/</emphasis>
+610 
+611 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1acedf7461ab825274c1c407dcc0ddd56b">glEnd</link>();
+612 &#32;&#32;&#32;}
+613 
+614 &#32;&#32;&#32;<link linkend="_gl_8h_1a4efb9a338a8a3db2b20d8ad57283d060">glPopMatrix</link>();
+615 
+616 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+617 }
+</programlisting>    </section><anchor xml:id="_boing_8c_1a2858154e2009b0e6e616f313177762bc"/>    <section>
+    <title>init()</title>
+<indexterm><primary>init</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>init</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> init (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 182 of file boing.c.</para>
+<programlisting>183 {
+184 &#32;&#32;&#32;<emphasis role="comment">/*</emphasis>
+185 <emphasis role="comment">&#32;&#32;&#32;&#32;*&#32;Clear&#32;background.</emphasis>
+186 <emphasis role="comment">&#32;&#32;&#32;&#32;*/</emphasis>
+187 &#32;&#32;&#32;<link linkend="_glad_8h_1a12060509af7dc9c8353810eb8b7f145c">glClearColor</link>(&#32;0.55<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.55<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.55<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;);
+188 
+189 &#32;&#32;&#32;<link linkend="_gl_8h_1ac4ef7ec10ac8d1b6c29ed3809f033c57">glShadeModel</link>(&#32;<link linkend="_gl_8h_1ad9368079438eebeb5622ea8f7d39cc05">GL_FLAT</link>&#32;);
+190 }
+</programlisting>    </section><anchor xml:id="_boing_8c_1a286930f4e8ede059b83ff6eafa2ff718"/>    <section>
+    <title>key_callback()</title>
+<indexterm><primary>key_callback</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>key_callback</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> key_callback (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> * window, int key, int scancode, int action, int mods)</computeroutput></para><para>
+Definition at line 240 of file boing.c.</para>
+<programlisting>241 {
+242 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(action&#32;!=&#32;<link linkend="_group__input_1ga2485743d0b59df3791c45951c4195265">GLFW_PRESS</link>)
+243 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+244 
+245 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>&#32;==&#32;<link linkend="_group__keys_1gaac6596c350b635c245113b81c2123b93">GLFW_KEY_ESCAPE</link>&#32;&amp;&amp;&#32;mods&#32;==&#32;0)
+246 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga1cadeda7a1e2f224e06a8415d30741aa">glfwSetWindowShouldClose</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>);
+247 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>&#32;==&#32;<link linkend="_group__keys_1ga9555a92ecbecdbc1f3435219c571d667">GLFW_KEY_ENTER</link>&#32;&amp;&amp;&#32;mods&#32;==&#32;<link linkend="_group__mods_1gad2acd5633463c29e07008687ea73c0f4">GLFW_MOD_ALT</link>)&#32;||
+248 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>&#32;==&#32;<link linkend="_group__keys_1ga0bc04b11627e7d69339151e7306b2832">GLFW_KEY_F11</link>&#32;&amp;&amp;&#32;mods&#32;==&#32;<link linkend="_group__mods_1gad2acd5633463c29e07008687ea73c0f4">GLFW_MOD_ALT</link>))
+249 &#32;&#32;&#32;&#32;{
+250 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_group__window_1gaf1525cb3bccd5789c702cc9676ef3403">glfwGetWindowMonitor</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>))
+251 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+252 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga12fabf78575e59c00f822f323ae0b6ae">glfwSetWindowMonitor</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,
+253 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1a6511876508d2f65ea8ace8f25d0e4c78">windowed_xpos</link>,&#32;<link linkend="_boing_8c_1adfcf830546ec1f6a64866d3b652a22fd">windowed_ypos</link>,
+254 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1a5371aa3f8486fe48d4878950ee8bd9a3">windowed_width</link>,&#32;<link linkend="_boing_8c_1aa3257f2fd88b76fd6585ba6e679253e0">windowed_height</link>,&#32;0);
+255 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+256 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+257 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+258 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link>*&#32;monitor&#32;=&#32;<link linkend="_group__monitor_1ga59ea49f377fe701dd76764183e64d9f4">glfwGetPrimaryMonitor</link>();
+259 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(monitor)
+260 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+261 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>*&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>&#32;=&#32;<link linkend="_group__monitor_1ga27319d7f045c4cbbeae5651696cacd5f">glfwGetVideoMode</link>(monitor);
+262 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga0076a8591ef7494d359730cf2250b45b">glfwGetWindowPos</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;&amp;<link linkend="_boing_8c_1a6511876508d2f65ea8ace8f25d0e4c78">windowed_xpos</link>,&#32;&amp;<link linkend="_boing_8c_1adfcf830546ec1f6a64866d3b652a22fd">windowed_ypos</link>);
+263 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga7feb769ebb3f3d21579b5a3fb07be76e">glfwGetWindowSize</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;&amp;<link linkend="_boing_8c_1a5371aa3f8486fe48d4878950ee8bd9a3">windowed_width</link>,&#32;&amp;<link linkend="_boing_8c_1aa3257f2fd88b76fd6585ba6e679253e0">windowed_height</link>);
+264 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga12fabf78575e59c00f822f323ae0b6ae">glfwSetWindowMonitor</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;monitor,&#32;0,&#32;0,&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;width,&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;height,&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;refreshRate);
+265 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+266 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+267 &#32;&#32;&#32;&#32;}
+268 }
+</programlisting>    </section><anchor xml:id="_boing_8c_1a840291bc02cba5474a4cb46a9b9566fe"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 624 of file boing.c.</para>
+<programlisting>625 {
+626 &#32;&#32;&#32;<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>*&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>;
+627 
+628 &#32;&#32;&#32;<emphasis role="comment">/*&#32;Init&#32;GLFW&#32;*/</emphasis>
+629 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(&#32;!<link linkend="_group__init_1gab41771f0215a2e0afb4cf1cf98082d40">glfwInit</link>()&#32;)
+630 &#32;&#32;&#32;&#32;&#32;&#32;exit(&#32;EXIT_FAILURE&#32;);
+631 
+632 &#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;<link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link>(&#32;400,&#32;400,&#32;<emphasis role="stringliteral">&quot;Boing&#32;(classic&#32;Amiga&#32;demo)&quot;</emphasis>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>&#32;);
+633 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)
+634 &#32;&#32;&#32;{
+635 &#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+636 &#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(&#32;EXIT_FAILURE&#32;);
+637 &#32;&#32;&#32;}
+638 
+639 &#32;&#32;&#32;<link linkend="_group__window_1gad2ae94a2c5ee1c46a36e13a8f4ac68ac">glfwSetWindowAspectRatio</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;1,&#32;1);
+640 
+641 &#32;&#32;&#32;<link linkend="_group__window_1ga41d69f9f263d7b33ea03cf58772b4ea0">glfwSetFramebufferSizeCallback</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_boing_8c_1a5272e39ef9d8944cb3f99d656f9f555a">reshape</link>);
+642 &#32;&#32;&#32;<link linkend="_group__input_1gaa4cbcb81b939b8800e44cea971ddae47">glfwSetKeyCallback</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_boing_8c_1a286930f4e8ede059b83ff6eafa2ff718">key_callback</link>);
+643 &#32;&#32;&#32;<link linkend="_group__input_1gab8f17646f43cdca14e5095512618fdf6">glfwSetMouseButtonCallback</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_boing_8c_1a5515d805e76ce6728de3c0dc5e187c86">mouse_button_callback</link>);
+644 &#32;&#32;&#32;<link linkend="_group__input_1ga74124d0eff27040fd10e4df9e17d129c">glfwSetCursorPosCallback</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_boing_8c_1ab5fb5502317b46f9cecd6379f2ecd210">cursor_position_callback</link>);
+645 
+646 &#32;&#32;&#32;<link linkend="_group__context_1gafd76c93e15ec8b0b90506a9936a46185">glfwMakeContextCurrent</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+647 &#32;&#32;&#32;<link linkend="_glad_8h_1a7e9e0ebe65864f5f2bcd289c5736041b">gladLoadGL</link>(<link linkend="_group__context_1ga0e8af175218929615c16e74938c10f2a">glfwGetProcAddress</link>);
+648 &#32;&#32;&#32;<link linkend="_group__context_1ga12a595c06947cec4967c6e1f14210a8a">glfwSwapInterval</link>(&#32;1&#32;);
+649 
+650 &#32;&#32;&#32;<link linkend="_group__window_1gaf7d17f3534b4b6dc9a6f905e3a240b7e">glfwGetFramebufferSize</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;&amp;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;&amp;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+651 &#32;&#32;&#32;<link linkend="_boing_8c_1a5272e39ef9d8944cb3f99d656f9f555a">reshape</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+652 
+653 &#32;&#32;&#32;<link linkend="_group__input_1ga94360a3628a09f32708f83cc3fa48590">glfwSetTime</link>(&#32;0.0&#32;);
+654 
+655 &#32;&#32;&#32;<link linkend="_boing_8c_1a2858154e2009b0e6e616f313177762bc">init</link>();
+656 
+657 &#32;&#32;&#32;<emphasis role="comment">/*&#32;Main&#32;loop&#32;*/</emphasis>
+658 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(;;)
+659 &#32;&#32;&#32;{
+660 &#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;Timing&#32;*/</emphasis>
+661 &#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>&#32;=&#32;<link linkend="_group__input_1ga03d4a1039b8662c71eeb40beea8cb622">glfwGetTime</link>();
+662 &#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>&#32;=&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>&#32;-&#32;<link linkend="_boing_8c_1a720c9aaf75c956f8d87132112332da97">t_old</link>;
+663 &#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1a720c9aaf75c956f8d87132112332da97">t_old</link>&#32;=&#32;<link linkend="_boing_8c_1a87accd1af8e0aff4b818d891374f7cec">t</link>;
+664 
+665 &#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;Draw&#32;one&#32;frame&#32;*/</emphasis>
+666 &#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1a4ea013001a5fb47853d0fab8f8de35cd">display</link>();
+667 
+668 &#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;Swap&#32;buffers&#32;*/</emphasis>
+669 &#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1gafb827800eedbfcbc97b1e5408df668d7">glfwSwapBuffers</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+670 &#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga872d16e4c77f58c0436f356255920cfc">glfwPollEvents</link>();
+671 
+672 &#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;Check&#32;if&#32;we&#32;are&#32;still&#32;running&#32;*/</emphasis>
+673 &#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_group__window_1gaa6162f67dfa38b8beda2fea623649332">glfwWindowShouldClose</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>))
+674 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+675 &#32;&#32;&#32;}
+676 
+677 &#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+678 &#32;&#32;&#32;exit(&#32;EXIT_SUCCESS&#32;);
+679 }
+</programlisting>    </section><anchor xml:id="_boing_8c_1a5515d805e76ce6728de3c0dc5e187c86"/>    <section>
+    <title>mouse_button_callback()</title>
+<indexterm><primary>mouse_button_callback</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>mouse_button_callback</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> mouse_button_callback (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> * window, int button, int action, int mods)</computeroutput></para><para>
+Definition at line 276 of file boing.c.</para>
+<programlisting>277 {
+278 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(button&#32;!=&#32;<link linkend="_group__buttons_1gaf37100431dcd5082d48f95ee8bc8cd56">GLFW_MOUSE_BUTTON_LEFT</link>)
+279 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+280 
+281 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(action&#32;==&#32;<link linkend="_group__input_1ga2485743d0b59df3791c45951c4195265">GLFW_PRESS</link>)
+282 &#32;&#32;&#32;{
+283 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1a5457032292643cc186a49f3163020555">override_pos</link>&#32;=&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+284 &#32;&#32;&#32;&#32;&#32;&#32;set_ball_pos(<link linkend="_boing_8c_1ad4356335fdb6fdaa6d4b759ac447a41d">cursor_x</link>,&#32;<link linkend="_boing_8c_1a4f59f7e6e37a64caf5bb5b228bce9afd">cursor_y</link>);
+285 &#32;&#32;&#32;}
+286 &#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+287 &#32;&#32;&#32;{
+288 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1a5457032292643cc186a49f3163020555">override_pos</link>&#32;=&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+289 &#32;&#32;&#32;}
+290 }
+</programlisting>    </section><anchor xml:id="_boing_8c_1a5272e39ef9d8944cb3f99d656f9f555a"/>    <section>
+    <title>reshape()</title>
+<indexterm><primary>reshape</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>reshape</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> reshape (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> * window, int w, int h)</computeroutput></para><para>
+Definition at line 217 of file boing.c.</para>
+<programlisting>218 {
+219 &#32;&#32;&#32;<link linkend="_linmath_8h_1aea448460b62175f89ed5760877496434">mat4x4</link>&#32;projection,&#32;view;
+220 
+221 &#32;&#32;&#32;<link linkend="_glad_8h_1ab54b002beb984f066acd0dd7fff469dc">glViewport</link>(&#32;0,&#32;0,&#32;(<link linkend="_glad_8h_1a9289d5b99dc1f27f01480360f2e18ae0">GLsizei</link>)<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>,&#32;(<link linkend="_glad_8h_1a9289d5b99dc1f27f01480360f2e18ae0">GLsizei</link>)<link linkend="_glad_8h_1afa0fb1b5e976920c0abeff2dca3ed774">h</link>&#32;);
+222 
+223 &#32;&#32;&#32;<link linkend="_gl_8h_1a984de7349d373e1088d1c31135c3a9fb">glMatrixMode</link>(&#32;<link linkend="_gl_8h_1a85e93b355494186ced027f1a1142fefb">GL_PROJECTION</link>&#32;);
+224 &#32;&#32;&#32;<link linkend="_linmath_8h_1a94145cd87abb64ac311b7937f5b822b6">mat4x4_perspective</link>(&#32;projection,
+225 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;2.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;*&#32;(<emphasis role="keywordtype">float</emphasis>)&#32;atan2(&#32;<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link>,&#32;200.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;),
+226 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(<emphasis role="keywordtype">float</emphasis>)<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>&#32;/&#32;(<emphasis role="keywordtype">float</emphasis>)<link linkend="_glad_8h_1afa0fb1b5e976920c0abeff2dca3ed774">h</link>,
+227 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_boing_8c_1a7a2f17659bb77c24edb2bea7a08a19a3">VIEW_SCENE_DIST</link>&#32;);
+228 &#32;&#32;&#32;<link linkend="_gl_8h_1a7ca5354d681c38db253679a45b419039">glLoadMatrixf</link>((<emphasis role="keyword">const</emphasis>&#32;<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>*)&#32;projection);
+229 
+230 &#32;&#32;&#32;<link linkend="_gl_8h_1a984de7349d373e1088d1c31135c3a9fb">glMatrixMode</link>(&#32;<link linkend="_gl_8h_1a8c0f92b5d50914825a1424b1cd4480cd">GL_MODELVIEW</link>&#32;);
+231 &#32;&#32;&#32;{
+232 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_types_8h_1aa12dddc6c5b49b59657f5b9262d3196c">vec3</link>&#32;eye&#32;=&#32;{&#32;0.f,&#32;0.f,&#32;<link linkend="_boing_8c_1a7a2f17659bb77c24edb2bea7a08a19a3">VIEW_SCENE_DIST</link>&#32;};
+233 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_types_8h_1aa12dddc6c5b49b59657f5b9262d3196c">vec3</link>&#32;center&#32;=&#32;{&#32;0.f,&#32;0.f,&#32;0.f&#32;};
+234 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_types_8h_1aa12dddc6c5b49b59657f5b9262d3196c">vec3</link>&#32;up&#32;=&#32;{&#32;0.f,&#32;-1.f,&#32;0.f&#32;};
+235 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linmath_8h_1a730f784f4cba86a5bacb673ed937acc7">mat4x4_look_at</link>(&#32;view,&#32;eye,&#32;center,&#32;up&#32;);
+236 &#32;&#32;&#32;}
+237 &#32;&#32;&#32;<link linkend="_gl_8h_1a7ca5354d681c38db253679a45b419039">glLoadMatrixf</link>((<emphasis role="keyword">const</emphasis>&#32;<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>*)&#32;view);
+238 }
+</programlisting>    </section><anchor xml:id="_boing_8c_1a5b090656aa7eb0a7d1bd2d0f0e7712e2"/>    <section>
+    <title>sin_deg()</title>
+<indexterm><primary>sin_deg</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>sin_deg</secondary></indexterm>
+<para><computeroutput>double sin_deg (double deg)</computeroutput></para><para>
+Definition at line 139 of file boing.c.</para>
+<programlisting>140 {
+141 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;sin(&#32;<link linkend="_boing_8c_1a8012f8bd66798ffbdd27462c9f593a54">deg2rad</link>(&#32;deg&#32;)&#32;);
+142 }
+</programlisting>    </section><anchor xml:id="_boing_8c_1a080dc55aae439523561bda8b86575b7f"/>    <section>
+    <title>TruncateDeg()</title>
+<indexterm><primary>TruncateDeg</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>TruncateDeg</secondary></indexterm>
+<para><computeroutput><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> TruncateDeg (<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> deg)</computeroutput></para><para>
+Definition at line 119 of file boing.c.</para>
+<programlisting>120 {
+121 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(&#32;deg&#32;&gt;=&#32;360.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;)
+122 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;(deg&#32;-&#32;360.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+123 &#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+124 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;deg;
+125 }
+</programlisting></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_boing_8c_1a66dbc10af7d1d045794549a09999d468"/>    <section>
+    <title>ball_x</title>
+<indexterm><primary>ball_x</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>ball_x</secondary></indexterm>
+<para><computeroutput><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> ball_x = -<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link></computeroutput></para><para>
+Definition at line 101 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a00cc50b4eae810b91ef59463d55cb097"/>    <section>
+    <title>ball_x_inc</title>
+<indexterm><primary>ball_x_inc</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>ball_x_inc</secondary></indexterm>
+<para><computeroutput><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> ball_x_inc = 1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 103 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a13df79b6b7f26cc1fc5279a1f12a9d98"/>    <section>
+    <title>ball_y</title>
+<indexterm><primary>ball_y</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>ball_y</secondary></indexterm>
+<para><computeroutput><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> ball_y = -<link linkend="_boing_8c_1aa4f8ea40228c3c3a9a7143b1d1ad8956">RADIUS</link></computeroutput></para><para>
+Definition at line 102 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1adf5ece0dd3b5effeac97071b87e106bd"/>    <section>
+    <title>ball_y_inc</title>
+<indexterm><primary>ball_y_inc</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>ball_y_inc</secondary></indexterm>
+<para><computeroutput><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> ball_y_inc = 2.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 104 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1ad4356335fdb6fdaa6d4b759ac447a41d"/>    <section>
+    <title>cursor_x</title>
+<indexterm><primary>cursor_x</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>cursor_x</secondary></indexterm>
+<para><computeroutput><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> cursor_x = 0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 99 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a4f59f7e6e37a64caf5bb5b228bce9afd"/>    <section>
+    <title>cursor_y</title>
+<indexterm><primary>cursor_y</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>cursor_y</secondary></indexterm>
+<para><computeroutput><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> cursor_y = 0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 100 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1ae721211dff5c00a883879373efad1187"/>    <section>
+    <title>deg_rot_y</title>
+<indexterm><primary>deg_rot_y</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>deg_rot_y</secondary></indexterm>
+<para><computeroutput><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> deg_rot_y = 0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 96 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1abd3eb9bcb0582eaed1be1c789fa9664a"/>    <section>
+    <title>deg_rot_y_inc</title>
+<indexterm><primary>deg_rot_y_inc</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>deg_rot_y_inc</secondary></indexterm>
+<para><computeroutput><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> deg_rot_y_inc = 2.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 97 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1ac1b93fa15ef429f4d5e3a0a9990304cf"/>    <section>
+    <title>drawBallHow</title>
+<indexterm><primary>drawBallHow</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>drawBallHow</secondary></indexterm>
+<para><computeroutput><link linkend="_boing_8c_1aaff0749849eeb426c1fff01f93f8aa38">DRAW_BALL_ENUM</link> drawBallHow</computeroutput></para><para>
+Definition at line 105 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a03e28be41881b703c836edbfe9b51b17"/>    <section>
+    <title>dt</title>
+<indexterm><primary>dt</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>dt</secondary></indexterm>
+<para><computeroutput>double dt</computeroutput></para><para>
+Definition at line 108 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1ad12fc34ce789bce6c8a05d8a17138534"/>    <section>
+    <title>height</title>
+<indexterm><primary>height</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>height</secondary></indexterm>
+<para><computeroutput>int <link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link></computeroutput></para><para>
+Definition at line 95 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a5457032292643cc186a49f3163020555"/>    <section>
+    <title>override_pos</title>
+<indexterm><primary>override_pos</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>override_pos</secondary></indexterm>
+<para><computeroutput>int override_pos = <link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link></computeroutput></para><para>
+Definition at line 98 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a87accd1af8e0aff4b818d891374f7cec"/>    <section>
+    <title>t</title>
+<indexterm><primary>t</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>t</secondary></indexterm>
+<para><computeroutput>double <link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link></computeroutput></para><para>
+Definition at line 106 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a720c9aaf75c956f8d87132112332da97"/>    <section>
+    <title>t_old</title>
+<indexterm><primary>t_old</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>t_old</secondary></indexterm>
+<para><computeroutput>double t_old = 0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 107 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a2474a5474cbff19523a51eb1de01cda4"/>    <section>
+    <title>width</title>
+<indexterm><primary>width</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>width</secondary></indexterm>
+<para><computeroutput>int <link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link></computeroutput></para><para>
+Definition at line 95 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1aa3257f2fd88b76fd6585ba6e679253e0"/>    <section>
+    <title>windowed_height</title>
+<indexterm><primary>windowed_height</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>windowed_height</secondary></indexterm>
+<para><computeroutput>int windowed_height</computeroutput></para><para>
+Definition at line 94 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a5371aa3f8486fe48d4878950ee8bd9a3"/>    <section>
+    <title>windowed_width</title>
+<indexterm><primary>windowed_width</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>windowed_width</secondary></indexterm>
+<para><computeroutput>int windowed_width</computeroutput></para><para>
+Definition at line 94 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1a6511876508d2f65ea8ace8f25d0e4c78"/>    <section>
+    <title>windowed_xpos</title>
+<indexterm><primary>windowed_xpos</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>windowed_xpos</secondary></indexterm>
+<para><computeroutput>int windowed_xpos</computeroutput></para><para>
+Definition at line 94 of file boing.c.</para>
+    </section><anchor xml:id="_boing_8c_1adfcf830546ec1f6a64866d3b652a22fd"/>    <section>
+    <title>windowed_ypos</title>
+<indexterm><primary>windowed_ypos</primary><secondary>boing.c</secondary></indexterm>
+<indexterm><primary>boing.c</primary><secondary>windowed_ypos</secondary></indexterm>
+<para><computeroutput>int windowed_ypos</computeroutput></para><para>
+Definition at line 94 of file boing.c.</para>
+</section>
+</section>
+</section>

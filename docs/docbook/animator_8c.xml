@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_animator_8c">
+<title>src/vally/ecs/components/animator.c File Reference</title>
+<indexterm><primary>src/vally/ecs/components/animator.c</primary></indexterm>
+<programlisting>#include &lt;vally/ecs/components/animator.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structanimator__state">animator_state</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_structanimation">animation</link> <link linkend="_animator_8c_1a25f1ed5f015471010b41f099edd9d4d2">animation_create</link> (<link linkend="_structtexture">texture</link> *<link linkend="_structtexture">texture</link>, <link linkend="_structvector2f">vector2f</link> tiling, <link linkend="_include_2vally_2config_8h_1afaa62991928fb9fb18ff0db62a040aba">u32</link> first_frame, <link linkend="_include_2vally_2config_8h_1afaa62991928fb9fb18ff0db62a040aba">u32</link> last_frame, <link linkend="_include_2vally_2config_8h_1afaa62991928fb9fb18ff0db62a040aba">u32</link> framerate)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_animator_8c_1a78e47b7f9191f99f16888fb77e02652c">ecs_animator_add</link> (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> <link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_animator_8c_1a818d6de966fa3753113cce67383b5cd1">ecs_animator_play</link> (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> <link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>, <link linkend="_structanimation">animation</link> *<link linkend="_structanimation">animation</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_animator_8c_1a2693624c68b83fbb88ae98090bb164ed">ecs_animator_stop</link> (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> <link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_animator_8c_1a15f32963c1ac3b6fe5afbc4cdc14b996">ecs_animator_update</link> (<link linkend="_include_2vally_2config_8h_1a5f6906312a689f27d70e9d086649d3fd">f32</link> <link linkend="_wave_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_animator_8c_1a25f1ed5f015471010b41f099edd9d4d2"/>    <section>
+    <title>animation_create()</title>
+<indexterm><primary>animation_create</primary><secondary>animator.c</secondary></indexterm>
+<indexterm><primary>animator.c</primary><secondary>animation_create</secondary></indexterm>
+<para><computeroutput><link linkend="_structanimation">animation</link> animation_create (<link linkend="_structtexture">texture</link> * texture, <link linkend="_structvector2f">vector2f</link> tiling, <link linkend="_include_2vally_2config_8h_1afaa62991928fb9fb18ff0db62a040aba">u32</link> first_frame, <link linkend="_include_2vally_2config_8h_1afaa62991928fb9fb18ff0db62a040aba">u32</link> last_frame, <link linkend="_include_2vally_2config_8h_1afaa62991928fb9fb18ff0db62a040aba">u32</link> framerate)</computeroutput></para><para>
+Definition at line 9 of file animator.c.</para>
+<programlisting>9 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+10 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;(<link linkend="_structanimation">animation</link>){<link linkend="_glad_8h_1af1de2b5e600991636b673dcda0fa5342">texture</link>,&#32;tiling,&#32;first_frame,&#32;last_frame,&#32;1.0f&#32;/&#32;framerate};
+11 }
+</programlisting>    </section><anchor xml:id="_animator_8c_1a78e47b7f9191f99f16888fb77e02652c"/>    <section>
+    <title>ecs_animator_add()</title>
+<indexterm><primary>ecs_animator_add</primary><secondary>animator.c</secondary></indexterm>
+<indexterm><primary>animator.c</primary><secondary>ecs_animator_add</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> ecs_animator_add (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> entity)</computeroutput></para><para>
+Definition at line 13 of file animator.c.</para>
+<programlisting>13 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+14 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>&#32;==&#32;<link linkend="_ecs_8h_1a590682d0c22ffe315650ba42fae2b231">ECS_NULL_ENTITY</link>)&#32;{
+15 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+16 &#32;&#32;}
+17 
+18 &#32;&#32;state.<link linkend="_structanimator__state_1a3fc2667a80c193fb0c42029d5a5dc735">components</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>]&#32;=&#32;(<link linkend="_structanimator">animator</link>){<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;0,&#32;0.0f};
+19 &#32;&#32;<link linkend="_ecs_8h_1a979231663bba3c9cd75a00dc24ca266f">ecs_component_add</link>(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>,&#32;<link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352aa79df9b55a1676fd54393460f3c15466">ECS_ANIMATOR_COMPONENT</link>);
+20 }
+</programlisting>    </section><anchor xml:id="_animator_8c_1a818d6de966fa3753113cce67383b5cd1"/>    <section>
+    <title>ecs_animator_play()</title>
+<indexterm><primary>ecs_animator_play</primary><secondary>animator.c</secondary></indexterm>
+<indexterm><primary>animator.c</primary><secondary>ecs_animator_play</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> ecs_animator_play (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> entity, <link linkend="_structanimation">animation</link> * animation)</computeroutput></para><para>
+Definition at line 22 of file animator.c.</para>
+<programlisting>22 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+23 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>&#32;==&#32;<link linkend="_ecs_8h_1a590682d0c22ffe315650ba42fae2b231">ECS_NULL_ENTITY</link>&#32;||&#32;!<link linkend="_ecs_8h_1a8558da821ae97171a28630f8da7414c4">ecs_component_has</link>(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>,&#32;<link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352aa79df9b55a1676fd54393460f3c15466">ECS_ANIMATOR_COMPONENT</link>&#32;|&#32;<link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352af8e60e59dfe04c01d724061010102fe5">ECS_SPRITERENDERER_COMPONENT</link>))&#32;{
+24 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+25 &#32;&#32;}
+26 
+27 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!(state.<link linkend="_structanimator__state_1a3fc2667a80c193fb0c42029d5a5dc735">components</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>].<link linkend="_structanimator_1a0dd71dd7d25e50670e680a751c4666b3">playing</link>&#32;&amp;&amp;&#32;state.<link linkend="_structanimator__state_1a3fc2667a80c193fb0c42029d5a5dc735">components</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>].<link linkend="_structanimator_1ab6489ec2c8c0a91543a9d756fbfa25bd">animation</link>&#32;==&#32;<link linkend="_structanimation">animation</link>))&#32;{
+28 &#32;&#32;&#32;&#32;state.<link linkend="_structanimator__state_1a3fc2667a80c193fb0c42029d5a5dc735">components</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>].<link linkend="_structanimator_1a0dd71dd7d25e50670e680a751c4666b3">playing</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+29 &#32;&#32;&#32;&#32;state.<link linkend="_structanimator__state_1a3fc2667a80c193fb0c42029d5a5dc735">components</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>].<link linkend="_structanimator_1ab6489ec2c8c0a91543a9d756fbfa25bd">animation</link>&#32;=&#32;<link linkend="_structanimation">animation</link>;
+30 &#32;&#32;&#32;&#32;state.<link linkend="_structanimator__state_1a3fc2667a80c193fb0c42029d5a5dc735">components</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>].<link linkend="_structanimator_1aad634bff6589efed241d308b8dd5b56c">current_frame</link>&#32;=&#32;<link linkend="_structanimation">animation</link>-&gt;<link linkend="_structanimation_1a04754d050a6c7dc68ceac25004121ecc">first_frame</link>;
+31 &#32;&#32;&#32;&#32;state.<link linkend="_structanimator__state_1a3fc2667a80c193fb0c42029d5a5dc735">components</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>].<link linkend="_structanimator_1a35fc27f4f6956a9c44201922fe17c037">time</link>&#32;=&#32;0.0f;
+32 
+33 &#32;&#32;&#32;&#32;<link linkend="_spriterenderer_8h_1ad50f63c6157ec4287542d6ec7c98db04">ecs_spriterenderer_add_from_atlas</link>(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>,&#32;<link linkend="_structanimation">animation</link>-&gt;<link linkend="_structanimation_1a356f4754dd6d3020ae17870e0edea36d">texture</link>,&#32;<link linkend="_structanimation">animation</link>-&gt;<link linkend="_structanimation_1a0f2e49657cd7a30cd7f6efdd1dd10fad">tiling</link>);
+34 &#32;&#32;&#32;&#32;<link linkend="_spriterenderer_8h_1a553edc81899945b974728f83b6c9d084">ecs_spriterenderer_atlas_select</link>(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>,&#32;<link linkend="_structanimation">animation</link>-&gt;<link linkend="_structanimation_1a04754d050a6c7dc68ceac25004121ecc">first_frame</link>);
+35 &#32;&#32;}
+36 }
+</programlisting>    </section><anchor xml:id="_animator_8c_1a2693624c68b83fbb88ae98090bb164ed"/>    <section>
+    <title>ecs_animator_stop()</title>
+<indexterm><primary>ecs_animator_stop</primary><secondary>animator.c</secondary></indexterm>
+<indexterm><primary>animator.c</primary><secondary>ecs_animator_stop</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> ecs_animator_stop (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> entity)</computeroutput></para><para>
+Definition at line 38 of file animator.c.</para>
+<programlisting>38 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+39 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>&#32;==&#32;<link linkend="_ecs_8h_1a590682d0c22ffe315650ba42fae2b231">ECS_NULL_ENTITY</link>&#32;||&#32;!<link linkend="_ecs_8h_1a8558da821ae97171a28630f8da7414c4">ecs_component_has</link>(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>,&#32;<link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352aa79df9b55a1676fd54393460f3c15466">ECS_ANIMATOR_COMPONENT</link>&#32;|&#32;<link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352af8e60e59dfe04c01d724061010102fe5">ECS_SPRITERENDERER_COMPONENT</link>))&#32;{
+40 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+41 &#32;&#32;}
+42 
+43 &#32;&#32;state.<link linkend="_structanimator__state_1a3fc2667a80c193fb0c42029d5a5dc735">components</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>].<link linkend="_structanimator_1a0dd71dd7d25e50670e680a751c4666b3">playing</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+44 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(state.<link linkend="_structanimator__state_1a3fc2667a80c193fb0c42029d5a5dc735">components</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>].<link linkend="_structanimator_1ab6489ec2c8c0a91543a9d756fbfa25bd">animation</link>&#32;!=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;{
+45 &#32;&#32;&#32;&#32;<link linkend="_spriterenderer_8h_1a553edc81899945b974728f83b6c9d084">ecs_spriterenderer_atlas_select</link>(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>,&#32;state.<link linkend="_structanimator__state_1a3fc2667a80c193fb0c42029d5a5dc735">components</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>].<link linkend="_structanimator_1ab6489ec2c8c0a91543a9d756fbfa25bd">animation</link>-&gt;<link linkend="_structanimation_1a04754d050a6c7dc68ceac25004121ecc">first_frame</link>);
+46 &#32;&#32;}
+47 &#32;&#32;state.<link linkend="_structanimator__state_1a3fc2667a80c193fb0c42029d5a5dc735">components</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>].<link linkend="_structanimator_1ab6489ec2c8c0a91543a9d756fbfa25bd">animation</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+48 }
+</programlisting>    </section><anchor xml:id="_animator_8c_1a15f32963c1ac3b6fe5afbc4cdc14b996"/>    <section>
+    <title>ecs_animator_update()</title>
+<indexterm><primary>ecs_animator_update</primary><secondary>animator.c</secondary></indexterm>
+<indexterm><primary>animator.c</primary><secondary>ecs_animator_update</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> ecs_animator_update (<link linkend="_include_2vally_2config_8h_1a5f6906312a689f27d70e9d086649d3fd">f32</link> dt)</computeroutput></para><para>
+Definition at line 50 of file animator.c.</para>
+<programlisting>50 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+51 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>&#32;=&#32;0;&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>&#32;&lt;&#32;<link linkend="_ecs_8h_1af2d2c47037654bc3387edf21f7b299c4">ecs_get_last</link>();&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>++)&#32;{
+52 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_ecs_8h_1ac303d50ed49e761f139d6805e1bba866">ecs_is_alive</link>(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>)&#32;&amp;&amp;&#32;<link linkend="_ecs_8h_1a8558da821ae97171a28630f8da7414c4">ecs_component_has</link>(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>,&#32;<link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352aa79df9b55a1676fd54393460f3c15466">ECS_ANIMATOR_COMPONENT</link>&#32;|&#32;<link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352af8e60e59dfe04c01d724061010102fe5">ECS_SPRITERENDERER_COMPONENT</link>))&#32;{
+53 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structanimator">animator</link>&#32;*<link linkend="_structanimator">animator</link>&#32;=&#32;&amp;state.<link linkend="_structanimator__state_1a3fc2667a80c193fb0c42029d5a5dc735">components</link>[<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>];
+54 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structanimation">animation</link>&#32;*<link linkend="_structanimation">animation</link>&#32;=&#32;<link linkend="_structanimator">animator</link>-&gt;<link linkend="_structanimator_1ab6489ec2c8c0a91543a9d756fbfa25bd">animation</link>;
+55 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_structanimator">animator</link>-&gt;<link linkend="_structanimator_1ab6489ec2c8c0a91543a9d756fbfa25bd">animation</link>&#32;!=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;{
+56 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structanimator">animator</link>-&gt;<link linkend="_structanimator_1a35fc27f4f6956a9c44201922fe17c037">time</link>&#32;+=&#32;<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>;
+57 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_structanimator">animator</link>-&gt;<link linkend="_structanimator_1a35fc27f4f6956a9c44201922fe17c037">time</link>&#32;&gt;=&#32;<link linkend="_structanimation">animation</link>-&gt;<link linkend="_structanimation_1a0e11cf9faee8d743d6cdb1c17bfcde73">frametime</link>)&#32;{
+58 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structanimator">animator</link>-&gt;<link linkend="_structanimator_1a35fc27f4f6956a9c44201922fe17c037">time</link>&#32;=&#32;0.0f;
+59 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_spriterenderer_8h_1a553edc81899945b974728f83b6c9d084">ecs_spriterenderer_atlas_select</link>(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>,&#32;<link linkend="_structanimator">animator</link>-&gt;<link linkend="_structanimator_1aad634bff6589efed241d308b8dd5b56c">current_frame</link>++);
+60 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_structanimator">animator</link>-&gt;<link linkend="_structanimator_1aad634bff6589efed241d308b8dd5b56c">current_frame</link>&#32;&gt;&#32;<link linkend="_structanimation">animation</link>-&gt;<link linkend="_structanimation_1a1ad410779897d122aef926ee69ca0dde">last_frame</link>)&#32;{
+61 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structanimator">animator</link>-&gt;<link linkend="_structanimator_1aad634bff6589efed241d308b8dd5b56c">current_frame</link>&#32;=&#32;<link linkend="_structanimation">animation</link>-&gt;<link linkend="_structanimation_1a04754d050a6c7dc68ceac25004121ecc">first_frame</link>;
+62 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+63 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+64 &#32;&#32;&#32;&#32;&#32;&#32;}
+65 &#32;&#32;&#32;&#32;}
+66 &#32;&#32;}
+67 }
+</programlisting></section>
+</section>
+</section>

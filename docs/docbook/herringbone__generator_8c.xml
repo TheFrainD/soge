@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_herringbone__generator_8c">
+<title>deps/stb/tests/herringbone_generator.c File Reference</title>
+<indexterm><primary>deps/stb/tests/herringbone_generator.c</primary></indexterm>
+<programlisting>#include &quot;stb_herringbone_wang_tile.h&quot;
+#include &quot;stb_image_write.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_herringbone__generator_8c_1a5fac6eca2f208808778d607599e12ef2">STB_HERRINGBONE_WANG_TILE_IMPLEMENTATION</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_herringbone__generator_8c_1aefe397a94e8feddc652f92ef40ce9597">STB_IMAGE_WRITE_IMPLEMENTATION</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_herringbone__generator_8c_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_herringbone__generator_8c_1a5fac6eca2f208808778d607599e12ef2"/>    <section>
+    <title>STB_HERRINGBONE_WANG_TILE_IMPLEMENTATION</title>
+<indexterm><primary>STB_HERRINGBONE_WANG_TILE_IMPLEMENTATION</primary><secondary>herringbone_generator.c</secondary></indexterm>
+<indexterm><primary>herringbone_generator.c</primary><secondary>STB_HERRINGBONE_WANG_TILE_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define STB_HERRINGBONE_WANG_TILE_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 1 of file herringbone_generator.c.</para>
+    </section><anchor xml:id="_herringbone__generator_8c_1aefe397a94e8feddc652f92ef40ce9597"/>    <section>
+    <title>STB_IMAGE_WRITE_IMPLEMENTATION</title>
+<indexterm><primary>STB_IMAGE_WRITE_IMPLEMENTATION</primary><secondary>herringbone_generator.c</secondary></indexterm>
+<indexterm><primary>herringbone_generator.c</primary><secondary>STB_IMAGE_WRITE_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define STB_IMAGE_WRITE_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 4 of file herringbone_generator.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_herringbone__generator_8c_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>herringbone_generator.c</secondary></indexterm>
+<indexterm><primary>herringbone_generator.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 9 of file herringbone_generator.c.</para>
+<programlisting>10 {
+11 &#32;&#32;&#32;<link linkend="_structstbhw__config">stbhw_config</link>&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>&#32;=&#32;{&#32;0&#32;};
+12 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>,<link linkend="_glad_8h_1afa0fb1b5e976920c0abeff2dca3ed774">h</link>,&#32;num_colors,i;
+13 &#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;*<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>;
+14 
+15 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(argc&#32;==&#32;1)&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;<link linkend="_glad_8h_1afb85c5d9b1bce96aa3b530d581194d1a">usage</link>;
+16 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(argc&#32;&#32;&lt;&#32;3)&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>;
+17 
+18 &#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(argv[2][0])&#32;{
+19 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;c&apos;</emphasis>:
+20 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(argc&#32;&lt;&#32;&#32;8&#32;||&#32;argc&#32;&gt;&#32;10)
+21 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>;
+22 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;num_colors&#32;=&#32;4;
+23 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>.is_corner&#32;=&#32;1;
+24 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+25 
+26 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;e&apos;</emphasis>:
+27 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(argc&#32;&lt;&#32;10&#32;||&#32;argc&#32;&gt;&#32;12)
+28 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>;
+29 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;num_colors&#32;=&#32;6;
+30 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>.is_corner&#32;=&#32;0;
+31 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+32 
+33 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">default</emphasis>:
+34 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>;
+35 &#32;&#32;&#32;}
+36 
+37 &#32;&#32;&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>.short_side_len&#32;=&#32;atoi(argv[3]);
+38 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;num_colors;&#32;++i)
+39 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>.num_color[i]&#32;=&#32;atoi(argv[4+i]);
+40 
+41 &#32;&#32;&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>.num_vary_x&#32;=&#32;1;
+42 &#32;&#32;&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>.num_vary_y&#32;=&#32;1;
+43 
+44 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(argc&#32;&gt;&#32;4+i)
+45 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>.num_vary_x&#32;=&#32;atoi(argv[4+i]);
+46 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(argc&#32;&gt;&#32;5+i)
+47 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>.num_vary_y&#32;=&#32;atoi(argv[5+i]);
+48 
+49 &#32;&#32;&#32;<link linkend="_stb__herringbone__wang__tile_8h_1a98c5d9cf99dc60b099dadbe9f2c99d05">stbhw_get_template_size</link>(&amp;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>,&#32;&amp;<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>,&#32;&amp;<link linkend="_glad_8h_1afa0fb1b5e976920c0abeff2dca3ed774">h</link>);
+50 
+51 &#32;&#32;&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>&#32;=&#32;(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;*)&#32;<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>(<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>*<link linkend="_glad_8h_1afa0fb1b5e976920c0abeff2dca3ed774">h</link>*3);
+52 
+53 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_stb__herringbone__wang__tile_8h_1a50f4b38fa86db29c0513598daf026871">stbhw_make_template</link>(&amp;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>,&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>,&#32;<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>,&#32;<link linkend="_glad_8h_1afa0fb1b5e976920c0abeff2dca3ed774">h</link>,&#32;<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>*3))
+54 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glfw_2deps_2stb__image__write_8h_1a9c03e5171f6aea47fde6dafcf3249ccf">stbi_write_png</link>(argv[1],&#32;<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>,&#32;<link linkend="_glad_8h_1afa0fb1b5e976920c0abeff2dca3ed774">h</link>,&#32;3,&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>,&#32;<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>*3);
+55 &#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+56 &#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<emphasis role="stringliteral">&quot;Error:&#32;%s\n&quot;</emphasis>,&#32;<link linkend="_stb__herringbone__wang__tile_8h_1ab16527d4a1675dcf33e22cb1b312c73a">stbhw_get_last_error</link>());
+57 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+58 
+59 &#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>:
+60 &#32;&#32;&#32;fputs(<emphasis role="stringliteral">&quot;Invalid&#32;command-line&#32;arguments\n\n&quot;</emphasis>,&#32;stderr);
+61 &#32;<link linkend="_glad_8h_1afb85c5d9b1bce96aa3b530d581194d1a">usage</link>:
+62 &#32;&#32;&#32;fputs(<emphasis role="stringliteral">&quot;Usage&#32;(see&#32;source&#32;for&#32;corner&#32;&amp;&#32;edge&#32;type&#32;definitions):\n\n&quot;</emphasis>,&#32;stderr);
+63 &#32;&#32;&#32;fputs(<emphasis role="stringliteral">&quot;herringbone_generator&#32;{outfile}&#32;c&#32;{sidelen}&#32;{c0}&#32;{c1}&#32;{c2}&#32;{c3}&#32;[{vx}&#32;{vy}]\n&quot;</emphasis>
+64 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;{outfile}&#32;&#32;--&#32;filename&#32;that&#32;template&#32;will&#32;be&#32;written&#32;to&#32;as&#32;PNG\n&quot;</emphasis>
+65 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;{sidelen}&#32;&#32;--&#32;length&#32;of&#32;short&#32;side&#32;of&#32;rectangle&#32;in&#32;pixels\n&quot;</emphasis>
+66 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;{c0}&#32;&#32;&#32;&#32;&#32;&#32;&#32;--&#32;number&#32;of&#32;colors&#32;for&#32;corner&#32;type&#32;0\n&quot;</emphasis>
+67 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;{c1}&#32;&#32;&#32;&#32;&#32;&#32;&#32;--&#32;number&#32;of&#32;colors&#32;for&#32;corner&#32;type&#32;1\n&quot;</emphasis>
+68 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;{c2}&#32;&#32;&#32;&#32;&#32;&#32;&#32;--&#32;number&#32;of&#32;colors&#32;for&#32;corner&#32;type&#32;2\n&quot;</emphasis>
+69 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;{c3}&#32;&#32;&#32;&#32;&#32;&#32;&#32;--&#32;number&#32;of&#32;colors&#32;for&#32;corner&#32;type&#32;3\n&quot;</emphasis>
+70 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;{vx}&#32;&#32;&#32;&#32;&#32;&#32;&#32;--&#32;number&#32;of&#32;color-duplicating&#32;variations&#32;horizontally&#32;in&#32;template\n&quot;</emphasis>
+71 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;{vy}&#32;&#32;&#32;&#32;&#32;&#32;&#32;--&#32;number&#32;of&#32;color-duplicating&#32;variations&#32;vertically&#32;in&#32;template\n&quot;</emphasis>
+72 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;\n&quot;</emphasis>
+73 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,&#32;stderr);
+74 &#32;&#32;&#32;fputs(<emphasis role="stringliteral">&quot;herringbone_generator&#32;{outfile}&#32;e&#32;{sidelen}&#32;{e0}&#32;{e1}&#32;{e2}&#32;{e3}&#32;{e4}&#32;{e5}&#32;[{vx}&#32;{vy}]\n&quot;</emphasis>
+75 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;{outfile}&#32;&#32;--&#32;filename&#32;that&#32;template&#32;will&#32;be&#32;written&#32;to&#32;as&#32;PNG\n&quot;</emphasis>
+76 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;{sidelen}&#32;&#32;--&#32;length&#32;of&#32;short&#32;side&#32;of&#32;rectangle&#32;in&#32;pixels\n&quot;</emphasis>
+77 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;{e0}&#32;&#32;&#32;&#32;&#32;&#32;&#32;--&#32;number&#32;of&#32;colors&#32;for&#32;edge&#32;type&#32;0\n&quot;</emphasis>
+78 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;{e1}&#32;&#32;&#32;&#32;&#32;&#32;&#32;--&#32;number&#32;of&#32;colors&#32;for&#32;edge&#32;type&#32;1\n&quot;</emphasis>
+79 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;{e2}&#32;&#32;&#32;&#32;&#32;&#32;&#32;--&#32;number&#32;of&#32;colors&#32;for&#32;edge&#32;type&#32;2\n&quot;</emphasis>
+80 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;{e3}&#32;&#32;&#32;&#32;&#32;&#32;&#32;--&#32;number&#32;of&#32;colors&#32;for&#32;edge&#32;type&#32;3\n&quot;</emphasis>
+81 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;{e4}&#32;&#32;&#32;&#32;&#32;&#32;&#32;--&#32;number&#32;of&#32;colors&#32;for&#32;edge&#32;type&#32;4\n&quot;</emphasis>
+82 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;{e5}&#32;&#32;&#32;&#32;&#32;&#32;&#32;--&#32;number&#32;of&#32;colors&#32;for&#32;edge&#32;type&#32;5\n&quot;</emphasis>
+83 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;{vx}&#32;&#32;&#32;&#32;&#32;&#32;&#32;--&#32;number&#32;of&#32;color-duplicating&#32;variations&#32;horizontally&#32;in&#32;template\n&quot;</emphasis>
+84 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;{vy}&#32;&#32;&#32;&#32;&#32;&#32;&#32;--&#32;number&#32;of&#32;color-duplicating&#32;variations&#32;vertically&#32;in&#32;template\n&quot;</emphasis>
+85 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,&#32;stderr);
+86 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;1;
+87 }
+</programlisting></section>
+</section>
+</section>

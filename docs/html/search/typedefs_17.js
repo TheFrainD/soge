@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['x_32946',['x',['../glad_8h.html#a1af10666aa42292f407f6acc2af11948',1,'x():&#160;glad.h'],['../glext_8h.html#a1af10666aa42292f407f6acc2af11948',1,'x():&#160;glext.h']]],
+  ['x0_32947',['x0',['../glext_8h.html#a98ac434677655cc8438bb72de2719f39',1,'glext.h']]],
+  ['x1_32948',['x1',['../glext_8h.html#a49825216c96caaeb09237b36651181c5',1,'glext.h']]],
+  ['x2_32949',['x2',['../glext_8h.html#a7b907a03236685c534d89d604cff23c8',1,'glext.h']]],
+  ['xcb_5fconnection_5ft_32950',['xcb_connection_t',['../x11__platform_8h.html#a8af532123ce5fb1c75ded03a0d77691f',1,'x11_platform.h']]],
+  ['xcb_5fvisualid_5ft_32951',['xcb_visualid_t',['../x11__platform_8h.html#af6d3da2162878f1f5100fda247831b8b',1,'x11_platform.h']]],
+  ['xcb_5fwindow_5ft_32952',['xcb_window_t',['../x11__platform_8h.html#a7d9111a4103329ac8c8f6e752a4c0a6c',1,'x11_platform.h']]],
+  ['xinput_5fbattery_5finformation_32953',['XINPUT_BATTERY_INFORMATION',['../xinput_8h.html#a72505c641a06433296303395d4c78a9b',1,'xinput.h']]],
+  ['xinput_5fcapabilities_32954',['XINPUT_CAPABILITIES',['../xinput_8h.html#acf54f59fb9d30352c7016615d997ee42',1,'xinput.h']]],
+  ['xinput_5fgamepad_32955',['XINPUT_GAMEPAD',['../xinput_8h.html#a0e062156ccca45e440e5c04a710bad4f',1,'xinput.h']]],
+  ['xinput_5fkeystroke_32956',['XINPUT_KEYSTROKE',['../xinput_8h.html#af13635c21248b8d2ca36fcba46aba2cb',1,'xinput.h']]],
+  ['xinput_5fstate_32957',['XINPUT_STATE',['../xinput_8h.html#a0627b327913f1bc398ae904fc980e74c',1,'xinput.h']]],
+  ['xinput_5fvibration_32958',['XINPUT_VIBRATION',['../xinput_8h.html#a073488a7b804766fea0cf4885bd18d83',1,'xinput.h']]],
+  ['xmove_32959',['xmove',['../glext_8h.html#a84285fbd59eb533a46dbd86adab48c8e',1,'glext.h']]],
+  ['xoffset_32960',['xoffset',['../glad_8h.html#ac20a0ffebf4c476650fcfa0633066f0e',1,'xoffset():&#160;glad.h'],['../glext_8h.html#ac20a0ffebf4c476650fcfa0633066f0e',1,'xoffset():&#160;glext.h']]],
+  ['xorig_32961',['xorig',['../glext_8h.html#a825a0e1948b3834ea6ba13ff3da52aff',1,'glext.h']]]
+];

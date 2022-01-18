@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_texture_8c">
+<title>src/vally/renderer/texture.c File Reference</title>
+<indexterm><primary>src/vally/renderer/texture.c</primary></indexterm>
+<programlisting>#include &lt;vally/renderer/texture.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;glad/glad.h&gt;
+#include &lt;vally/core/logger.h&gt;
+#include &lt;vally/resources/resources.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_structtexture">texture</link> * <link linkend="_texture_8c_1af14f5139f6bfc5968d335b9705e45820">texture_create</link> (<link linkend="_structimage">image</link> *<link linkend="_structimage">image</link>)</para>
+
+<para>Creates new texture from image. </para>
+</listitem>
+            <listitem><para><link linkend="_structtexture">texture</link> * <link linkend="_texture_8c_1abc90292f8765f0c1add26d78cfd21dd4">texture_white_create</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_texture_8c_1aa6ec5f9134f98a38d901418656e43499">texture_destroy</link> (<link linkend="_structtexture">texture</link> *<link linkend="_structtexture">texture</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_texture_8c_1ad2cb3b0ccaa6894880ef2ac785705f29">texture_bind</link> (<link linkend="_include_2vally_2config_8h_1afaa62991928fb9fb18ff0db62a040aba">u32</link> unit, <link linkend="_structtexture">texture</link> *<link linkend="_structtexture">texture</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_texture_8c_1a18f570cb1aaaaaf21d0a61216a35fdb5">texture_unbind</link> ()</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_texture_8c_1ad2cb3b0ccaa6894880ef2ac785705f29"/>    <section>
+    <title>texture_bind()</title>
+<indexterm><primary>texture_bind</primary><secondary>texture.c</secondary></indexterm>
+<indexterm><primary>texture.c</primary><secondary>texture_bind</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> texture_bind (<link linkend="_include_2vally_2config_8h_1afaa62991928fb9fb18ff0db62a040aba">u32</link> unit, <link linkend="_structtexture">texture</link> * texture)</computeroutput></para><para>
+Definition at line 88 of file texture.c.</para>
+<programlisting>88 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+89 &#32;&#32;<link linkend="_glad_8h_1af15266b67de988f5ddf442bbbdd1b3fc">glActiveTexture</link>(<link linkend="_glad_8h_1a16cc91096144fc7048b45e2add14915b">GL_TEXTURE0</link>&#32;+&#32;unit);
+90 &#32;&#32;<link linkend="_glad_8h_1a987aecafceffb9afaef11412d42e605b">glBindTexture</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;<link linkend="_structtexture">texture</link>-&gt;<link linkend="_structtexture_1a80d0e2a9d244ce65a29cb87e5db5c695">id</link>);
+91 }
+</programlisting>    </section><anchor xml:id="_texture_8c_1af14f5139f6bfc5968d335b9705e45820"/>    <section>
+    <title>texture_create()</title>
+<indexterm><primary>texture_create</primary><secondary>texture.c</secondary></indexterm>
+<indexterm><primary>texture.c</primary><secondary>texture_create</secondary></indexterm>
+<para><computeroutput><link linkend="_structtexture">texture</link>* texture_create (<link linkend="_structimage">image</link> * image)</computeroutput></para><para>
+
+<para>Creates new texture from image. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>img</entry>
+                                <entry>
+<para>image source </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>textureS </para>
+</formalpara>
+</para>
+<para>
+Definition at line 34 of file texture.c.</para>
+<programlisting>34 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+35 &#32;&#32;<link linkend="_structtexture">texture</link>&#32;*_texture&#32;=&#32;(<link linkend="_structtexture">texture</link>&#32;*)<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>(<emphasis role="keyword">sizeof</emphasis>(<link linkend="_structtexture">texture</link>));
+36 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!_texture)&#32;{
+37 &#32;&#32;&#32;&#32;<link linkend="_logger_8h_1ae5066a2e77390ed60a2e2a98c374c520">VALLY_ERROR</link>(<emphasis role="stringliteral">&quot;Could&#32;not&#32;create&#32;texture&quot;</emphasis>);
+38 &#32;&#32;}
+39 
+40 &#32;&#32;<emphasis role="comment">//&#32;Generate&#32;OpenGL&#32;Texture</emphasis>
+41 &#32;&#32;<link linkend="_glad_8h_1a82ac4415f852b8b5bfe7356202ca934e">glGenTextures</link>(1,&#32;&amp;_texture-&gt;<link linkend="_structtexture_1a80d0e2a9d244ce65a29cb87e5db5c695">id</link>);
+42 &#32;&#32;<link linkend="_glad_8h_1a987aecafceffb9afaef11412d42e605b">glBindTexture</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;_texture-&gt;<link linkend="_structtexture_1a80d0e2a9d244ce65a29cb87e5db5c695">id</link>);
+43 
+44 &#32;&#32;<emphasis role="comment">//&#32;Configure&#32;texture&#32;parameters</emphasis>
+45 &#32;&#32;<link linkend="_glad_8h_1a5817fa85137822142b4951eacd0154e7">glTexParameteri</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;<link linkend="_glad_8h_1a23a0bc2909cc2f79fe7287aaa044e880">GL_TEXTURE_WRAP_S</link>,&#32;<link linkend="_glad_8h_1ae90f81f48642444b4ba7fa5cacf40569">GL_CLAMP_TO_EDGE</link>);&#32;&#32;
+46 &#32;&#32;<link linkend="_glad_8h_1a5817fa85137822142b4951eacd0154e7">glTexParameteri</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;<link linkend="_glad_8h_1ac307a4772e1d3decd5b6f36192113ab6">GL_TEXTURE_WRAP_T</link>,&#32;<link linkend="_glad_8h_1ae90f81f48642444b4ba7fa5cacf40569">GL_CLAMP_TO_EDGE</link>);&#32;
+47 &#32;&#32;<link linkend="_glad_8h_1a5817fa85137822142b4951eacd0154e7">glTexParameteri</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;<link linkend="_glad_8h_1a173a2b2453322dd8d613df6cf2e72480">GL_TEXTURE_MIN_FILTER</link>,&#32;<link linkend="_glad_8h_1a7ec02582a9b1c390908a2230c8e26c0b">GL_NEAREST</link>);
+48 &#32;&#32;<link linkend="_glad_8h_1a5817fa85137822142b4951eacd0154e7">glTexParameteri</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;<link linkend="_glad_8h_1acb47a41b5963d44826f44b7370bccc26">GL_TEXTURE_MAG_FILTER</link>,&#32;<link linkend="_glad_8h_1a7ec02582a9b1c390908a2230c8e26c0b">GL_NEAREST</link>);
+49 
+50 &#32;&#32;_texture-&gt;<link linkend="_structtexture_1af1c60d7f83164b192685cc53a15ebd6b">width</link>&#32;=&#32;<link linkend="_structimage">image</link>-&gt;<link linkend="_structimage_1a42ecfe2675278f6b7e70033e3ff89e4a">width</link>;
+51 &#32;&#32;_texture-&gt;<link linkend="_structtexture_1a6c617792e2e0312db7ef3e475ac4b635">height</link>&#32;=&#32;<link linkend="_structimage">image</link>-&gt;<link linkend="_structimage_1aa478e4be0fe527274f9233cc11ec71e9">height</link>;&#32;&#32;<emphasis role="comment">//&#32;Binding&#32;image&#32;to&#32;the&#32;texture</emphasis>
+52 &#32;&#32;<link linkend="_glad_8h_1a7da97095b562f67f161b50104776a66d">glTexImage2D</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;0,&#32;<link linkend="_glad_8h_1a9f2854f4a91a0d83d2d54cb8110bfca4">GL_RGBA</link>,&#32;_texture-&gt;<link linkend="_structtexture_1af1c60d7f83164b192685cc53a15ebd6b">width</link>,&#32;_texture-&gt;<link linkend="_structtexture_1a6c617792e2e0312db7ef3e475ac4b635">height</link>,&#32;0,&#32;<link linkend="_glad_8h_1a9f2854f4a91a0d83d2d54cb8110bfca4">GL_RGBA</link>,&#32;<link linkend="_glad_8h_1a80a33c79f69417372d65d2a65ca36d49">GL_UNSIGNED_BYTE</link>,&#32;<link linkend="_structimage">image</link>-&gt;<link linkend="_structimage_1aecf7dbb8a46058432c245ff52e4fce82">buffer</link>);
+53 
+54 &#32;&#32;<link linkend="_glad_8h_1a987aecafceffb9afaef11412d42e605b">glBindTexture</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;0);
+55 
+56 &#32;&#32;<link linkend="_resources_8c_1a16641af0e8abb4648df5964f32f30adb">resources_add</link>(_texture,&#32;<link linkend="_texture_8c_1aa6ec5f9134f98a38d901418656e43499">texture_destroy</link>);
+57 
+58 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;_texture;
+59 }
+</programlisting>    </section><anchor xml:id="_texture_8c_1aa6ec5f9134f98a38d901418656e43499"/>    <section>
+    <title>texture_destroy()</title>
+<indexterm><primary>texture_destroy</primary><secondary>texture.c</secondary></indexterm>
+<indexterm><primary>texture.c</primary><secondary>texture_destroy</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> texture_destroy (<link linkend="_structtexture">texture</link> * texture)</computeroutput></para><para>
+Definition at line 83 of file texture.c.</para>
+<programlisting>83 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+84 &#32;&#32;<link linkend="_glad_8h_1aedf2546140e2c0f0e8d6f62e9998ae73">glDeleteTextures</link>(1,&#32;&amp;<link linkend="_structtexture">texture</link>-&gt;<link linkend="_structtexture_1a80d0e2a9d244ce65a29cb87e5db5c695">id</link>);
+85 &#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(<link linkend="_structtexture">texture</link>);
+86 }
+</programlisting>    </section><anchor xml:id="_texture_8c_1a18f570cb1aaaaaf21d0a61216a35fdb5"/>    <section>
+    <title>texture_unbind()</title>
+<indexterm><primary>texture_unbind</primary><secondary>texture.c</secondary></indexterm>
+<indexterm><primary>texture.c</primary><secondary>texture_unbind</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> texture_unbind ( )</computeroutput></para><para>
+Definition at line 93 of file texture.c.</para>
+<programlisting>93 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+94 &#32;&#32;<link linkend="_glad_8h_1a987aecafceffb9afaef11412d42e605b">glBindTexture</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;0);
+95 }
+</programlisting>    </section><anchor xml:id="_texture_8c_1abc90292f8765f0c1add26d78cfd21dd4"/>    <section>
+    <title>texture_white_create()</title>
+<indexterm><primary>texture_white_create</primary><secondary>texture.c</secondary></indexterm>
+<indexterm><primary>texture.c</primary><secondary>texture_white_create</secondary></indexterm>
+<para><computeroutput><link linkend="_structtexture">texture</link>* texture_white_create ( )</computeroutput></para><para>
+Definition at line 61 of file texture.c.</para>
+<programlisting>61 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+62 &#32;&#32;<link linkend="_structtexture">texture</link>&#32;*_texture&#32;=&#32;(<link linkend="_structtexture">texture</link>&#32;*)<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>(<emphasis role="keyword">sizeof</emphasis>(<link linkend="_structtexture">texture</link>));
+63 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!_texture)&#32;{
+64 &#32;&#32;&#32;&#32;<link linkend="_logger_8h_1ae5066a2e77390ed60a2e2a98c374c520">VALLY_ERROR</link>(<emphasis role="stringliteral">&quot;Could&#32;not&#32;create&#32;texture&quot;</emphasis>);
+65 &#32;&#32;}
+66 &#32;&#32;_texture-&gt;<link linkend="_structtexture_1af1c60d7f83164b192685cc53a15ebd6b">width</link>&#32;=&#32;1;
+67 &#32;&#32;_texture-&gt;<link linkend="_structtexture_1a6c617792e2e0312db7ef3e475ac4b635">height</link>&#32;=&#32;1;
+68 
+69 &#32;&#32;<emphasis role="comment">//&#32;generate&#32;white&#32;texture</emphasis>
+70 &#32;&#32;<link linkend="_glad_8h_1a82ac4415f852b8b5bfe7356202ca934e">glGenTextures</link>(1,&#32;&amp;_texture-&gt;<link linkend="_structtexture_1a80d0e2a9d244ce65a29cb87e5db5c695">id</link>);
+71 &#32;&#32;<link linkend="_glad_8h_1a987aecafceffb9afaef11412d42e605b">glBindTexture</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;_texture-&gt;<link linkend="_structtexture_1a80d0e2a9d244ce65a29cb87e5db5c695">id</link>);
+72 &#32;&#32;<link linkend="_glad_8h_1a5817fa85137822142b4951eacd0154e7">glTexParameteri</link>(&#32;<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;<link linkend="_glad_8h_1a23a0bc2909cc2f79fe7287aaa044e880">GL_TEXTURE_WRAP_S</link>,&#32;<link linkend="_glad_8h_1ae90f81f48642444b4ba7fa5cacf40569">GL_CLAMP_TO_EDGE</link>);&#32;
+73 &#32;&#32;<link linkend="_glad_8h_1a5817fa85137822142b4951eacd0154e7">glTexParameteri</link>(&#32;<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;<link linkend="_glad_8h_1ac307a4772e1d3decd5b6f36192113ab6">GL_TEXTURE_WRAP_T</link>,&#32;<link linkend="_glad_8h_1ae90f81f48642444b4ba7fa5cacf40569">GL_CLAMP_TO_EDGE</link>);&#32;
+74 &#32;&#32;<link linkend="_glad_8h_1a5817fa85137822142b4951eacd0154e7">glTexParameteri</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;<link linkend="_glad_8h_1a173a2b2453322dd8d613df6cf2e72480">GL_TEXTURE_MIN_FILTER</link>,&#32;<link linkend="_glad_8h_1a7ec02582a9b1c390908a2230c8e26c0b">GL_NEAREST</link>);
+75 &#32;&#32;<link linkend="_glad_8h_1a5817fa85137822142b4951eacd0154e7">glTexParameteri</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;<link linkend="_glad_8h_1acb47a41b5963d44826f44b7370bccc26">GL_TEXTURE_MAG_FILTER</link>,&#32;<link linkend="_glad_8h_1a7ec02582a9b1c390908a2230c8e26c0b">GL_NEAREST</link>);
+76 &#32;&#32;<link linkend="_include_2vally_2config_8h_1afaa62991928fb9fb18ff0db62a040aba">u32</link>&#32;<link linkend="_glad_8h_1a3ea846f998d64f079b86052b6c4193a8">color</link>&#32;=&#32;0xffffffff;&#32;<emphasis role="comment">//&#32;white&#32;color</emphasis>
+77 &#32;&#32;<link linkend="_glad_8h_1a7da97095b562f67f161b50104776a66d">glTexImage2D</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;0,&#32;<link linkend="_glad_8h_1a9f2854f4a91a0d83d2d54cb8110bfca4">GL_RGBA</link>,&#32;1,&#32;1,&#32;0,&#32;<link linkend="_glad_8h_1a9f2854f4a91a0d83d2d54cb8110bfca4">GL_RGBA</link>,&#32;<link linkend="_glad_8h_1a80a33c79f69417372d65d2a65ca36d49">GL_UNSIGNED_BYTE</link>,&#32;&amp;<link linkend="_glad_8h_1a3ea846f998d64f079b86052b6c4193a8">color</link>);
+78 &#32;&#32;<link linkend="_glad_8h_1a987aecafceffb9afaef11412d42e605b">glBindTexture</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;0);
+79 
+80 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;_texture;
+81 }
+</programlisting></section>
+</section>
+</section>

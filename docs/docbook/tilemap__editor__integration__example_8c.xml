@@ -1,0 +1,234 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_tilemap__editor__integration__example_8c">
+<title>deps/stb/tests/tilemap_editor_integration_example.c File Reference</title>
+<indexterm><primary>deps/stb/tests/tilemap_editor_integration_example.c</primary></indexterm>
+<programlisting>#include &lt;assert.h&gt;
+#include &lt;ctype.h&gt;
+#include &quot;game.h&quot;
+#include &quot;SDL.h&quot;
+#include &quot;stb_tilemap_editor.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_tilemap__editor__integration__example_8c_1a1042875aa70040c17bf65f1d73cc7b3c">STBTE_MAX_PROPERTIES</link>   8</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tilemap__editor__integration__example_8c_1aa40b3c75e55b04422fe1fcfbbb37dd94">STBTE_PROP_TYPE</link>(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  tiledata,  <link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>)   prop_type(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,tiledata)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tilemap__editor__integration__example_8c_1a898e79f515d8f40b7baed40bb66c9a6a">STBTE_PROP_NAME</link>(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  tiledata,  <link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>)   prop_name(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,tiledata)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tilemap__editor__integration__example_8c_1acf4389caa414189f611ab306baed73fd">STBTE_PROP_MIN</link>(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  tiledata,  <link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>)   prop_range(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,tiledata,0)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tilemap__editor__integration__example_8c_1a7e7ab932016a38fb4f6d8c7d0457b614">STBTE_PROP_MAX</link>(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  tiledata,  <link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>)   prop_range(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,tiledata,1)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tilemap__editor__integration__example_8c_1ad902c7d8c5fc8afbd0e53ebaacc24d51">STBTE_PROP_FLOAT_SCALE</link>(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  td,  <link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>)   (0.1)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tilemap__editor__integration__example_8c_1a034118506cd51dc54a2d0c04e267b390">STBTE_ALLOW_LINK</link>(srctile,  srcprop,  desttile,  destprop)   allow_link(srctile, desttile)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tilemap__editor__integration__example_8c_1aa6e44cfc6e5e41bafc45fe743b3a5087">STBTE_LINK_COLOR</link>(srctile,  srcprop,  desttile,  destprop)   (is_platform(srctile) ? 0xff80ff : 0x808040)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tilemap__editor__integration__example_8c_1a076bf3af5bf7f59909d6e7521d5bd2bc">STBTE_DRAW_RECT</link>(<link linkend="_glext_8h_1a98ac434677655cc8438bb72de2719f39">x0</link>,  <link linkend="_glext_8h_1ae7f97ed6c9c8e502fcbc44c7cb8a8312">y0</link>,  <link linkend="_glext_8h_1a49825216c96caaeb09237b36651181c5">x1</link>,  <link linkend="_glext_8h_1a3af6c78fcdfccea028a5878bc747ef39">y1</link>,  <link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)   <link linkend="_tilemap__editor__integration__example_8c_1a030e28df7e8330064f0f9cc13e98cc9f">editor_draw_rect</link>(<link linkend="_glext_8h_1a98ac434677655cc8438bb72de2719f39">x0</link>,<link linkend="_glext_8h_1ae7f97ed6c9c8e502fcbc44c7cb8a8312">y0</link>,<link linkend="_glext_8h_1a49825216c96caaeb09237b36651181c5">x1</link>,<link linkend="_glext_8h_1a3af6c78fcdfccea028a5878bc747ef39">y1</link>,(<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)&gt;&gt;16,((<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)&gt;&gt;8)&amp;255,(<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)&amp;255)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tilemap__editor__integration__example_8c_1ac561edcc59a25cc123bc0c059e9b3924">STBTE_DRAW_TILE</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,  <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,  <link linkend="_glad_8h_1a58c2a664503e14ffb8f21012aabff3e9">id</link>,  highlight,  <link linkend="_glad_8h_1a5eca93bfc840dd9013a5fcf04dbaf051">props</link>)   <link linkend="_tilemap__editor__integration__example_8c_1ac4a59a956e246a43fdfc8c1eebe0c6d1">editor_draw_tile</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,<link linkend="_glad_8h_1a58c2a664503e14ffb8f21012aabff3e9">id</link>,highlight,<link linkend="_glad_8h_1a5eca93bfc840dd9013a5fcf04dbaf051">props</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tilemap__editor__integration__example_8c_1ab8d570f6e93f0243c6d34b93de13ff50">STB_TILEMAP_EDITOR_IMPLEMENTATION</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_tilemap__editor__integration__example_8c_1ac4a59a956e246a43fdfc8c1eebe0c6d1">editor_draw_tile</link> (int <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, int <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>, unsigned short tile, int <link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>, float *<link linkend="_glad_8h_1a5eca93bfc840dd9013a5fcf04dbaf051">props</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_tilemap__editor__integration__example_8c_1a030e28df7e8330064f0f9cc13e98cc9f">editor_draw_rect</link> (int <link linkend="_glext_8h_1a98ac434677655cc8438bb72de2719f39">x0</link>, int <link linkend="_glext_8h_1ae7f97ed6c9c8e502fcbc44c7cb8a8312">y0</link>, int <link linkend="_glext_8h_1a49825216c96caaeb09237b36651181c5">x1</link>, int <link linkend="_glext_8h_1a3af6c78fcdfccea028a5878bc747ef39">y1</link>, unsigned char <link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>, unsigned char <link linkend="_glad_8h_1acaceb3a655ff28b75259860bcb868f9f">g</link>, unsigned char <link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link> (enum <link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489b">stbte_action</link> act)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_tilemap__editor__integration__example_8c_1acd83cebe5b37d1c3961060b9e32ff298">editor_process_sdl_event</link> (SDL_Event *<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_tilemap__editor__integration__example_8c_1a30962c693d3d8ad14f46baf596a1a9ea">editor_init</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_stb__tilemap__editor_8h_1a1eb4417db66bd630e3d03310a03416c5">stbte_tilemap</link> * <link linkend="_tilemap__editor__integration__example_8c_1a79fefaeaa40baa8397b68093b669a024">edit_map</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_tilemap__editor__integration__example_8c_1ab8d570f6e93f0243c6d34b93de13ff50"/>    <section>
+    <title>STB_TILEMAP_EDITOR_IMPLEMENTATION</title>
+<indexterm><primary>STB_TILEMAP_EDITOR_IMPLEMENTATION</primary><secondary>tilemap_editor_integration_example.c</secondary></indexterm>
+<indexterm><primary>tilemap_editor_integration_example.c</primary><secondary>STB_TILEMAP_EDITOR_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define STB_TILEMAP_EDITOR_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 41 of file tilemap_editor_integration_example.c.</para>
+    </section><anchor xml:id="_tilemap__editor__integration__example_8c_1a034118506cd51dc54a2d0c04e267b390"/>    <section>
+    <title>STBTE_ALLOW_LINK</title>
+<indexterm><primary>STBTE_ALLOW_LINK</primary><secondary>tilemap_editor_integration_example.c</secondary></indexterm>
+<indexterm><primary>tilemap_editor_integration_example.c</primary><secondary>STBTE_ALLOW_LINK</secondary></indexterm>
+<para><computeroutput>#define STBTE_ALLOW_LINK( srctile,  srcprop,  desttile,  destprop)   allow_link(srctile, desttile)</computeroutput></para><para>
+Definition at line 27 of file tilemap_editor_integration_example.c.</para>
+    </section><anchor xml:id="_tilemap__editor__integration__example_8c_1a076bf3af5bf7f59909d6e7521d5bd2bc"/>    <section>
+    <title>STBTE_DRAW_RECT</title>
+<indexterm><primary>STBTE_DRAW_RECT</primary><secondary>tilemap_editor_integration_example.c</secondary></indexterm>
+<indexterm><primary>tilemap_editor_integration_example.c</primary><secondary>STBTE_DRAW_RECT</secondary></indexterm>
+<para><computeroutput>#define STBTE_DRAW_RECT( <link linkend="_glext_8h_1a98ac434677655cc8438bb72de2719f39">x0</link>,  <link linkend="_glext_8h_1ae7f97ed6c9c8e502fcbc44c7cb8a8312">y0</link>,  <link linkend="_glext_8h_1a49825216c96caaeb09237b36651181c5">x1</link>,  <link linkend="_glext_8h_1a3af6c78fcdfccea028a5878bc747ef39">y1</link>,  <link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)   <link linkend="_tilemap__editor__integration__example_8c_1a030e28df7e8330064f0f9cc13e98cc9f">editor_draw_rect</link>(<link linkend="_glext_8h_1a98ac434677655cc8438bb72de2719f39">x0</link>,<link linkend="_glext_8h_1ae7f97ed6c9c8e502fcbc44c7cb8a8312">y0</link>,<link linkend="_glext_8h_1a49825216c96caaeb09237b36651181c5">x1</link>,<link linkend="_glext_8h_1a3af6c78fcdfccea028a5878bc747ef39">y1</link>,(<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)&gt;&gt;16,((<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)&gt;&gt;8)&amp;255,(<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)&amp;255)</computeroutput></para><para>
+Definition at line 33 of file tilemap_editor_integration_example.c.</para>
+    </section><anchor xml:id="_tilemap__editor__integration__example_8c_1ac561edcc59a25cc123bc0c059e9b3924"/>    <section>
+    <title>STBTE_DRAW_TILE</title>
+<indexterm><primary>STBTE_DRAW_TILE</primary><secondary>tilemap_editor_integration_example.c</secondary></indexterm>
+<indexterm><primary>tilemap_editor_integration_example.c</primary><secondary>STBTE_DRAW_TILE</secondary></indexterm>
+<para><computeroutput>#define STBTE_DRAW_TILE( <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,  <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,  <link linkend="_glad_8h_1a58c2a664503e14ffb8f21012aabff3e9">id</link>,  highlight,  <link linkend="_glad_8h_1a5eca93bfc840dd9013a5fcf04dbaf051">props</link>)   <link linkend="_tilemap__editor__integration__example_8c_1ac4a59a956e246a43fdfc8c1eebe0c6d1">editor_draw_tile</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,<link linkend="_glad_8h_1a58c2a664503e14ffb8f21012aabff3e9">id</link>,highlight,<link linkend="_glad_8h_1a5eca93bfc840dd9013a5fcf04dbaf051">props</link>)</computeroutput></para><para>
+Definition at line 36 of file tilemap_editor_integration_example.c.</para>
+    </section><anchor xml:id="_tilemap__editor__integration__example_8c_1aa6e44cfc6e5e41bafc45fe743b3a5087"/>    <section>
+    <title>STBTE_LINK_COLOR</title>
+<indexterm><primary>STBTE_LINK_COLOR</primary><secondary>tilemap_editor_integration_example.c</secondary></indexterm>
+<indexterm><primary>tilemap_editor_integration_example.c</primary><secondary>STBTE_LINK_COLOR</secondary></indexterm>
+<para><computeroutput>#define STBTE_LINK_COLOR( srctile,  srcprop,  desttile,  destprop)   (is_platform(srctile) ? 0xff80ff : 0x808040)</computeroutput></para><para>
+Definition at line 30 of file tilemap_editor_integration_example.c.</para>
+    </section><anchor xml:id="_tilemap__editor__integration__example_8c_1a1042875aa70040c17bf65f1d73cc7b3c"/>    <section>
+    <title>STBTE_MAX_PROPERTIES</title>
+<indexterm><primary>STBTE_MAX_PROPERTIES</primary><secondary>tilemap_editor_integration_example.c</secondary></indexterm>
+<indexterm><primary>tilemap_editor_integration_example.c</primary><secondary>STBTE_MAX_PROPERTIES</secondary></indexterm>
+<para><computeroutput>#define STBTE_MAX_PROPERTIES   8</computeroutput></para><para>
+Definition at line 19 of file tilemap_editor_integration_example.c.</para>
+    </section><anchor xml:id="_tilemap__editor__integration__example_8c_1ad902c7d8c5fc8afbd0e53ebaacc24d51"/>    <section>
+    <title>STBTE_PROP_FLOAT_SCALE</title>
+<indexterm><primary>STBTE_PROP_FLOAT_SCALE</primary><secondary>tilemap_editor_integration_example.c</secondary></indexterm>
+<indexterm><primary>tilemap_editor_integration_example.c</primary><secondary>STBTE_PROP_FLOAT_SCALE</secondary></indexterm>
+<para><computeroutput>#define STBTE_PROP_FLOAT_SCALE( <link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  td,  <link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>)   (0.1)</computeroutput></para><para>
+Definition at line 25 of file tilemap_editor_integration_example.c.</para>
+    </section><anchor xml:id="_tilemap__editor__integration__example_8c_1a7e7ab932016a38fb4f6d8c7d0457b614"/>    <section>
+    <title>STBTE_PROP_MAX</title>
+<indexterm><primary>STBTE_PROP_MAX</primary><secondary>tilemap_editor_integration_example.c</secondary></indexterm>
+<indexterm><primary>tilemap_editor_integration_example.c</primary><secondary>STBTE_PROP_MAX</secondary></indexterm>
+<para><computeroutput>#define STBTE_PROP_MAX( <link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  tiledata,  <link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>)   prop_range(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,tiledata,1)</computeroutput></para><para>
+Definition at line 24 of file tilemap_editor_integration_example.c.</para>
+    </section><anchor xml:id="_tilemap__editor__integration__example_8c_1acf4389caa414189f611ab306baed73fd"/>    <section>
+    <title>STBTE_PROP_MIN</title>
+<indexterm><primary>STBTE_PROP_MIN</primary><secondary>tilemap_editor_integration_example.c</secondary></indexterm>
+<indexterm><primary>tilemap_editor_integration_example.c</primary><secondary>STBTE_PROP_MIN</secondary></indexterm>
+<para><computeroutput>#define STBTE_PROP_MIN( <link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  tiledata,  <link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>)   prop_range(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,tiledata,0)</computeroutput></para><para>
+Definition at line 23 of file tilemap_editor_integration_example.c.</para>
+    </section><anchor xml:id="_tilemap__editor__integration__example_8c_1a898e79f515d8f40b7baed40bb66c9a6a"/>    <section>
+    <title>STBTE_PROP_NAME</title>
+<indexterm><primary>STBTE_PROP_NAME</primary><secondary>tilemap_editor_integration_example.c</secondary></indexterm>
+<indexterm><primary>tilemap_editor_integration_example.c</primary><secondary>STBTE_PROP_NAME</secondary></indexterm>
+<para><computeroutput>#define STBTE_PROP_NAME( <link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  tiledata,  <link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>)   prop_name(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,tiledata)</computeroutput></para><para>
+Definition at line 22 of file tilemap_editor_integration_example.c.</para>
+    </section><anchor xml:id="_tilemap__editor__integration__example_8c_1aa40b3c75e55b04422fe1fcfbbb37dd94"/>    <section>
+    <title>STBTE_PROP_TYPE</title>
+<indexterm><primary>STBTE_PROP_TYPE</primary><secondary>tilemap_editor_integration_example.c</secondary></indexterm>
+<indexterm><primary>tilemap_editor_integration_example.c</primary><secondary>STBTE_PROP_TYPE</secondary></indexterm>
+<para><computeroutput>#define STBTE_PROP_TYPE( <link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  tiledata,  <link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>)   prop_type(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,tiledata)</computeroutput></para><para>
+Definition at line 21 of file tilemap_editor_integration_example.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_tilemap__editor__integration__example_8c_1a030e28df7e8330064f0f9cc13e98cc9f"/>    <section>
+    <title>editor_draw_rect()</title>
+<indexterm><primary>editor_draw_rect</primary><secondary>tilemap_editor_integration_example.c</secondary></indexterm>
+<indexterm><primary>tilemap_editor_integration_example.c</primary><secondary>editor_draw_rect</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> editor_draw_rect (int x0, int y0, int x1, int y1, unsigned char r, unsigned char g, unsigned char b)</computeroutput></para>    </section><anchor xml:id="_tilemap__editor__integration__example_8c_1ac4a59a956e246a43fdfc8c1eebe0c6d1"/>    <section>
+    <title>editor_draw_tile()</title>
+<indexterm><primary>editor_draw_tile</primary><secondary>tilemap_editor_integration_example.c</secondary></indexterm>
+<indexterm><primary>tilemap_editor_integration_example.c</primary><secondary>editor_draw_tile</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> editor_draw_tile (int x, int y, unsigned short tile, int mode, float * props)</computeroutput></para>    </section><anchor xml:id="_tilemap__editor__integration__example_8c_1a30962c693d3d8ad14f46baf596a1a9ea"/>    <section>
+    <title>editor_init()</title>
+<indexterm><primary>editor_init</primary><secondary>tilemap_editor_integration_example.c</secondary></indexterm>
+<indexterm><primary>tilemap_editor_integration_example.c</primary><secondary>editor_init</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> editor_init (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 92 of file tilemap_editor_integration_example.c.</para>
+<programlisting>93 {
+94 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+95 &#32;&#32;&#32;<link linkend="_tilemap__editor__integration__example_8c_1a79fefaeaa40baa8397b68093b669a024">edit_map</link>&#32;=&#32;<link linkend="_stb__tilemap__editor_8h_1ad55839664c3676f7f3a3bdb07aa81297">stbte_create_map</link>(20,14,&#32;8,&#32;16,16,&#32;100);
+96 
+97 &#32;&#32;&#32;<link linkend="_stb__tilemap__editor_8h_1ab376c07fd370625478fbedc24208ef7a">stbte_set_background_tile</link>(<link linkend="_tilemap__editor__integration__example_8c_1a79fefaeaa40baa8397b68093b669a024">edit_map</link>,&#32;T_empty);
+98 
+99 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;T__num_types;&#32;++i)&#32;{
+100 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(i&#32;!=&#32;T_reserved1&#32;&amp;&amp;&#32;i&#32;!=&#32;T_entry&#32;&amp;&amp;&#32;i&#32;!=&#32;T_doorframe)
+101 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__tilemap__editor_8h_1a532d59e89a4d7b992b64e4b1199391d5">stbte_define_tile</link>(<link linkend="_tilemap__editor__integration__example_8c_1a79fefaeaa40baa8397b68093b669a024">edit_map</link>,&#32;0+i,&#32;1,&#32;<emphasis role="stringliteral">&quot;Background&quot;</emphasis>);
+102 &#32;&#32;&#32;}
+103 &#32;&#32;&#32;<link linkend="_stb__tilemap__editor_8h_1a532d59e89a4d7b992b64e4b1199391d5">stbte_define_tile</link>(<link linkend="_tilemap__editor__integration__example_8c_1a79fefaeaa40baa8397b68093b669a024">edit_map</link>,&#32;256+O_player&#32;&#32;&#32;,&#32;8,&#32;<emphasis role="stringliteral">&quot;Char&quot;</emphasis>);
+104 &#32;&#32;&#32;<link linkend="_stb__tilemap__editor_8h_1a532d59e89a4d7b992b64e4b1199391d5">stbte_define_tile</link>(<link linkend="_tilemap__editor__integration__example_8c_1a79fefaeaa40baa8397b68093b669a024">edit_map</link>,&#32;256+O_robot&#32;&#32;&#32;&#32;,&#32;8,&#32;<emphasis role="stringliteral">&quot;Char&quot;</emphasis>);
+105 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=O_lockeddoor;&#32;i&#32;&lt;&#32;O__num_types-2;&#32;++i)
+106 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(i&#32;==&#32;O_platform&#32;||&#32;i&#32;==&#32;O_vplatform)
+107 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__tilemap__editor_8h_1a532d59e89a4d7b992b64e4b1199391d5">stbte_define_tile</link>(<link linkend="_tilemap__editor__integration__example_8c_1a79fefaeaa40baa8397b68093b669a024">edit_map</link>,&#32;256+i,&#32;4,&#32;<emphasis role="stringliteral">&quot;Object&quot;</emphasis>);
+108 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+109 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__tilemap__editor_8h_1a532d59e89a4d7b992b64e4b1199391d5">stbte_define_tile</link>(<link linkend="_tilemap__editor__integration__example_8c_1a79fefaeaa40baa8397b68093b669a024">edit_map</link>,&#32;256+i,&#32;2,&#32;<emphasis role="stringliteral">&quot;Object&quot;</emphasis>);
+110 
+111 &#32;&#32;&#32;<emphasis role="comment">//stbte_set_layername(edit_map,&#32;0,&#32;&quot;background&quot;);</emphasis>
+112 &#32;&#32;&#32;<emphasis role="comment">//stbte_set_layername(edit_map,&#32;1,&#32;&quot;objects&quot;);</emphasis>
+113 &#32;&#32;&#32;<emphasis role="comment">//stbte_set_layername(edit_map,&#32;2,&#32;&quot;platforms&quot;);</emphasis>
+114 &#32;&#32;&#32;<emphasis role="comment">//stbte_set_layername(edit_map,&#32;3,&#32;&quot;characters&quot;);</emphasis>
+115 }
+</programlisting>    </section><anchor xml:id="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a"/>    <section>
+    <title>editor_key()</title>
+<indexterm><primary>editor_key</primary><secondary>tilemap_editor_integration_example.c</secondary></indexterm>
+<indexterm><primary>tilemap_editor_integration_example.c</primary><secondary>editor_key</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> editor_key (enum <link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489b">stbte_action</link> act)</computeroutput></para><para>
+Definition at line 46 of file tilemap_editor_integration_example.c.</para>
+<programlisting>47 {
+48 &#32;&#32;&#32;<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489b">stbte_action</link>(<link linkend="_tilemap__editor__integration__example_8c_1a79fefaeaa40baa8397b68093b669a024">edit_map</link>,&#32;act);
+49 }
+</programlisting>    </section><anchor xml:id="_tilemap__editor__integration__example_8c_1acd83cebe5b37d1c3961060b9e32ff298"/>    <section>
+    <title>editor_process_sdl_event()</title>
+<indexterm><primary>editor_process_sdl_event</primary><secondary>tilemap_editor_integration_example.c</secondary></indexterm>
+<indexterm><primary>tilemap_editor_integration_example.c</primary><secondary>editor_process_sdl_event</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> editor_process_sdl_event (SDL_Event * e)</computeroutput></para><para>
+Definition at line 51 of file tilemap_editor_integration_example.c.</para>
+<programlisting>52 {
+53 &#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;type)&#32;{
+54 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_MOUSEMOTION:
+55 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_MOUSEBUTTONDOWN:
+56 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_MOUSEBUTTONUP:
+57 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_MOUSEWHEEL:
+58 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__tilemap__editor_8h_1acafb5cfed567392a1baf79eeaae5e000">stbte_mouse_sdl</link>(<link linkend="_tilemap__editor__integration__example_8c_1a79fefaeaa40baa8397b68093b669a024">edit_map</link>,&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>,&#32;1.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>/editor_scale,1.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>/editor_scale,0,0);
+59 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+60 
+61 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_KEYDOWN:
+62 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(in_editor)&#32;{
+63 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;key.keysym.sym)&#32;{
+64 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDLK_RIGHT:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489ba144ea20a132345c10d9ca53a6d02ba19">STBTE_scroll_right</link>);&#32;<emphasis role="keywordflow">break</emphasis>;
+65 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDLK_LEFT&#32;:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489bae1d9ac30a5e2b3e333da82f9f64e7ee5">STBTE_scroll_left</link>&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+66 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDLK_UP&#32;&#32;&#32;:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489baf1d442243546075cdf22300644830165">STBTE_scroll_up</link>&#32;&#32;&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+67 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDLK_DOWN&#32;:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489ba55752707f18e9e16ff02c9c6cbcc8420">STBTE_scroll_down</link>&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+68 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+69 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;key.keysym.scancode)&#32;{
+70 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_S:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489ba165230ce39d882a97144e6227e69f9ad">STBTE_tool_select</link>);&#32;<emphasis role="keywordflow">break</emphasis>;
+71 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_B:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489ba32cde384d0d8a6714f94d9dcc3849a3f">STBTE_tool_brush</link>&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+72 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_E:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489baa35a62c011e46341589fb46002660521">STBTE_tool_erase</link>&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+73 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_R:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489baca063ebe73fa14e2fa11aa988d7449e0">STBTE_tool_rectangle</link>&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+74 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_I:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489bab062287551b5ee45068a64fa837637a9">STBTE_tool_eyedropper</link>);&#32;<emphasis role="keywordflow">break</emphasis>;
+75 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_L:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489ba6f60681098ec465c4ed2655dbfa368e1">STBTE_tool_link</link>);&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+76 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_G:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489bae81816d78c404bd57c0e8ed67be8f222">STBTE_act_toggle_grid</link>);&#32;<emphasis role="keywordflow">break</emphasis>;
+77 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+78 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;key.keysym.mod&#32;&amp;&#32;KMOD_CTRL)&#32;&amp;&amp;&#32;!(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;key.keysym.mod&#32;&amp;&#32;~KMOD_CTRL))&#32;{
+79 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;key.keysym.scancode)&#32;{
+80 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_X:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489baed6f197db53051e958e29ff9cfd6b92d">STBTE_act_cut</link>&#32;&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+81 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_C:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489ba05555aa5cee661a131fb491b28a23211">STBTE_act_copy</link>&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+82 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_V:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489ba9f148beb095d8cac4c9b534de3de0e7c">STBTE_act_paste</link>);&#32;<emphasis role="keywordflow">break</emphasis>;
+83 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_Z:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489bae46c9443f03e78bbde3e88a65c29895b">STBTE_act_undo</link>&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+84 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_Y:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489ba0cc48c1485f6aa0637963b3ff6ba807f">STBTE_act_redo</link>&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+85 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+86 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+87 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+88 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+89 &#32;&#32;&#32;}
+90 }
+</programlisting></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_tilemap__editor__integration__example_8c_1a79fefaeaa40baa8397b68093b669a024"/>    <section>
+    <title>edit_map</title>
+<indexterm><primary>edit_map</primary><secondary>tilemap_editor_integration_example.c</secondary></indexterm>
+<indexterm><primary>tilemap_editor_integration_example.c</primary><secondary>edit_map</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__tilemap__editor_8h_1a1eb4417db66bd630e3d03310a03416c5">stbte_tilemap</link>* edit_map</computeroutput></para><para>
+Definition at line 44 of file tilemap_editor_integration_example.c.</para>
+</section>
+</section>
+</section>

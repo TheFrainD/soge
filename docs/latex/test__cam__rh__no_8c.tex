@@ -1,0 +1,52 @@
+\hypertarget{test__cam__rh__no_8c}{}\doxysection{deps/cglm/test/src/test\+\_\+cam\+\_\+rh\+\_\+no.c File Reference}
+\label{test__cam__rh__no_8c}\index{deps/cglm/test/src/test\_cam\_rh\_no.c@{deps/cglm/test/src/test\_cam\_rh\_no.c}}
+{\ttfamily \#include \char`\"{}test\+\_\+common.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{test__cam__rh__no_8c_ab6460682d558b1a75e86ecba6452153d}{T\+E\+S\+T\+\_\+\+I\+M\+PL}} (perspective\+\_\+rh\+\_\+no)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{test__cam__rh__no_8c_ab6460682d558b1a75e86ecba6452153d}\label{test__cam__rh__no_8c_ab6460682d558b1a75e86ecba6452153d}} 
+\index{test\_cam\_rh\_no.c@{test\_cam\_rh\_no.c}!TEST\_IMPL@{TEST\_IMPL}}
+\index{TEST\_IMPL@{TEST\_IMPL}!test\_cam\_rh\_no.c@{test\_cam\_rh\_no.c}}
+\doxysubsubsection{\texorpdfstring{TEST\_IMPL()}{TEST\_IMPL()}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+I\+M\+PL (\begin{DoxyParamCaption}\item[{perspective\+\_\+rh\+\_\+no}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 10 of file test\+\_\+cam\+\_\+rh\+\_\+no.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{10                              \{}
+\DoxyCodeLine{11   \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} \mbox{\hyperlink{glad_8h_a92034251bfd455d524a9b5610cddba00}{dst}};}
+\DoxyCodeLine{12   \textcolor{keyword}{const} \textcolor{keywordtype}{float} fovy     = \mbox{\hyperlink{util_8h_a96ef52a4c391eca254a1d722b9a005e1}{glm\_rad}}(45.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}});}
+\DoxyCodeLine{13   \textcolor{keyword}{const} \textcolor{keywordtype}{float} aspect   = 640/480.0f;}
+\DoxyCodeLine{14   \textcolor{keyword}{const} \textcolor{keywordtype}{float} zNearVal = 0.1f;}
+\DoxyCodeLine{15   \textcolor{keyword}{const} \textcolor{keywordtype}{float} zFarVal  = 100.0f;}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17   \mbox{\hyperlink{clipspace_2persp__rh__no_8h_a872b96fede8c59d84be87e2299bfd006}{glm\_perspective\_rh\_no}}(fovy, aspect, zNearVal, zFarVal, \mbox{\hyperlink{glad_8h_a92034251bfd455d524a9b5610cddba00}{dst}});}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19   \textcolor{comment}{/* Sanity mk. I: longhand version */}}
+\DoxyCodeLine{20   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(\mbox{\hyperlink{test__common_8h_a8b5ca35f1cc6f58d128c0adf26c5f44a}{test\_eq}}(\mbox{\hyperlink{glad_8h_a92034251bfd455d524a9b5610cddba00}{dst}}[0][0],  1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} / (tanf(fovy / 2) * aspect)))}
+\DoxyCodeLine{21   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(\mbox{\hyperlink{test__common_8h_a8b5ca35f1cc6f58d128c0adf26c5f44a}{test\_eq}}(\mbox{\hyperlink{glad_8h_a92034251bfd455d524a9b5610cddba00}{dst}}[1][1],  1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} / tanf(fovy / 2)))}
+\DoxyCodeLine{22   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(\mbox{\hyperlink{test__common_8h_a8b5ca35f1cc6f58d128c0adf26c5f44a}{test\_eq}}(\mbox{\hyperlink{glad_8h_a92034251bfd455d524a9b5610cddba00}{dst}}[2][2], -\/1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} * (zFarVal + zNearVal) / (zFarVal -\/ zNearVal)))}
+\DoxyCodeLine{23   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(\mbox{\hyperlink{test__common_8h_a8b5ca35f1cc6f58d128c0adf26c5f44a}{test\_eq}}(\mbox{\hyperlink{glad_8h_a92034251bfd455d524a9b5610cddba00}{dst}}[2][3], -\/1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}))}
+\DoxyCodeLine{24   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(\mbox{\hyperlink{test__common_8h_a8b5ca35f1cc6f58d128c0adf26c5f44a}{test\_eq}}(\mbox{\hyperlink{glad_8h_a92034251bfd455d524a9b5610cddba00}{dst}}[3][2], -\/2 * zFarVal * zNearVal / (zFarVal -\/ zNearVal)))}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26   \textcolor{comment}{/* Sanity mk. II */}}
+\DoxyCodeLine{27   \textcolor{comment}{/*reference test data for glm\_perspective\_rh\_no*/}}
+\DoxyCodeLine{28   \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} cmp = \{0\};}
+\DoxyCodeLine{29   cmp[0][0] =  1.8106601f;}
+\DoxyCodeLine{30   cmp[1][1] =  2.4142134f;}
+\DoxyCodeLine{31   cmp[2][2] = -\/1.0020020f;}
+\DoxyCodeLine{32   cmp[2][3] = -\/1.0000000f;}
+\DoxyCodeLine{33   cmp[3][2] = -\/0.2002002f;}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35   \textcolor{keywordflow}{return} \mbox{\hyperlink{test__common_8c_ab6c735c5e9684b49694b21d4de506820}{test\_assert\_mat4\_eq}}(\mbox{\hyperlink{glad_8h_a92034251bfd455d524a9b5610cddba00}{dst}}, cmp);}
+\DoxyCodeLine{36 \}}
+
+\end{DoxyCode}

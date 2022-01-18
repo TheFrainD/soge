@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_windows_8c">
+<title>deps/glfw/examples/windows.c File Reference</title>
+<indexterm><primary>deps/glfw/examples/windows.c</primary></indexterm>
+<programlisting>#include &lt;glad/gl.h&gt;
+#include &lt;GLFW/glfw3.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_windows_8c_1a09f9c3bf094ecaf707c673924ffd615a">GLAD_GL_IMPLEMENTATION</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_windows_8c_1a088324ad8995e3eb76024e3e79083d48">GLFW_INCLUDE_NONE</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_windows_8c_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_windows_8c_1a09f9c3bf094ecaf707c673924ffd615a"/>    <section>
+    <title>GLAD_GL_IMPLEMENTATION</title>
+<indexterm><primary>GLAD_GL_IMPLEMENTATION</primary><secondary>windows.c</secondary></indexterm>
+<indexterm><primary>windows.c</primary><secondary>GLAD_GL_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define GLAD_GL_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 26 of file windows.c.</para>
+    </section><anchor xml:id="_windows_8c_1a088324ad8995e3eb76024e3e79083d48"/>    <section>
+    <title>GLFW_INCLUDE_NONE</title>
+<indexterm><primary>GLFW_INCLUDE_NONE</primary><secondary>windows.c</secondary></indexterm>
+<indexterm><primary>windows.c</primary><secondary>GLFW_INCLUDE_NONE</secondary></indexterm>
+<para><computeroutput>#define GLFW_INCLUDE_NONE</computeroutput></para><para>
+Definition at line 28 of file windows.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_windows_8c_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>windows.c</secondary></indexterm>
+<indexterm><primary>windows.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 34 of file windows.c.</para>
+<programlisting>35 {
+36 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;xpos,&#32;ypos,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>;
+37 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>*&#32;description;
+38 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>*&#32;windows[4];
+39 
+40 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_group__init_1gab41771f0215a2e0afb4cf1cf98082d40">glfwInit</link>())
+41 &#32;&#32;&#32;&#32;{
+42 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gaee7bac4c7e1b2769207747c1b5ae2f9e">glfwGetError</link>(&amp;description);
+43 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Error:&#32;%s\n&quot;</emphasis>,&#32;description);
+44 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+45 &#32;&#32;&#32;&#32;}
+46 
+47 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gafb3cdc45297e06d8f1eb13adc69ca6c4">GLFW_VISIBLE</link>,&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>);
+48 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga21b854d36314c94d65aed84405b2f25e">GLFW_DECORATED</link>,&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>);
+49 
+50 &#32;&#32;&#32;&#32;<link linkend="_group__monitor_1ga5a3ac0f6e3786df47aabccfb5760b31d">glfwGetMonitorWorkarea</link>(<link linkend="_group__monitor_1ga59ea49f377fe701dd76764183e64d9f4">glfwGetPrimaryMonitor</link>(),&#32;&amp;xpos,&#32;&amp;ypos,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;&amp;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+51 
+52 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;4;&#32;&#32;i++)
+53 &#32;&#32;&#32;&#32;{
+54 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&#32;=&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>&#32;/&#32;5;
+55 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keyword">struct</emphasis>
+56 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+57 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>,&#32;<link linkend="_glad_8h_1acaceb3a655ff28b75259860bcb868f9f">g</link>,&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>;
+58 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;colors[]&#32;=
+59 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+60 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;0.95f,&#32;0.32f,&#32;0.11f&#32;},
+61 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;0.50f,&#32;0.80f,&#32;0.16f&#32;},
+62 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;&#32;&#32;0.f,&#32;0.68f,&#32;0.94f&#32;},
+63 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;0.98f,&#32;0.74f,&#32;0.04f&#32;}
+64 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;};
+65 
+66 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(i&#32;&gt;&#32;0)
+67 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gafa94b1da34bfd6488c0d709761504dfc">GLFW_FOCUS_ON_SHOW</link>,&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>);
+68 
+69 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;windows[i]&#32;=&#32;<link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link>(<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>,&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>,&#32;<emphasis role="stringliteral">&quot;Multi-Window&#32;Example&quot;</emphasis>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+70 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!windows[i])
+71 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+72 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gaee7bac4c7e1b2769207747c1b5ae2f9e">glfwGetError</link>(&amp;description);
+73 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Error:&#32;%s\n&quot;</emphasis>,&#32;description);
+74 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+75 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+76 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+77 
+78 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga0dc8d880a0d87be16d3ea8114561f6f0">glfwSetWindowPos</link>(windows[i],
+79 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;xpos&#32;+&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&#32;*&#32;(1&#32;+&#32;(i&#32;&amp;&#32;1)),
+80 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ypos&#32;+&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&#32;*&#32;(1&#32;+&#32;(i&#32;&gt;&gt;&#32;1)));
+81 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__input_1gae1eb729d2dd91dc33fd60e150a6e1684">glfwSetInputMode</link>(windows[i],&#32;<link linkend="_glfw3_8h_1ae3bbe2315b7691ab088159eb6c9110fc">GLFW_STICKY_KEYS</link>,&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>);
+82 
+83 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__context_1gafd76c93e15ec8b0b90506a9936a46185">glfwMakeContextCurrent</link>(windows[i]);
+84 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a7e9e0ebe65864f5f2bcd289c5736041b">gladLoadGL</link>(<link linkend="_group__context_1ga0e8af175218929615c16e74938c10f2a">glfwGetProcAddress</link>);
+85 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a12060509af7dc9c8353810eb8b7f145c">glClearColor</link>(colors[i].<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>,&#32;colors[i].<link linkend="_glad_8h_1acaceb3a655ff28b75259860bcb868f9f">g</link>,&#32;colors[i].<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>,&#32;1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+86 &#32;&#32;&#32;&#32;}
+87 
+88 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;4;&#32;&#32;i++)
+89 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga7945bcdff9e5e058cf36505d6873ed8c">glfwShowWindow</link>(windows[i]);
+90 
+91 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(;;)
+92 &#32;&#32;&#32;&#32;{
+93 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;4;&#32;&#32;i++)
+94 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+95 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__context_1gafd76c93e15ec8b0b90506a9936a46185">glfwMakeContextCurrent</link>(windows[i]);
+96 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afc250a2b6bf11f24bb73534a2f053c0d">glClear</link>(<link linkend="_glad_8h_1a947db9ff944c4b78e652144c3dd1060c">GL_COLOR_BUFFER_BIT</link>);
+97 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1gafb827800eedbfcbc97b1e5408df668d7">glfwSwapBuffers</link>(windows[i]);
+98 
+99 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_group__window_1gaa6162f67dfa38b8beda2fea623649332">glfwWindowShouldClose</link>(windows[i])&#32;||
+100 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__input_1ga7d8ad8ffaf272808f04e1d5d33ec8859">glfwGetKey</link>(windows[i],&#32;<link linkend="_group__keys_1gaac6596c350b635c245113b81c2123b93">GLFW_KEY_ESCAPE</link>))
+101 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+102 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+103 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_SUCCESS);
+104 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+105 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+106 
+107 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga6e042d05823c11e11c7339b81a237738">glfwWaitEvents</link>();
+108 &#32;&#32;&#32;&#32;}
+109 }
+</programlisting></section>
+</section>
+</section>

@@ -1,0 +1,299 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_nsgl__context_8m">
+<title>deps/glfw/src/nsgl_context.m File Reference</title>
+<indexterm><primary>deps/glfw/src/nsgl_context.m</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+#include &lt;unistd.h&gt;
+#include &lt;math.h&gt;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_nsgl__context_8m_1ae24f754d0973d289958e25833b5025f1">addAttrib</link>(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_nsgl__context_8m_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,  <link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>)   { <link linkend="_wgl__context_8c_1ae24f754d0973d289958e25833b5025f1">addAttrib</link>(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>); <link linkend="_wgl__context_8c_1ae24f754d0973d289958e25833b5025f1">addAttrib</link>(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>); }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_nsgl__context_8m_1ac0510729f33f4aa006a3bc03dc98b37a">_glfwInitNSGL</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_nsgl__context_8m_1ad104998536aae3e02fa89f78925a9a52">_glfwTerminateNSGL</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_nsgl__context_8m_1a4d57514fb92fa2439dfe429183aee6c6">_glfwCreateContextNSGL</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, const <link linkend="_struct___g_l_f_wctxconfig">_GLFWctxconfig</link> *ctxconfig, const <link linkend="_struct___g_l_f_wfbconfig">_GLFWfbconfig</link> *fbconfig)</para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glad_8h_1a58c2a664503e14ffb8f21012aabff3e9">id</link> <link linkend="_nsgl__context_8m_1a7d06532c9eacc1beb3722ee02ec1b528">glfwGetNSGLContext</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_nsgl__context_8m_1ae24f754d0973d289958e25833b5025f1"/>    <section>
+    <title>addAttrib</title>
+<indexterm><primary>addAttrib</primary><secondary>nsgl_context.m</secondary></indexterm>
+<indexterm><primary>nsgl_context.m</primary><secondary>addAttrib</secondary></indexterm>
+<para><computeroutput>#define addAttrib( <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)</computeroutput></para><emphasis role="strong">Value:</emphasis><programlisting>{&#32;\
+&#32;&#32;&#32;&#32;assert((<emphasis role="keywordtype">size_t</emphasis>)&#32;<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>&#32;&lt;&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>)&#32;/&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>[0]));&#32;\
+&#32;&#32;&#32;&#32;attribs[<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>++]&#32;=&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>;&#32;\
+}
+</programlisting>    </section><anchor xml:id="_nsgl__context_8m_1a8f427f7949c0cb386b5632aa88cb30c7"/>    <section>
+    <title>setAttrib</title>
+<indexterm><primary>setAttrib</primary><secondary>nsgl_context.m</secondary></indexterm>
+<indexterm><primary>nsgl_context.m</primary><secondary>setAttrib</secondary></indexterm>
+<para><computeroutput>#define setAttrib( <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,  <link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>)   { <link linkend="_wgl__context_8c_1ae24f754d0973d289958e25833b5025f1">addAttrib</link>(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>); <link linkend="_wgl__context_8c_1ae24f754d0973d289958e25833b5025f1">addAttrib</link>(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>); }</computeroutput></para></section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_nsgl__context_8m_1a4d57514fb92fa2439dfe429183aee6c6"/>    <section>
+    <title>_glfwCreateContextNSGL()</title>
+<indexterm><primary>_glfwCreateContextNSGL</primary><secondary>nsgl_context.m</secondary></indexterm>
+<indexterm><primary>nsgl_context.m</primary><secondary>_glfwCreateContextNSGL</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwCreateContextNSGL (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, const <link linkend="_struct___g_l_f_wctxconfig">_GLFWctxconfig</link> * ctxconfig, const <link linkend="_struct___g_l_f_wfbconfig">_GLFWfbconfig</link> * fbconfig)</computeroutput></para><para>
+Definition at line 158 of file nsgl_context.m.</para>
+<programlisting>161 {
+162 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a9d54584dc156b04e39d7567a70e13ef8">client</link>&#32;==&#32;<link linkend="_glfw3_8h_1a28d9b3bc6c2a522d815c8e146595051f">GLFW_OPENGL_ES_API</link>)
+163 &#32;&#32;&#32;&#32;{
+164 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga56882b290db23261cc6c053c40c2d08e">GLFW_API_UNAVAILABLE</link>,
+165 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;NSGL:&#32;OpenGL&#32;ES&#32;is&#32;not&#32;available&#32;on&#32;macOS&quot;</emphasis>);
+166 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+167 &#32;&#32;&#32;&#32;}
+168 
+169 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a51a8fa315dccf7f6217098cf0413a7a9">major</link>&#32;&gt;&#32;2)
+170 &#32;&#32;&#32;&#32;{
+171 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a51a8fa315dccf7f6217098cf0413a7a9">major</link>&#32;==&#32;3&#32;&amp;&amp;&#32;ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a250a475c8d778778bb8fb4ab942eddd9">minor</link>&#32;&lt;&#32;2)
+172 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+173 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad16c5565b4a69f9c2a9ac2c0dbc89462">GLFW_VERSION_UNAVAILABLE</link>,
+174 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;NSGL:&#32;The&#32;targeted&#32;version&#32;of&#32;macOS&#32;does&#32;not&#32;support&#32;OpenGL&#32;3.0&#32;or&#32;3.1&#32;but&#32;may&#32;support&#32;3.2&#32;and&#32;above&quot;</emphasis>);
+175 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+176 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+177 &#32;&#32;&#32;&#32;}
+178 
+179 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Context&#32;robustness&#32;modes&#32;(GL_KHR_robustness)&#32;are&#32;not&#32;yet&#32;supported&#32;by</emphasis>
+180 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;macOS&#32;but&#32;are&#32;not&#32;a&#32;hard&#32;constraint,&#32;so&#32;ignore&#32;and&#32;continue</emphasis>
+181 
+182 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Context&#32;release&#32;behaviors&#32;(GL_KHR_context_flush_control)&#32;are&#32;not&#32;yet</emphasis>
+183 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;supported&#32;by&#32;macOS&#32;but&#32;are&#32;not&#32;a&#32;hard&#32;constraint,&#32;so&#32;ignore&#32;and&#32;continue</emphasis>
+184 
+185 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Debug&#32;contexts&#32;(GL_KHR_debug)&#32;are&#32;not&#32;yet&#32;supported&#32;by&#32;macOS&#32;but&#32;are&#32;not</emphasis>
+186 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;a&#32;hard&#32;constraint,&#32;so&#32;ignore&#32;and&#32;continue</emphasis>
+187 
+188 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;No-error&#32;contexts&#32;(GL_KHR_no_error)&#32;are&#32;not&#32;yet&#32;supported&#32;by&#32;macOS&#32;but</emphasis>
+189 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;are&#32;not&#32;a&#32;hard&#32;constraint,&#32;so&#32;ignore&#32;and&#32;continue</emphasis>
+190 
+191 <emphasis role="preprocessor">#define&#32;addAttrib(a)&#32;\</emphasis>
+192 <emphasis role="preprocessor">{&#32;\</emphasis>
+193 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;assert((size_t)&#32;index&#32;&lt;&#32;sizeof(attribs)&#32;/&#32;sizeof(attribs[0]));&#32;\</emphasis>
+194 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;attribs[index++]&#32;=&#32;a;&#32;\</emphasis>
+195 <emphasis role="preprocessor">}</emphasis>
+196 <emphasis role="preprocessor">#define&#32;setAttrib(a,&#32;v)&#32;{&#32;addAttrib(a);&#32;addAttrib(v);&#32;}</emphasis>
+197 
+198 &#32;&#32;&#32;&#32;NSOpenGLPixelFormatAttribute&#32;<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>[40];
+199 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>&#32;=&#32;0;
+200 
+201 &#32;&#32;&#32;&#32;<link linkend="_nsgl__context_8m_1ae24f754d0973d289958e25833b5025f1">addAttrib</link>(NSOpenGLPFAAccelerated);
+202 &#32;&#32;&#32;&#32;<link linkend="_nsgl__context_8m_1ae24f754d0973d289958e25833b5025f1">addAttrib</link>(NSOpenGLPFAClosestPolicy);
+203 
+204 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1aca19ede48c6927259d9b2ca477888fd0">nsgl</link>.<link linkend="_struct___g_l_f_wctxconfig_1a34067b0d1e79da07f2cb8a8d402cd29b">offline</link>)
+205 &#32;&#32;&#32;&#32;{
+206 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_nsgl__context_8m_1ae24f754d0973d289958e25833b5025f1">addAttrib</link>(NSOpenGLPFAAllowOfflineRenderers);
+207 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NOTE:&#32;This&#32;replaces&#32;the&#32;NSSupportsAutomaticGraphicsSwitching&#32;key&#32;in</emphasis>
+208 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;Info.plist&#32;for&#32;unbundled&#32;applications</emphasis>
+209 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;HACK:&#32;This&#32;assumes&#32;that&#32;NSOpenGLPixelFormat&#32;will&#32;remain</emphasis>
+210 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;a&#32;straightforward&#32;wrapper&#32;of&#32;its&#32;CGL&#32;counterpart</emphasis>
+211 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_nsgl__context_8m_1ae24f754d0973d289958e25833b5025f1">addAttrib</link>(kCGLPFASupportsAutomaticGraphicsSwitching);
+212 &#32;&#32;&#32;&#32;}
+213 
+214 <emphasis role="preprocessor">#if&#32;MAC_OS_X_VERSION_MAX_ALLOWED&#32;&gt;=&#32;101000</emphasis>
+215 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a51a8fa315dccf7f6217098cf0413a7a9">major</link>&#32;&gt;=&#32;4)
+216 &#32;&#32;&#32;&#32;{
+217 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_nsgl__context_8m_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(NSOpenGLPFAOpenGLProfile,&#32;NSOpenGLProfileVersion4_1Core);
+218 &#32;&#32;&#32;&#32;}
+219 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+220 <emphasis role="preprocessor">#endif&#32;</emphasis><emphasis role="comment">/*MAC_OS_X_VERSION_MAX_ALLOWED*/</emphasis><emphasis role="preprocessor"></emphasis>
+221 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a51a8fa315dccf7f6217098cf0413a7a9">major</link>&#32;&gt;=&#32;3)
+222 &#32;&#32;&#32;&#32;{
+223 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_nsgl__context_8m_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(NSOpenGLPFAOpenGLProfile,&#32;NSOpenGLProfileVersion3_2Core);
+224 &#32;&#32;&#32;&#32;}
+225 
+226 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a51a8fa315dccf7f6217098cf0413a7a9">major</link>&#32;&lt;=&#32;2)
+227 &#32;&#32;&#32;&#32;{
+228 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1a1ad8a70d25f8c39ee51365fdae9de7ff">auxBuffers</link>&#32;!=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>)
+229 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_nsgl__context_8m_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(NSOpenGLPFAAuxBuffers,&#32;fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1a1ad8a70d25f8c39ee51365fdae9de7ff">auxBuffers</link>);
+230 
+231 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1a90657631c2de9e7e45ae16b836c6cf4a">accumRedBits</link>&#32;!=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>&#32;&amp;&amp;
+232 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1a5207821bf6a7cf5625bb350b448c1ab9">accumGreenBits</link>&#32;!=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>&#32;&amp;&amp;
+233 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1a1628cb7857d3fd6d4967ddbc16f57445">accumBlueBits</link>&#32;!=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>&#32;&amp;&amp;
+234 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1a88d9b62bc1c4c4fb411ff2d980ef08e2">accumAlphaBits</link>&#32;!=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>)
+235 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+236 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;accumBits&#32;=&#32;fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1a90657631c2de9e7e45ae16b836c6cf4a">accumRedBits</link>&#32;+
+237 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fbconfig-&gt;accumGreenBits&#32;+
+238 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fbconfig-&gt;accumBlueBits&#32;+
+239 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fbconfig-&gt;accumAlphaBits;
+240 
+241 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_nsgl__context_8m_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(NSOpenGLPFAAccumSize,&#32;accumBits);
+242 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+243 &#32;&#32;&#32;&#32;}
+244 
+245 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1ab9a8f50cbc9b0c6e1ad230e411797f44">redBits</link>&#32;!=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>&#32;&amp;&amp;
+246 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1af19c4a4e81f5e852ebfbfdc5986610ab">greenBits</link>&#32;!=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>&#32;&amp;&amp;
+247 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1aff797f80ccb99126ce88f696f745f6e5">blueBits</link>&#32;!=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>)
+248 &#32;&#32;&#32;&#32;{
+249 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;colorBits&#32;=&#32;fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1ab9a8f50cbc9b0c6e1ad230e411797f44">redBits</link>&#32;+
+250 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fbconfig-&gt;greenBits&#32;+
+251 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fbconfig-&gt;blueBits;
+252 
+253 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;macOS&#32;needs&#32;non-zero&#32;color&#32;size,&#32;so&#32;set&#32;reasonable&#32;values</emphasis>
+254 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(colorBits&#32;==&#32;0)
+255 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;colorBits&#32;=&#32;24;
+256 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(colorBits&#32;&lt;&#32;15)
+257 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;colorBits&#32;=&#32;15;
+258 
+259 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_nsgl__context_8m_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(NSOpenGLPFAColorSize,&#32;colorBits);
+260 &#32;&#32;&#32;&#32;}
+261 
+262 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1a9945d1191aaa94d92f326382027a43a0">alphaBits</link>&#32;!=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>)
+263 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_nsgl__context_8m_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(NSOpenGLPFAAlphaSize,&#32;fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1a9945d1191aaa94d92f326382027a43a0">alphaBits</link>);
+264 
+265 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1a0e7baeca6ea2e4146236f38bc1df870f">depthBits</link>&#32;!=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>)
+266 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_nsgl__context_8m_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(NSOpenGLPFADepthSize,&#32;fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1a0e7baeca6ea2e4146236f38bc1df870f">depthBits</link>);
+267 
+268 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1a202a6343c817e5f6e9597a02559273b9">stencilBits</link>&#32;!=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>)
+269 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_nsgl__context_8m_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(NSOpenGLPFAStencilSize,&#32;fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1a202a6343c817e5f6e9597a02559273b9">stencilBits</link>);
+270 
+271 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1a25b8332a9aa5828345fdac1be790e135">stereo</link>)
+272 &#32;&#32;&#32;&#32;{
+273 <emphasis role="preprocessor">#if&#32;MAC_OS_X_VERSION_MAX_ALLOWED&#32;&gt;=&#32;101200</emphasis>
+274 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga196e125ef261d94184e2b55c05762f14">GLFW_FORMAT_UNAVAILABLE</link>,
+275 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;NSGL:&#32;Stereo&#32;rendering&#32;is&#32;deprecated&quot;</emphasis>);
+276 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+277 <emphasis role="preprocessor">#else</emphasis>
+278 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_nsgl__context_8m_1ae24f754d0973d289958e25833b5025f1">addAttrib</link>(NSOpenGLPFAStereo);
+279 <emphasis role="preprocessor">#endif</emphasis>
+280 &#32;&#32;&#32;&#32;}
+281 
+282 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1afd48b37171d567f9893bd8a660c4621b">doublebuffer</link>)
+283 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_nsgl__context_8m_1ae24f754d0973d289958e25833b5025f1">addAttrib</link>(NSOpenGLPFADoubleBuffer);
+284 
+285 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1aa6a57ca77268a4851f5c2be7e330cf5d">samples</link>&#32;!=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>)
+286 &#32;&#32;&#32;&#32;{
+287 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1aa6a57ca77268a4851f5c2be7e330cf5d">samples</link>&#32;==&#32;0)
+288 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+289 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_nsgl__context_8m_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(NSOpenGLPFASampleBuffers,&#32;0);
+290 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+291 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+292 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+293 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_nsgl__context_8m_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(NSOpenGLPFASampleBuffers,&#32;1);
+294 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_nsgl__context_8m_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(NSOpenGLPFASamples,&#32;fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1aa6a57ca77268a4851f5c2be7e330cf5d">samples</link>);
+295 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+296 &#32;&#32;&#32;&#32;}
+297 
+298 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NOTE:&#32;All&#32;NSOpenGLPixelFormats&#32;on&#32;the&#32;relevant&#32;cards&#32;support&#32;sRGB</emphasis>
+299 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;framebuffer,&#32;so&#32;there&apos;s&#32;no&#32;need&#32;(and&#32;no&#32;way)&#32;to&#32;request&#32;it</emphasis>
+300 
+301 &#32;&#32;&#32;&#32;<link linkend="_nsgl__context_8m_1ae24f754d0973d289958e25833b5025f1">addAttrib</link>(0);
+302 
+303 <emphasis role="preprocessor">#undef&#32;addAttrib</emphasis>
+304 <emphasis role="preprocessor">#undef&#32;setAttrib</emphasis>
+305 
+306 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.nsgl.pixelFormat&#32;=
+307 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;[[NSOpenGLPixelFormat&#32;alloc]&#32;initWithAttributes:attribs];
+308 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.nsgl.pixelFormat&#32;==&#32;nil)
+309 &#32;&#32;&#32;&#32;{
+310 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga196e125ef261d94184e2b55c05762f14">GLFW_FORMAT_UNAVAILABLE</link>,
+311 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;NSGL:&#32;Failed&#32;to&#32;find&#32;a&#32;suitable&#32;pixel&#32;format&quot;</emphasis>);
+312 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+313 &#32;&#32;&#32;&#32;}
+314 
+315 &#32;&#32;&#32;&#32;NSOpenGLContext*&#32;share&#32;=&#32;nil;
+316 
+317 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1ae2de5454bfc052ffa9c27f300fcc0425">share</link>)
+318 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;share&#32;=&#32;ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1ae2de5454bfc052ffa9c27f300fcc0425">share</link>-&gt;<link linkend="_struct___g_l_f_wwindow_1af46919bccfa19f04aa11a3b9900f2ce0">context</link>.nsgl.object;
+319 
+320 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.nsgl.object&#32;=
+321 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;[[NSOpenGLContext&#32;alloc]&#32;initWithFormat:window-&gt;context.nsgl.pixelFormat
+322 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;shareContext:share];
+323 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.nsgl.object&#32;==&#32;nil)
+324 &#32;&#32;&#32;&#32;{
+325 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad16c5565b4a69f9c2a9ac2c0dbc89462">GLFW_VERSION_UNAVAILABLE</link>,
+326 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;NSGL:&#32;Failed&#32;to&#32;create&#32;OpenGL&#32;context&quot;</emphasis>);
+327 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+328 &#32;&#32;&#32;&#32;}
+329 
+330 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1a5b19082325a56470e0770d08698a8965">transparent</link>)
+331 &#32;&#32;&#32;&#32;{
+332 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1acebcc1c5663f14ebde1d16831e5fed94">GLint</link>&#32;opaque&#32;=&#32;0;
+333 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;[window-&gt;context.nsgl.object&#32;setValues:&amp;opaque
+334 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;forParameter:NSOpenGLContextParameterSurfaceOpacity];
+335 &#32;&#32;&#32;&#32;}
+336 
+337 &#32;&#32;&#32;&#32;[window-&gt;ns.view&#32;setWantsBestResolutionOpenGLSurface:window-&gt;ns.retina];
+338 
+339 &#32;&#32;&#32;&#32;[window-&gt;context.nsgl.object&#32;setView:window-&gt;ns.view];
+340 
+341 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.makeCurrent&#32;=&#32;makeContextCurrentNSGL;
+342 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.swapBuffers&#32;=&#32;swapBuffersNSGL;
+343 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.swapInterval&#32;=&#32;swapIntervalNSGL;
+344 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.extensionSupported&#32;=&#32;extensionSupportedNSGL;
+345 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.getProcAddress&#32;=&#32;getProcAddressNSGL;
+346 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.destroy&#32;=&#32;destroyContextNSGL;
+347 
+348 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+349 }
+</programlisting>    </section><anchor xml:id="_nsgl__context_8m_1ac0510729f33f4aa006a3bc03dc98b37a"/>    <section>
+    <title>_glfwInitNSGL()</title>
+<indexterm><primary>_glfwInitNSGL</primary><secondary>nsgl_context.m</secondary></indexterm>
+<indexterm><primary>nsgl_context.m</primary><secondary>_glfwInitNSGL</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwInitNSGL (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 133 of file nsgl_context.m.</para>
+<programlisting>134 {
+135 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.nsgl.framework)
+136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+137 
+138 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.nsgl.framework&#32;=
+139 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFBundleGetBundleWithIdentifier(CFSTR(<emphasis role="stringliteral">&quot;com.apple.opengl&quot;</emphasis>));
+140 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.nsgl.framework&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+141 &#32;&#32;&#32;&#32;{
+142 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga56882b290db23261cc6c053c40c2d08e">GLFW_API_UNAVAILABLE</link>,
+143 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;NSGL:&#32;Failed&#32;to&#32;locate&#32;OpenGL&#32;framework&quot;</emphasis>);
+144 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+145 &#32;&#32;&#32;&#32;}
+146 
+147 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+148 }
+</programlisting>    </section><anchor xml:id="_nsgl__context_8m_1ad104998536aae3e02fa89f78925a9a52"/>    <section>
+    <title>_glfwTerminateNSGL()</title>
+<indexterm><primary>_glfwTerminateNSGL</primary><secondary>nsgl_context.m</secondary></indexterm>
+<indexterm><primary>nsgl_context.m</primary><secondary>_glfwTerminateNSGL</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwTerminateNSGL (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 152 of file nsgl_context.m.</para>
+<programlisting>153 {
+154 }
+</programlisting>    </section><anchor xml:id="_nsgl__context_8m_1a7d06532c9eacc1beb3722ee02ec1b528"/>    <section>
+    <title>glfwGetNSGLContext()</title>
+<indexterm><primary>glfwGetNSGLContext</primary><secondary>nsgl_context.m</secondary></indexterm>
+<indexterm><primary>nsgl_context.m</primary><secondary>glfwGetNSGLContext</secondary></indexterm>
+<para><computeroutput><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glad_8h_1a58c2a664503e14ffb8f21012aabff3e9">id</link> glfwGetNSGLContext (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> * handle)</computeroutput></para><para>
+Definition at line 356 of file nsgl_context.m.</para>
+<programlisting>357 {
+358 &#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link>*&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;(<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link>*)&#32;handle;
+359 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a69563c87fe776d416636a4d1b0e9e599">_GLFW_REQUIRE_INIT_OR_RETURN</link>(nil);
+360 
+361 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>.<link linkend="_struct___g_l_f_wplatform_1adadc0cac5c197cc28788bc4993a9f6da">platformID</link>&#32;!=&#32;<link linkend="_group__init_1ga83b18714254f75bc2f0cdbafa0f10b6b">GLFW_PLATFORM_COCOA</link>)
+362 &#32;&#32;&#32;&#32;{
+363 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga3608c6c29ab7a72f3bf019f4c3a2563d">GLFW_PLATFORM_UNAVAILABLE</link>,
+364 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;NSGL:&#32;Platform&#32;not&#32;initialized&quot;</emphasis>);
+365 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;nil;
+366 &#32;&#32;&#32;&#32;}
+367 
+368 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.source&#32;!=&#32;<link linkend="_glfw3_8h_1a0494c9bfd3f584ab41e6dbeeaa0e6a19">GLFW_NATIVE_CONTEXT_API</link>)
+369 &#32;&#32;&#32;&#32;{
+370 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gacff24d2757da752ae4c80bf452356487">GLFW_NO_WINDOW_CONTEXT</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+371 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;nil;
+372 &#32;&#32;&#32;&#32;}
+373 
+374 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.nsgl.object;
+375 }
+</programlisting></section>
+</section>
+</section>

@@ -1,0 +1,87 @@
+\hypertarget{image__write__test_8c}{}\doxysection{deps/stb/tests/image\+\_\+write\+\_\+test.c File Reference}
+\label{image__write__test_8c}\index{deps/stb/tests/image\_write\_test.c@{deps/stb/tests/image\_write\_test.c}}
+{\ttfamily \#include \char`\"{}stb\+\_\+image\+\_\+write.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{image__write__test_8c_af453f0874b279a4e019b538c84cc8587}{S\+T\+B\+\_\+\+I\+M\+A\+G\+E\+\_\+\+W\+R\+I\+T\+E\+\_\+\+S\+T\+A\+T\+IC}}
+\item 
+\#define \mbox{\hyperlink{image__write__test_8c_aefe397a94e8feddc652f92ef40ce9597}{S\+T\+B\+\_\+\+I\+M\+A\+G\+E\+\_\+\+W\+R\+I\+T\+E\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+A\+T\+I\+ON}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{image__write__test_8c_a4089b2e1b62709836196b7b2e2dd5d49}{image\+\_\+write\+\_\+test}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{image__write__test_8c_aefe397a94e8feddc652f92ef40ce9597}\label{image__write__test_8c_aefe397a94e8feddc652f92ef40ce9597}} 
+\index{image\_write\_test.c@{image\_write\_test.c}!STB\_IMAGE\_WRITE\_IMPLEMENTATION@{STB\_IMAGE\_WRITE\_IMPLEMENTATION}}
+\index{STB\_IMAGE\_WRITE\_IMPLEMENTATION@{STB\_IMAGE\_WRITE\_IMPLEMENTATION}!image\_write\_test.c@{image\_write\_test.c}}
+\doxysubsubsection{\texorpdfstring{STB\_IMAGE\_WRITE\_IMPLEMENTATION}{STB\_IMAGE\_WRITE\_IMPLEMENTATION}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+I\+M\+A\+G\+E\+\_\+\+W\+R\+I\+T\+E\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+A\+T\+I\+ON}
+
+
+
+Definition at line 5 of file image\+\_\+write\+\_\+test.\+c.
+
+\mbox{\Hypertarget{image__write__test_8c_af453f0874b279a4e019b538c84cc8587}\label{image__write__test_8c_af453f0874b279a4e019b538c84cc8587}} 
+\index{image\_write\_test.c@{image\_write\_test.c}!STB\_IMAGE\_WRITE\_STATIC@{STB\_IMAGE\_WRITE\_STATIC}}
+\index{STB\_IMAGE\_WRITE\_STATIC@{STB\_IMAGE\_WRITE\_STATIC}!image\_write\_test.c@{image\_write\_test.c}}
+\doxysubsubsection{\texorpdfstring{STB\_IMAGE\_WRITE\_STATIC}{STB\_IMAGE\_WRITE\_STATIC}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+I\+M\+A\+G\+E\+\_\+\+W\+R\+I\+T\+E\+\_\+\+S\+T\+A\+T\+IC}
+
+
+
+Definition at line 4 of file image\+\_\+write\+\_\+test.\+c.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{image__write__test_8c_a4089b2e1b62709836196b7b2e2dd5d49}\label{image__write__test_8c_a4089b2e1b62709836196b7b2e2dd5d49}} 
+\index{image\_write\_test.c@{image\_write\_test.c}!image\_write\_test@{image\_write\_test}}
+\index{image\_write\_test@{image\_write\_test}!image\_write\_test.c@{image\_write\_test.c}}
+\doxysubsubsection{\texorpdfstring{image\_write\_test()}{image\_write\_test()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} image\+\_\+write\+\_\+test (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 20 of file image\+\_\+write\+\_\+test.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{21 \{}
+\DoxyCodeLine{22    \textcolor{comment}{// make a RGB version of the template image}}
+\DoxyCodeLine{23    \textcolor{comment}{// use red on blue to detect R<-\/>B swaps}}
+\DoxyCodeLine{24    \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} img6x5\_rgb[6*5*3];}
+\DoxyCodeLine{25    \textcolor{keywordtype}{float} img6x5\_rgbf[6*5*3];}
+\DoxyCodeLine{26    \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28    \textcolor{keywordflow}{for} (i = 0; i < 6*5; i++) \{}
+\DoxyCodeLine{29       \textcolor{keywordtype}{int} on = img6x5\_template[i] == \textcolor{charliteral}{'*'};}
+\DoxyCodeLine{30       img6x5\_rgb[i*3 + 0] = on ? 255 : 0;}
+\DoxyCodeLine{31       img6x5\_rgb[i*3 + 1] = 0;}
+\DoxyCodeLine{32       img6x5\_rgb[i*3 + 2] = on ? 0 : 255;}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34       img6x5\_rgbf[i*3 + 0] = on ? 1.0f : 0.0f;}
+\DoxyCodeLine{35       img6x5\_rgbf[i*3 + 1] = 0.0f;}
+\DoxyCodeLine{36       img6x5\_rgbf[i*3 + 2] = on ? 0.0f : 1.0f;}
+\DoxyCodeLine{37    \}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39    \mbox{\hyperlink{glfw_2deps_2stb__image__write_8h_a9c03e5171f6aea47fde6dafcf3249ccf}{stbi\_write\_png}}(\textcolor{stringliteral}{"output/wr6x5\_regular.png"}, 6, 5, 3, img6x5\_rgb, 6*3);}
+\DoxyCodeLine{40    \mbox{\hyperlink{glfw_2deps_2stb__image__write_8h_a4f63ec842984e5db3edf2da89f16038e}{stbi\_write\_bmp}}(\textcolor{stringliteral}{"output/wr6x5\_regular.bmp"}, 6, 5, 3, img6x5\_rgb);}
+\DoxyCodeLine{41    \mbox{\hyperlink{glfw_2deps_2stb__image__write_8h_ab7a84427c6d7e894090fbeae3bc8f6da}{stbi\_write\_tga}}(\textcolor{stringliteral}{"output/wr6x5\_regular.tga"}, 6, 5, 3, img6x5\_rgb);}
+\DoxyCodeLine{42    \mbox{\hyperlink{stb_2stb__image__write_8h_a41048e8f918179d2788284ef9cc2590c}{stbi\_write\_jpg}}(\textcolor{stringliteral}{"output/wr6x5\_regular.jpg"}, 6, 5, 3, img6x5\_rgb, 95);}
+\DoxyCodeLine{43    \mbox{\hyperlink{glfw_2deps_2stb__image__write_8h_a21f22be0194761e08b682ed543ef6161}{stbi\_write\_hdr}}(\textcolor{stringliteral}{"output/wr6x5\_regular.hdr"}, 6, 5, 3, img6x5\_rgbf);}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45    \mbox{\hyperlink{stb_2stb__image__write_8h_a5c41a5d16dc665edd2489b982ba29b85}{stbi\_flip\_vertically\_on\_write}}(1);}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47    \mbox{\hyperlink{glfw_2deps_2stb__image__write_8h_a9c03e5171f6aea47fde6dafcf3249ccf}{stbi\_write\_png}}(\textcolor{stringliteral}{"output/wr6x5\_flip.png"}, 6, 5, 3, img6x5\_rgb, 6*3);}
+\DoxyCodeLine{48    \mbox{\hyperlink{glfw_2deps_2stb__image__write_8h_a4f63ec842984e5db3edf2da89f16038e}{stbi\_write\_bmp}}(\textcolor{stringliteral}{"output/wr6x5\_flip.bmp"}, 6, 5, 3, img6x5\_rgb);}
+\DoxyCodeLine{49    \mbox{\hyperlink{glfw_2deps_2stb__image__write_8h_ab7a84427c6d7e894090fbeae3bc8f6da}{stbi\_write\_tga}}(\textcolor{stringliteral}{"output/wr6x5\_flip.tga"}, 6, 5, 3, img6x5\_rgb);}
+\DoxyCodeLine{50    \mbox{\hyperlink{stb_2stb__image__write_8h_a41048e8f918179d2788284ef9cc2590c}{stbi\_write\_jpg}}(\textcolor{stringliteral}{"output/wr6x5\_flip.jpg"}, 6, 5, 3, img6x5\_rgb, 95);}
+\DoxyCodeLine{51    \mbox{\hyperlink{glfw_2deps_2stb__image__write_8h_a21f22be0194761e08b682ed543ef6161}{stbi\_write\_hdr}}(\textcolor{stringliteral}{"output/wr6x5\_flip.hdr"}, 6, 5, 3, img6x5\_rgbf);}
+\DoxyCodeLine{52 \}}
+
+\end{DoxyCode}

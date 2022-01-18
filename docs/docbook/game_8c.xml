@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_game_8c">
+<title>sandbox/src/game.c File Reference</title>
+<indexterm><primary>sandbox/src/game.c</primary></indexterm>
+<programlisting>#include &lt;vally/vally.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_game_8c_1a54ce556c2eb020c50f3ee97b8efc6dd6">start</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_game_8c_1afdf66b907b003137cbc1d6955cfa0baf">update</link> (<link linkend="_include_2vally_2config_8h_1a5f6906312a689f27d70e9d086649d3fd">f32</link> <link linkend="_wave_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_game_8c_1ab26eef233183a6a42dace6673fecbf95">render</link> (<link linkend="_include_2vally_2config_8h_1a5f6906312a689f27d70e9d086649d3fd">f32</link> <link linkend="_wave_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_game_8c_1a840291bc02cba5474a4cb46a9b9566fe">main</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> <link linkend="_game_8c_1a8e545db7ad6fc5e414c1d1ca389e1357">knight</link></para>
+</listitem>
+            <listitem><para><link linkend="_structanimation">animation</link> <link linkend="_game_8c_1a3f5dc1b1df5af571cc6b3832da5cdd5d">run_right</link></para>
+</listitem>
+            <listitem><para><link linkend="_structanimation">animation</link> <link linkend="_game_8c_1aec31fd22c2f3652590ad2663217f94b5">run_left</link></para>
+</listitem>
+            <listitem><para><link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> <link linkend="_game_8c_1aedaf12bab15bcbfea10ed2b823097774">stones</link> [16]</para>
+</listitem>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a5f6906312a689f27d70e9d086649d3fd">f32</link> <link linkend="_game_8c_1a98742c3e1ca883402b392f2819acd456">speed</link> = 120.0f</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_game_8c_1a840291bc02cba5474a4cb46a9b9566fe"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>game.c</secondary></indexterm>
+<indexterm><primary>game.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 58 of file game.c.</para>
+<programlisting>58 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+59 &#32;&#32;<link linkend="_engine_8h_1ac2da45ca9a7589842f6a7e14507c9770">engine_create</link>(640,&#32;480,&#32;<emphasis role="stringliteral">&quot;vally&quot;</emphasis>);
+60 &#32;&#32;<link linkend="_engine_8h_1a5af50542aabb976d20e6f9bfa7a3ca32">engine_run</link>(<link linkend="_glad_8h_1ac55adc720a3098c1b454d2a4647f4361">start</link>,&#32;<link linkend="_game_8c_1afdf66b907b003137cbc1d6955cfa0baf">update</link>,&#32;<link linkend="_game_8c_1ab26eef233183a6a42dace6673fecbf95">render</link>);
+61 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+62 }
+</programlisting>    </section><anchor xml:id="_game_8c_1ab26eef233183a6a42dace6673fecbf95"/>    <section>
+    <title>render()</title>
+<indexterm><primary>render</primary><secondary>game.c</secondary></indexterm>
+<indexterm><primary>game.c</primary><secondary>render</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> render (<link linkend="_include_2vally_2config_8h_1a5f6906312a689f27d70e9d086649d3fd">f32</link> dt)</computeroutput></para><para>
+Definition at line 54 of file game.c.</para>
+<programlisting>54 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+55 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+56 }
+</programlisting>    </section><anchor xml:id="_game_8c_1a54ce556c2eb020c50f3ee97b8efc6dd6"/>    <section>
+    <title>start()</title>
+<indexterm><primary>start</primary><secondary>game.c</secondary></indexterm>
+<indexterm><primary>game.c</primary><secondary>start</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_glad_8h_1ac55adc720a3098c1b454d2a4647f4361">start</link> ( )</computeroutput></para><para>
+Definition at line 11 of file game.c.</para>
+<programlisting>11 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+12 &#32;&#32;<link linkend="_game_8c_1a3f5dc1b1df5af571cc6b3832da5cdd5d">run_right</link>&#32;=&#32;<link linkend="_animator_8h_1a3a9bd82721cab2ca465b7a6533dfdff4">animation_create</link>(<link linkend="_texture_8h_1ab90d88b28dfef00a7e9d3412ca88593a">texture_create</link>(<link linkend="_image_8h_1aaef4a30136231213ad74ec5980999c5e">image_load</link>(<emphasis role="stringliteral">&quot;../assets/textures/knight_right.png&quot;</emphasis>)),&#32;
+13 &#32;&#32;<link linkend="_math_8h_1a19431f940e3c5e70e3de779a80a0d1fb">vector2f_create</link>(16.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;16.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>),&#32;0,&#32;5,&#32;12);
+14 
+15 &#32;&#32;<link linkend="_game_8c_1aec31fd22c2f3652590ad2663217f94b5">run_left</link>&#32;=&#32;<link linkend="_animator_8h_1a3a9bd82721cab2ca465b7a6533dfdff4">animation_create</link>(<link linkend="_texture_8h_1ab90d88b28dfef00a7e9d3412ca88593a">texture_create</link>(<link linkend="_image_8h_1aaef4a30136231213ad74ec5980999c5e">image_load</link>(<emphasis role="stringliteral">&quot;../assets/textures/knight_left.png&quot;</emphasis>)),&#32;
+16 &#32;&#32;<link linkend="_math_8h_1a19431f940e3c5e70e3de779a80a0d1fb">vector2f_create</link>(16.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;16.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>),&#32;0,&#32;5,&#32;12);
+17 
+18 &#32;&#32;<link linkend="_structtexture">texture</link>&#32;*terrain&#32;=&#32;<link linkend="_texture_8h_1ab90d88b28dfef00a7e9d3412ca88593a">texture_create</link>(<link linkend="_image_8h_1aaef4a30136231213ad74ec5980999c5e">image_load</link>(<emphasis role="stringliteral">&quot;../assets/textures/terrain.png&quot;</emphasis>));
+19 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_include_2vally_2config_8h_1a48d6cd8e4135fb2ff7e7f2dac84089ec">i32</link>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;16;&#32;i++)&#32;{
+20 &#32;&#32;&#32;&#32;<link linkend="_game_8c_1aedaf12bab15bcbfea10ed2b823097774">stones</link>[i]&#32;=&#32;<link linkend="_ecs_8h_1a527f48cf395814b9ea26d1219f98777f">ecs_entity_create</link>();
+21 &#32;&#32;&#32;&#32;<link linkend="_spriterenderer_8h_1ad50f63c6157ec4287542d6ec7c98db04">ecs_spriterenderer_add_from_atlas</link>(<link linkend="_game_8c_1aedaf12bab15bcbfea10ed2b823097774">stones</link>[i],&#32;terrain,&#32;<link linkend="_math_8h_1a19431f940e3c5e70e3de779a80a0d1fb">vector2f_create</link>(16.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;16.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>));
+22 &#32;&#32;&#32;&#32;<link linkend="_spriterenderer_8h_1a553edc81899945b974728f83b6c9d084">ecs_spriterenderer_atlas_select</link>(<link linkend="_game_8c_1aedaf12bab15bcbfea10ed2b823097774">stones</link>[i],&#32;1);
+23 &#32;&#32;&#32;&#32;<link linkend="_transform_8h_1af430a76b485573b98b333a3ef2badb02">ecs_transform_get</link>(<link linkend="_game_8c_1aedaf12bab15bcbfea10ed2b823097774">stones</link>[i])-&gt;<link linkend="_structtransform_1a90cdde0e5c0820ce7dc0d1cd6e633250">scale</link>&#32;=&#32;<link linkend="_math_8h_1a19431f940e3c5e70e3de779a80a0d1fb">vector2f_create</link>(4.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;4.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+24 &#32;&#32;&#32;&#32;<link linkend="_transform_8h_1af430a76b485573b98b333a3ef2badb02">ecs_transform_get</link>(<link linkend="_game_8c_1aedaf12bab15bcbfea10ed2b823097774">stones</link>[i])-&gt;<link linkend="_structtransform_1aca5f2f1120ff401216dc0ea843860e59">position</link>&#32;=&#32;<link linkend="_math_8h_1a19431f940e3c5e70e3de779a80a0d1fb">vector2f_create</link>(0.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;+&#32;64.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;*&#32;i,&#32;180.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+25 &#32;&#32;}
+26 
+27 &#32;&#32;<link linkend="_game_8c_1a8e545db7ad6fc5e414c1d1ca389e1357">knight</link>&#32;=&#32;<link linkend="_ecs_8h_1a527f48cf395814b9ea26d1219f98777f">ecs_entity_create</link>();
+28 &#32;&#32;<link linkend="_spriterenderer_8h_1ad50f63c6157ec4287542d6ec7c98db04">ecs_spriterenderer_add_from_atlas</link>(<link linkend="_game_8c_1a8e545db7ad6fc5e414c1d1ca389e1357">knight</link>,&#32;<link linkend="_texture_8h_1ab90d88b28dfef00a7e9d3412ca88593a">texture_create</link>(<link linkend="_image_8h_1aaef4a30136231213ad74ec5980999c5e">image_load</link>(<emphasis role="stringliteral">&quot;../assets/textures/knight_right.png&quot;</emphasis>)),&#32;<link linkend="_math_8h_1a19431f940e3c5e70e3de779a80a0d1fb">vector2f_create</link>(16.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;16.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>));
+29 &#32;&#32;<link linkend="_animator_8h_1aebb9c44f562910f5fa270a2fe70eca12">ecs_animator_add</link>(<link linkend="_game_8c_1a8e545db7ad6fc5e414c1d1ca389e1357">knight</link>);
+30 &#32;&#32;<link linkend="_transform_8h_1af430a76b485573b98b333a3ef2badb02">ecs_transform_get</link>(<link linkend="_game_8c_1a8e545db7ad6fc5e414c1d1ca389e1357">knight</link>)-&gt;<link linkend="_structtransform_1aca5f2f1120ff401216dc0ea843860e59">position</link>&#32;=&#32;<link linkend="_math_8h_1a19431f940e3c5e70e3de779a80a0d1fb">vector2f_create</link>(640.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;/&#32;2.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;-&#32;32.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;126.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+31 &#32;&#32;<link linkend="_transform_8h_1af430a76b485573b98b333a3ef2badb02">ecs_transform_get</link>(<link linkend="_game_8c_1a8e545db7ad6fc5e414c1d1ca389e1357">knight</link>)-&gt;<link linkend="_structtransform_1a90cdde0e5c0820ce7dc0d1cd6e633250">scale</link>&#32;=&#32;<link linkend="_math_8h_1a19431f940e3c5e70e3de779a80a0d1fb">vector2f_create</link>(4.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;4.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+32 
+33 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+34 }
+</programlisting>    </section><anchor xml:id="_game_8c_1afdf66b907b003137cbc1d6955cfa0baf"/>    <section>
+    <title>update()</title>
+<indexterm><primary>update</primary><secondary>game.c</secondary></indexterm>
+<indexterm><primary>game.c</primary><secondary>update</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> update (<link linkend="_include_2vally_2config_8h_1a5f6906312a689f27d70e9d086649d3fd">f32</link> dt)</computeroutput></para><para>
+Definition at line 36 of file game.c.</para>
+<programlisting>36 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+37 &#32;&#32;<link linkend="_include_2vally_2config_8h_1a5f6906312a689f27d70e9d086649d3fd">f32</link>&#32;translation&#32;=&#32;0.0f;
+38 
+39 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_input_8h_1a2a0dea60c31296a8918f20ff29695a2c">input_key_pressed</link>(<link linkend="_group__keys_1ga024e62650f02bfd64a4ce2b158ec2dd7">KEY_A</link>))&#32;{
+40 &#32;&#32;&#32;&#32;translation&#32;=&#32;-<link linkend="_game_8c_1a98742c3e1ca883402b392f2819acd456">speed</link>&#32;*&#32;<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>;
+41 &#32;&#32;&#32;&#32;<link linkend="_animator_8h_1a7094649591464b7498e2fe4f3f42135a">ecs_animator_play</link>(<link linkend="_game_8c_1a8e545db7ad6fc5e414c1d1ca389e1357">knight</link>,&#32;&amp;<link linkend="_game_8c_1aec31fd22c2f3652590ad2663217f94b5">run_left</link>);
+42 &#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_input_8h_1a2a0dea60c31296a8918f20ff29695a2c">input_key_pressed</link>(<link linkend="_group__keys_1gad2017b35fcff527a10050ab7c9af2d5c">KEY_D</link>))&#32;{
+43 &#32;&#32;&#32;&#32;translation&#32;=&#32;<link linkend="_game_8c_1a98742c3e1ca883402b392f2819acd456">speed</link>&#32;*&#32;<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>;
+44 &#32;&#32;&#32;&#32;<link linkend="_animator_8h_1a7094649591464b7498e2fe4f3f42135a">ecs_animator_play</link>(<link linkend="_game_8c_1a8e545db7ad6fc5e414c1d1ca389e1357">knight</link>,&#32;&amp;<link linkend="_game_8c_1a3f5dc1b1df5af571cc6b3832da5cdd5d">run_right</link>);
+45 &#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+46 &#32;&#32;&#32;&#32;<link linkend="_animator_8h_1a2ea5a3cd2cd82ef8491ab392a0fda630">ecs_animator_stop</link>(<link linkend="_game_8c_1a8e545db7ad6fc5e414c1d1ca389e1357">knight</link>);
+47 &#32;&#32;}
+48 
+49 &#32;&#32;<link linkend="_transform_8h_1af430a76b485573b98b333a3ef2badb02">ecs_transform_get</link>(<link linkend="_game_8c_1a8e545db7ad6fc5e414c1d1ca389e1357">knight</link>)-&gt;<link linkend="_structtransform_1aca5f2f1120ff401216dc0ea843860e59">position</link>.<link linkend="_structvector2f_1a20dc1efc39913c2f1dbdad416acc8719">x</link>&#32;+=&#32;translation;\
+50 
+51 &#32;&#32;return&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+52 }
+</programlisting></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_game_8c_1a8e545db7ad6fc5e414c1d1ca389e1357"/>    <section>
+    <title>knight</title>
+<indexterm><primary>knight</primary><secondary>game.c</secondary></indexterm>
+<indexterm><primary>game.c</primary><secondary>knight</secondary></indexterm>
+<para><computeroutput><link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> knight</computeroutput></para><para>
+Definition at line 3 of file game.c.</para>
+    </section><anchor xml:id="_game_8c_1aec31fd22c2f3652590ad2663217f94b5"/>    <section>
+    <title>run_left</title>
+<indexterm><primary>run_left</primary><secondary>game.c</secondary></indexterm>
+<indexterm><primary>game.c</primary><secondary>run_left</secondary></indexterm>
+<para><computeroutput><link linkend="_structanimation">animation</link> run_left</computeroutput></para><para>
+Definition at line 5 of file game.c.</para>
+    </section><anchor xml:id="_game_8c_1a3f5dc1b1df5af571cc6b3832da5cdd5d"/>    <section>
+    <title>run_right</title>
+<indexterm><primary>run_right</primary><secondary>game.c</secondary></indexterm>
+<indexterm><primary>game.c</primary><secondary>run_right</secondary></indexterm>
+<para><computeroutput><link linkend="_structanimation">animation</link> run_right</computeroutput></para><para>
+Definition at line 4 of file game.c.</para>
+    </section><anchor xml:id="_game_8c_1a98742c3e1ca883402b392f2819acd456"/>    <section>
+    <title>speed</title>
+<indexterm><primary>speed</primary><secondary>game.c</secondary></indexterm>
+<indexterm><primary>game.c</primary><secondary>speed</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a5f6906312a689f27d70e9d086649d3fd">f32</link> speed = 120.0f</computeroutput></para><para>
+Definition at line 9 of file game.c.</para>
+    </section><anchor xml:id="_game_8c_1aedaf12bab15bcbfea10ed2b823097774"/>    <section>
+    <title>stones</title>
+<indexterm><primary>stones</primary><secondary>game.c</secondary></indexterm>
+<indexterm><primary>game.c</primary><secondary>stones</secondary></indexterm>
+<para><computeroutput><link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> stones[16]</computeroutput></para><para>
+Definition at line 7 of file game.c.</para>
+</section>
+</section>
+</section>

@@ -1,0 +1,306 @@
+\hypertarget{getopt_8c}{}\doxysection{deps/glfw/deps/getopt.c File Reference}
+\label{getopt_8c}\index{deps/glfw/deps/getopt.c@{deps/glfw/deps/getopt.c}}
+{\ttfamily \#include \char`\"{}getopt.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{getopt_8c_a5ffa4c677fc71cecd94f140ef9db624c}{getopt}} (int argc, char $\ast$const argv\mbox{[}$\,$\mbox{]}, const char $\ast$optstring)
+\item 
+int \mbox{\hyperlink{getopt_8c_a19a25d4c484d212220cad56a69c426b0}{getopt\+\_\+long}} (int argc, char $\ast$const argv\mbox{[}$\,$\mbox{]}, const char $\ast$optstring, const struct \mbox{\hyperlink{structoption}{option}} $\ast$longopts, int $\ast$longindex)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const int \mbox{\hyperlink{getopt_8c_a69637a51de0bbacf102f8aae7281f6e0}{no\+\_\+argument}} = 0
+\item 
+const int \mbox{\hyperlink{getopt_8c_aea125b304b6afc653fa99511629d1e90}{required\+\_\+argument}} = 1
+\item 
+const int \mbox{\hyperlink{getopt_8c_a7035c1113b17e25706c513375cdfc81a}{optional\+\_\+argument}} = 2
+\item 
+char $\ast$ \mbox{\hyperlink{getopt_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}{optarg}}
+\item 
+int \mbox{\hyperlink{getopt_8c_a475b8db98445da73e5f62a1ef6324b95}{optopt}}
+\item 
+int \mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}} = 1
+\item 
+int \mbox{\hyperlink{getopt_8c_ae30f05ee1e2e5652f174a35c7875d25e}{opterr}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{getopt_8c_a5ffa4c677fc71cecd94f140ef9db624c}\label{getopt_8c_a5ffa4c677fc71cecd94f140ef9db624c}} 
+\index{getopt.c@{getopt.c}!getopt@{getopt}}
+\index{getopt@{getopt}!getopt.c@{getopt.c}}
+\doxysubsubsection{\texorpdfstring{getopt()}{getopt()}}
+{\footnotesize\ttfamily int getopt (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$const}]{argv\mbox{[}$\,$\mbox{]},  }\item[{const char $\ast$}]{optstring }\end{DoxyParamCaption})}
+
+
+
+Definition at line 52 of file getopt.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{52                                                                 \{}
+\DoxyCodeLine{53   \textcolor{keywordtype}{int} optchar = -\/1;}
+\DoxyCodeLine{54   \textcolor{keyword}{const} \textcolor{keywordtype}{char}* optdecl = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56   \mbox{\hyperlink{getopt_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}{optarg}} = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{57   \mbox{\hyperlink{getopt_8c_ae30f05ee1e2e5652f174a35c7875d25e}{opterr}} = 0;}
+\DoxyCodeLine{58   \mbox{\hyperlink{getopt_8c_a475b8db98445da73e5f62a1ef6324b95}{optopt}} = 0;}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60   \textcolor{comment}{/* Unspecified, but we need it to avoid overrunning the argv bounds. */}}
+\DoxyCodeLine{61   \textcolor{keywordflow}{if} (\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}} >= argc)}
+\DoxyCodeLine{62     \textcolor{keywordflow}{goto} no\_more\_optchars;}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64   \textcolor{comment}{/* If, when getopt() is called argv[optind] is a null pointer, getopt()}}
+\DoxyCodeLine{65 \textcolor{comment}{     shall return -\/1 without changing optind. */}}
+\DoxyCodeLine{66   \textcolor{keywordflow}{if} (argv[\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}}] == \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}})}
+\DoxyCodeLine{67     \textcolor{keywordflow}{goto} no\_more\_optchars;}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69   \textcolor{comment}{/* If, when getopt() is called *argv[optind]  is not the character '-\/',}}
+\DoxyCodeLine{70 \textcolor{comment}{     getopt() shall return -\/1 without changing optind. */}}
+\DoxyCodeLine{71   \textcolor{keywordflow}{if} (*argv[\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}}] != \textcolor{charliteral}{'-\/'})}
+\DoxyCodeLine{72     \textcolor{keywordflow}{goto} no\_more\_optchars;}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74   \textcolor{comment}{/* If, when getopt() is called argv[optind] points to the string "-\/",}}
+\DoxyCodeLine{75 \textcolor{comment}{     getopt() shall return -\/1 without changing optind. */}}
+\DoxyCodeLine{76   \textcolor{keywordflow}{if} (strcmp(argv[\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}}], \textcolor{stringliteral}{"-\/"}) == 0)}
+\DoxyCodeLine{77     \textcolor{keywordflow}{goto} no\_more\_optchars;}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79   \textcolor{comment}{/* If, when getopt() is called argv[optind] points to the string "-\/-\/",}}
+\DoxyCodeLine{80 \textcolor{comment}{     getopt() shall return -\/1 after incrementing optind. */}}
+\DoxyCodeLine{81   \textcolor{keywordflow}{if} (strcmp(argv[\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}}], \textcolor{stringliteral}{"-\/-\/"}) == 0) \{}
+\DoxyCodeLine{82     ++\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}};}
+\DoxyCodeLine{83     \textcolor{keywordflow}{goto} no\_more\_optchars;}
+\DoxyCodeLine{84   \}}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86   \textcolor{keywordflow}{if} (optcursor == \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}} || *optcursor == \textcolor{charliteral}{'\(\backslash\)0'})}
+\DoxyCodeLine{87     optcursor = argv[\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}}] + 1;}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89   optchar = *optcursor;}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91   \textcolor{comment}{/* FreeBSD: The variable optopt saves the last known option character}}
+\DoxyCodeLine{92 \textcolor{comment}{     returned by getopt(). */}}
+\DoxyCodeLine{93   \mbox{\hyperlink{getopt_8c_a475b8db98445da73e5f62a1ef6324b95}{optopt}} = optchar;}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95   \textcolor{comment}{/* The getopt() function shall return the next option character (if one is}}
+\DoxyCodeLine{96 \textcolor{comment}{     found) from argv that matches a character in optstring, if there is}}
+\DoxyCodeLine{97 \textcolor{comment}{     one that matches. */}}
+\DoxyCodeLine{98   optdecl = strchr(optstring, optchar);}
+\DoxyCodeLine{99   \textcolor{keywordflow}{if} (optdecl) \{}
+\DoxyCodeLine{100     \textcolor{comment}{/* [I]f a character is followed by a colon, the option takes an}}
+\DoxyCodeLine{101 \textcolor{comment}{       argument. */}}
+\DoxyCodeLine{102     \textcolor{keywordflow}{if} (optdecl[1] == \textcolor{charliteral}{':'}) \{}
+\DoxyCodeLine{103       \mbox{\hyperlink{getopt_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}{optarg}} = ++optcursor;}
+\DoxyCodeLine{104       \textcolor{keywordflow}{if} (*\mbox{\hyperlink{getopt_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}{optarg}} == \textcolor{charliteral}{'\(\backslash\)0'}) \{}
+\DoxyCodeLine{105         \textcolor{comment}{/* GNU extension: Two colons mean an option takes an}}
+\DoxyCodeLine{106 \textcolor{comment}{           optional arg; if there is text in the current argv-\/element}}
+\DoxyCodeLine{107 \textcolor{comment}{           (i.e., in the same word as the option name itself, for example,}}
+\DoxyCodeLine{108 \textcolor{comment}{           "-\/oarg"), then it is returned in optarg, otherwise optarg is set}}
+\DoxyCodeLine{109 \textcolor{comment}{           to zero. */}}
+\DoxyCodeLine{110         \textcolor{keywordflow}{if} (optdecl[2] != \textcolor{charliteral}{':'}) \{}
+\DoxyCodeLine{111           \textcolor{comment}{/* If the option was the last character in the string pointed to by}}
+\DoxyCodeLine{112 \textcolor{comment}{             an element of argv, then optarg shall contain the next element}}
+\DoxyCodeLine{113 \textcolor{comment}{             of argv, and optind shall be incremented by 2. If the resulting}}
+\DoxyCodeLine{114 \textcolor{comment}{             value of optind is greater than argc, this indicates a missing}}
+\DoxyCodeLine{115 \textcolor{comment}{             option-\/argument, and getopt() shall return an error indication.}}
+\DoxyCodeLine{116 \textcolor{comment}{}}
+\DoxyCodeLine{117 \textcolor{comment}{             Otherwise, optarg shall point to the string following the}}
+\DoxyCodeLine{118 \textcolor{comment}{             option character in that element of argv, and optind shall be}}
+\DoxyCodeLine{119 \textcolor{comment}{             incremented by 1.}}
+\DoxyCodeLine{120 \textcolor{comment}{          */}}
+\DoxyCodeLine{121           \textcolor{keywordflow}{if} (++\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}} < argc) \{}
+\DoxyCodeLine{122             \mbox{\hyperlink{getopt_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}{optarg}} = argv[\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}}];}
+\DoxyCodeLine{123           \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{124             \textcolor{comment}{/* If it detects a missing option-\/argument, it shall return the}}
+\DoxyCodeLine{125 \textcolor{comment}{               colon character ( ':' ) if the first character of optstring}}
+\DoxyCodeLine{126 \textcolor{comment}{               was a colon, or a question-\/mark character ( '?' ) otherwise.}}
+\DoxyCodeLine{127 \textcolor{comment}{            */}}
+\DoxyCodeLine{128             \mbox{\hyperlink{getopt_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}{optarg}} = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{129             optchar = (optstring[0] == \textcolor{charliteral}{':'}) ? \textcolor{charliteral}{':'} : \textcolor{charliteral}{'?'};}
+\DoxyCodeLine{130           \}}
+\DoxyCodeLine{131         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{132           \mbox{\hyperlink{getopt_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}{optarg}} = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{133         \}}
+\DoxyCodeLine{134       \}}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136       optcursor = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{137     \}}
+\DoxyCodeLine{138   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{139     \textcolor{comment}{/* If getopt() encounters an option character that is not contained in}}
+\DoxyCodeLine{140 \textcolor{comment}{       optstring, it shall return the question-\/mark ( '?' ) character. */}}
+\DoxyCodeLine{141     optchar = \textcolor{charliteral}{'?'};}
+\DoxyCodeLine{142   \}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144   \textcolor{keywordflow}{if} (optcursor == \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}} || *++optcursor == \textcolor{charliteral}{'\(\backslash\)0'})}
+\DoxyCodeLine{145     ++\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}};}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147   \textcolor{keywordflow}{return} optchar;}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149 no\_more\_optchars:}
+\DoxyCodeLine{150   optcursor = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{151   \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{152 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{getopt_8c_a19a25d4c484d212220cad56a69c426b0}\label{getopt_8c_a19a25d4c484d212220cad56a69c426b0}} 
+\index{getopt.c@{getopt.c}!getopt\_long@{getopt\_long}}
+\index{getopt\_long@{getopt\_long}!getopt.c@{getopt.c}}
+\doxysubsubsection{\texorpdfstring{getopt\_long()}{getopt\_long()}}
+{\footnotesize\ttfamily int getopt\+\_\+long (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$const}]{argv\mbox{[}$\,$\mbox{]},  }\item[{const char $\ast$}]{optstring,  }\item[{const struct \mbox{\hyperlink{structoption}{option}} $\ast$}]{longopts,  }\item[{int $\ast$}]{longindex }\end{DoxyParamCaption})}
+
+
+
+Definition at line 158 of file getopt.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{159                                                  \{}
+\DoxyCodeLine{160   \textcolor{keyword}{const} \textcolor{keyword}{struct }\mbox{\hyperlink{structoption}{option}}* o = longopts;}
+\DoxyCodeLine{161   \textcolor{keyword}{const} \textcolor{keyword}{struct }\mbox{\hyperlink{structoption}{option}}* match = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{162   \textcolor{keywordtype}{int} num\_matches = 0;}
+\DoxyCodeLine{163   \textcolor{keywordtype}{size\_t} argument\_name\_length = 0;}
+\DoxyCodeLine{164   \textcolor{keyword}{const} \textcolor{keywordtype}{char}* current\_argument = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{165   \textcolor{keywordtype}{int} retval = -\/1;}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167   \mbox{\hyperlink{getopt_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}{optarg}} = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{168   \mbox{\hyperlink{getopt_8c_a475b8db98445da73e5f62a1ef6324b95}{optopt}} = 0;}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170   \textcolor{keywordflow}{if} (\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}} >= argc)}
+\DoxyCodeLine{171     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173   \textcolor{keywordflow}{if} (strlen(argv[\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}}]) < 3 || strncmp(argv[\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}}], \textcolor{stringliteral}{"-\/-\/"}, 2) != 0)}
+\DoxyCodeLine{174     \textcolor{keywordflow}{return} \mbox{\hyperlink{getopt_8c_a5ffa4c677fc71cecd94f140ef9db624c}{getopt}}(argc, argv, optstring);}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176   \textcolor{comment}{/* It's an option; starts with -\/-\/ and is longer than two chars. */}}
+\DoxyCodeLine{177   current\_argument = argv[\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}}] + 2;}
+\DoxyCodeLine{178   argument\_name\_length = strcspn(current\_argument, \textcolor{stringliteral}{"="});}
+\DoxyCodeLine{179   \textcolor{keywordflow}{for} (; o-\/>\mbox{\hyperlink{structoption_adc503659d37af8017fb4b86d61c99086}{name}}; ++o) \{}
+\DoxyCodeLine{180     \textcolor{keywordflow}{if} (strncmp(o-\/>\mbox{\hyperlink{structoption_adc503659d37af8017fb4b86d61c99086}{name}}, current\_argument, argument\_name\_length) == 0) \{}
+\DoxyCodeLine{181       match = o;}
+\DoxyCodeLine{182       ++num\_matches;}
+\DoxyCodeLine{183     \}}
+\DoxyCodeLine{184   \}}
+\DoxyCodeLine{185 }
+\DoxyCodeLine{186   \textcolor{keywordflow}{if} (num\_matches == 1) \{}
+\DoxyCodeLine{187     \textcolor{comment}{/* If longindex is not NULL, it points to a variable which is set to the}}
+\DoxyCodeLine{188 \textcolor{comment}{       index of the long option relative to longopts. */}}
+\DoxyCodeLine{189     \textcolor{keywordflow}{if} (longindex)}
+\DoxyCodeLine{190       *longindex = (int) (match -\/ longopts);}
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192     \textcolor{comment}{/* If flag is NULL, then getopt\_long() shall return val.}}
+\DoxyCodeLine{193 \textcolor{comment}{       Otherwise, getopt\_long() returns 0, and flag shall point to a variable}}
+\DoxyCodeLine{194 \textcolor{comment}{       which shall be set to val if the option is found, but left unchanged if}}
+\DoxyCodeLine{195 \textcolor{comment}{       the option is not found. */}}
+\DoxyCodeLine{196     \textcolor{keywordflow}{if} (match-\/>\mbox{\hyperlink{structoption_ab366eea5fe7be25c1928328ba715e353}{flag}})}
+\DoxyCodeLine{197       *(match-\/>\mbox{\hyperlink{structoption_ab366eea5fe7be25c1928328ba715e353}{flag}}) = match-\/>\mbox{\hyperlink{structoption_a13bd155ec3b405d29c41ab8d0793be11}{val}};}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199     retval = match-\/>\mbox{\hyperlink{structoption_ab366eea5fe7be25c1928328ba715e353}{flag}} ? 0 : match-\/>\mbox{\hyperlink{structoption_a13bd155ec3b405d29c41ab8d0793be11}{val}};}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201     if (match-\/>\mbox{\hyperlink{structoption_a90d7ee9a51eea5c002682dbd0af149e4}{has\_arg}} != \mbox{\hyperlink{getopt_8c_a69637a51de0bbacf102f8aae7281f6e0}{no\_argument}}) \{}
+\DoxyCodeLine{202       \mbox{\hyperlink{getopt_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}{optarg}} = strchr(argv[\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}}], \textcolor{charliteral}{'='});}
+\DoxyCodeLine{203       \textcolor{keywordflow}{if} (\mbox{\hyperlink{getopt_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}{optarg}} != \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}})}
+\DoxyCodeLine{204         ++\mbox{\hyperlink{getopt_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}{optarg}};}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206       \textcolor{keywordflow}{if} (match-\/>\mbox{\hyperlink{structoption_a90d7ee9a51eea5c002682dbd0af149e4}{has\_arg}} == \mbox{\hyperlink{getopt_8c_aea125b304b6afc653fa99511629d1e90}{required\_argument}}) \{}
+\DoxyCodeLine{207         \textcolor{comment}{/* Only scan the next argv for required arguments. Behavior is not}}
+\DoxyCodeLine{208 \textcolor{comment}{           specified, but has been observed with Ubuntu and Mac OSX. */}}
+\DoxyCodeLine{209         \textcolor{keywordflow}{if} (\mbox{\hyperlink{getopt_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}{optarg}} == \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}} \&\& ++\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}} < argc) \{}
+\DoxyCodeLine{210           \mbox{\hyperlink{getopt_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}{optarg}} = argv[\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}}];}
+\DoxyCodeLine{211         \}}
+\DoxyCodeLine{212 }
+\DoxyCodeLine{213         \textcolor{keywordflow}{if} (\mbox{\hyperlink{getopt_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}{optarg}} == \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}})}
+\DoxyCodeLine{214           retval = \textcolor{charliteral}{':'};}
+\DoxyCodeLine{215       \}}
+\DoxyCodeLine{216     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (strchr(argv[\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}}], \textcolor{charliteral}{'='})) \{}
+\DoxyCodeLine{217       \textcolor{comment}{/* An argument was provided to a non-\/argument option.}}
+\DoxyCodeLine{218 \textcolor{comment}{         I haven't seen this specified explicitly, but both GNU and BSD-\/based}}
+\DoxyCodeLine{219 \textcolor{comment}{         implementations show this behavior.}}
+\DoxyCodeLine{220 \textcolor{comment}{      */}}
+\DoxyCodeLine{221       retval = \textcolor{charliteral}{'?'};}
+\DoxyCodeLine{222     \}}
+\DoxyCodeLine{223   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{224     \textcolor{comment}{/* Unknown option or ambiguous match. */}}
+\DoxyCodeLine{225     retval = \textcolor{charliteral}{'?'};}
+\DoxyCodeLine{226   \}}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228   ++\mbox{\hyperlink{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}};}
+\DoxyCodeLine{229   \textcolor{keywordflow}{return} retval;}
+\DoxyCodeLine{230 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{getopt_8c_a69637a51de0bbacf102f8aae7281f6e0}\label{getopt_8c_a69637a51de0bbacf102f8aae7281f6e0}} 
+\index{getopt.c@{getopt.c}!no\_argument@{no\_argument}}
+\index{no\_argument@{no\_argument}!getopt.c@{getopt.c}}
+\doxysubsubsection{\texorpdfstring{no\_argument}{no\_argument}}
+{\footnotesize\ttfamily const int no\+\_\+argument = 0}
+
+
+
+Definition at line 32 of file getopt.\+c.
+
+\mbox{\Hypertarget{getopt_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}\label{getopt_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}} 
+\index{getopt.c@{getopt.c}!optarg@{optarg}}
+\index{optarg@{optarg}!getopt.c@{getopt.c}}
+\doxysubsubsection{\texorpdfstring{optarg}{optarg}}
+{\footnotesize\ttfamily char$\ast$ optarg}
+
+
+
+Definition at line 36 of file getopt.\+c.
+
+\mbox{\Hypertarget{getopt_8c_ae30f05ee1e2e5652f174a35c7875d25e}\label{getopt_8c_ae30f05ee1e2e5652f174a35c7875d25e}} 
+\index{getopt.c@{getopt.c}!opterr@{opterr}}
+\index{opterr@{opterr}!getopt.c@{getopt.c}}
+\doxysubsubsection{\texorpdfstring{opterr}{opterr}}
+{\footnotesize\ttfamily int opterr}
+
+
+
+Definition at line 40 of file getopt.\+c.
+
+\mbox{\Hypertarget{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}\label{getopt_8c_ad5e1c16213bbee2d5e8cc363309f418c}} 
+\index{getopt.c@{getopt.c}!optind@{optind}}
+\index{optind@{optind}!getopt.c@{getopt.c}}
+\doxysubsubsection{\texorpdfstring{optind}{optind}}
+{\footnotesize\ttfamily int optind = 1}
+
+
+
+Definition at line 39 of file getopt.\+c.
+
+\mbox{\Hypertarget{getopt_8c_a7035c1113b17e25706c513375cdfc81a}\label{getopt_8c_a7035c1113b17e25706c513375cdfc81a}} 
+\index{getopt.c@{getopt.c}!optional\_argument@{optional\_argument}}
+\index{optional\_argument@{optional\_argument}!getopt.c@{getopt.c}}
+\doxysubsubsection{\texorpdfstring{optional\_argument}{optional\_argument}}
+{\footnotesize\ttfamily const int optional\+\_\+argument = 2}
+
+
+
+Definition at line 34 of file getopt.\+c.
+
+\mbox{\Hypertarget{getopt_8c_a475b8db98445da73e5f62a1ef6324b95}\label{getopt_8c_a475b8db98445da73e5f62a1ef6324b95}} 
+\index{getopt.c@{getopt.c}!optopt@{optopt}}
+\index{optopt@{optopt}!getopt.c@{getopt.c}}
+\doxysubsubsection{\texorpdfstring{optopt}{optopt}}
+{\footnotesize\ttfamily int optopt}
+
+
+
+Definition at line 37 of file getopt.\+c.
+
+\mbox{\Hypertarget{getopt_8c_aea125b304b6afc653fa99511629d1e90}\label{getopt_8c_aea125b304b6afc653fa99511629d1e90}} 
+\index{getopt.c@{getopt.c}!required\_argument@{required\_argument}}
+\index{required\_argument@{required\_argument}!getopt.c@{getopt.c}}
+\doxysubsubsection{\texorpdfstring{required\_argument}{required\_argument}}
+{\footnotesize\ttfamily const int required\+\_\+argument = 1}
+
+
+
+Definition at line 33 of file getopt.\+c.
+

@@ -1,0 +1,110 @@
+\hypertarget{clipspace_2project__no_8h}{}\doxysection{deps/cglm/include/cglm/clipspace/project\+\_\+no.h File Reference}
+\label{clipspace_2project__no_8h}\index{deps/cglm/include/cglm/clipspace/project\_no.h@{deps/cglm/include/cglm/clipspace/project\_no.h}}
+{\ttfamily \#include \char`\"{}../common.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../vec3.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../vec4.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../mat4.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{clipspace_2project__no_8h_a23da95e933cea8417f8bec09117b3e6e}{glm\+\_\+unprojecti\+\_\+no}} (\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} pos, \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} inv\+Mat, vec4 vp, \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} dest)
+\begin{DoxyCompactList}\small\item\em maps the specified viewport coordinates into specified space \mbox{[}1\mbox{]} the matrix should contain projection matrix. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{clipspace_2project__no_8h_a7d51afd6ed7aa6eda9e8336390e328dd}{glm\+\_\+project\+\_\+no}} (\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} pos, \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} \mbox{\hyperlink{glext_8h_af593500c283bf1a787a6f947f503a5c2}{m}}, vec4 vp, \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} dest)
+\begin{DoxyCompactList}\small\item\em map object coordinates to window coordinates \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{clipspace_2project__no_8h_a7d51afd6ed7aa6eda9e8336390e328dd}\label{clipspace_2project__no_8h_a7d51afd6ed7aa6eda9e8336390e328dd}} 
+\index{project\_no.h@{project\_no.h}!glm\_project\_no@{glm\_project\_no}}
+\index{glm\_project\_no@{glm\_project\_no}!project\_no.h@{project\_no.h}}
+\doxysubsubsection{\texorpdfstring{glm\_project\_no()}{glm\_project\_no()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} glm\+\_\+project\+\_\+no (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}}}]{pos,  }\item[{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}}}]{m,  }\item[{vec4}]{vp,  }\item[{\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}}}]{dest }\end{DoxyParamCaption})}
+
+
+
+map object coordinates to window coordinates 
+
+Computing M\+VP\+: glm\+\_\+mat4\+\_\+mul(proj, view, view\+Proj); glm\+\_\+mat4\+\_\+mul(view\+Proj, model, M\+V\+P);
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pos} & object coordinates \\
+\hline
+\mbox{\texttt{ in}}  & {\em m} & M\+VP matrix \\
+\hline
+\mbox{\texttt{ in}}  & {\em vp} & viewport as \mbox{[}x, y, width, height\mbox{]} \\
+\hline
+\mbox{\texttt{ out}}  & {\em dest} & projected coordinates \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 71 of file project\+\_\+no.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{71                                                      \{}
+\DoxyCodeLine{72   \mbox{\hyperlink{types_8h_a7a85e572ca5b793f224bae1ed1a827a1}{CGLM\_ALIGN}}(16) vec4 pos4;}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74   \mbox{\hyperlink{vec4_8h_af93601e8a97d9452b447821f7ced4d6f}{glm\_vec4}}(pos, 1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, pos4);}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76   \mbox{\hyperlink{mat4_8h_aa7c3819fd1b1f8a4c9e975848ea648ae}{glm\_mat4\_mulv}}(\mbox{\hyperlink{glext_8h_af593500c283bf1a787a6f947f503a5c2}{m}}, pos4, pos4);}
+\DoxyCodeLine{77   \mbox{\hyperlink{vec4_8h_a1de78b0d470aa3ba9c5335b7495fc763}{glm\_vec4\_scale}}(pos4, 1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} / pos4[3], pos4); \textcolor{comment}{/* pos = pos / pos.w */}}
+\DoxyCodeLine{78   \mbox{\hyperlink{vec4_8h_a1de78b0d470aa3ba9c5335b7495fc763}{glm\_vec4\_scale}}(pos4, 0.5\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, pos4);}
+\DoxyCodeLine{79   \mbox{\hyperlink{vec4_8h_ab8c45f482b686224b5742eaab0a3a4f5}{glm\_vec4\_adds}}(pos4,  0.5\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, pos4);}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81   dest[0] = pos4[0] * vp[2] + vp[0];}
+\DoxyCodeLine{82   dest[1] = pos4[1] * vp[3] + vp[1];}
+\DoxyCodeLine{83   dest[2] = pos4[2];}
+\DoxyCodeLine{84 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{clipspace_2project__no_8h_a23da95e933cea8417f8bec09117b3e6e}\label{clipspace_2project__no_8h_a23da95e933cea8417f8bec09117b3e6e}} 
+\index{project\_no.h@{project\_no.h}!glm\_unprojecti\_no@{glm\_unprojecti\_no}}
+\index{glm\_unprojecti\_no@{glm\_unprojecti\_no}!project\_no.h@{project\_no.h}}
+\doxysubsubsection{\texorpdfstring{glm\_unprojecti\_no()}{glm\_unprojecti\_no()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} glm\+\_\+unprojecti\+\_\+no (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}}}]{pos,  }\item[{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}}}]{inv\+Mat,  }\item[{vec4}]{vp,  }\item[{\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}}}]{dest }\end{DoxyParamCaption})}
+
+
+
+maps the specified viewport coordinates into specified space \mbox{[}1\mbox{]} the matrix should contain projection matrix. 
+
+if you don\textquotesingle{}t have ( and don\textquotesingle{}t want to have ) an inverse matrix then use glm\+\_\+unproject version. You may use existing inverse of matrix in somewhere else, this is why glm\+\_\+unprojecti exists to save save inversion cost
+
+\mbox{[}1\mbox{]} space\+: 1-\/ if m = inv\+Proj\+: View Space 2-\/ if m = inv\+View\+Proj\+: World Space 3-\/ if m = inv\+M\+VP\+: Object Space
+
+You probably want to map the coordinates into object space so use inv\+M\+VP as m
+
+Computing view\+Proj\+: glm\+\_\+mat4\+\_\+mul(proj, view, view\+Proj); glm\+\_\+mat4\+\_\+mul(view\+Proj, model, M\+V\+P); glm\+\_\+mat4\+\_\+inv(view\+Proj, inv\+M\+V\+P);
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pos} & point/position in viewport coordinates \\
+\hline
+\mbox{\texttt{ in}}  & {\em inv\+Mat} & matrix (see brief) \\
+\hline
+\mbox{\texttt{ in}}  & {\em vp} & viewport as \mbox{[}x, y, width, height\mbox{]} \\
+\hline
+\mbox{\texttt{ out}}  & {\em dest} & unprojected coordinates \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 44 of file project\+\_\+no.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{44                                                              \{}
+\DoxyCodeLine{45   vec4 \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}};}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47   \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}[0] = 2.0f * (pos[0] -\/ vp[0]) / vp[2] -\/ 1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}};}
+\DoxyCodeLine{48   \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}[1] = 2.0f * (pos[1] -\/ vp[1]) / vp[3] -\/ 1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}};}
+\DoxyCodeLine{49   \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}[2] = 2.0f *  pos[2]                  -\/ 1.0f;}
+\DoxyCodeLine{50   \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}[3] = 1.0f;}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52   \mbox{\hyperlink{mat4_8h_aa7c3819fd1b1f8a4c9e975848ea648ae}{glm\_mat4\_mulv}}(invMat, \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}, \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}});}
+\DoxyCodeLine{53   \mbox{\hyperlink{vec4_8h_a1de78b0d470aa3ba9c5335b7495fc763}{glm\_vec4\_scale}}(\mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}, 1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} / \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}[3], \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}});}
+\DoxyCodeLine{54   \mbox{\hyperlink{vec3_8h_a2cfefaeab3948431291fa624ad47e162}{glm\_vec3}}(\mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}, dest);}
+\DoxyCodeLine{55 \}}
+
+\end{DoxyCode}

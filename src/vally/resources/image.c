@@ -10,7 +10,7 @@ image *image_load(const char *path) {
   image *img = (image *)malloc(sizeof(image));
   img->buffer = stbi_load(path, &img->width, &img->height, &img->channels, STBI_rgb_alpha);
   if (!img->buffer) {
-    VALLY_ERROR("Could not load image at \"%s\"!", path);
+    LOG_ERROR("Could not load image at \"%s\"!", path);
     return NULL;
   }
 

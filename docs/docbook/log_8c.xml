@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_log_8c">
+<title>deps/log/src/log.c File Reference</title>
+<indexterm><primary>deps/log/src/log.c</primary></indexterm>
+<programlisting>#include &quot;log.h&quot;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_struct_callback">Callback</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_log_8c_1aea0bffe478318f476a4bedee63256b2c">MAX_CALLBACKS</link>   32</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>const char * <link linkend="_log_8c_1acf49945d7504646d76917c8efc4f375e">log_level_string</link> (int <link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_log_8c_1a18259d7b87158a91089fd1d081617715">log_set_lock</link> (<link linkend="_log_8h_1af1c7dea93a5ff832ba11a7a4e3a46c45">log_LockFn</link> fn, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_log_8c_1a697ce711b67313990d351b5c95f87aed">udata</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_log_8c_1af2493e94f152a28b2ba4e3a2e2bba65d">log_set_level</link> (int <link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_log_8c_1a6de5d12252f1b48279d28769b7c130eb">log_set_quiet</link> (bool <link linkend="_glext_8h_1ab0b5c7de20095d30091485d2c60a3dd5">enable</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_log_8c_1a4196855e1cd42700557b6e4fa0715a35">log_add_callback</link> (<link linkend="_log_8h_1a4e1a7e636a6cabe43a851e125ea86a28">log_LogFn</link> fn, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_log_8c_1a697ce711b67313990d351b5c95f87aed">udata</link>, int <link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_log_8c_1afcf2da85fa8a21494dc461d546c50e4b">log_add_fp</link> (FILE *fp, int <link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_log_8c_1ac008ecbde449b2dd1bc4f8671d9a0e07">log_log</link> (int <link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link>, const char *file, int line, const char *fmt,...)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_log_8c_1aea0bffe478318f476a4bedee63256b2c"/>    <section>
+    <title>MAX_CALLBACKS</title>
+<indexterm><primary>MAX_CALLBACKS</primary><secondary>log.c</secondary></indexterm>
+<indexterm><primary>log.c</primary><secondary>MAX_CALLBACKS</secondary></indexterm>
+<para><computeroutput>#define MAX_CALLBACKS   32</computeroutput></para><para>
+Definition at line 25 of file log.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_log_8c_1a4196855e1cd42700557b6e4fa0715a35"/>    <section>
+    <title>log_add_callback()</title>
+<indexterm><primary>log_add_callback</primary><secondary>log.c</secondary></indexterm>
+<indexterm><primary>log.c</primary><secondary>log_add_callback</secondary></indexterm>
+<para><computeroutput>int log_add_callback (<link linkend="_log_8h_1a4e1a7e636a6cabe43a851e125ea86a28">log_LogFn</link> fn, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * udata, int level)</computeroutput></para><para>
+Definition at line 115 of file log.c.</para>
+<programlisting>115 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+116 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;<link linkend="_log_8c_1aea0bffe478318f476a4bedee63256b2c">MAX_CALLBACKS</link>;&#32;i++)&#32;{
+117 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.callbacks[i].fn)&#32;{
+118 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.callbacks[i]&#32;=&#32;(<link linkend="_struct_callback">Callback</link>)&#32;{&#32;fn,&#32;<link linkend="_log_8c_1a697ce711b67313990d351b5c95f87aed">udata</link>,&#32;<link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link>&#32;};
+119 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+120 &#32;&#32;&#32;&#32;}
+121 &#32;&#32;}
+122 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;-1;
+123 }
+</programlisting>    </section><anchor xml:id="_log_8c_1afcf2da85fa8a21494dc461d546c50e4b"/>    <section>
+    <title>log_add_fp()</title>
+<indexterm><primary>log_add_fp</primary><secondary>log.c</secondary></indexterm>
+<indexterm><primary>log.c</primary><secondary>log_add_fp</secondary></indexterm>
+<para><computeroutput>int log_add_fp (FILE * fp, int level)</computeroutput></para><para>
+Definition at line 126 of file log.c.</para>
+<programlisting>126 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+127 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_log_8c_1a4196855e1cd42700557b6e4fa0715a35">log_add_callback</link>(file_callback,&#32;fp,&#32;<link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link>);
+128 }
+</programlisting>    </section><anchor xml:id="_log_8c_1acf49945d7504646d76917c8efc4f375e"/>    <section>
+    <title>log_level_string()</title>
+<indexterm><primary>log_level_string</primary><secondary>log.c</secondary></indexterm>
+<indexterm><primary>log.c</primary><secondary>log_level_string</secondary></indexterm>
+<para><computeroutput>const char* log_level_string (int level)</computeroutput></para><para>
+Definition at line 94 of file log.c.</para>
+<programlisting>94 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+95 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;level_strings[<link linkend="_log_8c_1acf4d33ee4cff36f69b924471174dcb11">level</link>];
+96 }
+</programlisting>    </section><anchor xml:id="_log_8c_1ac008ecbde449b2dd1bc4f8671d9a0e07"/>    <section>
+    <title>log_log()</title>
+<indexterm><primary>log_log</primary><secondary>log.c</secondary></indexterm>
+<indexterm><primary>log.c</primary><secondary>log_log</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> log_log (int level, const char * file, int line, const char * fmt,  ...)</computeroutput></para><para>
+Definition at line 140 of file log.c.</para>
+<programlisting>140 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+141 &#32;&#32;<link linkend="_structlog___event">log_Event</link>&#32;ev&#32;=&#32;{
+142 &#32;&#32;&#32;&#32;.<link linkend="_structlog___event_1a2917e4ca45c418b9b3301252237deac8">fmt</link>&#32;&#32;&#32;=&#32;fmt,
+143 &#32;&#32;&#32;&#32;.file&#32;&#32;=&#32;file,
+144 &#32;&#32;&#32;&#32;.line&#32;&#32;=&#32;line,
+145 &#32;&#32;&#32;&#32;.level&#32;=&#32;<link linkend="_log_8c_1acf4d33ee4cff36f69b924471174dcb11">level</link>,
+146 &#32;&#32;};
+147 
+148 &#32;&#32;<link linkend="_log_8c_1a9863926e23e26ddb194b82b7fc50756a">lock</link>();
+149 
+150 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.quiet&#32;&amp;&amp;&#32;<link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link>&#32;&gt;=&#32;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.level)&#32;{
+151 &#32;&#32;&#32;&#32;init_event(&amp;ev,&#32;stderr);
+152 &#32;&#32;&#32;&#32;va_start(ev.<link linkend="_structlog___event_1adeb420d9154c0bff0fbdca8bb0c3a985">ap</link>,&#32;fmt);
+153 &#32;&#32;&#32;&#32;stdout_callback(&amp;ev);
+154 &#32;&#32;&#32;&#32;va_end(ev.<link linkend="_structlog___event_1adeb420d9154c0bff0fbdca8bb0c3a985">ap</link>);
+155 &#32;&#32;}
+156 
+157 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;<link linkend="_log_8c_1aea0bffe478318f476a4bedee63256b2c">MAX_CALLBACKS</link>&#32;&amp;&amp;&#32;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.callbacks[i].fn;&#32;i++)&#32;{
+158 &#32;&#32;&#32;&#32;<link linkend="_struct_callback">Callback</link>&#32;*cb&#32;=&#32;&amp;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.callbacks[i];
+159 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link>&#32;&gt;=&#32;cb-&gt;<link linkend="_struct_callback_1ae2d14d16fd04cb9d7aeadae7f17a63d5">level</link>)&#32;{
+160 &#32;&#32;&#32;&#32;&#32;&#32;init_event(&amp;ev,&#32;cb-&gt;<link linkend="_struct_callback_1a8e866a6b66ae600e71a6b280057d8541">udata</link>);
+161 &#32;&#32;&#32;&#32;&#32;&#32;va_start(ev.<link linkend="_structlog___event_1adeb420d9154c0bff0fbdca8bb0c3a985">ap</link>,&#32;fmt);
+162 &#32;&#32;&#32;&#32;&#32;&#32;cb-&gt;<link linkend="_struct_callback_1a14a0a0dda819be431520a0a4a1a9b2e3">fn</link>(&amp;ev);
+163 &#32;&#32;&#32;&#32;&#32;&#32;va_end(ev.<link linkend="_structlog___event_1adeb420d9154c0bff0fbdca8bb0c3a985">ap</link>);
+164 &#32;&#32;&#32;&#32;}
+165 &#32;&#32;}
+166 
+167 &#32;&#32;unlock();
+168 }
+</programlisting>    </section><anchor xml:id="_log_8c_1af2493e94f152a28b2ba4e3a2e2bba65d"/>    <section>
+    <title>log_set_level()</title>
+<indexterm><primary>log_set_level</primary><secondary>log.c</secondary></indexterm>
+<indexterm><primary>log.c</primary><secondary>log_set_level</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> log_set_level (int level)</computeroutput></para><para>
+Definition at line 105 of file log.c.</para>
+<programlisting>105 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+106 &#32;&#32;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.level&#32;=&#32;<link linkend="_log_8c_1acf4d33ee4cff36f69b924471174dcb11">level</link>;
+107 }
+</programlisting>    </section><anchor xml:id="_log_8c_1a18259d7b87158a91089fd1d081617715"/>    <section>
+    <title>log_set_lock()</title>
+<indexterm><primary>log_set_lock</primary><secondary>log.c</secondary></indexterm>
+<indexterm><primary>log.c</primary><secondary>log_set_lock</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> log_set_lock (<link linkend="_log_8h_1af1c7dea93a5ff832ba11a7a4e3a46c45">log_LockFn</link> fn, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * udata)</computeroutput></para><para>
+Definition at line 99 of file log.c.</para>
+<programlisting>99 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+100 &#32;&#32;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.lock&#32;=&#32;fn;
+101 &#32;&#32;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.udata&#32;=&#32;<link linkend="_log_8c_1a697ce711b67313990d351b5c95f87aed">udata</link>;
+102 }
+</programlisting>    </section><anchor xml:id="_log_8c_1a6de5d12252f1b48279d28769b7c130eb"/>    <section>
+    <title>log_set_quiet()</title>
+<indexterm><primary>log_set_quiet</primary><secondary>log.c</secondary></indexterm>
+<indexterm><primary>log.c</primary><secondary>log_set_quiet</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> log_set_quiet (bool enable)</computeroutput></para><para>
+Definition at line 110 of file log.c.</para>
+<programlisting>110 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+111 &#32;&#32;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.quiet&#32;=&#32;<link linkend="_glext_8h_1ab0b5c7de20095d30091485d2c60a3dd5">enable</link>;
+112 }
+</programlisting></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_log_8c_1a38367a766a6e5583a1d7cd3552a45585"/>    <section>
+    <title>callbacks</title>
+<indexterm><primary>callbacks</primary><secondary>log.c</secondary></indexterm>
+<indexterm><primary>log.c</primary><secondary>callbacks</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_callback">Callback</link> callbacks[<link linkend="_log_8c_1aea0bffe478318f476a4bedee63256b2c">MAX_CALLBACKS</link>]</computeroutput></para><para>
+Definition at line 38 of file log.c.</para>
+    </section><anchor xml:id="_log_8c_1acf4d33ee4cff36f69b924471174dcb11"/>    <section>
+    <title>level</title>
+<indexterm><primary>level</primary><secondary>log.c</secondary></indexterm>
+<indexterm><primary>log.c</primary><secondary>level</secondary></indexterm>
+<para><computeroutput>int <link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link></computeroutput></para><para>
+Definition at line 36 of file log.c.</para>
+    </section><anchor xml:id="_log_8c_1a9863926e23e26ddb194b82b7fc50756a"/>    <section>
+    <title>lock</title>
+<indexterm><primary>lock</primary><secondary>log.c</secondary></indexterm>
+<indexterm><primary>log.c</primary><secondary>lock</secondary></indexterm>
+<para><computeroutput>static <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> lock</computeroutput></para><para>
+Definition at line 35 of file log.c.</para>
+    </section><anchor xml:id="_log_8c_1ae4426f467d61ae456b95844d4d9c2dcd"/>    <section>
+    <title>quiet</title>
+<indexterm><primary>quiet</primary><secondary>log.c</secondary></indexterm>
+<indexterm><primary>log.c</primary><secondary>quiet</secondary></indexterm>
+<para><computeroutput>bool quiet</computeroutput></para><para>
+Definition at line 37 of file log.c.</para>
+    </section><anchor xml:id="_log_8c_1a697ce711b67313990d351b5c95f87aed"/>    <section>
+    <title>udata</title>
+<indexterm><primary>udata</primary><secondary>log.c</secondary></indexterm>
+<indexterm><primary>log.c</primary><secondary>udata</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>* udata</computeroutput></para><para>
+Definition at line 34 of file log.c.</para>
+</section>
+</section>
+</section>

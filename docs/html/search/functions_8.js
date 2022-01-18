@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['texture_5fbind_0',['texture_bind',['../texture_8c.html#ad2cb3b0ccaa6894880ef2ac785705f29',1,'texture_bind(u32 unit, texture *texture):&#160;texture.c'],['../texture_8h.html#ad2cb3b0ccaa6894880ef2ac785705f29',1,'texture_bind(u32 unit, texture *texture):&#160;texture.c']]],
-  ['texture_5fcreate_1',['texture_create',['../texture_8c.html#ad20edeb7c077c9c1461b553d57af4b49',1,'texture_create(image *image):&#160;texture.c'],['../texture_8h.html#a3f1d6687c522581eca43d4873b748cbe',1,'texture_create(image *image):&#160;texture.c']]],
-  ['texture_5fdestroy_2',['texture_destroy',['../texture_8c.html#aa6ec5f9134f98a38d901418656e43499',1,'texture_destroy(texture *texture):&#160;texture.c'],['../texture_8h.html#aa6ec5f9134f98a38d901418656e43499',1,'texture_destroy(texture *texture):&#160;texture.c']]],
-  ['texture_5funbind_3',['texture_unbind',['../texture_8c.html#a18f570cb1aaaaaf21d0a61216a35fdb5',1,'texture_unbind():&#160;texture.c'],['../texture_8h.html#a18f570cb1aaaaaf21d0a61216a35fdb5',1,'texture_unbind():&#160;texture.c']]],
-  ['texture_5fwhite_5fcreate_4',['texture_white_create',['../texture_8c.html#a5626ff0130bef85d611f4b9da0915bac',1,'texture_white_create():&#160;texture.c'],['../texture_8h.html#a5626ff0130bef85d611f4b9da0915bac',1,'texture_white_create():&#160;texture.c']]],
-  ['time_5fnow_5',['time_now',['../time_8c.html#a40c527fa3a4dfe786ce3f977c78e653a',1,'time_now():&#160;time.c'],['../time_8h.html#a40c527fa3a4dfe786ce3f977c78e653a',1,'time_now():&#160;time.c']]]
+  ['hexwave_5fchange_24961',['hexwave_change',['../stb__hexwave_8h.html#a202dd823a8f57918907558a29b8eda1e',1,'stb_hexwave.h']]],
+  ['hexwave_5fcreate_24962',['hexwave_create',['../stb__hexwave_8h.html#ad6453a67d704d1178dc86dbd6d200f32',1,'stb_hexwave.h']]],
+  ['hexwave_5fgenerate_5fsamples_24963',['hexwave_generate_samples',['../stb__hexwave_8h.html#ac98cfb54c865df60bdd4f364ff5571de',1,'stb_hexwave.h']]],
+  ['hexwave_5finit_24964',['hexwave_init',['../stb__hexwave_8h.html#ad1005735efddc1d8a3428f9655362ef8',1,'stb_hexwave.h']]],
+  ['hexwave_5fshutdown_24965',['hexwave_shutdown',['../stb__hexwave_8h.html#ab1c2d8640e81e8d6368416f5d8726ecd',1,'stb_hexwave.h']]]
 ];

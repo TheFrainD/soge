@@ -1,0 +1,47 @@
+A simple logging library implemented in C99
+
+\hypertarget{md_deps_log__r_e_a_d_m_e_autotoc_md78}{}\doxysection{Usage}\label{md_deps_log__r_e_a_d_m_e_autotoc_md78}
+{\bfseries{\href{src/log.c?raw=1}{\texttt{ log.\+c}}}} and {\bfseries{\href{src/log.h?raw=1}{\texttt{ log.\+h}}}} should be dropped into an existing project and compiled along with it. The library provides 6 function-\/like macros for logging\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{log_8h_af89cb876e6e1d43cfeacdd58a7c9b78c}{log\_trace}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *fmt, ...);}
+\DoxyCodeLine{\mbox{\hyperlink{log_8h_aa77e596ef13d2f0f75d0ac9540ed358d}{log\_debug}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *fmt, ...);}
+\DoxyCodeLine{\mbox{\hyperlink{log_8h_aa1cfe5444875c8eca0ea6f6993977d6d}{log\_info}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *fmt, ...);}
+\DoxyCodeLine{\mbox{\hyperlink{log_8h_a04af09851c431d178f16b24fa1aac1e9}{log\_warn}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *fmt, ...);}
+\DoxyCodeLine{\mbox{\hyperlink{log_8h_a6ae72553ea9805dd87a463d6f710364d}{log\_error}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *fmt, ...);}
+\DoxyCodeLine{\mbox{\hyperlink{log_8h_a704a43b1e2ff3bb554aff101efdbeecf}{log\_fatal}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *fmt, ...);}
+\end{DoxyCode}
+
+
+Each function takes a printf format string followed by additional arguments\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{log_8h_af89cb876e6e1d43cfeacdd58a7c9b78c}{log\_trace}}(\textcolor{stringliteral}{"Hello \%s"}, \textcolor{stringliteral}{"world"})}
+\end{DoxyCode}
+
+
+Resulting in a line with the given format printed to stderr\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{20:18:26 TRACE src/main.c:11: Hello world}
+\end{DoxyCode}
+\hypertarget{md_deps_log__r_e_a_d_m_e_autotoc_md79}{}\doxysubsubsection{log\+\_\+set\+\_\+quiet(bool enable)}\label{md_deps_log__r_e_a_d_m_e_autotoc_md79}
+Quiet-\/mode can be enabled by passing {\ttfamily true} to the {\ttfamily \mbox{\hyperlink{log_8c_a6de5d12252f1b48279d28769b7c130eb}{log\+\_\+set\+\_\+quiet()}}} function. While this mode is enabled the library will not output anything to {\ttfamily stderr}, but will continue to write to files and callbacks if any are set.\hypertarget{md_deps_log__r_e_a_d_m_e_autotoc_md80}{}\doxysubsubsection{log\+\_\+set\+\_\+level(int level)}\label{md_deps_log__r_e_a_d_m_e_autotoc_md80}
+The current logging level can be set by using the {\ttfamily \mbox{\hyperlink{log_8c_af2493e94f152a28b2ba4e3a2e2bba65d}{log\+\_\+set\+\_\+level()}}} function. All logs below the given level will not be written to {\ttfamily stderr}. By default the level is {\ttfamily L\+O\+G\+\_\+\+T\+R\+A\+CE}, such that nothing is ignored.\hypertarget{md_deps_log__r_e_a_d_m_e_autotoc_md81}{}\doxysubsubsection{log\+\_\+add\+\_\+fp(\+F\+I\+L\+E $\ast$fp, int level)}\label{md_deps_log__r_e_a_d_m_e_autotoc_md81}
+One or more file pointers where the log will be written can be provided to the library by using the {\ttfamily \mbox{\hyperlink{log_8c_afcf2da85fa8a21494dc461d546c50e4b}{log\+\_\+add\+\_\+fp()}}} function. The data written to the file output is of the following format\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{2047-\/03-\/11 20:18:26 TRACE src/main.c:11: Hello world}
+\end{DoxyCode}
+
+
+Any messages below the given {\ttfamily level} are ignored. If the library failed to add a file pointer a value less-\/than-\/zero is returned.\hypertarget{md_deps_log__r_e_a_d_m_e_autotoc_md82}{}\doxysubsubsection{log\+\_\+add\+\_\+callback(log\+\_\+\+Log\+Fn fn, void $\ast$udata, int level)}\label{md_deps_log__r_e_a_d_m_e_autotoc_md82}
+One or more callback functions which are called with the log data can be provided to the library by using the {\ttfamily \mbox{\hyperlink{log_8c_a4196855e1cd42700557b6e4fa0715a35}{log\+\_\+add\+\_\+callback()}}} function. A callback function is passed a {\ttfamily \mbox{\hyperlink{structlog___event}{log\+\_\+\+Event}}} structure containing the {\ttfamily line} number, {\ttfamily filename}, {\ttfamily fmt} string, {\ttfamily va} printf va\+\_\+list, {\ttfamily level} and the given {\ttfamily udata}.\hypertarget{md_deps_log__r_e_a_d_m_e_autotoc_md83}{}\doxysubsubsection{log\+\_\+set\+\_\+lock(log\+\_\+\+Lock\+Fn fn, void $\ast$udata)}\label{md_deps_log__r_e_a_d_m_e_autotoc_md83}
+If the log will be written to from multiple threads a lock function can be set. The function is passed the boolean {\ttfamily true} if the lock should be acquired or {\ttfamily false} if the lock should be released and the given {\ttfamily udata} value.\hypertarget{md_deps_log__r_e_a_d_m_e_autotoc_md84}{}\doxysubsubsection{const char$\ast$ log\+\_\+level\+\_\+string(int level)}\label{md_deps_log__r_e_a_d_m_e_autotoc_md84}
+Returns the name of the given log level as a string.\hypertarget{md_deps_log__r_e_a_d_m_e_autotoc_md85}{}\doxysubsubsection{L\+O\+G\+\_\+\+U\+S\+E\+\_\+\+C\+O\+L\+OR}\label{md_deps_log__r_e_a_d_m_e_autotoc_md85}
+If the library is compiled with {\ttfamily -\/D\+L\+O\+G\+\_\+\+U\+S\+E\+\_\+\+C\+O\+L\+OR} A\+N\+SI color escape codes will be used when printing.\hypertarget{md_deps_log__r_e_a_d_m_e_autotoc_md86}{}\doxysection{License}\label{md_deps_log__r_e_a_d_m_e_autotoc_md86}
+This library is free software; you can redistribute it and/or modify it under the terms of the M\+IT license. See \mbox{[}L\+I\+C\+E\+N\+SE\mbox{]}(L\+I\+C\+E\+N\+SE) for details. 

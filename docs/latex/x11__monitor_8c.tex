@@ -1,0 +1,694 @@
+\hypertarget{x11__monitor_8c}{}\doxysection{deps/glfw/src/x11\+\_\+monitor.c File Reference}
+\label{x11__monitor_8c}\index{deps/glfw/src/x11\_monitor.c@{deps/glfw/src/x11\_monitor.c}}
+{\ttfamily \#include \char`\"{}internal.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{x11__monitor_8c_ade7b239b6691fb34b66f3022ad97949d}{\+\_\+glfw\+Poll\+Monitors\+X11}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{x11__monitor_8c_ab4f579e1c8c56307de37875618f947ba}{\+\_\+glfw\+Set\+Video\+Mode\+X11}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor, const \mbox{\hyperlink{struct_g_l_f_wvidmode}{G\+L\+F\+Wvidmode}} $\ast$desired)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{x11__monitor_8c_a6dbff2579e47fcec78b5510d738b70a1}{\+\_\+glfw\+Restore\+Video\+Mode\+X11}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{x11__monitor_8c_a5450ef92b12de637409609e32d0a371f}{\+\_\+glfw\+Free\+Monitor\+X11}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{x11__monitor_8c_a5a5996335db505831185dc58da020cfe}{\+\_\+glfw\+Get\+Monitor\+Pos\+X11}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor, int $\ast$xpos, int $\ast$ypos)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{x11__monitor_8c_a4e16e691c38b20d8996c2067ea9165b0}{\+\_\+glfw\+Get\+Monitor\+Content\+Scale\+X11}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor, float $\ast$xscale, float $\ast$yscale)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{x11__monitor_8c_a4017373b08c7c5941a5789f8ce7ef1fa}{\+\_\+glfw\+Get\+Monitor\+Workarea\+X11}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor, int $\ast$xpos, int $\ast$ypos, int $\ast$\mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}}, int $\ast$\mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}})
+\item 
+\mbox{\hyperlink{struct_g_l_f_wvidmode}{G\+L\+F\+Wvidmode}} $\ast$ \mbox{\hyperlink{x11__monitor_8c_a3a95b3fd09b98fd39b08ed0287a746e8}{\+\_\+glfw\+Get\+Video\+Modes\+X11}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor, int $\ast$\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{x11__monitor_8c_a448dc823ed0a17ad344e0f483a206a06}{\+\_\+glfw\+Get\+Video\+Mode\+X11}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor, \mbox{\hyperlink{struct_g_l_f_wvidmode}{G\+L\+F\+Wvidmode}} $\ast$\mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}})
+\item 
+\mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \mbox{\hyperlink{x11__monitor_8c_ad0cdfa6cb50ed204c90f2094cae885f0}{\+\_\+glfw\+Get\+Gamma\+Ramp\+X11}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor, \mbox{\hyperlink{struct_g_l_f_wgammaramp}{G\+L\+F\+Wgammaramp}} $\ast$ramp)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{x11__monitor_8c_a0c98119b648608e9090d83dd1ee9e1cf}{\+\_\+glfw\+Set\+Gamma\+Ramp\+X11}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor, const \mbox{\hyperlink{struct_g_l_f_wgammaramp}{G\+L\+F\+Wgammaramp}} $\ast$ramp)
+\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} R\+R\+Crtc \mbox{\hyperlink{x11__monitor_8c_a4cbf83a07f280efda4d13dd309d87b60}{glfw\+Get\+X11\+Adapter}} (\mbox{\hyperlink{group__monitor_ga8d9efd1cde9426692c73fe40437d0ae3}{G\+L\+F\+Wmonitor}} $\ast$handle)
+\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} R\+R\+Output \mbox{\hyperlink{x11__monitor_8c_aec04c3a957e504379dfc25dd8aaad24a}{glfw\+Get\+X11\+Monitor}} (\mbox{\hyperlink{group__monitor_ga8d9efd1cde9426692c73fe40437d0ae3}{G\+L\+F\+Wmonitor}} $\ast$handle)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{x11__monitor_8c_a5450ef92b12de637409609e32d0a371f}\label{x11__monitor_8c_a5450ef92b12de637409609e32d0a371f}} 
+\index{x11\_monitor.c@{x11\_monitor.c}!\_glfwFreeMonitorX11@{\_glfwFreeMonitorX11}}
+\index{\_glfwFreeMonitorX11@{\_glfwFreeMonitorX11}!x11\_monitor.c@{x11\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwFreeMonitorX11()}{\_glfwFreeMonitorX11()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Free\+Monitor\+X11 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor }\end{DoxyParamCaption})}
+
+
+
+Definition at line 313 of file x11\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{314 \{}
+\DoxyCodeLine{315 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{x11__monitor_8c_ad0cdfa6cb50ed204c90f2094cae885f0}\label{x11__monitor_8c_ad0cdfa6cb50ed204c90f2094cae885f0}} 
+\index{x11\_monitor.c@{x11\_monitor.c}!\_glfwGetGammaRampX11@{\_glfwGetGammaRampX11}}
+\index{\_glfwGetGammaRampX11@{\_glfwGetGammaRampX11}!x11\_monitor.c@{x11\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetGammaRampX11()}{\_glfwGetGammaRampX11()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \+\_\+glfw\+Get\+Gamma\+Ramp\+X11 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor,  }\item[{\mbox{\hyperlink{struct_g_l_f_wgammaramp}{G\+L\+F\+Wgammaramp}} $\ast$}]{ramp }\end{DoxyParamCaption})}
+
+
+
+Definition at line 524 of file x11\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{525 \{}
+\DoxyCodeLine{526     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.randr.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7978c47e7cee32b9d3b89bf787cfebc5}{available}} \&\& !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.randr.gammaBroken)}
+\DoxyCodeLine{527     \{}
+\DoxyCodeLine{528         \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}} = \mbox{\hyperlink{x11__platform_8h_a1263156e6a5f2e1c0bd1b30b2d0664a6}{XRRGetCrtcGammaSize}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}},}
+\DoxyCodeLine{529                                                 monitor-\/>x11.crtc);}
+\DoxyCodeLine{530         XRRCrtcGamma* gamma = \mbox{\hyperlink{x11__platform_8h_aab0e09d1538db8816e20c122dced690a}{XRRGetCrtcGamma}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}},}
+\DoxyCodeLine{531                                               monitor-\/>x11.crtc);}
+\DoxyCodeLine{532 }
+\DoxyCodeLine{533         \mbox{\hyperlink{internal_8h_acb6a8b432b06fd0accdfc0e046785109}{\_glfwAllocGammaArrays}}(ramp, \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}});}
+\DoxyCodeLine{534 }
+\DoxyCodeLine{535         memcpy(ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_a2cce5d968734b685623eef913e635138}{red}},   gamma-\/>red,   \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}} * \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short}));}
+\DoxyCodeLine{536         memcpy(ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_affccc6f5df47820b6562d709da3a5a3a}{green}}, gamma-\/>green, \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}} * \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short}));}
+\DoxyCodeLine{537         memcpy(ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_acf0c836d0efe29c392fe8d1a1042744b}{blue}},  gamma-\/>blue,  \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}} * \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short}));}
+\DoxyCodeLine{538 }
+\DoxyCodeLine{539         \mbox{\hyperlink{x11__platform_8h_a59cad2179f06c34d1ae55f3171dd49b3}{XRRFreeGamma}}(gamma);}
+\DoxyCodeLine{540         \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{541     \}}
+\DoxyCodeLine{542     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.vidmode.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7978c47e7cee32b9d3b89bf787cfebc5}{available}})}
+\DoxyCodeLine{543     \{}
+\DoxyCodeLine{544         \textcolor{keywordtype}{int} \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}};}
+\DoxyCodeLine{545         \mbox{\hyperlink{x11__platform_8h_a6700dbfed1f01bc9325e53aff8eb05ee}{XF86VidModeGetGammaRampSize}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.screen, \&\mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}});}
+\DoxyCodeLine{546 }
+\DoxyCodeLine{547         \mbox{\hyperlink{internal_8h_acb6a8b432b06fd0accdfc0e046785109}{\_glfwAllocGammaArrays}}(ramp, \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}});}
+\DoxyCodeLine{548 }
+\DoxyCodeLine{549         \mbox{\hyperlink{x11__platform_8h_a2119ddaa77e4203f56e874475cbce3ba}{XF86VidModeGetGammaRamp}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}},}
+\DoxyCodeLine{550                                 \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.screen,}
+\DoxyCodeLine{551                                 ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_ad620e1cffbff9a32c51bca46301b59a5}{size}}, ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_a2cce5d968734b685623eef913e635138}{red}}, ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_affccc6f5df47820b6562d709da3a5a3a}{green}}, ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_acf0c836d0efe29c392fe8d1a1042744b}{blue}});}
+\DoxyCodeLine{552         \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{553     \}}
+\DoxyCodeLine{554     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{555     \{}
+\DoxyCodeLine{556         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{557                         \textcolor{stringliteral}{"X11: Gamma ramp access not supported by server"});}
+\DoxyCodeLine{558         \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{559     \}}
+\DoxyCodeLine{560 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{x11__monitor_8c_a4e16e691c38b20d8996c2067ea9165b0}\label{x11__monitor_8c_a4e16e691c38b20d8996c2067ea9165b0}} 
+\index{x11\_monitor.c@{x11\_monitor.c}!\_glfwGetMonitorContentScaleX11@{\_glfwGetMonitorContentScaleX11}}
+\index{\_glfwGetMonitorContentScaleX11@{\_glfwGetMonitorContentScaleX11}!x11\_monitor.c@{x11\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetMonitorContentScaleX11()}{\_glfwGetMonitorContentScaleX11()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Get\+Monitor\+Content\+Scale\+X11 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor,  }\item[{float $\ast$}]{xscale,  }\item[{float $\ast$}]{yscale }\end{DoxyParamCaption})}
+
+
+
+Definition at line 339 of file x11\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{341 \{}
+\DoxyCodeLine{342     \textcolor{keywordflow}{if} (xscale)}
+\DoxyCodeLine{343         *xscale = \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.contentScaleX;}
+\DoxyCodeLine{344     \textcolor{keywordflow}{if} (yscale)}
+\DoxyCodeLine{345         *yscale = \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.contentScaleY;}
+\DoxyCodeLine{346 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{x11__monitor_8c_a5a5996335db505831185dc58da020cfe}\label{x11__monitor_8c_a5a5996335db505831185dc58da020cfe}} 
+\index{x11\_monitor.c@{x11\_monitor.c}!\_glfwGetMonitorPosX11@{\_glfwGetMonitorPosX11}}
+\index{\_glfwGetMonitorPosX11@{\_glfwGetMonitorPosX11}!x11\_monitor.c@{x11\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetMonitorPosX11()}{\_glfwGetMonitorPosX11()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Get\+Monitor\+Pos\+X11 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor,  }\item[{int $\ast$}]{xpos,  }\item[{int $\ast$}]{ypos }\end{DoxyParamCaption})}
+
+
+
+Definition at line 317 of file x11\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{318 \{}
+\DoxyCodeLine{319     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.randr.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7978c47e7cee32b9d3b89bf787cfebc5}{available}} \&\& !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.randr.monitorBroken)}
+\DoxyCodeLine{320     \{}
+\DoxyCodeLine{321         XRRScreenResources* sr =}
+\DoxyCodeLine{322             \mbox{\hyperlink{x11__platform_8h_a81b377b84134a955b71b1efffb8380e7}{XRRGetScreenResourcesCurrent}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.root);}
+\DoxyCodeLine{323         XRRCrtcInfo* ci = \mbox{\hyperlink{x11__platform_8h_a163460fc468733ed65a95d1a19197cb2}{XRRGetCrtcInfo}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, sr, monitor-\/>x11.crtc);}
+\DoxyCodeLine{324 }
+\DoxyCodeLine{325         \textcolor{keywordflow}{if} (ci)}
+\DoxyCodeLine{326         \{}
+\DoxyCodeLine{327             \textcolor{keywordflow}{if} (xpos)}
+\DoxyCodeLine{328                 *xpos = ci-\/>x;}
+\DoxyCodeLine{329             \textcolor{keywordflow}{if} (ypos)}
+\DoxyCodeLine{330                 *ypos = ci-\/>y;}
+\DoxyCodeLine{331 }
+\DoxyCodeLine{332             \mbox{\hyperlink{x11__platform_8h_af079b02e39f592f13414ab0c714a69a8}{XRRFreeCrtcInfo}}(ci);}
+\DoxyCodeLine{333         \}}
+\DoxyCodeLine{334 }
+\DoxyCodeLine{335         \mbox{\hyperlink{x11__platform_8h_a227499ad2e417195e18e86d6e4c9684d}{XRRFreeScreenResources}}(sr);}
+\DoxyCodeLine{336     \}}
+\DoxyCodeLine{337 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{x11__monitor_8c_a4017373b08c7c5941a5789f8ce7ef1fa}\label{x11__monitor_8c_a4017373b08c7c5941a5789f8ce7ef1fa}} 
+\index{x11\_monitor.c@{x11\_monitor.c}!\_glfwGetMonitorWorkareaX11@{\_glfwGetMonitorWorkareaX11}}
+\index{\_glfwGetMonitorWorkareaX11@{\_glfwGetMonitorWorkareaX11}!x11\_monitor.c@{x11\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetMonitorWorkareaX11()}{\_glfwGetMonitorWorkareaX11()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Get\+Monitor\+Workarea\+X11 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor,  }\item[{int $\ast$}]{xpos,  }\item[{int $\ast$}]{ypos,  }\item[{int $\ast$}]{width,  }\item[{int $\ast$}]{height }\end{DoxyParamCaption})}
+
+
+
+Definition at line 348 of file x11\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{351 \{}
+\DoxyCodeLine{352     \textcolor{keywordtype}{int} areaX = 0, areaY = 0, areaWidth = 0, areaHeight = 0;}
+\DoxyCodeLine{353 }
+\DoxyCodeLine{354     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.randr.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7978c47e7cee32b9d3b89bf787cfebc5}{available}} \&\& !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.randr.monitorBroken)}
+\DoxyCodeLine{355     \{}
+\DoxyCodeLine{356         XRRScreenResources* sr =}
+\DoxyCodeLine{357             \mbox{\hyperlink{x11__platform_8h_a81b377b84134a955b71b1efffb8380e7}{XRRGetScreenResourcesCurrent}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.root);}
+\DoxyCodeLine{358         XRRCrtcInfo* ci = \mbox{\hyperlink{x11__platform_8h_a163460fc468733ed65a95d1a19197cb2}{XRRGetCrtcInfo}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, sr, monitor-\/>x11.crtc);}
+\DoxyCodeLine{359 }
+\DoxyCodeLine{360         areaX = ci-\/>x;}
+\DoxyCodeLine{361         areaY = ci-\/>y;}
+\DoxyCodeLine{362 }
+\DoxyCodeLine{363         \textcolor{keyword}{const} XRRModeInfo* mi = getModeInfo(sr, ci-\/>mode);}
+\DoxyCodeLine{364 }
+\DoxyCodeLine{365         \textcolor{keywordflow}{if} (ci-\/>rotation == RR\_Rotate\_90 || ci-\/>rotation == RR\_Rotate\_270)}
+\DoxyCodeLine{366         \{}
+\DoxyCodeLine{367             areaWidth  = mi-\/>height;}
+\DoxyCodeLine{368             areaHeight = mi-\/>width;}
+\DoxyCodeLine{369         \}}
+\DoxyCodeLine{370         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{371         \{}
+\DoxyCodeLine{372             areaWidth  = mi-\/>width;}
+\DoxyCodeLine{373             areaHeight = mi-\/>height;}
+\DoxyCodeLine{374         \}}
+\DoxyCodeLine{375 }
+\DoxyCodeLine{376         \mbox{\hyperlink{x11__platform_8h_af079b02e39f592f13414ab0c714a69a8}{XRRFreeCrtcInfo}}(ci);}
+\DoxyCodeLine{377         \mbox{\hyperlink{x11__platform_8h_a227499ad2e417195e18e86d6e4c9684d}{XRRFreeScreenResources}}(sr);}
+\DoxyCodeLine{378     \}}
+\DoxyCodeLine{379     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{380     \{}
+\DoxyCodeLine{381         areaWidth  = DisplayWidth(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.screen);}
+\DoxyCodeLine{382         areaHeight = DisplayHeight(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.screen);}
+\DoxyCodeLine{383     \}}
+\DoxyCodeLine{384 }
+\DoxyCodeLine{385     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.NET\_WORKAREA \&\& \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.NET\_CURRENT\_DESKTOP)}
+\DoxyCodeLine{386     \{}
+\DoxyCodeLine{387         Atom* extents = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{388         Atom* desktop = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{389         \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} extentCount =}
+\DoxyCodeLine{390             \mbox{\hyperlink{x11__platform_8h_a889b3172437e770a55812b569e1a93bd}{\_glfwGetWindowPropertyX11}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.root,}
+\DoxyCodeLine{391                                       \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.NET\_WORKAREA,}
+\DoxyCodeLine{392                                       XA\_CARDINAL,}
+\DoxyCodeLine{393                                       (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}**) \&extents);}
+\DoxyCodeLine{394 }
+\DoxyCodeLine{395         \textcolor{keywordflow}{if} (\mbox{\hyperlink{x11__platform_8h_a889b3172437e770a55812b569e1a93bd}{\_glfwGetWindowPropertyX11}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.root,}
+\DoxyCodeLine{396                                       \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.NET\_CURRENT\_DESKTOP,}
+\DoxyCodeLine{397                                       XA\_CARDINAL,}
+\DoxyCodeLine{398                                       (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}**) \&desktop) > 0)}
+\DoxyCodeLine{399         \{}
+\DoxyCodeLine{400             \textcolor{keywordflow}{if} (extentCount >= 4 \&\& *desktop < extentCount / 4)}
+\DoxyCodeLine{401             \{}
+\DoxyCodeLine{402                 \textcolor{keyword}{const} \textcolor{keywordtype}{int} globalX = extents[*desktop * 4 + 0];}
+\DoxyCodeLine{403                 \textcolor{keyword}{const} \textcolor{keywordtype}{int} globalY = extents[*desktop * 4 + 1];}
+\DoxyCodeLine{404                 \textcolor{keyword}{const} \textcolor{keywordtype}{int} globalWidth  = extents[*desktop * 4 + 2];}
+\DoxyCodeLine{405                 \textcolor{keyword}{const} \textcolor{keywordtype}{int} globalHeight = extents[*desktop * 4 + 3];}
+\DoxyCodeLine{406 }
+\DoxyCodeLine{407                 \textcolor{keywordflow}{if} (areaX < globalX)}
+\DoxyCodeLine{408                 \{}
+\DoxyCodeLine{409                     areaWidth -\/= globalX -\/ areaX;}
+\DoxyCodeLine{410                     areaX = globalX;}
+\DoxyCodeLine{411                 \}}
+\DoxyCodeLine{412 }
+\DoxyCodeLine{413                 \textcolor{keywordflow}{if} (areaY < globalY)}
+\DoxyCodeLine{414                 \{}
+\DoxyCodeLine{415                     areaHeight -\/= globalY -\/ areaY;}
+\DoxyCodeLine{416                     areaY = globalY;}
+\DoxyCodeLine{417                 \}}
+\DoxyCodeLine{418 }
+\DoxyCodeLine{419                 \textcolor{keywordflow}{if} (areaX + areaWidth > globalX + globalWidth)}
+\DoxyCodeLine{420                     areaWidth = globalX -\/ areaX + globalWidth;}
+\DoxyCodeLine{421                 \textcolor{keywordflow}{if} (areaY + areaHeight > globalY + globalHeight)}
+\DoxyCodeLine{422                     areaHeight = globalY -\/ areaY + globalHeight;}
+\DoxyCodeLine{423             \}}
+\DoxyCodeLine{424         \}}
+\DoxyCodeLine{425 }
+\DoxyCodeLine{426         \textcolor{keywordflow}{if} (extents)}
+\DoxyCodeLine{427             \mbox{\hyperlink{x11__platform_8h_ac5e57c89cd1e963b41f12b3404b42ca8}{XFree}}(extents);}
+\DoxyCodeLine{428         \textcolor{keywordflow}{if} (desktop)}
+\DoxyCodeLine{429             \mbox{\hyperlink{x11__platform_8h_ac5e57c89cd1e963b41f12b3404b42ca8}{XFree}}(desktop);}
+\DoxyCodeLine{430     \}}
+\DoxyCodeLine{431 }
+\DoxyCodeLine{432     \textcolor{keywordflow}{if} (xpos)}
+\DoxyCodeLine{433         *xpos = areaX;}
+\DoxyCodeLine{434     \textcolor{keywordflow}{if} (ypos)}
+\DoxyCodeLine{435         *ypos = areaY;}
+\DoxyCodeLine{436     \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}})}
+\DoxyCodeLine{437         *\mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}} = areaWidth;}
+\DoxyCodeLine{438     \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}})}
+\DoxyCodeLine{439         *\mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}} = areaHeight;}
+\DoxyCodeLine{440 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{x11__monitor_8c_a3a95b3fd09b98fd39b08ed0287a746e8}\label{x11__monitor_8c_a3a95b3fd09b98fd39b08ed0287a746e8}} 
+\index{x11\_monitor.c@{x11\_monitor.c}!\_glfwGetVideoModesX11@{\_glfwGetVideoModesX11}}
+\index{\_glfwGetVideoModesX11@{\_glfwGetVideoModesX11}!x11\_monitor.c@{x11\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetVideoModesX11()}{\_glfwGetVideoModesX11()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_f_wvidmode}{G\+L\+F\+Wvidmode}}$\ast$ \+\_\+glfw\+Get\+Video\+Modes\+X11 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor,  }\item[{int $\ast$}]{count }\end{DoxyParamCaption})}
+
+
+
+Definition at line 442 of file x11\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{443 \{}
+\DoxyCodeLine{444     \mbox{\hyperlink{struct_g_l_f_wvidmode}{GLFWvidmode}}* \mbox{\hyperlink{glext_8h_a321ff419cd5252e54cf95e64dc6687ee}{result}};}
+\DoxyCodeLine{445 }
+\DoxyCodeLine{446     *\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}} = 0;}
+\DoxyCodeLine{447 }
+\DoxyCodeLine{448     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.randr.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7978c47e7cee32b9d3b89bf787cfebc5}{available}} \&\& !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.randr.monitorBroken)}
+\DoxyCodeLine{449     \{}
+\DoxyCodeLine{450         XRRScreenResources* sr =}
+\DoxyCodeLine{451             \mbox{\hyperlink{x11__platform_8h_a81b377b84134a955b71b1efffb8380e7}{XRRGetScreenResourcesCurrent}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.root);}
+\DoxyCodeLine{452         XRRCrtcInfo* ci = \mbox{\hyperlink{x11__platform_8h_a163460fc468733ed65a95d1a19197cb2}{XRRGetCrtcInfo}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, sr, monitor-\/>x11.crtc);}
+\DoxyCodeLine{453         XRROutputInfo* oi = \mbox{\hyperlink{x11__platform_8h_a1b69e960073c7171a14e9b312d40115a}{XRRGetOutputInfo}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, sr, monitor-\/>x11.output);}
+\DoxyCodeLine{454 }
+\DoxyCodeLine{455         \mbox{\hyperlink{structresult}{result}} = \mbox{\hyperlink{init_8c_afdf24e4f0665535fd3d012b810ffb18f}{\_glfw\_calloc}}(oi-\/>nmode, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct_g_l_f_wvidmode}{GLFWvidmode}}));}
+\DoxyCodeLine{456 }
+\DoxyCodeLine{457         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0;  i < oi-\/>nmode;  i++)}
+\DoxyCodeLine{458         \{}
+\DoxyCodeLine{459             \textcolor{keyword}{const} XRRModeInfo* mi = getModeInfo(sr, oi-\/>modes[i]);}
+\DoxyCodeLine{460             \textcolor{keywordflow}{if} (!modeIsGood(mi))}
+\DoxyCodeLine{461                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{462 }
+\DoxyCodeLine{463             \textcolor{keyword}{const} \mbox{\hyperlink{struct_g_l_f_wvidmode}{GLFWvidmode}} \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}} = vidmodeFromModeInfo(mi, ci);}
+\DoxyCodeLine{464             \textcolor{keywordtype}{int} j;}
+\DoxyCodeLine{465 }
+\DoxyCodeLine{466             \textcolor{keywordflow}{for} (j = 0;  j < *\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}};  j++)}
+\DoxyCodeLine{467             \{}
+\DoxyCodeLine{468                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{internal_8h_aaca82db2d0453cb2895b0aa5e495387f}{\_glfwCompareVideoModes}}(\mbox{\hyperlink{structresult}{result}} + j, \&\mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}) == 0)}
+\DoxyCodeLine{469                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{470             \}}
+\DoxyCodeLine{471 }
+\DoxyCodeLine{472             \textcolor{comment}{// Skip duplicate modes}}
+\DoxyCodeLine{473             \textcolor{keywordflow}{if} (j < *\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}})}
+\DoxyCodeLine{474                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{475 }
+\DoxyCodeLine{476             (*count)++;}
+\DoxyCodeLine{477             \mbox{\hyperlink{structresult}{result}}[*\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}} -\/ 1] = \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}};}
+\DoxyCodeLine{478         \}}
+\DoxyCodeLine{479 }
+\DoxyCodeLine{480         \mbox{\hyperlink{x11__platform_8h_af7039567d4292985380e5a21462df00a}{XRRFreeOutputInfo}}(oi);}
+\DoxyCodeLine{481         \mbox{\hyperlink{x11__platform_8h_af079b02e39f592f13414ab0c714a69a8}{XRRFreeCrtcInfo}}(ci);}
+\DoxyCodeLine{482         \mbox{\hyperlink{x11__platform_8h_a227499ad2e417195e18e86d6e4c9684d}{XRRFreeScreenResources}}(sr);}
+\DoxyCodeLine{483     \}}
+\DoxyCodeLine{484     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{485     \{}
+\DoxyCodeLine{486         *\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}} = 1;}
+\DoxyCodeLine{487         \mbox{\hyperlink{structresult}{result}} = \mbox{\hyperlink{init_8c_afdf24e4f0665535fd3d012b810ffb18f}{\_glfw\_calloc}}(1, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct_g_l_f_wvidmode}{GLFWvidmode}}));}
+\DoxyCodeLine{488         \mbox{\hyperlink{x11__monitor_8c_a448dc823ed0a17ad344e0f483a206a06}{\_glfwGetVideoModeX11}}(monitor, \mbox{\hyperlink{structresult}{result}});}
+\DoxyCodeLine{489     \}}
+\DoxyCodeLine{490 }
+\DoxyCodeLine{491     \textcolor{keywordflow}{return} \mbox{\hyperlink{glext_8h_a321ff419cd5252e54cf95e64dc6687ee}{result}};}
+\DoxyCodeLine{492 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{x11__monitor_8c_a448dc823ed0a17ad344e0f483a206a06}\label{x11__monitor_8c_a448dc823ed0a17ad344e0f483a206a06}} 
+\index{x11\_monitor.c@{x11\_monitor.c}!\_glfwGetVideoModeX11@{\_glfwGetVideoModeX11}}
+\index{\_glfwGetVideoModeX11@{\_glfwGetVideoModeX11}!x11\_monitor.c@{x11\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetVideoModeX11()}{\_glfwGetVideoModeX11()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Get\+Video\+Mode\+X11 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor,  }\item[{\mbox{\hyperlink{struct_g_l_f_wvidmode}{G\+L\+F\+Wvidmode}} $\ast$}]{mode }\end{DoxyParamCaption})}
+
+
+
+Definition at line 494 of file x11\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{495 \{}
+\DoxyCodeLine{496     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.randr.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7978c47e7cee32b9d3b89bf787cfebc5}{available}} \&\& !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.randr.monitorBroken)}
+\DoxyCodeLine{497     \{}
+\DoxyCodeLine{498         XRRScreenResources* sr =}
+\DoxyCodeLine{499             \mbox{\hyperlink{x11__platform_8h_a81b377b84134a955b71b1efffb8380e7}{XRRGetScreenResourcesCurrent}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.root);}
+\DoxyCodeLine{500         XRRCrtcInfo* ci = \mbox{\hyperlink{x11__platform_8h_a163460fc468733ed65a95d1a19197cb2}{XRRGetCrtcInfo}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, sr, monitor-\/>x11.crtc);}
+\DoxyCodeLine{501 }
+\DoxyCodeLine{502         \textcolor{keywordflow}{if} (ci)}
+\DoxyCodeLine{503         \{}
+\DoxyCodeLine{504             \textcolor{keyword}{const} XRRModeInfo* mi = getModeInfo(sr, ci-\/>mode);}
+\DoxyCodeLine{505             \textcolor{keywordflow}{if} (mi)  \textcolor{comment}{// mi can be NULL if the monitor has been disconnected}}
+\DoxyCodeLine{506                 *\mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}} = vidmodeFromModeInfo(mi, ci);}
+\DoxyCodeLine{507 }
+\DoxyCodeLine{508             \mbox{\hyperlink{x11__platform_8h_af079b02e39f592f13414ab0c714a69a8}{XRRFreeCrtcInfo}}(ci);}
+\DoxyCodeLine{509         \}}
+\DoxyCodeLine{510 }
+\DoxyCodeLine{511         \mbox{\hyperlink{x11__platform_8h_a227499ad2e417195e18e86d6e4c9684d}{XRRFreeScreenResources}}(sr);}
+\DoxyCodeLine{512     \}}
+\DoxyCodeLine{513     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{514     \{}
+\DoxyCodeLine{515         \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}-\/>width = DisplayWidth(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.screen);}
+\DoxyCodeLine{516         \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}-\/>height = DisplayHeight(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.screen);}
+\DoxyCodeLine{517         \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}-\/>refreshRate = 0;}
+\DoxyCodeLine{518 }
+\DoxyCodeLine{519         \mbox{\hyperlink{internal_8h_a3f83dfd3a9beffeba9bac74ec15071a0}{\_glfwSplitBPP}}(DefaultDepth(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.screen),}
+\DoxyCodeLine{520                       \&\mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}-\/>redBits, \&\mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}-\/>greenBits, \&\mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}-\/>blueBits);}
+\DoxyCodeLine{521     \}}
+\DoxyCodeLine{522 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{x11__monitor_8c_ade7b239b6691fb34b66f3022ad97949d}\label{x11__monitor_8c_ade7b239b6691fb34b66f3022ad97949d}} 
+\index{x11\_monitor.c@{x11\_monitor.c}!\_glfwPollMonitorsX11@{\_glfwPollMonitorsX11}}
+\index{\_glfwPollMonitorsX11@{\_glfwPollMonitorsX11}!x11\_monitor.c@{x11\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwPollMonitorsX11()}{\_glfwPollMonitorsX11()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Poll\+Monitors\+X11 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 101 of file x11\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{102 \{}
+\DoxyCodeLine{103     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.randr.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7978c47e7cee32b9d3b89bf787cfebc5}{available}} \&\& !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.randr.monitorBroken)}
+\DoxyCodeLine{104     \{}
+\DoxyCodeLine{105         \textcolor{keywordtype}{int} disconnectedCount, screenCount = 0;}
+\DoxyCodeLine{106         \mbox{\hyperlink{struct___g_l_f_wmonitor}{\_GLFWmonitor}}** disconnected = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{107         XineramaScreenInfo* screens = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{108         XRRScreenResources* sr = \mbox{\hyperlink{x11__platform_8h_a81b377b84134a955b71b1efffb8380e7}{XRRGetScreenResourcesCurrent}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}},}
+\DoxyCodeLine{109                                                               \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.root);}
+\DoxyCodeLine{110         RROutput primary = \mbox{\hyperlink{x11__platform_8h_abc464c1cf1d3f982397d77e172f10572}{XRRGetOutputPrimary}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}},}
+\DoxyCodeLine{111                                                \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.root);}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113         \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.xinerama.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7978c47e7cee32b9d3b89bf787cfebc5}{available}})}
+\DoxyCodeLine{114             screens = \mbox{\hyperlink{x11__platform_8h_ab3eab609dc01e6fa7302a611f2297cbb}{XineramaQueryScreens}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, \&screenCount);}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116         disconnectedCount = \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_ae3f408467579cb3fb517fcd39fa23568}{monitorCount}};}
+\DoxyCodeLine{117         \textcolor{keywordflow}{if} (disconnectedCount)}
+\DoxyCodeLine{118         \{}
+\DoxyCodeLine{119             disconnected = \mbox{\hyperlink{init_8c_afdf24e4f0665535fd3d012b810ffb18f}{\_glfw\_calloc}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_ae3f408467579cb3fb517fcd39fa23568}{monitorCount}}, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct___g_l_f_wmonitor}{\_GLFWmonitor}}*));}
+\DoxyCodeLine{120             memcpy(disconnected,}
+\DoxyCodeLine{121                    \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_acb84371972f4d704deb0cdc649a1f1da}{monitors}},}
+\DoxyCodeLine{122                    \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_ae3f408467579cb3fb517fcd39fa23568}{monitorCount}} * \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct___g_l_f_wmonitor}{\_GLFWmonitor}}*));}
+\DoxyCodeLine{123         \}}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0;  i < sr-\/>noutput;  i++)}
+\DoxyCodeLine{126         \{}
+\DoxyCodeLine{127             \textcolor{keywordtype}{int} j, \mbox{\hyperlink{glad_8h_ab7c1afc09f67635c2c376638fcc0db5f}{type}}, widthMM, heightMM;}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129             XRROutputInfo* oi = \mbox{\hyperlink{x11__platform_8h_a1b69e960073c7171a14e9b312d40115a}{XRRGetOutputInfo}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, sr, sr-\/>outputs[i]);}
+\DoxyCodeLine{130             \textcolor{keywordflow}{if} (oi-\/>connection != RR\_Connected || oi-\/>crtc == None)}
+\DoxyCodeLine{131             \{}
+\DoxyCodeLine{132                 \mbox{\hyperlink{x11__platform_8h_af7039567d4292985380e5a21462df00a}{XRRFreeOutputInfo}}(oi);}
+\DoxyCodeLine{133                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{134             \}}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136             \textcolor{keywordflow}{for} (j = 0;  j < disconnectedCount;  j++)}
+\DoxyCodeLine{137             \{}
+\DoxyCodeLine{138                 \textcolor{keywordflow}{if} (disconnected[j] \&\&}
+\DoxyCodeLine{139                     disconnected[j]-\/>x11.output == sr-\/>outputs[i])}
+\DoxyCodeLine{140                 \{}
+\DoxyCodeLine{141                     disconnected[j] = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{142                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{143                 \}}
+\DoxyCodeLine{144             \}}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146             \textcolor{keywordflow}{if} (j < disconnectedCount)}
+\DoxyCodeLine{147             \{}
+\DoxyCodeLine{148                 \mbox{\hyperlink{x11__platform_8h_af7039567d4292985380e5a21462df00a}{XRRFreeOutputInfo}}(oi);}
+\DoxyCodeLine{149                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{150             \}}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152             XRRCrtcInfo* ci = \mbox{\hyperlink{x11__platform_8h_a163460fc468733ed65a95d1a19197cb2}{XRRGetCrtcInfo}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, sr, oi-\/>crtc);}
+\DoxyCodeLine{153             \textcolor{keywordflow}{if} (ci-\/>rotation == RR\_Rotate\_90 || ci-\/>rotation == RR\_Rotate\_270)}
+\DoxyCodeLine{154             \{}
+\DoxyCodeLine{155                 widthMM  = oi-\/>mm\_height;}
+\DoxyCodeLine{156                 heightMM = oi-\/>mm\_width;}
+\DoxyCodeLine{157             \}}
+\DoxyCodeLine{158             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{159             \{}
+\DoxyCodeLine{160                 widthMM  = oi-\/>mm\_width;}
+\DoxyCodeLine{161                 heightMM = oi-\/>mm\_height;}
+\DoxyCodeLine{162             \}}
+\DoxyCodeLine{163 }
+\DoxyCodeLine{164             \textcolor{keywordflow}{if} (widthMM <= 0 || heightMM <= 0)}
+\DoxyCodeLine{165             \{}
+\DoxyCodeLine{166                 \textcolor{comment}{// HACK: If RandR does not provide a physical size, assume the}}
+\DoxyCodeLine{167                 \textcolor{comment}{//       X11 default 96 DPI and calculate from the CRTC viewport}}
+\DoxyCodeLine{168                 \textcolor{comment}{// NOTE: These members are affected by rotation, unlike the mode}}
+\DoxyCodeLine{169                 \textcolor{comment}{//       info and output info members}}
+\DoxyCodeLine{170                 widthMM  = (int) (ci-\/>width * 25.4f / 96.f);}
+\DoxyCodeLine{171                 heightMM = (int) (ci-\/>height * 25.4f / 96.f);}
+\DoxyCodeLine{172             \}}
+\DoxyCodeLine{173 }
+\DoxyCodeLine{174             \mbox{\hyperlink{struct___g_l_f_wmonitor}{\_GLFWmonitor}}* monitor = \mbox{\hyperlink{internal_8h_aba9010067229bd447389b85b22f15b72}{\_glfwAllocMonitor}}(oi-\/>name, widthMM, heightMM);}
+\DoxyCodeLine{175             monitor-\/>x11.output = sr-\/>outputs[i];}
+\DoxyCodeLine{176             monitor-\/>x11.crtc   = oi-\/>crtc;}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178             \textcolor{keywordflow}{for} (j = 0;  j < screenCount;  j++)}
+\DoxyCodeLine{179             \{}
+\DoxyCodeLine{180                 \textcolor{keywordflow}{if} (screens[j].x\_org == ci-\/>x \&\&}
+\DoxyCodeLine{181                     screens[j].y\_org == ci-\/>y \&\&}
+\DoxyCodeLine{182                     screens[j].width == ci-\/>width \&\&}
+\DoxyCodeLine{183                     screens[j].height == ci-\/>height)}
+\DoxyCodeLine{184                 \{}
+\DoxyCodeLine{185                     monitor-\/>x11.index = j;}
+\DoxyCodeLine{186                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{187                 \}}
+\DoxyCodeLine{188             \}}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190             \textcolor{keywordflow}{if} (monitor-\/>x11.output == primary)}
+\DoxyCodeLine{191                 \mbox{\hyperlink{glad_8h_ab7c1afc09f67635c2c376638fcc0db5f}{type}} = \mbox{\hyperlink{internal_8h_a9455a4c5815aa9184abd69811f939496}{\_GLFW\_INSERT\_FIRST}};}
+\DoxyCodeLine{192             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{193                 \mbox{\hyperlink{glad_8h_ab7c1afc09f67635c2c376638fcc0db5f}{type}} = \mbox{\hyperlink{internal_8h_abc25b1b7cd5fe7f2fe3d010f0d1867ba}{\_GLFW\_INSERT\_LAST}};}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195             \mbox{\hyperlink{internal_8h_a2a45c0c0677b73011b7364e2cdd9760d}{\_glfwInputMonitor}}(monitor, \mbox{\hyperlink{glfw3_8h_abe11513fd1ffbee5bb9b173f06028b9e}{GLFW\_CONNECTED}}, \mbox{\hyperlink{glad_8h_ab7c1afc09f67635c2c376638fcc0db5f}{type}});}
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197             \mbox{\hyperlink{x11__platform_8h_af7039567d4292985380e5a21462df00a}{XRRFreeOutputInfo}}(oi);}
+\DoxyCodeLine{198             \mbox{\hyperlink{x11__platform_8h_af079b02e39f592f13414ab0c714a69a8}{XRRFreeCrtcInfo}}(ci);}
+\DoxyCodeLine{199         \}}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201         \mbox{\hyperlink{x11__platform_8h_a227499ad2e417195e18e86d6e4c9684d}{XRRFreeScreenResources}}(sr);}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203         \textcolor{keywordflow}{if} (screens)}
+\DoxyCodeLine{204             \mbox{\hyperlink{x11__platform_8h_ac5e57c89cd1e963b41f12b3404b42ca8}{XFree}}(screens);}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0;  i < disconnectedCount;  i++)}
+\DoxyCodeLine{207         \{}
+\DoxyCodeLine{208             \textcolor{keywordflow}{if} (disconnected[i])}
+\DoxyCodeLine{209                 \mbox{\hyperlink{internal_8h_a2a45c0c0677b73011b7364e2cdd9760d}{\_glfwInputMonitor}}(disconnected[i], \mbox{\hyperlink{glfw3_8h_aab64b25921ef21d89252d6f0a71bfc32}{GLFW\_DISCONNECTED}}, 0);}
+\DoxyCodeLine{210         \}}
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212         \mbox{\hyperlink{init_8c_abcf72962b101a8a5c539da1a278b0e9e}{\_glfw\_free}}(disconnected);}
+\DoxyCodeLine{213     \}}
+\DoxyCodeLine{214     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{215     \{}
+\DoxyCodeLine{216         \textcolor{keyword}{const} \textcolor{keywordtype}{int} widthMM = DisplayWidthMM(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.screen);}
+\DoxyCodeLine{217         \textcolor{keyword}{const} \textcolor{keywordtype}{int} heightMM = DisplayHeightMM(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.screen);}
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219         \mbox{\hyperlink{internal_8h_a2a45c0c0677b73011b7364e2cdd9760d}{\_glfwInputMonitor}}(\mbox{\hyperlink{internal_8h_aba9010067229bd447389b85b22f15b72}{\_glfwAllocMonitor}}(\textcolor{stringliteral}{"Display"}, widthMM, heightMM),}
+\DoxyCodeLine{220                           \mbox{\hyperlink{glfw3_8h_abe11513fd1ffbee5bb9b173f06028b9e}{GLFW\_CONNECTED}},}
+\DoxyCodeLine{221                           \mbox{\hyperlink{internal_8h_a9455a4c5815aa9184abd69811f939496}{\_GLFW\_INSERT\_FIRST}});}
+\DoxyCodeLine{222     \}}
+\DoxyCodeLine{223 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{x11__monitor_8c_a6dbff2579e47fcec78b5510d738b70a1}\label{x11__monitor_8c_a6dbff2579e47fcec78b5510d738b70a1}} 
+\index{x11\_monitor.c@{x11\_monitor.c}!\_glfwRestoreVideoModeX11@{\_glfwRestoreVideoModeX11}}
+\index{\_glfwRestoreVideoModeX11@{\_glfwRestoreVideoModeX11}!x11\_monitor.c@{x11\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwRestoreVideoModeX11()}{\_glfwRestoreVideoModeX11()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Restore\+Video\+Mode\+X11 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor }\end{DoxyParamCaption})}
+
+
+
+Definition at line 281 of file x11\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{282 \{}
+\DoxyCodeLine{283     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.randr.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7978c47e7cee32b9d3b89bf787cfebc5}{available}} \&\& !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.randr.monitorBroken)}
+\DoxyCodeLine{284     \{}
+\DoxyCodeLine{285         \textcolor{keywordflow}{if} (monitor-\/>x11.oldMode == None)}
+\DoxyCodeLine{286             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{287 }
+\DoxyCodeLine{288         XRRScreenResources* sr =}
+\DoxyCodeLine{289             \mbox{\hyperlink{x11__platform_8h_a81b377b84134a955b71b1efffb8380e7}{XRRGetScreenResourcesCurrent}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.root);}
+\DoxyCodeLine{290         XRRCrtcInfo* ci = \mbox{\hyperlink{x11__platform_8h_a163460fc468733ed65a95d1a19197cb2}{XRRGetCrtcInfo}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, sr, monitor-\/>x11.crtc);}
+\DoxyCodeLine{291 }
+\DoxyCodeLine{292         \mbox{\hyperlink{x11__platform_8h_a8a18de031c310e1e981b09cebb89970f}{XRRSetCrtcConfig}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}},}
+\DoxyCodeLine{293                          sr, monitor-\/>x11.crtc,}
+\DoxyCodeLine{294                          CurrentTime,}
+\DoxyCodeLine{295                          ci-\/>x, ci-\/>y,}
+\DoxyCodeLine{296                          monitor-\/>x11.oldMode,}
+\DoxyCodeLine{297                          ci-\/>rotation,}
+\DoxyCodeLine{298                          ci-\/>outputs,}
+\DoxyCodeLine{299                          ci-\/>noutput);}
+\DoxyCodeLine{300 }
+\DoxyCodeLine{301         \mbox{\hyperlink{x11__platform_8h_af079b02e39f592f13414ab0c714a69a8}{XRRFreeCrtcInfo}}(ci);}
+\DoxyCodeLine{302         \mbox{\hyperlink{x11__platform_8h_a227499ad2e417195e18e86d6e4c9684d}{XRRFreeScreenResources}}(sr);}
+\DoxyCodeLine{303 }
+\DoxyCodeLine{304         monitor-\/>x11.oldMode = None;}
+\DoxyCodeLine{305     \}}
+\DoxyCodeLine{306 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{x11__monitor_8c_a0c98119b648608e9090d83dd1ee9e1cf}\label{x11__monitor_8c_a0c98119b648608e9090d83dd1ee9e1cf}} 
+\index{x11\_monitor.c@{x11\_monitor.c}!\_glfwSetGammaRampX11@{\_glfwSetGammaRampX11}}
+\index{\_glfwSetGammaRampX11@{\_glfwSetGammaRampX11}!x11\_monitor.c@{x11\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetGammaRampX11()}{\_glfwSetGammaRampX11()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Gamma\+Ramp\+X11 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor,  }\item[{const \mbox{\hyperlink{struct_g_l_f_wgammaramp}{G\+L\+F\+Wgammaramp}} $\ast$}]{ramp }\end{DoxyParamCaption})}
+
+
+
+Definition at line 562 of file x11\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{563 \{}
+\DoxyCodeLine{564     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.randr.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7978c47e7cee32b9d3b89bf787cfebc5}{available}} \&\& !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.randr.gammaBroken)}
+\DoxyCodeLine{565     \{}
+\DoxyCodeLine{566         \textcolor{keywordflow}{if} (\mbox{\hyperlink{x11__platform_8h_a1263156e6a5f2e1c0bd1b30b2d0664a6}{XRRGetCrtcGammaSize}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, monitor-\/>x11.crtc) != ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_ad620e1cffbff9a32c51bca46301b59a5}{size}})}
+\DoxyCodeLine{567         \{}
+\DoxyCodeLine{568             \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{569                             \textcolor{stringliteral}{"X11: Gamma ramp size must match current ramp size"});}
+\DoxyCodeLine{570             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{571         \}}
+\DoxyCodeLine{572 }
+\DoxyCodeLine{573         XRRCrtcGamma* gamma = \mbox{\hyperlink{x11__platform_8h_a87a17c4f5e704cd4bcf06c5049f66350}{XRRAllocGamma}}(ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_ad620e1cffbff9a32c51bca46301b59a5}{size}});}
+\DoxyCodeLine{574 }
+\DoxyCodeLine{575         memcpy(gamma-\/>red,   ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_a2cce5d968734b685623eef913e635138}{red}},   ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_ad620e1cffbff9a32c51bca46301b59a5}{size}} * \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short}));}
+\DoxyCodeLine{576         memcpy(gamma-\/>green, ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_affccc6f5df47820b6562d709da3a5a3a}{green}}, ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_ad620e1cffbff9a32c51bca46301b59a5}{size}} * \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short}));}
+\DoxyCodeLine{577         memcpy(gamma-\/>blue,  ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_acf0c836d0efe29c392fe8d1a1042744b}{blue}},  ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_ad620e1cffbff9a32c51bca46301b59a5}{size}} * \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short}));}
+\DoxyCodeLine{578 }
+\DoxyCodeLine{579         \mbox{\hyperlink{x11__platform_8h_af4af6286fb934b318c6c0e1eca406d41}{XRRSetCrtcGamma}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, monitor-\/>x11.crtc, gamma);}
+\DoxyCodeLine{580         \mbox{\hyperlink{x11__platform_8h_a59cad2179f06c34d1ae55f3171dd49b3}{XRRFreeGamma}}(gamma);}
+\DoxyCodeLine{581     \}}
+\DoxyCodeLine{582     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.vidmode.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7978c47e7cee32b9d3b89bf787cfebc5}{available}})}
+\DoxyCodeLine{583     \{}
+\DoxyCodeLine{584         \mbox{\hyperlink{x11__platform_8h_a41578e983b45d9acc7b55975aab6e3db}{XF86VidModeSetGammaRamp}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}},}
+\DoxyCodeLine{585                                 \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.screen,}
+\DoxyCodeLine{586                                 ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_ad620e1cffbff9a32c51bca46301b59a5}{size}},}
+\DoxyCodeLine{587                                 (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short}*) ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_a2cce5d968734b685623eef913e635138}{red}},}
+\DoxyCodeLine{588                                 (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short}*) ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_affccc6f5df47820b6562d709da3a5a3a}{green}},}
+\DoxyCodeLine{589                                 (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short}*) ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_acf0c836d0efe29c392fe8d1a1042744b}{blue}});}
+\DoxyCodeLine{590     \}}
+\DoxyCodeLine{591     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{592     \{}
+\DoxyCodeLine{593         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{594                         \textcolor{stringliteral}{"X11: Gamma ramp access not supported by server"});}
+\DoxyCodeLine{595     \}}
+\DoxyCodeLine{596 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{x11__monitor_8c_ab4f579e1c8c56307de37875618f947ba}\label{x11__monitor_8c_ab4f579e1c8c56307de37875618f947ba}} 
+\index{x11\_monitor.c@{x11\_monitor.c}!\_glfwSetVideoModeX11@{\_glfwSetVideoModeX11}}
+\index{\_glfwSetVideoModeX11@{\_glfwSetVideoModeX11}!x11\_monitor.c@{x11\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetVideoModeX11()}{\_glfwSetVideoModeX11()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Video\+Mode\+X11 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor,  }\item[{const \mbox{\hyperlink{struct_g_l_f_wvidmode}{G\+L\+F\+Wvidmode}} $\ast$}]{desired }\end{DoxyParamCaption})}
+
+
+
+Definition at line 227 of file x11\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{228 \{}
+\DoxyCodeLine{229     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.randr.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7978c47e7cee32b9d3b89bf787cfebc5}{available}} \&\& !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.randr.monitorBroken)}
+\DoxyCodeLine{230     \{}
+\DoxyCodeLine{231         \mbox{\hyperlink{struct_g_l_f_wvidmode}{GLFWvidmode}} current;}
+\DoxyCodeLine{232         RRMode native = None;}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234         \textcolor{keyword}{const} \mbox{\hyperlink{struct_g_l_f_wvidmode}{GLFWvidmode}}* best = \mbox{\hyperlink{internal_8h_acf6b57bbbf447209081a27abdc00465c}{\_glfwChooseVideoMode}}(monitor, desired);}
+\DoxyCodeLine{235         \mbox{\hyperlink{x11__monitor_8c_a448dc823ed0a17ad344e0f483a206a06}{\_glfwGetVideoModeX11}}(monitor, \&current);}
+\DoxyCodeLine{236         \textcolor{keywordflow}{if} (\mbox{\hyperlink{internal_8h_aaca82db2d0453cb2895b0aa5e495387f}{\_glfwCompareVideoModes}}(\&current, best) == 0)}
+\DoxyCodeLine{237             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239         XRRScreenResources* sr =}
+\DoxyCodeLine{240             \mbox{\hyperlink{x11__platform_8h_a81b377b84134a955b71b1efffb8380e7}{XRRGetScreenResourcesCurrent}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.root);}
+\DoxyCodeLine{241         XRRCrtcInfo* ci = \mbox{\hyperlink{x11__platform_8h_a163460fc468733ed65a95d1a19197cb2}{XRRGetCrtcInfo}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, sr, monitor-\/>x11.crtc);}
+\DoxyCodeLine{242         XRROutputInfo* oi = \mbox{\hyperlink{x11__platform_8h_a1b69e960073c7171a14e9b312d40115a}{XRRGetOutputInfo}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}}, sr, monitor-\/>x11.output);}
+\DoxyCodeLine{243 }
+\DoxyCodeLine{244         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0;  i < oi-\/>nmode;  i++)}
+\DoxyCodeLine{245         \{}
+\DoxyCodeLine{246             \textcolor{keyword}{const} XRRModeInfo* mi = getModeInfo(sr, oi-\/>modes[i]);}
+\DoxyCodeLine{247             \textcolor{keywordflow}{if} (!modeIsGood(mi))}
+\DoxyCodeLine{248                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{249 }
+\DoxyCodeLine{250             \textcolor{keyword}{const} \mbox{\hyperlink{struct_g_l_f_wvidmode}{GLFWvidmode}} \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}} = vidmodeFromModeInfo(mi, ci);}
+\DoxyCodeLine{251             \textcolor{keywordflow}{if} (\mbox{\hyperlink{internal_8h_aaca82db2d0453cb2895b0aa5e495387f}{\_glfwCompareVideoModes}}(best, \&\mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}) == 0)}
+\DoxyCodeLine{252             \{}
+\DoxyCodeLine{253                 native = mi-\/>id;}
+\DoxyCodeLine{254                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{255             \}}
+\DoxyCodeLine{256         \}}
+\DoxyCodeLine{257 }
+\DoxyCodeLine{258         \textcolor{keywordflow}{if} (native)}
+\DoxyCodeLine{259         \{}
+\DoxyCodeLine{260             \textcolor{keywordflow}{if} (monitor-\/>x11.oldMode == None)}
+\DoxyCodeLine{261                 monitor-\/>x11.oldMode = ci-\/>mode;}
+\DoxyCodeLine{262 }
+\DoxyCodeLine{263             \mbox{\hyperlink{x11__platform_8h_a8a18de031c310e1e981b09cebb89970f}{XRRSetCrtcConfig}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.x11.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}},}
+\DoxyCodeLine{264                              sr, monitor-\/>x11.crtc,}
+\DoxyCodeLine{265                              CurrentTime,}
+\DoxyCodeLine{266                              ci-\/>x, ci-\/>y,}
+\DoxyCodeLine{267                              native,}
+\DoxyCodeLine{268                              ci-\/>rotation,}
+\DoxyCodeLine{269                              ci-\/>outputs,}
+\DoxyCodeLine{270                              ci-\/>noutput);}
+\DoxyCodeLine{271         \}}
+\DoxyCodeLine{272 }
+\DoxyCodeLine{273         \mbox{\hyperlink{x11__platform_8h_af7039567d4292985380e5a21462df00a}{XRRFreeOutputInfo}}(oi);}
+\DoxyCodeLine{274         \mbox{\hyperlink{x11__platform_8h_af079b02e39f592f13414ab0c714a69a8}{XRRFreeCrtcInfo}}(ci);}
+\DoxyCodeLine{275         \mbox{\hyperlink{x11__platform_8h_a227499ad2e417195e18e86d6e4c9684d}{XRRFreeScreenResources}}(sr);}
+\DoxyCodeLine{276     \}}
+\DoxyCodeLine{277 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{x11__monitor_8c_a4cbf83a07f280efda4d13dd309d87b60}\label{x11__monitor_8c_a4cbf83a07f280efda4d13dd309d87b60}} 
+\index{x11\_monitor.c@{x11\_monitor.c}!glfwGetX11Adapter@{glfwGetX11Adapter}}
+\index{glfwGetX11Adapter@{glfwGetX11Adapter}!x11\_monitor.c@{x11\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{glfwGetX11Adapter()}{glfwGetX11Adapter()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} R\+R\+Crtc glfw\+Get\+X11\+Adapter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__monitor_ga8d9efd1cde9426692c73fe40437d0ae3}{G\+L\+F\+Wmonitor}} $\ast$}]{handle }\end{DoxyParamCaption})}
+
+
+
+Definition at line 603 of file x11\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{604 \{}
+\DoxyCodeLine{605     \mbox{\hyperlink{struct___g_l_f_wmonitor}{\_GLFWmonitor}}* monitor = (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\_GLFWmonitor}}*) handle;}
+\DoxyCodeLine{606     \mbox{\hyperlink{internal_8h_a69563c87fe776d416636a4d1b0e9e599}{\_GLFW\_REQUIRE\_INIT\_OR\_RETURN}}(None);}
+\DoxyCodeLine{607     \textcolor{keywordflow}{return} monitor-\/>x11.crtc;}
+\DoxyCodeLine{608 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{x11__monitor_8c_aec04c3a957e504379dfc25dd8aaad24a}\label{x11__monitor_8c_aec04c3a957e504379dfc25dd8aaad24a}} 
+\index{x11\_monitor.c@{x11\_monitor.c}!glfwGetX11Monitor@{glfwGetX11Monitor}}
+\index{glfwGetX11Monitor@{glfwGetX11Monitor}!x11\_monitor.c@{x11\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{glfwGetX11Monitor()}{glfwGetX11Monitor()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} R\+R\+Output glfw\+Get\+X11\+Monitor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__monitor_ga8d9efd1cde9426692c73fe40437d0ae3}{G\+L\+F\+Wmonitor}} $\ast$}]{handle }\end{DoxyParamCaption})}
+
+
+
+Definition at line 610 of file x11\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{611 \{}
+\DoxyCodeLine{612     \mbox{\hyperlink{struct___g_l_f_wmonitor}{\_GLFWmonitor}}* monitor = (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\_GLFWmonitor}}*) handle;}
+\DoxyCodeLine{613     \mbox{\hyperlink{internal_8h_a69563c87fe776d416636a4d1b0e9e599}{\_GLFW\_REQUIRE\_INIT\_OR\_RETURN}}(None);}
+\DoxyCodeLine{614     \textcolor{keywordflow}{return} monitor-\/>x11.output;}
+\DoxyCodeLine{615 \}}
+
+\end{DoxyCode}

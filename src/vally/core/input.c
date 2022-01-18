@@ -1,3 +1,14 @@
+/*********************************************************************
+ * input.c                                                           *
+ *                                                                   *
+ * Copyright (c) 2022 Dmytro Zykov                                   *
+ *                                                                   *
+ * This file is a part of the vally project, and may only be used,   *
+ * modified and distributed under the terms of the MIT License,      *
+ * LICENSE.md. By continuing to use, modify and distribute this file *
+ * you inidicate that you have read the license and accept it fully. *
+ *********************************************************************/
+
 #include <vally/core/input.h>
 
 #include <string.h>
@@ -71,13 +82,13 @@ b8 input_init() {
   window_set_cursor_position_callback(cursor_position_callback);
 
   initialized = TRUE;
-  VALLY_TRACE("Input system initialized");
+  LOG_TRACE("Input system initialized");
 
   return TRUE;
 }
 void input_terminate() {
   initialized = FALSE;
-  VALLY_TRACE("Input system terminated");
+  LOG_TRACE("Input system terminated");
 }
 
 b8 input_key_pressed(u16 key) {

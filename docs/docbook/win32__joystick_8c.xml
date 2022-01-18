@@ -1,0 +1,450 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_win32__joystick_8c">
+<title>deps/glfw/src/win32_joystick.c File Reference</title>
+<indexterm><primary>deps/glfw/src/win32_joystick.c</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_struct___g_l_f_wobjenum_win32">_GLFWobjenumWin32</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_win32__joystick_8c_1a106797aadafb40536144108a327d7899">_GLFW_TYPE_AXIS</link>   0</para>
+</listitem>
+            <listitem><para>#define <link linkend="_win32__joystick_8c_1a3e46214f179e9569bbaaf7001c4a84cb">_GLFW_TYPE_SLIDER</link>   1</para>
+</listitem>
+            <listitem><para>#define <link linkend="_win32__joystick_8c_1a51c03f1b45c64281f526e735075248e1">_GLFW_TYPE_BUTTON</link>   2</para>
+</listitem>
+            <listitem><para>#define <link linkend="_win32__joystick_8c_1a3af724408ec3bc4c86ecac8241cfa94d">_GLFW_TYPE_POV</link>   3</para>
+</listitem>
+            <listitem><para>#define <link linkend="_win32__joystick_8c_1a4d04555ffcfbf4bec0bcda3d131213b1">IID_IDirectInput8W</link>   _glfw_IID_IDirectInput8W</para>
+</listitem>
+            <listitem><para>#define <link linkend="_win32__joystick_8c_1ad7e545cd90e961c82a9505d427b4dc7d">GUID_XAxis</link>   _glfw_GUID_XAxis</para>
+</listitem>
+            <listitem><para>#define <link linkend="_win32__joystick_8c_1afabae522e34742b0de98c5251e522a04">GUID_YAxis</link>   _glfw_GUID_YAxis</para>
+</listitem>
+            <listitem><para>#define <link linkend="_win32__joystick_8c_1a11d0c3ef37335f3320e93ee1ca6c1d61">GUID_ZAxis</link>   _glfw_GUID_ZAxis</para>
+</listitem>
+            <listitem><para>#define <link linkend="_win32__joystick_8c_1a1ec981550612e155078ee65c6331c037">GUID_RxAxis</link>   _glfw_GUID_RxAxis</para>
+</listitem>
+            <listitem><para>#define <link linkend="_win32__joystick_8c_1a891842ba5fedbd93ae1917f1fab9cf00">GUID_RyAxis</link>   _glfw_GUID_RyAxis</para>
+</listitem>
+            <listitem><para>#define <link linkend="_win32__joystick_8c_1ac9ea6aa114ab9e0c561ae38da64268f1">GUID_RzAxis</link>   _glfw_GUID_RzAxis</para>
+</listitem>
+            <listitem><para>#define <link linkend="_win32__joystick_8c_1af300e58c35a975a286a25ef97451a4a7">GUID_Slider</link>   _glfw_GUID_Slider</para>
+</listitem>
+            <listitem><para>#define <link linkend="_win32__joystick_8c_1ad705b5a7bc731dfc97fb0c68e19ec376">GUID_POV</link>   _glfw_GUID_POV</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Typedefs    </title>
+        <itemizedlist>
+            <listitem><para>typedef struct <link linkend="_struct___g_l_f_wobjenum_win32">_GLFWobjenumWin32</link> <link linkend="_win32__joystick_8c_1aef5f9a164492cc20fd00028a77f572b2">_GLFWobjenumWin32</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__joystick_8c_1a58cafa45ca625cc01aee93124c190b13">_glfwDetectJoystickConnectionWin32</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__joystick_8c_1a0075ab897c58609717fddb588970c268">_glfwDetectJoystickDisconnectionWin32</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_win32__joystick_8c_1a3e920595135793177be13d7ad39d20b7">_glfwInitJoysticksWin32</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__joystick_8c_1a219b355c48800354e45f6091d7b2e564">_glfwTerminateJoysticksWin32</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_win32__joystick_8c_1a031cd959c74b03ac0523bbe77f3b117e">_glfwPollJoystickWin32</link> (<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link> *js, int <link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>)</para>
+</listitem>
+            <listitem><para>const char * <link linkend="_win32__joystick_8c_1ab4f284ba366d4134e9fb38c4f76c10a3">_glfwGetMappingNameWin32</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__joystick_8c_1a148681c996ee9d03ca7be51de6360ee4">_glfwUpdateGamepadGUIDWin32</link> (char *guid)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_win32__joystick_8c_1a106797aadafb40536144108a327d7899"/>    <section>
+    <title>_GLFW_TYPE_AXIS</title>
+<indexterm><primary>_GLFW_TYPE_AXIS</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>_GLFW_TYPE_AXIS</secondary></indexterm>
+<para><computeroutput>#define _GLFW_TYPE_AXIS   0</computeroutput></para><para>
+Definition at line 35 of file win32_joystick.c.</para>
+    </section><anchor xml:id="_win32__joystick_8c_1a51c03f1b45c64281f526e735075248e1"/>    <section>
+    <title>_GLFW_TYPE_BUTTON</title>
+<indexterm><primary>_GLFW_TYPE_BUTTON</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>_GLFW_TYPE_BUTTON</secondary></indexterm>
+<para><computeroutput>#define _GLFW_TYPE_BUTTON   2</computeroutput></para><para>
+Definition at line 37 of file win32_joystick.c.</para>
+    </section><anchor xml:id="_win32__joystick_8c_1a3af724408ec3bc4c86ecac8241cfa94d"/>    <section>
+    <title>_GLFW_TYPE_POV</title>
+<indexterm><primary>_GLFW_TYPE_POV</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>_GLFW_TYPE_POV</secondary></indexterm>
+<para><computeroutput>#define _GLFW_TYPE_POV   3</computeroutput></para><para>
+Definition at line 38 of file win32_joystick.c.</para>
+    </section><anchor xml:id="_win32__joystick_8c_1a3e46214f179e9569bbaaf7001c4a84cb"/>    <section>
+    <title>_GLFW_TYPE_SLIDER</title>
+<indexterm><primary>_GLFW_TYPE_SLIDER</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>_GLFW_TYPE_SLIDER</secondary></indexterm>
+<para><computeroutput>#define _GLFW_TYPE_SLIDER   1</computeroutput></para><para>
+Definition at line 36 of file win32_joystick.c.</para>
+    </section><anchor xml:id="_win32__joystick_8c_1ad705b5a7bc731dfc97fb0c68e19ec376"/>    <section>
+    <title>GUID_POV</title>
+<indexterm><primary>GUID_POV</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>GUID_POV</secondary></indexterm>
+<para><computeroutput>#define GUID_POV   _glfw_GUID_POV</computeroutput></para><para>
+Definition at line 82 of file win32_joystick.c.</para>
+    </section><anchor xml:id="_win32__joystick_8c_1a1ec981550612e155078ee65c6331c037"/>    <section>
+    <title>GUID_RxAxis</title>
+<indexterm><primary>GUID_RxAxis</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>GUID_RxAxis</secondary></indexterm>
+<para><computeroutput>#define GUID_RxAxis   _glfw_GUID_RxAxis</computeroutput></para><para>
+Definition at line 78 of file win32_joystick.c.</para>
+    </section><anchor xml:id="_win32__joystick_8c_1a891842ba5fedbd93ae1917f1fab9cf00"/>    <section>
+    <title>GUID_RyAxis</title>
+<indexterm><primary>GUID_RyAxis</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>GUID_RyAxis</secondary></indexterm>
+<para><computeroutput>#define GUID_RyAxis   _glfw_GUID_RyAxis</computeroutput></para><para>
+Definition at line 79 of file win32_joystick.c.</para>
+    </section><anchor xml:id="_win32__joystick_8c_1ac9ea6aa114ab9e0c561ae38da64268f1"/>    <section>
+    <title>GUID_RzAxis</title>
+<indexterm><primary>GUID_RzAxis</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>GUID_RzAxis</secondary></indexterm>
+<para><computeroutput>#define GUID_RzAxis   _glfw_GUID_RzAxis</computeroutput></para><para>
+Definition at line 80 of file win32_joystick.c.</para>
+    </section><anchor xml:id="_win32__joystick_8c_1af300e58c35a975a286a25ef97451a4a7"/>    <section>
+    <title>GUID_Slider</title>
+<indexterm><primary>GUID_Slider</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>GUID_Slider</secondary></indexterm>
+<para><computeroutput>#define GUID_Slider   _glfw_GUID_Slider</computeroutput></para><para>
+Definition at line 81 of file win32_joystick.c.</para>
+    </section><anchor xml:id="_win32__joystick_8c_1ad7e545cd90e961c82a9505d427b4dc7d"/>    <section>
+    <title>GUID_XAxis</title>
+<indexterm><primary>GUID_XAxis</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>GUID_XAxis</secondary></indexterm>
+<para><computeroutput>#define GUID_XAxis   _glfw_GUID_XAxis</computeroutput></para><para>
+Definition at line 75 of file win32_joystick.c.</para>
+    </section><anchor xml:id="_win32__joystick_8c_1afabae522e34742b0de98c5251e522a04"/>    <section>
+    <title>GUID_YAxis</title>
+<indexterm><primary>GUID_YAxis</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>GUID_YAxis</secondary></indexterm>
+<para><computeroutput>#define GUID_YAxis   _glfw_GUID_YAxis</computeroutput></para><para>
+Definition at line 76 of file win32_joystick.c.</para>
+    </section><anchor xml:id="_win32__joystick_8c_1a11d0c3ef37335f3320e93ee1ca6c1d61"/>    <section>
+    <title>GUID_ZAxis</title>
+<indexterm><primary>GUID_ZAxis</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>GUID_ZAxis</secondary></indexterm>
+<para><computeroutput>#define GUID_ZAxis   _glfw_GUID_ZAxis</computeroutput></para><para>
+Definition at line 77 of file win32_joystick.c.</para>
+    </section><anchor xml:id="_win32__joystick_8c_1a4d04555ffcfbf4bec0bcda3d131213b1"/>    <section>
+    <title>IID_IDirectInput8W</title>
+<indexterm><primary>IID_IDirectInput8W</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>IID_IDirectInput8W</secondary></indexterm>
+<para><computeroutput>#define IID_IDirectInput8W   _glfw_IID_IDirectInput8W</computeroutput></para><para>
+Definition at line 74 of file win32_joystick.c.</para>
+</section>
+</section>
+<section>
+<title>Typedef Documentation</title>
+<anchor xml:id="_win32__joystick_8c_1aef5f9a164492cc20fd00028a77f572b2"/>    <section>
+    <title>_GLFWobjenumWin32</title>
+<indexterm><primary>_GLFWobjenumWin32</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>_GLFWobjenumWin32</secondary></indexterm>
+<para><computeroutput>typedef struct <link linkend="_struct___g_l_f_wobjenum_win32">_GLFWobjenumWin32</link> <link linkend="_struct___g_l_f_wobjenum_win32">_GLFWobjenumWin32</link></computeroutput></para></section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_win32__joystick_8c_1a58cafa45ca625cc01aee93124c190b13"/>    <section>
+    <title>_glfwDetectJoystickConnectionWin32()</title>
+<indexterm><primary>_glfwDetectJoystickConnectionWin32</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>_glfwDetectJoystickConnectionWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwDetectJoystickConnectionWin32 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 496 of file win32_joystick.c.</para>
+<programlisting>497 {
+498 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.xinput.instance)
+499 &#32;&#32;&#32;&#32;{
+500 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;DWORD&#32;<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>;
+501 
+502 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>&#32;=&#32;0;&#32;&#32;<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>&#32;&lt;&#32;<link linkend="_xinput_8h_1a1ed62c09d395884159e802440e233a94">XUSER_MAX_COUNT</link>;&#32;&#32;<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>++)
+503 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+504 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;jid;
+505 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;guid[33];
+506 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_struct___x_i_n_p_u_t___c_a_p_a_b_i_l_i_t_i_e_s">XINPUT_CAPABILITIES</link>&#32;xic;
+507 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link>*&#32;js;
+508 
+509 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(jid&#32;=&#32;0;&#32;&#32;jid&#32;&lt;=&#32;<link linkend="_group__joysticks_1ga9ca13ebf24c331dd98df17d84a4b72c9">GLFW_JOYSTICK_LAST</link>;&#32;&#32;jid++)
+510 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+511 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7f6b01642d8bc4965fd7b084a01bc401">joysticks</link>[jid].<link linkend="_struct___g_l_f_wjoystick_1a88a2e71ed9c3be6eca850577a104d611">present</link>&#32;&amp;&amp;
+512 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7f6b01642d8bc4965fd7b084a01bc401">joysticks</link>[jid].win32.device&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>&#32;&amp;&amp;
+513 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7f6b01642d8bc4965fd7b084a01bc401">joysticks</link>[jid].win32.index&#32;==&#32;<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>)
+514 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+515 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+516 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+517 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+518 
+519 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(jid&#32;&lt;=&#32;<link linkend="_group__joysticks_1ga9ca13ebf24c331dd98df17d84a4b72c9">GLFW_JOYSTICK_LAST</link>)
+520 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+521 
+522 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_xinput_8h_1a36e7b355f8bb63d1486ee229af5a9b30">XInputGetCapabilities</link>(<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>,&#32;0,&#32;&amp;xic)&#32;!=&#32;ERROR_SUCCESS)
+523 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+524 
+525 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Generate&#32;a&#32;joystick&#32;GUID&#32;that&#32;matches&#32;the&#32;SDL&#32;2.0.5+&#32;one</emphasis>
+526 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_rrsprintf_8h_1a9b1bcf2b847c7e2a9e4d06b7bb6fa018">sprintf</link>(guid,&#32;<emphasis role="stringliteral">&quot;78696e707574%02x000000000000000000&quot;</emphasis>,
+527 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;xic.<link linkend="_struct___x_i_n_p_u_t___c_a_p_a_b_i_l_i_t_i_e_s_1ab686f41df1cb509eebda27f84c76faa1">SubType</link>&#32;&amp;&#32;0xff);
+528 
+529 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;js&#32;=&#32;<link linkend="_deps_2glfw_2src_2input_8c_1aa53debe565c79b60729cf4acda5df3d1">_glfwAllocJoystick</link>(getDeviceDescription(&amp;xic),&#32;guid,&#32;6,&#32;10,&#32;1);
+530 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!js)
+531 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+532 
+533 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;js-&gt;win32.index&#32;=&#32;<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>;
+534 
+535 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1a3f053fce7ffb1aeb2ebdee3674a8fee2">_glfwInputJoystick</link>(js,&#32;<link linkend="_glfw3_8h_1abe11513fd1ffbee5bb9b173f06028b9e">GLFW_CONNECTED</link>);
+536 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+537 &#32;&#32;&#32;&#32;}
+538 
+539 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.dinput8.api)
+540 &#32;&#32;&#32;&#32;{
+541 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(FAILED(<link linkend="_dinput_8h_1a54da8c6eff290db2220aa0f8ebd16368">IDirectInput8_EnumDevices</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.dinput8.api,
+542 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_dinput_8h_1aef48b3fdbcd4a26f7757728ea58191e1">DI8DEVCLASS_GAMECTRL</link>,
+543 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;deviceCallback,
+544 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,
+545 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_dinput_8h_1a40ca027f3872ec929f1a343dfeb70034">DIEDFL_ALLDEVICES</link>)))
+546 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+547 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+548 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Failed&#32;to&#32;enumerate&#32;DirectInput8&#32;devices&quot;</emphasis>);
+549 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+550 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+551 &#32;&#32;&#32;&#32;}
+552 }
+</programlisting>    </section><anchor xml:id="_win32__joystick_8c_1a0075ab897c58609717fddb588970c268"/>    <section>
+    <title>_glfwDetectJoystickDisconnectionWin32()</title>
+<indexterm><primary>_glfwDetectJoystickDisconnectionWin32</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>_glfwDetectJoystickDisconnectionWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwDetectJoystickDisconnectionWin32 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 556 of file win32_joystick.c.</para>
+<programlisting>557 {
+558 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;jid;
+559 
+560 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(jid&#32;=&#32;0;&#32;&#32;jid&#32;&lt;=&#32;<link linkend="_group__joysticks_1ga9ca13ebf24c331dd98df17d84a4b72c9">GLFW_JOYSTICK_LAST</link>;&#32;&#32;jid++)
+561 &#32;&#32;&#32;&#32;{
+562 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link>*&#32;js&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7f6b01642d8bc4965fd7b084a01bc401">joysticks</link>&#32;+&#32;jid;
+563 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a88a2e71ed9c3be6eca850577a104d611">present</link>)
+564 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__joystick_8c_1a031cd959c74b03ac0523bbe77f3b117e">_glfwPollJoystickWin32</link>(js,&#32;<link linkend="_internal_8h_1afacd50de7ce642cb201352bba9c73307">_GLFW_POLL_PRESENCE</link>);
+565 &#32;&#32;&#32;&#32;}
+566 }
+</programlisting>    </section><anchor xml:id="_win32__joystick_8c_1ab4f284ba366d4134e9fb38c4f76c10a3"/>    <section>
+    <title>_glfwGetMappingNameWin32()</title>
+<indexterm><primary>_glfwGetMappingNameWin32</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>_glfwGetMappingNameWin32</secondary></indexterm>
+<para><computeroutput>const char* _glfwGetMappingNameWin32 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 743 of file win32_joystick.c.</para>
+<programlisting>744 {
+745 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="stringliteral">&quot;Windows&quot;</emphasis>;
+746 }
+</programlisting>    </section><anchor xml:id="_win32__joystick_8c_1a3e920595135793177be13d7ad39d20b7"/>    <section>
+    <title>_glfwInitJoysticksWin32()</title>
+<indexterm><primary>_glfwInitJoysticksWin32</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>_glfwInitJoysticksWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwInitJoysticksWin32 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 573 of file win32_joystick.c.</para>
+<programlisting>574 {
+575 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.dinput8.instance)
+576 &#32;&#32;&#32;&#32;{
+577 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(FAILED(<link linkend="_dinput_8h_1afa169e6e963eb705bb8458933a6dac16">DirectInput8Create</link>(GetModuleHandle(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>),
+578 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_dinput_8h_1a1d7ab29fdefabdb4e7e7cd27ac4c9934">DIRECTINPUT_VERSION</link>,
+579 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;<link linkend="_win32__joystick_8c_1a4d04555ffcfbf4bec0bcda3d131213b1">IID_IDirectInput8W</link>,
+580 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(<emphasis role="keywordtype">void</emphasis>**)&#32;&amp;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.dinput8.api,
+581 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)))
+582 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+583 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+584 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Win32:&#32;Failed&#32;to&#32;create&#32;interface&quot;</emphasis>);
+585 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+586 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+587 &#32;&#32;&#32;&#32;}
+588 
+589 &#32;&#32;&#32;&#32;<link linkend="_win32__joystick_8c_1a58cafa45ca625cc01aee93124c190b13">_glfwDetectJoystickConnectionWin32</link>();
+590 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+591 }
+</programlisting>    </section><anchor xml:id="_win32__joystick_8c_1a031cd959c74b03ac0523bbe77f3b117e"/>    <section>
+    <title>_glfwPollJoystickWin32()</title>
+<indexterm><primary>_glfwPollJoystickWin32</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>_glfwPollJoystickWin32</secondary></indexterm>
+<para><computeroutput>int _glfwPollJoystickWin32 (<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link> * js, int mode)</computeroutput></para><para>
+Definition at line 604 of file win32_joystick.c.</para>
+<programlisting>605 {
+606 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(js-&gt;win32.device)
+607 &#32;&#32;&#32;&#32;{
+608 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i,&#32;ai&#32;=&#32;0,&#32;bi&#32;=&#32;0,&#32;pi&#32;=&#32;0;
+609 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;HRESULT&#32;<link linkend="_glext_8h_1a321ff419cd5252e54cf95e64dc6687ee">result</link>;
+610 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_struct_d_i_j_o_y_s_t_a_t_e">DIJOYSTATE</link>&#32;state;
+611 
+612 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_dinput_8h_1ab18a02de299693772608441ee9100ac6">IDirectInputDevice8_Poll</link>(js-&gt;win32.device);
+613 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structresult">result</link>&#32;=&#32;<link linkend="_dinput_8h_1a4bb2b89fae4c53e596e2c29ddafc53ba">IDirectInputDevice8_GetDeviceState</link>(js-&gt;win32.device,
+614 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">sizeof</emphasis>(state),
+615 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;state);
+616 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_structresult">result</link>&#32;==&#32;<link linkend="_dinput_8h_1a744a5f6d4ca7882c0835e87a4cea2578">DIERR_NOTACQUIRED</link>&#32;||&#32;<link linkend="_structresult">result</link>&#32;==&#32;<link linkend="_dinput_8h_1aadd51bdf0e53047ab5d39f334ee3699f">DIERR_INPUTLOST</link>)
+617 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+618 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_dinput_8h_1ad58e96d0c42e9d49d22669d6b1b48dae">IDirectInputDevice8_Acquire</link>(js-&gt;win32.device);
+619 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_dinput_8h_1ab18a02de299693772608441ee9100ac6">IDirectInputDevice8_Poll</link>(js-&gt;win32.device);
+620 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structresult">result</link>&#32;=&#32;<link linkend="_dinput_8h_1a4bb2b89fae4c53e596e2c29ddafc53ba">IDirectInputDevice8_GetDeviceState</link>(js-&gt;win32.device,
+621 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">sizeof</emphasis>(state),
+622 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;state);
+623 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+624 
+625 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(FAILED(<link linkend="_structresult">result</link>))
+626 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+627 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;closeJoystick(js);
+628 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+629 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+630 
+631 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>&#32;==&#32;<link linkend="_internal_8h_1afacd50de7ce642cb201352bba9c73307">_GLFW_POLL_PRESENCE</link>)
+632 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+633 
+634 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;js-&gt;win32.objectCount;&#32;&#32;i++)
+635 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+636 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">void</emphasis>*&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>&#32;=&#32;(<emphasis role="keywordtype">char</emphasis>*)&#32;&amp;state&#32;+&#32;js-&gt;win32.objects[i].offset;
+637 
+638 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;switch&#32;(js-&gt;win32.objects[i].type)
+639 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+640 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_win32__joystick_8c_1a106797aadafb40536144108a327d7899">_GLFW_TYPE_AXIS</link>:
+641 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_win32__joystick_8c_1a3e46214f179e9569bbaaf7001c4a84cb">_GLFW_TYPE_SLIDER</link>:
+642 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+643 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">float</emphasis>&#32;<link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>&#32;=&#32;(*((LONG*)&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>)&#32;+&#32;0.5f)&#32;/&#32;32767.5<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>;
+644 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1ab91e3f3a89daff3809c3817a57a4f523">_glfwInputJoystickAxis</link>(js,&#32;ai,&#32;<link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>);
+645 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ai++;
+646 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+647 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+648 
+649 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_win32__joystick_8c_1a51c03f1b45c64281f526e735075248e1">_GLFW_TYPE_BUTTON</link>:
+650 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+651 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>&#32;=&#32;(*((BYTE*)&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>)&#32;&amp;&#32;0x80)&#32;!=&#32;0;
+652 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1af1048006805591e17cc431c016f539f5">_glfwInputJoystickButton</link>(js,&#32;bi,&#32;<link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>);
+653 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;bi++;
+654 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+655 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+656 
+657 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_win32__joystick_8c_1a3af724408ec3bc4c86ecac8241cfa94d">_GLFW_TYPE_POV</link>:
+658 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+659 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;states[9]&#32;=
+660 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+661 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__hat__state_1ga8c9720c76cd1b912738159ed74c85b36">GLFW_HAT_UP</link>,
+662 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__hat__state_1ga94aea0ae241a8b902883536c592ee693">GLFW_HAT_RIGHT_UP</link>,
+663 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__hat__state_1ga252586e3bbde75f4b0e07ad3124867f5">GLFW_HAT_RIGHT</link>,
+664 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__hat__state_1gad7f0e4f52fd68d734863aaeadab3a3f5">GLFW_HAT_RIGHT_DOWN</link>,
+665 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__hat__state_1gad60d1fd0dc85c18f2642cbae96d3deff">GLFW_HAT_DOWN</link>,
+666 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__hat__state_1ga76c02baf1ea345fcbe3e8ff176a73e19">GLFW_HAT_LEFT_DOWN</link>,
+667 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__hat__state_1gac775f4b3154fdf5db93eb432ba546dff">GLFW_HAT_LEFT</link>,
+668 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__hat__state_1ga638f0e20dc5de90de21a33564e8ce129">GLFW_HAT_LEFT_UP</link>,
+669 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__hat__state_1gae2c0bcb7aec609e4736437554f6638fd">GLFW_HAT_CENTERED</link>
+670 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;};
+671 
+672 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Screams&#32;of&#32;horror&#32;are&#32;appropriate&#32;at&#32;this&#32;point</emphasis>
+673 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;stateIndex&#32;=&#32;LOWORD(*(DWORD*)&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>)&#32;/&#32;(45&#32;*&#32;<link linkend="_dinput_8h_1a63861314608667d0b1c02d6b5b672971">DI_DEGREES</link>);
+674 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(stateIndex&#32;&lt;&#32;0&#32;||&#32;stateIndex&#32;&gt;&#32;8)
+675 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;stateIndex&#32;=&#32;8;
+676 
+677 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1aca3d4e257b8212cf2a713f9a1069ff08">_glfwInputJoystickHat</link>(js,&#32;pi,&#32;states[stateIndex]);
+678 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pi++;
+679 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+680 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+681 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+682 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+683 &#32;&#32;&#32;&#32;}
+684 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+685 &#32;&#32;&#32;&#32;{
+686 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i,&#32;dpad&#32;=&#32;0;
+687 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;DWORD&#32;<link linkend="_glext_8h_1a321ff419cd5252e54cf95e64dc6687ee">result</link>;
+688 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_struct___x_i_n_p_u_t___s_t_a_t_e">XINPUT_STATE</link>&#32;xis;
+689 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;WORD&#32;buttons[10]&#32;=
+690 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+691 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_xinput_8h_1abc16418681df26e5550d4b1cd0ee189f">XINPUT_GAMEPAD_A</link>,
+692 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_xinput_8h_1a2c8ca2ad832e581f82e020da9dc3df76">XINPUT_GAMEPAD_B</link>,
+693 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_xinput_8h_1a601cb8ab3003686dc9d62166323e1eae">XINPUT_GAMEPAD_X</link>,
+694 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_xinput_8h_1a1033c4b2e32e532f77c60ecaf42f94c6">XINPUT_GAMEPAD_Y</link>,
+695 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_xinput_8h_1ac4e92e3baf1077141925bd994a8df5e2">XINPUT_GAMEPAD_LEFT_SHOULDER</link>,
+696 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_xinput_8h_1aa8669aec44f097aa63bbee10cd95dcaa">XINPUT_GAMEPAD_RIGHT_SHOULDER</link>,
+697 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_xinput_8h_1a60a5564a9661ec8002f57aee5a036920">XINPUT_GAMEPAD_BACK</link>,
+698 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_xinput_8h_1a30f3024691937a5d40381da611eb53a5">XINPUT_GAMEPAD_START</link>,
+699 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_xinput_8h_1afa3822de8ee77924f74978908b026940">XINPUT_GAMEPAD_LEFT_THUMB</link>,
+700 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_xinput_8h_1af8df547f70dd2e60a9cf9693ff34d381">XINPUT_GAMEPAD_RIGHT_THUMB</link>
+701 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;};
+702 
+703 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structresult">result</link>&#32;=&#32;<link linkend="_xinput_8h_1aa72a1b166b2d99969df0a07446ffc875">XInputGetState</link>(js-&gt;win32.index,&#32;&amp;xis);
+704 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_structresult">result</link>&#32;!=&#32;ERROR_SUCCESS)
+705 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+706 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_structresult">result</link>&#32;==&#32;ERROR_DEVICE_NOT_CONNECTED)
+707 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;closeJoystick(js);
+708 
+709 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+710 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+711 
+712 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>&#32;==&#32;<link linkend="_internal_8h_1afacd50de7ce642cb201352bba9c73307">_GLFW_POLL_PRESENCE</link>)
+713 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+714 
+715 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1ab91e3f3a89daff3809c3817a57a4f523">_glfwInputJoystickAxis</link>(js,&#32;0,&#32;(xis.<link linkend="_struct___x_i_n_p_u_t___s_t_a_t_e_1a5eee32c04cc4419aa6ae2d24a53b56fa">Gamepad</link>.<link linkend="_struct___x_i_n_p_u_t___g_a_m_e_p_a_d_1acab2d1e1bda5277f4cbd9abdf6b82066">sThumbLX</link>&#32;+&#32;0.5f)&#32;/&#32;32767.5f);
+716 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1ab91e3f3a89daff3809c3817a57a4f523">_glfwInputJoystickAxis</link>(js,&#32;1,&#32;-(xis.<link linkend="_struct___x_i_n_p_u_t___s_t_a_t_e_1a5eee32c04cc4419aa6ae2d24a53b56fa">Gamepad</link>.<link linkend="_struct___x_i_n_p_u_t___g_a_m_e_p_a_d_1ad0c91ee8c26e828438bacb475f9c5ec3">sThumbLY</link>&#32;+&#32;0.5f)&#32;/&#32;32767.5f);
+717 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1ab91e3f3a89daff3809c3817a57a4f523">_glfwInputJoystickAxis</link>(js,&#32;2,&#32;(xis.<link linkend="_struct___x_i_n_p_u_t___s_t_a_t_e_1a5eee32c04cc4419aa6ae2d24a53b56fa">Gamepad</link>.<link linkend="_struct___x_i_n_p_u_t___g_a_m_e_p_a_d_1ae6c4c141613af0574fc86a40fdf14405">sThumbRX</link>&#32;+&#32;0.5f)&#32;/&#32;32767.5f);
+718 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1ab91e3f3a89daff3809c3817a57a4f523">_glfwInputJoystickAxis</link>(js,&#32;3,&#32;-(xis.<link linkend="_struct___x_i_n_p_u_t___s_t_a_t_e_1a5eee32c04cc4419aa6ae2d24a53b56fa">Gamepad</link>.<link linkend="_struct___x_i_n_p_u_t___g_a_m_e_p_a_d_1a89660a58eda7e822d44abbe1af7aea3b">sThumbRY</link>&#32;+&#32;0.5f)&#32;/&#32;32767.5f);
+719 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1ab91e3f3a89daff3809c3817a57a4f523">_glfwInputJoystickAxis</link>(js,&#32;4,&#32;xis.<link linkend="_struct___x_i_n_p_u_t___s_t_a_t_e_1a5eee32c04cc4419aa6ae2d24a53b56fa">Gamepad</link>.<link linkend="_struct___x_i_n_p_u_t___g_a_m_e_p_a_d_1a50480b9dd5f9d0f5db9d47358c66b0da">bLeftTrigger</link>&#32;/&#32;127.5f&#32;-&#32;1.f);
+720 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1ab91e3f3a89daff3809c3817a57a4f523">_glfwInputJoystickAxis</link>(js,&#32;5,&#32;xis.<link linkend="_struct___x_i_n_p_u_t___s_t_a_t_e_1a5eee32c04cc4419aa6ae2d24a53b56fa">Gamepad</link>.<link linkend="_struct___x_i_n_p_u_t___g_a_m_e_p_a_d_1a065347fca7403ff5c399b21af5a0e1f3">bRightTrigger</link>&#32;/&#32;127.5f&#32;-&#32;1.f);
+721 
+722 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;10;&#32;&#32;i++)
+723 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+724 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>&#32;=&#32;(xis.<link linkend="_struct___x_i_n_p_u_t___s_t_a_t_e_1a5eee32c04cc4419aa6ae2d24a53b56fa">Gamepad</link>.<link linkend="_struct___x_i_n_p_u_t___g_a_m_e_p_a_d_1aa67905941abea0fac79e57b4fb8b5124">wButtons</link>&#32;&amp;&#32;buttons[i])&#32;?&#32;1&#32;:&#32;0;
+725 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1af1048006805591e17cc431c016f539f5">_glfwInputJoystickButton</link>(js,&#32;i,&#32;<link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>);
+726 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+727 
+728 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xis.<link linkend="_struct___x_i_n_p_u_t___s_t_a_t_e_1a5eee32c04cc4419aa6ae2d24a53b56fa">Gamepad</link>.<link linkend="_struct___x_i_n_p_u_t___g_a_m_e_p_a_d_1aa67905941abea0fac79e57b4fb8b5124">wButtons</link>&#32;&amp;&#32;<link linkend="_xinput_8h_1a20b7a903ac4a045ddbf97f54c9b7fe43">XINPUT_GAMEPAD_DPAD_UP</link>)
+729 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;dpad&#32;|=&#32;<link linkend="_group__hat__state_1ga8c9720c76cd1b912738159ed74c85b36">GLFW_HAT_UP</link>;
+730 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xis.<link linkend="_struct___x_i_n_p_u_t___s_t_a_t_e_1a5eee32c04cc4419aa6ae2d24a53b56fa">Gamepad</link>.<link linkend="_struct___x_i_n_p_u_t___g_a_m_e_p_a_d_1aa67905941abea0fac79e57b4fb8b5124">wButtons</link>&#32;&amp;&#32;<link linkend="_xinput_8h_1a9f552fa69b963475330a38af68266989">XINPUT_GAMEPAD_DPAD_RIGHT</link>)
+731 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;dpad&#32;|=&#32;<link linkend="_group__hat__state_1ga252586e3bbde75f4b0e07ad3124867f5">GLFW_HAT_RIGHT</link>;
+732 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xis.<link linkend="_struct___x_i_n_p_u_t___s_t_a_t_e_1a5eee32c04cc4419aa6ae2d24a53b56fa">Gamepad</link>.<link linkend="_struct___x_i_n_p_u_t___g_a_m_e_p_a_d_1aa67905941abea0fac79e57b4fb8b5124">wButtons</link>&#32;&amp;&#32;<link linkend="_xinput_8h_1aa39a471445e0695725826ec3460dd15f">XINPUT_GAMEPAD_DPAD_DOWN</link>)
+733 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;dpad&#32;|=&#32;<link linkend="_group__hat__state_1gad60d1fd0dc85c18f2642cbae96d3deff">GLFW_HAT_DOWN</link>;
+734 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xis.<link linkend="_struct___x_i_n_p_u_t___s_t_a_t_e_1a5eee32c04cc4419aa6ae2d24a53b56fa">Gamepad</link>.<link linkend="_struct___x_i_n_p_u_t___g_a_m_e_p_a_d_1aa67905941abea0fac79e57b4fb8b5124">wButtons</link>&#32;&amp;&#32;<link linkend="_xinput_8h_1a7bfc5bbdebf1a9ee61d9c127522bc333">XINPUT_GAMEPAD_DPAD_LEFT</link>)
+735 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;dpad&#32;|=&#32;<link linkend="_group__hat__state_1gac775f4b3154fdf5db93eb432ba546dff">GLFW_HAT_LEFT</link>;
+736 
+737 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1aca3d4e257b8212cf2a713f9a1069ff08">_glfwInputJoystickHat</link>(js,&#32;0,&#32;dpad);
+738 &#32;&#32;&#32;&#32;}
+739 
+740 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+741 }
+</programlisting>    </section><anchor xml:id="_win32__joystick_8c_1a219b355c48800354e45f6091d7b2e564"/>    <section>
+    <title>_glfwTerminateJoysticksWin32()</title>
+<indexterm><primary>_glfwTerminateJoysticksWin32</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>_glfwTerminateJoysticksWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwTerminateJoysticksWin32 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 593 of file win32_joystick.c.</para>
+<programlisting>594 {
+595 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;jid;
+596 
+597 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(jid&#32;=&#32;<link linkend="_group__joysticks_1ga34a0443d059e9f22272cd4669073f73d">GLFW_JOYSTICK_1</link>;&#32;&#32;jid&#32;&lt;=&#32;<link linkend="_group__joysticks_1ga9ca13ebf24c331dd98df17d84a4b72c9">GLFW_JOYSTICK_LAST</link>;&#32;&#32;jid++)
+598 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;closeJoystick(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7f6b01642d8bc4965fd7b084a01bc401">joysticks</link>&#32;+&#32;jid);
+599 
+600 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.dinput8.api)
+601 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_dinput_8h_1a8cd6a8dd530a10d7c136e11243c91f69">IDirectInput8_Release</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.dinput8.api);
+602 }
+</programlisting>    </section><anchor xml:id="_win32__joystick_8c_1a148681c996ee9d03ca7be51de6360ee4"/>    <section>
+    <title>_glfwUpdateGamepadGUIDWin32()</title>
+<indexterm><primary>_glfwUpdateGamepadGUIDWin32</primary><secondary>win32_joystick.c</secondary></indexterm>
+<indexterm><primary>win32_joystick.c</primary><secondary>_glfwUpdateGamepadGUIDWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwUpdateGamepadGUIDWin32 (char * guid)</computeroutput></para><para>
+Definition at line 748 of file win32_joystick.c.</para>
+<programlisting>749 {
+750 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(guid&#32;+&#32;20,&#32;<emphasis role="stringliteral">&quot;504944564944&quot;</emphasis>)&#32;==&#32;0)
+751 &#32;&#32;&#32;&#32;{
+752 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;original[33];
+753 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strncpy(original,&#32;guid,&#32;<emphasis role="keyword">sizeof</emphasis>(original)&#32;-&#32;1);
+754 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_rrsprintf_8h_1a9b1bcf2b847c7e2a9e4d06b7bb6fa018">sprintf</link>(guid,&#32;<emphasis role="stringliteral">&quot;03000000%.4s0000%.4s000000000000&quot;</emphasis>,
+755 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;original,&#32;original&#32;+&#32;4);
+756 &#32;&#32;&#32;&#32;}
+757 }
+</programlisting></section>
+</section>
+</section>

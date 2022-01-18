@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_internals_guide">
+
+<para>There are several interfaces inside GLFW. Each interface has its own area of responsibility and its own naming conventions.</para>
+<section xml:id="_internals_guide_1internals_public">
+<title>Public interface</title>
+
+<para>The most well-known is the public interface, described in the glfw3.h header file. This is implemented in source files shared by all platforms and these files contain no platform-specific code. This code usually ends up calling the platform and internal interfaces to do the actual work.</para>
+
+<para>The public interface uses the OpenGL naming conventions except with GLFW and glfw instead of GL and gl. For struct members, where OpenGL sets no precedent, it use headless camel case.</para>
+
+<para>Examples: <computeroutput>glfwCreateWindow</computeroutput>, <computeroutput>GLFWwindow</computeroutput>, <computeroutput>GLFW_RED_BITS</computeroutput></para>
+</section>
+<section xml:id="_internals_guide_1internals_native">
+<title>Native interface</title>
+
+<para>The <link linkend="_group__native">native interface</link> is a small set of publicly available but platform-specific functions, described in the glfw3native.h header file and used to gain access to the underlying window, context and (on some platforms) display handles used by the platform interface.</para>
+
+<para>The function names of the native interface are similar to those of the public interface, but embeds the name of the interface that the returned handle is from.</para>
+
+<para>Examples: <computeroutput>glfwGetX11Window</computeroutput>, <computeroutput>glfwGetWGLContext</computeroutput></para>
+</section>
+<section xml:id="_internals_guide_1internals_internal">
+<title>Internal interface</title>
+
+<para>The internal interface consists of utility functions used by all other interfaces. It is shared code implemented in the same shared source files as the public and event interfaces. The internal interface is described in the internal.h header file.</para>
+
+<para>The internal interface is in charge of GLFW&apos;s global data, which it stores in a <computeroutput><link linkend="_struct___g_l_f_wlibrary">_GLFWlibrary</link></computeroutput> struct named <computeroutput>_glfw</computeroutput>.</para>
+
+<para>The internal interface uses the same style as the public interface, except all global names have a leading underscore.</para>
+
+<para>Examples: <computeroutput>_glfwIsValidContextConfig</computeroutput>, <computeroutput><link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link></computeroutput>, <computeroutput>_glfw.monitorCount</computeroutput></para>
+</section>
+<section xml:id="_internals_guide_1internals_platform">
+<title>Platform interface</title>
+
+<para>The platform interface implements all platform-specific operations as a service to the public interface. This includes event processing. The platform interface is never directly called by application code and never directly calls application-provided callbacks. It is also prohibited from modifying the platform-independent part of the internal structs. Instead, it calls the event interface when events interesting to GLFW are received.</para>
+
+<para>The platform interface mostly mirrors those parts of the public interface that needs to perform platform-specific operations on some or all platforms.</para>
+
+<para>The window system bits of the platform API is called through the <computeroutput><link linkend="_struct___g_l_f_wplatform">_GLFWplatform</link></computeroutput> struct of function pointers, to allow runtime selection of platform. This includes the window and context creation, input and event processing, monitor and Vulkan surface creation parts of GLFW. This is located in the global <computeroutput>_glfw</computeroutput> struct.</para>
+
+<para>Examples: <computeroutput>_glfw.platform.createWindow</computeroutput></para>
+
+<para>The timer, threading and module loading bits of the platform API are plain functions with a <computeroutput>_glfwPlatform</computeroutput> prefix, as these things are independent of what window system is being used.</para>
+
+<para>Examples: <computeroutput>_glfwPlatformGetTimerValue</computeroutput></para>
+
+<para>The platform interface also defines structs that contain platform-specific global and per-object state. Their names mirror those of the internal interface, except that an interface-specific suffix is added.</para>
+
+<para>Examples: <computeroutput><link linkend="_struct___g_l_f_wwindow_x11">_GLFWwindowX11</link></computeroutput>, <computeroutput><link linkend="_struct___g_l_f_wcontext_w_g_l">_GLFWcontextWGL</link></computeroutput></para>
+
+<para>These structs are incorporated as members into the internal interface structs using special macros that name them after the specific interface used. This prevents shared code from accidentally using these members.</para>
+
+<para>Examples: <computeroutput>window-&gt;win32.handle</computeroutput>, <computeroutput>_glfw.x11.display</computeroutput></para>
+</section>
+<section xml:id="_internals_guide_1internals_event">
+<title>Event interface</title>
+
+<para>The event interface is implemented in the same shared source files as the public interface and is responsible for delivering the events it receives to the application, either via callbacks, via window state changes or both.</para>
+
+<para>The function names of the event interface use a <computeroutput>_glfwInput</computeroutput> prefix and the ObjectEvent pattern.</para>
+
+<para>Examples: <computeroutput>_glfwInputWindowFocus</computeroutput>, <computeroutput>_glfwInputCursorPos</computeroutput></para>
+</section>
+<section xml:id="_internals_guide_1internals_static">
+<title>Static functions</title>
+
+<para>Static functions may be used by any interface and have no prefixes or suffixes. These use headless camel case.</para>
+
+<para>Examples: <computeroutput>isValidElementForJoystick</computeroutput></para>
+</section>
+<section xml:id="_internals_guide_1internals_config">
+<title>Configuration macros</title>
+
+<para>GLFW uses a number of configuration macros to select at compile time which interfaces and code paths to use. They are defined in the GLFW CMake target.</para>
+
+<para>Configuration macros the same style as tokens in the public interface, except with a leading underscore.</para>
+
+<para>Examples: <computeroutput>_GLFW_WIN32</computeroutput>, <computeroutput>_GLFW_BUILD_DLL</computeroutput> </para>
+</section>
+</section>

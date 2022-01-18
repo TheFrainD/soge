@@ -1,21 +1,22 @@
-//===================================================================
-// input.h
-//
-// Copyright (c) 2022 Dmytro Zykov
-//
-// This file is a part of the vally project, and may only be used,
-// modified and distributed under the terms of the MIT License, 
-// LICENSE.md. By continuing to use, modify and distribute this file
-// you inidicate that you have read the license and accept it fully.
-//===================================================================
+/*********************************************************************
+ * input.h                                                           *
+ *                                                                   *
+ * Copyright (c) 2022 Dmytro Zykov                                   *
+ *                                                                   *
+ * This file is a part of the vally project, and may only be used,   *
+ * modified and distributed under the terms of the MIT License,      *
+ * LICENSE.md. By continuing to use, modify and distribute this file *
+ * you inidicate that you have read the license and accept it fully. *
+ *********************************************************************/
 
 #ifndef VALLY_INPUT_H_
 #define VALLY_INPUT_H_
 
 #include <vally/config.h>
 
-/*! \defgroup keys Keyboard keys
- *  @{
+/**
+ * @defgroup keys Keyboard keys
+ * @{
  */
 #define KEY_SPACE              32
 #define KEY_APOSTROPHE         39
@@ -138,10 +139,11 @@
 #define KEY_RIGHT_SUPER        347
 #define KEY_MENU               348
 #define KEYS_MAX_KEYS          KEY_MENU
-/*! @} */
+/** @} */
 
-/*! \defgroup buttons Mouse buttons
- *  @{
+/**
+ * @defgroup buttons Mouse buttons
+ * @{
  */
 #define MOUSE_BUTTON_1         0
 #define MOUSE_BUTTON_2         1
@@ -155,48 +157,40 @@
 #define MOUSE_BUTTON_LEFT      MOUSE_BUTTON_1
 #define MOUSE_BUTTON_RIGHT     MOUSE_BUTTON_2
 #define MOUSE_BUTTON_MIDDLE    MOUSE_BUTTON_3
-/*! @} */
+/** @} */
 
 b8 input_init();
 void input_terminate();
 
-/*!
- *  \brief Checks if keyboard key is pressed
+/**
+ * @brief Checks if keyboard key is pressed.
  * 
- *  \param key Keyboard key code
- *  
- *  \return TRUE - if pressed, FALSE - if released
- * 
+ * @param key Keyboard key code.
+ * @return TRUE - if pressed, FALSE - if released 
  */
 VALLY_API b8 input_key_pressed(u16 key);
 
-/*!
- *  \brief Checks if keyboard key is released
+/**
+ * @brief Checks if keyboard key is released.
  * 
- *  \param key Keyboard key code
- *  
- *  \return TRUE - if released, FALSE - if pressed
- * 
+ * @param key Keyboard key code.
+ * @return TRUE - if released, FALSE - if pressed 
  */
 VALLY_API b8 input_key_released(u16 key);
 
-/*!
- *  \brief Checks if mouse button is pressed
+/**
+ * @brief Checks if mouse button is pressed.
  * 
- *  \param button Mouse button code
- *  
- *  \return TRUE - if pressed, FALSE - if released
- * 
+ * @param key Mouse button code.
+ * @return TRUE - if pressed, FALSE - if released 
  */
 VALLY_API b8 input_mouse_button_pressed(u16 button);
 
-/*!
- *  \brief Checks if mouse button is released
+/**
+ * @brief Checks if mouse button is released.
  * 
- *  \param button Mouse button code
- *  
- *  \return TRUE - if released, FALSE - if pressed
- * 
+ * @param key Mouse button code.
+ * @return TRUE - if released, FALSE - if pressed 
  */
 VALLY_API b8 input_mouse_button_released(u16 button);
 
@@ -207,14 +201,22 @@ VALLY_API b8 input_mouse_button_released(u16 button);
  *  \param y pointer where mouse y coordinate will be written
  *  
  */
+
+/**
+ * @brief Gets current mouse position
+ * 
+ * @param x pointer to location where mouse x coordinate will be stored
+ * @param y pointer to location where mouse x coordinate will be stored
+ * @return VALLY_API 
+ */
 VALLY_API void input_mouse_position(f64 *x, f64 *y);
 
-/*!
- *  \brief Returns current previous position
+/**
+ * @brief Gets previous mouse position
  * 
- *  \param x pointer where mouse x coordinate will be written
- *  \param y pointer where mouse y coordinate will be written
- *  
+ * @param x pointer to location where mouse x coordinate will be stored
+ * @param y pointer to location where mouse x coordinate will be stored
+ * @return VALLY_API 
  */
 VALLY_API void input_mouse_prev_position(f64 *x, f64 *y);
 

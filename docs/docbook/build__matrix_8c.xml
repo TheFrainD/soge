@@ -1,0 +1,247 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_build__matrix_8c">
+<title>deps/stb/tools/build_matrix.c File Reference</title>
+<indexterm><primary>deps/stb/tools/build_matrix.c</primary></indexterm>
+<programlisting>#include &quot;stb.h&quot;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structcompiler__info">compiler_info</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structproject__info">project_info</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_build__matrix_8c_1a5640e9acc84db268e2628d4c5dad308c">STB_DEFINE</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Enumerations    </title>
+        <itemizedlist>
+            <listitem><para>enum { 
+<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027dac157bdf0b85a40d2619cbc8bc1ae5fe2">NONE</link>, 
+<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da90c4b38c17d7ac9351523c8414786c30">IN_COMPILERS</link>, 
+<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da4c6c52303dec691fc59eab38b0800fa3">IN_ARGS</link>, 
+<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da46aff1f2d1172ebf5e45c131792e2600">IN_PROJECTS</link>, 
+
+<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da0b1ed3f750fee3dfa9c1ad48ded74b42">IN_LINK</link>
+ }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_build__matrix_8c_1ab1641339ae9988ec76758e692c28278c">run_command</link> (char *batch_file, char *command)</para>
+</listitem>
+            <listitem><para>int <link linkend="_build__matrix_8c_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_structcompiler__info">compiler_info</link> * <link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link></para>
+</listitem>
+            <listitem><para>char * <link linkend="_build__matrix_8c_1ace3d46b2fb83f7101ab45bef49bcedc9">shared_args</link></para>
+</listitem>
+            <listitem><para>char * <link linkend="_build__matrix_8c_1a5f11bbc8cf14d871bba5e30c73761540">shared_link</link></para>
+</listitem>
+            <listitem><para><link linkend="_structproject__info">project_info</link> * <link linkend="_build__matrix_8c_1afcce764385867b5c17f459871ecdb16d">projects</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_build__matrix_8c_1a5640e9acc84db268e2628d4c5dad308c"/>    <section>
+    <title>STB_DEFINE</title>
+<indexterm><primary>STB_DEFINE</primary><secondary>build_matrix.c</secondary></indexterm>
+<indexterm><primary>build_matrix.c</primary><secondary>STB_DEFINE</secondary></indexterm>
+<para><computeroutput>#define STB_DEFINE</computeroutput></para><para>
+Definition at line 1 of file build_matrix.c.</para>
+</section>
+</section>
+<section>
+<title>Enumeration Type Documentation</title>
+<anchor xml:id="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027d"/>    <section>
+    <title>anonymous enum</title>
+<para><computeroutput>anonymous enum</computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>NONE</primary><secondary>build_matrix.c</secondary></indexterm>
+<indexterm><primary>build_matrix.c</primary><secondary>NONE</secondary></indexterm>
+<anchor xml:id="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027dac157bdf0b85a40d2619cbc8bc1ae5fe2"/>NONE</entry><entry></entry></row><row><entry><indexterm><primary>IN_COMPILERS</primary><secondary>build_matrix.c</secondary></indexterm>
+<indexterm><primary>build_matrix.c</primary><secondary>IN_COMPILERS</secondary></indexterm>
+<anchor xml:id="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da90c4b38c17d7ac9351523c8414786c30"/>IN_COMPILERS</entry><entry></entry></row><row><entry><indexterm><primary>IN_ARGS</primary><secondary>build_matrix.c</secondary></indexterm>
+<indexterm><primary>build_matrix.c</primary><secondary>IN_ARGS</secondary></indexterm>
+<anchor xml:id="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da4c6c52303dec691fc59eab38b0800fa3"/>IN_ARGS</entry><entry></entry></row><row><entry><indexterm><primary>IN_PROJECTS</primary><secondary>build_matrix.c</secondary></indexterm>
+<indexterm><primary>build_matrix.c</primary><secondary>IN_PROJECTS</secondary></indexterm>
+<anchor xml:id="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da46aff1f2d1172ebf5e45c131792e2600"/>IN_PROJECTS</entry><entry></entry></row><row><entry><indexterm><primary>IN_LINK</primary><secondary>build_matrix.c</secondary></indexterm>
+<indexterm><primary>build_matrix.c</primary><secondary>IN_LINK</secondary></indexterm>
+<anchor xml:id="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da0b1ed3f750fee3dfa9c1ad48ded74b42"/>IN_LINK</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 37 of file build_matrix.c.</para>
+<programlisting>37 {&#32;<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027dac157bdf0b85a40d2619cbc8bc1ae5fe2">NONE</link>,&#32;<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da90c4b38c17d7ac9351523c8414786c30">IN_COMPILERS</link>,&#32;<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da4c6c52303dec691fc59eab38b0800fa3">IN_ARGS</link>,&#32;<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da46aff1f2d1172ebf5e45c131792e2600">IN_PROJECTS</link>,&#32;<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da0b1ed3f750fee3dfa9c1ad48ded74b42">IN_LINK</link>&#32;};
+</programlisting></section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_build__matrix_8c_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>build_matrix.c</secondary></indexterm>
+<indexterm><primary>build_matrix.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 39 of file build_matrix.c.</para>
+<programlisting>40 {
+41 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;state&#32;=&#32;<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027dac157bdf0b85a40d2619cbc8bc1ae5fe2">NONE</link>;
+42 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i,j,<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>;
+43 &#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;**line;
+44 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(argc&#32;!=&#32;2)&#32;<link linkend="_stb_8h_1ad1583ce7c103777e5eeeca9fe489d274">stb_fatal</link>(<emphasis role="stringliteral">&quot;Usage:&#32;stb_build_matrix&#32;{build-file}\n&quot;</emphasis>);
+45 &#32;&#32;&#32;line&#32;=&#32;<link linkend="_stb_8h_1a3d3b7a43779945f90b5c35c0b1d47a37">stb_stringfile</link>(argv[1],&#32;&amp;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>);
+46 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(line&#32;==&#32;0)&#32;<link linkend="_stb_8h_1ad1583ce7c103777e5eeeca9fe489d274">stb_fatal</link>(<emphasis role="stringliteral">&quot;Couldn&apos;t&#32;open&#32;file&#32;&apos;%s&apos;\n&quot;</emphasis>,&#32;argv[1]);
+47 
+48 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>;&#32;++i)&#32;{
+49 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;*<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;=&#32;<link linkend="_stb_8h_1aa388feb75cd06529b263d327cfe9afd6">stb_trimwhite</link>(line[i]);
+50 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>[0]&#32;==&#32;0)&#32;<emphasis role="keywordflow">continue</emphasis>;
+51 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>[0]&#32;==&#32;<emphasis role="charliteral">&apos;#&apos;</emphasis>)&#32;<emphasis role="keywordflow">continue</emphasis>;
+52 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(0&#32;==&#32;stricmp(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>,&#32;<emphasis role="stringliteral">&quot;[compilers]&quot;</emphasis>))&#32;{&#32;state&#32;=&#32;<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da90c4b38c17d7ac9351523c8414786c30">IN_COMPILERS</link>;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+53 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(0&#32;==&#32;stricmp(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>,&#32;<emphasis role="stringliteral">&quot;[args]&quot;</emphasis>&#32;&#32;&#32;&#32;&#32;))&#32;{&#32;state&#32;=&#32;<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da4c6c52303dec691fc59eab38b0800fa3">IN_ARGS</link>&#32;&#32;&#32;&#32;&#32;;&#32;<link linkend="_build__matrix_8c_1ace3d46b2fb83f7101ab45bef49bcedc9">shared_args</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;&#32;}
+54 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(0&#32;==&#32;stricmp(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>,&#32;<emphasis role="stringliteral">&quot;[projects]&quot;</emphasis>&#32;))&#32;{&#32;state&#32;=&#32;<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da46aff1f2d1172ebf5e45c131792e2600">IN_PROJECTS</link>&#32;;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+55 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(0&#32;==&#32;stricmp(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>,&#32;<emphasis role="stringliteral">&quot;[link]&quot;</emphasis>&#32;&#32;&#32;&#32;&#32;))&#32;{&#32;state&#32;=&#32;<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da0b1ed3f750fee3dfa9c1ad48ded74b42">IN_LINK</link>&#32;&#32;&#32;&#32;&#32;;&#32;<link linkend="_build__matrix_8c_1a5f11bbc8cf14d871bba5e30c73761540">shared_link</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;&#32;}
+56 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+57 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(state)&#32;{
+58 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027dac157bdf0b85a40d2619cbc8bc1ae5fe2">NONE</link>:&#32;<link linkend="_stb_8h_1ad1583ce7c103777e5eeeca9fe489d274">stb_fatal</link>(<emphasis role="stringliteral">&quot;Invalid&#32;text&#32;outside&#32;section&#32;at&#32;line&#32;%d.&quot;</emphasis>,&#32;i+1);
+59 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da90c4b38c17d7ac9351523c8414786c30">IN_COMPILERS</link>:&#32;{
+60 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_structbuffer">buffer</link>[4096];
+61 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>;
+62 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structcompiler__info">compiler_info</link>&#32;ci;
+63 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;**tokens&#32;=&#32;<link linkend="_stb_8h_1ae01118f4ea89b6e29a06c8b58543e61f">stb_tokens_stripwhite</link>(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>,&#32;<emphasis role="stringliteral">&quot;,&quot;</emphasis>,&#32;&amp;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>),&#32;*batch;
+64 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;&gt;&#32;3)&#32;<link linkend="_stb_8h_1ad1583ce7c103777e5eeeca9fe489d274">stb_fatal</link>(<emphasis role="stringliteral">&quot;Expecting&#32;name&#32;and&#32;batch&#32;file&#32;name&#32;at&#32;line&#32;%d.&quot;</emphasis>,&#32;i+1);
+65 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;batch&#32;=&#32;(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>==1&#32;?&#32;tokens[0]&#32;:&#32;tokens[1]);
+66 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strlen(batch))&#32;
+67 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_rrsprintf_8h_1a9b1bcf2b847c7e2a9e4d06b7bb6fa018">sprintf</link>(<link linkend="_structbuffer">buffer</link>,&#32;<emphasis role="stringliteral">&quot;c:\\%s.bat&quot;</emphasis>,&#32;batch);
+68 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+69 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strcpy(<link linkend="_structbuffer">buffer</link>,&#32;<emphasis role="stringliteral">&quot;&quot;</emphasis>);
+70 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ci.<link linkend="_structcompiler__info_1a247cb8a0deaff3d2345c4cc3ee3fcd29">compiler_name</link>&#32;=&#32;strdup(tokens[0]);
+71 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ci.<link linkend="_structcompiler__info_1a2473271212bb2622aa07d21c016478db">batchfile</link>&#32;&#32;&#32;&#32;&#32;=&#32;strdup(<link linkend="_structbuffer">buffer</link>);
+72 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ci.<link linkend="_structcompiler__info_1abab61dda365aa92a601d84b437584dc2">compiler</link>&#32;&#32;&#32;&#32;&#32;&#32;=&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>==3&#32;?&#32;strdup(tokens[2])&#32;:&#32;<emphasis role="stringliteral">&quot;cl&quot;</emphasis>;
+73 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(0==strnicmp(batch,&#32;<emphasis role="stringliteral">&quot;vcvars_&quot;</emphasis>,&#32;7))
+74 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ci.<link linkend="_structcompiler__info_1a17a55bea23590da690805545546d8dab">objdir</link>&#32;&#32;&#32;&#32;&#32;=&#32;strdup(<link linkend="_stb_8h_1adaabe895f1a146aa609843309b34a5d3">stb_sprintf</link>(<emphasis role="stringliteral">&quot;vs_%s_%d&quot;</emphasis>,&#32;batch+7,&#32;i));
+75 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+76 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ci.<link linkend="_structcompiler__info_1a17a55bea23590da690805545546d8dab">objdir</link>&#32;&#32;&#32;&#32;&#32;=&#32;strdup(<link linkend="_stb_8h_1adaabe895f1a146aa609843309b34a5d3">stb_sprintf</link>(<emphasis role="stringliteral">&quot;%s_%d&quot;</emphasis>,&#32;batch,&#32;i));
+77 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ci.<link linkend="_structcompiler__info_1aeac0acc72197c4d571c170cfa6b4bfcf">args</link>&#32;=&#32;<link linkend="_build__matrix_8c_1ace3d46b2fb83f7101ab45bef49bcedc9">shared_args</link>;
+78 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ci.<link linkend="_structcompiler__info_1a51259a1825e2bc76e3563ecd9426a957">link</link>&#32;=&#32;<link linkend="_build__matrix_8c_1a5f11bbc8cf14d871bba5e30c73761540">shared_link</link>;
+79 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a30a089ec00300b0c18918dd60bbd6854">stb_arr_push</link>(<link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link>,&#32;ci);
+80 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+81 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+82 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da4c6c52303dec691fc59eab38b0800fa3">IN_ARGS</link>:&#32;{
+83 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a30a089ec00300b0c18918dd60bbd6854">stb_arr_push</link>(<link linkend="_build__matrix_8c_1ace3d46b2fb83f7101ab45bef49bcedc9">shared_args</link>,&#32;<emphasis role="charliteral">&apos;&#32;&apos;</emphasis>);
+84 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(j=0;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>[j]&#32;!=&#32;0;&#32;++j)
+85 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a30a089ec00300b0c18918dd60bbd6854">stb_arr_push</link>(<link linkend="_build__matrix_8c_1ace3d46b2fb83f7101ab45bef49bcedc9">shared_args</link>,&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>[j]);
+86 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+87 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+88 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da0b1ed3f750fee3dfa9c1ad48ded74b42">IN_LINK</link>:&#32;{
+89 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a30a089ec00300b0c18918dd60bbd6854">stb_arr_push</link>(<link linkend="_build__matrix_8c_1a5f11bbc8cf14d871bba5e30c73761540">shared_link</link>,&#32;<emphasis role="charliteral">&apos;&#32;&apos;</emphasis>);
+90 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(j=0;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>[j]&#32;!=&#32;0;&#32;++j)
+91 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a30a089ec00300b0c18918dd60bbd6854">stb_arr_push</link>(<link linkend="_build__matrix_8c_1a5f11bbc8cf14d871bba5e30c73761540">shared_link</link>,&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>[j]);
+92 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+93 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+94 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_build__matrix_8c_1aad393aa3e173d7f081ab4bbc6ba5027da46aff1f2d1172ebf5e45c131792e2600">IN_PROJECTS</link>:&#32;{
+95 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structproject__info">project_info</link>&#32;pi;
+96 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pi.<link linkend="_structproject__info_1aca8bf948d75ceb13c66b33e7104ac1cb">filelist</link>&#32;=&#32;strdup(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>);
+97 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a30a089ec00300b0c18918dd60bbd6854">stb_arr_push</link>(<link linkend="_build__matrix_8c_1afcce764385867b5c17f459871ecdb16d">projects</link>,&#32;pi);
+98 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+99 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+100 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+101 &#32;&#32;&#32;&#32;&#32;&#32;}
+102 &#32;&#32;&#32;}
+103 
+104 &#32;&#32;&#32;_mkdir(<emphasis role="stringliteral">&quot;obj&quot;</emphasis>);
+105 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(j=0;&#32;j&#32;&lt;&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link>);&#32;++j)&#32;{
+106 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;command[4096];
+107 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_build__matrix_8c_1afcce764385867b5c17f459871ecdb16d">projects</link>);&#32;++i)&#32;{
+108 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>;
+109 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;_mkdir(<link linkend="_stb_8h_1adaabe895f1a146aa609843309b34a5d3">stb_sprintf</link>(<emphasis role="stringliteral">&quot;obj/%s&quot;</emphasis>,&#32;<link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link>[j].objdir));
+110 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_stb_8h_1a60a1b9c6cc3e5b14c12bdfc11a5b761a">stb_suffix</link>(<link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link>[j].compiler,&#32;<emphasis role="stringliteral">&quot;cl&quot;</emphasis>))
+111 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_rrsprintf_8h_1a9b1bcf2b847c7e2a9e4d06b7bb6fa018">sprintf</link>(command,&#32;<emphasis role="stringliteral">&quot;%s&#32;%.*s&#32;%s&#32;/link&#32;%.*s&quot;</emphasis>,
+112 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link>[j].compiler,
+113 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link>[j].<link linkend="_stb_8c_1aa45b6cbf8b26f4ce33ac4757f2e7b5d9">args</link>),&#32;<link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link>[j].<link linkend="_stb_8c_1aa45b6cbf8b26f4ce33ac4757f2e7b5d9">args</link>,
+114 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_build__matrix_8c_1afcce764385867b5c17f459871ecdb16d">projects</link>[i].filelist,
+115 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link>[j].link),&#32;<link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link>[j].link);
+116 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+117 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_rrsprintf_8h_1a9b1bcf2b847c7e2a9e4d06b7bb6fa018">sprintf</link>(command,&#32;<emphasis role="stringliteral">&quot;%s&#32;%.*s&#32;%s&#32;%.*s&quot;</emphasis>,
+118 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link>[j].compiler,
+119 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link>[j].<link linkend="_stb_8c_1aa45b6cbf8b26f4ce33ac4757f2e7b5d9">args</link>),&#32;<link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link>[j].<link linkend="_stb_8c_1aa45b6cbf8b26f4ce33ac4757f2e7b5d9">args</link>,
+120 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_build__matrix_8c_1afcce764385867b5c17f459871ecdb16d">projects</link>[i].filelist,
+121 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link>[j].link),&#32;<link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link>[j].link);
+122 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>&#32;=&#32;<link linkend="_build__matrix_8c_1ab1641339ae9988ec76758e692c28278c">run_command</link>(<link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link>[j].batchfile,&#32;command);
+123 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a2ec0bf1a6318ab6674fce1aca74cf274">stbprint</link>(<emphasis role="stringliteral">&quot;{%c==&#32;Compiler&#32;%s&#32;==&#32;Building&#32;%s}\n&quot;</emphasis>,&#32;<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>&#32;?&#32;<emphasis role="charliteral">&apos;$&apos;</emphasis>&#32;:&#32;<emphasis role="charliteral">&apos;!&apos;</emphasis>,&#32;<link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link>[j].compiler_name,&#32;<link linkend="_build__matrix_8c_1afcce764385867b5c17f459871ecdb16d">projects</link>[i].filelist);
+124 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a74bf21514471b91b226f3ba6f5b903f5">stb_copyfile</link>(<emphasis role="stringliteral">&quot;a.exe&quot;</emphasis>,&#32;<link linkend="_stb_8h_1adaabe895f1a146aa609843309b34a5d3">stb_sprintf</link>(<emphasis role="stringliteral">&quot;obj/%s/a.exe&quot;</emphasis>,&#32;<link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link>[j].objdir));
+125 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//printf(&quot;Copy:&#32;%s&#32;to&#32;%s\n&quot;,&#32;&quot;a.exe&quot;,&#32;stb_sprintf(&quot;obj/%s/a.exe&quot;,&#32;compilers[j].objdir));</emphasis>
+126 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a74bf21514471b91b226f3ba6f5b903f5">stb_copyfile</link>(<emphasis role="stringliteral">&quot;temp.exe&quot;</emphasis>,&#32;<link linkend="_stb_8h_1adaabe895f1a146aa609843309b34a5d3">stb_sprintf</link>(<emphasis role="stringliteral">&quot;obj/%s/temp.exe&quot;</emphasis>,&#32;<link linkend="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6">compilers</link>[j].objdir));
+127 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;system(<emphasis role="stringliteral">&quot;if&#32;EXIST&#32;a.exe&#32;del&#32;/q&#32;a.exe&quot;</emphasis>);
+128 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;system(<emphasis role="stringliteral">&quot;if&#32;EXIST&#32;temp.exe&#32;del&#32;/q&#32;temp.exe&quot;</emphasis>);
+129 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;system(<emphasis role="stringliteral">&quot;if&#32;EXIST&#32;*.obj&#32;del&#32;/q&#32;*.obj&quot;</emphasis>);
+130 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;system(<emphasis role="stringliteral">&quot;if&#32;EXIST&#32;*.o&#32;del&#32;/q&#32;*.o&quot;</emphasis>);
+131 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>)
+132 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;1;
+133 &#32;&#32;&#32;&#32;&#32;&#32;}
+134 &#32;&#32;&#32;}
+135 
+136 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+137 }
+</programlisting>    </section><anchor xml:id="_build__matrix_8c_1ab1641339ae9988ec76758e692c28278c"/>    <section>
+    <title>run_command()</title>
+<indexterm><primary>run_command</primary><secondary>build_matrix.c</secondary></indexterm>
+<indexterm><primary>build_matrix.c</primary><secondary>run_command</secondary></indexterm>
+<para><computeroutput>int run_command (char * batch_file, char * command)</computeroutput></para><para>
+Definition at line 5 of file build_matrix.c.</para>
+<programlisting>6 {
+7 &#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_structbuffer">buffer</link>[4096];
+8 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(batch_file[0])&#32;{
+9 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_rrsprintf_8h_1a9b1bcf2b847c7e2a9e4d06b7bb6fa018">sprintf</link>(<link linkend="_structbuffer">buffer</link>,&#32;<emphasis role="stringliteral">&quot;%s&#32;&amp;&amp;&#32;%s&quot;</emphasis>,&#32;batch_file,&#32;command);
+10 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;system(<link linkend="_structbuffer">buffer</link>)&#32;==&#32;0;
+11 &#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+12 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;system(command)&#32;==&#32;0;
+13 &#32;&#32;&#32;}
+14 }
+</programlisting></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_build__matrix_8c_1a3a6bd42212ca18ee75be63efccf3b5f6"/>    <section>
+    <title>compilers</title>
+<indexterm><primary>compilers</primary><secondary>build_matrix.c</secondary></indexterm>
+<indexterm><primary>build_matrix.c</primary><secondary>compilers</secondary></indexterm>
+<para><computeroutput><link linkend="_structcompiler__info">compiler_info</link>* compilers</computeroutput></para><para>
+Definition at line 26 of file build_matrix.c.</para>
+    </section><anchor xml:id="_build__matrix_8c_1afcce764385867b5c17f459871ecdb16d"/>    <section>
+    <title>projects</title>
+<indexterm><primary>projects</primary><secondary>build_matrix.c</secondary></indexterm>
+<indexterm><primary>build_matrix.c</primary><secondary>projects</secondary></indexterm>
+<para><computeroutput><link linkend="_structproject__info">project_info</link>* projects</computeroutput></para><para>
+Definition at line 35 of file build_matrix.c.</para>
+    </section><anchor xml:id="_build__matrix_8c_1ace3d46b2fb83f7101ab45bef49bcedc9"/>    <section>
+    <title>shared_args</title>
+<indexterm><primary>shared_args</primary><secondary>build_matrix.c</secondary></indexterm>
+<indexterm><primary>build_matrix.c</primary><secondary>shared_args</secondary></indexterm>
+<para><computeroutput>char* shared_args</computeroutput></para><para>
+Definition at line 27 of file build_matrix.c.</para>
+    </section><anchor xml:id="_build__matrix_8c_1a5f11bbc8cf14d871bba5e30c73761540"/>    <section>
+    <title>shared_link</title>
+<indexterm><primary>shared_link</primary><secondary>build_matrix.c</secondary></indexterm>
+<indexterm><primary>build_matrix.c</primary><secondary>shared_link</secondary></indexterm>
+<para><computeroutput>char* shared_link</computeroutput></para><para>
+Definition at line 28 of file build_matrix.c.</para>
+</section>
+</section>
+</section>

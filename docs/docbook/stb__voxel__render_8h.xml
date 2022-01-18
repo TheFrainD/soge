@@ -1,0 +1,781 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_stb__voxel__render_8h">
+<title>deps/stb/stb_voxel_render.h File Reference</title>
+<indexterm><primary>deps/stb/stb_voxel_render.h</primary></indexterm>
+<programlisting>#include &lt;stdlib.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structstbvox__uniform__info">stbvox_uniform_info</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structstbvox__rgb">stbvox_rgb</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structstbvox__input__description">stbvox_input_description</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link>   extern</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a9f0707063571f7794e1ba83b090b0812">STBVOX_COLOR_TEX1_ENABLE</link>   64</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1aaa34a23227b55275b4233482ee36d1c3">STBVOX_COLOR_TEX2_ENABLE</link>   128</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a115801002e44ceef507858292d9763b7">STBVOX_FACE_NONE</link>   7</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1aa12481bf548bfc870b0950e5fc93692d">STBVOX_BLOCKTYPE_EMPTY</link>   0</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1ae21cfc1c11173e91839cfe89e99faa25">STBVOX_BLOCKTYPE_HOLE</link>   255</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a15590f88a985eb242c6dffb8c462983a">STBVOX_MAKE_GEOMETRY</link>(geom,  rotate,  vheight)   ((geom) + (rotate)*16 + (vheight)*64)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a7481d3530d34c5048938868910e259e3">STBVOX_MAKE_VHEIGHT</link>(v_sw,  v_se,  v_nw,  v_ne)   ((v_sw) + (v_se)*4 + (v_nw)*16 + (v_ne)*64)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a648b29130a3e66f4e7c21192bae19e20">STBVOX_MAKE_MATROT</link>(block,  overlay,  <link linkend="_glad_8h_1a3ea846f998d64f079b86052b6c4193a8">color</link>)   ((block) + (overlay)*4 + (<link linkend="_glad_8h_1a3ea846f998d64f079b86052b6c4193a8">color</link>)*64)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a3c2a25c7d1b181b32ccc8e34f81ac362">STBVOX_MAKE_TEX2_REPLACE</link>(tex2,  tex2_replace_face)   ((tex2) + ((tex2_replace_face) &amp; 3)*64)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a4f13391708b23d536a614897eadf2ca4">STBVOX_MAKE_TEXLERP</link>(ns2,  ew2,  ud2,  vert)   ((ew2) + (ns2)*4 + (ud2)*16 + (vert)*64)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a1dd71f4d5dd54614b656c2b17dc236c9">STBVOX_MAKE_TEXLERP_SIMPLE</link>(baselerp,  vert,  <link linkend="_glext_8h_1a676ca580c460c0154eb58200433d2a9e">face</link>)   ((vert)*32 + (<link linkend="_glext_8h_1a676ca580c460c0154eb58200433d2a9e">face</link>)*4 + (baselerp))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a0a16737e453f13bc6bf110fa9169a1c1">STBVOX_MAKE_TEXLERP1</link>(vert,  e2,  n2,  <link linkend="_glext_8h_1a1ca5aca787be24213d9591fdf074b094">w2</link>,  s2,  u4,  d2)   <link linkend="_stb__voxel__render_8h_1a4f13391708b23d536a614897eadf2ca4">STBVOX_MAKE_TEXLERP</link>(s2, <link linkend="_glext_8h_1a1ca5aca787be24213d9591fdf074b094">w2</link>, d2, vert)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a26554d7969a866c9265c343c81c5063d">STBVOX_MAKE_TEXLERP2</link>(vert,  e2,  n2,  <link linkend="_glext_8h_1a1ca5aca787be24213d9591fdf074b094">w2</link>,  s2,  u4,  d2)   ((<link linkend="_glext_8h_1a1c6bf6fa786a04b729b30e56d68474ef">u2</link>)*16 + (n2)*4 + (s2))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a05e1006252362770dcb8997704c87af0">STBVOX_MAKE_FACE_MASK</link>(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>,  <link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  <link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>,  <link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,  u,  d)   ((<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>)+(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>)*2+(<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>)*4+(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>)*8+(u)*16+(d)*32)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a62e6b4a4b3bbe3b5ca82434cd6b35c48">STBVOX_MAKE_SIDE_TEXROT</link>(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>,  <link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  <link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>,  <link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>)   ((<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>)+(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>)*4+(<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>)*16+(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>)*64)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1aa5c64524cb38841d0dd49b36149a3c83">STBVOX_MAKE_COLOR</link>(<link linkend="_glad_8h_1a3ea846f998d64f079b86052b6c4193a8">color</link>,  <link linkend="_glext_8h_1af48031a37b713afa3b0d0d7d29653d7c">t1</link>,  t2)   ((<link linkend="_glad_8h_1a3ea846f998d64f079b86052b6c4193a8">color</link>)+(<link linkend="_glext_8h_1af48031a37b713afa3b0d0d7d29653d7c">t1</link>)*64+(t2)*128)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a6994c7a5b2a8be52d456bef366b739d7">STBVOX_MAKE_TEXLERP_VERT3</link>(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>,  <link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  <link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>,  <link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,  u)   ((<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>)+(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>)*8+(<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>)*64+(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>)*512+(u)*4096)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1ab97c6061e45e27486e6a6022a382564a">STBVOX_MAKE_TEXLERP_FACE3</link>(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>,  <link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  <link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>,  <link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,  u,  d)   ((<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>)+(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>)*8+(<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>)*64+(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>)*512+(u)*4096+(d)*16384)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a15683569184dbc025f3c799bfce5c585">STBVOX_MAKE_PACKED_COMPACT</link>(rot,  vheight,  texlerp,  def)   ((rot)+4*(vheight)+16*(use)+32*(texlerp))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a010e6516eb03985257ba2a14eeea396c">STBVOX_MAKE_LIGHTING_EXT</link>(lighting,  rot)   (((lighting)&amp;~3)+(rot))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a731a149693aa9a021e7844ad6d5db249">STBVOX_MAKE_LIGHTING</link>(lighting)   (lighting)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a9624467b8d0b4ae065bc5dadcc0ba2c2">STBVOX_MAX_MESHES</link>   2</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__voxel__render_8h_1a03bfe9594a2da3f19c2e779d2c2edbaf">STBVOX_MAX_MESH_SLOTS</link>   3</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Typedefs    </title>
+        <itemizedlist>
+            <listitem><para>typedef struct <link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> <link linkend="_stb__voxel__render_8h_1a9af9a03e1ab5947cf7f357e3513013f2">stbvox_mesh_maker</link></para>
+</listitem>
+            <listitem><para>typedef struct <link linkend="_structstbvox__input__description">stbvox_input_description</link> <link linkend="_stb__voxel__render_8h_1a7e0d9359468102f8a32a4c1802d3e680">stbvox_input_description</link></para>
+</listitem>
+            <listitem><para>typedef struct <link linkend="_structstbvox__uniform__info">stbvox_uniform_info</link> <link linkend="_stb__voxel__render_8h_1aeab80555354a685a4978717aeecda080">stbvox_uniform_info</link></para>
+</listitem>
+            <listitem><para>typedef unsigned char <link linkend="_stb__voxel__render_8h_1a18bbd36e563065fc4c6c29e8f79d5b49">stbvox_block_type</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Enumerations    </title>
+        <itemizedlist>
+            <listitem><para>enum { 
+<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051eae4a976805a2c137e4e56be03380ea2a2">STBVOX_UNIFORM_face_data</link>, 
+<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051eab955886cfcf0c2c881d633beeb99ad93">STBVOX_UNIFORM_transform</link>, 
+<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea9415362fa2fe2833bbb221c12310dc81">STBVOX_UNIFORM_tex_array</link>, 
+<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051eaf9b476df9befe12c8855d1ea20db22fe">STBVOX_UNIFORM_texscale</link>, 
+
+<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea1f8122611f70005180ede22ebffa840f">STBVOX_UNIFORM_color_table</link>, 
+<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea67cfb94d15198e0d936ca263a2077b5e">STBVOX_UNIFORM_normals</link>, 
+<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea65f746116b3aa230da8bbb534e6cea97">STBVOX_UNIFORM_texgen</link>, 
+<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea87500607917aa427db2ff08fc3ea1ca8">STBVOX_UNIFORM_ambient</link>, 
+
+<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea82a48737d53c36a05fdf8138c17c349f">STBVOX_UNIFORM_camera_pos</link>, 
+<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea463fbe04a519703eaad7ce1434576696">STBVOX_UNIFORM_count</link>
+ }</para>
+</listitem>
+            <listitem><para>enum { 
+<link linkend="_stb__voxel__render_8h_1a79e9f285d34216706a748fd7ba8941b7ad342112fde8fd8be3edbd5a2120ca317">STBVOX_UNIFORM_TYPE_none</link>, 
+<link linkend="_stb__voxel__render_8h_1a79e9f285d34216706a748fd7ba8941b7ac7047970a5db6dd015b117186730c558">STBVOX_UNIFORM_TYPE_sampler</link>, 
+<link linkend="_stb__voxel__render_8h_1a79e9f285d34216706a748fd7ba8941b7adf4638d7323db2e592ee2d87917cd785">STBVOX_UNIFORM_TYPE_vec2</link>, 
+<link linkend="_stb__voxel__render_8h_1a79e9f285d34216706a748fd7ba8941b7a01e4c8c453c9d498f2125eaeb26ebb5c">STBVOX_UNIFORM_TYPE_vec3</link>, 
+
+<link linkend="_stb__voxel__render_8h_1a79e9f285d34216706a748fd7ba8941b7abb971ba14a3c74cddba2b40bf5cc3b8f">STBVOX_UNIFORM_TYPE_vec4</link>
+ }</para>
+</listitem>
+            <listitem><para>enum { 
+<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3cacf4698c9739b8b6c1af7f8a124169cc9">STBVOX_GEOM_empty</link>, 
+<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca0c121ca2d1b34ddb76fc268d10251117">STBVOX_GEOM_knockout</link>, 
+<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca685a066c41ada07dc62ffaa16d23ccf5">STBVOX_GEOM_solid</link>, 
+<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca5921e838cb3457e8097fd111be407eec">STBVOX_GEOM_transp</link>, 
+
+<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca30b6f0c40e6b6e40d49dab03c03fc327">STBVOX_GEOM_slab_upper</link>, 
+<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca4d3a600f27892ef5bb64aa2e884b6570">STBVOX_GEOM_slab_lower</link>, 
+<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca063a4146fc89954375c7fc7fa39e8747">STBVOX_GEOM_floor_slope_north_is_top</link>, 
+<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3caa5dcab0b072fb42d24d09d3ace41724d">STBVOX_GEOM_ceil_slope_north_is_bottom</link>, 
+
+<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca967b6a84170cb5bbb3af61a3eda1e185">STBVOX_GEOM_floor_slope_north_is_top_as_wall_UNIMPLEMENTED</link>, 
+<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca23b7fdc60695dd2873855631799b54d2">STBVOX_GEOM_ceil_slope_north_is_bottom_as_wall_UNIMPLEMENTED</link>, 
+<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca9cd52f024f074ece1f5cecbcc517c54f">STBVOX_GEOM_crossed_pair</link>, 
+<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca334b45fb41d2329d21d3bd81b8c2568d">STBVOX_GEOM_force</link>, 
+
+<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3cada2a4d1b275d962d5c76388b2f731b3f">STBVOX_GEOM_floor_vheight_03</link> = 12, 
+<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca7511f84da0693e6147590c76a74480d6">STBVOX_GEOM_floor_vheight_12</link>, 
+<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca62855fb026ed6bb2b93a02f94b9eaacb">STBVOX_GEOM_ceil_vheight_03</link>, 
+<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca63a77bdea6849081b9924e525fe602df">STBVOX_GEOM_ceil_vheight_12</link>, 
+
+<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca392c7b9ba79ae0aec0364b3cbd57ad1c">STBVOX_GEOM_count</link>
+ }</para>
+</listitem>
+            <listitem><para>enum { 
+<link linkend="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7afa499b8104b6de8c8a86aa4ffaac4029">STBVOX_FACE_east</link>, 
+<link linkend="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7ae6ab3be9f1d3f183497386adf6de0b7f">STBVOX_FACE_north</link>, 
+<link linkend="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7a5d1070e526b0400de9341f0ea13d2761">STBVOX_FACE_west</link>, 
+<link linkend="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7a989b46927a59c0e897e5a2132453a602">STBVOX_FACE_south</link>, 
+
+<link linkend="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7aa81aa17ee2457c5e27dacbc28b081b70">STBVOX_FACE_up</link>, 
+<link linkend="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7a0afd0d6f81410ddc95c3a6a8ed98ec22">STBVOX_FACE_down</link>, 
+<link linkend="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7a65bdc989c6728bab691aad91e4d4ec05">STBVOX_FACE_count</link>
+ }</para>
+</listitem>
+            <listitem><para>enum { <link linkend="_stb__voxel__render_8h_1a70ad55be767ca0a42c9150d24618e4caa3fcc5a8bbe095c16e10c82d50c688685">STBVOX_VERTEX_HEIGHT_0</link>, 
+<link linkend="_stb__voxel__render_8h_1a70ad55be767ca0a42c9150d24618e4caa4f4eb402db50e3377f15836b4a782c39">STBVOX_VERTEX_HEIGHT_half</link>, 
+<link linkend="_stb__voxel__render_8h_1a70ad55be767ca0a42c9150d24618e4caa092bad5aa4358be71d81eaae4623e94b">STBVOX_VERTEX_HEIGHT_1</link>, 
+<link linkend="_stb__voxel__render_8h_1a70ad55be767ca0a42c9150d24618e4caa280c918aae70c240be01dc4de2fb3f86">STBVOX_VERTEX_HEIGHT_one_and_a_half</link>
+ }</para>
+</listitem>
+            <listitem><para>enum { <link linkend="_stb__voxel__render_8h_1a4b4213b1f9d54da7c7e36bde32fc7c80aa70bad6df098dbf1accf2968094dbebb">STBVOX_TEXLERP_FACE_0</link>, 
+<link linkend="_stb__voxel__render_8h_1a4b4213b1f9d54da7c7e36bde32fc7c80a0adcec82e25711e882ca2142fcdf9f26">STBVOX_TEXLERP_FACE_half</link>, 
+<link linkend="_stb__voxel__render_8h_1a4b4213b1f9d54da7c7e36bde32fc7c80a0143df9adb613c460bca2a586504f084">STBVOX_TEXLERP_FACE_1</link>, 
+<link linkend="_stb__voxel__render_8h_1a4b4213b1f9d54da7c7e36bde32fc7c80a87926e8413a0d08ee2e482d5487772f9">STBVOX_TEXLERP_FACE_use_vert</link>
+ }</para>
+</listitem>
+            <listitem><para>enum { <link linkend="_stb__voxel__render_8h_1aa491173a6b1628f4ff82067b2e1ceaa9aaad075e62e6c827472550b0a280d52b9">STBVOX_TEXLERP_BASE_0</link>, 
+<link linkend="_stb__voxel__render_8h_1aa491173a6b1628f4ff82067b2e1ceaa9a0786a482a211591e81641bf5c4121444">STBVOX_TEXLERP_BASE_2_7</link>, 
+<link linkend="_stb__voxel__render_8h_1aa491173a6b1628f4ff82067b2e1ceaa9af8154cb231658e333b0f05883b87170d">STBVOX_TEXLERP_BASE_5_7</link>, 
+<link linkend="_stb__voxel__render_8h_1aa491173a6b1628f4ff82067b2e1ceaa9ab69e6ee711cc4542ea10ad5a16ee18d4">STBVOX_TEXLERP_BASE_1</link>
+ }</para>
+</listitem>
+            <listitem><para>enum { 
+<link linkend="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbdab96a9b5c77f77149dff728aacde0ff16">STBVOX_TEXLERP3_0_8</link>, 
+<link linkend="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbdaea2d40827737c1071f6dc6952a543059">STBVOX_TEXLERP3_1_8</link>, 
+<link linkend="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbda99d3b9c21f17c66cdbb8665cd0943cd7">STBVOX_TEXLERP3_2_8</link>, 
+<link linkend="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbdacdae7d0ff7353e002ae2eacf6b8aa88a">STBVOX_TEXLERP3_3_8</link>, 
+
+<link linkend="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbda7c684dcd79b403475e1d3c4eaf5f25fa">STBVOX_TEXLERP3_4_8</link>, 
+<link linkend="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbdafdc5d19076df6039c2c7b0d70a06e259">STBVOX_TEXLERP3_5_8</link>, 
+<link linkend="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbda9c2fad89edbd61a6c0b84476658420bb">STBVOX_TEXLERP3_6_8</link>, 
+<link linkend="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbda87385e4fba94fdb00b6b3d03b5d54f05">STBVOX_TEXLERP3_7_8</link>
+ }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__voxel__render_8h_1a1b8b7770f24477cf39260eac3ade3400">stbvox_init_mesh_maker</link> (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> *mm)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__voxel__render_8h_1a3b24ab8855010267a0e93541d1673fb9">stbvox_set_buffer</link> (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> *mm, int mesh, int slot, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_structbuffer">buffer</link>, size_t <link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> int <link linkend="_stb__voxel__render_8h_1a3b537bb87f5e14c78f17f0b4d4ac29e9">stbvox_get_buffer_count</link> (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> *mm)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> int <link linkend="_stb__voxel__render_8h_1afe4a3740055547f625557281f5f56f11">stbvox_get_buffer_size_per_quad</link> (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> *mm, int slot)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__voxel__render_8h_1aae8b2a3e95db09861fef397aeb7cf10d">stbvox_set_default_mesh</link> (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> *mm, int mesh)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_structstbvox__input__description">stbvox_input_description</link> * <link linkend="_stb__voxel__render_8h_1adadf81990fab203a9b48c738922899e1">stbvox_get_input_description</link> (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> *mm)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__voxel__render_8h_1a089559775ad9ffc7671d147ef40f6509">stbvox_set_input_stride</link> (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> *mm, int x_stride_in_elements, int y_stride_in_elements)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__voxel__render_8h_1a63fbb8703cf2c2718e6a0b4a90db00e6">stbvox_set_input_range</link> (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> *mm, int <link linkend="_glext_8h_1a98ac434677655cc8438bb72de2719f39">x0</link>, int <link linkend="_glext_8h_1ae7f97ed6c9c8e502fcbc44c7cb8a8312">y0</link>, int z0, int <link linkend="_glext_8h_1a49825216c96caaeb09237b36651181c5">x1</link>, int <link linkend="_glext_8h_1a3af6c78fcdfccea028a5878bc747ef39">y1</link>, int z1)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> int <link linkend="_stb__voxel__render_8h_1ab792b164e02789bce6e2ba96a4b8f935">stbvox_make_mesh</link> (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> *mm)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> int <link linkend="_stb__voxel__render_8h_1ace18e150b58146e2ec7ecba5ca0517b6">stbvox_get_quad_count</link> (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> *mm, int mesh)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__voxel__render_8h_1a4592b690afe4825bfabdfd9ae29fb35e">stbvox_set_mesh_coordinates</link> (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> *mm, int <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, int <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>, int <link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__voxel__render_8h_1a0ad8a7764f93c0592671bcf0e246dc6e">stbvox_get_bounds</link> (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> *mm, float bounds[2][3])</para>
+</listitem>
+            <listitem><para><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__voxel__render_8h_1a0a8668048f7cca70ef7043261761da90">stbvox_get_transform</link> (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> *mm, float <link linkend="_structtransform">transform</link>[3][3])</para>
+</listitem>
+            <listitem><para><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__voxel__render_8h_1a34226517e08ca1da34b39d34a5c31031">stbvox_reset_buffers</link> (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> *mm)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> char * <link linkend="_stb__voxel__render_8h_1a79f9e4c051c53927e0f762910729860b">stbvox_get_vertex_shader</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> char * <link linkend="_stb__voxel__render_8h_1a21e1e1586c93abcba24be8eb01d8fd3d">stbvox_get_fragment_shader</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> char * <link linkend="_stb__voxel__render_8h_1add1d57d13c2dc697f3fc2782abf5c795">stbvox_get_fragment_shader_alpha_only</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> int <link linkend="_stb__voxel__render_8h_1ac6724208eddce3a25e3927abed86426e">stbvox_get_uniform_info</link> (<link linkend="_structstbvox__uniform__info">stbvox_uniform_info</link> *<link linkend="_structinfo">info</link>, int uniform)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_stb__voxel__render_8h_1aa12481bf548bfc870b0950e5fc93692d"/>    <section>
+    <title>STBVOX_BLOCKTYPE_EMPTY</title>
+<indexterm><primary>STBVOX_BLOCKTYPE_EMPTY</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_BLOCKTYPE_EMPTY</secondary></indexterm>
+<para><computeroutput>#define STBVOX_BLOCKTYPE_EMPTY   0</computeroutput></para><para>
+Definition at line 1147 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1ae21cfc1c11173e91839cfe89e99faa25"/>    <section>
+    <title>STBVOX_BLOCKTYPE_HOLE</title>
+<indexterm><primary>STBVOX_BLOCKTYPE_HOLE</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_BLOCKTYPE_HOLE</secondary></indexterm>
+<para><computeroutput>#define STBVOX_BLOCKTYPE_HOLE   255</computeroutput></para><para>
+Definition at line 1152 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a9f0707063571f7794e1ba83b090b0812"/>    <section>
+    <title>STBVOX_COLOR_TEX1_ENABLE</title>
+<indexterm><primary>STBVOX_COLOR_TEX1_ENABLE</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_COLOR_TEX1_ENABLE</secondary></indexterm>
+<para><computeroutput>#define STBVOX_COLOR_TEX1_ENABLE   64</computeroutput></para><para>
+Definition at line 716 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1aaa34a23227b55275b4233482ee36d1c3"/>    <section>
+    <title>STBVOX_COLOR_TEX2_ENABLE</title>
+<indexterm><primary>STBVOX_COLOR_TEX2_ENABLE</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_COLOR_TEX2_ENABLE</secondary></indexterm>
+<para><computeroutput>#define STBVOX_COLOR_TEX2_ENABLE   128</computeroutput></para><para>
+Definition at line 717 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a115801002e44ceef507858292d9763b7"/>    <section>
+    <title>STBVOX_FACE_NONE</title>
+<indexterm><primary>STBVOX_FACE_NONE</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_FACE_NONE</secondary></indexterm>
+<para><computeroutput>#define STBVOX_FACE_NONE   7</computeroutput></para><para>
+Definition at line 1145 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1aa5c64524cb38841d0dd49b36149a3c83"/>    <section>
+    <title>STBVOX_MAKE_COLOR</title>
+<indexterm><primary>STBVOX_MAKE_COLOR</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_MAKE_COLOR</secondary></indexterm>
+<para><computeroutput>#define STBVOX_MAKE_COLOR( <link linkend="_glad_8h_1a3ea846f998d64f079b86052b6c4193a8">color</link>,  <link linkend="_glext_8h_1af48031a37b713afa3b0d0d7d29653d7c">t1</link>,  t2)   ((<link linkend="_glad_8h_1a3ea846f998d64f079b86052b6c4193a8">color</link>)+(<link linkend="_glext_8h_1af48031a37b713afa3b0d0d7d29653d7c">t1</link>)*64+(t2)*128)</computeroutput></para><para>
+Definition at line 1165 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a05e1006252362770dcb8997704c87af0"/>    <section>
+    <title>STBVOX_MAKE_FACE_MASK</title>
+<indexterm><primary>STBVOX_MAKE_FACE_MASK</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_MAKE_FACE_MASK</secondary></indexterm>
+<para><computeroutput>#define STBVOX_MAKE_FACE_MASK( <link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>,  <link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  <link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>,  <link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,  u,  d)   ((<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>)+(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>)*2+(<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>)*4+(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>)*8+(u)*16+(d)*32)</computeroutput></para><para>
+Definition at line 1163 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a15590f88a985eb242c6dffb8c462983a"/>    <section>
+    <title>STBVOX_MAKE_GEOMETRY</title>
+<indexterm><primary>STBVOX_MAKE_GEOMETRY</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_MAKE_GEOMETRY</secondary></indexterm>
+<para><computeroutput>#define STBVOX_MAKE_GEOMETRY( geom,  rotate,  vheight)   ((geom) + (rotate)*16 + (vheight)*64)</computeroutput></para><para>
+Definition at line 1155 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a731a149693aa9a021e7844ad6d5db249"/>    <section>
+    <title>STBVOX_MAKE_LIGHTING</title>
+<indexterm><primary>STBVOX_MAKE_LIGHTING</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_MAKE_LIGHTING</secondary></indexterm>
+<para><computeroutput>#define STBVOX_MAKE_LIGHTING( lighting)   (lighting)</computeroutput></para><para>
+Definition at line 1171 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a010e6516eb03985257ba2a14eeea396c"/>    <section>
+    <title>STBVOX_MAKE_LIGHTING_EXT</title>
+<indexterm><primary>STBVOX_MAKE_LIGHTING_EXT</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_MAKE_LIGHTING_EXT</secondary></indexterm>
+<para><computeroutput>#define STBVOX_MAKE_LIGHTING_EXT( lighting,  rot)   (((lighting)&amp;~3)+(rot))</computeroutput></para><para>
+Definition at line 1170 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a648b29130a3e66f4e7c21192bae19e20"/>    <section>
+    <title>STBVOX_MAKE_MATROT</title>
+<indexterm><primary>STBVOX_MAKE_MATROT</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_MAKE_MATROT</secondary></indexterm>
+<para><computeroutput>#define STBVOX_MAKE_MATROT( block,  overlay,  <link linkend="_glad_8h_1a3ea846f998d64f079b86052b6c4193a8">color</link>)   ((block) + (overlay)*4 + (<link linkend="_glad_8h_1a3ea846f998d64f079b86052b6c4193a8">color</link>)*64)</computeroutput></para><para>
+Definition at line 1157 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a15683569184dbc025f3c799bfce5c585"/>    <section>
+    <title>STBVOX_MAKE_PACKED_COMPACT</title>
+<indexterm><primary>STBVOX_MAKE_PACKED_COMPACT</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_MAKE_PACKED_COMPACT</secondary></indexterm>
+<para><computeroutput>#define STBVOX_MAKE_PACKED_COMPACT( rot,  vheight,  texlerp,  def)   ((rot)+4*(vheight)+16*(use)+32*(texlerp))</computeroutput></para><para>
+Definition at line 1168 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a62e6b4a4b3bbe3b5ca82434cd6b35c48"/>    <section>
+    <title>STBVOX_MAKE_SIDE_TEXROT</title>
+<indexterm><primary>STBVOX_MAKE_SIDE_TEXROT</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_MAKE_SIDE_TEXROT</secondary></indexterm>
+<para><computeroutput>#define STBVOX_MAKE_SIDE_TEXROT( <link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>,  <link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  <link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>,  <link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>)   ((<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>)+(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>)*4+(<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>)*16+(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>)*64)</computeroutput></para><para>
+Definition at line 1164 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a3c2a25c7d1b181b32ccc8e34f81ac362"/>    <section>
+    <title>STBVOX_MAKE_TEX2_REPLACE</title>
+<indexterm><primary>STBVOX_MAKE_TEX2_REPLACE</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_MAKE_TEX2_REPLACE</secondary></indexterm>
+<para><computeroutput>#define STBVOX_MAKE_TEX2_REPLACE( tex2,  tex2_replace_face)   ((tex2) + ((tex2_replace_face) &amp; 3)*64)</computeroutput></para><para>
+Definition at line 1158 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a4f13391708b23d536a614897eadf2ca4"/>    <section>
+    <title>STBVOX_MAKE_TEXLERP</title>
+<indexterm><primary>STBVOX_MAKE_TEXLERP</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_MAKE_TEXLERP</secondary></indexterm>
+<para><computeroutput>#define STBVOX_MAKE_TEXLERP( ns2,  ew2,  ud2,  vert)   ((ew2) + (ns2)*4 + (ud2)*16 + (vert)*64)</computeroutput></para><para>
+Definition at line 1159 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a0a16737e453f13bc6bf110fa9169a1c1"/>    <section>
+    <title>STBVOX_MAKE_TEXLERP1</title>
+<indexterm><primary>STBVOX_MAKE_TEXLERP1</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_MAKE_TEXLERP1</secondary></indexterm>
+<para><computeroutput>#define STBVOX_MAKE_TEXLERP1( vert,  e2,  n2,  <link linkend="_glext_8h_1a1ca5aca787be24213d9591fdf074b094">w2</link>,  s2,  u4,  d2)   <link linkend="_stb__voxel__render_8h_1a4f13391708b23d536a614897eadf2ca4">STBVOX_MAKE_TEXLERP</link>(s2, <link linkend="_glext_8h_1a1ca5aca787be24213d9591fdf074b094">w2</link>, d2, vert)</computeroutput></para><para>
+Definition at line 1161 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a26554d7969a866c9265c343c81c5063d"/>    <section>
+    <title>STBVOX_MAKE_TEXLERP2</title>
+<indexterm><primary>STBVOX_MAKE_TEXLERP2</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_MAKE_TEXLERP2</secondary></indexterm>
+<para><computeroutput>#define STBVOX_MAKE_TEXLERP2( vert,  e2,  n2,  <link linkend="_glext_8h_1a1ca5aca787be24213d9591fdf074b094">w2</link>,  s2,  u4,  d2)   ((<link linkend="_glext_8h_1a1c6bf6fa786a04b729b30e56d68474ef">u2</link>)*16 + (n2)*4 + (s2))</computeroutput></para><para>
+Definition at line 1162 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1ab97c6061e45e27486e6a6022a382564a"/>    <section>
+    <title>STBVOX_MAKE_TEXLERP_FACE3</title>
+<indexterm><primary>STBVOX_MAKE_TEXLERP_FACE3</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_MAKE_TEXLERP_FACE3</secondary></indexterm>
+<para><computeroutput>#define STBVOX_MAKE_TEXLERP_FACE3( <link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>,  <link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  <link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>,  <link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,  u,  d)   ((<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>)+(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>)*8+(<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>)*64+(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>)*512+(u)*4096+(d)*16384)</computeroutput></para><para>
+Definition at line 1167 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a1dd71f4d5dd54614b656c2b17dc236c9"/>    <section>
+    <title>STBVOX_MAKE_TEXLERP_SIMPLE</title>
+<indexterm><primary>STBVOX_MAKE_TEXLERP_SIMPLE</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_MAKE_TEXLERP_SIMPLE</secondary></indexterm>
+<para><computeroutput>#define STBVOX_MAKE_TEXLERP_SIMPLE( baselerp,  vert,  <link linkend="_glext_8h_1a676ca580c460c0154eb58200433d2a9e">face</link>)   ((vert)*32 + (<link linkend="_glext_8h_1a676ca580c460c0154eb58200433d2a9e">face</link>)*4 + (baselerp))</computeroutput></para><para>
+Definition at line 1160 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a6994c7a5b2a8be52d456bef366b739d7"/>    <section>
+    <title>STBVOX_MAKE_TEXLERP_VERT3</title>
+<indexterm><primary>STBVOX_MAKE_TEXLERP_VERT3</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_MAKE_TEXLERP_VERT3</secondary></indexterm>
+<para><computeroutput>#define STBVOX_MAKE_TEXLERP_VERT3( <link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>,  <link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,  <link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>,  <link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,  u)   ((<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>)+(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>)*8+(<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>)*64+(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>)*512+(u)*4096)</computeroutput></para><para>
+Definition at line 1166 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a7481d3530d34c5048938868910e259e3"/>    <section>
+    <title>STBVOX_MAKE_VHEIGHT</title>
+<indexterm><primary>STBVOX_MAKE_VHEIGHT</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_MAKE_VHEIGHT</secondary></indexterm>
+<para><computeroutput>#define STBVOX_MAKE_VHEIGHT( v_sw,  v_se,  v_nw,  v_ne)   ((v_sw) + (v_se)*4 + (v_nw)*16 + (v_ne)*64)</computeroutput></para><para>
+Definition at line 1156 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a03bfe9594a2da3f19c2e779d2c2edbaf"/>    <section>
+    <title>STBVOX_MAX_MESH_SLOTS</title>
+<indexterm><primary>STBVOX_MAX_MESH_SLOTS</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_MAX_MESH_SLOTS</secondary></indexterm>
+<para><computeroutput>#define STBVOX_MAX_MESH_SLOTS   3</computeroutput></para><para>
+Definition at line 1177 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a9624467b8d0b4ae065bc5dadcc0ba2c2"/>    <section>
+    <title>STBVOX_MAX_MESHES</title>
+<indexterm><primary>STBVOX_MAX_MESHES</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_MAX_MESHES</secondary></indexterm>
+<para><computeroutput>#define STBVOX_MAX_MESHES   2</computeroutput></para><para>
+Definition at line 1174 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c"/>    <section>
+    <title>STBVXDEC</title>
+<indexterm><primary>STBVXDEC</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVXDEC</secondary></indexterm>
+<para><computeroutput>#define STBVXDEC   extern</computeroutput></para><para>
+Definition at line 239 of file stb_voxel_render.h.</para>
+</section>
+</section>
+<section>
+<title>Typedef Documentation</title>
+<anchor xml:id="_stb__voxel__render_8h_1a18bbd36e563065fc4c6c29e8f79d5b49"/>    <section>
+    <title>stbvox_block_type</title>
+<indexterm><primary>stbvox_block_type</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_block_type</secondary></indexterm>
+<para><computeroutput>typedef unsigned char <link linkend="_stb__voxel__render_8h_1a18bbd36e563065fc4c6c29e8f79d5b49">stbvox_block_type</link></computeroutput></para><para>
+Definition at line 707 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a7e0d9359468102f8a32a4c1802d3e680"/>    <section>
+    <title>stbvox_input_description</title>
+<indexterm><primary>stbvox_input_description</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_input_description</secondary></indexterm>
+<para><computeroutput>typedef struct <link linkend="_structstbvox__input__description">stbvox_input_description</link> <link linkend="_structstbvox__input__description">stbvox_input_description</link></computeroutput></para><para>
+Definition at line 234 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1a9af9a03e1ab5947cf7f357e3513013f2"/>    <section>
+    <title>stbvox_mesh_maker</title>
+<indexterm><primary>stbvox_mesh_maker</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_mesh_maker</secondary></indexterm>
+<para><computeroutput>typedef struct <link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> <link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link></computeroutput></para><para>
+Definition at line 233 of file stb_voxel_render.h.</para>
+    </section><anchor xml:id="_stb__voxel__render_8h_1aeab80555354a685a4978717aeecda080"/>    <section>
+    <title>stbvox_uniform_info</title>
+<indexterm><primary>stbvox_uniform_info</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_uniform_info</secondary></indexterm>
+<para><computeroutput>typedef struct <link linkend="_structstbvox__uniform__info">stbvox_uniform_info</link> <link linkend="_structstbvox__uniform__info">stbvox_uniform_info</link></computeroutput></para><para>
+Definition at line 529 of file stb_voxel_render.h.</para>
+</section>
+</section>
+<section>
+<title>Enumeration Type Documentation</title>
+<anchor xml:id="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051e"/>    <section>
+    <title>anonymous enum</title>
+<para><computeroutput>anonymous enum</computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>STBVOX_UNIFORM_face_data</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_UNIFORM_face_data</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051eae4a976805a2c137e4e56be03380ea2a2"/>STBVOX_UNIFORM_face_data</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_UNIFORM_transform</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_UNIFORM_transform</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051eab955886cfcf0c2c881d633beeb99ad93"/>STBVOX_UNIFORM_transform</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_UNIFORM_tex_array</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_UNIFORM_tex_array</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea9415362fa2fe2833bbb221c12310dc81"/>STBVOX_UNIFORM_tex_array</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_UNIFORM_texscale</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_UNIFORM_texscale</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051eaf9b476df9befe12c8855d1ea20db22fe"/>STBVOX_UNIFORM_texscale</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_UNIFORM_color_table</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_UNIFORM_color_table</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea1f8122611f70005180ede22ebffa840f"/>STBVOX_UNIFORM_color_table</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_UNIFORM_normals</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_UNIFORM_normals</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea67cfb94d15198e0d936ca263a2077b5e"/>STBVOX_UNIFORM_normals</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_UNIFORM_texgen</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_UNIFORM_texgen</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea65f746116b3aa230da8bbb534e6cea97"/>STBVOX_UNIFORM_texgen</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_UNIFORM_ambient</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_UNIFORM_ambient</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea87500607917aa427db2ff08fc3ea1ca8"/>STBVOX_UNIFORM_ambient</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_UNIFORM_camera_pos</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_UNIFORM_camera_pos</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea82a48737d53c36a05fdf8138c17c349f"/>STBVOX_UNIFORM_camera_pos</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_UNIFORM_count</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_UNIFORM_count</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea463fbe04a519703eaad7ce1434576696"/>STBVOX_UNIFORM_count</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 568 of file stb_voxel_render.h.</para>
+<programlisting>569 {&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;------------------------------------------------</emphasis>
+570 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051eae4a976805a2c137e4e56be03380ea2a2">STBVOX_UNIFORM_face_data</link>,&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;n&#32;&#32;&#32;&#32;&#32;&#32;the&#32;sampler&#32;with&#32;the&#32;face&#32;texture&#32;buffer</emphasis>
+571 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051eab955886cfcf0c2c881d633beeb99ad93">STBVOX_UNIFORM_transform</link>,&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;n&#32;&#32;&#32;&#32;&#32;&#32;the&#32;transform&#32;data&#32;from&#32;stbvox_get_transform</emphasis>
+572 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea9415362fa2fe2833bbb221c12310dc81">STBVOX_UNIFORM_tex_array</link>,&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;n&#32;&#32;&#32;&#32;&#32;&#32;an&#32;array&#32;of&#32;two&#32;texture&#32;samplers&#32;containing&#32;the&#32;two&#32;texture&#32;arrays</emphasis>
+573 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051eaf9b476df9befe12c8855d1ea20db22fe">STBVOX_UNIFORM_texscale</link>,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;Y&#32;&#32;&#32;&#32;&#32;&#32;a&#32;table&#32;of&#32;texture&#32;properties,&#32;see&#32;above</emphasis>
+574 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea1f8122611f70005180ede22ebffa840f">STBVOX_UNIFORM_color_table</link>,&#32;<emphasis role="comment">//&#32;&#32;Y&#32;&#32;&#32;&#32;&#32;&#32;64&#32;vec4&#32;RGBA&#32;values;&#32;a&#32;default&#32;palette&#32;is&#32;provided;&#32;if&#32;A&#32;&gt;&#32;1.0,&#32;fullbright</emphasis>
+575 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea67cfb94d15198e0d936ca263a2077b5e">STBVOX_UNIFORM_normals</link>,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;Y&#32;&#32;Y&#32;&#32;&#32;table&#32;of&#32;normals,&#32;internal-only</emphasis>
+576 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea65f746116b3aa230da8bbb534e6cea97">STBVOX_UNIFORM_texgen</link>,&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;Y&#32;&#32;Y&#32;&#32;&#32;table&#32;of&#32;texgen&#32;vectors,&#32;internal-only</emphasis>
+577 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea87500607917aa427db2ff08fc3ea1ca8">STBVOX_UNIFORM_ambient</link>,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;n&#32;&#32;&#32;&#32;&#32;&#32;lighting&#32;&amp;&#32;fog&#32;info,&#32;see&#32;above</emphasis>
+578 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea82a48737d53c36a05fdf8138c17c349f">STBVOX_UNIFORM_camera_pos</link>,&#32;&#32;<emphasis role="comment">//&#32;&#32;Y&#32;&#32;&#32;&#32;&#32;&#32;camera&#32;position&#32;in&#32;global&#32;voxel&#32;space&#32;(for&#32;lighting&#32;&amp;&#32;fog)</emphasis>
+579 
+580 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a7859c0a3efa8b1c360f5c2376baf051ea463fbe04a519703eaad7ce1434576696">STBVOX_UNIFORM_count</link>,
+581 };
+</programlisting>    </section><anchor xml:id="_stb__voxel__render_8h_1a79e9f285d34216706a748fd7ba8941b7"/>    <section>
+    <title>anonymous enum</title>
+<para><computeroutput>anonymous enum</computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>STBVOX_UNIFORM_TYPE_none</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_UNIFORM_TYPE_none</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a79e9f285d34216706a748fd7ba8941b7ad342112fde8fd8be3edbd5a2120ca317"/>STBVOX_UNIFORM_TYPE_none</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_UNIFORM_TYPE_sampler</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_UNIFORM_TYPE_sampler</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a79e9f285d34216706a748fd7ba8941b7ac7047970a5db6dd015b117186730c558"/>STBVOX_UNIFORM_TYPE_sampler</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_UNIFORM_TYPE_vec2</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_UNIFORM_TYPE_vec2</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a79e9f285d34216706a748fd7ba8941b7adf4638d7323db2e592ee2d87917cd785"/>STBVOX_UNIFORM_TYPE_vec2</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_UNIFORM_TYPE_vec3</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_UNIFORM_TYPE_vec3</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a79e9f285d34216706a748fd7ba8941b7a01e4c8c453c9d498f2125eaeb26ebb5c"/>STBVOX_UNIFORM_TYPE_vec3</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_UNIFORM_TYPE_vec4</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_UNIFORM_TYPE_vec4</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a79e9f285d34216706a748fd7ba8941b7abb971ba14a3c74cddba2b40bf5cc3b8f"/>STBVOX_UNIFORM_TYPE_vec4</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 583 of file stb_voxel_render.h.</para>
+<programlisting>584 {
+585 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a79e9f285d34216706a748fd7ba8941b7ad342112fde8fd8be3edbd5a2120ca317">STBVOX_UNIFORM_TYPE_none</link>,
+586 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a79e9f285d34216706a748fd7ba8941b7ac7047970a5db6dd015b117186730c558">STBVOX_UNIFORM_TYPE_sampler</link>,
+587 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a79e9f285d34216706a748fd7ba8941b7adf4638d7323db2e592ee2d87917cd785">STBVOX_UNIFORM_TYPE_vec2</link>,
+588 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a79e9f285d34216706a748fd7ba8941b7a01e4c8c453c9d498f2125eaeb26ebb5c">STBVOX_UNIFORM_TYPE_vec3</link>,
+589 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a79e9f285d34216706a748fd7ba8941b7abb971ba14a3c74cddba2b40bf5cc3b8f">STBVOX_UNIFORM_TYPE_vec4</link>,
+590 };
+</programlisting>    </section><anchor xml:id="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3c"/>    <section>
+    <title>anonymous enum</title>
+<para><computeroutput>anonymous enum</computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>STBVOX_GEOM_empty</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_GEOM_empty</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3cacf4698c9739b8b6c1af7f8a124169cc9"/>STBVOX_GEOM_empty</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_GEOM_knockout</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_GEOM_knockout</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca0c121ca2d1b34ddb76fc268d10251117"/>STBVOX_GEOM_knockout</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_GEOM_solid</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_GEOM_solid</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca685a066c41ada07dc62ffaa16d23ccf5"/>STBVOX_GEOM_solid</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_GEOM_transp</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_GEOM_transp</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca5921e838cb3457e8097fd111be407eec"/>STBVOX_GEOM_transp</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_GEOM_slab_upper</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_GEOM_slab_upper</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca30b6f0c40e6b6e40d49dab03c03fc327"/>STBVOX_GEOM_slab_upper</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_GEOM_slab_lower</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_GEOM_slab_lower</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca4d3a600f27892ef5bb64aa2e884b6570"/>STBVOX_GEOM_slab_lower</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_GEOM_floor_slope_north_is_top</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_GEOM_floor_slope_north_is_top</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca063a4146fc89954375c7fc7fa39e8747"/>STBVOX_GEOM_floor_slope_north_is_top</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_GEOM_ceil_slope_north_is_bottom</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_GEOM_ceil_slope_north_is_bottom</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3caa5dcab0b072fb42d24d09d3ace41724d"/>STBVOX_GEOM_ceil_slope_north_is_bottom</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_GEOM_floor_slope_north_is_top_as_wall_UNIMPLEMENTED</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_GEOM_floor_slope_north_is_top_as_wall_UNIMPLEMENTED</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca967b6a84170cb5bbb3af61a3eda1e185"/>STBVOX_GEOM_floor_slope_north_is_top_as_wall_UNIMPLEMENTED</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_GEOM_ceil_slope_north_is_bottom_as_wall_UNIMPLEMENTED</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_GEOM_ceil_slope_north_is_bottom_as_wall_UNIMPLEMENTED</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca23b7fdc60695dd2873855631799b54d2"/>STBVOX_GEOM_ceil_slope_north_is_bottom_as_wall_UNIMPLEMENTED</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_GEOM_crossed_pair</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_GEOM_crossed_pair</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca9cd52f024f074ece1f5cecbcc517c54f"/>STBVOX_GEOM_crossed_pair</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_GEOM_force</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_GEOM_force</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca334b45fb41d2329d21d3bd81b8c2568d"/>STBVOX_GEOM_force</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_GEOM_floor_vheight_03</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_GEOM_floor_vheight_03</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3cada2a4d1b275d962d5c76388b2f731b3f"/>STBVOX_GEOM_floor_vheight_03</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_GEOM_floor_vheight_12</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_GEOM_floor_vheight_12</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca7511f84da0693e6147590c76a74480d6"/>STBVOX_GEOM_floor_vheight_12</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_GEOM_ceil_vheight_03</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_GEOM_ceil_vheight_03</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca62855fb026ed6bb2b93a02f94b9eaacb"/>STBVOX_GEOM_ceil_vheight_03</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_GEOM_ceil_vheight_12</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_GEOM_ceil_vheight_12</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca63a77bdea6849081b9924e525fe602df"/>STBVOX_GEOM_ceil_vheight_12</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_GEOM_count</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_GEOM_count</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca392c7b9ba79ae0aec0364b3cbd57ad1c"/>STBVOX_GEOM_count</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 665 of file stb_voxel_render.h.</para>
+<programlisting>666 {
+667 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3cacf4698c9739b8b6c1af7f8a124169cc9">STBVOX_GEOM_empty</link>,
+668 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca0c121ca2d1b34ddb76fc268d10251117">STBVOX_GEOM_knockout</link>,&#32;&#32;<emphasis role="comment">//&#32;creates&#32;a&#32;hole&#32;in&#32;the&#32;mesh</emphasis>
+669 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca685a066c41ada07dc62ffaa16d23ccf5">STBVOX_GEOM_solid</link>,
+670 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca5921e838cb3457e8097fd111be407eec">STBVOX_GEOM_transp</link>,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;solid&#32;geometry,&#32;but&#32;transparent&#32;contents&#32;so&#32;neighbors&#32;generate&#32;normally,&#32;unless&#32;same&#32;blocktype</emphasis>
+671 
+672 &#32;&#32;&#32;<emphasis role="comment">//&#32;following&#32;4&#32;can&#32;be&#32;represented&#32;by&#32;vheight&#32;as&#32;well</emphasis>
+673 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca30b6f0c40e6b6e40d49dab03c03fc327">STBVOX_GEOM_slab_upper</link>,
+674 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca4d3a600f27892ef5bb64aa2e884b6570">STBVOX_GEOM_slab_lower</link>,
+675 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca063a4146fc89954375c7fc7fa39e8747">STBVOX_GEOM_floor_slope_north_is_top</link>,
+676 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3caa5dcab0b072fb42d24d09d3ace41724d">STBVOX_GEOM_ceil_slope_north_is_bottom</link>,
+677 
+678 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca967b6a84170cb5bbb3af61a3eda1e185">STBVOX_GEOM_floor_slope_north_is_top_as_wall_UNIMPLEMENTED</link>,&#32;&#32;&#32;<emphasis role="comment">//&#32;same&#32;as&#32;floor_slope&#32;above,&#32;but&#32;uses&#32;wall&apos;s&#32;texture&#32;&amp;&#32;texture&#32;projection</emphasis>
+679 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca23b7fdc60695dd2873855631799b54d2">STBVOX_GEOM_ceil_slope_north_is_bottom_as_wall_UNIMPLEMENTED</link>,
+680 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca9cd52f024f074ece1f5cecbcc517c54f">STBVOX_GEOM_crossed_pair</link>,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;corner-to-corner&#32;pairs,&#32;with&#32;normal&#32;vector&#32;bumped&#32;upwards</emphasis>
+681 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca334b45fb41d2329d21d3bd81b8c2568d">STBVOX_GEOM_force</link>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;like&#32;GEOM_transp,&#32;but&#32;faces&#32;visible&#32;even&#32;if&#32;neighbor&#32;is&#32;same&#32;type,&#32;e.g.&#32;minecraft&#32;fancy&#32;leaves</emphasis>
+682 
+683 &#32;&#32;&#32;<emphasis role="comment">//&#32;these&#32;access&#32;vheight&#32;input</emphasis>
+684 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3cada2a4d1b275d962d5c76388b2f731b3f">STBVOX_GEOM_floor_vheight_03</link>&#32;=&#32;12,&#32;&#32;<emphasis role="comment">//&#32;diagonal&#32;is&#32;SW-NE</emphasis>
+685 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca7511f84da0693e6147590c76a74480d6">STBVOX_GEOM_floor_vheight_12</link>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;diagonal&#32;is&#32;SE-NW</emphasis>
+686 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca62855fb026ed6bb2b93a02f94b9eaacb">STBVOX_GEOM_ceil_vheight_03</link>,
+687 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca63a77bdea6849081b9924e525fe602df">STBVOX_GEOM_ceil_vheight_12</link>,
+688 
+689 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca392c7b9ba79ae0aec0364b3cbd57ad1c">STBVOX_GEOM_count</link>,&#32;<emphasis role="comment">//&#32;number&#32;of&#32;geom&#32;cases</emphasis>
+690 };
+</programlisting>    </section><anchor xml:id="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7"/>    <section>
+    <title>anonymous enum</title>
+<para><computeroutput>anonymous enum</computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>STBVOX_FACE_east</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_FACE_east</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7afa499b8104b6de8c8a86aa4ffaac4029"/>STBVOX_FACE_east</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_FACE_north</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_FACE_north</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7ae6ab3be9f1d3f183497386adf6de0b7f"/>STBVOX_FACE_north</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_FACE_west</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_FACE_west</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7a5d1070e526b0400de9341f0ea13d2761"/>STBVOX_FACE_west</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_FACE_south</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_FACE_south</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7a989b46927a59c0e897e5a2132453a602"/>STBVOX_FACE_south</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_FACE_up</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_FACE_up</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7aa81aa17ee2457c5e27dacbc28b081b70"/>STBVOX_FACE_up</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_FACE_down</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_FACE_down</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7a0afd0d6f81410ddc95c3a6a8ed98ec22"/>STBVOX_FACE_down</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_FACE_count</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_FACE_count</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7a65bdc989c6728bab691aad91e4d4ec05"/>STBVOX_FACE_count</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 692 of file stb_voxel_render.h.</para>
+<programlisting>693 {
+694 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7afa499b8104b6de8c8a86aa4ffaac4029">STBVOX_FACE_east</link>,
+695 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7ae6ab3be9f1d3f183497386adf6de0b7f">STBVOX_FACE_north</link>,
+696 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7a5d1070e526b0400de9341f0ea13d2761">STBVOX_FACE_west</link>,
+697 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7a989b46927a59c0e897e5a2132453a602">STBVOX_FACE_south</link>,
+698 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7aa81aa17ee2457c5e27dacbc28b081b70">STBVOX_FACE_up</link>,
+699 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7a0afd0d6f81410ddc95c3a6a8ed98ec22">STBVOX_FACE_down</link>,
+700 
+701 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a1b70d876770ccff427513794d6b0b2a7a65bdc989c6728bab691aad91e4d4ec05">STBVOX_FACE_count</link>,
+702 };
+</programlisting>    </section><anchor xml:id="_stb__voxel__render_8h_1a70ad55be767ca0a42c9150d24618e4ca"/>    <section>
+    <title>anonymous enum</title>
+<para><computeroutput>anonymous enum</computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>STBVOX_VERTEX_HEIGHT_0</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_VERTEX_HEIGHT_0</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a70ad55be767ca0a42c9150d24618e4caa3fcc5a8bbe095c16e10c82d50c688685"/>STBVOX_VERTEX_HEIGHT_0</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_VERTEX_HEIGHT_half</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_VERTEX_HEIGHT_half</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a70ad55be767ca0a42c9150d24618e4caa4f4eb402db50e3377f15836b4a782c39"/>STBVOX_VERTEX_HEIGHT_half</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_VERTEX_HEIGHT_1</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_VERTEX_HEIGHT_1</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a70ad55be767ca0a42c9150d24618e4caa092bad5aa4358be71d81eaae4623e94b"/>STBVOX_VERTEX_HEIGHT_1</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_VERTEX_HEIGHT_one_and_a_half</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_VERTEX_HEIGHT_one_and_a_half</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a70ad55be767ca0a42c9150d24618e4caa280c918aae70c240be01dc4de2fb3f86"/>STBVOX_VERTEX_HEIGHT_one_and_a_half</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 1035 of file stb_voxel_render.h.</para>
+<programlisting>1036 {
+1037 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a70ad55be767ca0a42c9150d24618e4caa3fcc5a8bbe095c16e10c82d50c688685">STBVOX_VERTEX_HEIGHT_0</link>,
+1038 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a70ad55be767ca0a42c9150d24618e4caa4f4eb402db50e3377f15836b4a782c39">STBVOX_VERTEX_HEIGHT_half</link>,
+1039 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a70ad55be767ca0a42c9150d24618e4caa092bad5aa4358be71d81eaae4623e94b">STBVOX_VERTEX_HEIGHT_1</link>,
+1040 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a70ad55be767ca0a42c9150d24618e4caa280c918aae70c240be01dc4de2fb3f86">STBVOX_VERTEX_HEIGHT_one_and_a_half</link>,
+1041 };
+</programlisting>    </section><anchor xml:id="_stb__voxel__render_8h_1a4b4213b1f9d54da7c7e36bde32fc7c80"/>    <section>
+    <title>anonymous enum</title>
+<para><computeroutput>anonymous enum</computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>STBVOX_TEXLERP_FACE_0</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_TEXLERP_FACE_0</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a4b4213b1f9d54da7c7e36bde32fc7c80aa70bad6df098dbf1accf2968094dbebb"/>STBVOX_TEXLERP_FACE_0</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_TEXLERP_FACE_half</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_TEXLERP_FACE_half</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a4b4213b1f9d54da7c7e36bde32fc7c80a0adcec82e25711e882ca2142fcdf9f26"/>STBVOX_TEXLERP_FACE_half</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_TEXLERP_FACE_1</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_TEXLERP_FACE_1</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a4b4213b1f9d54da7c7e36bde32fc7c80a0143df9adb613c460bca2a586504f084"/>STBVOX_TEXLERP_FACE_1</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_TEXLERP_FACE_use_vert</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_TEXLERP_FACE_use_vert</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a4b4213b1f9d54da7c7e36bde32fc7c80a87926e8413a0d08ee2e482d5487772f9"/>STBVOX_TEXLERP_FACE_use_vert</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 1117 of file stb_voxel_render.h.</para>
+<programlisting>1118 {
+1119 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a4b4213b1f9d54da7c7e36bde32fc7c80aa70bad6df098dbf1accf2968094dbebb">STBVOX_TEXLERP_FACE_0</link>,
+1120 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a4b4213b1f9d54da7c7e36bde32fc7c80a0adcec82e25711e882ca2142fcdf9f26">STBVOX_TEXLERP_FACE_half</link>,
+1121 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a4b4213b1f9d54da7c7e36bde32fc7c80a0143df9adb613c460bca2a586504f084">STBVOX_TEXLERP_FACE_1</link>,
+1122 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a4b4213b1f9d54da7c7e36bde32fc7c80a87926e8413a0d08ee2e482d5487772f9">STBVOX_TEXLERP_FACE_use_vert</link>,
+1123 };
+</programlisting>    </section><anchor xml:id="_stb__voxel__render_8h_1aa491173a6b1628f4ff82067b2e1ceaa9"/>    <section>
+    <title>anonymous enum</title>
+<para><computeroutput>anonymous enum</computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>STBVOX_TEXLERP_BASE_0</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_TEXLERP_BASE_0</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1aa491173a6b1628f4ff82067b2e1ceaa9aaad075e62e6c827472550b0a280d52b9"/>STBVOX_TEXLERP_BASE_0</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_TEXLERP_BASE_2_7</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_TEXLERP_BASE_2_7</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1aa491173a6b1628f4ff82067b2e1ceaa9a0786a482a211591e81641bf5c4121444"/>STBVOX_TEXLERP_BASE_2_7</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_TEXLERP_BASE_5_7</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_TEXLERP_BASE_5_7</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1aa491173a6b1628f4ff82067b2e1ceaa9af8154cb231658e333b0f05883b87170d"/>STBVOX_TEXLERP_BASE_5_7</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_TEXLERP_BASE_1</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_TEXLERP_BASE_1</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1aa491173a6b1628f4ff82067b2e1ceaa9ab69e6ee711cc4542ea10ad5a16ee18d4"/>STBVOX_TEXLERP_BASE_1</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 1125 of file stb_voxel_render.h.</para>
+<programlisting>1126 {
+1127 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1aa491173a6b1628f4ff82067b2e1ceaa9aaad075e62e6c827472550b0a280d52b9">STBVOX_TEXLERP_BASE_0</link>,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;0.0</emphasis>
+1128 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1aa491173a6b1628f4ff82067b2e1ceaa9a0786a482a211591e81641bf5c4121444">STBVOX_TEXLERP_BASE_2_7</link>,&#32;&#32;<emphasis role="comment">//&#32;2/7</emphasis>
+1129 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1aa491173a6b1628f4ff82067b2e1ceaa9af8154cb231658e333b0f05883b87170d">STBVOX_TEXLERP_BASE_5_7</link>,&#32;&#32;<emphasis role="comment">//&#32;4/7</emphasis>
+1130 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1aa491173a6b1628f4ff82067b2e1ceaa9ab69e6ee711cc4542ea10ad5a16ee18d4">STBVOX_TEXLERP_BASE_1</link>&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;1.0</emphasis>
+1131 };
+</programlisting>    </section><anchor xml:id="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbd"/>    <section>
+    <title>anonymous enum</title>
+<para><computeroutput>anonymous enum</computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>STBVOX_TEXLERP3_0_8</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_TEXLERP3_0_8</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbdab96a9b5c77f77149dff728aacde0ff16"/>STBVOX_TEXLERP3_0_8</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_TEXLERP3_1_8</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_TEXLERP3_1_8</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbdaea2d40827737c1071f6dc6952a543059"/>STBVOX_TEXLERP3_1_8</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_TEXLERP3_2_8</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_TEXLERP3_2_8</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbda99d3b9c21f17c66cdbb8665cd0943cd7"/>STBVOX_TEXLERP3_2_8</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_TEXLERP3_3_8</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_TEXLERP3_3_8</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbdacdae7d0ff7353e002ae2eacf6b8aa88a"/>STBVOX_TEXLERP3_3_8</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_TEXLERP3_4_8</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_TEXLERP3_4_8</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbda7c684dcd79b403475e1d3c4eaf5f25fa"/>STBVOX_TEXLERP3_4_8</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_TEXLERP3_5_8</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_TEXLERP3_5_8</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbdafdc5d19076df6039c2c7b0d70a06e259"/>STBVOX_TEXLERP3_5_8</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_TEXLERP3_6_8</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_TEXLERP3_6_8</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbda9c2fad89edbd61a6c0b84476658420bb"/>STBVOX_TEXLERP3_6_8</entry><entry></entry></row><row><entry><indexterm><primary>STBVOX_TEXLERP3_7_8</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>STBVOX_TEXLERP3_7_8</secondary></indexterm>
+<anchor xml:id="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbda87385e4fba94fdb00b6b3d03b5d54f05"/>STBVOX_TEXLERP3_7_8</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 1133 of file stb_voxel_render.h.</para>
+<programlisting>1134 {
+1135 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbdab96a9b5c77f77149dff728aacde0ff16">STBVOX_TEXLERP3_0_8</link>,
+1136 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbdaea2d40827737c1071f6dc6952a543059">STBVOX_TEXLERP3_1_8</link>,
+1137 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbda99d3b9c21f17c66cdbb8665cd0943cd7">STBVOX_TEXLERP3_2_8</link>,
+1138 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbdacdae7d0ff7353e002ae2eacf6b8aa88a">STBVOX_TEXLERP3_3_8</link>,
+1139 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbda7c684dcd79b403475e1d3c4eaf5f25fa">STBVOX_TEXLERP3_4_8</link>,
+1140 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbdafdc5d19076df6039c2c7b0d70a06e259">STBVOX_TEXLERP3_5_8</link>,
+1141 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbda9c2fad89edbd61a6c0b84476658420bb">STBVOX_TEXLERP3_6_8</link>,
+1142 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a3babbf89cae9b856a12864a41506efbda87385e4fba94fdb00b6b3d03b5d54f05">STBVOX_TEXLERP3_7_8</link>,
+1143 };
+</programlisting></section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_stb__voxel__render_8h_1a0ad8a7764f93c0592671bcf0e246dc6e"/>    <section>
+    <title>stbvox_get_bounds()</title>
+<indexterm><primary>stbvox_get_bounds</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_get_bounds</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbvox_get_bounds (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> * mm, float bounds[2][3])</computeroutput></para>    </section><anchor xml:id="_stb__voxel__render_8h_1a3b537bb87f5e14c78f17f0b4d4ac29e9"/>    <section>
+    <title>stbvox_get_buffer_count()</title>
+<indexterm><primary>stbvox_get_buffer_count</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_get_buffer_count</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> int stbvox_get_buffer_count (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> * mm)</computeroutput></para>    </section><anchor xml:id="_stb__voxel__render_8h_1afe4a3740055547f625557281f5f56f11"/>    <section>
+    <title>stbvox_get_buffer_size_per_quad()</title>
+<indexterm><primary>stbvox_get_buffer_size_per_quad</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_get_buffer_size_per_quad</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> int stbvox_get_buffer_size_per_quad (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> * mm, int slot)</computeroutput></para>    </section><anchor xml:id="_stb__voxel__render_8h_1a21e1e1586c93abcba24be8eb01d8fd3d"/>    <section>
+    <title>stbvox_get_fragment_shader()</title>
+<indexterm><primary>stbvox_get_fragment_shader</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_get_fragment_shader</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> char* stbvox_get_fragment_shader (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para>    </section><anchor xml:id="_stb__voxel__render_8h_1add1d57d13c2dc697f3fc2782abf5c795"/>    <section>
+    <title>stbvox_get_fragment_shader_alpha_only()</title>
+<indexterm><primary>stbvox_get_fragment_shader_alpha_only</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_get_fragment_shader_alpha_only</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> char* stbvox_get_fragment_shader_alpha_only (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para>    </section><anchor xml:id="_stb__voxel__render_8h_1adadf81990fab203a9b48c738922899e1"/>    <section>
+    <title>stbvox_get_input_description()</title>
+<indexterm><primary>stbvox_get_input_description</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_get_input_description</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_structstbvox__input__description">stbvox_input_description</link>* stbvox_get_input_description (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> * mm)</computeroutput></para>    </section><anchor xml:id="_stb__voxel__render_8h_1ace18e150b58146e2ec7ecba5ca0517b6"/>    <section>
+    <title>stbvox_get_quad_count()</title>
+<indexterm><primary>stbvox_get_quad_count</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_get_quad_count</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> int stbvox_get_quad_count (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> * mm, int mesh)</computeroutput></para>    </section><anchor xml:id="_stb__voxel__render_8h_1a0a8668048f7cca70ef7043261761da90"/>    <section>
+    <title>stbvox_get_transform()</title>
+<indexterm><primary>stbvox_get_transform</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_get_transform</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbvox_get_transform (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> * mm, float transform[3][3])</computeroutput></para>    </section><anchor xml:id="_stb__voxel__render_8h_1ac6724208eddce3a25e3927abed86426e"/>    <section>
+    <title>stbvox_get_uniform_info()</title>
+<indexterm><primary>stbvox_get_uniform_info</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_get_uniform_info</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> int stbvox_get_uniform_info (<link linkend="_structstbvox__uniform__info">stbvox_uniform_info</link> * info, int uniform)</computeroutput></para>    </section><anchor xml:id="_stb__voxel__render_8h_1a79f9e4c051c53927e0f762910729860b"/>    <section>
+    <title>stbvox_get_vertex_shader()</title>
+<indexterm><primary>stbvox_get_vertex_shader</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_get_vertex_shader</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> char* stbvox_get_vertex_shader (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para>    </section><anchor xml:id="_stb__voxel__render_8h_1a1b8b7770f24477cf39260eac3ade3400"/>    <section>
+    <title>stbvox_init_mesh_maker()</title>
+<indexterm><primary>stbvox_init_mesh_maker</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_init_mesh_maker</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbvox_init_mesh_maker (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> * mm)</computeroutput></para>    </section><anchor xml:id="_stb__voxel__render_8h_1ab792b164e02789bce6e2ba96a4b8f935"/>    <section>
+    <title>stbvox_make_mesh()</title>
+<indexterm><primary>stbvox_make_mesh</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_make_mesh</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> int stbvox_make_mesh (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> * mm)</computeroutput></para>    </section><anchor xml:id="_stb__voxel__render_8h_1a34226517e08ca1da34b39d34a5c31031"/>    <section>
+    <title>stbvox_reset_buffers()</title>
+<indexterm><primary>stbvox_reset_buffers</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_reset_buffers</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbvox_reset_buffers (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> * mm)</computeroutput></para>    </section><anchor xml:id="_stb__voxel__render_8h_1a3b24ab8855010267a0e93541d1673fb9"/>    <section>
+    <title>stbvox_set_buffer()</title>
+<indexterm><primary>stbvox_set_buffer</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_set_buffer</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbvox_set_buffer (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> * mm, int mesh, int slot, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * buffer, size_t len)</computeroutput></para>    </section><anchor xml:id="_stb__voxel__render_8h_1aae8b2a3e95db09861fef397aeb7cf10d"/>    <section>
+    <title>stbvox_set_default_mesh()</title>
+<indexterm><primary>stbvox_set_default_mesh</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_set_default_mesh</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbvox_set_default_mesh (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> * mm, int mesh)</computeroutput></para>    </section><anchor xml:id="_stb__voxel__render_8h_1a63fbb8703cf2c2718e6a0b4a90db00e6"/>    <section>
+    <title>stbvox_set_input_range()</title>
+<indexterm><primary>stbvox_set_input_range</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_set_input_range</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbvox_set_input_range (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> * mm, int x0, int y0, int z0, int x1, int y1, int z1)</computeroutput></para>    </section><anchor xml:id="_stb__voxel__render_8h_1a089559775ad9ffc7671d147ef40f6509"/>    <section>
+    <title>stbvox_set_input_stride()</title>
+<indexterm><primary>stbvox_set_input_stride</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_set_input_stride</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbvox_set_input_stride (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> * mm, int x_stride_in_elements, int y_stride_in_elements)</computeroutput></para>    </section><anchor xml:id="_stb__voxel__render_8h_1a4592b690afe4825bfabdfd9ae29fb35e"/>    <section>
+    <title>stbvox_set_mesh_coordinates()</title>
+<indexterm><primary>stbvox_set_mesh_coordinates</primary><secondary>stb_voxel_render.h</secondary></indexterm>
+<indexterm><primary>stb_voxel_render.h</primary><secondary>stbvox_set_mesh_coordinates</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__voxel__render_8h_1a099e6ffd06ac1f49b7d5d4254165623c">STBVXDEC</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbvox_set_mesh_coordinates (<link linkend="_structstbvox__mesh__maker">stbvox_mesh_maker</link> * mm, int x, int y, int z)</computeroutput></para></section>
+</section>
+</section>

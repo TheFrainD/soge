@@ -34,7 +34,7 @@
 texture *texture_create(image *image) {
   texture *_texture = (texture *)malloc(sizeof(texture));
   if (!_texture) {
-    VALLY_ERROR("Could not create texture");
+    LOG_ERROR("Could not create texture");
   }
 
   // Generate OpenGL Texture
@@ -61,7 +61,7 @@ texture *texture_create(image *image) {
 texture *texture_white_create() {
   texture *_texture = (texture *)malloc(sizeof(texture));
   if (!_texture) {
-    VALLY_ERROR("Could not create texture");
+    LOG_ERROR("Could not create texture");
   }
   _texture->width = 1;
   _texture->height = 1;

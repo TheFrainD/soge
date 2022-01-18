@@ -1,0 +1,203 @@
+\hypertarget{affine-mat_8h}{}\doxysection{deps/cglm/include/cglm/affine-\/mat.h File Reference}
+\label{affine-mat_8h}\index{deps/cglm/include/cglm/affine-\/mat.h@{deps/cglm/include/cglm/affine-\/mat.h}}
+{\ttfamily \#include \char`\"{}common.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mat4.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mat3.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{affine-mat_8h_a7b037f8a0cc9322c8e39e23d5aa5a678}{glm\+\_\+mul}} (\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} m1, \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} m2, \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} dest)
+\begin{DoxyCompactList}\small\item\em this is similar to glm\+\_\+mat4\+\_\+mul but specialized to affine transform \end{DoxyCompactList}\item 
+\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{affine-mat_8h_a2fb55157c4db3012b51795408e1b0561}{glm\+\_\+mul\+\_\+rot}} (\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} m1, \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} m2, \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} dest)
+\begin{DoxyCompactList}\small\item\em this is similar to glm\+\_\+mat4\+\_\+mul but specialized to affine transform \end{DoxyCompactList}\item 
+\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{affine-mat_8h_a0690b48c1733e0f31a8e5e9f68ff6aa4}{glm\+\_\+inv\+\_\+tr}} (\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} mat)
+\begin{DoxyCompactList}\small\item\em inverse orthonormal rotation + translation matrix (ridig-\/body) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{affine-mat_8h_a0690b48c1733e0f31a8e5e9f68ff6aa4}\label{affine-mat_8h_a0690b48c1733e0f31a8e5e9f68ff6aa4}} 
+\index{affine-\/mat.h@{affine-\/mat.h}!glm\_inv\_tr@{glm\_inv\_tr}}
+\index{glm\_inv\_tr@{glm\_inv\_tr}!affine-\/mat.h@{affine-\/mat.h}}
+\doxysubsubsection{\texorpdfstring{glm\_inv\_tr()}{glm\_inv\_tr()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} glm\+\_\+inv\+\_\+tr (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}}}]{mat }\end{DoxyParamCaption})}
+
+
+
+inverse orthonormal rotation + translation matrix (ridig-\/body) 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{X = | \mbox{\hyperlink{stb__vorbis_8c_a5c71a5e59a53413cd6c270266d63b031}{R}}  T |   X\textcolor{stringliteral}{' = | R'} -\/\mbox{\hyperlink{stb__vorbis_8c_a5c71a5e59a53413cd6c270266d63b031}{R}}\textcolor{stringliteral}{'T |}}
+\DoxyCodeLine{\textcolor{stringliteral}{    | 0  1 |        | 0     1 |}}
+\end{DoxyCode}
+
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em mat} & matrix \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 158 of file affine-\/mat.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{158                      \{}
+\DoxyCodeLine{159 \textcolor{preprocessor}{\#if defined( \_\_SSE\_\_ ) || defined( \_\_SSE2\_\_ )}}
+\DoxyCodeLine{160   glm\_inv\_tr\_sse2(mat);}
+\DoxyCodeLine{161 \textcolor{preprocessor}{\#elif defined(CGLM\_NEON\_FP)}}
+\DoxyCodeLine{162   glm\_inv\_tr\_neon(mat);}
+\DoxyCodeLine{163 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{164   \mbox{\hyperlink{types_8h_a8b0ff7d349466e900282bf2d8d9c98a3}{CGLM\_ALIGN\_MAT}} \mbox{\hyperlink{types_8h_a68e0f5fed49f769f2fca0e61daeab5f5}{mat3}} \mbox{\hyperlink{glad_8h_a42ce7cdc612e53abee15043f80220d97}{r}};}
+\DoxyCodeLine{165   \mbox{\hyperlink{types_8h_a7a85e572ca5b793f224bae1ed1a827a1}{CGLM\_ALIGN}}(8)  \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} \mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}};}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167   \textcolor{comment}{/* rotate */}}
+\DoxyCodeLine{168   \mbox{\hyperlink{mat4_8h_a0d1b2b85f7d1ede6892eec642d9f8f23}{glm\_mat4\_pick3t}}(mat, \mbox{\hyperlink{glad_8h_a42ce7cdc612e53abee15043f80220d97}{r}});}
+\DoxyCodeLine{169   \mbox{\hyperlink{mat4_8h_a820f4c98bd9e535e1d9a81aac2fa7792}{glm\_mat4\_ins3}}(\mbox{\hyperlink{glad_8h_a42ce7cdc612e53abee15043f80220d97}{r}}, mat);}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171   \textcolor{comment}{/* translate */}}
+\DoxyCodeLine{172   \mbox{\hyperlink{mat3_8h_a5e67abac6a1350b820c919ac5ec7a088}{glm\_mat3\_mulv}}(\mbox{\hyperlink{glad_8h_a42ce7cdc612e53abee15043f80220d97}{r}}, mat[3], \mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}});}
+\DoxyCodeLine{173   \mbox{\hyperlink{vec3_8h_a0670d5409499b75435fc5caed9e712aa}{glm\_vec3\_negate}}(\mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}});}
+\DoxyCodeLine{174   \mbox{\hyperlink{vec3_8h_a15bcfba5a95e389426accbf8843eb866}{glm\_vec3\_copy}}(\mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}}, mat[3]);}
+\DoxyCodeLine{175 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{176 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{affine-mat_8h_a7b037f8a0cc9322c8e39e23d5aa5a678}\label{affine-mat_8h_a7b037f8a0cc9322c8e39e23d5aa5a678}} 
+\index{affine-\/mat.h@{affine-\/mat.h}!glm\_mul@{glm\_mul}}
+\index{glm\_mul@{glm\_mul}!affine-\/mat.h@{affine-\/mat.h}}
+\doxysubsubsection{\texorpdfstring{glm\_mul()}{glm\_mul()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} glm\+\_\+mul (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}}}]{m1,  }\item[{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}}}]{m2,  }\item[{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}}}]{dest }\end{DoxyParamCaption})}
+
+
+
+this is similar to glm\+\_\+mat4\+\_\+mul but specialized to affine transform 
+
+Matrix format should be\+: R R R X R R R Y R R R Z 0 0 0 W
+
+this reduces some multiplications. It should be faster than mat4\+\_\+mul. if you are not sure about matrix format then D\+ON\textquotesingle{}T use this! use mat4\+\_\+mul
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em m1} & affine matrix 1 \\
+\hline
+\mbox{\texttt{ in}}  & {\em m2} & affine matrix 2 \\
+\hline
+\mbox{\texttt{ out}}  & {\em dest} & result matrix \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 51 of file affine-\/mat.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{51                                      \{}
+\DoxyCodeLine{52 \textcolor{preprocessor}{\#ifdef \_\_AVX\_\_}}
+\DoxyCodeLine{53   glm\_mul\_avx(m1, m2, dest);}
+\DoxyCodeLine{54 \textcolor{preprocessor}{\#elif defined( \_\_SSE\_\_ ) || defined( \_\_SSE2\_\_ )}}
+\DoxyCodeLine{55   glm\_mul\_sse2(m1, m2, dest);}
+\DoxyCodeLine{56 \textcolor{preprocessor}{\#elif defined(CGLM\_NEON\_FP)}}
+\DoxyCodeLine{57   glm\_mul\_neon(m1, m2, dest);}
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{59   \textcolor{keywordtype}{float} a00 = m1[0][0], a01 = m1[0][1], a02 = m1[0][2], a03 = m1[0][3],}
+\DoxyCodeLine{60         a10 = m1[1][0], a11 = m1[1][1], a12 = m1[1][2], a13 = m1[1][3],}
+\DoxyCodeLine{61         a20 = m1[2][0], a21 = m1[2][1], a22 = m1[2][2], a23 = m1[2][3],}
+\DoxyCodeLine{62         a30 = m1[3][0], a31 = m1[3][1], a32 = m1[3][2], a33 = m1[3][3],}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64         b00 = m2[0][0], b01 = m2[0][1], b02 = m2[0][2],}
+\DoxyCodeLine{65         b10 = m2[1][0], b11 = m2[1][1], b12 = m2[1][2],}
+\DoxyCodeLine{66         b20 = m2[2][0], b21 = m2[2][1], b22 = m2[2][2],}
+\DoxyCodeLine{67         b30 = m2[3][0], b31 = m2[3][1], \mbox{\hyperlink{include_2vally_2config_8h_a9d1a1d99b6972446ae039de3d9599b96}{b32}} = m2[3][2], b33 = m2[3][3];}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69   dest[0][0] = a00 * b00 + a10 * b01 + a20 * b02;}
+\DoxyCodeLine{70   dest[0][1] = a01 * b00 + a11 * b01 + a21 * b02;}
+\DoxyCodeLine{71   dest[0][2] = a02 * b00 + a12 * b01 + a22 * b02;}
+\DoxyCodeLine{72   dest[0][3] = a03 * b00 + a13 * b01 + a23 * b02;}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74   dest[1][0] = a00 * b10 + a10 * b11 + a20 * b12;}
+\DoxyCodeLine{75   dest[1][1] = a01 * b10 + a11 * b11 + a21 * b12;}
+\DoxyCodeLine{76   dest[1][2] = a02 * b10 + a12 * b11 + a22 * b12;}
+\DoxyCodeLine{77   dest[1][3] = a03 * b10 + a13 * b11 + a23 * b12;}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79   dest[2][0] = a00 * b20 + a10 * b21 + a20 * b22;}
+\DoxyCodeLine{80   dest[2][1] = a01 * b20 + a11 * b21 + a21 * b22;}
+\DoxyCodeLine{81   dest[2][2] = a02 * b20 + a12 * b21 + a22 * b22;}
+\DoxyCodeLine{82   dest[2][3] = a03 * b20 + a13 * b21 + a23 * b22;}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84   dest[3][0] = a00 * b30 + a10 * b31 + a20 * \mbox{\hyperlink{include_2vally_2config_8h_a9d1a1d99b6972446ae039de3d9599b96}{b32}} + a30 * b33;}
+\DoxyCodeLine{85   dest[3][1] = a01 * b30 + a11 * b31 + a21 * \mbox{\hyperlink{include_2vally_2config_8h_a9d1a1d99b6972446ae039de3d9599b96}{b32}} + a31 * b33;}
+\DoxyCodeLine{86   dest[3][2] = a02 * b30 + a12 * b31 + a22 * \mbox{\hyperlink{include_2vally_2config_8h_a9d1a1d99b6972446ae039de3d9599b96}{b32}} + a32 * b33;}
+\DoxyCodeLine{87   dest[3][3] = a03 * b30 + a13 * b31 + a23 * \mbox{\hyperlink{include_2vally_2config_8h_a9d1a1d99b6972446ae039de3d9599b96}{b32}} + a33 * b33;}
+\DoxyCodeLine{88 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{89 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{affine-mat_8h_a2fb55157c4db3012b51795408e1b0561}\label{affine-mat_8h_a2fb55157c4db3012b51795408e1b0561}} 
+\index{affine-\/mat.h@{affine-\/mat.h}!glm\_mul\_rot@{glm\_mul\_rot}}
+\index{glm\_mul\_rot@{glm\_mul\_rot}!affine-\/mat.h@{affine-\/mat.h}}
+\doxysubsubsection{\texorpdfstring{glm\_mul\_rot()}{glm\_mul\_rot()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} glm\+\_\+mul\+\_\+rot (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}}}]{m1,  }\item[{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}}}]{m2,  }\item[{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}}}]{dest }\end{DoxyParamCaption})}
+
+
+
+this is similar to glm\+\_\+mat4\+\_\+mul but specialized to affine transform 
+
+Right Matrix format should be\+: R R R 0 R R R 0 R R R 0 0 0 0 1
+
+this reduces some multiplications. It should be faster than mat4\+\_\+mul. if you are not sure about matrix format then D\+ON\textquotesingle{}T use this! use mat4\+\_\+mul
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em m1} & affine matrix 1 \\
+\hline
+\mbox{\texttt{ in}}  & {\em m2} & affine matrix 2 \\
+\hline
+\mbox{\texttt{ out}}  & {\em dest} & result matrix \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 109 of file affine-\/mat.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{109                                          \{}
+\DoxyCodeLine{110 \textcolor{preprocessor}{\#if defined( \_\_SSE\_\_ ) || defined( \_\_SSE2\_\_ )}}
+\DoxyCodeLine{111   glm\_mul\_rot\_sse2(m1, m2, dest);}
+\DoxyCodeLine{112 \textcolor{preprocessor}{\#elif defined(CGLM\_NEON\_FP)}}
+\DoxyCodeLine{113   glm\_mul\_rot\_neon(m1, m2, dest);}
+\DoxyCodeLine{114 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{115   \textcolor{keywordtype}{float} a00 = m1[0][0], a01 = m1[0][1], a02 = m1[0][2], a03 = m1[0][3],}
+\DoxyCodeLine{116         a10 = m1[1][0], a11 = m1[1][1], a12 = m1[1][2], a13 = m1[1][3],}
+\DoxyCodeLine{117         a20 = m1[2][0], a21 = m1[2][1], a22 = m1[2][2], a23 = m1[2][3],}
+\DoxyCodeLine{118         a30 = m1[3][0], a31 = m1[3][1], a32 = m1[3][2], a33 = m1[3][3],}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120         b00 = m2[0][0], b01 = m2[0][1], b02 = m2[0][2],}
+\DoxyCodeLine{121         b10 = m2[1][0], b11 = m2[1][1], b12 = m2[1][2],}
+\DoxyCodeLine{122         b20 = m2[2][0], b21 = m2[2][1], b22 = m2[2][2];}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124   dest[0][0] = a00 * b00 + a10 * b01 + a20 * b02;}
+\DoxyCodeLine{125   dest[0][1] = a01 * b00 + a11 * b01 + a21 * b02;}
+\DoxyCodeLine{126   dest[0][2] = a02 * b00 + a12 * b01 + a22 * b02;}
+\DoxyCodeLine{127   dest[0][3] = a03 * b00 + a13 * b01 + a23 * b02;}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129   dest[1][0] = a00 * b10 + a10 * b11 + a20 * b12;}
+\DoxyCodeLine{130   dest[1][1] = a01 * b10 + a11 * b11 + a21 * b12;}
+\DoxyCodeLine{131   dest[1][2] = a02 * b10 + a12 * b11 + a22 * b12;}
+\DoxyCodeLine{132   dest[1][3] = a03 * b10 + a13 * b11 + a23 * b12;}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134   dest[2][0] = a00 * b20 + a10 * b21 + a20 * b22;}
+\DoxyCodeLine{135   dest[2][1] = a01 * b20 + a11 * b21 + a21 * b22;}
+\DoxyCodeLine{136   dest[2][2] = a02 * b20 + a12 * b21 + a22 * b22;}
+\DoxyCodeLine{137   dest[2][3] = a03 * b20 + a13 * b21 + a23 * b22;}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139   dest[3][0] = a30;}
+\DoxyCodeLine{140   dest[3][1] = a31;}
+\DoxyCodeLine{141   dest[3][2] = a32;}
+\DoxyCodeLine{142   dest[3][3] = a33;}
+\DoxyCodeLine{143 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{144 \}}
+
+\end{DoxyCode}

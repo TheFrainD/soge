@@ -1,5 +1,16 @@
-#ifndef VALLY_MATH_VMATH_H_
-#define VALLY_MATH_VMATH_H_
+/*********************************************************************
+ * math.h                                                            *
+ *                                                                   *
+ * Copyright (c) 2022 Dmytro Zykov                                   *
+ *                                                                   *
+ * This file is a part of the vally project, and may only be used,   *
+ * modified and distributed under the terms of the MIT License,      *
+ * LICENSE.md. By continuing to use, modify and distribute this file *
+ * you inidicate that you have read the license and accept it fully. *
+ *********************************************************************/
+
+#ifndef VALLY_MATH_H_
+#define VALLY_MATH_H_
 
 #include <vally/config.h>
 #include <vally/math/math_types.h>
@@ -35,35 +46,35 @@ VALLY_API f32 vsqrt(f32 x);
 VALLY_API f32 vabs(f32 x);
 
 /* vector2f */
-VALLY_INLINE vector2f vector2f_add(vector2f a, vector2f b) {
+static inline vector2f vector2f_add(vector2f a, vector2f b) {
   return vector2f_create(a.x + b.x, a.y + b.y);
 }
 
-VALLY_INLINE vector2f vector2f_sub(vector2f a, vector2f b) {
+static inline vector2f vector2f_sub(vector2f a, vector2f b) {
   return vector2f_create(a.x - b.x, a.y - b.y);
 }
 
-VALLY_INLINE vector2f vector2f_mul(vector2f a, vector2f b) {
+static inline vector2f vector2f_mul(vector2f a, vector2f b) {
   return vector2f_create(a.x * b.x, a.y * b.y);
 }
 
-VALLY_INLINE vector2f vector2f_muls(vector2f vector, f32 scalar) {
+static inline vector2f vector2f_muls(vector2f vector, f32 scalar) {
   return vector2f_create(vector.x * scalar, vector.y * scalar);
 }
 
-VALLY_INLINE vector2f vector2f_divs(vector2f vector, f32 scalar) {
+static inline vector2f vector2f_divs(vector2f vector, f32 scalar) {
   return vector2f_create(vector.x / scalar, vector.y / scalar);
 }
 
-VALLY_INLINE vector2f vector2f_div(vector2f a, vector2f b) {
+static inline vector2f vector2f_div(vector2f a, vector2f b) {
   return vector2f_create(a.x / b.x, a.y / b.y);
 }
 
-VALLY_INLINE f32 vector2f_length(vector2f vector) {
+static inline f32 vector2f_length(vector2f vector) {
   return vsqrt(vector.x * vector.x + vector.y * vector.y);
 }
 
-VALLY_INLINE vector2f vector2f_normalized(vector2f vector) {
+static inline vector2f vector2f_normalized(vector2f vector) {
   const f32 length = vector2f_length(vector);
   if (length != 0.0f) {
     return vector2f_divs(vector, vector2f_length(vector));
@@ -72,7 +83,7 @@ VALLY_INLINE vector2f vector2f_normalized(vector2f vector) {
   }
 }
 
-VALLY_INLINE void vector2f_normalize(vector2f *vector) {
+static inline void vector2f_normalize(vector2f *vector) {
   const f32 length = vector2f_length(*vector);
   if (length != 0.0f) {
     vector->x /= length;
@@ -80,73 +91,73 @@ VALLY_INLINE void vector2f_normalize(vector2f *vector) {
   }
 }
 
-VALLY_INLINE f32 vector2f_distance(vector2f a, vector2f b) {
+static inline f32 vector2f_distance(vector2f a, vector2f b) {
   return vector2f_length(vector2f_sub(a, b));
 }
 
 /* vector3f */
-VALLY_INLINE vector3f vector3f_add(vector3f a, vector3f b) {
+static inline vector3f vector3f_add(vector3f a, vector3f b) {
   return vector3f_create(a.x + b.x, a.y + b.y, a.z + b.z);
 }
 
-VALLY_INLINE vector3f vector3f_sub(vector3f a, vector3f b) {
+static inline vector3f vector3f_sub(vector3f a, vector3f b) {
   return vector3f_create(a.x - b.x, a.y - b.y, a.z - b.z);
 }
 
-VALLY_INLINE vector3f vector3f_cross(vector3f a, vector3f b) {
+static inline vector3f vector3f_cross(vector3f a, vector3f b) {
   return vector3f_create((a.y * b.z - a.z * b.y), ( a.z * b.x - a.x * b.z), (a.x * b.y - a.y * b.x));
 }
 
-VALLY_INLINE f32 vector3f_dot(vector3f a, vector3f b) {
+static inline f32 vector3f_dot(vector3f a, vector3f b) {
   return a.x * b.x + a.y * b.y + a.z * b.z;
 }
 
-VALLY_INLINE vector3f vector3f_mul(vector3f a, vector3f b) {
+static inline vector3f vector3f_mul(vector3f a, vector3f b) {
   return vector3f_create(a.x * b.x, a.y * b.y, a.z * b.z);
 }
 
-VALLY_INLINE vector3f vector3f_div(vector3f a, vector3f b) {
+static inline vector3f vector3f_div(vector3f a, vector3f b) {
   return vector3f_create(a.x / b.x, a.y / b.y, a.z / b.z);
 }
 
-VALLY_INLINE vector3f vector3f_muls(vector3f vector, f32 scalar) {
+static inline vector3f vector3f_muls(vector3f vector, f32 scalar) {
   return vector3f_create(vector.x * scalar, vector.y * scalar, vector.z * scalar);
 }
 
-VALLY_INLINE vector3f vector3f_divs(vector3f vector, f32 scalar) {
+static inline vector3f vector3f_divs(vector3f vector, f32 scalar) {
   return vector3f_create(vector.x / scalar, vector.y / scalar, vector.z / scalar);
 }
 
-VALLY_INLINE f32 vector3f_length(vector3f vector) {
+static inline f32 vector3f_length(vector3f vector) {
   return vsqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
 }
 
-VALLY_INLINE vector3f vector3f_normalized(vector3f vector) {
+static inline vector3f vector3f_normalized(vector3f vector) {
   return vector3f_divs(vector, vector3f_length(vector));
 }
 
-VALLY_INLINE void vector3f_normalize(vector3f *vector) {
+static inline void vector3f_normalize(vector3f *vector) {
   *vector = vector3f_normalized(*vector);
 }
 
-VALLY_INLINE f32 vector3f_distance(vector3f a, vector3f b) {
+static inline f32 vector3f_distance(vector3f a, vector3f b) {
   return vector3f_length(vector3f_sub(a, b));
 }
 
-VALLY_INLINE vector2i vector2i_add(vector2i a, vector2i b) {
+static inline vector2i vector2i_add(vector2i a, vector2i b) {
   return vector2i_create(a.x + b.x, a.y + b.y);
 }
 
-VALLY_INLINE vector3i vector3i_add(vector3i a, vector3i b) {
+static inline vector3i vector3i_add(vector3i a, vector3i b) {
   return vector3i_create(a.x + b.x, a.y + b.y, a.z + b.z);
 }
 
-VALLY_INLINE vector2i vector2i_sub(vector2i a, vector2i b) {
+static inline vector2i vector2i_sub(vector2i a, vector2i b) {
   return vector2i_create(a.x - b.x, a.y - b.y);
 }
 
-VALLY_INLINE vector3i vector3i_sub(vector3i a, vector3i b) {
+static inline vector3i vector3i_sub(vector3i a, vector3i b) {
   return vector3i_create(a.x - b.x, a.y - b.y, a.z - b.z);
 }
 
-#endif // !VALLY_MATH_VMATH_H_
+#endif // VALLY_MATH_H_

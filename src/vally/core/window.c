@@ -1,3 +1,14 @@
+/*********************************************************************
+ * window.c                                                          *
+ *                                                                   *
+ * Copyright (c) 2022 Dmytro Zykov                                   *
+ *                                                                   *
+ * This file is a part of the vally project, and may only be used,   *
+ * modified and distributed under the terms of the MIT License,      *
+ * LICENSE.md. By continuing to use, modify and distribute this file *
+ * you inidicate that you have read the license and accept it fully. *
+ *********************************************************************/
+
 #include <vally/core/window.h>
 
 #include <glad/glad.h>
@@ -27,11 +38,11 @@ static void window_size_callback(GLFWwindow *window, i32 width, i32 height) {
 }
 
 static void window_error_callback(i32 id, const char *description) {
-  VALLY_ERROR("GLFW error: %s", description);
+  LOG_ERROR("GLFW error: %s", description);
 }
 
 
-b8 window_create(i32 width, i32 height, const char* title) {
+b8 window_create(i32 width, i32 height, char* title) {
   if (initialized) {
     return FALSE;
   }
@@ -41,43 +52,41 @@ b8 window_create(i32 width, i32 height, const char* title) {
 
   glfwSetErrorCallback(window_error_callback);
   if (!glfwInit()) {
-    VALLY_FATAL("Could not initialize GLFW!");
+    LOG_FATAL("Could not initialize GLFW!");
     return FALSE;
   }
-  VALLY_TRACE("GLFW initialized");
+  LOG_TRACE("GLFW initialized");
 
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
   state.window = glfwCreateWindow(width, height, title, NULL, NULL);
   if (!state.window) {
-    VALLY_FATAL("Could not create window!");
+    LOG_FATAL("Could not create window!");
     return FALSE;
   }
-  VALLY_TRACE("Window created");
+  LOG_TRACE("Window created");
   glfwMakeContextCurrent(state.window);
   glfwSwapInterval(1);
 
   glfwSetWindowSizeCallback(state.window, window_size_callback);
 
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-    VALLY_FATAL("Could not initialize glad!");
+    LOG_FATAL("Could not initialize glad!");
     return FALSE;
   }
-  VALLY_TRACE("glad initialized");
+  LOG_TRACE("glad initialized");
 
   glViewport(0, 0, width, height);
 
-  VALLY_INFO("====System Info====");
-  VALLY_INFO("Vendor: %s", glGetString(GL_VENDOR));
-  VALLY_INFO("Renderer: %s,", glGetString(GL_RENDERER));
+  LOG_INFO("System Info:");
+  LOG_INFO("Vendor: %s", glGetString(GL_VENDOR));
+  LOG_INFO("Renderer: %s,", glGetString(GL_RENDERER));
   i32 major, minor;
   glGetIntegerv(GL_MAJOR_VERSION, &major);
   glGetIntegerv(GL_MINOR_VERSION, &minor);
-  VALLY_INFO("OpenGL version: %d.%d", major, minor);
-  VALLY_INFO("===================");
-
+  LOG_INFO("OpenGL version: %d.%d", major, minor);
 
   return TRUE;
 }
@@ -94,7 +103,7 @@ void window_swap_buffers() {
 void window_terminate() {
   glfwDestroyWindow(state.window);
   glfwTerminate();
-  VALLY_TRACE("Window subsystem terminated");
+  LOG_TRACE("Window subsystem terminated");
 }
 
 void window_set_key_callback(void *callback) {

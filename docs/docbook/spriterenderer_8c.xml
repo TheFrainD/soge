@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_spriterenderer_8c">
+<title>src/vally/ecs/components/spriterenderer.c File Reference</title>
+<indexterm><primary>src/vally/ecs/components/spriterenderer.c</primary></indexterm>
+<programlisting>#include &lt;vally/ecs/components/spriterenderer.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;vally/core/logger.h&gt;
+#include &lt;vally/renderer/renderer.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structspriterenderer__state">spriterenderer_state</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_spriterenderer_8c_1a7e3e9bfa298ee30af0438ef259be9bb5">ecs_spriterenderer_add</link> (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> <link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>, <link linkend="_structtexture">texture</link> *<link linkend="_structtexture">texture</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_spriterenderer_8c_1ad4d1da2e23d1eb0341d178cbc4f740c7">ecs_spriterenderer_add_from_atlas</link> (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> <link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>, <link linkend="_structtexture">texture</link> *<link linkend="_structtexture">texture</link>, <link linkend="_structvector2f">vector2f</link> tiling)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_spriterenderer_8c_1aa4b2525b52d88b108dce880a27bfef20">ecs_spriterenderer_atlas_select</link> (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> <link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>, <link linkend="_include_2vally_2config_8h_1afaa62991928fb9fb18ff0db62a040aba">u32</link> <link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_structspriterenderer">spriterenderer</link> * <link linkend="_spriterenderer_8c_1a0d498d87b2a55c8e395d20826f264dbd">ecs_spriterenderer_get</link> (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> <link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_spriterenderer_8c_1ab4ff416b9b83f7e3988b60652cc479b4">ecs_spriterenderer_update</link> ()</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_spriterenderer_8c_1a7e3e9bfa298ee30af0438ef259be9bb5"/>    <section>
+    <title>ecs_spriterenderer_add()</title>
+<indexterm><primary>ecs_spriterenderer_add</primary><secondary>spriterenderer.c</secondary></indexterm>
+<indexterm><primary>spriterenderer.c</primary><secondary>ecs_spriterenderer_add</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> ecs_spriterenderer_add (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> entity, <link linkend="_structtexture">texture</link> * texture)</computeroutput></para><para>
+Definition at line 14 of file spriterenderer.c.</para>
+<programlisting>14 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+15 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>&#32;==&#32;<link linkend="_ecs_8h_1a590682d0c22ffe315650ba42fae2b231">ECS_NULL_ENTITY</link>)&#32;{
+16 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+17 &#32;&#32;}
+18 
+19 &#32;&#32;<link linkend="_structspriterenderer">spriterenderer</link>&#32;component;
+20 &#32;&#32;component.<link linkend="_structspriterenderer_1a0593fa06c4d365d80c8202c32acc240d">entity</link>&#32;=&#32;<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>;
+21 &#32;&#32;component.<link linkend="_structspriterenderer_1aaea0426bf2e05815ff8715ffb93a3d5b">texture</link>&#32;=&#32;<link linkend="_glad_8h_1af1de2b5e600991636b673dcda0fa5342">texture</link>;
+22 &#32;&#32;component.<link linkend="_structspriterenderer_1af311dd14ea5c2f52bf7ff15ec00c3c7f">size</link>&#32;=&#32;<link linkend="_math_8h_1a19431f940e3c5e70e3de779a80a0d1fb">vector2f_create</link>(<link linkend="_structtexture">texture</link>-&gt;<link linkend="_structtexture_1af1c60d7f83164b192685cc53a15ebd6b">width</link>,&#32;<link linkend="_structtexture">texture</link>-&gt;<link linkend="_structtexture_1a6c617792e2e0312db7ef3e475ac4b635">height</link>);
+23 
+24 &#32;&#32;component.<link linkend="_structspriterenderer_1af97cc2ae8d89f35067ee0689b6405ed8">uvs</link>.<link linkend="_structuvs_1acb1974c4327344146f48827261f0ac71">uv</link>[0]&#32;=&#32;<link linkend="_math_8h_1a19431f940e3c5e70e3de779a80a0d1fb">vector2f_create</link>(0.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+25 &#32;&#32;component.<link linkend="_structspriterenderer_1af97cc2ae8d89f35067ee0689b6405ed8">uvs</link>.<link linkend="_structuvs_1acb1974c4327344146f48827261f0ac71">uv</link>[1]&#32;=&#32;<link linkend="_math_8h_1a19431f940e3c5e70e3de779a80a0d1fb">vector2f_create</link>(1.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+26 &#32;&#32;component.<link linkend="_structspriterenderer_1af97cc2ae8d89f35067ee0689b6405ed8">uvs</link>.<link linkend="_structuvs_1acb1974c4327344146f48827261f0ac71">uv</link>[2]&#32;=&#32;<link linkend="_math_8h_1a19431f940e3c5e70e3de779a80a0d1fb">vector2f_create</link>(1.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;1.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+27 &#32;&#32;component.<link linkend="_structspriterenderer_1af97cc2ae8d89f35067ee0689b6405ed8">uvs</link>.<link linkend="_structuvs_1acb1974c4327344146f48827261f0ac71">uv</link>[3]&#32;=&#32;<link linkend="_math_8h_1a19431f940e3c5e70e3de779a80a0d1fb">vector2f_create</link>(0.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;1.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+28 
+29 &#32;&#32;component.<link linkend="_structspriterenderer_1a9ff890a5bceb8a336b594d72bd3a8f0c">atlas</link>&#32;=&#32;(<link linkend="_structatlas">atlas</link>){component.<link linkend="_structspriterenderer_1af311dd14ea5c2f52bf7ff15ec00c3c7f">size</link>,&#32;1,&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>};
+30 
+31 &#32;&#32;state.<link linkend="_structspriterenderer__state_1a912d7ec9f394c7260f70a6856b853d52">components</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>]&#32;=&#32;component;
+32 &#32;&#32;<link linkend="_ecs_8h_1a979231663bba3c9cd75a00dc24ca266f">ecs_component_add</link>(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>,&#32;<link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352af8e60e59dfe04c01d724061010102fe5">ECS_SPRITERENDERER_COMPONENT</link>);
+33 }
+</programlisting>    </section><anchor xml:id="_spriterenderer_8c_1ad4d1da2e23d1eb0341d178cbc4f740c7"/>    <section>
+    <title>ecs_spriterenderer_add_from_atlas()</title>
+<indexterm><primary>ecs_spriterenderer_add_from_atlas</primary><secondary>spriterenderer.c</secondary></indexterm>
+<indexterm><primary>spriterenderer.c</primary><secondary>ecs_spriterenderer_add_from_atlas</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> ecs_spriterenderer_add_from_atlas (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> entity, <link linkend="_structtexture">texture</link> * texture, <link linkend="_structvector2f">vector2f</link> tiling)</computeroutput></para><para>
+Definition at line 35 of file spriterenderer.c.</para>
+<programlisting>35 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+36 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>&#32;==&#32;<link linkend="_ecs_8h_1a590682d0c22ffe315650ba42fae2b231">ECS_NULL_ENTITY</link>)&#32;{
+37 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+38 &#32;&#32;}
+39 
+40 &#32;&#32;<link linkend="_structspriterenderer">spriterenderer</link>&#32;component;
+41 &#32;&#32;component.<link linkend="_structspriterenderer_1a0593fa06c4d365d80c8202c32acc240d">entity</link>&#32;=&#32;<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>;
+42 &#32;&#32;component.<link linkend="_structspriterenderer_1aaea0426bf2e05815ff8715ffb93a3d5b">texture</link>&#32;=&#32;<link linkend="_glad_8h_1af1de2b5e600991636b673dcda0fa5342">texture</link>;
+43 &#32;&#32;component.<link linkend="_structspriterenderer_1af311dd14ea5c2f52bf7ff15ec00c3c7f">size</link>&#32;=&#32;tiling;
+44 
+45 &#32;&#32;<link linkend="_structatlas">atlas</link>&#32;<link linkend="_structatlas">atlas</link>;
+46 &#32;&#32;<link linkend="_structatlas">atlas</link>.<link linkend="_structatlas_1a9a482f05cee50657458889e1ec3542c1">tiling</link>&#32;=&#32;tiling;
+47 &#32;&#32;<link linkend="_structatlas">atlas</link>.<link linkend="_structatlas_1a669221f5101047b42eddf9285be5a8d5">sprites_per_row</link>&#32;=&#32;<link linkend="_structtexture">texture</link>-&gt;<link linkend="_structtexture_1af1c60d7f83164b192685cc53a15ebd6b">width</link>&#32;/&#32;tiling.<link linkend="_structvector2f_1a20dc1efc39913c2f1dbdad416acc8719">x</link>;
+48 &#32;&#32;<link linkend="_structatlas">atlas</link>.<link linkend="_structatlas_1a9018f342e962f48b06cddf4e09fcc33c">sprite_count</link>&#32;=&#32;<link linkend="_structatlas">atlas</link>.<link linkend="_structatlas_1a669221f5101047b42eddf9285be5a8d5">sprites_per_row</link>&#32;*&#32;(<link linkend="_structtexture">texture</link>-&gt;<link linkend="_structtexture_1a6c617792e2e0312db7ef3e475ac4b635">height</link>&#32;/&#32;tiling.<link linkend="_structvector2f_1a54628be95c6efcc45c1e1c49a83dc0df">y</link>);
+49 &#32;&#32;<link linkend="_structatlas">atlas</link>.<link linkend="_structatlas_1a757896bfe45cfabd08df8fc1fa9ac782">uvs</link>&#32;=&#32;(<link linkend="_structuvs">uvs</link>&#32;*)<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>(<emphasis role="keyword">sizeof</emphasis>(<link linkend="_structuvs">uvs</link>)&#32;*&#32;<link linkend="_structatlas">atlas</link>.<link linkend="_structatlas_1a9018f342e962f48b06cddf4e09fcc33c">sprite_count</link>);
+50 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_include_2vally_2config_8h_1a48d6cd8e4135fb2ff7e7f2dac84089ec">i32</link>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;<link linkend="_structatlas">atlas</link>.<link linkend="_structatlas_1a9018f342e962f48b06cddf4e09fcc33c">sprite_count</link>;&#32;i++)&#32;{
+51 &#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a5f6906312a689f27d70e9d086649d3fd">f32</link>&#32;tw&#32;=&#32;tiling.<link linkend="_structvector2f_1a20dc1efc39913c2f1dbdad416acc8719">x</link>&#32;/&#32;<link linkend="_structtexture">texture</link>-&gt;<link linkend="_structtexture_1af1c60d7f83164b192685cc53a15ebd6b">width</link>;
+52 &#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a5f6906312a689f27d70e9d086649d3fd">f32</link>&#32;th&#32;=&#32;tiling.<link linkend="_structvector2f_1a54628be95c6efcc45c1e1c49a83dc0df">y</link>&#32;/&#32;<link linkend="_structtexture">texture</link>-&gt;<link linkend="_structtexture_1a6c617792e2e0312db7ef3e475ac4b635">height</link>;
+53 &#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a5f6906312a689f27d70e9d086649d3fd">f32</link>&#32;tx&#32;=&#32;(i&#32;%&#32;<link linkend="_structatlas">atlas</link>.<link linkend="_structatlas_1a669221f5101047b42eddf9285be5a8d5">sprites_per_row</link>)&#32;*&#32;tw;
+54 &#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a5f6906312a689f27d70e9d086649d3fd">f32</link>&#32;<link linkend="_glext_8h_1ae09063918284e24e3265a007fd1cc983">ty</link>&#32;=&#32;(i&#32;/&#32;<link linkend="_structatlas">atlas</link>.<link linkend="_structatlas_1a669221f5101047b42eddf9285be5a8d5">sprites_per_row</link>)&#32;*&#32;th;
+55 
+56 &#32;&#32;&#32;&#32;<link linkend="_structatlas">atlas</link>.<link linkend="_structatlas_1a757896bfe45cfabd08df8fc1fa9ac782">uvs</link>[i].<link linkend="_structuvs_1acb1974c4327344146f48827261f0ac71">uv</link>[0]&#32;=&#32;<link linkend="_math_8h_1a19431f940e3c5e70e3de779a80a0d1fb">vector2f_create</link>(tx,&#32;<link linkend="_glext_8h_1ae09063918284e24e3265a007fd1cc983">ty</link>);
+57 &#32;&#32;&#32;&#32;<link linkend="_structatlas">atlas</link>.<link linkend="_structatlas_1a757896bfe45cfabd08df8fc1fa9ac782">uvs</link>[i].<link linkend="_structuvs_1acb1974c4327344146f48827261f0ac71">uv</link>[1]&#32;=&#32;<link linkend="_math_8h_1a19431f940e3c5e70e3de779a80a0d1fb">vector2f_create</link>(tx&#32;+&#32;tw,&#32;<link linkend="_glext_8h_1ae09063918284e24e3265a007fd1cc983">ty</link>);
+58 &#32;&#32;&#32;&#32;<link linkend="_structatlas">atlas</link>.<link linkend="_structatlas_1a757896bfe45cfabd08df8fc1fa9ac782">uvs</link>[i].<link linkend="_structuvs_1acb1974c4327344146f48827261f0ac71">uv</link>[2]&#32;=&#32;<link linkend="_math_8h_1a19431f940e3c5e70e3de779a80a0d1fb">vector2f_create</link>(tx&#32;+&#32;tw,&#32;<link linkend="_glext_8h_1ae09063918284e24e3265a007fd1cc983">ty</link>&#32;+&#32;th);
+59 &#32;&#32;&#32;&#32;<link linkend="_structatlas">atlas</link>.<link linkend="_structatlas_1a757896bfe45cfabd08df8fc1fa9ac782">uvs</link>[i].<link linkend="_structuvs_1acb1974c4327344146f48827261f0ac71">uv</link>[3]&#32;=&#32;<link linkend="_math_8h_1a19431f940e3c5e70e3de779a80a0d1fb">vector2f_create</link>(tx,&#32;<link linkend="_glext_8h_1ae09063918284e24e3265a007fd1cc983">ty</link>&#32;+&#32;th);
+60 &#32;&#32;}
+61 
+62 &#32;&#32;component.<link linkend="_structspriterenderer_1a9ff890a5bceb8a336b594d72bd3a8f0c">atlas</link>&#32;=&#32;<link linkend="_structatlas">atlas</link>;
+63 &#32;&#32;component.<link linkend="_structspriterenderer_1af97cc2ae8d89f35067ee0689b6405ed8">uvs</link>&#32;=&#32;<link linkend="_structatlas">atlas</link>.<link linkend="_structatlas_1a757896bfe45cfabd08df8fc1fa9ac782">uvs</link>[0];
+64 
+65 &#32;&#32;state.<link linkend="_structspriterenderer__state_1a912d7ec9f394c7260f70a6856b853d52">components</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>]&#32;=&#32;component;
+66 &#32;&#32;<link linkend="_ecs_8h_1a979231663bba3c9cd75a00dc24ca266f">ecs_component_add</link>(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>,&#32;<link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352af8e60e59dfe04c01d724061010102fe5">ECS_SPRITERENDERER_COMPONENT</link>);
+67 }
+</programlisting>    </section><anchor xml:id="_spriterenderer_8c_1aa4b2525b52d88b108dce880a27bfef20"/>    <section>
+    <title>ecs_spriterenderer_atlas_select()</title>
+<indexterm><primary>ecs_spriterenderer_atlas_select</primary><secondary>spriterenderer.c</secondary></indexterm>
+<indexterm><primary>spriterenderer.c</primary><secondary>ecs_spriterenderer_atlas_select</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> ecs_spriterenderer_atlas_select (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> entity, <link linkend="_include_2vally_2config_8h_1afaa62991928fb9fb18ff0db62a040aba">u32</link> index)</computeroutput></para><para>
+Definition at line 69 of file spriterenderer.c.</para>
+<programlisting>69 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+70 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>&#32;==&#32;<link linkend="_ecs_8h_1a590682d0c22ffe315650ba42fae2b231">ECS_NULL_ENTITY</link>&#32;||&#32;!<link linkend="_ecs_8h_1a8558da821ae97171a28630f8da7414c4">ecs_component_has</link>(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>,&#32;<link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352af8e60e59dfe04c01d724061010102fe5">ECS_SPRITERENDERER_COMPONENT</link>))&#32;{
+71 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+72 &#32;&#32;}
+73 
+74 &#32;&#32;<link linkend="_structspriterenderer">spriterenderer</link>&#32;*<link linkend="_structspriterenderer">spriterenderer</link>&#32;=&#32;&amp;state.<link linkend="_structspriterenderer__state_1a912d7ec9f394c7260f70a6856b853d52">components</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>];
+75 &#32;&#32;<link linkend="_structspriterenderer">spriterenderer</link>-&gt;<link linkend="_structspriterenderer_1af97cc2ae8d89f35067ee0689b6405ed8">uvs</link>&#32;=&#32;<link linkend="_structspriterenderer">spriterenderer</link>-&gt;<link linkend="_structspriterenderer_1a9ff890a5bceb8a336b594d72bd3a8f0c">atlas</link>.<link linkend="_structatlas_1a757896bfe45cfabd08df8fc1fa9ac782">uvs</link>[<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>];
+76 }
+</programlisting>    </section><anchor xml:id="_spriterenderer_8c_1a0d498d87b2a55c8e395d20826f264dbd"/>    <section>
+    <title>ecs_spriterenderer_get()</title>
+<indexterm><primary>ecs_spriterenderer_get</primary><secondary>spriterenderer.c</secondary></indexterm>
+<indexterm><primary>spriterenderer.c</primary><secondary>ecs_spriterenderer_get</secondary></indexterm>
+<para><computeroutput><link linkend="_structspriterenderer">spriterenderer</link>* ecs_spriterenderer_get (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> entity)</computeroutput></para><para>
+Definition at line 78 of file spriterenderer.c.</para>
+<programlisting>78 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+79 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>&#32;==&#32;<link linkend="_ecs_8h_1a590682d0c22ffe315650ba42fae2b231">ECS_NULL_ENTITY</link>&#32;||&#32;!<link linkend="_ecs_8h_1a8558da821ae97171a28630f8da7414c4">ecs_component_has</link>(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>,&#32;<link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352af8e60e59dfe04c01d724061010102fe5">ECS_SPRITERENDERER_COMPONENT</link>))&#32;{
+80 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+81 &#32;&#32;}
+82 
+83 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;&amp;state.<link linkend="_structspriterenderer__state_1a912d7ec9f394c7260f70a6856b853d52">components</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>];
+84 }
+</programlisting>    </section><anchor xml:id="_spriterenderer_8c_1ab4ff416b9b83f7e3988b60652cc479b4"/>    <section>
+    <title>ecs_spriterenderer_update()</title>
+<indexterm><primary>ecs_spriterenderer_update</primary><secondary>spriterenderer.c</secondary></indexterm>
+<indexterm><primary>spriterenderer.c</primary><secondary>ecs_spriterenderer_update</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> ecs_spriterenderer_update ( )</computeroutput></para><para>
+Definition at line 86 of file spriterenderer.c.</para>
+<programlisting>86 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+87 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>&#32;=&#32;0;&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>&#32;&lt;&#32;<link linkend="_ecs_8h_1af2d2c47037654bc3387edf21f7b299c4">ecs_get_last</link>();&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>++)&#32;{
+88 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_ecs_8h_1ac303d50ed49e761f139d6805e1bba866">ecs_is_alive</link>(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>)&#32;&amp;&amp;&#32;<link linkend="_ecs_8h_1a8558da821ae97171a28630f8da7414c4">ecs_component_has</link>(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>,&#32;<link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352af8e60e59dfe04c01d724061010102fe5">ECS_SPRITERENDERER_COMPONENT</link>))&#32;{
+89 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_renderer_8c_1ae6e66fdff388a00145c99c774abacd00">renderer_draw</link>(&amp;state.<link linkend="_structspriterenderer__state_1a912d7ec9f394c7260f70a6856b853d52">components</link>[<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>]);
+90 &#32;&#32;&#32;&#32;}
+91 &#32;&#32;}
+92 }
+</programlisting></section>
+</section>
+</section>

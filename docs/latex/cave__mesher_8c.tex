@@ -1,0 +1,1240 @@
+\hypertarget{cave__mesher_8c}{}\doxysection{deps/stb/tests/caveview/cave\+\_\+mesher.c File Reference}
+\label{cave__mesher_8c}\index{deps/stb/tests/caveview/cave\_mesher.c@{deps/stb/tests/caveview/cave\_mesher.c}}
+{\ttfamily \#include \char`\"{}stb\+\_\+gl.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stb\+\_\+image.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stb\+\_\+glprog.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}caveview.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}cave\+\_\+parse.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stb.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sdl.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sdl\+\_\+thread.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}stb\+\_\+voxel\+\_\+render.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcached__converted__chunk}{cached\+\_\+converted\+\_\+chunk}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{cave__mesher_8c_aae20e9fa62595e4621ebf19a38824f9f}{S\+T\+B\+\_\+\+G\+L\+E\+X\+T\+\_\+\+D\+E\+C\+L\+A\+RE}}~\char`\"{}glext\+\_\+list.\+h\char`\"{}
+\item 
+\#define \mbox{\hyperlink{cave__mesher_8c_a974b06da70220834204261702f3232bf}{S\+T\+B\+V\+O\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+M\+O\+DE}}~1
+\item 
+\#define \mbox{\hyperlink{cave__mesher_8c_a81687755688954f9ef5707413c6d643c}{S\+T\+B\+V\+O\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+O\+P\+E\+N\+G\+L\+\_\+\+M\+O\+D\+E\+L\+V\+I\+EW}}
+\item 
+\#define \mbox{\hyperlink{cave__mesher_8c_a734835ebe7e96d37cf10a8cfb867f28e}{S\+T\+B\+V\+O\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+P\+R\+E\+F\+E\+R\+\_\+\+T\+E\+X\+B\+U\+F\+F\+ER}}
+\item 
+\#define \mbox{\hyperlink{cave__mesher_8c_afbfd39d19102078d83c276346db11790}{S\+T\+B\+V\+O\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+F\+O\+G\+\_\+\+S\+M\+O\+O\+T\+H\+S\+T\+EP}}
+\item 
+\#define \mbox{\hyperlink{cave__mesher_8c_a1216223b9bb3998115075e494d2f14e4}{S\+T\+B\+V\+O\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+D\+I\+S\+A\+B\+L\+E\+\_\+\+T\+E\+X2}}
+\item 
+\#define \mbox{\hyperlink{cave__mesher_8c_a98386a77a0c5d01dacddbb177283a5cb}{S\+T\+B\+V\+O\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+I\+N\+\_\+\+L\+I\+G\+H\+T\+I\+NG}}
+\item 
+\#define \mbox{\hyperlink{cave__mesher_8c_a2e3162139b42678f82424d8e2c2dc7ff}{S\+T\+B\+\_\+\+V\+O\+X\+E\+L\+\_\+\+R\+E\+N\+D\+E\+R\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+A\+T\+I\+ON}}
+\item 
+\#define \mbox{\hyperlink{cave__mesher_8c_a5d3aa76dea5c5fcbdee0e58ed42f2dfe}{F\+A\+S\+T\+\_\+\+C\+H\+U\+NK}}
+\item 
+\#define \mbox{\hyperlink{cave__mesher_8c_acf9495e0af27842ed032cb05edcb9126}{I\+N\+\_\+\+P\+L\+A\+CE}}
+\item 
+\#define \mbox{\hyperlink{cave__mesher_8c_af205db34cd0a183e5e3481c4f8baa716}{S\+K\+I\+P\+\_\+\+T\+E\+R\+R\+A\+IN}}~0
+\item 
+\#define \mbox{\hyperlink{cave__mesher_8c_af27f13c9b204e636f39b2ffa47096911}{S\+U\+P\+E\+R\+C\+H\+U\+N\+K\+\_\+X}}~4
+\item 
+\#define \mbox{\hyperlink{cave__mesher_8c_af2b8c9fb9e00cadb61f99d69b0dc71f4}{S\+U\+P\+E\+R\+C\+H\+U\+N\+K\+\_\+Y}}~4
+\item 
+\#define \mbox{\hyperlink{cave__mesher_8c_a3d38bc2fa620f958e39c87755218f173}{C\+H\+U\+N\+K\+\_\+\+C\+A\+C\+HE}}~64
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \newline
+\mbox{\hyperlink{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a8e25f3fef8ddfd9ae47971d91958d83b}{C\+\_\+empty}}, 
+\mbox{\hyperlink{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84afff8826292ebae88305f433d13066894}{C\+\_\+solid}}, 
+\mbox{\hyperlink{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a61eaada366b3b15525272abc143dbfd5}{C\+\_\+trans}}, 
+\mbox{\hyperlink{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84af21da253d94bc582688921653c467895}{C\+\_\+cross}}, 
+\newline
+\mbox{\hyperlink{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a0fcd3f1395447fcee9413f39c0687c76}{C\+\_\+water}}, 
+\mbox{\hyperlink{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a209b2a787a7b9ac2a8aa7cbf64df1b49}{C\+\_\+slab}}, 
+\mbox{\hyperlink{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a184aff99562d1f8a4c2bb2886e6a88e6}{C\+\_\+stair}}, 
+\mbox{\hyperlink{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84ad11d3d00256ac1a21a18239adfdc2de6}{C\+\_\+force}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{cave__mesher_8c_aefd62d461236c6e9ced738eac9d8042c}{ods}} (char $\ast$fmt,...)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{cave__mesher_8c_a147e37fcae806febbdaac22c776d5685}{convert\+\_\+fastchunk\+\_\+inplace}} (\mbox{\hyperlink{structfast__chunk}{fast\+\_\+chunk}} $\ast$fc)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{cave__mesher_8c_a7bea63cfeb0603fcda8860fe0355fb57}{make\+\_\+converted\+\_\+fastchunk}} (\mbox{\hyperlink{structfast__chunk}{fast\+\_\+chunk}} $\ast$fc, int \mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}}, int \mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}}, int \mbox{\hyperlink{structsegment}{segment}}, \mbox{\hyperlink{stb_8h_adde6aaee8457bee49c2a92621fe22b79}{uint8}} $\ast$sv\+\_\+blocktype, \mbox{\hyperlink{stb_8h_adde6aaee8457bee49c2a92621fe22b79}{uint8}} $\ast$sv\+\_\+lighting)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{cave__mesher_8c_af74c70130c88949f4d2bac551594d41f}{reset\+\_\+cache\+\_\+size}} (int \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{cave__mesher_8c_a65286ae93fc1fc5e6e88af8d2f02a731}{deref\+\_\+fastchunk}} (\mbox{\hyperlink{structfast__chunk}{fast\+\_\+chunk}} $\ast$fc)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{cave__mesher_8c_af4e8c4c0c38242366db62d9936274079}{lock\+\_\+chunk\+\_\+get\+\_\+mutex}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{cave__mesher_8c_afaaad5f587e3275de99ae8ff61b2e18a}{unlock\+\_\+chunk\+\_\+get\+\_\+mutex}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{structfast__chunk}{fast\+\_\+chunk}} $\ast$ \mbox{\hyperlink{cave__mesher_8c_a7c54b9b85359841f7dbe539558bc5aa5}{get\+\_\+converted\+\_\+fastchunk}} (int chunk\+\_\+x, int chunk\+\_\+y)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{cave__mesher_8c_a72869edd94d6159ab80497d6fcf71071}{make\+\_\+map\+\_\+segment\+\_\+for\+\_\+superchunk\+\_\+preconvert}} (int chunk\+\_\+x, int chunk\+\_\+y, int \mbox{\hyperlink{structsegment}{segment}}, \mbox{\hyperlink{structfast__chunk}{fast\+\_\+chunk}} $\ast$fc\+\_\+table\mbox{[}4\mbox{]}\mbox{[}4\mbox{]}, \mbox{\hyperlink{stb_8h_adde6aaee8457bee49c2a92621fe22b79}{uint8}} sv\+\_\+blocktype\mbox{[}34\mbox{]}\mbox{[}34\mbox{]}\mbox{[}18\mbox{]}, \mbox{\hyperlink{stb_8h_adde6aaee8457bee49c2a92621fe22b79}{uint8}} sv\+\_\+lighting\mbox{[}34\mbox{]}\mbox{[}34\mbox{]}\mbox{[}18\mbox{]})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{cave__mesher_8c_ab4e47a2bc64f10cabe87c675e9b2bcc5}{build\+\_\+chunk}} (int chunk\+\_\+x, int chunk\+\_\+y, \mbox{\hyperlink{structfast__chunk}{fast\+\_\+chunk}} $\ast$fc\+\_\+table\mbox{[}4\mbox{]}\mbox{[}4\mbox{]}, \mbox{\hyperlink{structraw__mesh}{raw\+\_\+mesh}} $\ast$rm)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{cave__mesher_8c_a626c17451761446962cffc9add2ed539}{build\+\_\+stair\+\_\+rotations}} (int blocktype, unsigned char $\ast$map)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{cave__mesher_8c_addb3a71c75c33215207185a88be4bb62}{build\+\_\+wool\+\_\+variations}} (int bt, unsigned char $\ast$map)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{cave__mesher_8c_adcf4dda69d85bc49b9f4babc57587095}{build\+\_\+wood\+\_\+variations}} (int bt, unsigned char $\ast$map)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{cave__mesher_8c_a16709242463cda7c163b826a5da978c5}{remap\+\_\+in\+\_\+place}} (int bt, int rm)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{cave__mesher_8c_a24f0dbbfdca90a74902964396c137bac}{mesh\+\_\+init}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+unsigned char \mbox{\hyperlink{cave__mesher_8c_adbdd9089890d950d54cd125d4464eab7}{geom\+\_\+map}} \mbox{[}$\,$\mbox{]}
+\item 
+unsigned char \mbox{\hyperlink{cave__mesher_8c_a17dd80d3766327026eae4547eae231fd}{minecraft\+\_\+info}} \mbox{[}256\mbox{]}\mbox{[}7\mbox{]}
+\item 
+unsigned char \mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\+\_\+tex1\+\_\+for\+\_\+blocktype}} \mbox{[}256\mbox{]}\mbox{[}6\mbox{]}
+\item 
+unsigned char \mbox{\hyperlink{cave__mesher_8c_af38282980cc171915d4acfe5f3e03c90}{effective\+\_\+blocktype}} \mbox{[}256\mbox{]}
+\item 
+unsigned char \mbox{\hyperlink{cave__mesher_8c_a33fdd49440ce0309319d973be49dfd0a}{minecraft\+\_\+color\+\_\+for\+\_\+blocktype}} \mbox{[}256\mbox{]}\mbox{[}6\mbox{]}
+\item 
+unsigned char \mbox{\hyperlink{cave__mesher_8c_ae01a977fd1f7c889f186baee1076b732}{minecraft\+\_\+geom\+\_\+for\+\_\+blocktype}} \mbox{[}256\mbox{]}
+\item 
+\mbox{\hyperlink{stb_8h_adde6aaee8457bee49c2a92621fe22b79}{uint8}} \mbox{\hyperlink{cave__mesher_8c_a165e793676d312d0c37aa23551127f48}{build\+\_\+buffer}} \mbox{[}\mbox{\hyperlink{caveview_8h_afa950acf77b651e25839f9fffcc15e3a}{B\+U\+I\+L\+D\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+S\+I\+ZE}}\mbox{]}
+\item 
+\mbox{\hyperlink{stb_8h_adde6aaee8457bee49c2a92621fe22b79}{uint8}} \mbox{\hyperlink{cave__mesher_8c_aa27715cf788c95d0334051f4bfe7ade9}{face\+\_\+buffer}} \mbox{[}\mbox{\hyperlink{caveview_8h_a4d65dca8ffc1cd92783b26732044ba59}{F\+A\+C\+E\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+S\+I\+ZE}}\mbox{]}
+\item 
+unsigned char \mbox{\hyperlink{cave__mesher_8c_a2015282d41ced055a462520de780e814}{remap\+\_\+data}} \mbox{[}16\mbox{]}\mbox{[}16\mbox{]}
+\item 
+unsigned char \mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}} \mbox{[}256\mbox{]}
+\item 
+unsigned char \mbox{\hyperlink{cave__mesher_8c_a1b58e7e250316c8d1a2fe21fafaa5fcd}{rotate\+\_\+data}} \mbox{[}4\mbox{]} = \{ 1,3,2,0 \}
+\item 
+\mbox{\hyperlink{structcached__converted__chunk}{cached\+\_\+converted\+\_\+chunk}} \mbox{\hyperlink{cave__mesher_8c_ab799c6e56a65a1a9a2c089c9d4b81de9}{chunk\+\_\+cache}} \mbox{[}\mbox{\hyperlink{cave__mesher_8c_a3d38bc2fa620f958e39c87755218f173}{C\+H\+U\+N\+K\+\_\+\+C\+A\+C\+HE}}\mbox{]}\mbox{[}\mbox{\hyperlink{cave__mesher_8c_a3d38bc2fa620f958e39c87755218f173}{C\+H\+U\+N\+K\+\_\+\+C\+A\+C\+HE}}\mbox{]}
+\item 
+int \mbox{\hyperlink{cave__mesher_8c_adc2cfac3a357c5424aafa9d351a2e6ea}{cache\+\_\+size}} = \mbox{\hyperlink{cave__mesher_8c_a3d38bc2fa620f958e39c87755218f173}{C\+H\+U\+N\+K\+\_\+\+C\+A\+C\+HE}}
+\item 
+S\+D\+L\+\_\+mutex $\ast$ \mbox{\hyperlink{cave__mesher_8c_a784ba0617dbc4eec455188b9671295aa}{chunk\+\_\+cache\+\_\+mutex}}
+\item 
+S\+D\+L\+\_\+mutex $\ast$ \mbox{\hyperlink{cave__mesher_8c_a9105640f64bd2fca823fa679f99fb62b}{chunk\+\_\+get\+\_\+mutex}}
+\item 
+int \mbox{\hyperlink{cave__mesher_8c_a209a4cb1b4169823bf527e2e1410d8a1}{next\+\_\+blocktype}} = 255
+\item 
+unsigned char \mbox{\hyperlink{cave__mesher_8c_affec1534a3e53c768c48caac2475d930}{mc\+\_\+rot}} \mbox{[}4\mbox{]} = \{ 1,3,2,0 \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{cave__mesher_8c_a3d38bc2fa620f958e39c87755218f173}\label{cave__mesher_8c_a3d38bc2fa620f958e39c87755218f173}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!CHUNK\_CACHE@{CHUNK\_CACHE}}
+\index{CHUNK\_CACHE@{CHUNK\_CACHE}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{CHUNK\_CACHE}{CHUNK\_CACHE}}
+{\footnotesize\ttfamily \#define C\+H\+U\+N\+K\+\_\+\+C\+A\+C\+HE~64}
+
+
+
+Definition at line 479 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_a5d3aa76dea5c5fcbdee0e58ed42f2dfe}\label{cave__mesher_8c_a5d3aa76dea5c5fcbdee0e58ed42f2dfe}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!FAST\_CHUNK@{FAST\_CHUNK}}
+\index{FAST\_CHUNK@{FAST\_CHUNK}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{FAST\_CHUNK}{FAST\_CHUNK}}
+{\footnotesize\ttfamily \#define F\+A\+S\+T\+\_\+\+C\+H\+U\+NK}
+
+
+
+Definition at line 37 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_acf9495e0af27842ed032cb05edcb9126}\label{cave__mesher_8c_acf9495e0af27842ed032cb05edcb9126}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!IN\_PLACE@{IN\_PLACE}}
+\index{IN\_PLACE@{IN\_PLACE}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{IN\_PLACE}{IN\_PLACE}}
+{\footnotesize\ttfamily \#define I\+N\+\_\+\+P\+L\+A\+CE}
+
+
+
+Definition at line 38 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_af205db34cd0a183e5e3481c4f8baa716}\label{cave__mesher_8c_af205db34cd0a183e5e3481c4f8baa716}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!SKIP\_TERRAIN@{SKIP\_TERRAIN}}
+\index{SKIP\_TERRAIN@{SKIP\_TERRAIN}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{SKIP\_TERRAIN}{SKIP\_TERRAIN}}
+{\footnotesize\ttfamily \#define S\+K\+I\+P\+\_\+\+T\+E\+R\+R\+A\+IN~0}
+
+
+
+Definition at line 40 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_aae20e9fa62595e4621ebf19a38824f9f}\label{cave__mesher_8c_aae20e9fa62595e4621ebf19a38824f9f}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!STB\_GLEXT\_DECLARE@{STB\_GLEXT\_DECLARE}}
+\index{STB\_GLEXT\_DECLARE@{STB\_GLEXT\_DECLARE}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{STB\_GLEXT\_DECLARE}{STB\_GLEXT\_DECLARE}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+G\+L\+E\+X\+T\+\_\+\+D\+E\+C\+L\+A\+RE~\char`\"{}glext\+\_\+list.\+h\char`\"{}}
+
+
+
+Definition at line 4 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_a2e3162139b42678f82424d8e2c2dc7ff}\label{cave__mesher_8c_a2e3162139b42678f82424d8e2c2dc7ff}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!STB\_VOXEL\_RENDER\_IMPLEMENTATION@{STB\_VOXEL\_RENDER\_IMPLEMENTATION}}
+\index{STB\_VOXEL\_RENDER\_IMPLEMENTATION@{STB\_VOXEL\_RENDER\_IMPLEMENTATION}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{STB\_VOXEL\_RENDER\_IMPLEMENTATION}{STB\_VOXEL\_RENDER\_IMPLEMENTATION}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+V\+O\+X\+E\+L\+\_\+\+R\+E\+N\+D\+E\+R\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+A\+T\+I\+ON}
+
+
+
+Definition at line 31 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_a1216223b9bb3998115075e494d2f14e4}\label{cave__mesher_8c_a1216223b9bb3998115075e494d2f14e4}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!STBVOX\_CONFIG\_DISABLE\_TEX2@{STBVOX\_CONFIG\_DISABLE\_TEX2}}
+\index{STBVOX\_CONFIG\_DISABLE\_TEX2@{STBVOX\_CONFIG\_DISABLE\_TEX2}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_CONFIG\_DISABLE\_TEX2}{STBVOX\_CONFIG\_DISABLE\_TEX2}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+D\+I\+S\+A\+B\+L\+E\+\_\+\+T\+E\+X2}
+
+
+
+Definition at line 27 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_afbfd39d19102078d83c276346db11790}\label{cave__mesher_8c_afbfd39d19102078d83c276346db11790}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!STBVOX\_CONFIG\_FOG\_SMOOTHSTEP@{STBVOX\_CONFIG\_FOG\_SMOOTHSTEP}}
+\index{STBVOX\_CONFIG\_FOG\_SMOOTHSTEP@{STBVOX\_CONFIG\_FOG\_SMOOTHSTEP}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_CONFIG\_FOG\_SMOOTHSTEP}{STBVOX\_CONFIG\_FOG\_SMOOTHSTEP}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+F\+O\+G\+\_\+\+S\+M\+O\+O\+T\+H\+S\+T\+EP}
+
+
+
+Definition at line 23 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_a974b06da70220834204261702f3232bf}\label{cave__mesher_8c_a974b06da70220834204261702f3232bf}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!STBVOX\_CONFIG\_MODE@{STBVOX\_CONFIG\_MODE}}
+\index{STBVOX\_CONFIG\_MODE@{STBVOX\_CONFIG\_MODE}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_CONFIG\_MODE}{STBVOX\_CONFIG\_MODE}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+M\+O\+DE~1}
+
+
+
+Definition at line 19 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_a81687755688954f9ef5707413c6d643c}\label{cave__mesher_8c_a81687755688954f9ef5707413c6d643c}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!STBVOX\_CONFIG\_OPENGL\_MODELVIEW@{STBVOX\_CONFIG\_OPENGL\_MODELVIEW}}
+\index{STBVOX\_CONFIG\_OPENGL\_MODELVIEW@{STBVOX\_CONFIG\_OPENGL\_MODELVIEW}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_CONFIG\_OPENGL\_MODELVIEW}{STBVOX\_CONFIG\_OPENGL\_MODELVIEW}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+O\+P\+E\+N\+G\+L\+\_\+\+M\+O\+D\+E\+L\+V\+I\+EW}
+
+
+
+Definition at line 20 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_a734835ebe7e96d37cf10a8cfb867f28e}\label{cave__mesher_8c_a734835ebe7e96d37cf10a8cfb867f28e}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!STBVOX\_CONFIG\_PREFER\_TEXBUFFER@{STBVOX\_CONFIG\_PREFER\_TEXBUFFER}}
+\index{STBVOX\_CONFIG\_PREFER\_TEXBUFFER@{STBVOX\_CONFIG\_PREFER\_TEXBUFFER}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_CONFIG\_PREFER\_TEXBUFFER}{STBVOX\_CONFIG\_PREFER\_TEXBUFFER}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+P\+R\+E\+F\+E\+R\+\_\+\+T\+E\+X\+B\+U\+F\+F\+ER}
+
+
+
+Definition at line 21 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_a98386a77a0c5d01dacddbb177283a5cb}\label{cave__mesher_8c_a98386a77a0c5d01dacddbb177283a5cb}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!STBVOX\_CONFIG\_ROTATION\_IN\_LIGHTING@{STBVOX\_CONFIG\_ROTATION\_IN\_LIGHTING}}
+\index{STBVOX\_CONFIG\_ROTATION\_IN\_LIGHTING@{STBVOX\_CONFIG\_ROTATION\_IN\_LIGHTING}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_CONFIG\_ROTATION\_IN\_LIGHTING}{STBVOX\_CONFIG\_ROTATION\_IN\_LIGHTING}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+I\+N\+\_\+\+L\+I\+G\+H\+T\+I\+NG}
+
+
+
+Definition at line 29 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_af27f13c9b204e636f39b2ffa47096911}\label{cave__mesher_8c_af27f13c9b204e636f39b2ffa47096911}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!SUPERCHUNK\_X@{SUPERCHUNK\_X}}
+\index{SUPERCHUNK\_X@{SUPERCHUNK\_X}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{SUPERCHUNK\_X}{SUPERCHUNK\_X}}
+{\footnotesize\ttfamily \#define S\+U\+P\+E\+R\+C\+H\+U\+N\+K\+\_\+X~4}
+
+
+
+Definition at line 325 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_af2b8c9fb9e00cadb61f99d69b0dc71f4}\label{cave__mesher_8c_af2b8c9fb9e00cadb61f99d69b0dc71f4}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!SUPERCHUNK\_Y@{SUPERCHUNK\_Y}}
+\index{SUPERCHUNK\_Y@{SUPERCHUNK\_Y}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{SUPERCHUNK\_Y}{SUPERCHUNK\_Y}}
+{\footnotesize\ttfamily \#define S\+U\+P\+E\+R\+C\+H\+U\+N\+K\+\_\+Y~4}
+
+
+
+Definition at line 326 of file cave\+\_\+mesher.\+c.
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84}\label{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84}} 
+\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C\_empty@{C\_empty}!cave\_mesher.c@{cave\_mesher.c}}\index{cave\_mesher.c@{cave\_mesher.c}!C\_empty@{C\_empty}}}\mbox{\Hypertarget{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a8e25f3fef8ddfd9ae47971d91958d83b}\label{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a8e25f3fef8ddfd9ae47971d91958d83b}} 
+C\+\_\+empty&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C\_solid@{C\_solid}!cave\_mesher.c@{cave\_mesher.c}}\index{cave\_mesher.c@{cave\_mesher.c}!C\_solid@{C\_solid}}}\mbox{\Hypertarget{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84afff8826292ebae88305f433d13066894}\label{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84afff8826292ebae88305f433d13066894}} 
+C\+\_\+solid&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C\_trans@{C\_trans}!cave\_mesher.c@{cave\_mesher.c}}\index{cave\_mesher.c@{cave\_mesher.c}!C\_trans@{C\_trans}}}\mbox{\Hypertarget{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a61eaada366b3b15525272abc143dbfd5}\label{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a61eaada366b3b15525272abc143dbfd5}} 
+C\+\_\+trans&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C\_cross@{C\_cross}!cave\_mesher.c@{cave\_mesher.c}}\index{cave\_mesher.c@{cave\_mesher.c}!C\_cross@{C\_cross}}}\mbox{\Hypertarget{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84af21da253d94bc582688921653c467895}\label{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84af21da253d94bc582688921653c467895}} 
+C\+\_\+cross&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C\_water@{C\_water}!cave\_mesher.c@{cave\_mesher.c}}\index{cave\_mesher.c@{cave\_mesher.c}!C\_water@{C\_water}}}\mbox{\Hypertarget{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a0fcd3f1395447fcee9413f39c0687c76}\label{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a0fcd3f1395447fcee9413f39c0687c76}} 
+C\+\_\+water&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C\_slab@{C\_slab}!cave\_mesher.c@{cave\_mesher.c}}\index{cave\_mesher.c@{cave\_mesher.c}!C\_slab@{C\_slab}}}\mbox{\Hypertarget{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a209b2a787a7b9ac2a8aa7cbf64df1b49}\label{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a209b2a787a7b9ac2a8aa7cbf64df1b49}} 
+C\+\_\+slab&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C\_stair@{C\_stair}!cave\_mesher.c@{cave\_mesher.c}}\index{cave\_mesher.c@{cave\_mesher.c}!C\_stair@{C\_stair}}}\mbox{\Hypertarget{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a184aff99562d1f8a4c2bb2886e6a88e6}\label{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a184aff99562d1f8a4c2bb2886e6a88e6}} 
+C\+\_\+stair&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C\_force@{C\_force}!cave\_mesher.c@{cave\_mesher.c}}\index{cave\_mesher.c@{cave\_mesher.c}!C\_force@{C\_force}}}\mbox{\Hypertarget{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84ad11d3d00256ac1a21a18239adfdc2de6}\label{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84ad11d3d00256ac1a21a18239adfdc2de6}} 
+C\+\_\+force&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 45 of file cave\+\_\+mesher.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{46 \{}
+\DoxyCodeLine{47    \mbox{\hyperlink{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a8e25f3fef8ddfd9ae47971d91958d83b}{C\_empty}},}
+\DoxyCodeLine{48    \mbox{\hyperlink{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84afff8826292ebae88305f433d13066894}{C\_solid}},}
+\DoxyCodeLine{49    \mbox{\hyperlink{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a61eaada366b3b15525272abc143dbfd5}{C\_trans}},}
+\DoxyCodeLine{50    \mbox{\hyperlink{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84af21da253d94bc582688921653c467895}{C\_cross}},}
+\DoxyCodeLine{51    \mbox{\hyperlink{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a0fcd3f1395447fcee9413f39c0687c76}{C\_water}},}
+\DoxyCodeLine{52    \mbox{\hyperlink{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a209b2a787a7b9ac2a8aa7cbf64df1b49}{C\_slab}},}
+\DoxyCodeLine{53    \mbox{\hyperlink{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a184aff99562d1f8a4c2bb2886e6a88e6}{C\_stair}},}
+\DoxyCodeLine{54    \mbox{\hyperlink{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84ad11d3d00256ac1a21a18239adfdc2de6}{C\_force}},}
+\DoxyCodeLine{55 \};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{cave__mesher_8c_ab4e47a2bc64f10cabe87c675e9b2bcc5}\label{cave__mesher_8c_ab4e47a2bc64f10cabe87c675e9b2bcc5}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!build\_chunk@{build\_chunk}}
+\index{build\_chunk@{build\_chunk}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{build\_chunk()}{build\_chunk()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} build\+\_\+chunk (\begin{DoxyParamCaption}\item[{int}]{chunk\+\_\+x,  }\item[{int}]{chunk\+\_\+y,  }\item[{\mbox{\hyperlink{structfast__chunk}{fast\+\_\+chunk}} $\ast$}]{fc\+\_\+table\mbox{[}4\mbox{]}\mbox{[}4\mbox{]},  }\item[{\mbox{\hyperlink{structraw__mesh}{raw\+\_\+mesh}} $\ast$}]{rm }\end{DoxyParamCaption})}
+
+
+
+Definition at line 602 of file cave\+\_\+mesher.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{603 \{}
+\DoxyCodeLine{604    \textcolor{keywordtype}{int} \mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}},\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}},\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}};}
+\DoxyCodeLine{605    \mbox{\hyperlink{structstbvox__input__description}{stbvox\_input\_description}} *map;}
+\DoxyCodeLine{606 }
+\DoxyCodeLine{607 \textcolor{preprocessor}{   \#ifdef VHEIGHT\_TEST}}
+\DoxyCodeLine{608    \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} vheight[34][34][18];}
+\DoxyCodeLine{609 \textcolor{preprocessor}{   \#endif}}
+\DoxyCodeLine{610 }
+\DoxyCodeLine{611 \textcolor{preprocessor}{   \#ifndef STBVOX\_CONFIG\_DISABLE\_TEX2}}
+\DoxyCodeLine{612    \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} tex2\_choice[34][34][18];}
+\DoxyCodeLine{613 \textcolor{preprocessor}{   \#endif}}
+\DoxyCodeLine{614 }
+\DoxyCodeLine{615    assert((chunk\_x \& 1) == 0);}
+\DoxyCodeLine{616    assert((chunk\_y \& 1) == 0);}
+\DoxyCodeLine{617 }
+\DoxyCodeLine{618    rm-\/>\mbox{\hyperlink{structraw__mesh_a2d8a1b1dea7e8a743e0f5aafb434befb}{cx}} = chunk\_x;}
+\DoxyCodeLine{619    rm-\/>\mbox{\hyperlink{structraw__mesh_a9098748aa135ddeeb362867175cc6751}{cy}} = chunk\_y;}
+\DoxyCodeLine{620 }
+\DoxyCodeLine{621    \mbox{\hyperlink{stb__voxel__render_8h_a089559775ad9ffc7671d147ef40f6509}{stbvox\_set\_input\_stride}}(\&rm-\/>\mbox{\hyperlink{structraw__mesh_a39eed89ae7fec0a09b73e75946c57640}{mm}}, 34*18, 18);}
+\DoxyCodeLine{622 }
+\DoxyCodeLine{623    assert(rm-\/>\mbox{\hyperlink{structraw__mesh_a39eed89ae7fec0a09b73e75946c57640}{mm}}.\mbox{\hyperlink{structstbvox__mesh__maker_ae83f21625eef0fb8db4d55900b1e8d74}{input}}.\mbox{\hyperlink{structstbvox__input__description_a18e00a30f954f1ab1a1a5ad69e35b8ee}{geometry}} == \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{624 }
+\DoxyCodeLine{625    map = \mbox{\hyperlink{stb__voxel__render_8h_adadf81990fab203a9b48c738922899e1}{stbvox\_get\_input\_description}}(\&rm-\/>\mbox{\hyperlink{structraw__mesh_a39eed89ae7fec0a09b73e75946c57640}{mm}});}
+\DoxyCodeLine{626    map-\/>\mbox{\hyperlink{structstbvox__input__description_a85cf8f5f29e98cd445900b131a9a8a8d}{block\_tex1\_face}} = \mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}};}
+\DoxyCodeLine{627    map-\/>\mbox{\hyperlink{structstbvox__input__description_a4cba1da418a53a010b75d6cee593aece}{block\_color\_face}} = \mbox{\hyperlink{cave__mesher_8c_a33fdd49440ce0309319d973be49dfd0a}{minecraft\_color\_for\_blocktype}};}
+\DoxyCodeLine{628    map-\/>\mbox{\hyperlink{structstbvox__input__description_acdcebc8d321327f365bbd3a3468f7f2d}{block\_geometry}} = \mbox{\hyperlink{cave__mesher_8c_ae01a977fd1f7c889f186baee1076b732}{minecraft\_geom\_for\_blocktype}};}
+\DoxyCodeLine{629 }
+\DoxyCodeLine{630    \mbox{\hyperlink{stb__voxel__render_8h_a34226517e08ca1da34b39d34a5c31031}{stbvox\_reset\_buffers}}(\&rm-\/>\mbox{\hyperlink{structraw__mesh_a39eed89ae7fec0a09b73e75946c57640}{mm}});}
+\DoxyCodeLine{631    \mbox{\hyperlink{stb__voxel__render_8h_a3b24ab8855010267a0e93541d1673fb9}{stbvox\_set\_buffer}}(\&rm-\/>\mbox{\hyperlink{structraw__mesh_a39eed89ae7fec0a09b73e75946c57640}{mm}}, 0, 0, rm-\/>\mbox{\hyperlink{structraw__mesh_aeea914666948a38adf71765721139455}{build\_buffer}}, \mbox{\hyperlink{caveview_8h_afa950acf77b651e25839f9fffcc15e3a}{BUILD\_BUFFER\_SIZE}});}
+\DoxyCodeLine{632    \mbox{\hyperlink{stb__voxel__render_8h_a3b24ab8855010267a0e93541d1673fb9}{stbvox\_set\_buffer}}(\&rm-\/>\mbox{\hyperlink{structraw__mesh_a39eed89ae7fec0a09b73e75946c57640}{mm}}, 0, 1, rm-\/>\mbox{\hyperlink{structraw__mesh_a5e8e2e14af2f1cfa02d66f7a2fcb0a81}{face\_buffer}} , \mbox{\hyperlink{caveview_8h_a4d65dca8ffc1cd92783b26732044ba59}{FACE\_BUFFER\_SIZE}});}
+\DoxyCodeLine{633 }
+\DoxyCodeLine{634    map-\/>\mbox{\hyperlink{structstbvox__input__description_a68f6d2ab5ba77e7e80021d60a2af7019}{blocktype}} = \&rm-\/>\mbox{\hyperlink{structraw__mesh_aed4362c13d96da67cf5237df5bed86cc}{sv\_blocktype}}[1][1][1]; \textcolor{comment}{// this is (0,0,0), but we need to be able to query off the edges}}
+\DoxyCodeLine{635    map-\/>\mbox{\hyperlink{structstbvox__input__description_a6b64e4cf0061bfe6dbae7981a002ab77}{lighting}} = \&rm-\/>\mbox{\hyperlink{structraw__mesh_afb37f5f58e50feb7d873c2ee28dcf00c}{sv\_lighting}}[1][1][1];}
+\DoxyCodeLine{636 }
+\DoxyCodeLine{637    \textcolor{comment}{// fill in the top two rows of the buffer}}
+\DoxyCodeLine{638    \textcolor{keywordflow}{for} (\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}=0; \mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}} < 34; ++\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}) \{}
+\DoxyCodeLine{639       \textcolor{keywordflow}{for} (\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}=0; \mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}} < 34; ++\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}) \{}
+\DoxyCodeLine{640          rm-\/>\mbox{\hyperlink{structraw__mesh_aed4362c13d96da67cf5237df5bed86cc}{sv\_blocktype}}[\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][16] = 0;}
+\DoxyCodeLine{641          rm-\/>\mbox{\hyperlink{structraw__mesh_afb37f5f58e50feb7d873c2ee28dcf00c}{sv\_lighting}} [\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][16] = 255;}
+\DoxyCodeLine{642          rm-\/>\mbox{\hyperlink{structraw__mesh_aed4362c13d96da67cf5237df5bed86cc}{sv\_blocktype}}[\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][17] = 0;}
+\DoxyCodeLine{643          rm-\/>\mbox{\hyperlink{structraw__mesh_afb37f5f58e50feb7d873c2ee28dcf00c}{sv\_lighting}} [\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][17] = 255;}
+\DoxyCodeLine{644       \}}
+\DoxyCodeLine{645    \}}
+\DoxyCodeLine{646 }
+\DoxyCodeLine{647 \textcolor{preprocessor}{   \#ifndef STBVOX\_CONFIG\_DISABLE\_TEX2}}
+\DoxyCodeLine{648    \textcolor{keywordflow}{for} (\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}=0; \mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}} < 34; ++\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}) \{}
+\DoxyCodeLine{649       \textcolor{keywordflow}{for} (\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}=0; \mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}} < 34; ++\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}) \{}
+\DoxyCodeLine{650          \textcolor{keywordtype}{int} px = chunk\_x*16 + \mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}} -\/ 1;}
+\DoxyCodeLine{651          \textcolor{keywordtype}{int} py = chunk\_y*16 + \mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}} -\/ 1;}
+\DoxyCodeLine{652          \textcolor{keywordtype}{float} dist = (float) sqrt(px*px + py*py);}
+\DoxyCodeLine{653          \textcolor{keywordtype}{float} \mbox{\hyperlink{glext_8h_a4ed25fb4dc5bf1a768a78d2e2f0ca003}{s1}} = (float) sin(dist / 16), s2, s3;}
+\DoxyCodeLine{654          dist = (float) sqrt((px-\/80)*(px-\/80) + (py-\/50)*(py-\/50));}
+\DoxyCodeLine{655          s2 = (float) sin(dist / 11);}
+\DoxyCodeLine{656          \textcolor{keywordflow}{for} (\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}=0; \mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}} < 18; ++\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}) \{}
+\DoxyCodeLine{657             s3 = (float) sin(\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}} * 3.141592 / 8);}
+\DoxyCodeLine{658 }
+\DoxyCodeLine{659             s3 = \mbox{\hyperlink{glext_8h_a4ed25fb4dc5bf1a768a78d2e2f0ca003}{s1}}*s2*s3;}
+\DoxyCodeLine{660             tex2\_choice[\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}] = 63 \& (int) \mbox{\hyperlink{stb_8h_ab2a4b1beb0e146a2cd0fed985d185909}{stb\_linear\_remap}}(s3,-\/1,1, -\/20,83);}
+\DoxyCodeLine{661          \}}
+\DoxyCodeLine{662       \}}
+\DoxyCodeLine{663    \}}
+\DoxyCodeLine{664 \textcolor{preprocessor}{   \#endif}}
+\DoxyCodeLine{665 }
+\DoxyCodeLine{666    \textcolor{keywordflow}{for} (\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}=256-\/16; \mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}} >= \mbox{\hyperlink{cave__mesher_8c_af205db34cd0a183e5e3481c4f8baa716}{SKIP\_TERRAIN}}; \mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}} -\/= 16)}
+\DoxyCodeLine{667    \{}
+\DoxyCodeLine{668       \textcolor{keywordtype}{int} z0 = \mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}};}
+\DoxyCodeLine{669       \textcolor{keywordtype}{int} z1 = \mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}+16;}
+\DoxyCodeLine{670       \textcolor{keywordflow}{if} (z1 == 256) z1 = 255;}
+\DoxyCodeLine{671 }
+\DoxyCodeLine{672       \mbox{\hyperlink{cave__mesher_8c_a72869edd94d6159ab80497d6fcf71071}{make\_map\_segment\_for\_superchunk\_preconvert}}(chunk\_x, chunk\_y, \mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}} >> 4, fc\_table, rm-\/>\mbox{\hyperlink{structraw__mesh_aed4362c13d96da67cf5237df5bed86cc}{sv\_blocktype}}, rm-\/>\mbox{\hyperlink{structraw__mesh_afb37f5f58e50feb7d873c2ee28dcf00c}{sv\_lighting}});}
+\DoxyCodeLine{673 }
+\DoxyCodeLine{674       map-\/>\mbox{\hyperlink{structstbvox__input__description_a68f6d2ab5ba77e7e80021d60a2af7019}{blocktype}} = \&rm-\/>\mbox{\hyperlink{structraw__mesh_aed4362c13d96da67cf5237df5bed86cc}{sv\_blocktype}}[1][1][1-\/\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}]; \textcolor{comment}{// specify location of 0,0,0 so that accessing z0..z1 gets right data}}
+\DoxyCodeLine{675       map-\/>\mbox{\hyperlink{structstbvox__input__description_a6b64e4cf0061bfe6dbae7981a002ab77}{lighting}} = \&rm-\/>\mbox{\hyperlink{structraw__mesh_afb37f5f58e50feb7d873c2ee28dcf00c}{sv\_lighting}}[1][1][1-\/\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}];}
+\DoxyCodeLine{676 \textcolor{preprocessor}{      \#ifndef STBVOX\_CONFIG\_DISABLE\_TEX2}}
+\DoxyCodeLine{677       map-\/>\mbox{\hyperlink{structstbvox__input__description_a21f1647c23699b973eecb6b2ea50e721}{tex2}} = \&tex2\_choice[1][1][1-\/\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}];}
+\DoxyCodeLine{678 \textcolor{preprocessor}{      \#endif}}
+\DoxyCodeLine{679 }
+\DoxyCodeLine{680 \textcolor{preprocessor}{      \#ifdef VHEIGHT\_TEST}}
+\DoxyCodeLine{681       \textcolor{comment}{// hacky test of vheight}}
+\DoxyCodeLine{682       \textcolor{keywordflow}{for} (\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}=0; \mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}} < 34; ++\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}) \{}
+\DoxyCodeLine{683          \textcolor{keywordflow}{for} (\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}=0; \mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}} < 34; ++\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}) \{}
+\DoxyCodeLine{684             \textcolor{keywordtype}{int} \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}};}
+\DoxyCodeLine{685             \textcolor{keywordflow}{for} (\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}=0; \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}} < 17; ++\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}) \{}
+\DoxyCodeLine{686                \textcolor{keywordflow}{if} (rm-\/>\mbox{\hyperlink{structraw__mesh_aed4362c13d96da67cf5237df5bed86cc}{sv\_blocktype}}[\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}] != 0 \&\& rm-\/>\mbox{\hyperlink{structraw__mesh_aed4362c13d96da67cf5237df5bed86cc}{sv\_blocktype}}[\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}+1] == 0) \{}
+\DoxyCodeLine{687                   \textcolor{comment}{// topmost block}}
+\DoxyCodeLine{688                   vheight[\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}] = rand() \& 255;}
+\DoxyCodeLine{689                   rm-\/>\mbox{\hyperlink{structraw__mesh_aed4362c13d96da67cf5237df5bed86cc}{sv\_blocktype}}[\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}] = 168;}
+\DoxyCodeLine{690                \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}} > 0 \&\& rm-\/>\mbox{\hyperlink{structraw__mesh_aed4362c13d96da67cf5237df5bed86cc}{sv\_blocktype}}[\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}] != 0 \&\& rm-\/>\mbox{\hyperlink{structraw__mesh_aed4362c13d96da67cf5237df5bed86cc}{sv\_blocktype}}[\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}-\/1] == 0) \{}
+\DoxyCodeLine{691                   \textcolor{comment}{// bottommost block}}
+\DoxyCodeLine{692                   vheight[\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}] = ((rand() \% 3) << 6) + ((rand() \% 3) << 4) + ((rand() \% 3) << 2) + (rand() \% 3);}
+\DoxyCodeLine{693                   rm-\/>\mbox{\hyperlink{structraw__mesh_aed4362c13d96da67cf5237df5bed86cc}{sv\_blocktype}}[\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}] = 169;}
+\DoxyCodeLine{694                \}}
+\DoxyCodeLine{695             \}}
+\DoxyCodeLine{696             vheight[\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}] = \mbox{\hyperlink{stb__voxel__render_8h_a7481d3530d34c5048938868910e259e3}{STBVOX\_MAKE\_VHEIGHT}}(2,2,2,2); \textcolor{comment}{// flat top}}
+\DoxyCodeLine{697          \}}
+\DoxyCodeLine{698       \}}
+\DoxyCodeLine{699       map-\/>\mbox{\hyperlink{structstbvox__input__description_a02de8f98d512dc9cef6094ad7571be05}{vheight}} = \&vheight[1][1][1-\/\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}];}
+\DoxyCodeLine{700 \textcolor{preprocessor}{      \#endif}}
+\DoxyCodeLine{701 }
+\DoxyCodeLine{702       \{}
+\DoxyCodeLine{703          \mbox{\hyperlink{stb__voxel__render_8h_a63fbb8703cf2c2718e6a0b4a90db00e6}{stbvox\_set\_input\_range}}(\&rm-\/>\mbox{\hyperlink{structraw__mesh_a39eed89ae7fec0a09b73e75946c57640}{mm}}, 0,0,z0, 32,32,z1);}
+\DoxyCodeLine{704          \mbox{\hyperlink{stb__voxel__render_8h_aae8b2a3e95db09861fef397aeb7cf10d}{stbvox\_set\_default\_mesh}}(\&rm-\/>\mbox{\hyperlink{structraw__mesh_a39eed89ae7fec0a09b73e75946c57640}{mm}}, 0);}
+\DoxyCodeLine{705          \mbox{\hyperlink{stb__voxel__render_8h_ab792b164e02789bce6e2ba96a4b8f935}{stbvox\_make\_mesh}}(\&rm-\/>\mbox{\hyperlink{structraw__mesh_a39eed89ae7fec0a09b73e75946c57640}{mm}});}
+\DoxyCodeLine{706       \}}
+\DoxyCodeLine{707 }
+\DoxyCodeLine{708       \textcolor{comment}{// copy the bottom two rows of data up to the top}}
+\DoxyCodeLine{709       \textcolor{keywordflow}{for} (\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}=0; \mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}} < 34; ++\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}) \{}
+\DoxyCodeLine{710          \textcolor{keywordflow}{for} (\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}=0; \mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}} < 34; ++\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}) \{}
+\DoxyCodeLine{711             rm-\/>\mbox{\hyperlink{structraw__mesh_aed4362c13d96da67cf5237df5bed86cc}{sv\_blocktype}}[\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][16] = rm-\/>\mbox{\hyperlink{structraw__mesh_aed4362c13d96da67cf5237df5bed86cc}{sv\_blocktype}}[\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][0];}
+\DoxyCodeLine{712             rm-\/>\mbox{\hyperlink{structraw__mesh_aed4362c13d96da67cf5237df5bed86cc}{sv\_blocktype}}[\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][17] = rm-\/>\mbox{\hyperlink{structraw__mesh_aed4362c13d96da67cf5237df5bed86cc}{sv\_blocktype}}[\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][1];}
+\DoxyCodeLine{713             rm-\/>\mbox{\hyperlink{structraw__mesh_afb37f5f58e50feb7d873c2ee28dcf00c}{sv\_lighting}} [\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][16] = rm-\/>\mbox{\hyperlink{structraw__mesh_afb37f5f58e50feb7d873c2ee28dcf00c}{sv\_lighting}} [\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][0];}
+\DoxyCodeLine{714             rm-\/>\mbox{\hyperlink{structraw__mesh_afb37f5f58e50feb7d873c2ee28dcf00c}{sv\_lighting}} [\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][17] = rm-\/>\mbox{\hyperlink{structraw__mesh_afb37f5f58e50feb7d873c2ee28dcf00c}{sv\_lighting}} [\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}][\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}][1];}
+\DoxyCodeLine{715          \}}
+\DoxyCodeLine{716       \}}
+\DoxyCodeLine{717    \}}
+\DoxyCodeLine{718 }
+\DoxyCodeLine{719    \mbox{\hyperlink{stb__voxel__render_8h_a4592b690afe4825bfabdfd9ae29fb35e}{stbvox\_set\_mesh\_coordinates}}(\&rm-\/>\mbox{\hyperlink{structraw__mesh_a39eed89ae7fec0a09b73e75946c57640}{mm}}, chunk\_x*16, chunk\_y*16, 0);}
+\DoxyCodeLine{720    \mbox{\hyperlink{stb__voxel__render_8h_a0a8668048f7cca70ef7043261761da90}{stbvox\_get\_transform}}(\&rm-\/>\mbox{\hyperlink{structraw__mesh_a39eed89ae7fec0a09b73e75946c57640}{mm}}, rm-\/>\mbox{\hyperlink{structraw__mesh_a85966417fa9b2b01fa2deb493d59996a}{transform}});}
+\DoxyCodeLine{721 }
+\DoxyCodeLine{722    \mbox{\hyperlink{stb__voxel__render_8h_a63fbb8703cf2c2718e6a0b4a90db00e6}{stbvox\_set\_input\_range}}(\&rm-\/>\mbox{\hyperlink{structraw__mesh_a39eed89ae7fec0a09b73e75946c57640}{mm}}, 0,0,0, 32,32,255);}
+\DoxyCodeLine{723    \mbox{\hyperlink{stb__voxel__render_8h_a0ad8a7764f93c0592671bcf0e246dc6e}{stbvox\_get\_bounds}}(\&rm-\/>\mbox{\hyperlink{structraw__mesh_a39eed89ae7fec0a09b73e75946c57640}{mm}}, rm-\/>\mbox{\hyperlink{structraw__mesh_ad56f04c63fd9fc1263329916029d6222}{bounds}});}
+\DoxyCodeLine{724 }
+\DoxyCodeLine{725    rm-\/>\mbox{\hyperlink{structraw__mesh_aaa6e0d90284bfa6172577269e7d1d84a}{num\_quads}} = \mbox{\hyperlink{stb__voxel__render_8h_ace18e150b58146e2ec7ecba5ca0517b6}{stbvox\_get\_quad\_count}}(\&rm-\/>\mbox{\hyperlink{structraw__mesh_a39eed89ae7fec0a09b73e75946c57640}{mm}}, 0);}
+\DoxyCodeLine{726 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__mesher_8c_a626c17451761446962cffc9add2ed539}\label{cave__mesher_8c_a626c17451761446962cffc9add2ed539}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!build\_stair\_rotations@{build\_stair\_rotations}}
+\index{build\_stair\_rotations@{build\_stair\_rotations}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{build\_stair\_rotations()}{build\_stair\_rotations()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} build\+\_\+stair\+\_\+rotations (\begin{DoxyParamCaption}\item[{int}]{blocktype,  }\item[{unsigned char $\ast$}]{map }\end{DoxyParamCaption})}
+
+
+
+Definition at line 735 of file cave\+\_\+mesher.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{736 \{}
+\DoxyCodeLine{737    \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{738 }
+\DoxyCodeLine{739    \textcolor{comment}{// use the existing block type for floor stairs; allocate a new type for ceil stairs}}
+\DoxyCodeLine{740    \textcolor{keywordflow}{for} (i=0; i < 6; ++i) \{}
+\DoxyCodeLine{741       \mbox{\hyperlink{cave__mesher_8c_a33fdd49440ce0309319d973be49dfd0a}{minecraft\_color\_for\_blocktype}}[\mbox{\hyperlink{cave__mesher_8c_a209a4cb1b4169823bf527e2e1410d8a1}{next\_blocktype}}][i] = \mbox{\hyperlink{cave__mesher_8c_a33fdd49440ce0309319d973be49dfd0a}{minecraft\_color\_for\_blocktype}}[blocktype][i];}
+\DoxyCodeLine{742       \mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}} [\mbox{\hyperlink{cave__mesher_8c_a209a4cb1b4169823bf527e2e1410d8a1}{next\_blocktype}}][i] = \mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}} [blocktype][i];}
+\DoxyCodeLine{743    \}}
+\DoxyCodeLine{744    \mbox{\hyperlink{cave__mesher_8c_ae01a977fd1f7c889f186baee1076b732}{minecraft\_geom\_for\_blocktype}}[\mbox{\hyperlink{cave__mesher_8c_a209a4cb1b4169823bf527e2e1410d8a1}{next\_blocktype}}] = (\textcolor{keywordtype}{unsigned} char) \mbox{\hyperlink{stb__voxel__render_8h_a15590f88a985eb242c6dffb8c462983a}{STBVOX\_MAKE\_GEOMETRY}}(\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3caa5dcab0b072fb42d24d09d3ace41724d}{STBVOX\_GEOM\_ceil\_slope\_north\_is\_bottom}}, 0, 0);}
+\DoxyCodeLine{745    \mbox{\hyperlink{cave__mesher_8c_ae01a977fd1f7c889f186baee1076b732}{minecraft\_geom\_for\_blocktype}}[     blocktype] = (\textcolor{keywordtype}{unsigned} char) \mbox{\hyperlink{stb__voxel__render_8h_a15590f88a985eb242c6dffb8c462983a}{STBVOX\_MAKE\_GEOMETRY}}(\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca063a4146fc89954375c7fc7fa39e8747}{STBVOX\_GEOM\_floor\_slope\_north\_is\_top}}, 0, 0);}
+\DoxyCodeLine{746 }
+\DoxyCodeLine{747    \textcolor{keywordflow}{for} (i=0; i < 4; ++i) \{}
+\DoxyCodeLine{748       map[0+i+8] = map[0+i] =      blocktype;}
+\DoxyCodeLine{749       map[4+i+8] = map[4+i] = \mbox{\hyperlink{cave__mesher_8c_a209a4cb1b4169823bf527e2e1410d8a1}{next\_blocktype}};}
+\DoxyCodeLine{750    \}}
+\DoxyCodeLine{751    -\/-\/\mbox{\hyperlink{cave__mesher_8c_a209a4cb1b4169823bf527e2e1410d8a1}{next\_blocktype}};}
+\DoxyCodeLine{752 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__mesher_8c_adcf4dda69d85bc49b9f4babc57587095}\label{cave__mesher_8c_adcf4dda69d85bc49b9f4babc57587095}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!build\_wood\_variations@{build\_wood\_variations}}
+\index{build\_wood\_variations@{build\_wood\_variations}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{build\_wood\_variations()}{build\_wood\_variations()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} build\+\_\+wood\+\_\+variations (\begin{DoxyParamCaption}\item[{int}]{bt,  }\item[{unsigned char $\ast$}]{map }\end{DoxyParamCaption})}
+
+
+
+Definition at line 772 of file cave\+\_\+mesher.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{773 \{}
+\DoxyCodeLine{774    \textcolor{keywordtype}{int} i,k;}
+\DoxyCodeLine{775    \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \mbox{\hyperlink{truetype__test__win32_8c_a02b59d9340abbb5f3058556198d6c0fa}{tex}}[4] = \{ 5, 198, 214, 199 \};}
+\DoxyCodeLine{776    \textcolor{keywordflow}{for} (i=0; i < 4; ++i) \{}
+\DoxyCodeLine{777       \textcolor{keywordflow}{if} (i == 0)}
+\DoxyCodeLine{778          map[i] = bt;}
+\DoxyCodeLine{779       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{780          map[i] = \mbox{\hyperlink{cave__mesher_8c_a209a4cb1b4169823bf527e2e1410d8a1}{next\_blocktype}};}
+\DoxyCodeLine{781          \textcolor{keywordflow}{for} (k=0; k < 6; ++k) \{}
+\DoxyCodeLine{782             \mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[\mbox{\hyperlink{cave__mesher_8c_a209a4cb1b4169823bf527e2e1410d8a1}{next\_blocktype}}][k] = \mbox{\hyperlink{truetype__test__win32_8c_a02b59d9340abbb5f3058556198d6c0fa}{tex}}[i];}
+\DoxyCodeLine{783          \}}
+\DoxyCodeLine{784          \mbox{\hyperlink{cave__mesher_8c_ae01a977fd1f7c889f186baee1076b732}{minecraft\_geom\_for\_blocktype}}[\mbox{\hyperlink{cave__mesher_8c_a209a4cb1b4169823bf527e2e1410d8a1}{next\_blocktype}}] = \mbox{\hyperlink{cave__mesher_8c_ae01a977fd1f7c889f186baee1076b732}{minecraft\_geom\_for\_blocktype}}[bt];}
+\DoxyCodeLine{785          -\/-\/\mbox{\hyperlink{cave__mesher_8c_a209a4cb1b4169823bf527e2e1410d8a1}{next\_blocktype}};}
+\DoxyCodeLine{786       \}}
+\DoxyCodeLine{787    \}}
+\DoxyCodeLine{788    map[i] = map[i-\/1];}
+\DoxyCodeLine{789    ++i;}
+\DoxyCodeLine{790    \textcolor{keywordflow}{for} (; i < 16; ++i)}
+\DoxyCodeLine{791       map[i] = bt;}
+\DoxyCodeLine{792 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__mesher_8c_addb3a71c75c33215207185a88be4bb62}\label{cave__mesher_8c_addb3a71c75c33215207185a88be4bb62}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!build\_wool\_variations@{build\_wool\_variations}}
+\index{build\_wool\_variations@{build\_wool\_variations}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{build\_wool\_variations()}{build\_wool\_variations()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} build\+\_\+wool\+\_\+variations (\begin{DoxyParamCaption}\item[{int}]{bt,  }\item[{unsigned char $\ast$}]{map }\end{DoxyParamCaption})}
+
+
+
+Definition at line 754 of file cave\+\_\+mesher.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{755 \{}
+\DoxyCodeLine{756    \textcolor{keywordtype}{int} i,k;}
+\DoxyCodeLine{757    \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \mbox{\hyperlink{truetype__test__win32_8c_a02b59d9340abbb5f3058556198d6c0fa}{tex}}[16] = \{ 64, 210, 194, 178,  162, 146, 130, 114,  225, 209, 193, 177,  161, 145, 129, 113 \};}
+\DoxyCodeLine{758    \textcolor{keywordflow}{for} (i=0; i < 16; ++i) \{}
+\DoxyCodeLine{759       \textcolor{keywordflow}{if} (i == 0)}
+\DoxyCodeLine{760          map[i] = bt;}
+\DoxyCodeLine{761       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{762          map[i] = \mbox{\hyperlink{cave__mesher_8c_a209a4cb1b4169823bf527e2e1410d8a1}{next\_blocktype}};}
+\DoxyCodeLine{763          \textcolor{keywordflow}{for} (k=0; k < 6; ++k) \{}
+\DoxyCodeLine{764             \mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[\mbox{\hyperlink{cave__mesher_8c_a209a4cb1b4169823bf527e2e1410d8a1}{next\_blocktype}}][k] = \mbox{\hyperlink{truetype__test__win32_8c_a02b59d9340abbb5f3058556198d6c0fa}{tex}}[i];}
+\DoxyCodeLine{765          \}}
+\DoxyCodeLine{766          \mbox{\hyperlink{cave__mesher_8c_ae01a977fd1f7c889f186baee1076b732}{minecraft\_geom\_for\_blocktype}}[\mbox{\hyperlink{cave__mesher_8c_a209a4cb1b4169823bf527e2e1410d8a1}{next\_blocktype}}] = \mbox{\hyperlink{cave__mesher_8c_ae01a977fd1f7c889f186baee1076b732}{minecraft\_geom\_for\_blocktype}}[bt];}
+\DoxyCodeLine{767          -\/-\/\mbox{\hyperlink{cave__mesher_8c_a209a4cb1b4169823bf527e2e1410d8a1}{next\_blocktype}};}
+\DoxyCodeLine{768       \}}
+\DoxyCodeLine{769    \}}
+\DoxyCodeLine{770 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__mesher_8c_a147e37fcae806febbdaac22c776d5685}\label{cave__mesher_8c_a147e37fcae806febbdaac22c776d5685}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!convert\_fastchunk\_inplace@{convert\_fastchunk\_inplace}}
+\index{convert\_fastchunk\_inplace@{convert\_fastchunk\_inplace}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{convert\_fastchunk\_inplace()}{convert\_fastchunk\_inplace()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} convert\+\_\+fastchunk\+\_\+inplace (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structfast__chunk}{fast\+\_\+chunk}} $\ast$}]{fc }\end{DoxyParamCaption})}
+
+
+
+Definition at line 332 of file cave\+\_\+mesher.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{333 \{}
+\DoxyCodeLine{334    \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{335    \textcolor{keywordtype}{int} num\_blocks=0, \mbox{\hyperlink{cave__render_8c_a863c86bdfd96bf9c461846689c2614aa}{step}}=0;}
+\DoxyCodeLine{336    \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} rot[4096];}
+\DoxyCodeLine{337 \textcolor{preprocessor}{   \#ifndef IN\_PLACE}}
+\DoxyCodeLine{338    \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *storage;}
+\DoxyCodeLine{339 \textcolor{preprocessor}{   \#endif}}
+\DoxyCodeLine{340 }
+\DoxyCodeLine{341    memset(rot, 0, 4096);}
+\DoxyCodeLine{342 }
+\DoxyCodeLine{343    \textcolor{keywordflow}{for} (i=0; i < 16; ++i)}
+\DoxyCodeLine{344       num\_blocks += fc-\/>\mbox{\hyperlink{structfast__chunk_aa3910677b48fdbfa3e5222b458aba2c8}{blockdata}}[i] != \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{345 }
+\DoxyCodeLine{346    \#ifndef \mbox{\hyperlink{cave__mesher_8c_acf9495e0af27842ed032cb05edcb9126}{IN\_PLACE}}}
+\DoxyCodeLine{347    storage = \mbox{\hyperlink{stb__leakcheck_8h_ac71ce303a4b993665ae00f1e1293ba8b}{malloc}}(16*16*16*2 * num\_blocks);}
+\DoxyCodeLine{348 \textcolor{preprocessor}{   \#endif}}
+\DoxyCodeLine{349 }
+\DoxyCodeLine{350    \textcolor{keywordflow}{for} (i=0; i < 16; ++i) \{}
+\DoxyCodeLine{351       \textcolor{keywordflow}{if} (fc-\/>\mbox{\hyperlink{structfast__chunk_aa3910677b48fdbfa3e5222b458aba2c8}{blockdata}}[i]) \{}
+\DoxyCodeLine{352          \textcolor{keywordtype}{int} o=0;}
+\DoxyCodeLine{353          \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *bd,*dd,*lt,*sky;}
+\DoxyCodeLine{354          \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *out, *outb;}
+\DoxyCodeLine{355 }
+\DoxyCodeLine{356          \textcolor{comment}{// this ordering allows us to determine which data we can safely overwrite for in-\/place processing}}
+\DoxyCodeLine{357          bd = fc-\/>\mbox{\hyperlink{structfast__chunk_aa3910677b48fdbfa3e5222b458aba2c8}{blockdata}}[i];}
+\DoxyCodeLine{358          dd = fc-\/>\mbox{\hyperlink{structfast__chunk_a537008bbe2af7d45e3c62bbf911ace41}{data}}[i];}
+\DoxyCodeLine{359          lt = fc-\/>\mbox{\hyperlink{structfast__chunk_a3bfc4a7b95a52dfc31599b6e7cff3707}{light}}[i];}
+\DoxyCodeLine{360          sky = fc-\/>\mbox{\hyperlink{structfast__chunk_a612a4dca5a8ade5e6d1738fc39d5e42a}{skylight}}[i];}
+\DoxyCodeLine{361 }
+\DoxyCodeLine{362 \textcolor{preprocessor}{         \#ifdef IN\_PLACE}}
+\DoxyCodeLine{363          out = bd;}
+\DoxyCodeLine{364 \textcolor{preprocessor}{         \#else}}
+\DoxyCodeLine{365          out = storage + 16*16*16*2*\mbox{\hyperlink{cave__render_8c_a863c86bdfd96bf9c461846689c2614aa}{step}};}
+\DoxyCodeLine{366 \textcolor{preprocessor}{         \#endif}}
+\DoxyCodeLine{367 }
+\DoxyCodeLine{368          \textcolor{comment}{// bd is written in place, but also reads from dd}}
+\DoxyCodeLine{369          \textcolor{keywordflow}{for} (o=0; o < 16*16*16/2; o += 1) \{}
+\DoxyCodeLine{370             \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \mbox{\hyperlink{glad_8h_a435c176a02c061b43e19bdf7c86cceae}{v1}},\mbox{\hyperlink{glad_8h_a0928f6d0f0f794ba000a21dfae422136}{v2}};}
+\DoxyCodeLine{371             \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} d = dd[o];}
+\DoxyCodeLine{372             \mbox{\hyperlink{glad_8h_a435c176a02c061b43e19bdf7c86cceae}{v1}} = bd[o*2+0];}
+\DoxyCodeLine{373             \mbox{\hyperlink{glad_8h_a0928f6d0f0f794ba000a21dfae422136}{v2}} = bd[o*2+1];}
+\DoxyCodeLine{374 }
+\DoxyCodeLine{375             \textcolor{keywordflow}{if} (\mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}}[\mbox{\hyperlink{glad_8h_a435c176a02c061b43e19bdf7c86cceae}{v1}}])}
+\DoxyCodeLine{376             \{}
+\DoxyCodeLine{377                \textcolor{comment}{//unsigned char d = bd[o] \& 15;}}
+\DoxyCodeLine{378                \mbox{\hyperlink{glad_8h_a435c176a02c061b43e19bdf7c86cceae}{v1}} = \mbox{\hyperlink{cave__mesher_8c_a2015282d41ced055a462520de780e814}{remap\_data}}[\mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}}[\mbox{\hyperlink{glad_8h_a435c176a02c061b43e19bdf7c86cceae}{v1}}]][d\&15];}
+\DoxyCodeLine{379                rot[o*2+0] = \mbox{\hyperlink{cave__mesher_8c_a1b58e7e250316c8d1a2fe21fafaa5fcd}{rotate\_data}}[d\&3];}
+\DoxyCodeLine{380             \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{381                \mbox{\hyperlink{glad_8h_a435c176a02c061b43e19bdf7c86cceae}{v1}} = \mbox{\hyperlink{cave__mesher_8c_af38282980cc171915d4acfe5f3e03c90}{effective\_blocktype}}[\mbox{\hyperlink{glad_8h_a435c176a02c061b43e19bdf7c86cceae}{v1}}];}
+\DoxyCodeLine{382 }
+\DoxyCodeLine{383             \textcolor{keywordflow}{if} (\mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}}[\mbox{\hyperlink{glad_8h_a0928f6d0f0f794ba000a21dfae422136}{v2}}])}
+\DoxyCodeLine{384             \{}
+\DoxyCodeLine{385                \textcolor{comment}{//unsigned char d = bd[o] >> 4;}}
+\DoxyCodeLine{386                \mbox{\hyperlink{glad_8h_a0928f6d0f0f794ba000a21dfae422136}{v2}} = \mbox{\hyperlink{cave__mesher_8c_a2015282d41ced055a462520de780e814}{remap\_data}}[\mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}}[\mbox{\hyperlink{glad_8h_a0928f6d0f0f794ba000a21dfae422136}{v2}}]][d>>4];}
+\DoxyCodeLine{387                rot[o*2+1] = \mbox{\hyperlink{cave__mesher_8c_a1b58e7e250316c8d1a2fe21fafaa5fcd}{rotate\_data}}[(d>>4)\&3];}
+\DoxyCodeLine{388             \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{389                \mbox{\hyperlink{glad_8h_a0928f6d0f0f794ba000a21dfae422136}{v2}} = \mbox{\hyperlink{cave__mesher_8c_af38282980cc171915d4acfe5f3e03c90}{effective\_blocktype}}[\mbox{\hyperlink{glad_8h_a0928f6d0f0f794ba000a21dfae422136}{v2}}];}
+\DoxyCodeLine{390 }
+\DoxyCodeLine{391             out[o*2+0] = \mbox{\hyperlink{glad_8h_a435c176a02c061b43e19bdf7c86cceae}{v1}};}
+\DoxyCodeLine{392             out[o*2+1] = \mbox{\hyperlink{glad_8h_a0928f6d0f0f794ba000a21dfae422136}{v2}};}
+\DoxyCodeLine{393          \}}
+\DoxyCodeLine{394 }
+\DoxyCodeLine{395          \textcolor{comment}{// this reads from lt \& sky}}
+\DoxyCodeLine{396 \textcolor{preprocessor}{         \#ifndef IN\_PLACE}}
+\DoxyCodeLine{397          outb = out + 16*16*16;}
+\DoxyCodeLine{398          ++\mbox{\hyperlink{cave__render_8c_a863c86bdfd96bf9c461846689c2614aa}{step}};}
+\DoxyCodeLine{399 \textcolor{preprocessor}{         \#endif}}
+\DoxyCodeLine{400 }
+\DoxyCodeLine{401          \textcolor{comment}{// MC used to write in this order and it makes it possible to compute in-\/place}}
+\DoxyCodeLine{402          \textcolor{keywordflow}{if} (dd < sky \&\& sky < lt) \{}
+\DoxyCodeLine{403             \textcolor{comment}{// @TODO go this path always if !IN\_PLACE}}
+\DoxyCodeLine{404 \textcolor{preprocessor}{            \#ifdef IN\_PLACE}}
+\DoxyCodeLine{405             outb = dd;}
+\DoxyCodeLine{406 \textcolor{preprocessor}{            \#endif}}
+\DoxyCodeLine{407 }
+\DoxyCodeLine{408             \textcolor{keywordflow}{for} (o=0; o < 16*16*16/2; ++o) \{}
+\DoxyCodeLine{409                \textcolor{keywordtype}{int} bright;}
+\DoxyCodeLine{410                bright = (lt[o]\&15)*12 + 15 + (sky[o]\&15)*16;}
+\DoxyCodeLine{411                \textcolor{keywordflow}{if} (bright > 255) bright = 255;}
+\DoxyCodeLine{412                \textcolor{keywordflow}{if} (bright <  32) bright =  32;}
+\DoxyCodeLine{413                outb[o*2+0] = \mbox{\hyperlink{stb__voxel__render_8h_a010e6516eb03985257ba2a14eeea396c}{STBVOX\_MAKE\_LIGHTING\_EXT}}((\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}) bright, (rot[o*2+0]\&3));}
+\DoxyCodeLine{414 }
+\DoxyCodeLine{415                bright = (lt[o]>>4)*12 + 15 + (sky[o]>>4)*16;}
+\DoxyCodeLine{416                \textcolor{keywordflow}{if} (bright > 255) bright = 255;}
+\DoxyCodeLine{417                \textcolor{keywordflow}{if} (bright <  32) bright =  32;}
+\DoxyCodeLine{418                outb[o*2+1] = \mbox{\hyperlink{stb__voxel__render_8h_a010e6516eb03985257ba2a14eeea396c}{STBVOX\_MAKE\_LIGHTING\_EXT}}((\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}) bright, (rot[o*2+1]\&3));}
+\DoxyCodeLine{419             \}}
+\DoxyCodeLine{420          \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{421             \textcolor{comment}{// @TODO: if blocktype is in between others, this breaks; need to find which side has two pointers, and use that}}
+\DoxyCodeLine{422             \textcolor{comment}{// overwrite rot[] array, then copy out}}
+\DoxyCodeLine{423 \textcolor{preprocessor}{            \#ifdef IN\_PLACE}}
+\DoxyCodeLine{424             outb = (dd < sky) ? dd : sky;}
+\DoxyCodeLine{425             \textcolor{keywordflow}{if} (lt < outb) lt = outb;}
+\DoxyCodeLine{426 \textcolor{preprocessor}{            \#endif}}
+\DoxyCodeLine{427 }
+\DoxyCodeLine{428             \textcolor{keywordflow}{for} (o=0; o < 16*16*16/2; ++o) \{}
+\DoxyCodeLine{429                \textcolor{keywordtype}{int} bright;}
+\DoxyCodeLine{430                bright = (lt[o]\&15)*12 + 15 + (sky[o]\&15)*16;}
+\DoxyCodeLine{431                \textcolor{keywordflow}{if} (bright > 255) bright = 255;}
+\DoxyCodeLine{432                \textcolor{keywordflow}{if} (bright <  32) bright =  32;}
+\DoxyCodeLine{433                rot[o*2+0] = \mbox{\hyperlink{stb__voxel__render_8h_a010e6516eb03985257ba2a14eeea396c}{STBVOX\_MAKE\_LIGHTING\_EXT}}((\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}) bright, (rot[o*2+0]\&3));}
+\DoxyCodeLine{434 }
+\DoxyCodeLine{435                bright = (lt[o]>>4)*12 + 15 + (sky[o]>>4)*16;}
+\DoxyCodeLine{436                \textcolor{keywordflow}{if} (bright > 255) bright = 255;}
+\DoxyCodeLine{437                \textcolor{keywordflow}{if} (bright <  32) bright =  32;}
+\DoxyCodeLine{438                rot[o*2+1] = \mbox{\hyperlink{stb__voxel__render_8h_a010e6516eb03985257ba2a14eeea396c}{STBVOX\_MAKE\_LIGHTING\_EXT}}((\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}) bright, (rot[o*2+1]\&3));}
+\DoxyCodeLine{439             \}}
+\DoxyCodeLine{440 }
+\DoxyCodeLine{441             memcpy(outb, rot, 4096);}
+\DoxyCodeLine{442             fc-\/>\mbox{\hyperlink{structfast__chunk_a537008bbe2af7d45e3c62bbf911ace41}{data}}[i] = outb;}
+\DoxyCodeLine{443          \}}
+\DoxyCodeLine{444 }
+\DoxyCodeLine{445 \textcolor{preprocessor}{         \#ifndef IN\_PLACE}}
+\DoxyCodeLine{446          fc-\/>\mbox{\hyperlink{structfast__chunk_aa3910677b48fdbfa3e5222b458aba2c8}{blockdata}}[i] = out;}
+\DoxyCodeLine{447          fc-\/>\mbox{\hyperlink{structfast__chunk_a537008bbe2af7d45e3c62bbf911ace41}{data}}[i] = outb;}
+\DoxyCodeLine{448 \textcolor{preprocessor}{         \#endif}}
+\DoxyCodeLine{449       \}}
+\DoxyCodeLine{450    \}}
+\DoxyCodeLine{451 }
+\DoxyCodeLine{452 \textcolor{preprocessor}{   \#ifndef IN\_PLACE}}
+\DoxyCodeLine{453    \mbox{\hyperlink{stb__leakcheck_8h_a9d4b5df3530d1bc733070a4669ba6ebc}{free}}(fc-\/>\mbox{\hyperlink{structfast__chunk_aea03b39185c1d472a7f61f86529f0863}{pointer\_to\_free}});}
+\DoxyCodeLine{454    fc-\/>\mbox{\hyperlink{structfast__chunk_aea03b39185c1d472a7f61f86529f0863}{pointer\_to\_free}} = storage;}
+\DoxyCodeLine{455 \textcolor{preprocessor}{   \#endif}}
+\DoxyCodeLine{456 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__mesher_8c_a65286ae93fc1fc5e6e88af8d2f02a731}\label{cave__mesher_8c_a65286ae93fc1fc5e6e88af8d2f02a731}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!deref\_fastchunk@{deref\_fastchunk}}
+\index{deref\_fastchunk@{deref\_fastchunk}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{deref\_fastchunk()}{deref\_fastchunk()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} deref\+\_\+fastchunk (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structfast__chunk}{fast\+\_\+chunk}} $\ast$}]{fc }\end{DoxyParamCaption})}
+
+
+
+Definition at line 510 of file cave\+\_\+mesher.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{511 \{}
+\DoxyCodeLine{512    \textcolor{keywordflow}{if} (fc) \{}
+\DoxyCodeLine{513       assert(fc-\/>\mbox{\hyperlink{structfast__chunk_a0bcf2001e68fdcf8e5eaf83a7ea83440}{refcount}} > 0);}
+\DoxyCodeLine{514       -\/-\/fc-\/>\mbox{\hyperlink{structfast__chunk_a0bcf2001e68fdcf8e5eaf83a7ea83440}{refcount}};}
+\DoxyCodeLine{515       \textcolor{keywordflow}{if} (fc-\/>\mbox{\hyperlink{structfast__chunk_a0bcf2001e68fdcf8e5eaf83a7ea83440}{refcount}} == 0) \{}
+\DoxyCodeLine{516          \mbox{\hyperlink{stb__leakcheck_8h_a9d4b5df3530d1bc733070a4669ba6ebc}{free}}(fc-\/>\mbox{\hyperlink{structfast__chunk_aea03b39185c1d472a7f61f86529f0863}{pointer\_to\_free}});}
+\DoxyCodeLine{517          \mbox{\hyperlink{stb__leakcheck_8h_a9d4b5df3530d1bc733070a4669ba6ebc}{free}}(fc);}
+\DoxyCodeLine{518       \}}
+\DoxyCodeLine{519    \}}
+\DoxyCodeLine{520 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__mesher_8c_a7c54b9b85359841f7dbe539558bc5aa5}\label{cave__mesher_8c_a7c54b9b85359841f7dbe539558bc5aa5}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!get\_converted\_fastchunk@{get\_converted\_fastchunk}}
+\index{get\_converted\_fastchunk@{get\_converted\_fastchunk}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{get\_converted\_fastchunk()}{get\_converted\_fastchunk()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structfast__chunk}{fast\+\_\+chunk}}$\ast$ get\+\_\+converted\+\_\+fastchunk (\begin{DoxyParamCaption}\item[{int}]{chunk\+\_\+x,  }\item[{int}]{chunk\+\_\+y }\end{DoxyParamCaption})}
+
+
+
+Definition at line 534 of file cave\+\_\+mesher.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{535 \{}
+\DoxyCodeLine{536    \textcolor{keywordtype}{int} slot\_x = (chunk\_x \& (\mbox{\hyperlink{cave__mesher_8c_adc2cfac3a357c5424aafa9d351a2e6ea}{cache\_size}}-\/1));}
+\DoxyCodeLine{537    \textcolor{keywordtype}{int} slot\_y = (chunk\_y \& (\mbox{\hyperlink{cave__mesher_8c_adc2cfac3a357c5424aafa9d351a2e6ea}{cache\_size}}-\/1));}
+\DoxyCodeLine{538    \mbox{\hyperlink{structfast__chunk}{fast\_chunk}} *fc;}
+\DoxyCodeLine{539    \mbox{\hyperlink{structcached__converted__chunk}{cached\_converted\_chunk}} *ccc;}
+\DoxyCodeLine{540    SDL\_LockMutex(\mbox{\hyperlink{cave__mesher_8c_a784ba0617dbc4eec455188b9671295aa}{chunk\_cache\_mutex}});}
+\DoxyCodeLine{541    ccc = \&\mbox{\hyperlink{cave__mesher_8c_ab799c6e56a65a1a9a2c089c9d4b81de9}{chunk\_cache}}[slot\_y][slot\_x];}
+\DoxyCodeLine{542    \textcolor{keywordflow}{if} (ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_a890fc62a8689a97e24ffd59097770836}{valid}}) \{}
+\DoxyCodeLine{543       \textcolor{keywordflow}{if} (ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_a720a08b6d6b18cf740d807dd119c52c0}{chunk\_x}} == chunk\_x \&\& ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_a5a71274f9dc7a89cd3e962a719e0ac7f}{chunk\_y}} == chunk\_y) \{}
+\DoxyCodeLine{544          \mbox{\hyperlink{structfast__chunk}{fast\_chunk}} *fc = ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_ad891f426a0caf16bf5a9a54439beeade}{fc}};}
+\DoxyCodeLine{545          \textcolor{keywordflow}{if} (fc)}
+\DoxyCodeLine{546             ++fc-\/>\mbox{\hyperlink{structfast__chunk_a0bcf2001e68fdcf8e5eaf83a7ea83440}{refcount}};}
+\DoxyCodeLine{547          SDL\_UnlockMutex(\mbox{\hyperlink{cave__mesher_8c_a784ba0617dbc4eec455188b9671295aa}{chunk\_cache\_mutex}});}
+\DoxyCodeLine{548          \textcolor{keywordflow}{return} fc;}
+\DoxyCodeLine{549       \}}
+\DoxyCodeLine{550       \textcolor{keywordflow}{if} (ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_ad891f426a0caf16bf5a9a54439beeade}{fc}}) \{}
+\DoxyCodeLine{551          \mbox{\hyperlink{cave__mesher_8c_a65286ae93fc1fc5e6e88af8d2f02a731}{deref\_fastchunk}}(ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_ad891f426a0caf16bf5a9a54439beeade}{fc}});}
+\DoxyCodeLine{552          ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_ad891f426a0caf16bf5a9a54439beeade}{fc}} = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{553          ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_a890fc62a8689a97e24ffd59097770836}{valid}} = 0;}
+\DoxyCodeLine{554       \}}
+\DoxyCodeLine{555    \}}
+\DoxyCodeLine{556    SDL\_UnlockMutex(\mbox{\hyperlink{cave__mesher_8c_a784ba0617dbc4eec455188b9671295aa}{chunk\_cache\_mutex}});}
+\DoxyCodeLine{557 }
+\DoxyCodeLine{558    fc = \mbox{\hyperlink{cave__parse_8c_ac3885b139871d53a3d39cca5380075c9}{get\_decoded\_fastchunk\_uncached}}(chunk\_x, -\/chunk\_y);}
+\DoxyCodeLine{559    \textcolor{keywordflow}{if} (fc)}
+\DoxyCodeLine{560       \mbox{\hyperlink{cave__mesher_8c_a147e37fcae806febbdaac22c776d5685}{convert\_fastchunk\_inplace}}(fc);}
+\DoxyCodeLine{561 }
+\DoxyCodeLine{562    SDL\_LockMutex(\mbox{\hyperlink{cave__mesher_8c_a784ba0617dbc4eec455188b9671295aa}{chunk\_cache\_mutex}});}
+\DoxyCodeLine{563    \textcolor{comment}{// another thread might have updated it, so before we overwrite it...}}
+\DoxyCodeLine{564    \textcolor{keywordflow}{if} (ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_ad891f426a0caf16bf5a9a54439beeade}{fc}}) \{}
+\DoxyCodeLine{565       \mbox{\hyperlink{cave__mesher_8c_a65286ae93fc1fc5e6e88af8d2f02a731}{deref\_fastchunk}}(ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_ad891f426a0caf16bf5a9a54439beeade}{fc}});}
+\DoxyCodeLine{566       ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_ad891f426a0caf16bf5a9a54439beeade}{fc}} = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{567    \}}
+\DoxyCodeLine{568 }
+\DoxyCodeLine{569    \textcolor{keywordflow}{if} (fc)}
+\DoxyCodeLine{570       fc-\/>\mbox{\hyperlink{structfast__chunk_a0bcf2001e68fdcf8e5eaf83a7ea83440}{refcount}} = 1; \textcolor{comment}{// 1 in the cache}}
+\DoxyCodeLine{571 }
+\DoxyCodeLine{572    ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_a720a08b6d6b18cf740d807dd119c52c0}{chunk\_x}} = chunk\_x;}
+\DoxyCodeLine{573    ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_a5a71274f9dc7a89cd3e962a719e0ac7f}{chunk\_y}} = chunk\_y;}
+\DoxyCodeLine{574    ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_a890fc62a8689a97e24ffd59097770836}{valid}} = 1;}
+\DoxyCodeLine{575    \textcolor{keywordflow}{if} (fc)}
+\DoxyCodeLine{576       ++fc-\/>\mbox{\hyperlink{structfast__chunk_a0bcf2001e68fdcf8e5eaf83a7ea83440}{refcount}};}
+\DoxyCodeLine{577    ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_ad891f426a0caf16bf5a9a54439beeade}{fc}} = fc;}
+\DoxyCodeLine{578    SDL\_UnlockMutex(\mbox{\hyperlink{cave__mesher_8c_a784ba0617dbc4eec455188b9671295aa}{chunk\_cache\_mutex}});}
+\DoxyCodeLine{579    \textcolor{keywordflow}{return} fc;}
+\DoxyCodeLine{580 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__mesher_8c_af4e8c4c0c38242366db62d9936274079}\label{cave__mesher_8c_af4e8c4c0c38242366db62d9936274079}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!lock\_chunk\_get\_mutex@{lock\_chunk\_get\_mutex}}
+\index{lock\_chunk\_get\_mutex@{lock\_chunk\_get\_mutex}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{lock\_chunk\_get\_mutex()}{lock\_chunk\_get\_mutex()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} lock\+\_\+chunk\+\_\+get\+\_\+mutex (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 525 of file cave\+\_\+mesher.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{526 \{}
+\DoxyCodeLine{527    SDL\_LockMutex(\mbox{\hyperlink{cave__mesher_8c_a9105640f64bd2fca823fa679f99fb62b}{chunk\_get\_mutex}});}
+\DoxyCodeLine{528 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__mesher_8c_a7bea63cfeb0603fcda8860fe0355fb57}\label{cave__mesher_8c_a7bea63cfeb0603fcda8860fe0355fb57}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!make\_converted\_fastchunk@{make\_converted\_fastchunk}}
+\index{make\_converted\_fastchunk@{make\_converted\_fastchunk}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{make\_converted\_fastchunk()}{make\_converted\_fastchunk()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} make\+\_\+converted\+\_\+fastchunk (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structfast__chunk}{fast\+\_\+chunk}} $\ast$}]{fc,  }\item[{int}]{x,  }\item[{int}]{y,  }\item[{int}]{segment,  }\item[{\mbox{\hyperlink{stb_8h_adde6aaee8457bee49c2a92621fe22b79}{uint8}} $\ast$}]{sv\+\_\+blocktype,  }\item[{\mbox{\hyperlink{stb_8h_adde6aaee8457bee49c2a92621fe22b79}{uint8}} $\ast$}]{sv\+\_\+lighting }\end{DoxyParamCaption})}
+
+
+
+Definition at line 458 of file cave\+\_\+mesher.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{459 \{}
+\DoxyCodeLine{460    \textcolor{keywordtype}{int} \mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}};}
+\DoxyCodeLine{461    assert(fc == \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}} || (fc-\/>\mbox{\hyperlink{structfast__chunk_a0bcf2001e68fdcf8e5eaf83a7ea83440}{refcount}} > 0 \&\& fc-\/>\mbox{\hyperlink{structfast__chunk_a0bcf2001e68fdcf8e5eaf83a7ea83440}{refcount}} < 64));}
+\DoxyCodeLine{462    \textcolor{keywordflow}{if} (fc == \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}} || fc-\/>\mbox{\hyperlink{structfast__chunk_aa3910677b48fdbfa3e5222b458aba2c8}{blockdata}}[\mbox{\hyperlink{structsegment}{segment}}] == \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}) \{}
+\DoxyCodeLine{463       \textcolor{keywordflow}{for} (\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}=0; \mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}} < 16; ++\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}) \{}
+\DoxyCodeLine{464          sv\_blocktype[\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}] = \mbox{\hyperlink{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a8e25f3fef8ddfd9ae47971d91958d83b}{C\_empty}};}
+\DoxyCodeLine{465          sv\_lighting[\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}] = 255;}
+\DoxyCodeLine{466       \}}
+\DoxyCodeLine{467    \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{468       \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *block = fc-\/>\mbox{\hyperlink{structfast__chunk_aa3910677b48fdbfa3e5222b458aba2c8}{blockdata}}[\mbox{\hyperlink{structsegment}{segment}}];}
+\DoxyCodeLine{469       \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *\mbox{\hyperlink{glad_8h_a41a8247b39e9cdb744299c3331ca3453}{data}}  = fc-\/>\mbox{\hyperlink{structfast__chunk_a537008bbe2af7d45e3c62bbf911ace41}{data}}[\mbox{\hyperlink{structsegment}{segment}}];}
+\DoxyCodeLine{470       \mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}} = 15-\/\mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}};}
+\DoxyCodeLine{471       \textcolor{keywordflow}{for} (\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}=0; \mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}} < 16; ++\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}) \{}
+\DoxyCodeLine{472          sv\_blocktype[\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}] = block[\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}*256 + \mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}}*16 + \mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}}];}
+\DoxyCodeLine{473          sv\_lighting [\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}] = \mbox{\hyperlink{glad_8h_a41a8247b39e9cdb744299c3331ca3453}{data}} [\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}*256 + \mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}}*16 + \mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}}];}
+\DoxyCodeLine{474       \}}
+\DoxyCodeLine{475    \}}
+\DoxyCodeLine{476 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__mesher_8c_a72869edd94d6159ab80497d6fcf71071}\label{cave__mesher_8c_a72869edd94d6159ab80497d6fcf71071}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!make\_map\_segment\_for\_superchunk\_preconvert@{make\_map\_segment\_for\_superchunk\_preconvert}}
+\index{make\_map\_segment\_for\_superchunk\_preconvert@{make\_map\_segment\_for\_superchunk\_preconvert}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{make\_map\_segment\_for\_superchunk\_preconvert()}{make\_map\_segment\_for\_superchunk\_preconvert()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} make\+\_\+map\+\_\+segment\+\_\+for\+\_\+superchunk\+\_\+preconvert (\begin{DoxyParamCaption}\item[{int}]{chunk\+\_\+x,  }\item[{int}]{chunk\+\_\+y,  }\item[{int}]{segment,  }\item[{\mbox{\hyperlink{structfast__chunk}{fast\+\_\+chunk}} $\ast$}]{fc\+\_\+table\mbox{[}4\mbox{]}\mbox{[}4\mbox{]},  }\item[{\mbox{\hyperlink{stb_8h_adde6aaee8457bee49c2a92621fe22b79}{uint8}}}]{sv\+\_\+blocktype\mbox{[}34\mbox{]}\mbox{[}34\mbox{]}\mbox{[}18\mbox{]},  }\item[{\mbox{\hyperlink{stb_8h_adde6aaee8457bee49c2a92621fe22b79}{uint8}}}]{sv\+\_\+lighting\mbox{[}34\mbox{]}\mbox{[}34\mbox{]}\mbox{[}18\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 582 of file cave\+\_\+mesher.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{583 \{}
+\DoxyCodeLine{584    \textcolor{keywordtype}{int} \mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}},\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}};}
+\DoxyCodeLine{585    assert((chunk\_x \& 1) == 0);}
+\DoxyCodeLine{586    assert((chunk\_y \& 1) == 0);}
+\DoxyCodeLine{587    \textcolor{keywordflow}{for} (\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}=-\/1; \mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}} < 3; ++\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}) \{}
+\DoxyCodeLine{588       \textcolor{keywordflow}{for} (\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}=-\/1; \mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}} < 3; ++\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}) \{}
+\DoxyCodeLine{589          \textcolor{keywordtype}{int} xo = \mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}*16+1;}
+\DoxyCodeLine{590          \textcolor{keywordtype}{int} yo = \mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}*16+1;}
+\DoxyCodeLine{591          \textcolor{keywordtype}{int} \mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}},\mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}};}
+\DoxyCodeLine{592          \mbox{\hyperlink{structfast__chunk}{fast\_chunk}} *fc = fc\_table[\mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}+1][\mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}+1];}
+\DoxyCodeLine{593          \textcolor{keywordflow}{for} (\mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}}=0; \mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}} < 16; ++\mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}})}
+\DoxyCodeLine{594             \textcolor{keywordflow}{for} (\mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}}=0; \mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}} < 16; ++\mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}})}
+\DoxyCodeLine{595                \textcolor{keywordflow}{if} (xo+\mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}} >= 0 \&\& xo+\mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x < 34 \&\& yo+y >}}= 0 \&\& yo+\mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}} < 34)}
+\DoxyCodeLine{596                   \mbox{\hyperlink{cave__mesher_8c_a7bea63cfeb0603fcda8860fe0355fb57}{make\_converted\_fastchunk}}(fc,\mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}},\mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}}, \mbox{\hyperlink{structsegment}{segment}}, sv\_blocktype[xo+\mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}}][yo+\mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}}], sv\_lighting[xo+\mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}}][yo+\mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}}]);}
+\DoxyCodeLine{597       \}}
+\DoxyCodeLine{598    \}}
+\DoxyCodeLine{599 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__mesher_8c_a24f0dbbfdca90a74902964396c137bac}\label{cave__mesher_8c_a24f0dbbfdca90a74902964396c137bac}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!mesh\_init@{mesh\_init}}
+\index{mesh\_init@{mesh\_init}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{mesh\_init()}{mesh\_init()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} mesh\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 803 of file cave\+\_\+mesher.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{804 \{}
+\DoxyCodeLine{805    \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{806 }
+\DoxyCodeLine{807    \mbox{\hyperlink{cave__mesher_8c_a784ba0617dbc4eec455188b9671295aa}{chunk\_cache\_mutex}} = SDL\_CreateMutex();}
+\DoxyCodeLine{808    \mbox{\hyperlink{cave__mesher_8c_a9105640f64bd2fca823fa679f99fb62b}{chunk\_get\_mutex}}   = SDL\_CreateMutex();}
+\DoxyCodeLine{809 }
+\DoxyCodeLine{810    \textcolor{keywordflow}{for} (i=0; i < 256; ++i) \{}
+\DoxyCodeLine{811       memcpy(\mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[i], \mbox{\hyperlink{cave__mesher_8c_a17dd80d3766327026eae4547eae231fd}{minecraft\_info}}[i]+1, 6);}
+\DoxyCodeLine{812       \mbox{\hyperlink{cave__mesher_8c_af38282980cc171915d4acfe5f3e03c90}{effective\_blocktype}}[i] = (\mbox{\hyperlink{cave__mesher_8c_a17dd80d3766327026eae4547eae231fd}{minecraft\_info}}[i][0] == \mbox{\hyperlink{cave__mesher_8c_aa57e16cd48de3b9a989056ff8df26f84a8e25f3fef8ddfd9ae47971d91958d83b}{C\_empty}} ? 0 : i);}
+\DoxyCodeLine{813       \mbox{\hyperlink{cave__mesher_8c_ae01a977fd1f7c889f186baee1076b732}{minecraft\_geom\_for\_blocktype}}[i] = \mbox{\hyperlink{cave__mesher_8c_adbdd9089890d950d54cd125d4464eab7}{geom\_map}}[\mbox{\hyperlink{cave__mesher_8c_a17dd80d3766327026eae4547eae231fd}{minecraft\_info}}[i][0]];}
+\DoxyCodeLine{814    \}}
+\DoxyCodeLine{815    \textcolor{comment}{//effective\_blocktype[50] = 0; // delete torches}}
+\DoxyCodeLine{816 }
+\DoxyCodeLine{817    \textcolor{keywordflow}{for} (i=0; i < 6*256; ++i) \{}
+\DoxyCodeLine{818       \textcolor{keywordflow}{if} (\mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[0][i] == 40)}
+\DoxyCodeLine{819          \mbox{\hyperlink{cave__mesher_8c_a33fdd49440ce0309319d973be49dfd0a}{minecraft\_color\_for\_blocktype}}[0][i] = 38 | 64; \textcolor{comment}{// apply to tex1}}
+\DoxyCodeLine{820       \textcolor{keywordflow}{if} (\mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[0][i] == 39)}
+\DoxyCodeLine{821          \mbox{\hyperlink{cave__mesher_8c_a33fdd49440ce0309319d973be49dfd0a}{minecraft\_color\_for\_blocktype}}[0][i] = 39 | 64; \textcolor{comment}{// apply to tex1}}
+\DoxyCodeLine{822       \textcolor{keywordflow}{if} (\mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[0][i] == 105)}
+\DoxyCodeLine{823          \mbox{\hyperlink{cave__mesher_8c_a33fdd49440ce0309319d973be49dfd0a}{minecraft\_color\_for\_blocktype}}[0][i] = 63; \textcolor{comment}{// emissive}}
+\DoxyCodeLine{824       \textcolor{keywordflow}{if} (\mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[0][i] == 212)}
+\DoxyCodeLine{825          \mbox{\hyperlink{cave__mesher_8c_a33fdd49440ce0309319d973be49dfd0a}{minecraft\_color\_for\_blocktype}}[0][i] = 63; \textcolor{comment}{// emissive}}
+\DoxyCodeLine{826       \textcolor{keywordflow}{if} (\mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[0][i] == 80)}
+\DoxyCodeLine{827          \mbox{\hyperlink{cave__mesher_8c_a33fdd49440ce0309319d973be49dfd0a}{minecraft\_color\_for\_blocktype}}[0][i] = 63; \textcolor{comment}{// emissive}}
+\DoxyCodeLine{828    \}}
+\DoxyCodeLine{829 }
+\DoxyCodeLine{830    \textcolor{keywordflow}{for} (i=0; i < 6; ++i) \{}
+\DoxyCodeLine{831       \mbox{\hyperlink{cave__mesher_8c_a33fdd49440ce0309319d973be49dfd0a}{minecraft\_color\_for\_blocktype}}[172][i] = 47 | 64; \textcolor{comment}{// apply to tex1}}
+\DoxyCodeLine{832       \mbox{\hyperlink{cave__mesher_8c_a33fdd49440ce0309319d973be49dfd0a}{minecraft\_color\_for\_blocktype}}[178][i] = 47 | 64; \textcolor{comment}{// apply to tex1}}
+\DoxyCodeLine{833       \mbox{\hyperlink{cave__mesher_8c_a33fdd49440ce0309319d973be49dfd0a}{minecraft\_color\_for\_blocktype}}[18][i] = 39 | 64; \textcolor{comment}{// green}}
+\DoxyCodeLine{834       \mbox{\hyperlink{cave__mesher_8c_a33fdd49440ce0309319d973be49dfd0a}{minecraft\_color\_for\_blocktype}}[161][i] = 37 | 64; \textcolor{comment}{// green}}
+\DoxyCodeLine{835       \mbox{\hyperlink{cave__mesher_8c_a33fdd49440ce0309319d973be49dfd0a}{minecraft\_color\_for\_blocktype}}[10][i] = 63; \textcolor{comment}{// emissive lava}}
+\DoxyCodeLine{836       \mbox{\hyperlink{cave__mesher_8c_a33fdd49440ce0309319d973be49dfd0a}{minecraft\_color\_for\_blocktype}}[11][i] = 63; \textcolor{comment}{// emissive}}
+\DoxyCodeLine{837       \textcolor{comment}{//minecraft\_color\_for\_blocktype[56][i] = 63; // emissive diamond}}
+\DoxyCodeLine{838       \mbox{\hyperlink{cave__mesher_8c_a33fdd49440ce0309319d973be49dfd0a}{minecraft\_color\_for\_blocktype}}[48][i] = 63; \textcolor{comment}{// emissive dungeon}}
+\DoxyCodeLine{839    \}}
+\DoxyCodeLine{840 }
+\DoxyCodeLine{841 \textcolor{preprocessor}{   \#ifdef VHEIGHT\_TEST}}
+\DoxyCodeLine{842    \mbox{\hyperlink{cave__mesher_8c_af38282980cc171915d4acfe5f3e03c90}{effective\_blocktype}}[168] = 168;}
+\DoxyCodeLine{843    \mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[168][0] = 1;}
+\DoxyCodeLine{844    \mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[168][1] = 1;}
+\DoxyCodeLine{845    \mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[168][2] = 1;}
+\DoxyCodeLine{846    \mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[168][3] = 1;}
+\DoxyCodeLine{847    \mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[168][4] = 1;}
+\DoxyCodeLine{848    \mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[168][5] = 1;}
+\DoxyCodeLine{849    \mbox{\hyperlink{cave__mesher_8c_ae01a977fd1f7c889f186baee1076b732}{minecraft\_geom\_for\_blocktype}}[168] = \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca7511f84da0693e6147590c76a74480d6}{STBVOX\_GEOM\_floor\_vheight\_12}};}
+\DoxyCodeLine{850    \mbox{\hyperlink{cave__mesher_8c_af38282980cc171915d4acfe5f3e03c90}{effective\_blocktype}}[169] = 169;}
+\DoxyCodeLine{851    \mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[169][0] = 1;}
+\DoxyCodeLine{852    \mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[169][1] = 1;}
+\DoxyCodeLine{853    \mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[169][2] = 1;}
+\DoxyCodeLine{854    \mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[169][3] = 1;}
+\DoxyCodeLine{855    \mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[169][4] = 1;}
+\DoxyCodeLine{856    \mbox{\hyperlink{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}{minecraft\_tex1\_for\_blocktype}}[169][5] = 1;}
+\DoxyCodeLine{857    \mbox{\hyperlink{cave__mesher_8c_ae01a977fd1f7c889f186baee1076b732}{minecraft\_geom\_for\_blocktype}}[169] = \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca62855fb026ed6bb2b93a02f94b9eaacb}{STBVOX\_GEOM\_ceil\_vheight\_03}};}
+\DoxyCodeLine{858 \textcolor{preprocessor}{   \#endif}}
+\DoxyCodeLine{859 }
+\DoxyCodeLine{860    \mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}}[53] = 1;}
+\DoxyCodeLine{861    \mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}}[67] = 2;}
+\DoxyCodeLine{862    \mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}}[108] = 3;}
+\DoxyCodeLine{863    \mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}}[109] = 4;}
+\DoxyCodeLine{864    \mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}}[114] = 5;}
+\DoxyCodeLine{865    \mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}}[136] = 6;}
+\DoxyCodeLine{866    \mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}}[156] = 7;}
+\DoxyCodeLine{867    \textcolor{keywordflow}{for} (i=0; i < 256; ++i)}
+\DoxyCodeLine{868       \textcolor{keywordflow}{if} (\mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}}[i])}
+\DoxyCodeLine{869          \mbox{\hyperlink{cave__mesher_8c_a626c17451761446962cffc9add2ed539}{build\_stair\_rotations}}(i, \mbox{\hyperlink{cave__mesher_8c_a2015282d41ced055a462520de780e814}{remap\_data}}[\mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}}[i]]);}
+\DoxyCodeLine{870    \mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}}[35]  = 8;}
+\DoxyCodeLine{871    \mbox{\hyperlink{cave__mesher_8c_addb3a71c75c33215207185a88be4bb62}{build\_wool\_variations}}(35, \mbox{\hyperlink{cave__mesher_8c_a2015282d41ced055a462520de780e814}{remap\_data}}[\mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}}[35]]);}
+\DoxyCodeLine{872    \mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}}[5] = 11;}
+\DoxyCodeLine{873    \mbox{\hyperlink{cave__mesher_8c_adcf4dda69d85bc49b9f4babc57587095}{build\_wood\_variations}}(5, \mbox{\hyperlink{cave__mesher_8c_a2015282d41ced055a462520de780e814}{remap\_data}}[\mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}}[5]]);}
+\DoxyCodeLine{874 }
+\DoxyCodeLine{875    \textcolor{comment}{// set the remap flags for these so they write the rotation values}}
+\DoxyCodeLine{876    \mbox{\hyperlink{cave__mesher_8c_a16709242463cda7c163b826a5da978c5}{remap\_in\_place}}(54, 9);}
+\DoxyCodeLine{877    \mbox{\hyperlink{cave__mesher_8c_a16709242463cda7c163b826a5da978c5}{remap\_in\_place}}(146, 10);}
+\DoxyCodeLine{878 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__mesher_8c_aefd62d461236c6e9ced738eac9d8042c}\label{cave__mesher_8c_aefd62d461236c6e9ced738eac9d8042c}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!ods@{ods}}
+\index{ods@{ods}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{ods()}{ods()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} ods (\begin{DoxyParamCaption}\item[{char $\ast$}]{fmt,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+
+
+Definition at line 311 of file cave\+\_\+main.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{312 \{}
+\DoxyCodeLine{313    \textcolor{keywordtype}{char} \mbox{\hyperlink{structbuffer}{buffer}}[1000];}
+\DoxyCodeLine{314    va\_list va;}
+\DoxyCodeLine{315    va\_start(va, fmt);}
+\DoxyCodeLine{316    \mbox{\hyperlink{rrsprintf_8h_a3e41f3ed65b0d392da13d3341751b5a5}{vsprintf}}(\mbox{\hyperlink{structbuffer}{buffer}}, fmt, va);}
+\DoxyCodeLine{317    va\_end(va);}
+\DoxyCodeLine{318    SDL\_Log(\textcolor{stringliteral}{"\%s"}, \mbox{\hyperlink{structbuffer}{buffer}});}
+\DoxyCodeLine{319 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__mesher_8c_a16709242463cda7c163b826a5da978c5}\label{cave__mesher_8c_a16709242463cda7c163b826a5da978c5}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!remap\_in\_place@{remap\_in\_place}}
+\index{remap\_in\_place@{remap\_in\_place}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{remap\_in\_place()}{remap\_in\_place()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} remap\+\_\+in\+\_\+place (\begin{DoxyParamCaption}\item[{int}]{bt,  }\item[{int}]{rm }\end{DoxyParamCaption})}
+
+
+
+Definition at line 794 of file cave\+\_\+mesher.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{795 \{}
+\DoxyCodeLine{796    \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{797    \mbox{\hyperlink{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}{remap}}[bt] = rm;}
+\DoxyCodeLine{798    \textcolor{keywordflow}{for} (i=0; i < 16; ++i)}
+\DoxyCodeLine{799       \mbox{\hyperlink{cave__mesher_8c_a2015282d41ced055a462520de780e814}{remap\_data}}[rm][i] = bt;}
+\DoxyCodeLine{800 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__mesher_8c_af74c70130c88949f4d2bac551594d41f}\label{cave__mesher_8c_af74c70130c88949f4d2bac551594d41f}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!reset\_cache\_size@{reset\_cache\_size}}
+\index{reset\_cache\_size@{reset\_cache\_size}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{reset\_cache\_size()}{reset\_cache\_size()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} reset\+\_\+cache\+\_\+size (\begin{DoxyParamCaption}\item[{int}]{size }\end{DoxyParamCaption})}
+
+
+
+Definition at line 490 of file cave\+\_\+mesher.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{491 \{}
+\DoxyCodeLine{492    \textcolor{keywordtype}{int} i,j;}
+\DoxyCodeLine{493    \textcolor{keywordflow}{for} (j=\mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}}; j < \mbox{\hyperlink{cave__mesher_8c_adc2cfac3a357c5424aafa9d351a2e6ea}{cache\_size}}; ++j) \{}
+\DoxyCodeLine{494       \textcolor{keywordflow}{for} (i=\mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}}; i < \mbox{\hyperlink{cave__mesher_8c_adc2cfac3a357c5424aafa9d351a2e6ea}{cache\_size}}; ++i) \{}
+\DoxyCodeLine{495          \mbox{\hyperlink{structcached__converted__chunk}{cached\_converted\_chunk}} *ccc = \&\mbox{\hyperlink{cave__mesher_8c_ab799c6e56a65a1a9a2c089c9d4b81de9}{chunk\_cache}}[j][i];}
+\DoxyCodeLine{496          \textcolor{keywordflow}{if} (ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_a890fc62a8689a97e24ffd59097770836}{valid}}) \{}
+\DoxyCodeLine{497             \textcolor{keywordflow}{if} (ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_ad891f426a0caf16bf5a9a54439beeade}{fc}}) \{}
+\DoxyCodeLine{498                \mbox{\hyperlink{stb__leakcheck_8h_a9d4b5df3530d1bc733070a4669ba6ebc}{free}}(ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_ad891f426a0caf16bf5a9a54439beeade}{fc}}-\/>\mbox{\hyperlink{structfast__chunk_aea03b39185c1d472a7f61f86529f0863}{pointer\_to\_free}});}
+\DoxyCodeLine{499                \mbox{\hyperlink{stb__leakcheck_8h_a9d4b5df3530d1bc733070a4669ba6ebc}{free}}(ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_ad891f426a0caf16bf5a9a54439beeade}{fc}});}
+\DoxyCodeLine{500                ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_ad891f426a0caf16bf5a9a54439beeade}{fc}} = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{501             \}}
+\DoxyCodeLine{502             ccc-\/>\mbox{\hyperlink{structcached__converted__chunk_a890fc62a8689a97e24ffd59097770836}{valid}} = 0;}
+\DoxyCodeLine{503          \}}
+\DoxyCodeLine{504       \}}
+\DoxyCodeLine{505    \}}
+\DoxyCodeLine{506    \mbox{\hyperlink{cave__mesher_8c_adc2cfac3a357c5424aafa9d351a2e6ea}{cache\_size}} = \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}};}
+\DoxyCodeLine{507 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__mesher_8c_afaaad5f587e3275de99ae8ff61b2e18a}\label{cave__mesher_8c_afaaad5f587e3275de99ae8ff61b2e18a}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!unlock\_chunk\_get\_mutex@{unlock\_chunk\_get\_mutex}}
+\index{unlock\_chunk\_get\_mutex@{unlock\_chunk\_get\_mutex}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{unlock\_chunk\_get\_mutex()}{unlock\_chunk\_get\_mutex()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} unlock\+\_\+chunk\+\_\+get\+\_\+mutex (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 529 of file cave\+\_\+mesher.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{530 \{}
+\DoxyCodeLine{531    SDL\_UnlockMutex(\mbox{\hyperlink{cave__mesher_8c_a9105640f64bd2fca823fa679f99fb62b}{chunk\_get\_mutex}});}
+\DoxyCodeLine{532 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{cave__mesher_8c_a165e793676d312d0c37aa23551127f48}\label{cave__mesher_8c_a165e793676d312d0c37aa23551127f48}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!build\_buffer@{build\_buffer}}
+\index{build\_buffer@{build\_buffer}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{build\_buffer}{build\_buffer}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb_8h_adde6aaee8457bee49c2a92621fe22b79}{uint8}} build\+\_\+buffer\mbox{[}\mbox{\hyperlink{caveview_8h_afa950acf77b651e25839f9fffcc15e3a}{B\+U\+I\+L\+D\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+S\+I\+ZE}}\mbox{]}}
+
+
+
+Definition at line 312 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_adc2cfac3a357c5424aafa9d351a2e6ea}\label{cave__mesher_8c_adc2cfac3a357c5424aafa9d351a2e6ea}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!cache\_size@{cache\_size}}
+\index{cache\_size@{cache\_size}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{cache\_size}{cache\_size}}
+{\footnotesize\ttfamily int cache\+\_\+size = \mbox{\hyperlink{cave__mesher_8c_a3d38bc2fa620f958e39c87755218f173}{C\+H\+U\+N\+K\+\_\+\+C\+A\+C\+HE}}}
+
+
+
+Definition at line 488 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_ab799c6e56a65a1a9a2c089c9d4b81de9}\label{cave__mesher_8c_ab799c6e56a65a1a9a2c089c9d4b81de9}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!chunk\_cache@{chunk\_cache}}
+\index{chunk\_cache@{chunk\_cache}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{chunk\_cache}{chunk\_cache}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structcached__converted__chunk}{cached\+\_\+converted\+\_\+chunk}} chunk\+\_\+cache\mbox{[}\mbox{\hyperlink{cave__mesher_8c_a3d38bc2fa620f958e39c87755218f173}{C\+H\+U\+N\+K\+\_\+\+C\+A\+C\+HE}}\mbox{]}\mbox{[}\mbox{\hyperlink{cave__mesher_8c_a3d38bc2fa620f958e39c87755218f173}{C\+H\+U\+N\+K\+\_\+\+C\+A\+C\+HE}}\mbox{]}}
+
+
+
+Definition at line 487 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_a784ba0617dbc4eec455188b9671295aa}\label{cave__mesher_8c_a784ba0617dbc4eec455188b9671295aa}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!chunk\_cache\_mutex@{chunk\_cache\_mutex}}
+\index{chunk\_cache\_mutex@{chunk\_cache\_mutex}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{chunk\_cache\_mutex}{chunk\_cache\_mutex}}
+{\footnotesize\ttfamily S\+D\+L\+\_\+mutex$\ast$ chunk\+\_\+cache\+\_\+mutex}
+
+
+
+Definition at line 522 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_a9105640f64bd2fca823fa679f99fb62b}\label{cave__mesher_8c_a9105640f64bd2fca823fa679f99fb62b}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!chunk\_get\_mutex@{chunk\_get\_mutex}}
+\index{chunk\_get\_mutex@{chunk\_get\_mutex}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{chunk\_get\_mutex}{chunk\_get\_mutex}}
+{\footnotesize\ttfamily S\+D\+L\+\_\+mutex$\ast$ chunk\+\_\+get\+\_\+mutex}
+
+
+
+Definition at line 523 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_af38282980cc171915d4acfe5f3e03c90}\label{cave__mesher_8c_af38282980cc171915d4acfe5f3e03c90}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!effective\_blocktype@{effective\_blocktype}}
+\index{effective\_blocktype@{effective\_blocktype}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{effective\_blocktype}{effective\_blocktype}}
+{\footnotesize\ttfamily unsigned char effective\+\_\+blocktype\mbox{[}256\mbox{]}}
+
+
+
+Definition at line 308 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_aa27715cf788c95d0334051f4bfe7ade9}\label{cave__mesher_8c_aa27715cf788c95d0334051f4bfe7ade9}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!face\_buffer@{face\_buffer}}
+\index{face\_buffer@{face\_buffer}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{face\_buffer}{face\_buffer}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb_8h_adde6aaee8457bee49c2a92621fe22b79}{uint8}} face\+\_\+buffer\mbox{[}\mbox{\hyperlink{caveview_8h_a4d65dca8ffc1cd92783b26732044ba59}{F\+A\+C\+E\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+S\+I\+ZE}}\mbox{]}}
+
+
+
+Definition at line 313 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_adbdd9089890d950d54cd125d4464eab7}\label{cave__mesher_8c_adbdd9089890d950d54cd125d4464eab7}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!geom\_map@{geom\_map}}
+\index{geom\_map@{geom\_map}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{geom\_map}{geom\_map}}
+{\footnotesize\ttfamily unsigned char geom\+\_\+map\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{   \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3cacf4698c9739b8b6c1af7f8a124169cc9}{STBVOX\_GEOM\_empty}},}
+\DoxyCodeLine{   \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca685a066c41ada07dc62ffaa16d23ccf5}{STBVOX\_GEOM\_solid}},}
+\DoxyCodeLine{   \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca5921e838cb3457e8097fd111be407eec}{STBVOX\_GEOM\_transp}},}
+\DoxyCodeLine{   \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca9cd52f024f074ece1f5cecbcc517c54f}{STBVOX\_GEOM\_crossed\_pair}},}
+\DoxyCodeLine{   \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca685a066c41ada07dc62ffaa16d23ccf5}{STBVOX\_GEOM\_solid}},}
+\DoxyCodeLine{   \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca4d3a600f27892ef5bb64aa2e884b6570}{STBVOX\_GEOM\_slab\_lower}},}
+\DoxyCodeLine{   \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca063a4146fc89954375c7fc7fa39e8747}{STBVOX\_GEOM\_floor\_slope\_north\_is\_top}},}
+\DoxyCodeLine{   \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca334b45fb41d2329d21d3bd81b8c2568d}{STBVOX\_GEOM\_force}},}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Definition at line 57 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_affec1534a3e53c768c48caac2475d930}\label{cave__mesher_8c_affec1534a3e53c768c48caac2475d930}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!mc\_rot@{mc\_rot}}
+\index{mc\_rot@{mc\_rot}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{mc\_rot}{mc\_rot}}
+{\footnotesize\ttfamily unsigned char mc\+\_\+rot\mbox{[}4\mbox{]} = \{ 1,3,2,0 \}}
+
+
+
+Definition at line 730 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_a33fdd49440ce0309319d973be49dfd0a}\label{cave__mesher_8c_a33fdd49440ce0309319d973be49dfd0a}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!minecraft\_color\_for\_blocktype@{minecraft\_color\_for\_blocktype}}
+\index{minecraft\_color\_for\_blocktype@{minecraft\_color\_for\_blocktype}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{minecraft\_color\_for\_blocktype}{minecraft\_color\_for\_blocktype}}
+{\footnotesize\ttfamily unsigned char minecraft\+\_\+color\+\_\+for\+\_\+blocktype\mbox{[}256\mbox{]}\mbox{[}6\mbox{]}}
+
+
+
+Definition at line 309 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_ae01a977fd1f7c889f186baee1076b732}\label{cave__mesher_8c_ae01a977fd1f7c889f186baee1076b732}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!minecraft\_geom\_for\_blocktype@{minecraft\_geom\_for\_blocktype}}
+\index{minecraft\_geom\_for\_blocktype@{minecraft\_geom\_for\_blocktype}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{minecraft\_geom\_for\_blocktype}{minecraft\_geom\_for\_blocktype}}
+{\footnotesize\ttfamily unsigned char minecraft\+\_\+geom\+\_\+for\+\_\+blocktype\mbox{[}256\mbox{]}}
+
+
+
+Definition at line 310 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_a17dd80d3766327026eae4547eae231fd}\label{cave__mesher_8c_a17dd80d3766327026eae4547eae231fd}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!minecraft\_info@{minecraft\_info}}
+\index{minecraft\_info@{minecraft\_info}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{minecraft\_info}{minecraft\_info}}
+{\footnotesize\ttfamily unsigned char minecraft\+\_\+info\mbox{[}256\mbox{]}\mbox{[}7\mbox{]}}
+
+
+
+Definition at line 69 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}\label{cave__mesher_8c_add8be801e9bdf08c2966ff797143933a}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!minecraft\_tex1\_for\_blocktype@{minecraft\_tex1\_for\_blocktype}}
+\index{minecraft\_tex1\_for\_blocktype@{minecraft\_tex1\_for\_blocktype}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{minecraft\_tex1\_for\_blocktype}{minecraft\_tex1\_for\_blocktype}}
+{\footnotesize\ttfamily unsigned char minecraft\+\_\+tex1\+\_\+for\+\_\+blocktype\mbox{[}256\mbox{]}\mbox{[}6\mbox{]}}
+
+
+
+Definition at line 307 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_a209a4cb1b4169823bf527e2e1410d8a1}\label{cave__mesher_8c_a209a4cb1b4169823bf527e2e1410d8a1}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!next\_blocktype@{next\_blocktype}}
+\index{next\_blocktype@{next\_blocktype}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{next\_blocktype}{next\_blocktype}}
+{\footnotesize\ttfamily int next\+\_\+blocktype = 255}
+
+
+
+Definition at line 728 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}\label{cave__mesher_8c_a10cae8a4d85b638a4d2f2ce75883552e}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!remap@{remap}}
+\index{remap@{remap}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{remap}{remap}}
+{\footnotesize\ttfamily unsigned char remap\mbox{[}256\mbox{]}}
+
+
+
+Definition at line 329 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_a2015282d41ced055a462520de780e814}\label{cave__mesher_8c_a2015282d41ced055a462520de780e814}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!remap\_data@{remap\_data}}
+\index{remap\_data@{remap\_data}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{remap\_data}{remap\_data}}
+{\footnotesize\ttfamily unsigned char remap\+\_\+data\mbox{[}16\mbox{]}\mbox{[}16\mbox{]}}
+
+
+
+Definition at line 328 of file cave\+\_\+mesher.\+c.
+
+\mbox{\Hypertarget{cave__mesher_8c_a1b58e7e250316c8d1a2fe21fafaa5fcd}\label{cave__mesher_8c_a1b58e7e250316c8d1a2fe21fafaa5fcd}} 
+\index{cave\_mesher.c@{cave\_mesher.c}!rotate\_data@{rotate\_data}}
+\index{rotate\_data@{rotate\_data}!cave\_mesher.c@{cave\_mesher.c}}
+\doxysubsubsection{\texorpdfstring{rotate\_data}{rotate\_data}}
+{\footnotesize\ttfamily unsigned char rotate\+\_\+data\mbox{[}4\mbox{]} = \{ 1,3,2,0 \}}
+
+
+
+Definition at line 330 of file cave\+\_\+mesher.\+c.
+

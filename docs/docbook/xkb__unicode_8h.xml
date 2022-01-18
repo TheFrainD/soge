@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_xkb__unicode_8h">
+<title>deps/glfw/src/xkb_unicode.h File Reference</title>
+<indexterm><primary>deps/glfw/src/xkb_unicode.h</primary></indexterm>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_xkb__unicode_8h_1a45fc2e5a3ba025f1ac362831cfe04416">GLFW_INVALID_CODEPOINT</link>   0xffffffffu</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link> <link linkend="_xkb__unicode_8h_1acc4747eb62386c01c9dd0cd6997c8983">_glfwKeySym2Unicode</link> (unsigned int keysym)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_xkb__unicode_8h_1a45fc2e5a3ba025f1ac362831cfe04416"/>    <section>
+    <title>GLFW_INVALID_CODEPOINT</title>
+<indexterm><primary>GLFW_INVALID_CODEPOINT</primary><secondary>xkb_unicode.h</secondary></indexterm>
+<indexterm><primary>xkb_unicode.h</primary><secondary>GLFW_INVALID_CODEPOINT</secondary></indexterm>
+<para><computeroutput>#define GLFW_INVALID_CODEPOINT   0xffffffffu</computeroutput></para><para>
+Definition at line 27 of file xkb_unicode.h.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_xkb__unicode_8h_1acc4747eb62386c01c9dd0cd6997c8983"/>    <section>
+    <title>_glfwKeySym2Unicode()</title>
+<indexterm><primary>_glfwKeySym2Unicode</primary><secondary>xkb_unicode.h</secondary></indexterm>
+<indexterm><primary>xkb_unicode.h</primary><secondary>_glfwKeySym2Unicode</secondary></indexterm>
+<para><computeroutput><link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link> _glfwKeySym2Unicode (unsigned int keysym)</computeroutput></para><para>
+Definition at line 910 of file xkb_unicode.c.</para>
+<programlisting>911 {
+912 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_stb_8h_1abb702d8b501669a23aa0ab3b281b9384">min</link>&#32;=&#32;0;
+913 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_stb_8h_1ac39d9cef6a5e030ba8d9e11121054268">max</link>&#32;=&#32;<emphasis role="keyword">sizeof</emphasis>(keysymtab)&#32;/&#32;<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keyword">struct</emphasis>&#32;codepair)&#32;-&#32;1;
+914 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;mid;
+915 
+916 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;First&#32;check&#32;for&#32;Latin-1&#32;characters&#32;(1:1&#32;mapping)</emphasis>
+917 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((keysym&#32;&gt;=&#32;0x0020&#32;&amp;&amp;&#32;keysym&#32;&lt;=&#32;0x007e)&#32;||
+918 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(keysym&#32;&gt;=&#32;0x00a0&#32;&amp;&amp;&#32;keysym&#32;&lt;=&#32;0x00ff))
+919 &#32;&#32;&#32;&#32;{
+920 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;keysym;
+921 &#32;&#32;&#32;&#32;}
+922 
+923 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Also&#32;check&#32;for&#32;directly&#32;encoded&#32;24-bit&#32;UCS&#32;characters</emphasis>
+924 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((keysym&#32;&amp;&#32;0xff000000)&#32;==&#32;0x01000000)
+925 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;keysym&#32;&amp;&#32;0x00ffffff;
+926 
+927 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Binary&#32;search&#32;in&#32;table</emphasis>
+928 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_stb_8h_1ac39d9cef6a5e030ba8d9e11121054268">max</link>&#32;&gt;=&#32;<link linkend="_stb_8h_1abb702d8b501669a23aa0ab3b281b9384">min</link>)
+929 &#32;&#32;&#32;&#32;{
+930 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;mid&#32;=&#32;(<link linkend="_stb_8h_1abb702d8b501669a23aa0ab3b281b9384">min</link>&#32;+&#32;<link linkend="_stb_8h_1ac39d9cef6a5e030ba8d9e11121054268">max</link>)&#32;/&#32;2;
+931 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(keysymtab[mid].keysym&#32;&lt;&#32;keysym)
+932 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1abb702d8b501669a23aa0ab3b281b9384">min</link>&#32;=&#32;mid&#32;+&#32;1;
+933 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(keysymtab[mid].keysym&#32;&gt;&#32;keysym)
+934 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1ac39d9cef6a5e030ba8d9e11121054268">max</link>&#32;=&#32;mid&#32;-&#32;1;
+935 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+936 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;keysymtab[mid].ucs;
+937 &#32;&#32;&#32;&#32;}
+938 
+939 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;No&#32;matching&#32;Unicode&#32;value&#32;found</emphasis>
+940 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_xkb__unicode_8h_1a45fc2e5a3ba025f1ac362831cfe04416">GLFW_INVALID_CODEPOINT</link>;
+941 }
+</programlisting></section>
+</section>
+</section>

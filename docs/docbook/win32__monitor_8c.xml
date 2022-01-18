@@ -1,0 +1,498 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_win32__monitor_8c">
+<title>deps/glfw/src/win32_monitor.c File Reference</title>
+<indexterm><primary>deps/glfw/src/win32_monitor.c</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;limits.h&gt;
+#include &lt;wchar.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__monitor_8c_1a345b11644c658a9a94b0eeb4ed4a0618">_glfwPollMonitorsWin32</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__monitor_8c_1a52d8e36bf649dcb15198832d92206ce2">_glfwSetVideoModeWin32</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, const <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> *desired)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__monitor_8c_1af4b02765bc562c8265503bb97c0cd8e9">_glfwRestoreVideoModeWin32</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__monitor_8c_1a666ce7b96d7717b71d8086be7b4e9fb3">_glfwGetHMONITORContentScaleWin32</link> (HMONITOR handle, float *xscale, float *yscale)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__monitor_8c_1a9df387b074c350e1cca8dbd26a375243">_glfwFreeMonitorWin32</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__monitor_8c_1a4261cca207894705081bbe41a912529b">_glfwGetMonitorPosWin32</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, int *xpos, int *ypos)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__monitor_8c_1a3fe7a2258a3ce26e3a8257c3d0ea1ca0">_glfwGetMonitorContentScaleWin32</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, float *xscale, float *yscale)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__monitor_8c_1a844e706059e08613de692291969111d2">_glfwGetMonitorWorkareaWin32</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, int *xpos, int *ypos, int *<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>, int *<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> * <link linkend="_win32__monitor_8c_1ab4ce13c23c2b2bc9635e36ee5387375e">_glfwGetVideoModesWin32</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, int *<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__monitor_8c_1a7b43d8548648f7a49903525cda10e09c">_glfwGetVideoModeWin32</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> *<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_win32__monitor_8c_1afb31cbafed71b1ea3fd13f1110d44af8">_glfwGetGammaRampWin32</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, <link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> *ramp)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_win32__monitor_8c_1a605f08f68a28c0bde60a12a0a399938e">_glfwSetGammaRampWin32</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, const <link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> *ramp)</para>
+</listitem>
+            <listitem><para>const <link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> char * <link linkend="_win32__monitor_8c_1a0b1d43af32c6c7a6c70a74f47a6bddc9">glfwGetWin32Adapter</link> (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> *handle)</para>
+</listitem>
+            <listitem><para>const <link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> char * <link linkend="_win32__monitor_8c_1adaf1ded80f4a4e3e5cd5b4dc8e4f44c0">glfwGetWin32Monitor</link> (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> *handle)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_win32__monitor_8c_1a9df387b074c350e1cca8dbd26a375243"/>    <section>
+    <title>_glfwFreeMonitorWin32()</title>
+<indexterm><primary>_glfwFreeMonitorWin32</primary><secondary>win32_monitor.c</secondary></indexterm>
+<indexterm><primary>win32_monitor.c</primary><secondary>_glfwFreeMonitorWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwFreeMonitorWin32 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor)</computeroutput></para><para>
+Definition at line 352 of file win32_monitor.c.</para>
+<programlisting>353 {
+354 }
+</programlisting>    </section><anchor xml:id="_win32__monitor_8c_1afb31cbafed71b1ea3fd13f1110d44af8"/>    <section>
+    <title>_glfwGetGammaRampWin32()</title>
+<indexterm><primary>_glfwGetGammaRampWin32</primary><secondary>win32_monitor.c</secondary></indexterm>
+<indexterm><primary>win32_monitor.c</primary><secondary>_glfwGetGammaRampWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwGetGammaRampWin32 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, <link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> * ramp)</computeroutput></para><para>
+Definition at line 490 of file win32_monitor.c.</para>
+<programlisting>491 {
+492 &#32;&#32;&#32;&#32;HDC&#32;<link linkend="_truetype__test__win32_8c_1a107e8c958b2db614ef53259d777a5752">dc</link>;
+493 &#32;&#32;&#32;&#32;WORD&#32;<link linkend="_glad_8h_1a0aa8cf39c79d294b1d9f4daef5020bec">values</link>[3][256];
+494 
+495 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a107e8c958b2db614ef53259d777a5752">dc</link>&#32;=&#32;CreateDCW(<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link><emphasis role="stringliteral">&quot;DISPLAY&quot;</emphasis>,&#32;monitor-&gt;win32.adapterName,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+496 &#32;&#32;&#32;&#32;GetDeviceGammaRamp(<link linkend="_truetype__test__win32_8c_1a107e8c958b2db614ef53259d777a5752">dc</link>,&#32;<link linkend="_glad_8h_1a0aa8cf39c79d294b1d9f4daef5020bec">values</link>);
+497 &#32;&#32;&#32;&#32;DeleteDC(<link linkend="_truetype__test__win32_8c_1a107e8c958b2db614ef53259d777a5752">dc</link>);
+498 
+499 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1acb6a8b432b06fd0accdfc0e046785109">_glfwAllocGammaArrays</link>(ramp,&#32;256);
+500 
+501 &#32;&#32;&#32;&#32;memcpy(ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1a2cce5d968734b685623eef913e635138">red</link>,&#32;&#32;&#32;<link linkend="_glad_8h_1a0aa8cf39c79d294b1d9f4daef5020bec">values</link>[0],&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glad_8h_1a0aa8cf39c79d294b1d9f4daef5020bec">values</link>[0]));
+502 &#32;&#32;&#32;&#32;memcpy(ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1affccc6f5df47820b6562d709da3a5a3a">green</link>,&#32;<link linkend="_glad_8h_1a0aa8cf39c79d294b1d9f4daef5020bec">values</link>[1],&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glad_8h_1a0aa8cf39c79d294b1d9f4daef5020bec">values</link>[1]));
+503 &#32;&#32;&#32;&#32;memcpy(ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1acf0c836d0efe29c392fe8d1a1042744b">blue</link>,&#32;&#32;<link linkend="_glad_8h_1a0aa8cf39c79d294b1d9f4daef5020bec">values</link>[2],&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glad_8h_1a0aa8cf39c79d294b1d9f4daef5020bec">values</link>[2]));
+504 
+505 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+506 }
+</programlisting>    </section><anchor xml:id="_win32__monitor_8c_1a666ce7b96d7717b71d8086be7b4e9fb3"/>    <section>
+    <title>_glfwGetHMONITORContentScaleWin32()</title>
+<indexterm><primary>_glfwGetHMONITORContentScaleWin32</primary><secondary>win32_monitor.c</secondary></indexterm>
+<indexterm><primary>win32_monitor.c</primary><secondary>_glfwGetHMONITORContentScaleWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetHMONITORContentScaleWin32 (HMONITOR handle, float * xscale, float * yscale)</computeroutput></para><para>
+Definition at line 316 of file win32_monitor.c.</para>
+<programlisting>317 {
+318 &#32;&#32;&#32;&#32;UINT&#32;xdpi,&#32;ydpi;
+319 
+320 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xscale)
+321 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*xscale&#32;=&#32;0.f;
+322 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(yscale)
+323 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*yscale&#32;=&#32;0.f;
+324 
+325 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_win32__platform_8h_1a5e26976cd63d69f6ff83f646e6a6f27f">IsWindows8Point1OrGreater</link>())
+326 &#32;&#32;&#32;&#32;{
+327 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_win32__platform_8h_1a0a09db022c26f82f539c0e925feae84a">GetDpiForMonitor</link>(handle,&#32;<link linkend="_win32__platform_8h_1a6d3b6e6160452fd0315bf529461dadcfa75d3ba3b96559377e5cac23d6e380162">MDT_EFFECTIVE_DPI</link>,&#32;&amp;xdpi,&#32;&amp;ydpi)&#32;!=&#32;S_OK)
+328 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+329 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,&#32;<emphasis role="stringliteral">&quot;Win32:&#32;Failed&#32;to&#32;query&#32;monitor&#32;DPI&quot;</emphasis>);
+330 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+331 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+332 &#32;&#32;&#32;&#32;}
+333 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+334 &#32;&#32;&#32;&#32;{
+335 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;HDC&#32;<link linkend="_truetype__test__win32_8c_1a107e8c958b2db614ef53259d777a5752">dc</link>&#32;=&#32;GetDC(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+336 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;xdpi&#32;=&#32;GetDeviceCaps(<link linkend="_truetype__test__win32_8c_1a107e8c958b2db614ef53259d777a5752">dc</link>,&#32;LOGPIXELSX);
+337 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ydpi&#32;=&#32;GetDeviceCaps(<link linkend="_truetype__test__win32_8c_1a107e8c958b2db614ef53259d777a5752">dc</link>,&#32;LOGPIXELSY);
+338 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ReleaseDC(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_truetype__test__win32_8c_1a107e8c958b2db614ef53259d777a5752">dc</link>);
+339 &#32;&#32;&#32;&#32;}
+340 
+341 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xscale)
+342 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*xscale&#32;=&#32;xdpi&#32;/&#32;(float)&#32;<link linkend="_win32__platform_8h_1ad7cf236b9f6824d4924c8397b9478e0c">USER_DEFAULT_SCREEN_DPI</link>;
+343 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(yscale)
+344 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*yscale&#32;=&#32;ydpi&#32;/&#32;(float)&#32;<link linkend="_win32__platform_8h_1ad7cf236b9f6824d4924c8397b9478e0c">USER_DEFAULT_SCREEN_DPI</link>;
+345 }
+</programlisting>    </section><anchor xml:id="_win32__monitor_8c_1a3fe7a2258a3ce26e3a8257c3d0ea1ca0"/>    <section>
+    <title>_glfwGetMonitorContentScaleWin32()</title>
+<indexterm><primary>_glfwGetMonitorContentScaleWin32</primary><secondary>win32_monitor.c</secondary></indexterm>
+<indexterm><primary>win32_monitor.c</primary><secondary>_glfwGetMonitorContentScaleWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetMonitorContentScaleWin32 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, float * xscale, float * yscale)</computeroutput></para><para>
+Definition at line 373 of file win32_monitor.c.</para>
+<programlisting>375 {
+376 &#32;&#32;&#32;&#32;<link linkend="_win32__monitor_8c_1a666ce7b96d7717b71d8086be7b4e9fb3">_glfwGetHMONITORContentScaleWin32</link>(monitor-&gt;win32.handle,&#32;xscale,&#32;yscale);
+377 }
+</programlisting>    </section><anchor xml:id="_win32__monitor_8c_1a4261cca207894705081bbe41a912529b"/>    <section>
+    <title>_glfwGetMonitorPosWin32()</title>
+<indexterm><primary>_glfwGetMonitorPosWin32</primary><secondary>win32_monitor.c</secondary></indexterm>
+<indexterm><primary>win32_monitor.c</primary><secondary>_glfwGetMonitorPosWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetMonitorPosWin32 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, int * xpos, int * ypos)</computeroutput></para><para>
+Definition at line 356 of file win32_monitor.c.</para>
+<programlisting>357 {
+358 &#32;&#32;&#32;&#32;DEVMODEW&#32;dm;
+359 &#32;&#32;&#32;&#32;ZeroMemory(&amp;dm,&#32;<emphasis role="keyword">sizeof</emphasis>(dm));
+360 &#32;&#32;&#32;&#32;dm.dmSize&#32;=&#32;<emphasis role="keyword">sizeof</emphasis>(dm);
+361 
+362 &#32;&#32;&#32;&#32;EnumDisplaySettingsExW(monitor-&gt;win32.adapterName,
+363 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ENUM_CURRENT_SETTINGS,
+364 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;dm,
+365 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1ae4a3f2aeae276c46f44d9d5c08452c12">EDS_ROTATEDMODE</link>);
+366 
+367 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xpos)
+368 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*xpos&#32;=&#32;dm.dmPosition.x;
+369 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ypos)
+370 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*ypos&#32;=&#32;dm.dmPosition.y;
+371 }
+</programlisting>    </section><anchor xml:id="_win32__monitor_8c_1a844e706059e08613de692291969111d2"/>    <section>
+    <title>_glfwGetMonitorWorkareaWin32()</title>
+<indexterm><primary>_glfwGetMonitorWorkareaWin32</primary><secondary>win32_monitor.c</secondary></indexterm>
+<indexterm><primary>win32_monitor.c</primary><secondary>_glfwGetMonitorWorkareaWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetMonitorWorkareaWin32 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, int * xpos, int * ypos, int * width, int * height)</computeroutput></para><para>
+Definition at line 379 of file win32_monitor.c.</para>
+<programlisting>382 {
+383 &#32;&#32;&#32;&#32;MONITORINFO&#32;mi&#32;=&#32;{&#32;<emphasis role="keyword">sizeof</emphasis>(mi)&#32;};
+384 &#32;&#32;&#32;&#32;GetMonitorInfo(monitor-&gt;win32.handle,&#32;&amp;mi);
+385 
+386 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xpos)
+387 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*xpos&#32;=&#32;mi.rcWork.left;
+388 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ypos)
+389 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*ypos&#32;=&#32;mi.rcWork.top;
+390 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>)
+391 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>&#32;=&#32;mi.rcWork.right&#32;-&#32;mi.rcWork.left;
+392 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)
+393 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>&#32;=&#32;mi.rcWork.bottom&#32;-&#32;mi.rcWork.top;
+394 }
+</programlisting>    </section><anchor xml:id="_win32__monitor_8c_1ab4ce13c23c2b2bc9635e36ee5387375e"/>    <section>
+    <title>_glfwGetVideoModesWin32()</title>
+<indexterm><primary>_glfwGetVideoModesWin32</primary><secondary>win32_monitor.c</secondary></indexterm>
+<indexterm><primary>win32_monitor.c</primary><secondary>_glfwGetVideoModesWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>* _glfwGetVideoModesWin32 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, int * count)</computeroutput></para><para>
+Definition at line 396 of file win32_monitor.c.</para>
+<programlisting>397 {
+398 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;modeIndex&#32;=&#32;0,&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&#32;=&#32;0;
+399 &#32;&#32;&#32;&#32;<link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>*&#32;<link linkend="_structresult">result</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+400 
+401 &#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;=&#32;0;
+402 
+403 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(;;)
+404 &#32;&#32;&#32;&#32;{
+405 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+406 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>;
+407 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;DEVMODEW&#32;dm;
+408 
+409 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ZeroMemory(&amp;dm,&#32;<emphasis role="keyword">sizeof</emphasis>(dm));
+410 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;dm.dmSize&#32;=&#32;<emphasis role="keyword">sizeof</emphasis>(dm);
+411 
+412 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!EnumDisplaySettingsW(monitor-&gt;win32.adapterName,&#32;modeIndex,&#32;&amp;dm))
+413 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+414 
+415 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;modeIndex++;
+416 
+417 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Skip&#32;modes&#32;with&#32;less&#32;than&#32;15&#32;BPP</emphasis>
+418 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(dm.dmBitsPerPel&#32;&lt;&#32;15)
+419 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+420 
+421 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>.width&#32;&#32;=&#32;dm.dmPelsWidth;
+422 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>.height&#32;=&#32;dm.dmPelsHeight;
+423 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>.refreshRate&#32;=&#32;dm.dmDisplayFrequency;
+424 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a3f83dfd3a9beffeba9bac74ec15071a0">_glfwSplitBPP</link>(dm.dmBitsPerPel,
+425 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>.redBits,
+426 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>.greenBits,
+427 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>.blueBits);
+428 
+429 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;*<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>;&#32;&#32;i++)
+430 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+431 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_internal_8h_1aaca82db2d0453cb2895b0aa5e495387f">_glfwCompareVideoModes</link>(<link linkend="_structresult">result</link>&#32;+&#32;i,&#32;&amp;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>)&#32;==&#32;0)
+432 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+433 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+434 
+435 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Skip&#32;duplicate&#32;modes</emphasis>
+436 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(i&#32;&lt;&#32;*<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>)
+437 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+438 
+439 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(monitor-&gt;win32.modesPruned)
+440 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+441 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Skip&#32;modes&#32;not&#32;supported&#32;by&#32;the&#32;connected&#32;displays</emphasis>
+442 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ChangeDisplaySettingsExW(monitor-&gt;win32.adapterName,
+443 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;dm,
+444 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,
+445 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CDS_TEST,
+446 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;!=&#32;DISP_CHANGE_SUCCESSFUL)
+447 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+448 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+449 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+450 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+451 
+452 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(*<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;==&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)
+453 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+454 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&#32;+=&#32;128;
+455 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structresult">result</link>&#32;=&#32;(<link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>*)&#32;<link linkend="_init_8c_1a428a65f03ddd87abacc7db0251b4e9af">_glfw_realloc</link>(<link linkend="_structresult">result</link>,&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>));
+456 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+457 
+458 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(*count)++;
+459 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structresult">result</link>[*<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;-&#32;1]&#32;=&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>;
+460 &#32;&#32;&#32;&#32;}
+461 
+462 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!*<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>)
+463 &#32;&#32;&#32;&#32;{
+464 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;HACK:&#32;Report&#32;the&#32;current&#32;mode&#32;if&#32;no&#32;valid&#32;modes&#32;were&#32;found</emphasis>
+465 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structresult">result</link>&#32;=&#32;<link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link>(1,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>));
+466 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__monitor_8c_1a7b43d8548648f7a49903525cda10e09c">_glfwGetVideoModeWin32</link>(monitor,&#32;<link linkend="_structresult">result</link>);
+467 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;=&#32;1;
+468 &#32;&#32;&#32;&#32;}
+469 
+470 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glext_8h_1a321ff419cd5252e54cf95e64dc6687ee">result</link>;
+471 }
+</programlisting>    </section><anchor xml:id="_win32__monitor_8c_1a7b43d8548648f7a49903525cda10e09c"/>    <section>
+    <title>_glfwGetVideoModeWin32()</title>
+<indexterm><primary>_glfwGetVideoModeWin32</primary><secondary>win32_monitor.c</secondary></indexterm>
+<indexterm><primary>win32_monitor.c</primary><secondary>_glfwGetVideoModeWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetVideoModeWin32 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> * mode)</computeroutput></para><para>
+Definition at line 473 of file win32_monitor.c.</para>
+<programlisting>474 {
+475 &#32;&#32;&#32;&#32;DEVMODEW&#32;dm;
+476 &#32;&#32;&#32;&#32;ZeroMemory(&amp;dm,&#32;<emphasis role="keyword">sizeof</emphasis>(dm));
+477 &#32;&#32;&#32;&#32;dm.dmSize&#32;=&#32;<emphasis role="keyword">sizeof</emphasis>(dm);
+478 
+479 &#32;&#32;&#32;&#32;EnumDisplaySettingsW(monitor-&gt;win32.adapterName,&#32;ENUM_CURRENT_SETTINGS,&#32;&amp;dm);
+480 
+481 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;width&#32;&#32;=&#32;dm.dmPelsWidth;
+482 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;height&#32;=&#32;dm.dmPelsHeight;
+483 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;refreshRate&#32;=&#32;dm.dmDisplayFrequency;
+484 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a3f83dfd3a9beffeba9bac74ec15071a0">_glfwSplitBPP</link>(dm.dmBitsPerPel,
+485 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;redBits,
+486 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;greenBits,
+487 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;blueBits);
+488 }
+</programlisting>    </section><anchor xml:id="_win32__monitor_8c_1a345b11644c658a9a94b0eeb4ed4a0618"/>    <section>
+    <title>_glfwPollMonitorsWin32()</title>
+<indexterm><primary>_glfwPollMonitorsWin32</primary><secondary>win32_monitor.c</secondary></indexterm>
+<indexterm><primary>win32_monitor.c</primary><secondary>_glfwPollMonitorsWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwPollMonitorsWin32 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 136 of file win32_monitor.c.</para>
+<programlisting>137 {
+138 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i,&#32;disconnectedCount;
+139 &#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>**&#32;disconnected&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+140 &#32;&#32;&#32;&#32;DWORD&#32;adapterIndex,&#32;displayIndex;
+141 &#32;&#32;&#32;&#32;DISPLAY_DEVICEW&#32;adapter,&#32;<link linkend="_boing_8c_1a4ea013001a5fb47853d0fab8f8de35cd">display</link>;
+142 &#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*&#32;monitor;
+143 
+144 &#32;&#32;&#32;&#32;disconnectedCount&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1ae3f408467579cb3fb517fcd39fa23568">monitorCount</link>;
+145 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(disconnectedCount)
+146 &#32;&#32;&#32;&#32;{
+147 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;disconnected&#32;=&#32;<link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1ae3f408467579cb3fb517fcd39fa23568">monitorCount</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*));
+148 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memcpy(disconnected,
+149 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1acb84371972f4d704deb0cdc649a1f1da">monitors</link>,
+150 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1ae3f408467579cb3fb517fcd39fa23568">monitorCount</link>&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*));
+151 &#32;&#32;&#32;&#32;}
+152 
+153 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(adapterIndex&#32;=&#32;0;&#32;&#32;;&#32;&#32;adapterIndex++)
+154 &#32;&#32;&#32;&#32;{
+155 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>&#32;=&#32;<link linkend="_internal_8h_1abc25b1b7cd5fe7f2fe3d010f0d1867ba">_GLFW_INSERT_LAST</link>;
+156 
+157 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ZeroMemory(&amp;adapter,&#32;<emphasis role="keyword">sizeof</emphasis>(adapter));
+158 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;adapter.cb&#32;=&#32;<emphasis role="keyword">sizeof</emphasis>(adapter);
+159 
+160 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!EnumDisplayDevicesW(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;adapterIndex,&#32;&amp;adapter,&#32;0))
+161 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+162 
+163 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!(adapter.StateFlags&#32;&amp;&#32;<link linkend="_win32__platform_8h_1acfc9af5fc06a9d2336c4d876213a96f4">DISPLAY_DEVICE_ACTIVE</link>))
+164 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+165 
+166 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(adapter.StateFlags&#32;&amp;&#32;DISPLAY_DEVICE_PRIMARY_DEVICE)
+167 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>&#32;=&#32;<link linkend="_internal_8h_1a9455a4c5815aa9184abd69811f939496">_GLFW_INSERT_FIRST</link>;
+168 
+169 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(displayIndex&#32;=&#32;0;&#32;&#32;;&#32;&#32;displayIndex++)
+170 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+171 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ZeroMemory(&amp;<link linkend="_boing_8c_1a4ea013001a5fb47853d0fab8f8de35cd">display</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_boing_8c_1a4ea013001a5fb47853d0fab8f8de35cd">display</link>));
+172 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1a4ea013001a5fb47853d0fab8f8de35cd">display</link>.cb&#32;=&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_boing_8c_1a4ea013001a5fb47853d0fab8f8de35cd">display</link>);
+173 
+174 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!EnumDisplayDevicesW(adapter.DeviceName,&#32;displayIndex,&#32;&amp;<link linkend="_boing_8c_1a4ea013001a5fb47853d0fab8f8de35cd">display</link>,&#32;0))
+175 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+176 
+177 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!(<link linkend="_boing_8c_1a4ea013001a5fb47853d0fab8f8de35cd">display</link>.StateFlags&#32;&amp;&#32;<link linkend="_win32__platform_8h_1acfc9af5fc06a9d2336c4d876213a96f4">DISPLAY_DEVICE_ACTIVE</link>))
+178 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+179 
+180 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;disconnectedCount;&#32;&#32;i++)
+181 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+182 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(disconnected[i]&#32;&amp;&amp;
+183 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wcscmp(disconnected[i]-&gt;win32.displayName,
+184 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1a4ea013001a5fb47853d0fab8f8de35cd">display</link>.DeviceName)&#32;==&#32;0)
+185 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+186 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;disconnected[i]&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+187 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;handle&#32;may&#32;have&#32;changed,&#32;update</emphasis>
+188 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;EnumDisplayMonitors(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;monitorCallback,&#32;(LPARAM)&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1acb84371972f4d704deb0cdc649a1f1da">monitors</link>[i]);
+189 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+190 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+191 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+192 
+193 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(i&#32;&lt;&#32;disconnectedCount)
+194 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+195 
+196 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;monitor&#32;=&#32;createMonitor(&amp;adapter,&#32;&amp;<link linkend="_boing_8c_1a4ea013001a5fb47853d0fab8f8de35cd">display</link>);
+197 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!monitor)
+198 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+199 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(disconnected);
+200 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+201 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+202 
+203 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a2a45c0c0677b73011b7364e2cdd9760d">_glfwInputMonitor</link>(monitor,&#32;<link linkend="_glfw3_8h_1abe11513fd1ffbee5bb9b173f06028b9e">GLFW_CONNECTED</link>,&#32;<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>);
+204 
+205 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>&#32;=&#32;<link linkend="_internal_8h_1abc25b1b7cd5fe7f2fe3d010f0d1867ba">_GLFW_INSERT_LAST</link>;
+206 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+207 
+208 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;HACK:&#32;If&#32;an&#32;active&#32;adapter&#32;does&#32;not&#32;have&#32;any&#32;display&#32;devices</emphasis>
+209 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;(as&#32;sometimes&#32;happens),&#32;add&#32;it&#32;directly&#32;as&#32;a&#32;monitor</emphasis>
+210 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(displayIndex&#32;==&#32;0)
+211 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+212 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;disconnectedCount;&#32;&#32;i++)
+213 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+214 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(disconnected[i]&#32;&amp;&amp;
+215 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wcscmp(disconnected[i]-&gt;win32.adapterName,
+216 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;adapter.DeviceName)&#32;==&#32;0)
+217 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+218 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;disconnected[i]&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+219 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+220 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+221 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+222 
+223 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(i&#32;&lt;&#32;disconnectedCount)
+224 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+225 
+226 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;monitor&#32;=&#32;createMonitor(&amp;adapter,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+227 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!monitor)
+228 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+229 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(disconnected);
+230 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+231 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+232 
+233 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a2a45c0c0677b73011b7364e2cdd9760d">_glfwInputMonitor</link>(monitor,&#32;<link linkend="_glfw3_8h_1abe11513fd1ffbee5bb9b173f06028b9e">GLFW_CONNECTED</link>,&#32;<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>);
+234 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+235 &#32;&#32;&#32;&#32;}
+236 
+237 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;disconnectedCount;&#32;&#32;i++)
+238 &#32;&#32;&#32;&#32;{
+239 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(disconnected[i])
+240 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a2a45c0c0677b73011b7364e2cdd9760d">_glfwInputMonitor</link>(disconnected[i],&#32;<link linkend="_glfw3_8h_1aab64b25921ef21d89252d6f0a71bfc32">GLFW_DISCONNECTED</link>,&#32;0);
+241 &#32;&#32;&#32;&#32;}
+242 
+243 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(disconnected);
+244 }
+</programlisting>    </section><anchor xml:id="_win32__monitor_8c_1af4b02765bc562c8265503bb97c0cd8e9"/>    <section>
+    <title>_glfwRestoreVideoModeWin32()</title>
+<indexterm><primary>_glfwRestoreVideoModeWin32</primary><secondary>win32_monitor.c</secondary></indexterm>
+<indexterm><primary>win32_monitor.c</primary><secondary>_glfwRestoreVideoModeWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwRestoreVideoModeWin32 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor)</computeroutput></para><para>
+Definition at line 306 of file win32_monitor.c.</para>
+<programlisting>307 {
+308 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(monitor-&gt;win32.modeChanged)
+309 &#32;&#32;&#32;&#32;{
+310 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ChangeDisplaySettingsExW(monitor-&gt;win32.adapterName,
+311 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;CDS_FULLSCREEN,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+312 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;monitor-&gt;win32.modeChanged&#32;=&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+313 &#32;&#32;&#32;&#32;}
+314 }
+</programlisting>    </section><anchor xml:id="_win32__monitor_8c_1a605f08f68a28c0bde60a12a0a399938e"/>    <section>
+    <title>_glfwSetGammaRampWin32()</title>
+<indexterm><primary>_glfwSetGammaRampWin32</primary><secondary>win32_monitor.c</secondary></indexterm>
+<indexterm><primary>win32_monitor.c</primary><secondary>_glfwSetGammaRampWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetGammaRampWin32 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, const <link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> * ramp)</computeroutput></para><para>
+Definition at line 508 of file win32_monitor.c.</para>
+<programlisting>509 {
+510 &#32;&#32;&#32;&#32;HDC&#32;<link linkend="_truetype__test__win32_8c_1a107e8c958b2db614ef53259d777a5752">dc</link>;
+511 &#32;&#32;&#32;&#32;WORD&#32;<link linkend="_glad_8h_1a0aa8cf39c79d294b1d9f4daef5020bec">values</link>[3][256];
+512 
+513 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1ad620e1cffbff9a32c51bca46301b59a5">size</link>&#32;!=&#32;256)
+514 &#32;&#32;&#32;&#32;{
+515 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+516 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Win32:&#32;Gamma&#32;ramp&#32;size&#32;must&#32;be&#32;256&quot;</emphasis>);
+517 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+518 &#32;&#32;&#32;&#32;}
+519 
+520 &#32;&#32;&#32;&#32;memcpy(<link linkend="_glad_8h_1a0aa8cf39c79d294b1d9f4daef5020bec">values</link>[0],&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1a2cce5d968734b685623eef913e635138">red</link>,&#32;&#32;&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glad_8h_1a0aa8cf39c79d294b1d9f4daef5020bec">values</link>[0]));
+521 &#32;&#32;&#32;&#32;memcpy(<link linkend="_glad_8h_1a0aa8cf39c79d294b1d9f4daef5020bec">values</link>[1],&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1affccc6f5df47820b6562d709da3a5a3a">green</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glad_8h_1a0aa8cf39c79d294b1d9f4daef5020bec">values</link>[1]));
+522 &#32;&#32;&#32;&#32;memcpy(<link linkend="_glad_8h_1a0aa8cf39c79d294b1d9f4daef5020bec">values</link>[2],&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1acf0c836d0efe29c392fe8d1a1042744b">blue</link>,&#32;&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glad_8h_1a0aa8cf39c79d294b1d9f4daef5020bec">values</link>[2]));
+523 
+524 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a107e8c958b2db614ef53259d777a5752">dc</link>&#32;=&#32;CreateDCW(<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link><emphasis role="stringliteral">&quot;DISPLAY&quot;</emphasis>,&#32;monitor-&gt;win32.adapterName,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+525 &#32;&#32;&#32;&#32;SetDeviceGammaRamp(<link linkend="_truetype__test__win32_8c_1a107e8c958b2db614ef53259d777a5752">dc</link>,&#32;<link linkend="_glad_8h_1a0aa8cf39c79d294b1d9f4daef5020bec">values</link>);
+526 &#32;&#32;&#32;&#32;DeleteDC(<link linkend="_truetype__test__win32_8c_1a107e8c958b2db614ef53259d777a5752">dc</link>);
+527 }
+</programlisting>    </section><anchor xml:id="_win32__monitor_8c_1a52d8e36bf649dcb15198832d92206ce2"/>    <section>
+    <title>_glfwSetVideoModeWin32()</title>
+<indexterm><primary>_glfwSetVideoModeWin32</primary><secondary>win32_monitor.c</secondary></indexterm>
+<indexterm><primary>win32_monitor.c</primary><secondary>_glfwSetVideoModeWin32</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetVideoModeWin32 (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, const <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> * desired)</computeroutput></para><para>
+Definition at line 248 of file win32_monitor.c.</para>
+<programlisting>249 {
+250 &#32;&#32;&#32;&#32;<link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>&#32;current;
+251 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>*&#32;best;
+252 &#32;&#32;&#32;&#32;DEVMODEW&#32;dm;
+253 &#32;&#32;&#32;&#32;LONG&#32;<link linkend="_glext_8h_1a321ff419cd5252e54cf95e64dc6687ee">result</link>;
+254 
+255 &#32;&#32;&#32;&#32;best&#32;=&#32;<link linkend="_internal_8h_1acf6b57bbbf447209081a27abdc00465c">_glfwChooseVideoMode</link>(monitor,&#32;desired);
+256 &#32;&#32;&#32;&#32;<link linkend="_win32__monitor_8c_1a7b43d8548648f7a49903525cda10e09c">_glfwGetVideoModeWin32</link>(monitor,&#32;&amp;current);
+257 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_internal_8h_1aaca82db2d0453cb2895b0aa5e495387f">_glfwCompareVideoModes</link>(&amp;current,&#32;best)&#32;==&#32;0)
+258 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+259 
+260 &#32;&#32;&#32;&#32;ZeroMemory(&amp;dm,&#32;<emphasis role="keyword">sizeof</emphasis>(dm));
+261 &#32;&#32;&#32;&#32;dm.dmSize&#32;=&#32;<emphasis role="keyword">sizeof</emphasis>(dm);
+262 &#32;&#32;&#32;&#32;dm.dmFields&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;DM_PELSWIDTH&#32;|&#32;DM_PELSHEIGHT&#32;|&#32;DM_BITSPERPEL&#32;|
+263 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;DM_DISPLAYFREQUENCY;
+264 &#32;&#32;&#32;&#32;dm.dmPelsWidth&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;best-&gt;<link linkend="_struct_g_l_f_wvidmode_1a698dcb200562051a7249cb6ae154c71d">width</link>;
+265 &#32;&#32;&#32;&#32;dm.dmPelsHeight&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;best-&gt;<link linkend="_struct_g_l_f_wvidmode_1ac65942a5f6981695517437a9d571d03c">height</link>;
+266 &#32;&#32;&#32;&#32;dm.dmBitsPerPel&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;best-&gt;<link linkend="_struct_g_l_f_wvidmode_1a6066c4ecd251098700062d3b735dba1b">redBits</link>&#32;+&#32;best-&gt;<link linkend="_struct_g_l_f_wvidmode_1a292fdd281f3485fb3ff102a5bda43faa">greenBits</link>&#32;+&#32;best-&gt;<link linkend="_struct_g_l_f_wvidmode_1af310977f58d2e3b188175b6e3d314047">blueBits</link>;
+267 &#32;&#32;&#32;&#32;dm.dmDisplayFrequency&#32;=&#32;best-&gt;<link linkend="_struct_g_l_f_wvidmode_1a791bdd6c7697b09f7e9c97054bf05649">refreshRate</link>;
+268 
+269 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(dm.dmBitsPerPel&#32;&lt;&#32;15&#32;||&#32;dm.dmBitsPerPel&#32;&gt;=&#32;24)
+270 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;dm.dmBitsPerPel&#32;=&#32;32;
+271 
+272 &#32;&#32;&#32;&#32;<link linkend="_structresult">result</link>&#32;=&#32;ChangeDisplaySettingsExW(monitor-&gt;win32.adapterName,
+273 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;dm,
+274 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,
+275 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CDS_FULLSCREEN,
+276 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+277 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_structresult">result</link>&#32;==&#32;DISP_CHANGE_SUCCESSFUL)
+278 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;monitor-&gt;win32.modeChanged&#32;=&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+279 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+280 &#32;&#32;&#32;&#32;{
+281 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>*&#32;description&#32;=&#32;<emphasis role="stringliteral">&quot;Unknown&#32;error&quot;</emphasis>;
+282 
+283 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_structresult">result</link>&#32;==&#32;DISP_CHANGE_BADDUALVIEW)
+284 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;description&#32;=&#32;<emphasis role="stringliteral">&quot;The&#32;system&#32;uses&#32;DualView&quot;</emphasis>;
+285 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_structresult">result</link>&#32;==&#32;DISP_CHANGE_BADFLAGS)
+286 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;description&#32;=&#32;<emphasis role="stringliteral">&quot;Invalid&#32;flags&quot;</emphasis>;
+287 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_structresult">result</link>&#32;==&#32;DISP_CHANGE_BADMODE)
+288 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;description&#32;=&#32;<emphasis role="stringliteral">&quot;Graphics&#32;mode&#32;not&#32;supported&quot;</emphasis>;
+289 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_structresult">result</link>&#32;==&#32;DISP_CHANGE_BADPARAM)
+290 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;description&#32;=&#32;<emphasis role="stringliteral">&quot;Invalid&#32;parameter&quot;</emphasis>;
+291 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_structresult">result</link>&#32;==&#32;DISP_CHANGE_FAILED)
+292 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;description&#32;=&#32;<emphasis role="stringliteral">&quot;Graphics&#32;mode&#32;failed&quot;</emphasis>;
+293 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_structresult">result</link>&#32;==&#32;DISP_CHANGE_NOTUPDATED)
+294 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;description&#32;=&#32;<emphasis role="stringliteral">&quot;Failed&#32;to&#32;write&#32;to&#32;registry&quot;</emphasis>;
+295 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_structresult">result</link>&#32;==&#32;DISP_CHANGE_RESTART)
+296 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;description&#32;=&#32;<emphasis role="stringliteral">&quot;Computer&#32;restart&#32;required&quot;</emphasis>;
+297 
+298 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+299 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Win32:&#32;Failed&#32;to&#32;set&#32;video&#32;mode:&#32;%s&quot;</emphasis>,
+300 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;description);
+301 &#32;&#32;&#32;&#32;}
+302 }
+</programlisting>    </section><anchor xml:id="_win32__monitor_8c_1a0b1d43af32c6c7a6c70a74f47a6bddc9"/>    <section>
+    <title>glfwGetWin32Adapter()</title>
+<indexterm><primary>glfwGetWin32Adapter</primary><secondary>win32_monitor.c</secondary></indexterm>
+<indexterm><primary>win32_monitor.c</primary><secondary>glfwGetWin32Adapter</secondary></indexterm>
+<para><computeroutput>const <link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> char* glfwGetWin32Adapter (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> * handle)</computeroutput></para><para>
+Definition at line 534 of file win32_monitor.c.</para>
+<programlisting>535 {
+536 &#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*&#32;monitor&#32;=&#32;(<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*)&#32;handle;
+537 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a69563c87fe776d416636a4d1b0e9e599">_GLFW_REQUIRE_INIT_OR_RETURN</link>(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+538 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;monitor-&gt;win32.publicAdapterName;
+539 }
+</programlisting>    </section><anchor xml:id="_win32__monitor_8c_1adaf1ded80f4a4e3e5cd5b4dc8e4f44c0"/>    <section>
+    <title>glfwGetWin32Monitor()</title>
+<indexterm><primary>glfwGetWin32Monitor</primary><secondary>win32_monitor.c</secondary></indexterm>
+<indexterm><primary>win32_monitor.c</primary><secondary>glfwGetWin32Monitor</secondary></indexterm>
+<para><computeroutput>const <link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> char* glfwGetWin32Monitor (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> * handle)</computeroutput></para><para>
+Definition at line 541 of file win32_monitor.c.</para>
+<programlisting>542 {
+543 &#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*&#32;monitor&#32;=&#32;(<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*)&#32;handle;
+544 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a69563c87fe776d416636a4d1b0e9e599">_GLFW_REQUIRE_INIT_OR_RETURN</link>(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+545 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;monitor-&gt;win32.publicDisplayName;
+546 }
+</programlisting></section>
+</section>
+</section>

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['shader_0',['shader',['../structshader.html',1,'']]],
-  ['spriterenderer_1',['spriterenderer',['../structspriterenderer.html',1,'']]],
-  ['spriterenderer_5fstate_2',['spriterenderer_state',['../structspriterenderer__state.html',1,'']]]
+  ['hexwave_21911',['HexWave',['../struct_hex_wave.html',1,'']]],
+  ['hexwaveparameters_21912',['HexWaveParameters',['../struct_hex_wave_parameters.html',1,'']]],
+  ['huffman_21913',['huffman',['../structhuffman.html',1,'']]]
 ];

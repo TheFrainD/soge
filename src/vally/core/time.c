@@ -1,42 +1,49 @@
+/*********************************************************************
+ * time.c                                                            *
+ *                                                                   *
+ * Copyright (c) 2022 Dmytro Zykov                                   *
+ *                                                                   *
+ * This file is a part of the vally project, and may only be used,   *
+ * modified and distributed under the terms of the MIT License,      *
+ * LICENSE.md. By continuing to use, modify and distribute this file *
+ * you inidicate that you have read the license and accept it fully. *
+ *********************************************************************/
+
 #include <vally/core/time.h>
 
-#ifdef __linux__
-#define _POSIX_C_SOURCE 199309L
-#include <sys/time.h>
-#endif
+#if defined(VALLY_PLATFORM_LINUX)
 
-#ifdef _WIN32
-#include <windows.h>
+  #define _POSIX_C_SOURCE 199309L
+  #include <sys/time.h>
+  #include <time.h>
 
-static f64 clock_frequency;
-static LARGE_INTEGER start_time;
-#endif
-
-#include <time.h>
-
-#ifdef _WIN32
-void time_init() {
-  LARGE_INTEGER frequency;
-  QueryPerformanceFrequency(&frequency);
-  clock_frequency = 1.0 / (f64)frequency.QuadPart;
-  QueryPerformanceCounter(&start_time);
-}
-#endif
-
-f64 time_now() {
-#ifdef __linux__
-  struct timespec now;
-  clock_gettime(CLOCK_MONOTONIC, &now);
-  return now.tv_sec + now.tv_nsec * 0.000000001;
-#endif
-
-#ifdef _WIN32
-  if (!clock_frequency) {
-    time_init();
+  f64 time_now() {
+    struct timespec now;
+    clock_gettime(CLOCK_MONOTONIC, &now);
+    return now.tv_sec + now.tv_nsec * 0.000000001;
   }
 
-  LARGE_INTEGER now_time;
-  QueryPerformanceCounter(&now_time);
-  return (f64)now_time.QuadPart * clock_frequency;
+#elif defined(VALLY_PLATFORM_WINDOWS)
+  #include <windows.h>
+  #include <time.h>
+
+  static f64 clock_frequency;
+  static LARGE_INTEGER start_time;
+
+  void time_init() {
+    LARGE_INTEGER frequency;
+    QueryPerformanceFrequency(&frequency);
+    clock_frequency = 1.0 / (f64)frequency.QuadPart;
+    QueryPerformanceCounter(&start_time);
+  }
+
+  f64 time_now() {
+    if (!clock_frequency) {
+      time_init();
+    }
+
+    LARGE_INTEGER now_time;
+    QueryPerformanceCounter(&now_time);
+    return (f64)now_time.QuadPart * clock_frequency;
+  }
 #endif
-}

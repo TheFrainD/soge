@@ -1,0 +1,541 @@
+\hypertarget{deps_2glfw_2src_2input_8c}{}\doxysection{deps/glfw/src/input.c File Reference}
+\label{deps_2glfw_2src_2input_8c}\index{deps/glfw/src/input.c@{deps/glfw/src/input.c}}
+{\ttfamily \#include \char`\"{}internal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mappings.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$float.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{deps_2glfw_2src_2input_8c_af05e8b8bf6c333e9b40f3480b9d88241}{\+\_\+\+G\+L\+F\+W\+\_\+\+S\+T\+I\+CK}}~3
+\item 
+\#define \mbox{\hyperlink{deps_2glfw_2src_2input_8c_a5bf4fa1f0b519aa53c409cfa43c09287}{\+\_\+\+G\+L\+F\+W\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+A\+X\+IS}}~1
+\item 
+\#define \mbox{\hyperlink{deps_2glfw_2src_2input_8c_a582c697f7502aae03c949fde57daaf56}{\+\_\+\+G\+L\+F\+W\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+B\+U\+T\+T\+ON}}~2
+\item 
+\#define \mbox{\hyperlink{deps_2glfw_2src_2input_8c_aa05206ef4ae4fc35573852aa9d26c811}{\+\_\+\+G\+L\+F\+W\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+H\+A\+T\+B\+IT}}~3
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{deps_2glfw_2src_2input_8c_aba4a5bf53c475cf2dc3e594c3c5034ab}{\+\_\+glfw\+Input\+Key}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, int \mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}}, int scancode, int action, int mods)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{deps_2glfw_2src_2input_8c_aa778fa9144afadb49baa95f0178d3d3e}{\+\_\+glfw\+Input\+Char}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{stdint_8h_a435d1572bf3f880d55459d9805097f62}{uint32\+\_\+t}} codepoint, int mods, \mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} plain)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{deps_2glfw_2src_2input_8c_a65b98312da830a2c65b36543f119a7fa}{\+\_\+glfw\+Input\+Scroll}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, double \mbox{\hyperlink{glad_8h_ac20a0ffebf4c476650fcfa0633066f0e}{xoffset}}, double \mbox{\hyperlink{glad_8h_a76dfb6803dcff61037ba688b7f4242b8}{yoffset}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{deps_2glfw_2src_2input_8c_ae259527976c9b13341aa3e4587d0353e}{\+\_\+glfw\+Input\+Mouse\+Click}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, int button, int action, int mods)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{deps_2glfw_2src_2input_8c_a973210bc0a11cc09fb55574ec5491bed}{\+\_\+glfw\+Input\+Cursor\+Pos}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, double xpos, double ypos)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{deps_2glfw_2src_2input_8c_a507361a8b8610b4daee7e83aa056f339}{\+\_\+glfw\+Input\+Cursor\+Enter}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} entered)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{deps_2glfw_2src_2input_8c_a3a90fb32fec8ddd068b64671d1e85596}{\+\_\+glfw\+Input\+Drop}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, int \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}}, const char $\ast$$\ast$\mbox{\hyperlink{glext_8h_adcb3345bcd367edfa374dd2e0452a033}{paths}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{deps_2glfw_2src_2input_8c_a3f053fce7ffb1aeb2ebdee3674a8fee2}{\+\_\+glfw\+Input\+Joystick}} (\mbox{\hyperlink{struct___g_l_f_wjoystick}{\+\_\+\+G\+L\+F\+Wjoystick}} $\ast$js, int \mbox{\hyperlink{glext_8h_a03b04a5a978bad576866339075de01f6}{event}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{deps_2glfw_2src_2input_8c_ab91e3f3a89daff3809c3817a57a4f523}{\+\_\+glfw\+Input\+Joystick\+Axis}} (\mbox{\hyperlink{struct___g_l_f_wjoystick}{\+\_\+\+G\+L\+F\+Wjoystick}} $\ast$js, int axis, float \mbox{\hyperlink{glad_8h_a79169be77d7e02a24f68a5bfe627dc29}{value}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{deps_2glfw_2src_2input_8c_af1048006805591e17cc431c016f539f5}{\+\_\+glfw\+Input\+Joystick\+Button}} (\mbox{\hyperlink{struct___g_l_f_wjoystick}{\+\_\+\+G\+L\+F\+Wjoystick}} $\ast$js, int button, char \mbox{\hyperlink{glad_8h_a79169be77d7e02a24f68a5bfe627dc29}{value}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{deps_2glfw_2src_2input_8c_aca3d4e257b8212cf2a713f9a1069ff08}{\+\_\+glfw\+Input\+Joystick\+Hat}} (\mbox{\hyperlink{struct___g_l_f_wjoystick}{\+\_\+\+G\+L\+F\+Wjoystick}} $\ast$js, int hat, char \mbox{\hyperlink{glad_8h_a79169be77d7e02a24f68a5bfe627dc29}{value}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{deps_2glfw_2src_2input_8c_a1dab257a37caa6b39cfe9924c2487db6}{\+\_\+glfw\+Init\+Gamepad\+Mappings}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{struct___g_l_f_wjoystick}{\+\_\+\+G\+L\+F\+Wjoystick}} $\ast$ \mbox{\hyperlink{deps_2glfw_2src_2input_8c_aa53debe565c79b60729cf4acda5df3d1}{\+\_\+glfw\+Alloc\+Joystick}} (const char $\ast$\mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}}, const char $\ast$guid, int axis\+Count, int button\+Count, int hat\+Count)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{deps_2glfw_2src_2input_8c_aef69e836bb7cfec79044fd23b367eb62}{\+\_\+glfw\+Free\+Joystick}} (\mbox{\hyperlink{struct___g_l_f_wjoystick}{\+\_\+\+G\+L\+F\+Wjoystick}} $\ast$js)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{deps_2glfw_2src_2input_8c_acf1fbc03e8d658a35f70544df858fe6c}{\+\_\+glfw\+Center\+Cursor\+In\+Content\+Area}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}})
+\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} int \mbox{\hyperlink{group__input_ga1248dd5b1e566b2817e71547564d6af9}{glfw\+Get\+Input\+Mode}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$handle, int \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}})
+\begin{DoxyCompactList}\small\item\em Returns the value of an input option for the specified window. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{group__input_gae1eb729d2dd91dc33fd60e150a6e1684}{glfw\+Set\+Input\+Mode}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$handle, int \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}, int \mbox{\hyperlink{glad_8h_a79169be77d7e02a24f68a5bfe627dc29}{value}})
+\begin{DoxyCompactList}\small\item\em Sets an input option for the specified window. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} int \mbox{\hyperlink{group__input_ga9b83d8957a566b22b3b768c7d1d4be03}{glfw\+Raw\+Mouse\+Motion\+Supported}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\begin{DoxyCompactList}\small\item\em Returns whether raw mouse motion is supported. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} char $\ast$ \mbox{\hyperlink{group__input_ga244737e5242c866e0f0af5a9c95f3e58}{glfw\+Get\+Key\+Name}} (int \mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}}, int scancode)
+\begin{DoxyCompactList}\small\item\em Returns the layout-\/specific name of the specified printable key. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} int \mbox{\hyperlink{group__input_ga3ea3b9d74f8352506068620980e01fe5}{glfw\+Get\+Key\+Scancode}} (int \mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}})
+\begin{DoxyCompactList}\small\item\em Returns the platform-\/specific scancode of the specified key. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} int \mbox{\hyperlink{group__input_ga7d8ad8ffaf272808f04e1d5d33ec8859}{glfw\+Get\+Key}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$handle, int \mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}})
+\begin{DoxyCompactList}\small\item\em Returns the last reported state of a keyboard key for the specified window. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} int \mbox{\hyperlink{group__input_ga6da5efb04f700c312a57a169fa9393a0}{glfw\+Get\+Mouse\+Button}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$handle, int button)
+\begin{DoxyCompactList}\small\item\em Returns the last reported state of a mouse button for the specified window. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{group__input_gad289438eb7cf53d11eca685373f44105}{glfw\+Get\+Cursor\+Pos}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$handle, double $\ast$xpos, double $\ast$ypos)
+\begin{DoxyCompactList}\small\item\em Retrieves the position of the cursor relative to the content area of the window. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{group__input_gaaf152cc93418acb0ba342e3f4af922bc}{glfw\+Set\+Cursor\+Pos}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$handle, double xpos, double ypos)
+\begin{DoxyCompactList}\small\item\em Sets the position of the cursor, relative to the content area of the window. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{group__input_ga89261ae18c75e863aaf2656ecdd238f4}{G\+L\+F\+Wcursor}} $\ast$ \mbox{\hyperlink{group__input_gac0f0f691f2d110f9acfb4bfe07f1216c}{glfw\+Create\+Cursor}} (const \mbox{\hyperlink{struct_g_l_f_wimage}{G\+L\+F\+Wimage}} $\ast$\mbox{\hyperlink{structimage}{image}}, int xhot, int yhot)
+\begin{DoxyCompactList}\small\item\em Creates a custom cursor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{group__input_ga89261ae18c75e863aaf2656ecdd238f4}{G\+L\+F\+Wcursor}} $\ast$ \mbox{\hyperlink{group__input_ga969dd87ad2ddbf3e1086cc40f235eed1}{glfw\+Create\+Standard\+Cursor}} (int shape)
+\begin{DoxyCompactList}\small\item\em Creates a cursor with a standard shape. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{group__input_ga27556b7122117bc1bbb4bb3cc003ea43}{glfw\+Destroy\+Cursor}} (\mbox{\hyperlink{group__input_ga89261ae18c75e863aaf2656ecdd238f4}{G\+L\+F\+Wcursor}} $\ast$handle)
+\begin{DoxyCompactList}\small\item\em Destroys a cursor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{group__input_gafaf103cea2f43530cff7de4e01126a4f}{glfw\+Set\+Cursor}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$window\+Handle, \mbox{\hyperlink{group__input_ga89261ae18c75e863aaf2656ecdd238f4}{G\+L\+F\+Wcursor}} $\ast$cursor\+Handle)
+\begin{DoxyCompactList}\small\item\em Sets the cursor for the window. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{group__input_ga5bd751b27b90f865d2ea613533f0453c}{G\+L\+F\+Wkeyfun}} \mbox{\hyperlink{group__input_gaa4cbcb81b939b8800e44cea971ddae47}{glfw\+Set\+Key\+Callback}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$handle, \mbox{\hyperlink{group__input_ga5bd751b27b90f865d2ea613533f0453c}{G\+L\+F\+Wkeyfun}} cbfun)
+\begin{DoxyCompactList}\small\item\em Sets the key callback. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{group__input_ga1ab90a55cf3f58639b893c0f4118cb6e}{G\+L\+F\+Wcharfun}} \mbox{\hyperlink{group__input_gad3d7e6e3134fa034cc1604162579585e}{glfw\+Set\+Char\+Callback}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$handle, \mbox{\hyperlink{group__input_ga1ab90a55cf3f58639b893c0f4118cb6e}{G\+L\+F\+Wcharfun}} cbfun)
+\begin{DoxyCompactList}\small\item\em Sets the Unicode character callback. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{group__input_gac3cf64f90b6219c05ac7b7822d5a4b8f}{G\+L\+F\+Wcharmodsfun}} \mbox{\hyperlink{group__input_ga359a8529c2eb06e6e2173168f30ac99c}{glfw\+Set\+Char\+Mods\+Callback}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$handle, \mbox{\hyperlink{group__input_gac3cf64f90b6219c05ac7b7822d5a4b8f}{G\+L\+F\+Wcharmodsfun}} cbfun)
+\begin{DoxyCompactList}\small\item\em Sets the Unicode character with modifiers callback. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{group__input_ga0184dcb59f6d85d735503dcaae809727}{G\+L\+F\+Wmousebuttonfun}} \mbox{\hyperlink{group__input_gab8f17646f43cdca14e5095512618fdf6}{glfw\+Set\+Mouse\+Button\+Callback}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$handle, \mbox{\hyperlink{group__input_ga0184dcb59f6d85d735503dcaae809727}{G\+L\+F\+Wmousebuttonfun}} cbfun)
+\begin{DoxyCompactList}\small\item\em Sets the mouse button callback. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{group__input_gad6fae41b3ac2e4209aaa87b596c57f68}{G\+L\+F\+Wcursorposfun}} \mbox{\hyperlink{group__input_ga74124d0eff27040fd10e4df9e17d129c}{glfw\+Set\+Cursor\+Pos\+Callback}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$handle, \mbox{\hyperlink{group__input_gad6fae41b3ac2e4209aaa87b596c57f68}{G\+L\+F\+Wcursorposfun}} cbfun)
+\begin{DoxyCompactList}\small\item\em Sets the cursor position callback. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{group__input_gaa93dc4818ac9ab32532909d53a337cbe}{G\+L\+F\+Wcursorenterfun}} \mbox{\hyperlink{group__input_gacdb3490e374c8bc08549c6f173ffa7c2}{glfw\+Set\+Cursor\+Enter\+Callback}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$handle, \mbox{\hyperlink{group__input_gaa93dc4818ac9ab32532909d53a337cbe}{G\+L\+F\+Wcursorenterfun}} cbfun)
+\begin{DoxyCompactList}\small\item\em Sets the cursor enter/leave callback. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{group__input_gaf656112c33de3efdb227fa58f0134cf5}{G\+L\+F\+Wscrollfun}} \mbox{\hyperlink{group__input_gaa786b59f19ad8525d251cda8e0d7d29b}{glfw\+Set\+Scroll\+Callback}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$handle, \mbox{\hyperlink{group__input_gaf656112c33de3efdb227fa58f0134cf5}{G\+L\+F\+Wscrollfun}} cbfun)
+\begin{DoxyCompactList}\small\item\em Sets the scroll callback. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{group__input_gaaba73c3274062c18723b7f05862d94b2}{G\+L\+F\+Wdropfun}} \mbox{\hyperlink{group__input_ga8bab819b7b0ef9bc1a38e58c577c1d13}{glfw\+Set\+Drop\+Callback}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$handle, \mbox{\hyperlink{group__input_gaaba73c3274062c18723b7f05862d94b2}{G\+L\+F\+Wdropfun}} cbfun)
+\begin{DoxyCompactList}\small\item\em Sets the path drop callback. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} int \mbox{\hyperlink{group__input_gacb1b7dfd79df673d48814c06fc436eff}{glfw\+Joystick\+Present}} (int jid)
+\begin{DoxyCompactList}\small\item\em Returns whether the specified joystick is present. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} float $\ast$ \mbox{\hyperlink{group__input_gaf0537d8832818963f8d24ac1c98e42a3}{glfw\+Get\+Joystick\+Axes}} (int jid, int $\ast$\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}})
+\begin{DoxyCompactList}\small\item\em Returns the values of all axes of the specified joystick. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} unsigned char $\ast$ \mbox{\hyperlink{group__input_gaee8f9532b2dff9278cee70d0e6cde82c}{glfw\+Get\+Joystick\+Buttons}} (int jid, int $\ast$\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}})
+\begin{DoxyCompactList}\small\item\em Returns the state of all buttons of the specified joystick. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} unsigned char $\ast$ \mbox{\hyperlink{group__input_gad415b53795a1aeced53b7b66c7943931}{glfw\+Get\+Joystick\+Hats}} (int jid, int $\ast$\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}})
+\begin{DoxyCompactList}\small\item\em Returns the state of all hats of the specified joystick. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} char $\ast$ \mbox{\hyperlink{group__input_ga9b5d2d156f0138e0e7ad065e477dcfe3}{glfw\+Get\+Joystick\+Name}} (int jid)
+\begin{DoxyCompactList}\small\item\em Returns the name of the specified joystick. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} char $\ast$ \mbox{\hyperlink{group__input_ga40f8522193d983af333bb6e21a3b120a}{glfw\+Get\+Joystick\+G\+U\+ID}} (int jid)
+\begin{DoxyCompactList}\small\item\em Returns the S\+DL compatible G\+U\+ID of the specified joystick. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{group__input_ga3a8999c2d2634c7bcf4a04f1ec64895c}{glfw\+Set\+Joystick\+User\+Pointer}} (int jid, \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} $\ast$\mbox{\hyperlink{glad_8h_a8e06a460fd89ba3a95ce49119ef7aab2}{pointer}})
+\begin{DoxyCompactList}\small\item\em Sets the user pointer of the specified joystick. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} $\ast$ \mbox{\hyperlink{group__input_gaf4317a5b0a7849f9b2b7b2b69366a72b}{glfw\+Get\+Joystick\+User\+Pointer}} (int jid)
+\begin{DoxyCompactList}\small\item\em Returns the user pointer of the specified joystick. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{group__input_gaa21ad5986ae9a26077a40142efb56243}{G\+L\+F\+Wjoystickfun}} \mbox{\hyperlink{group__input_gad90f60a4c0e04629928305b53e96154a}{glfw\+Set\+Joystick\+Callback}} (\mbox{\hyperlink{group__input_gaa21ad5986ae9a26077a40142efb56243}{G\+L\+F\+Wjoystickfun}} cbfun)
+\begin{DoxyCompactList}\small\item\em Sets the joystick configuration callback. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} int \mbox{\hyperlink{group__input_ga276a2aec236a671a99f6f0a9be7fa3fc}{glfw\+Update\+Gamepad\+Mappings}} (const char $\ast$\mbox{\hyperlink{glad_8h_ae84541b4f3d8e1ea24ec0f466a8c568b}{string}})
+\begin{DoxyCompactList}\small\item\em Adds the specified S\+D\+L\+\_\+\+Game\+Controller\+DB gamepad mappings. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} int \mbox{\hyperlink{group__input_gac9720b6e5062a5fc5fc0bb4be6dc04a0}{glfw\+Joystick\+Is\+Gamepad}} (int jid)
+\begin{DoxyCompactList}\small\item\em Returns whether the specified joystick has a gamepad mapping. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} char $\ast$ \mbox{\hyperlink{group__input_ga36983e6ae6fa159a1426a0148a1ec00b}{glfw\+Get\+Gamepad\+Name}} (int jid)
+\begin{DoxyCompactList}\small\item\em Returns the human-\/readable gamepad name for the specified joystick. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} int \mbox{\hyperlink{group__input_ga6e138d3b0761546f5a12546f367501d6}{glfw\+Get\+Gamepad\+State}} (int jid, \mbox{\hyperlink{struct_g_l_f_wgamepadstate}{G\+L\+F\+Wgamepadstate}} $\ast$state)
+\begin{DoxyCompactList}\small\item\em Retrieves the state of the specified joystick remapped as a gamepad. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{group__input_ga7a580309bbc185a0459c3559021d2fd7}{glfw\+Set\+Clipboard\+String}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$handle, const char $\ast$\mbox{\hyperlink{glad_8h_ae84541b4f3d8e1ea24ec0f466a8c568b}{string}})
+\begin{DoxyCompactList}\small\item\em Sets the clipboard to the specified string. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} char $\ast$ \mbox{\hyperlink{group__input_gae22e5d8bc376aeb71ea063d1bc63fddc}{glfw\+Get\+Clipboard\+String}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$handle)
+\begin{DoxyCompactList}\small\item\em Returns the contents of the clipboard as a string. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} double \mbox{\hyperlink{group__input_ga03d4a1039b8662c71eeb40beea8cb622}{glfw\+Get\+Time}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\begin{DoxyCompactList}\small\item\em Returns the G\+L\+FW time. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{group__input_ga94360a3628a09f32708f83cc3fa48590}{glfw\+Set\+Time}} (double time)
+\begin{DoxyCompactList}\small\item\em Sets the G\+L\+FW time. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{stdint_8h_aec6fcb673ff035718c238c8c9d544c47}{uint64\+\_\+t}} \mbox{\hyperlink{group__input_gaa00c3e32227eb70b3968fca0bfe4ae26}{glfw\+Get\+Timer\+Value}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\begin{DoxyCompactList}\small\item\em Returns the current value of the raw timer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} \mbox{\hyperlink{stdint_8h_aec6fcb673ff035718c238c8c9d544c47}{uint64\+\_\+t}} \mbox{\hyperlink{group__input_gaa92d10b10013372778efbf6367714371}{glfw\+Get\+Timer\+Frequency}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\begin{DoxyCompactList}\small\item\em Returns the frequency, in Hz, of the raw timer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_a5bf4fa1f0b519aa53c409cfa43c09287}\label{deps_2glfw_2src_2input_8c_a5bf4fa1f0b519aa53c409cfa43c09287}} 
+\index{input.c@{input.c}!\_GLFW\_JOYSTICK\_AXIS@{\_GLFW\_JOYSTICK\_AXIS}}
+\index{\_GLFW\_JOYSTICK\_AXIS@{\_GLFW\_JOYSTICK\_AXIS}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_GLFW\_JOYSTICK\_AXIS}{\_GLFW\_JOYSTICK\_AXIS}}
+{\footnotesize\ttfamily \#define \+\_\+\+G\+L\+F\+W\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+A\+X\+IS~1}
+
+
+
+Definition at line 43 of file input.\+c.
+
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_a582c697f7502aae03c949fde57daaf56}\label{deps_2glfw_2src_2input_8c_a582c697f7502aae03c949fde57daaf56}} 
+\index{input.c@{input.c}!\_GLFW\_JOYSTICK\_BUTTON@{\_GLFW\_JOYSTICK\_BUTTON}}
+\index{\_GLFW\_JOYSTICK\_BUTTON@{\_GLFW\_JOYSTICK\_BUTTON}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_GLFW\_JOYSTICK\_BUTTON}{\_GLFW\_JOYSTICK\_BUTTON}}
+{\footnotesize\ttfamily \#define \+\_\+\+G\+L\+F\+W\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+B\+U\+T\+T\+ON~2}
+
+
+
+Definition at line 44 of file input.\+c.
+
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_aa05206ef4ae4fc35573852aa9d26c811}\label{deps_2glfw_2src_2input_8c_aa05206ef4ae4fc35573852aa9d26c811}} 
+\index{input.c@{input.c}!\_GLFW\_JOYSTICK\_HATBIT@{\_GLFW\_JOYSTICK\_HATBIT}}
+\index{\_GLFW\_JOYSTICK\_HATBIT@{\_GLFW\_JOYSTICK\_HATBIT}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_GLFW\_JOYSTICK\_HATBIT}{\_GLFW\_JOYSTICK\_HATBIT}}
+{\footnotesize\ttfamily \#define \+\_\+\+G\+L\+F\+W\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+H\+A\+T\+B\+IT~3}
+
+
+
+Definition at line 45 of file input.\+c.
+
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_af05e8b8bf6c333e9b40f3480b9d88241}\label{deps_2glfw_2src_2input_8c_af05e8b8bf6c333e9b40f3480b9d88241}} 
+\index{input.c@{input.c}!\_GLFW\_STICK@{\_GLFW\_STICK}}
+\index{\_GLFW\_STICK@{\_GLFW\_STICK}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_GLFW\_STICK}{\_GLFW\_STICK}}
+{\footnotesize\ttfamily \#define \+\_\+\+G\+L\+F\+W\+\_\+\+S\+T\+I\+CK~3}
+
+
+
+Definition at line 40 of file input.\+c.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_aa53debe565c79b60729cf4acda5df3d1}\label{deps_2glfw_2src_2input_8c_aa53debe565c79b60729cf4acda5df3d1}} 
+\index{input.c@{input.c}!\_glfwAllocJoystick@{\_glfwAllocJoystick}}
+\index{\_glfwAllocJoystick@{\_glfwAllocJoystick}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwAllocJoystick()}{\_glfwAllocJoystick()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct___g_l_f_wjoystick}{\+\_\+\+G\+L\+F\+Wjoystick}}$\ast$ \+\_\+glfw\+Alloc\+Joystick (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name,  }\item[{const char $\ast$}]{guid,  }\item[{int}]{axis\+Count,  }\item[{int}]{button\+Count,  }\item[{int}]{hat\+Count }\end{DoxyParamCaption})}
+
+
+
+Definition at line 434 of file input.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{439 \{}
+\DoxyCodeLine{440     \textcolor{keywordtype}{int} jid;}
+\DoxyCodeLine{441     \mbox{\hyperlink{struct___g_l_f_wjoystick}{\_GLFWjoystick}}* js;}
+\DoxyCodeLine{442 }
+\DoxyCodeLine{443     \textcolor{keywordflow}{for} (jid = 0;  jid <= \mbox{\hyperlink{group__joysticks_ga9ca13ebf24c331dd98df17d84a4b72c9}{GLFW\_JOYSTICK\_LAST}};  jid++)}
+\DoxyCodeLine{444     \{}
+\DoxyCodeLine{445         \textcolor{keywordflow}{if} (!\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7f6b01642d8bc4965fd7b084a01bc401}{joysticks}}[jid].\mbox{\hyperlink{struct___g_l_f_wjoystick_a88a2e71ed9c3be6eca850577a104d611}{present}})}
+\DoxyCodeLine{446             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{447     \}}
+\DoxyCodeLine{448 }
+\DoxyCodeLine{449     \textcolor{keywordflow}{if} (jid > \mbox{\hyperlink{group__joysticks_ga9ca13ebf24c331dd98df17d84a4b72c9}{GLFW\_JOYSTICK\_LAST}})}
+\DoxyCodeLine{450         \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{451 }
+\DoxyCodeLine{452     js = \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7f6b01642d8bc4965fd7b084a01bc401}{joysticks}} + jid;}
+\DoxyCodeLine{453     js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a88a2e71ed9c3be6eca850577a104d611}{present}}     = \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{454     js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a9412079f36e6531022d5fcb9efa3a156}{axes}}        = \mbox{\hyperlink{init_8c_afdf24e4f0665535fd3d012b810ffb18f}{\_glfw\_calloc}}(axisCount, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{float}));}
+\DoxyCodeLine{455     js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_acb06a7749913576f172ea34950b8ec1c}{buttons}}     = \mbox{\hyperlink{init_8c_afdf24e4f0665535fd3d012b810ffb18f}{\_glfw\_calloc}}(buttonCount + (\textcolor{keywordtype}{size\_t}) hatCount * 4, 1);}
+\DoxyCodeLine{456     js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a84e345346f70340100edf3a715fd11f0}{hats}}        = \mbox{\hyperlink{init_8c_afdf24e4f0665535fd3d012b810ffb18f}{\_glfw\_calloc}}(hatCount, 1);}
+\DoxyCodeLine{457     js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a764d4c38cb049362d335450442277773}{axisCount}}   = axisCount;}
+\DoxyCodeLine{458     js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a556785f64f15a3153371a39d120fbc0b}{buttonCount}} = buttonCount;}
+\DoxyCodeLine{459     js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a812df79ec7f31658e884c4bb93ab73b5}{hatCount}}    = hatCount;}
+\DoxyCodeLine{460 }
+\DoxyCodeLine{461     strncpy(js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a5c3a6e76b15f9865478c10da42eb8518}{name}}, \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}}, \textcolor{keyword}{sizeof}(js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a5c3a6e76b15f9865478c10da42eb8518}{name}}) -\/ 1);}
+\DoxyCodeLine{462     strncpy(js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a0d7c8dee95327210882e04073a2b05d4}{guid}}, guid, \textcolor{keyword}{sizeof}(js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a0d7c8dee95327210882e04073a2b05d4}{guid}}) -\/ 1);}
+\DoxyCodeLine{463     js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a2f367b7ecb533af018bc37304701b502}{mapping}} = findValidMapping(js);}
+\DoxyCodeLine{464 }
+\DoxyCodeLine{465     \textcolor{keywordflow}{return} js;}
+\DoxyCodeLine{466 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_acf1fbc03e8d658a35f70544df858fe6c}\label{deps_2glfw_2src_2input_8c_acf1fbc03e8d658a35f70544df858fe6c}} 
+\index{input.c@{input.c}!\_glfwCenterCursorInContentArea@{\_glfwCenterCursorInContentArea}}
+\index{\_glfwCenterCursorInContentArea@{\_glfwCenterCursorInContentArea}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwCenterCursorInContentArea()}{\_glfwCenterCursorInContentArea()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Center\+Cursor\+In\+Content\+Area (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Definition at line 480 of file input.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{481 \{}
+\DoxyCodeLine{482     \textcolor{keywordtype}{int} \mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}}, \mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}};}
+\DoxyCodeLine{483 }
+\DoxyCodeLine{484     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a93b1c9522ac532d94b32072cf4bf1421}{platform}}.\mbox{\hyperlink{struct___g_l_f_wplatform_abb483c8d581cba5199ac0f8bbd4776d5}{getWindowSize}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \&\mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}}, \&\mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}});}
+\DoxyCodeLine{485     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a93b1c9522ac532d94b32072cf4bf1421}{platform}}.\mbox{\hyperlink{struct___g_l_f_wplatform_a12b2a907300bcf7e4badcd84c36f41aa}{setCursorPos}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}} / 2.0, \mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}} / 2.0);}
+\DoxyCodeLine{486 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_aef69e836bb7cfec79044fd23b367eb62}\label{deps_2glfw_2src_2input_8c_aef69e836bb7cfec79044fd23b367eb62}} 
+\index{input.c@{input.c}!\_glfwFreeJoystick@{\_glfwFreeJoystick}}
+\index{\_glfwFreeJoystick@{\_glfwFreeJoystick}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwFreeJoystick()}{\_glfwFreeJoystick()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Free\+Joystick (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wjoystick}{\+\_\+\+G\+L\+F\+Wjoystick}} $\ast$}]{js }\end{DoxyParamCaption})}
+
+
+
+Definition at line 470 of file input.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{471 \{}
+\DoxyCodeLine{472     \mbox{\hyperlink{init_8c_abcf72962b101a8a5c539da1a278b0e9e}{\_glfw\_free}}(js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a9412079f36e6531022d5fcb9efa3a156}{axes}});}
+\DoxyCodeLine{473     \mbox{\hyperlink{init_8c_abcf72962b101a8a5c539da1a278b0e9e}{\_glfw\_free}}(js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_acb06a7749913576f172ea34950b8ec1c}{buttons}});}
+\DoxyCodeLine{474     \mbox{\hyperlink{init_8c_abcf72962b101a8a5c539da1a278b0e9e}{\_glfw\_free}}(js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a84e345346f70340100edf3a715fd11f0}{hats}});}
+\DoxyCodeLine{475     memset(js, 0, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct___g_l_f_wjoystick}{\_GLFWjoystick}}));}
+\DoxyCodeLine{476 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_a1dab257a37caa6b39cfe9924c2487db6}\label{deps_2glfw_2src_2input_8c_a1dab257a37caa6b39cfe9924c2487db6}} 
+\index{input.c@{input.c}!\_glfwInitGamepadMappings@{\_glfwInitGamepadMappings}}
+\index{\_glfwInitGamepadMappings@{\_glfwInitGamepadMappings}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwInitGamepadMappings()}{\_glfwInitGamepadMappings()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Init\+Gamepad\+Mappings (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 419 of file input.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{420 \{}
+\DoxyCodeLine{421     \textcolor{keywordtype}{size\_t} i;}
+\DoxyCodeLine{422     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}} = \textcolor{keyword}{sizeof}(\mbox{\hyperlink{mappings_8h_a96b853880d91f95d8f661ae07d75d049}{\_glfwDefaultMappings}}) / \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}*);}
+\DoxyCodeLine{423     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a0f3d3622b971d031db365d71eeae0048}{mappings}} = \mbox{\hyperlink{init_8c_afdf24e4f0665535fd3d012b810ffb18f}{\_glfw\_calloc}}(\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}}, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct___g_l_f_wmapping}{\_GLFWmapping}}));}
+\DoxyCodeLine{424 }
+\DoxyCodeLine{425     \textcolor{keywordflow}{for} (i = 0;  i < \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}};  i++)}
+\DoxyCodeLine{426     \{}
+\DoxyCodeLine{427         \textcolor{keywordflow}{if} (parseMapping(\&\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a0f3d3622b971d031db365d71eeae0048}{mappings}}[\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a974eecd4fb17f568673a0b16474268aa}{mappingCount}}], \mbox{\hyperlink{mappings_8h_a96b853880d91f95d8f661ae07d75d049}{\_glfwDefaultMappings}}[i]))}
+\DoxyCodeLine{428             \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a974eecd4fb17f568673a0b16474268aa}{mappingCount}}++;}
+\DoxyCodeLine{429     \}}
+\DoxyCodeLine{430 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_aa778fa9144afadb49baa95f0178d3d3e}\label{deps_2glfw_2src_2input_8c_aa778fa9144afadb49baa95f0178d3d3e}} 
+\index{input.c@{input.c}!\_glfwInputChar@{\_glfwInputChar}}
+\index{\_glfwInputChar@{\_glfwInputChar}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwInputChar()}{\_glfwInputChar()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Input\+Char (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{\mbox{\hyperlink{stdint_8h_a435d1572bf3f880d55459d9805097f62}{uint32\+\_\+t}}}]{codepoint,  }\item[{int}]{mods,  }\item[{\mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}}}]{plain }\end{DoxyParamCaption})}
+
+
+
+Definition at line 298 of file input.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{299 \{}
+\DoxyCodeLine{300     \textcolor{keywordflow}{if} (codepoint < 32 || (codepoint > 126 \&\& codepoint < 160))}
+\DoxyCodeLine{301         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{302 }
+\DoxyCodeLine{303     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>lockKeyMods)}
+\DoxyCodeLine{304         mods \&= \string~(\mbox{\hyperlink{group__mods_gaefeef8fcf825a6e43e241b337897200f}{GLFW\_MOD\_CAPS\_LOCK}} | \mbox{\hyperlink{group__mods_ga64e020b8a42af8376e944baf61feecbe}{GLFW\_MOD\_NUM\_LOCK}});}
+\DoxyCodeLine{305 }
+\DoxyCodeLine{306     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>callbacks.charmods)}
+\DoxyCodeLine{307         \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>callbacks.charmods((\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{GLFWwindow}}*) \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, codepoint, mods);}
+\DoxyCodeLine{308 }
+\DoxyCodeLine{309     \textcolor{keywordflow}{if} (plain)}
+\DoxyCodeLine{310     \{}
+\DoxyCodeLine{311         \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>callbacks.character)}
+\DoxyCodeLine{312             \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>callbacks.character((\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{GLFWwindow}}*) \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, codepoint);}
+\DoxyCodeLine{313     \}}
+\DoxyCodeLine{314 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_a507361a8b8610b4daee7e83aa056f339}\label{deps_2glfw_2src_2input_8c_a507361a8b8610b4daee7e83aa056f339}} 
+\index{input.c@{input.c}!\_glfwInputCursorEnter@{\_glfwInputCursorEnter}}
+\index{\_glfwInputCursorEnter@{\_glfwInputCursorEnter}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwInputCursorEnter()}{\_glfwInputCursorEnter()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Input\+Cursor\+Enter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{\mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}}}]{entered }\end{DoxyParamCaption})}
+
+
+
+Definition at line 360 of file input.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{361 \{}
+\DoxyCodeLine{362     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>callbacks.cursorEnter)}
+\DoxyCodeLine{363         \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>callbacks.cursorEnter((\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{GLFWwindow}}*) \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, entered);}
+\DoxyCodeLine{364 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_a973210bc0a11cc09fb55574ec5491bed}\label{deps_2glfw_2src_2input_8c_a973210bc0a11cc09fb55574ec5491bed}} 
+\index{input.c@{input.c}!\_glfwInputCursorPos@{\_glfwInputCursorPos}}
+\index{\_glfwInputCursorPos@{\_glfwInputCursorPos}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwInputCursorPos()}{\_glfwInputCursorPos()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Input\+Cursor\+Pos (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{double}]{xpos,  }\item[{double}]{ypos }\end{DoxyParamCaption})}
+
+
+
+Definition at line 346 of file input.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{347 \{}
+\DoxyCodeLine{348     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>virtualCursorPosX == xpos \&\& \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>virtualCursorPosY == ypos)}
+\DoxyCodeLine{349         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{350 }
+\DoxyCodeLine{351     \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>virtualCursorPosX = xpos;}
+\DoxyCodeLine{352     \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>virtualCursorPosY = ypos;}
+\DoxyCodeLine{353 }
+\DoxyCodeLine{354     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>callbacks.cursorPos)}
+\DoxyCodeLine{355         \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>callbacks.cursorPos((\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{GLFWwindow}}*) \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, xpos, ypos);}
+\DoxyCodeLine{356 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_a3a90fb32fec8ddd068b64671d1e85596}\label{deps_2glfw_2src_2input_8c_a3a90fb32fec8ddd068b64671d1e85596}} 
+\index{input.c@{input.c}!\_glfwInputDrop@{\_glfwInputDrop}}
+\index{\_glfwInputDrop@{\_glfwInputDrop}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwInputDrop()}{\_glfwInputDrop()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Input\+Drop (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{int}]{count,  }\item[{const char $\ast$$\ast$}]{paths }\end{DoxyParamCaption})}
+
+
+
+Definition at line 368 of file input.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{369 \{}
+\DoxyCodeLine{370     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>callbacks.drop)}
+\DoxyCodeLine{371         \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>callbacks.drop((\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{GLFWwindow}}*) \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}}, \mbox{\hyperlink{glext_8h_adcb3345bcd367edfa374dd2e0452a033}{paths}});}
+\DoxyCodeLine{372 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_a3f053fce7ffb1aeb2ebdee3674a8fee2}\label{deps_2glfw_2src_2input_8c_a3f053fce7ffb1aeb2ebdee3674a8fee2}} 
+\index{input.c@{input.c}!\_glfwInputJoystick@{\_glfwInputJoystick}}
+\index{\_glfwInputJoystick@{\_glfwInputJoystick}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwInputJoystick()}{\_glfwInputJoystick()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Input\+Joystick (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wjoystick}{\+\_\+\+G\+L\+F\+Wjoystick}} $\ast$}]{js,  }\item[{int}]{event }\end{DoxyParamCaption})}
+
+
+
+Definition at line 376 of file input.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{377 \{}
+\DoxyCodeLine{378     \textcolor{keyword}{const} \textcolor{keywordtype}{int} jid = (int) (js -\/ \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7f6b01642d8bc4965fd7b084a01bc401}{joysticks}});}
+\DoxyCodeLine{379 }
+\DoxyCodeLine{380     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a59fc977d623a780eb748aadcd1485d6c}{callbacks}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a60d552e59e41b4500e3d36acd35131da}{joystick}})}
+\DoxyCodeLine{381         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a59fc977d623a780eb748aadcd1485d6c}{callbacks}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a60d552e59e41b4500e3d36acd35131da}{joystick}}(jid, \mbox{\hyperlink{glext_8h_a03b04a5a978bad576866339075de01f6}{event}});}
+\DoxyCodeLine{382 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_ab91e3f3a89daff3809c3817a57a4f523}\label{deps_2glfw_2src_2input_8c_ab91e3f3a89daff3809c3817a57a4f523}} 
+\index{input.c@{input.c}!\_glfwInputJoystickAxis@{\_glfwInputJoystickAxis}}
+\index{\_glfwInputJoystickAxis@{\_glfwInputJoystickAxis}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwInputJoystickAxis()}{\_glfwInputJoystickAxis()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Input\+Joystick\+Axis (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wjoystick}{\+\_\+\+G\+L\+F\+Wjoystick}} $\ast$}]{js,  }\item[{int}]{axis,  }\item[{float}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line 386 of file input.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{387 \{}
+\DoxyCodeLine{388     js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a9412079f36e6531022d5fcb9efa3a156}{axes}}[axis] = \mbox{\hyperlink{glad_8h_a79169be77d7e02a24f68a5bfe627dc29}{value}};}
+\DoxyCodeLine{389 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_af1048006805591e17cc431c016f539f5}\label{deps_2glfw_2src_2input_8c_af1048006805591e17cc431c016f539f5}} 
+\index{input.c@{input.c}!\_glfwInputJoystickButton@{\_glfwInputJoystickButton}}
+\index{\_glfwInputJoystickButton@{\_glfwInputJoystickButton}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwInputJoystickButton()}{\_glfwInputJoystickButton()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Input\+Joystick\+Button (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wjoystick}{\+\_\+\+G\+L\+F\+Wjoystick}} $\ast$}]{js,  }\item[{int}]{button,  }\item[{char}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line 393 of file input.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{394 \{}
+\DoxyCodeLine{395     js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_acb06a7749913576f172ea34950b8ec1c}{buttons}}[button] = \mbox{\hyperlink{glad_8h_a79169be77d7e02a24f68a5bfe627dc29}{value}};}
+\DoxyCodeLine{396 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_aca3d4e257b8212cf2a713f9a1069ff08}\label{deps_2glfw_2src_2input_8c_aca3d4e257b8212cf2a713f9a1069ff08}} 
+\index{input.c@{input.c}!\_glfwInputJoystickHat@{\_glfwInputJoystickHat}}
+\index{\_glfwInputJoystickHat@{\_glfwInputJoystickHat}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwInputJoystickHat()}{\_glfwInputJoystickHat()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Input\+Joystick\+Hat (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wjoystick}{\+\_\+\+G\+L\+F\+Wjoystick}} $\ast$}]{js,  }\item[{int}]{hat,  }\item[{char}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line 400 of file input.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{401 \{}
+\DoxyCodeLine{402     \textcolor{keyword}{const} \textcolor{keywordtype}{int} base = js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a556785f64f15a3153371a39d120fbc0b}{buttonCount}} + hat * 4;}
+\DoxyCodeLine{403 }
+\DoxyCodeLine{404     js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_acb06a7749913576f172ea34950b8ec1c}{buttons}}[base + 0] = (\mbox{\hyperlink{glad_8h_a79169be77d7e02a24f68a5bfe627dc29}{value}} \& 0x01) ? \mbox{\hyperlink{group__input_ga2485743d0b59df3791c45951c4195265}{GLFW\_PRESS}} : \mbox{\hyperlink{group__input_gada11d965c4da13090ad336e030e4d11f}{GLFW\_RELEASE}};}
+\DoxyCodeLine{405     js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_acb06a7749913576f172ea34950b8ec1c}{buttons}}[base + 1] = (\mbox{\hyperlink{glad_8h_a79169be77d7e02a24f68a5bfe627dc29}{value}} \& 0x02) ? \mbox{\hyperlink{group__input_ga2485743d0b59df3791c45951c4195265}{GLFW\_PRESS}} : \mbox{\hyperlink{group__input_gada11d965c4da13090ad336e030e4d11f}{GLFW\_RELEASE}};}
+\DoxyCodeLine{406     js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_acb06a7749913576f172ea34950b8ec1c}{buttons}}[base + 2] = (\mbox{\hyperlink{glad_8h_a79169be77d7e02a24f68a5bfe627dc29}{value}} \& 0x04) ? \mbox{\hyperlink{group__input_ga2485743d0b59df3791c45951c4195265}{GLFW\_PRESS}} : \mbox{\hyperlink{group__input_gada11d965c4da13090ad336e030e4d11f}{GLFW\_RELEASE}};}
+\DoxyCodeLine{407     js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_acb06a7749913576f172ea34950b8ec1c}{buttons}}[base + 3] = (\mbox{\hyperlink{glad_8h_a79169be77d7e02a24f68a5bfe627dc29}{value}} \& 0x08) ? \mbox{\hyperlink{group__input_ga2485743d0b59df3791c45951c4195265}{GLFW\_PRESS}} : \mbox{\hyperlink{group__input_gada11d965c4da13090ad336e030e4d11f}{GLFW\_RELEASE}};}
+\DoxyCodeLine{408 }
+\DoxyCodeLine{409     js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a84e345346f70340100edf3a715fd11f0}{hats}}[hat] = \mbox{\hyperlink{glad_8h_a79169be77d7e02a24f68a5bfe627dc29}{value}};}
+\DoxyCodeLine{410 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_aba4a5bf53c475cf2dc3e594c3c5034ab}\label{deps_2glfw_2src_2input_8c_aba4a5bf53c475cf2dc3e594c3c5034ab}} 
+\index{input.c@{input.c}!\_glfwInputKey@{\_glfwInputKey}}
+\index{\_glfwInputKey@{\_glfwInputKey}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwInputKey()}{\_glfwInputKey()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Input\+Key (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{int}]{key,  }\item[{int}]{scancode,  }\item[{int}]{action,  }\item[{int}]{mods }\end{DoxyParamCaption})}
+
+
+
+Definition at line 267 of file input.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{268 \{}
+\DoxyCodeLine{269     \textcolor{keywordflow}{if} (\mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}} >= 0 \&\& \mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}} <= \mbox{\hyperlink{group__keys_ga442cbaef7bfb9a4ba13594dd7fbf2789}{GLFW\_KEY\_LAST}})}
+\DoxyCodeLine{270     \{}
+\DoxyCodeLine{271         \mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{GLFWbool}} repeated = \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{272 }
+\DoxyCodeLine{273         \textcolor{keywordflow}{if} (action == \mbox{\hyperlink{group__input_gada11d965c4da13090ad336e030e4d11f}{GLFW\_RELEASE}} \&\& \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>keys[\mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}}] == \mbox{\hyperlink{group__input_gada11d965c4da13090ad336e030e4d11f}{GLFW\_RELEASE}})}
+\DoxyCodeLine{274             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{275 }
+\DoxyCodeLine{276         \textcolor{keywordflow}{if} (action == \mbox{\hyperlink{group__input_ga2485743d0b59df3791c45951c4195265}{GLFW\_PRESS}} \&\& \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>keys[\mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}}] == \mbox{\hyperlink{group__input_ga2485743d0b59df3791c45951c4195265}{GLFW\_PRESS}})}
+\DoxyCodeLine{277             repeated = \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{278 }
+\DoxyCodeLine{279         \textcolor{keywordflow}{if} (action == \mbox{\hyperlink{group__input_gada11d965c4da13090ad336e030e4d11f}{GLFW\_RELEASE}} \&\& \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>stickyKeys)}
+\DoxyCodeLine{280             \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>keys[\mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}}] = \mbox{\hyperlink{deps_2glfw_2src_2input_8c_af05e8b8bf6c333e9b40f3480b9d88241}{\_GLFW\_STICK}};}
+\DoxyCodeLine{281         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{282             \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>keys[\mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}}] = (char) action;}
+\DoxyCodeLine{283 }
+\DoxyCodeLine{284         \textcolor{keywordflow}{if} (repeated)}
+\DoxyCodeLine{285             action = \mbox{\hyperlink{group__input_gac96fd3b9fc66c6f0eebaf6532595338f}{GLFW\_REPEAT}};}
+\DoxyCodeLine{286     \}}
+\DoxyCodeLine{287 }
+\DoxyCodeLine{288     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>lockKeyMods)}
+\DoxyCodeLine{289         mods \&= \string~(\mbox{\hyperlink{group__mods_gaefeef8fcf825a6e43e241b337897200f}{GLFW\_MOD\_CAPS\_LOCK}} | \mbox{\hyperlink{group__mods_ga64e020b8a42af8376e944baf61feecbe}{GLFW\_MOD\_NUM\_LOCK}});}
+\DoxyCodeLine{290 }
+\DoxyCodeLine{291     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>callbacks.key)}
+\DoxyCodeLine{292         \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>callbacks.key((\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{GLFWwindow}}*) \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}}, scancode, action, mods);}
+\DoxyCodeLine{293 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_ae259527976c9b13341aa3e4587d0353e}\label{deps_2glfw_2src_2input_8c_ae259527976c9b13341aa3e4587d0353e}} 
+\index{input.c@{input.c}!\_glfwInputMouseClick@{\_glfwInputMouseClick}}
+\index{\_glfwInputMouseClick@{\_glfwInputMouseClick}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwInputMouseClick()}{\_glfwInputMouseClick()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Input\+Mouse\+Click (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{int}]{button,  }\item[{int}]{action,  }\item[{int}]{mods }\end{DoxyParamCaption})}
+
+
+
+Definition at line 326 of file input.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{327 \{}
+\DoxyCodeLine{328     \textcolor{keywordflow}{if} (button < 0 || button > \mbox{\hyperlink{group__buttons_gab1fd86a4518a9141ec7bcde2e15a2fdf}{GLFW\_MOUSE\_BUTTON\_LAST}})}
+\DoxyCodeLine{329         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{330 }
+\DoxyCodeLine{331     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>lockKeyMods)}
+\DoxyCodeLine{332         mods \&= \string~(\mbox{\hyperlink{group__mods_gaefeef8fcf825a6e43e241b337897200f}{GLFW\_MOD\_CAPS\_LOCK}} | \mbox{\hyperlink{group__mods_ga64e020b8a42af8376e944baf61feecbe}{GLFW\_MOD\_NUM\_LOCK}});}
+\DoxyCodeLine{333 }
+\DoxyCodeLine{334     \textcolor{keywordflow}{if} (action == \mbox{\hyperlink{group__input_gada11d965c4da13090ad336e030e4d11f}{GLFW\_RELEASE}} \&\& \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>stickyMouseButtons)}
+\DoxyCodeLine{335         \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>mouseButtons[button] = \mbox{\hyperlink{deps_2glfw_2src_2input_8c_af05e8b8bf6c333e9b40f3480b9d88241}{\_GLFW\_STICK}};}
+\DoxyCodeLine{336     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{337         \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>mouseButtons[button] = (char) action;}
+\DoxyCodeLine{338 }
+\DoxyCodeLine{339     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>callbacks.mouseButton)}
+\DoxyCodeLine{340         \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>callbacks.mouseButton((\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{GLFWwindow}}*) \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, button, action, mods);}
+\DoxyCodeLine{341 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{deps_2glfw_2src_2input_8c_a65b98312da830a2c65b36543f119a7fa}\label{deps_2glfw_2src_2input_8c_a65b98312da830a2c65b36543f119a7fa}} 
+\index{input.c@{input.c}!\_glfwInputScroll@{\_glfwInputScroll}}
+\index{\_glfwInputScroll@{\_glfwInputScroll}!input.c@{input.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwInputScroll()}{\_glfwInputScroll()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Input\+Scroll (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{double}]{xoffset,  }\item[{double}]{yoffset }\end{DoxyParamCaption})}
+
+
+
+Definition at line 318 of file input.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{319 \{}
+\DoxyCodeLine{320     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>callbacks.scroll)}
+\DoxyCodeLine{321         \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>callbacks.scroll((\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{GLFWwindow}}*) \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{glad_8h_ac20a0ffebf4c476650fcfa0633066f0e}{xoffset}}, \mbox{\hyperlink{glad_8h_a76dfb6803dcff61037ba688b7f4242b8}{yoffset}});}
+\DoxyCodeLine{322 \}}
+
+\end{DoxyCode}

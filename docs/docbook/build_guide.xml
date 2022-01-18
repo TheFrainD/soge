@@ -1,0 +1,213 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_build_guide">
+
+<para>This is about compiling and linking applications that use GLFW. For information on how to write such applications, start with the <link linkend="_quick_guide">introductory tutorial</link>. For information on how to compile the GLFW library itself, see <link linkend="_compile_guide">Compiling GLFW</link>.</para>
+
+<para>This is not a tutorial on compilation or linking. It assumes basic understanding of how to compile and link a C program as well as how to use the specific compiler of your chosen development environment. The compilation and linking process should be explained in your C programming material and in the documentation for your development environment.</para>
+<section xml:id="_build_guide_1build_include">
+<title>Including the GLFW header file</title>
+
+<para>You should include the GLFW header in the source files where you use OpenGL or GLFW.</para>
+
+<para><literallayout><computeroutput>#include&#32;&lt;GLFW/glfw3.h&gt;
+</computeroutput></literallayout></para>
+
+<para>This header defines all the constants and declares all the types and function prototypes of the GLFW API. By default it also includes the OpenGL header from your development environment. See <link linkend="_build_guide_1build_macros">option macros</link> below for how to select OpenGL ES headers and more.</para>
+
+<para>The GLFW header also defines any platform-specific macros needed by your OpenGL header, so that it can be included without needing any window system headers.</para>
+
+<para>It does this only when needed, so if window system headers are included, the GLFW header does not try to redefine those symbols. The reverse is not true, i.e. <computeroutput>windows.h</computeroutput> cannot cope if any Win32 symbols have already been defined.</para>
+
+<para>In other words:</para>
+
+<para><itemizedlist>
+<listitem>
+<para>Use the GLFW header to include OpenGL or OpenGL ES headers portably</para>
+</listitem><listitem>
+<para>Do not include window system headers unless you will use those APIs directly</para>
+</listitem><listitem>
+<para>If you do need such headers, include them before the GLFW header</para>
+</listitem></itemizedlist>
+</para>
+
+<para>If you are using an OpenGL extension loading library such as <link xlink:href="https://github.com/Dav1dde/glad">glad</link>, the extension loader header should be included before the GLFW one. GLFW attempts to detect any OpenGL or OpenGL ES header or extension loader header included before it and will then disable the inclusion of the default OpenGL header. Most extension loaders also define macros that disable similar headers below it.</para>
+
+<para><literallayout><computeroutput>#include&#32;&lt;glad/gl.h&gt;
+#include&#32;&lt;GLFW/glfw3.h&gt;
+</computeroutput></literallayout></para>
+
+<para>Both of these mechanisms depend on the extension loader header defining a known macro. If yours doesn&apos;t or you don&apos;t know which one your users will pick, the <link linkend="_build_guide_1GLFW_INCLUDE_NONE">GLFW_INCLUDE_NONE</link> macro will explicitly to prevent the GLFW header from including the OpenGL header. This will also allow you to include the two headers in any order.</para>
+
+<para><literallayout><computeroutput>#define&#32;GLFW_INCLUDE_NONE
+#include&#32;&lt;GLFW/glfw3.h&gt;
+#include&#32;&lt;glad/gl.h&gt;
+</computeroutput></literallayout></para>
+<section xml:id="_build_guide_1build_macros">
+<title>GLFW header option macros</title>
+
+<para>These macros may be defined before the inclusion of the GLFW header and affect its behavior.</para>
+
+<para><anchor xml:id="_build_guide_1GLFW_DLL"/><emphasis role="bold">GLFW_DLL</emphasis> is required on Windows when using the GLFW DLL, to tell the compiler that the GLFW functions are defined in a DLL.</para>
+
+<para>The following macros control which OpenGL or OpenGL ES API header is included. Only one of these may be defined at a time.</para>
+
+<para><note><title>Note</title>
+
+<para>GLFW does not provide any of the API headers mentioned below. They are provided by your development environment or your OpenGL, OpenGL ES or Vulkan SDK, and most of them can be downloaded from the <link xlink:href="https://www.khronos.org/registry/">Khronos Registry</link>.</para>
+</note>
+<anchor xml:id="_build_guide_1GLFW_INCLUDE_GLCOREARB"/><emphasis role="bold">GLFW_INCLUDE_GLCOREARB</emphasis> makes the GLFW header include the modern <computeroutput>GL/glcorearb.h</computeroutput> header (<computeroutput>OpenGL/gl3.h</computeroutput> on macOS) instead of the regular OpenGL header.</para>
+
+<para><anchor xml:id="_build_guide_1GLFW_INCLUDE_ES1"/><emphasis role="bold">GLFW_INCLUDE_ES1</emphasis> makes the GLFW header include the OpenGL ES 1.x <computeroutput>GLES/gl.h</computeroutput> header instead of the regular OpenGL header.</para>
+
+<para><anchor xml:id="_build_guide_1GLFW_INCLUDE_ES2"/><emphasis role="bold">GLFW_INCLUDE_ES2</emphasis> makes the GLFW header include the OpenGL ES 2.0 <computeroutput>GLES2/gl2.h</computeroutput> header instead of the regular OpenGL header.</para>
+
+<para><anchor xml:id="_build_guide_1GLFW_INCLUDE_ES3"/><emphasis role="bold">GLFW_INCLUDE_ES3</emphasis> makes the GLFW header include the OpenGL ES 3.0 <computeroutput>GLES3/gl3.h</computeroutput> header instead of the regular OpenGL header.</para>
+
+<para><anchor xml:id="_build_guide_1GLFW_INCLUDE_ES31"/><emphasis role="bold">GLFW_INCLUDE_ES31</emphasis> makes the GLFW header include the OpenGL ES 3.1 <computeroutput>GLES3/gl31.h</computeroutput> header instead of the regular OpenGL header.</para>
+
+<para><anchor xml:id="_build_guide_1GLFW_INCLUDE_ES32"/><emphasis role="bold">GLFW_INCLUDE_ES32</emphasis> makes the GLFW header include the OpenGL ES 3.2 <computeroutput>GLES3/gl32.h</computeroutput> header instead of the regular OpenGL header.</para>
+
+<para><anchor xml:id="_build_guide_1GLFW_INCLUDE_NONE"/><emphasis role="bold">GLFW_INCLUDE_NONE</emphasis> makes the GLFW header not include any OpenGL or OpenGL ES API header. This is useful in combination with an extension loading library.</para>
+
+<para>If none of the above inclusion macros are defined, the standard OpenGL <computeroutput>GL/gl.h</computeroutput> header (<computeroutput>OpenGL/gl.h</computeroutput> on macOS) is included, unless GLFW detects the inclusion guards of any OpenGL, OpenGL ES or extension loader header it knows about.</para>
+
+<para>The following macros control the inclusion of additional API headers. Any number of these may be defined simultaneously, and/or together with one of the above macros.</para>
+
+<para><anchor xml:id="_build_guide_1GLFW_INCLUDE_VULKAN"/><emphasis role="bold">GLFW_INCLUDE_VULKAN</emphasis> makes the GLFW header include the Vulkan <computeroutput>vulkan/vulkan.h</computeroutput> header in addition to any selected OpenGL or OpenGL ES header.</para>
+
+<para><anchor xml:id="_build_guide_1GLFW_INCLUDE_GLEXT"/><emphasis role="bold">GLFW_INCLUDE_GLEXT</emphasis> makes the GLFW header include the appropriate extension header for the OpenGL or OpenGL ES header selected above after and in addition to that header.</para>
+
+<para><anchor xml:id="_build_guide_1GLFW_INCLUDE_GLU"/><emphasis role="bold">GLFW_INCLUDE_GLU</emphasis> makes the header include the GLU header in addition to the header selected above. This should only be used with the standard OpenGL header and only for compatibility with legacy code. GLU has been deprecated and should not be used in new code.</para>
+
+<para><note><title>Note</title>
+
+<para>None of these macros may be defined during the compilation of GLFW itself. If your build includes GLFW and you define any these in your build files, make sure they are not applied to the GLFW sources.</para>
+</note>
+</para>
+</section>
+</section>
+<section xml:id="_build_guide_1build_link">
+<title>Link with the right libraries</title>
+
+<para>GLFW is essentially a wrapper of various platform-specific APIs and therefore needs to link against many different system libraries. If you are using GLFW as a shared library / dynamic library / DLL then it takes care of these links. However, if you are using GLFW as a static library then your executable will need to link against these libraries.</para>
+
+<para>On Windows and macOS, the list of system libraries is static and can be hard-coded into your build environment. See the section for your development environment below. On Linux and other Unix-like operating systems, the list varies but can be retrieved in various ways as described below.</para>
+
+<para>A good general introduction to linking is <link xlink:href="https://www.lurklurk.org/linkers/linkers.html">Beginner&apos;s Guide to Linkers</link> by David Drysdale.</para>
+<section xml:id="_build_guide_1build_link_win32">
+<title>With MinGW or Visual C++ on Windows</title>
+
+<para>The static version of the GLFW library is named <computeroutput>glfw3</computeroutput>. When using this version, it is also necessary to link with some libraries that GLFW uses.</para>
+
+<para>When using MinGW to link an application with the static version of GLFW, you must also explicitly link with <computeroutput>gdi32</computeroutput>. Other toolchains including MinGW-w64 include it in the set of default libraries along with other dependencies like <computeroutput>user32</computeroutput> and <computeroutput>kernel32</computeroutput>.</para>
+
+<para>The link library for the GLFW DLL is named <computeroutput>glfw3dll</computeroutput>. When compiling an application that uses the DLL version of GLFW, you need to define the <link linkend="_build_guide_1GLFW_DLL">GLFW_DLL</link> macro <emphasis>before</emphasis> any inclusion of the GLFW header. This can be done either with a compiler switch or by defining it in your source code.</para>
+</section>
+<section xml:id="_build_guide_1build_link_cmake_source">
+<title>With CMake and GLFW source</title>
+
+<para>This section is about using CMake to compile and link GLFW along with your application. If you want to use an installed binary instead, see <link linkend="_build_guide_1build_link_cmake_package">With CMake and installed GLFW binaries</link>.</para>
+
+<para>With a few changes to your <computeroutput>CMakeLists.txt</computeroutput> you can have the GLFW source tree built along with your application.</para>
+
+<para>Add the root directory of the GLFW source tree to your project. This will add the <computeroutput>glfw</computeroutput> target to your project.</para>
+
+<para><literallayout><computeroutput>add_subdirectory(path/to/glfw)
+</computeroutput></literallayout></para>
+
+<para>Once GLFW has been added, link your application against the <computeroutput>glfw</computeroutput> target. This adds the GLFW library and its link-time dependencies as it is currently configured, the include directory for the GLFW header and, when applicable, the <link linkend="_build_guide_1GLFW_DLL">GLFW_DLL</link> macro.</para>
+
+<para><literallayout><computeroutput>target_link_libraries(myapp&#32;glfw)
+</computeroutput></literallayout></para>
+
+<para>Note that the <computeroutput>glfw</computeroutput> target does not depend on OpenGL, as GLFW loads any OpenGL, OpenGL ES or Vulkan libraries it needs at runtime. If your application calls OpenGL directly, instead of using a modern <link linkend="_context_guide_1context_glext_auto">extension loader library</link>, use the OpenGL CMake package.</para>
+
+<para><literallayout><computeroutput>find_package(OpenGL&#32;REQUIRED)
+</computeroutput></literallayout></para>
+
+<para>If OpenGL is found, the <computeroutput>OpenGL::GL</computeroutput> target is added to your project, containing library and include directory paths. Link against this like any other library.</para>
+
+<para><literallayout><computeroutput>target_link_libraries(myapp&#32;OpenGL::GL)
+</computeroutput></literallayout></para>
+
+<para>For a minimal example of a program and GLFW sources built with CMake, see the <link xlink:href="https://github.com/juliettef/GLFW-CMake-starter">GLFW CMake Starter</link> on GitHub.</para>
+</section>
+<section xml:id="_build_guide_1build_link_cmake_package">
+<title>With CMake and installed GLFW binaries</title>
+
+<para>This section is about using CMake to link GLFW after it has been built and installed. If you want to build it along with your application instead, see <link linkend="_build_guide_1build_link_cmake_source">With CMake and GLFW source</link>.</para>
+
+<para>With a few changes to your <computeroutput>CMakeLists.txt</computeroutput> you can locate the package and target files generated when GLFW is installed.</para>
+
+<para><literallayout><computeroutput>find_package(glfw3&#32;3.4&#32;REQUIRED)
+</computeroutput></literallayout></para>
+
+<para>Once GLFW has been added to the project, link against it with the <computeroutput>glfw</computeroutput> target. This adds the GLFW library and its link-time dependencies, the include directory for the GLFW header and, when applicable, the <link linkend="_build_guide_1GLFW_DLL">GLFW_DLL</link> macro.</para>
+
+<para><literallayout><computeroutput>target_link_libraries(myapp&#32;glfw)
+</computeroutput></literallayout></para>
+
+<para>Note that the <computeroutput>glfw</computeroutput> target does not depend on OpenGL, as GLFW loads any OpenGL, OpenGL ES or Vulkan libraries it needs at runtime. If your application calls OpenGL directly, instead of using a modern <link linkend="_context_guide_1context_glext_auto">extension loader library</link>, use the OpenGL CMake package.</para>
+
+<para><literallayout><computeroutput>find_package(OpenGL&#32;REQUIRED)
+</computeroutput></literallayout></para>
+
+<para>If OpenGL is found, the <computeroutput>OpenGL::GL</computeroutput> target is added to your project, containing library and include directory paths. Link against this like any other library.</para>
+
+<para><literallayout><computeroutput>target_link_libraries(myapp&#32;OpenGL::GL)
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_build_guide_1build_link_pkgconfig">
+<title>With makefiles and pkg-config on Unix</title>
+
+<para>GLFW supports <link xlink:href="https://www.freedesktop.org/wiki/Software/pkg-config/">pkg-config</link>, and the <computeroutput>glfw3.pc</computeroutput> pkg-config file is generated when the GLFW library is built and is installed along with it. A pkg-config file describes all necessary compile-time and link-time flags and dependencies needed to use a library. When they are updated or if they differ between systems, you will get the correct ones automatically.</para>
+
+<para>A typical compile and link command-line when using the static version of the GLFW library may look like this:</para>
+
+<para><literallayout><computeroutput>cc&#32;$(pkg-config&#32;--cflags&#32;glfw3)&#32;-o&#32;myprog&#32;myprog.c&#32;$(pkg-config&#32;--static&#32;--libs&#32;glfw3)
+</computeroutput></literallayout></para>
+
+<para>If you are using the shared version of the GLFW library, omit the <computeroutput>--static</computeroutput> flag.</para>
+
+<para><literallayout><computeroutput>cc&#32;$(pkg-config&#32;--cflags&#32;glfw3)&#32;-o&#32;myprog&#32;myprog.c&#32;$(pkg-config&#32;--libs&#32;glfw3)
+</computeroutput></literallayout></para>
+
+<para>You can also use the <computeroutput>glfw3.pc</computeroutput> file without installing it first, by using the <computeroutput>PKG_CONFIG_PATH</computeroutput> environment variable.</para>
+
+<para><literallayout><computeroutput>env&#32;PKG_CONFIG_PATH=path/to/glfw/src&#32;cc&#32;$(pkg-config&#32;--cflags&#32;glfw3)&#32;-o&#32;myprog&#32;myprog.c&#32;$(pkg-config&#32;--libs&#32;glfw3)
+</computeroutput></literallayout></para>
+
+<para>The dependencies do not include OpenGL, as GLFW loads any OpenGL, OpenGL ES or Vulkan libraries it needs at runtime. If your application calls OpenGL directly, instead of using a modern <link linkend="_context_guide_1context_glext_auto">extension loader library</link>, you should add the <computeroutput>gl</computeroutput> pkg-config package.</para>
+
+<para><literallayout><computeroutput>cc&#32;$(pkg-config&#32;--cflags&#32;glfw3&#32;gl)&#32;-o&#32;myprog&#32;myprog.c&#32;$(pkg-config&#32;--libs&#32;glfw3&#32;gl)
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_build_guide_1build_link_xcode">
+<title>With Xcode on macOS</title>
+
+<para>If you are using the dynamic library version of GLFW, add it to the project dependencies.</para>
+
+<para>If you are using the static library version of GLFW, add it and the Cocoa, OpenGL and IOKit frameworks to the project as dependencies. They can all be found in <computeroutput>/System/Library/Frameworks</computeroutput>.</para>
+</section>
+<section xml:id="_build_guide_1build_link_osx">
+<title>With command-line on macOS</title>
+
+<para>It is recommended that you use <link linkend="_build_guide_1build_link_pkgconfig">pkg-config</link> when building from the command line on macOS. That way you will get any new dependencies added automatically. If you still wish to build manually, you need to add the required frameworks and libraries to your command-line yourself using the <computeroutput>-l</computeroutput> and <computeroutput>-framework</computeroutput> switches.</para>
+
+<para>If you are using the dynamic GLFW library, which is named <computeroutput>libglfw.3.dylib</computeroutput>, do:</para>
+
+<para><literallayout><computeroutput>cc&#32;-o&#32;myprog&#32;myprog.c&#32;-lglfw&#32;-framework&#32;Cocoa&#32;-framework&#32;OpenGL&#32;-framework&#32;IOKit
+</computeroutput></literallayout></para>
+
+<para>If you are using the static library, named <computeroutput>libglfw3.a</computeroutput>, substitute <computeroutput>-lglfw3</computeroutput> for <computeroutput>-lglfw</computeroutput>.</para>
+
+<para>Note that you do not add the <computeroutput>.framework</computeroutput> extension to a framework when linking against it from the command-line.</para>
+
+<para><note><title>Note</title>
+
+<para>Your machine may have <computeroutput>libGL.*.dylib</computeroutput> style OpenGL library, but that is for the X Window System and will not work with the macOS native version of GLFW. </para>
+</note>
+</para>
+</section>
+</section>
+</section>

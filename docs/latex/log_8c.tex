@@ -1,0 +1,251 @@
+\hypertarget{log_8c}{}\doxysection{deps/log/src/log.c File Reference}
+\label{log_8c}\index{deps/log/src/log.c@{deps/log/src/log.c}}
+{\ttfamily \#include \char`\"{}log.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_callback}{Callback}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{log_8c_aea0bffe478318f476a4bedee63256b2c}{M\+A\+X\+\_\+\+C\+A\+L\+L\+B\+A\+C\+KS}}~32
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ \mbox{\hyperlink{log_8c_acf49945d7504646d76917c8efc4f375e}{log\+\_\+level\+\_\+string}} (int \mbox{\hyperlink{glad_8h_a2b536fca24f51d6a849aed325793e661}{level}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{log_8c_a18259d7b87158a91089fd1d081617715}{log\+\_\+set\+\_\+lock}} (\mbox{\hyperlink{log_8h_af1c7dea93a5ff832ba11a7a4e3a46c45}{log\+\_\+\+Lock\+Fn}} fn, \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} $\ast$\mbox{\hyperlink{log_8c_a697ce711b67313990d351b5c95f87aed}{udata}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{log_8c_af2493e94f152a28b2ba4e3a2e2bba65d}{log\+\_\+set\+\_\+level}} (int \mbox{\hyperlink{glad_8h_a2b536fca24f51d6a849aed325793e661}{level}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{log_8c_a6de5d12252f1b48279d28769b7c130eb}{log\+\_\+set\+\_\+quiet}} (bool \mbox{\hyperlink{glext_8h_ab0b5c7de20095d30091485d2c60a3dd5}{enable}})
+\item 
+int \mbox{\hyperlink{log_8c_a4196855e1cd42700557b6e4fa0715a35}{log\+\_\+add\+\_\+callback}} (\mbox{\hyperlink{log_8h_a4e1a7e636a6cabe43a851e125ea86a28}{log\+\_\+\+Log\+Fn}} fn, \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} $\ast$\mbox{\hyperlink{log_8c_a697ce711b67313990d351b5c95f87aed}{udata}}, int \mbox{\hyperlink{glad_8h_a2b536fca24f51d6a849aed325793e661}{level}})
+\item 
+int \mbox{\hyperlink{log_8c_afcf2da85fa8a21494dc461d546c50e4b}{log\+\_\+add\+\_\+fp}} (F\+I\+LE $\ast$fp, int \mbox{\hyperlink{glad_8h_a2b536fca24f51d6a849aed325793e661}{level}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{log_8c_ac008ecbde449b2dd1bc4f8671d9a0e07}{log\+\_\+log}} (int \mbox{\hyperlink{glad_8h_a2b536fca24f51d6a849aed325793e661}{level}}, const char $\ast$file, int line, const char $\ast$fmt,...)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{log_8c_aea0bffe478318f476a4bedee63256b2c}\label{log_8c_aea0bffe478318f476a4bedee63256b2c}} 
+\index{log.c@{log.c}!MAX\_CALLBACKS@{MAX\_CALLBACKS}}
+\index{MAX\_CALLBACKS@{MAX\_CALLBACKS}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{MAX\_CALLBACKS}{MAX\_CALLBACKS}}
+{\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+C\+A\+L\+L\+B\+A\+C\+KS~32}
+
+
+
+Definition at line 25 of file log.\+c.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{log_8c_a4196855e1cd42700557b6e4fa0715a35}\label{log_8c_a4196855e1cd42700557b6e4fa0715a35}} 
+\index{log.c@{log.c}!log\_add\_callback@{log\_add\_callback}}
+\index{log\_add\_callback@{log\_add\_callback}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{log\_add\_callback()}{log\_add\_callback()}}
+{\footnotesize\ttfamily int log\+\_\+add\+\_\+callback (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{log_8h_a4e1a7e636a6cabe43a851e125ea86a28}{log\+\_\+\+Log\+Fn}}}]{fn,  }\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} $\ast$}]{udata,  }\item[{int}]{level }\end{DoxyParamCaption})}
+
+
+
+Definition at line 115 of file log.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{115                                                            \{}
+\DoxyCodeLine{116   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < \mbox{\hyperlink{log_8c_aea0bffe478318f476a4bedee63256b2c}{MAX\_CALLBACKS}}; i++) \{}
+\DoxyCodeLine{117     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{stb__vorbis_8c_aa73214aa5f2f94f63d90bb4e3d99fe53}{L}}.callbacks[i].fn) \{}
+\DoxyCodeLine{118       \mbox{\hyperlink{stb__vorbis_8c_aa73214aa5f2f94f63d90bb4e3d99fe53}{L}}.callbacks[i] = (\mbox{\hyperlink{struct_callback}{Callback}}) \{ fn, \mbox{\hyperlink{log_8c_a697ce711b67313990d351b5c95f87aed}{udata}}, \mbox{\hyperlink{glad_8h_a2b536fca24f51d6a849aed325793e661}{level}} \};}
+\DoxyCodeLine{119       \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{120     \}}
+\DoxyCodeLine{121   \}}
+\DoxyCodeLine{122   \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{123 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{log_8c_afcf2da85fa8a21494dc461d546c50e4b}\label{log_8c_afcf2da85fa8a21494dc461d546c50e4b}} 
+\index{log.c@{log.c}!log\_add\_fp@{log\_add\_fp}}
+\index{log\_add\_fp@{log\_add\_fp}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{log\_add\_fp()}{log\_add\_fp()}}
+{\footnotesize\ttfamily int log\+\_\+add\+\_\+fp (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{fp,  }\item[{int}]{level }\end{DoxyParamCaption})}
+
+
+
+Definition at line 126 of file log.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{126                                     \{}
+\DoxyCodeLine{127   \textcolor{keywordflow}{return} \mbox{\hyperlink{log_8c_a4196855e1cd42700557b6e4fa0715a35}{log\_add\_callback}}(file\_callback, fp, \mbox{\hyperlink{glad_8h_a2b536fca24f51d6a849aed325793e661}{level}});}
+\DoxyCodeLine{128 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{log_8c_acf49945d7504646d76917c8efc4f375e}\label{log_8c_acf49945d7504646d76917c8efc4f375e}} 
+\index{log.c@{log.c}!log\_level\_string@{log\_level\_string}}
+\index{log\_level\_string@{log\_level\_string}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{log\_level\_string()}{log\_level\_string()}}
+{\footnotesize\ttfamily const char$\ast$ log\+\_\+level\+\_\+string (\begin{DoxyParamCaption}\item[{int}]{level }\end{DoxyParamCaption})}
+
+
+
+Definition at line 94 of file log.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{94                                         \{}
+\DoxyCodeLine{95   \textcolor{keywordflow}{return} level\_strings[\mbox{\hyperlink{log_8c_acf4d33ee4cff36f69b924471174dcb11}{level}}];}
+\DoxyCodeLine{96 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{log_8c_ac008ecbde449b2dd1bc4f8671d9a0e07}\label{log_8c_ac008ecbde449b2dd1bc4f8671d9a0e07}} 
+\index{log.c@{log.c}!log\_log@{log\_log}}
+\index{log\_log@{log\_log}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{log\_log()}{log\_log()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} log\+\_\+log (\begin{DoxyParamCaption}\item[{int}]{level,  }\item[{const char $\ast$}]{file,  }\item[{int}]{line,  }\item[{const char $\ast$}]{fmt,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+
+
+Definition at line 140 of file log.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{140                                                                           \{}
+\DoxyCodeLine{141   \mbox{\hyperlink{structlog___event}{log\_Event}} ev = \{}
+\DoxyCodeLine{142     .\mbox{\hyperlink{structlog___event_a2917e4ca45c418b9b3301252237deac8}{fmt}}   = fmt,}
+\DoxyCodeLine{143     .file  = file,}
+\DoxyCodeLine{144     .line  = line,}
+\DoxyCodeLine{145     .level = \mbox{\hyperlink{log_8c_acf4d33ee4cff36f69b924471174dcb11}{level}},}
+\DoxyCodeLine{146   \};}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148   \mbox{\hyperlink{log_8c_a9863926e23e26ddb194b82b7fc50756a}{lock}}();}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{stb__vorbis_8c_aa73214aa5f2f94f63d90bb4e3d99fe53}{L}}.quiet \&\& \mbox{\hyperlink{glad_8h_a2b536fca24f51d6a849aed325793e661}{level}} >= \mbox{\hyperlink{stb__vorbis_8c_aa73214aa5f2f94f63d90bb4e3d99fe53}{L}}.level) \{}
+\DoxyCodeLine{151     init\_event(\&ev, stderr);}
+\DoxyCodeLine{152     va\_start(ev.\mbox{\hyperlink{structlog___event_adeb420d9154c0bff0fbdca8bb0c3a985}{ap}}, fmt);}
+\DoxyCodeLine{153     stdout\_callback(\&ev);}
+\DoxyCodeLine{154     va\_end(ev.\mbox{\hyperlink{structlog___event_adeb420d9154c0bff0fbdca8bb0c3a985}{ap}});}
+\DoxyCodeLine{155   \}}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < \mbox{\hyperlink{log_8c_aea0bffe478318f476a4bedee63256b2c}{MAX\_CALLBACKS}} \&\& \mbox{\hyperlink{stb__vorbis_8c_aa73214aa5f2f94f63d90bb4e3d99fe53}{L}}.callbacks[i].fn; i++) \{}
+\DoxyCodeLine{158     \mbox{\hyperlink{struct_callback}{Callback}} *cb = \&\mbox{\hyperlink{stb__vorbis_8c_aa73214aa5f2f94f63d90bb4e3d99fe53}{L}}.callbacks[i];}
+\DoxyCodeLine{159     \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a2b536fca24f51d6a849aed325793e661}{level}} >= cb-\/>\mbox{\hyperlink{struct_callback_ae2d14d16fd04cb9d7aeadae7f17a63d5}{level}}) \{}
+\DoxyCodeLine{160       init\_event(\&ev, cb-\/>\mbox{\hyperlink{struct_callback_a8e866a6b66ae600e71a6b280057d8541}{udata}});}
+\DoxyCodeLine{161       va\_start(ev.\mbox{\hyperlink{structlog___event_adeb420d9154c0bff0fbdca8bb0c3a985}{ap}}, fmt);}
+\DoxyCodeLine{162       cb-\/>\mbox{\hyperlink{struct_callback_a14a0a0dda819be431520a0a4a1a9b2e3}{fn}}(\&ev);}
+\DoxyCodeLine{163       va\_end(ev.\mbox{\hyperlink{structlog___event_adeb420d9154c0bff0fbdca8bb0c3a985}{ap}});}
+\DoxyCodeLine{164     \}}
+\DoxyCodeLine{165   \}}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167   unlock();}
+\DoxyCodeLine{168 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{log_8c_af2493e94f152a28b2ba4e3a2e2bba65d}\label{log_8c_af2493e94f152a28b2ba4e3a2e2bba65d}} 
+\index{log.c@{log.c}!log\_set\_level@{log\_set\_level}}
+\index{log\_set\_level@{log\_set\_level}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{log\_set\_level()}{log\_set\_level()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} log\+\_\+set\+\_\+level (\begin{DoxyParamCaption}\item[{int}]{level }\end{DoxyParamCaption})}
+
+
+
+Definition at line 105 of file log.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{105                               \{}
+\DoxyCodeLine{106   \mbox{\hyperlink{stb__vorbis_8c_aa73214aa5f2f94f63d90bb4e3d99fe53}{L}}.level = \mbox{\hyperlink{log_8c_acf4d33ee4cff36f69b924471174dcb11}{level}};}
+\DoxyCodeLine{107 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{log_8c_a18259d7b87158a91089fd1d081617715}\label{log_8c_a18259d7b87158a91089fd1d081617715}} 
+\index{log.c@{log.c}!log\_set\_lock@{log\_set\_lock}}
+\index{log\_set\_lock@{log\_set\_lock}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{log\_set\_lock()}{log\_set\_lock()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} log\+\_\+set\+\_\+lock (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{log_8h_af1c7dea93a5ff832ba11a7a4e3a46c45}{log\+\_\+\+Lock\+Fn}}}]{fn,  }\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} $\ast$}]{udata }\end{DoxyParamCaption})}
+
+
+
+Definition at line 99 of file log.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{99                                               \{}
+\DoxyCodeLine{100   \mbox{\hyperlink{stb__vorbis_8c_aa73214aa5f2f94f63d90bb4e3d99fe53}{L}}.lock = fn;}
+\DoxyCodeLine{101   \mbox{\hyperlink{stb__vorbis_8c_aa73214aa5f2f94f63d90bb4e3d99fe53}{L}}.udata = \mbox{\hyperlink{log_8c_a697ce711b67313990d351b5c95f87aed}{udata}};}
+\DoxyCodeLine{102 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{log_8c_a6de5d12252f1b48279d28769b7c130eb}\label{log_8c_a6de5d12252f1b48279d28769b7c130eb}} 
+\index{log.c@{log.c}!log\_set\_quiet@{log\_set\_quiet}}
+\index{log\_set\_quiet@{log\_set\_quiet}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{log\_set\_quiet()}{log\_set\_quiet()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} log\+\_\+set\+\_\+quiet (\begin{DoxyParamCaption}\item[{bool}]{enable }\end{DoxyParamCaption})}
+
+
+
+Definition at line 110 of file log.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{110                                 \{}
+\DoxyCodeLine{111   \mbox{\hyperlink{stb__vorbis_8c_aa73214aa5f2f94f63d90bb4e3d99fe53}{L}}.quiet = \mbox{\hyperlink{glext_8h_ab0b5c7de20095d30091485d2c60a3dd5}{enable}};}
+\DoxyCodeLine{112 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{log_8c_a38367a766a6e5583a1d7cd3552a45585}\label{log_8c_a38367a766a6e5583a1d7cd3552a45585}} 
+\index{log.c@{log.c}!callbacks@{callbacks}}
+\index{callbacks@{callbacks}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{callbacks}{callbacks}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_callback}{Callback}} callbacks\mbox{[}\mbox{\hyperlink{log_8c_aea0bffe478318f476a4bedee63256b2c}{M\+A\+X\+\_\+\+C\+A\+L\+L\+B\+A\+C\+KS}}\mbox{]}}
+
+
+
+Definition at line 38 of file log.\+c.
+
+\mbox{\Hypertarget{log_8c_acf4d33ee4cff36f69b924471174dcb11}\label{log_8c_acf4d33ee4cff36f69b924471174dcb11}} 
+\index{log.c@{log.c}!level@{level}}
+\index{level@{level}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{level}{level}}
+{\footnotesize\ttfamily int \mbox{\hyperlink{glad_8h_a2b536fca24f51d6a849aed325793e661}{level}}}
+
+
+
+Definition at line 36 of file log.\+c.
+
+\mbox{\Hypertarget{log_8c_a9863926e23e26ddb194b82b7fc50756a}\label{log_8c_a9863926e23e26ddb194b82b7fc50756a}} 
+\index{log.c@{log.c}!lock@{lock}}
+\index{lock@{lock}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{lock}{lock}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} lock}
+
+
+
+Definition at line 35 of file log.\+c.
+
+\mbox{\Hypertarget{log_8c_ae4426f467d61ae456b95844d4d9c2dcd}\label{log_8c_ae4426f467d61ae456b95844d4d9c2dcd}} 
+\index{log.c@{log.c}!quiet@{quiet}}
+\index{quiet@{quiet}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{quiet}{quiet}}
+{\footnotesize\ttfamily bool quiet}
+
+
+
+Definition at line 37 of file log.\+c.
+
+\mbox{\Hypertarget{log_8c_a697ce711b67313990d351b5c95f87aed}\label{log_8c_a697ce711b67313990d351b5c95f87aed}} 
+\index{log.c@{log.c}!udata@{udata}}
+\index{udata@{udata}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{udata}{udata}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}$\ast$ udata}
+
+
+
+Definition at line 34 of file log.\+c.
+

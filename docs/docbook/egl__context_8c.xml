@@ -1,0 +1,571 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_egl__context_8c">
+<title>deps/glfw/src/egl_context.c File Reference</title>
+<indexterm><primary>deps/glfw/src/egl_context.c</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;assert.h&gt;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_egl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,  <link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_egl__context_8c_1ad83def5c7af30c3bfcc9371712ba96ac">_glfwInitEGL</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_egl__context_8c_1ab095be9ec2b3a40942da090ee7ab2960">_glfwTerminateEGL</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_egl__context_8c_1adfb1d7aa925810c45a2ef4efc268c2fe">_glfwCreateContextEGL</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, const <link linkend="_struct___g_l_f_wctxconfig">_GLFWctxconfig</link> *ctxconfig, const <link linkend="_struct___g_l_f_wfbconfig">_GLFWfbconfig</link> *fbconfig)</para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_internal_8h_1a87d55554aa13accdcb0e10eab910c72e">EGLDisplay</link> <link linkend="_egl__context_8c_1ad0775fdd159691393957594814a09237">glfwGetEGLDisplay</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_internal_8h_1a5105beca2335557d2a9507727cdc78d5">EGLContext</link> <link linkend="_egl__context_8c_1af08f50db04d440d536931df8f5270f1d">glfwGetEGLContext</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle)</para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_internal_8h_1a1bd45435703af31ea10bc2f2229f337b">EGLSurface</link> <link linkend="_egl__context_8c_1ae6624d31855848bb3da2aaf6d0e3292e">glfwGetEGLSurface</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_egl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7"/>    <section>
+    <title>setAttrib</title>
+<indexterm><primary>setAttrib</primary><secondary>egl_context.c</secondary></indexterm>
+<indexterm><primary>egl_context.c</primary><secondary>setAttrib</secondary></indexterm>
+<para><computeroutput>#define setAttrib( <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,  <link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>)</computeroutput></para><emphasis role="strong">Value:</emphasis><programlisting>{&#32;\
+&#32;&#32;&#32;&#32;assert(((<emphasis role="keywordtype">size_t</emphasis>)&#32;<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>&#32;+&#32;1)&#32;&lt;&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>)&#32;/&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>[0]));&#32;\
+&#32;&#32;&#32;&#32;attribs[<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>++]&#32;=&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>;&#32;\
+&#32;&#32;&#32;&#32;attribs[<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>++]&#32;=&#32;<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>;&#32;\
+}
+</programlisting><para>
+Definition at line 509 of file egl_context.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_egl__context_8c_1adfb1d7aa925810c45a2ef4efc268c2fe"/>    <section>
+    <title>_glfwCreateContextEGL()</title>
+<indexterm><primary>_glfwCreateContextEGL</primary><secondary>egl_context.c</secondary></indexterm>
+<indexterm><primary>egl_context.c</primary><secondary>_glfwCreateContextEGL</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwCreateContextEGL (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, const <link linkend="_struct___g_l_f_wctxconfig">_GLFWctxconfig</link> * ctxconfig, const <link linkend="_struct___g_l_f_wfbconfig">_GLFWfbconfig</link> * fbconfig)</computeroutput></para><para>
+Definition at line 518 of file egl_context.c.</para>
+<programlisting>521 {
+522 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a97030274d045a36c550fc0d66d26f175">EGLint</link>&#32;<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>[40];
+523 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a691766e6d867e15207ec0a6d6e46253c">EGLConfig</link>&#32;config;
+524 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a5105beca2335557d2a9507727cdc78d5">EGLContext</link>&#32;share&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+525 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a858431dc7d9081b52dc734956fd1f563">EGLNativeWindowType</link>&#32;native;
+526 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>&#32;=&#32;0;
+527 
+528 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>)
+529 &#32;&#32;&#32;&#32;{
+530 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga56882b290db23261cc6c053c40c2d08e">GLFW_API_UNAVAILABLE</link>,&#32;<emphasis role="stringliteral">&quot;EGL:&#32;API&#32;not&#32;available&quot;</emphasis>);
+531 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+532 &#32;&#32;&#32;&#32;}
+533 
+534 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1ae2de5454bfc052ffa9c27f300fcc0425">share</link>)
+535 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;share&#32;=&#32;ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1ae2de5454bfc052ffa9c27f300fcc0425">share</link>-&gt;<link linkend="_struct___g_l_f_wwindow_1af46919bccfa19f04aa11a3b9900f2ce0">context</link>.<link linkend="_struct___g_l_f_wcontext_1a9d96796bdf18ed88ad5fd128ec8b7679">egl</link>.<link linkend="_struct___g_l_f_wcontext_1a6dfe395af278c63cd5efb05e84fb74c7">handle</link>;
+536 
+537 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!chooseEGLConfig(ctxconfig,&#32;fbconfig,&#32;&amp;config))
+538 &#32;&#32;&#32;&#32;{
+539 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga196e125ef261d94184e2b55c05762f14">GLFW_FORMAT_UNAVAILABLE</link>,
+540 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;EGL:&#32;Failed&#32;to&#32;find&#32;a&#32;suitable&#32;EGLConfig&quot;</emphasis>);
+541 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+542 &#32;&#32;&#32;&#32;}
+543 
+544 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a9d54584dc156b04e39d7567a70e13ef8">client</link>&#32;==&#32;<link linkend="_glfw3_8h_1a28d9b3bc6c2a522d815c8e146595051f">GLFW_OPENGL_ES_API</link>)
+545 &#32;&#32;&#32;&#32;{
+546 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_internal_8h_1aaa4af8971a18d50b39c3bab2b308c982">eglBindAPI</link>(<link linkend="_internal_8h_1a8e70e8d5af9ee29678e42d20acd68195">EGL_OPENGL_ES_API</link>))
+547 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+548 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga56882b290db23261cc6c053c40c2d08e">GLFW_API_UNAVAILABLE</link>,
+549 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;EGL:&#32;Failed&#32;to&#32;bind&#32;OpenGL&#32;ES:&#32;%s&quot;</emphasis>,
+550 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;getEGLErrorString(<link linkend="_internal_8h_1a9892c99c17a360398541651528d89a63">eglGetError</link>()));
+551 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+552 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+553 &#32;&#32;&#32;&#32;}
+554 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+555 &#32;&#32;&#32;&#32;{
+556 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_internal_8h_1aaa4af8971a18d50b39c3bab2b308c982">eglBindAPI</link>(<link linkend="_internal_8h_1a41f4503e2f7cd89ad4275b18f1490b1b">EGL_OPENGL_API</link>))
+557 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+558 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga56882b290db23261cc6c053c40c2d08e">GLFW_API_UNAVAILABLE</link>,
+559 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;EGL:&#32;Failed&#32;to&#32;bind&#32;OpenGL:&#32;%s&quot;</emphasis>,
+560 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;getEGLErrorString(<link linkend="_internal_8h_1a9892c99c17a360398541651528d89a63">eglGetError</link>()));
+561 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+562 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+563 &#32;&#32;&#32;&#32;}
+564 
+565 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1abed9833a2b990d1072e066e18510d27c">KHR_create_context</link>)
+566 &#32;&#32;&#32;&#32;{
+567 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>&#32;=&#32;0,&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;=&#32;0;
+568 
+569 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a9d54584dc156b04e39d7567a70e13ef8">client</link>&#32;==&#32;<link linkend="_glfw3_8h_1a01b3f66db266341425e9abee6b257db2">GLFW_OPENGL_API</link>)
+570 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+571 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1ae7a2859b35b0bf3692abd6bf076ef4c7">forward</link>)
+572 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;|=&#32;<link linkend="_internal_8h_1a515a7345ffcde0bfb8b49ac6ff022828">EGL_CONTEXT_OPENGL_FORWARD_COMPATIBLE_BIT_KHR</link>;
+573 
+574 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a0c56aeafa0f85b1b0ba3e9371a737770">profile</link>&#32;==&#32;<link linkend="_glfw3_8h_1af094bb16da76f66ebceb19ee213b3de8">GLFW_OPENGL_CORE_PROFILE</link>)
+575 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>&#32;|=&#32;<link linkend="_internal_8h_1a62c6d8c693f4cf8aac4f284f20644ce0">EGL_CONTEXT_OPENGL_CORE_PROFILE_BIT_KHR</link>;
+576 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a0c56aeafa0f85b1b0ba3e9371a737770">profile</link>&#32;==&#32;<link linkend="_glfw3_8h_1ac06b663d79c8fcf04669cc8fcc0b7670">GLFW_OPENGL_COMPAT_PROFILE</link>)
+577 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>&#32;|=&#32;<link linkend="_internal_8h_1aab2c77b1d4d68625aa53f4c881d0a83b">EGL_CONTEXT_OPENGL_COMPATIBILITY_PROFILE_BIT_KHR</link>;
+578 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+579 
+580 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a694b0434791f532ddf39bca57b94042e">debug</link>)
+581 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;|=&#32;<link linkend="_internal_8h_1a38df31ddd79d9a981aa7d26613f467e4">EGL_CONTEXT_OPENGL_DEBUG_BIT_KHR</link>;
+582 
+583 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a5aaf92358c6be9ac0dac61cc916b968f">robustness</link>)
+584 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+585 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a5aaf92358c6be9ac0dac61cc916b968f">robustness</link>&#32;==&#32;<link linkend="_glfw3_8h_1aee84a679230d205005e22487ff678a85">GLFW_NO_RESET_NOTIFICATION</link>)
+586 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+587 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_internal_8h_1a2521184cbf6e4e181fe0f98b44e4de4e">EGL_CONTEXT_OPENGL_RESET_NOTIFICATION_STRATEGY_KHR</link>,
+588 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a7ffe350fe0c3ab7352f30c1c7e125762">EGL_NO_RESET_NOTIFICATION_KHR</link>);
+589 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+590 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a5aaf92358c6be9ac0dac61cc916b968f">robustness</link>&#32;==&#32;<link linkend="_glfw3_8h_1aec1132f245143fc915b2f0995228564c">GLFW_LOSE_CONTEXT_ON_RESET</link>)
+591 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+592 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_internal_8h_1a2521184cbf6e4e181fe0f98b44e4de4e">EGL_CONTEXT_OPENGL_RESET_NOTIFICATION_STRATEGY_KHR</link>,
+593 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1acc1adba56b5a8b0b3388f6a278da24ef">EGL_LOSE_CONTEXT_ON_RESET_KHR</link>);
+594 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+595 
+596 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;|=&#32;<link linkend="_internal_8h_1a6230987be6cffaa2f177e952eef3568c">EGL_CONTEXT_OPENGL_ROBUST_ACCESS_BIT_KHR</link>;
+597 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+598 
+599 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a7c97fb74d89b1666d0de89222551a2ee">noerror</link>)
+600 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+601 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1ae0b589a4154e4eeceb368d5df49f8178">KHR_create_context_no_error</link>)
+602 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_internal_8h_1ac65ab825b80273516d167e562db66dce">EGL_CONTEXT_OPENGL_NO_ERROR_KHR</link>,&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>);
+603 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+604 
+605 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a51a8fa315dccf7f6217098cf0413a7a9">major</link>&#32;!=&#32;1&#32;||&#32;ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a250a475c8d778778bb8fb4ab942eddd9">minor</link>&#32;!=&#32;0)
+606 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+607 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_internal_8h_1a76581071cb7dceaa6687f861b70f6e51">EGL_CONTEXT_MAJOR_VERSION_KHR</link>,&#32;ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a51a8fa315dccf7f6217098cf0413a7a9">major</link>);
+608 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_internal_8h_1a66d0c1963300edd33cae3a87f398c4b4">EGL_CONTEXT_MINOR_VERSION_KHR</link>,&#32;ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a250a475c8d778778bb8fb4ab942eddd9">minor</link>);
+609 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+610 
+611 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>)
+612 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_internal_8h_1afa0110f78c53e4c156722137faebce89">EGL_CONTEXT_OPENGL_PROFILE_MASK_KHR</link>,&#32;<link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>);
+613 
+614 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>)
+615 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_internal_8h_1acb7571b6e022ef4bae43dadbc33f8913">EGL_CONTEXT_FLAGS_KHR</link>,&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>);
+616 &#32;&#32;&#32;&#32;}
+617 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+618 &#32;&#32;&#32;&#32;{
+619 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a9d54584dc156b04e39d7567a70e13ef8">client</link>&#32;==&#32;<link linkend="_glfw3_8h_1a28d9b3bc6c2a522d815c8e146595051f">GLFW_OPENGL_ES_API</link>)
+620 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_internal_8h_1a6cbb268839c9d72aba1104baa0be9503">EGL_CONTEXT_CLIENT_VERSION</link>,&#32;ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a51a8fa315dccf7f6217098cf0413a7a9">major</link>);
+621 &#32;&#32;&#32;&#32;}
+622 
+623 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1add3a053d2e4b8ab24094cf915555066a">KHR_context_flush_control</link>)
+624 &#32;&#32;&#32;&#32;{
+625 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a70db828a89fe653b4efd5ec03419b46d">release</link>&#32;==&#32;<link linkend="_glfw3_8h_1afca09088eccacdce4b59036cfae349c5">GLFW_RELEASE_BEHAVIOR_NONE</link>)
+626 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+627 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_internal_8h_1aafc1440af89e329feba1c6233b7c37a3">EGL_CONTEXT_RELEASE_BEHAVIOR_KHR</link>,
+628 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a18aa4bd0c49350c859ef518c6be1103b">EGL_CONTEXT_RELEASE_BEHAVIOR_NONE_KHR</link>);
+629 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+630 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a70db828a89fe653b4efd5ec03419b46d">release</link>&#32;==&#32;<link linkend="_glfw3_8h_1a999961d391db49cb4f949c1dece0e13b">GLFW_RELEASE_BEHAVIOR_FLUSH</link>)
+631 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+632 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_internal_8h_1aafc1440af89e329feba1c6233b7c37a3">EGL_CONTEXT_RELEASE_BEHAVIOR_KHR</link>,
+633 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a4890a6d4481a94bf73ff1c60a71f3138">EGL_CONTEXT_RELEASE_BEHAVIOR_FLUSH_KHR</link>);
+634 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+635 &#32;&#32;&#32;&#32;}
+636 
+637 &#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_internal_8h_1a6ae1eb8c8ec07b6f5a68f9cd6551691a">EGL_NONE</link>,&#32;<link linkend="_internal_8h_1a6ae1eb8c8ec07b6f5a68f9cd6551691a">EGL_NONE</link>);
+638 
+639 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.egl.handle&#32;=&#32;<link linkend="_internal_8h_1a02ed64e1ae73669b2b42b51dc27c257c">eglCreateContext</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,
+640 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;config,&#32;share,&#32;<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>);
+641 
+642 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.egl.handle&#32;==&#32;<link linkend="_internal_8h_1a145d8278e9c309f0ca36cbcd9a16e3b2">EGL_NO_CONTEXT</link>)
+643 &#32;&#32;&#32;&#32;{
+644 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad16c5565b4a69f9c2a9ac2c0dbc89462">GLFW_VERSION_UNAVAILABLE</link>,
+645 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;EGL:&#32;Failed&#32;to&#32;create&#32;context:&#32;%s&quot;</emphasis>,
+646 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;getEGLErrorString(<link linkend="_internal_8h_1a9892c99c17a360398541651528d89a63">eglGetError</link>()));
+647 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+648 &#32;&#32;&#32;&#32;}
+649 
+650 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Set&#32;up&#32;attributes&#32;for&#32;surface&#32;creation</emphasis>
+651 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>&#32;=&#32;0;
+652 
+653 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1a964edb36c54dec04c9a48ba5ff333297">sRGB</link>)
+654 &#32;&#32;&#32;&#32;{
+655 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1af953e694040585e50ef0142ad6fba8eb">KHR_gl_colorspace</link>)
+656 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_internal_8h_1af8884daa1475b593c8000738c288520e">EGL_GL_COLORSPACE_KHR</link>,&#32;<link linkend="_internal_8h_1a2476f91e159c477815437ea4c3a23c4b">EGL_GL_COLORSPACE_SRGB_KHR</link>);
+657 &#32;&#32;&#32;&#32;}
+658 
+659 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1afd48b37171d567f9893bd8a660c4621b">doublebuffer</link>)
+660 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_internal_8h_1abe23abc1f218cf7e9662a862872020c5">EGL_RENDER_BUFFER</link>,&#32;<link linkend="_internal_8h_1a50618b289f7eee20fc5730d1ccd496d5">EGL_SINGLE_BUFFER</link>);
+661 
+662 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a00df6a88280ed7116795eb1005db87bd">EXT_present_opaque</link>)
+663 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_internal_8h_1adbfac547793cfd12033d9180a61a0217">EGL_PRESENT_OPAQUE_EXT</link>,&#32;!fbconfig-&gt;<link linkend="_struct___g_l_f_wfbconfig_1a5b19082325a56470e0770d08698a8965">transparent</link>);
+664 
+665 &#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_internal_8h_1a6ae1eb8c8ec07b6f5a68f9cd6551691a">EGL_NONE</link>,&#32;<link linkend="_internal_8h_1a6ae1eb8c8ec07b6f5a68f9cd6551691a">EGL_NONE</link>);
+666 
+667 &#32;&#32;&#32;&#32;native&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>.<link linkend="_struct___g_l_f_wplatform_1accce4862fa82b3cd19bf1b2c3b1664af">getEGLNativeWindow</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+668 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;HACK:&#32;ANGLE&#32;does&#32;not&#32;implement&#32;eglCreatePlatformWindowSurfaceEXT</emphasis>
+669 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;despite&#32;reporting&#32;EGL_EXT_platform_base</emphasis>
+670 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>&#32;&amp;&amp;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>&#32;!=&#32;<link linkend="_internal_8h_1ae585501f87a1353f924098f26084bb7c">EGL_PLATFORM_ANGLE_ANGLE</link>)
+671 &#32;&#32;&#32;&#32;{
+672 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.egl.surface&#32;=
+673 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a1fb4f9292a682c52182de4a53e5f3a6c">eglCreatePlatformWindowSurfaceEXT</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;config,&#32;native,&#32;<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>);
+674 &#32;&#32;&#32;&#32;}
+675 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+676 &#32;&#32;&#32;&#32;{
+677 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.egl.surface&#32;=
+678 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1abfbd1ef792164f5a1b471999cd7da255">eglCreateWindowSurface</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;config,&#32;native,&#32;<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>);
+679 &#32;&#32;&#32;&#32;}
+680 
+681 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.egl.surface&#32;==&#32;<link linkend="_internal_8h_1a7702c4a90b1a17bd2692fd01341b28b4">EGL_NO_SURFACE</link>)
+682 &#32;&#32;&#32;&#32;{
+683 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+684 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;EGL:&#32;Failed&#32;to&#32;create&#32;window&#32;surface:&#32;%s&quot;</emphasis>,
+685 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;getEGLErrorString(<link linkend="_internal_8h_1a9892c99c17a360398541651528d89a63">eglGetError</link>()));
+686 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+687 &#32;&#32;&#32;&#32;}
+688 
+689 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.egl.config&#32;=&#32;config;
+690 
+691 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Load&#32;the&#32;appropriate&#32;client&#32;library</emphasis>
+692 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5b751b44508b855632e04736f7742ed8">KHR_get_all_proc_addresses</link>)
+693 &#32;&#32;&#32;&#32;{
+694 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+695 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>**&#32;sonames;
+696 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>*&#32;es1sonames[]&#32;=
+697 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+698 <emphasis role="preprocessor">#if&#32;defined(_GLFW_GLESV1_LIBRARY)</emphasis>
+699 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;_GLFW_GLESV1_LIBRARY,
+700 <emphasis role="preprocessor">#elif&#32;defined(_GLFW_WIN32)</emphasis>
+701 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;GLESv1_CM.dll&quot;</emphasis>,
+702 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;libGLES_CM.dll&quot;</emphasis>,
+703 <emphasis role="preprocessor">#elif&#32;defined(_GLFW_COCOA)</emphasis>
+704 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;libGLESv1_CM.dylib&quot;</emphasis>,
+705 <emphasis role="preprocessor">#elif&#32;defined(__OpenBSD__)</emphasis>
+706 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;libGLESv1_CM.so&quot;</emphasis>,
+707 <emphasis role="preprocessor">#else</emphasis>
+708 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;libGLESv1_CM.so.1&quot;</emphasis>,
+709 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;libGLES_CM.so.1&quot;</emphasis>,
+710 <emphasis role="preprocessor">#endif</emphasis>
+711 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>
+712 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;};
+713 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>*&#32;es2sonames[]&#32;=
+714 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+715 <emphasis role="preprocessor">#if&#32;defined(_GLFW_GLESV2_LIBRARY)</emphasis>
+716 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;_GLFW_GLESV2_LIBRARY,
+717 <emphasis role="preprocessor">#elif&#32;defined(_GLFW_WIN32)</emphasis>
+718 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;GLESv2.dll&quot;</emphasis>,
+719 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;libGLESv2.dll&quot;</emphasis>,
+720 <emphasis role="preprocessor">#elif&#32;defined(_GLFW_COCOA)</emphasis>
+721 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;libGLESv2.dylib&quot;</emphasis>,
+722 <emphasis role="preprocessor">#elif&#32;defined(__CYGWIN__)</emphasis>
+723 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;libGLESv2-2.so&quot;</emphasis>,
+724 <emphasis role="preprocessor">#elif&#32;defined(__OpenBSD__)</emphasis>
+725 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;libGLESv2.so&quot;</emphasis>,
+726 <emphasis role="preprocessor">#else</emphasis>
+727 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;libGLESv2.so.2&quot;</emphasis>,
+728 <emphasis role="preprocessor">#endif</emphasis>
+729 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>
+730 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;};
+731 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>*&#32;glsonames[]&#32;=
+732 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+733 <emphasis role="preprocessor">#if&#32;defined(_GLFW_OPENGL_LIBRARY)</emphasis>
+734 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;_GLFW_OPENGL_LIBRARY,
+735 <emphasis role="preprocessor">#elif&#32;defined(_GLFW_WIN32)</emphasis>
+736 <emphasis role="preprocessor">#elif&#32;defined(_GLFW_COCOA)</emphasis>
+737 <emphasis role="preprocessor">#elif&#32;defined(__OpenBSD__)</emphasis>
+738 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;libGL.so&quot;</emphasis>,
+739 <emphasis role="preprocessor">#else</emphasis>
+740 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;libGL.so.1&quot;</emphasis>,
+741 <emphasis role="preprocessor">#endif</emphasis>
+742 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>
+743 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;};
+744 
+745 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a9d54584dc156b04e39d7567a70e13ef8">client</link>&#32;==&#32;<link linkend="_glfw3_8h_1a28d9b3bc6c2a522d815c8e146595051f">GLFW_OPENGL_ES_API</link>)
+746 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+747 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a51a8fa315dccf7f6217098cf0413a7a9">major</link>&#32;==&#32;1)
+748 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;sonames&#32;=&#32;es1sonames;
+749 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+750 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;sonames&#32;=&#32;es2sonames;
+751 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+752 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+753 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;sonames&#32;=&#32;glsonames;
+754 
+755 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;sonames[i];&#32;&#32;i++)
+756 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+757 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;HACK:&#32;Match&#32;presence&#32;of&#32;lib&#32;prefix&#32;to&#32;increase&#32;chance&#32;of&#32;finding</emphasis>
+758 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;a&#32;matching&#32;pair&#32;in&#32;the&#32;jungle&#32;that&#32;is&#32;Win32&#32;EGL/GLES</emphasis>
+759 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a43e38da19db4b54f31c8710e0cb90de6">prefix</link>&#32;!=&#32;(strncmp(sonames[i],&#32;<emphasis role="stringliteral">&quot;lib&quot;</emphasis>,&#32;3)&#32;==&#32;0))
+760 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+761 
+762 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.egl.client&#32;=&#32;<link linkend="_internal_8h_1a0ca69d860ad190bdb5beab6de9160842">_glfwPlatformLoadModule</link>(sonames[i]);
+763 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.egl.client)
+764 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+765 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+766 
+767 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.egl.client)
+768 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+769 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga56882b290db23261cc6c053c40c2d08e">GLFW_API_UNAVAILABLE</link>,
+770 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;EGL:&#32;Failed&#32;to&#32;load&#32;client&#32;library&quot;</emphasis>);
+771 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+772 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+773 &#32;&#32;&#32;&#32;}
+774 
+775 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.makeCurrent&#32;=&#32;makeContextCurrentEGL;
+776 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.swapBuffers&#32;=&#32;swapBuffersEGL;
+777 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.swapInterval&#32;=&#32;swapIntervalEGL;
+778 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.extensionSupported&#32;=&#32;extensionSupportedEGL;
+779 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.getProcAddress&#32;=&#32;getProcAddressEGL;
+780 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.destroy&#32;=&#32;destroyContextEGL;
+781 
+782 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+783 }
+</programlisting>    </section><anchor xml:id="_egl__context_8c_1ad83def5c7af30c3bfcc9371712ba96ac"/>    <section>
+    <title>_glfwInitEGL()</title>
+<indexterm><primary>_glfwInitEGL</primary><secondary>egl_context.c</secondary></indexterm>
+<indexterm><primary>egl_context.c</primary><secondary>_glfwInitEGL</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwInitEGL (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 312 of file egl_context.c.</para>
+<programlisting>313 {
+314 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+315 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a97030274d045a36c550fc0d66d26f175">EGLint</link>*&#32;<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+316 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>*&#32;<link linkend="_namespaceconf_1ae475e080536acb271a0a0efe56c3ba42">extensions</link>;
+317 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>*&#32;sonames[]&#32;=
+318 &#32;&#32;&#32;&#32;{
+319 <emphasis role="preprocessor">#if&#32;defined(_GLFW_EGL_LIBRARY)</emphasis>
+320 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;_GLFW_EGL_LIBRARY,
+321 <emphasis role="preprocessor">#elif&#32;defined(_GLFW_WIN32)</emphasis>
+322 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;libEGL.dll&quot;</emphasis>,
+323 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;EGL.dll&quot;</emphasis>,
+324 <emphasis role="preprocessor">#elif&#32;defined(_GLFW_COCOA)</emphasis>
+325 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;libEGL.dylib&quot;</emphasis>,
+326 <emphasis role="preprocessor">#elif&#32;defined(__CYGWIN__)</emphasis>
+327 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;libEGL-1.so&quot;</emphasis>,
+328 <emphasis role="preprocessor">#elif&#32;defined(__OpenBSD__)</emphasis>
+329 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;libEGL.so&quot;</emphasis>,
+330 <emphasis role="preprocessor">#else</emphasis>
+331 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;libEGL.so.1&quot;</emphasis>,
+332 <emphasis role="preprocessor">#endif</emphasis>
+333 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>
+334 &#32;&#32;&#32;&#32;};
+335 
+336 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+337 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+338 
+339 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;sonames[i];&#32;&#32;i++)
+340 &#32;&#32;&#32;&#32;{
+341 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>&#32;=&#32;<link linkend="_internal_8h_1a0ca69d860ad190bdb5beab6de9160842">_glfwPlatformLoadModule</link>(sonames[i]);
+342 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+343 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+344 &#32;&#32;&#32;&#32;}
+345 
+346 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+347 &#32;&#32;&#32;&#32;{
+348 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga56882b290db23261cc6c053c40c2d08e">GLFW_API_UNAVAILABLE</link>,&#32;<emphasis role="stringliteral">&quot;EGL:&#32;Library&#32;not&#32;found&quot;</emphasis>);
+349 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+350 &#32;&#32;&#32;&#32;}
+351 
+352 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a43e38da19db4b54f31c8710e0cb90de6">prefix</link>&#32;=&#32;(strncmp(sonames[i],&#32;<emphasis role="stringliteral">&quot;lib&quot;</emphasis>,&#32;3)&#32;==&#32;0);
+353 
+354 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1ae8803ce13f25bba1f4c6e48bb1983ff3">GetConfigAttrib</link>&#32;=&#32;(<link linkend="_internal_8h_1a97ab723faa33ac31b46ada81d8e2e497">PFN_eglGetConfigAttrib</link>)
+355 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;eglGetConfigAttrib&quot;</emphasis>);
+356 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a4cf9ee7fad25f95b77e7e4bd3c16efb1">GetConfigs</link>&#32;=&#32;(<link linkend="_internal_8h_1a7d215df83d79b9c910f5968a56807408">PFN_eglGetConfigs</link>)
+357 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;eglGetConfigs&quot;</emphasis>);
+358 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a82dfbbd2d15bf1ca1bc846453d420a69">GetDisplay</link>&#32;=&#32;(<link linkend="_internal_8h_1ae9ff3749c76bb78820675ec819f8ef79">PFN_eglGetDisplay</link>)
+359 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;eglGetDisplay&quot;</emphasis>);
+360 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a03f74be00a9dea98a5ac3b2faf085c98">GetError</link>&#32;=&#32;(<link linkend="_internal_8h_1a0f6249bd982c3c111ca2179b6aa7320f">PFN_eglGetError</link>)
+361 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;eglGetError&quot;</emphasis>);
+362 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a73e949a3f2f745658fa936c0ce3b8edf">Initialize</link>&#32;=&#32;(<link linkend="_internal_8h_1a961064f167deb265185aa3f69617fe3a">PFN_eglInitialize</link>)
+363 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;eglInitialize&quot;</emphasis>);
+364 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a8473b50122b785b9958b33cafd44805e">Terminate</link>&#32;=&#32;(<link linkend="_internal_8h_1a9957b5b18f9aedc5c4975c6a094a14cf">PFN_eglTerminate</link>)
+365 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;eglTerminate&quot;</emphasis>);
+366 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1ad12c6f803115636dfff913147ec0d72d">BindAPI</link>&#32;=&#32;(<link linkend="_internal_8h_1a6b8853332751f1b0fa25d65597acefa7">PFN_eglBindAPI</link>)
+367 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;eglBindAPI&quot;</emphasis>);
+368 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1ab54a110bc2f6c69907856d9375fa882c">CreateContext</link>&#32;=&#32;(<link linkend="_internal_8h_1a70457dc77b6296c8fe5d1e5aa220190e">PFN_eglCreateContext</link>)
+369 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;eglCreateContext&quot;</emphasis>);
+370 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a00166eb3af45fa10282d980863e28dda">DestroySurface</link>&#32;=&#32;(<link linkend="_internal_8h_1a6c162304015a82ba97f05be85d3db0ea">PFN_eglDestroySurface</link>)
+371 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;eglDestroySurface&quot;</emphasis>);
+372 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a4482edf6fd0579b5fe9540ef499fd077">DestroyContext</link>&#32;=&#32;(<link linkend="_internal_8h_1a9916f870896725c5e572a4c3376bc531">PFN_eglDestroyContext</link>)
+373 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;eglDestroyContext&quot;</emphasis>);
+374 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a3c17333053fe4fa02f99dd88e56a10fa">CreateWindowSurface</link>&#32;=&#32;(<link linkend="_internal_8h_1a64f656c631460c74e59078ceb3d6fe5e">PFN_eglCreateWindowSurface</link>)
+375 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;eglCreateWindowSurface&quot;</emphasis>);
+376 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1ab4b9194ec5fbc1114553f9665cb990c3">MakeCurrent</link>&#32;=&#32;(<link linkend="_internal_8h_1a9454961673514d14107f9308ed6814d5">PFN_eglMakeCurrent</link>)
+377 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;eglMakeCurrent&quot;</emphasis>);
+378 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1ac53409e25654554e67bf009808554b03">SwapBuffers</link>&#32;=&#32;(<link linkend="_internal_8h_1ad3c19bfc7be17a33113006b7ecf739e9">PFN_eglSwapBuffers</link>)
+379 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;eglSwapBuffers&quot;</emphasis>);
+380 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5e5ad4855e21a1192054342526caa171">SwapInterval</link>&#32;=&#32;(<link linkend="_internal_8h_1a0a660eb3ad8a62e3663f0caf9cb635ed">PFN_eglSwapInterval</link>)
+381 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;eglSwapInterval&quot;</emphasis>);
+382 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1aa3bc941e740530e3d9c3a91f4d199ea8">QueryString</link>&#32;=&#32;(<link linkend="_internal_8h_1ab27923ebbbc21fd0b1fd6a8f0cf323a1">PFN_eglQueryString</link>)
+383 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;eglQueryString&quot;</emphasis>);
+384 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1adcf8173be4e691390a0bc60540509c9e">GetProcAddress</link>&#32;=&#32;(<link linkend="_internal_8h_1af0d9bf6c17563089707f361b68507ca2">PFN_eglGetProcAddress</link>)
+385 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;eglGetProcAddress&quot;</emphasis>);
+386 
+387 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1ae8803ce13f25bba1f4c6e48bb1983ff3">GetConfigAttrib</link>&#32;||
+388 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a4cf9ee7fad25f95b77e7e4bd3c16efb1">GetConfigs</link>&#32;||
+389 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a82dfbbd2d15bf1ca1bc846453d420a69">GetDisplay</link>&#32;||
+390 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a03f74be00a9dea98a5ac3b2faf085c98">GetError</link>&#32;||
+391 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a73e949a3f2f745658fa936c0ce3b8edf">Initialize</link>&#32;||
+392 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a8473b50122b785b9958b33cafd44805e">Terminate</link>&#32;||
+393 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1ad12c6f803115636dfff913147ec0d72d">BindAPI</link>&#32;||
+394 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1ab54a110bc2f6c69907856d9375fa882c">CreateContext</link>&#32;||
+395 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a00166eb3af45fa10282d980863e28dda">DestroySurface</link>&#32;||
+396 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a4482edf6fd0579b5fe9540ef499fd077">DestroyContext</link>&#32;||
+397 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a3c17333053fe4fa02f99dd88e56a10fa">CreateWindowSurface</link>&#32;||
+398 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1ab4b9194ec5fbc1114553f9665cb990c3">MakeCurrent</link>&#32;||
+399 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1ac53409e25654554e67bf009808554b03">SwapBuffers</link>&#32;||
+400 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5e5ad4855e21a1192054342526caa171">SwapInterval</link>&#32;||
+401 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1aa3bc941e740530e3d9c3a91f4d199ea8">QueryString</link>&#32;||
+402 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1adcf8173be4e691390a0bc60540509c9e">GetProcAddress</link>)
+403 &#32;&#32;&#32;&#32;{
+404 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+405 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;EGL:&#32;Failed&#32;to&#32;load&#32;required&#32;entry&#32;points&quot;</emphasis>);
+406 
+407 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1ab095be9ec2b3a40942da090ee7ab2960">_glfwTerminateEGL</link>();
+408 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+409 &#32;&#32;&#32;&#32;}
+410 
+411 &#32;&#32;&#32;&#32;<link linkend="_namespaceconf_1ae475e080536acb271a0a0efe56c3ba42">extensions</link>&#32;=&#32;<link linkend="_internal_8h_1aee344c300e1a80aeb064368dee9a163b">eglQueryString</link>(<link linkend="_internal_8h_1a2eb0e3fe048fa79c7fc04f06f6e198be">EGL_NO_DISPLAY</link>,&#32;<link linkend="_internal_8h_1a8ffaea1c1fbbeca45890967aadeaf927">EGL_EXTENSIONS</link>);
+412 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_namespaceconf_1ae475e080536acb271a0a0efe56c3ba42">extensions</link>&#32;&amp;&amp;&#32;<link linkend="_internal_8h_1a9892c99c17a360398541651528d89a63">eglGetError</link>()&#32;==&#32;<link linkend="_internal_8h_1ae787cf64b8f720db669775c23cf40052">EGL_SUCCESS</link>)
+413 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a9d654873d77877c6eece1ca1b2b89eea">EXT_client_extensions</link>&#32;=&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+414 
+415 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a9d654873d77877c6eece1ca1b2b89eea">EXT_client_extensions</link>)
+416 &#32;&#32;&#32;&#32;{
+417 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a709af831ee7cf025c3bc5bfa6d2527f2">EXT_platform_base</link>&#32;=
+418 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_context_8c_1a6fb78d968ce928112060770a16dca695">_glfwStringInExtensionString</link>(<emphasis role="stringliteral">&quot;EGL_EXT_platform_base&quot;</emphasis>,&#32;<link linkend="_namespaceconf_1ae475e080536acb271a0a0efe56c3ba42">extensions</link>);
+419 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1ad2127a03dd29e4fb070edc5ade564e67">EXT_platform_x11</link>&#32;=
+420 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_context_8c_1a6fb78d968ce928112060770a16dca695">_glfwStringInExtensionString</link>(<emphasis role="stringliteral">&quot;EGL_EXT_platform_x11&quot;</emphasis>,&#32;<link linkend="_namespaceconf_1ae475e080536acb271a0a0efe56c3ba42">extensions</link>);
+421 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1abbaa54e1a19006b93b64d5cae90f59ad">EXT_platform_wayland</link>&#32;=
+422 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_context_8c_1a6fb78d968ce928112060770a16dca695">_glfwStringInExtensionString</link>(<emphasis role="stringliteral">&quot;EGL_EXT_platform_wayland&quot;</emphasis>,&#32;<link linkend="_namespaceconf_1ae475e080536acb271a0a0efe56c3ba42">extensions</link>);
+423 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a9fca831c2886082570fa87e2b7a9267e">ANGLE_platform_angle</link>&#32;=
+424 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_context_8c_1a6fb78d968ce928112060770a16dca695">_glfwStringInExtensionString</link>(<emphasis role="stringliteral">&quot;EGL_ANGLE_platform_angle&quot;</emphasis>,&#32;<link linkend="_namespaceconf_1ae475e080536acb271a0a0efe56c3ba42">extensions</link>);
+425 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1afc8f1d5be1e42ae0a8a1ddecd7482d7d">ANGLE_platform_angle_opengl</link>&#32;=
+426 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_context_8c_1a6fb78d968ce928112060770a16dca695">_glfwStringInExtensionString</link>(<emphasis role="stringliteral">&quot;EGL_ANGLE_platform_angle_opengl&quot;</emphasis>,&#32;<link linkend="_namespaceconf_1ae475e080536acb271a0a0efe56c3ba42">extensions</link>);
+427 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a373fe47d0bde740c7febb8513d9baff9">ANGLE_platform_angle_d3d</link>&#32;=
+428 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_context_8c_1a6fb78d968ce928112060770a16dca695">_glfwStringInExtensionString</link>(<emphasis role="stringliteral">&quot;EGL_ANGLE_platform_angle_d3d&quot;</emphasis>,&#32;<link linkend="_namespaceconf_1ae475e080536acb271a0a0efe56c3ba42">extensions</link>);
+429 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1ab843671532e7d8d3fbce804e813b460a">ANGLE_platform_angle_vulkan</link>&#32;=
+430 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_context_8c_1a6fb78d968ce928112060770a16dca695">_glfwStringInExtensionString</link>(<emphasis role="stringliteral">&quot;EGL_ANGLE_platform_angle_vulkan&quot;</emphasis>,&#32;<link linkend="_namespaceconf_1ae475e080536acb271a0a0efe56c3ba42">extensions</link>);
+431 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a26f43f44ebbf0549d7a7b660c853a4f7">ANGLE_platform_angle_metal</link>&#32;=
+432 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_context_8c_1a6fb78d968ce928112060770a16dca695">_glfwStringInExtensionString</link>(<emphasis role="stringliteral">&quot;EGL_ANGLE_platform_angle_metal&quot;</emphasis>,&#32;<link linkend="_namespaceconf_1ae475e080536acb271a0a0efe56c3ba42">extensions</link>);
+433 &#32;&#32;&#32;&#32;}
+434 
+435 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a709af831ee7cf025c3bc5bfa6d2527f2">EXT_platform_base</link>)
+436 &#32;&#32;&#32;&#32;{
+437 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a498b93252c9562ad48e663d97a578d7d">GetPlatformDisplayEXT</link>&#32;=&#32;(<link linkend="_internal_8h_1aee5d03d94f43d4f612d692dc8b623de7">PFNEGLGETPLATFORMDISPLAYEXTPROC</link>)
+438 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a907032f1931a3927837d9feb5d7e5569">eglGetProcAddress</link>(<emphasis role="stringliteral">&quot;eglGetPlatformDisplayEXT&quot;</emphasis>);
+439 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a7491f428ed62d0f2541b96468a0a48a1">CreatePlatformWindowSurfaceEXT</link>&#32;=&#32;(<link linkend="_internal_8h_1a373a1abef9858892e7604247f1df8571">PFNEGLCREATEPLATFORMWINDOWSURFACEEXTPROC</link>)
+440 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a907032f1931a3927837d9feb5d7e5569">eglGetProcAddress</link>(<emphasis role="stringliteral">&quot;eglCreatePlatformWindowSurfaceEXT&quot;</emphasis>);
+441 &#32;&#32;&#32;&#32;}
+442 
+443 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>.<link linkend="_struct___g_l_f_wplatform_1a913677586ff99bb87f4f0b8edc32b332">getEGLPlatform</link>(&amp;<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>);
+444 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>)
+445 &#32;&#32;&#32;&#32;{
+446 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>&#32;=
+447 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a8f53a2ec02ab95bd47bdbd5b1b9d8e96">eglGetPlatformDisplayEXT</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>,
+448 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>.<link linkend="_struct___g_l_f_wplatform_1a647fd537104b4d7203157c4b79384ff4">getEGLNativeDisplay</link>(),
+449 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>);
+450 &#32;&#32;&#32;&#32;}
+451 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+452 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>&#32;=&#32;<link linkend="_internal_8h_1a51d101debe17dc98e78f6332a41fac59">eglGetDisplay</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>.<link linkend="_struct___g_l_f_wplatform_1a647fd537104b4d7203157c4b79384ff4">getEGLNativeDisplay</link>());
+453 
+454 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>);
+455 
+456 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>&#32;==&#32;<link linkend="_internal_8h_1a2eb0e3fe048fa79c7fc04f06f6e198be">EGL_NO_DISPLAY</link>)
+457 &#32;&#32;&#32;&#32;{
+458 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga56882b290db23261cc6c053c40c2d08e">GLFW_API_UNAVAILABLE</link>,
+459 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;EGL:&#32;Failed&#32;to&#32;get&#32;EGL&#32;display:&#32;%s&quot;</emphasis>,
+460 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;getEGLErrorString(<link linkend="_internal_8h_1a9892c99c17a360398541651528d89a63">eglGetError</link>()));
+461 
+462 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1ab095be9ec2b3a40942da090ee7ab2960">_glfwTerminateEGL</link>();
+463 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+464 &#32;&#32;&#32;&#32;}
+465 
+466 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_internal_8h_1abf3af38eba2b46a581b89e2719494155">eglInitialize</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;&amp;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a769db05d88bf2c893a2172c4cb9f5199">major</link>,&#32;&amp;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a2caef79adcd0ff4e1789e2a888f9bad9">minor</link>))
+467 &#32;&#32;&#32;&#32;{
+468 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga56882b290db23261cc6c053c40c2d08e">GLFW_API_UNAVAILABLE</link>,
+469 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;EGL:&#32;Failed&#32;to&#32;initialize&#32;EGL:&#32;%s&quot;</emphasis>,
+470 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;getEGLErrorString(<link linkend="_internal_8h_1a9892c99c17a360398541651528d89a63">eglGetError</link>()));
+471 
+472 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1ab095be9ec2b3a40942da090ee7ab2960">_glfwTerminateEGL</link>();
+473 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+474 &#32;&#32;&#32;&#32;}
+475 
+476 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1abed9833a2b990d1072e066e18510d27c">KHR_create_context</link>&#32;=
+477 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionSupportedEGL(<emphasis role="stringliteral">&quot;EGL_KHR_create_context&quot;</emphasis>);
+478 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1ae0b589a4154e4eeceb368d5df49f8178">KHR_create_context_no_error</link>&#32;=
+479 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionSupportedEGL(<emphasis role="stringliteral">&quot;EGL_KHR_create_context_no_error&quot;</emphasis>);
+480 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1af953e694040585e50ef0142ad6fba8eb">KHR_gl_colorspace</link>&#32;=
+481 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionSupportedEGL(<emphasis role="stringliteral">&quot;EGL_KHR_gl_colorspace&quot;</emphasis>);
+482 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5b751b44508b855632e04736f7742ed8">KHR_get_all_proc_addresses</link>&#32;=
+483 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionSupportedEGL(<emphasis role="stringliteral">&quot;EGL_KHR_get_all_proc_addresses&quot;</emphasis>);
+484 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1add3a053d2e4b8ab24094cf915555066a">KHR_context_flush_control</link>&#32;=
+485 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionSupportedEGL(<emphasis role="stringliteral">&quot;EGL_KHR_context_flush_control&quot;</emphasis>);
+486 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a00df6a88280ed7116795eb1005db87bd">EXT_present_opaque</link>&#32;=
+487 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionSupportedEGL(<emphasis role="stringliteral">&quot;EGL_EXT_present_opaque&quot;</emphasis>);
+488 
+489 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+490 }
+</programlisting>    </section><anchor xml:id="_egl__context_8c_1ab095be9ec2b3a40942da090ee7ab2960"/>    <section>
+    <title>_glfwTerminateEGL()</title>
+<indexterm><primary>_glfwTerminateEGL</primary><secondary>egl_context.c</secondary></indexterm>
+<indexterm><primary>egl_context.c</primary><secondary>_glfwTerminateEGL</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwTerminateEGL (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 494 of file egl_context.c.</para>
+<programlisting>495 {
+496 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>)
+497 &#32;&#32;&#32;&#32;{
+498 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a40d0d756a0a979a8c281a5d3e7fc5376">eglTerminate</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>);
+499 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>&#32;=&#32;<link linkend="_internal_8h_1a2eb0e3fe048fa79c7fc04f06f6e198be">EGL_NO_DISPLAY</link>;
+500 &#32;&#32;&#32;&#32;}
+501 
+502 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+503 &#32;&#32;&#32;&#32;{
+504 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ad4b9e48b150850f6ee00874f85036715">_glfwPlatformFreeModule</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>);
+505 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+506 &#32;&#32;&#32;&#32;}
+507 }
+</programlisting>    </section><anchor xml:id="_egl__context_8c_1af08f50db04d440d536931df8f5270f1d"/>    <section>
+    <title>glfwGetEGLContext()</title>
+<indexterm><primary>glfwGetEGLContext</primary><secondary>egl_context.c</secondary></indexterm>
+<indexterm><primary>egl_context.c</primary><secondary>glfwGetEGLContext</secondary></indexterm>
+<para><computeroutput><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_internal_8h_1a5105beca2335557d2a9507727cdc78d5">EGLContext</link> glfwGetEGLContext (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> * handle)</computeroutput></para><para>
+Definition at line 841 of file egl_context.c.</para>
+<programlisting>842 {
+843 &#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link>*&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;(<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link>*)&#32;handle;
+844 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a69563c87fe776d416636a4d1b0e9e599">_GLFW_REQUIRE_INIT_OR_RETURN</link>(<link linkend="_internal_8h_1a145d8278e9c309f0ca36cbcd9a16e3b2">EGL_NO_CONTEXT</link>);
+845 
+846 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.source&#32;!=&#32;<link linkend="_glfw3_8h_1a03cf65c9ab01fc8b872ba58842c531c9">GLFW_EGL_CONTEXT_API</link>)
+847 &#32;&#32;&#32;&#32;{
+848 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gacff24d2757da752ae4c80bf452356487">GLFW_NO_WINDOW_CONTEXT</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+849 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_internal_8h_1a145d8278e9c309f0ca36cbcd9a16e3b2">EGL_NO_CONTEXT</link>;
+850 &#32;&#32;&#32;&#32;}
+851 
+852 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.egl.handle;
+853 }
+</programlisting>    </section><anchor xml:id="_egl__context_8c_1ad0775fdd159691393957594814a09237"/>    <section>
+    <title>glfwGetEGLDisplay()</title>
+<indexterm><primary>glfwGetEGLDisplay</primary><secondary>egl_context.c</secondary></indexterm>
+<indexterm><primary>egl_context.c</primary><secondary>glfwGetEGLDisplay</secondary></indexterm>
+<para><computeroutput><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_internal_8h_1a87d55554aa13accdcb0e10eab910c72e">EGLDisplay</link> glfwGetEGLDisplay (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 835 of file egl_context.c.</para>
+<programlisting>836 {
+837 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a69563c87fe776d416636a4d1b0e9e599">_GLFW_REQUIRE_INIT_OR_RETURN</link>(<link linkend="_internal_8h_1a2eb0e3fe048fa79c7fc04f06f6e198be">EGL_NO_DISPLAY</link>);
+838 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>;
+839 }
+</programlisting>    </section><anchor xml:id="_egl__context_8c_1ae6624d31855848bb3da2aaf6d0e3292e"/>    <section>
+    <title>glfwGetEGLSurface()</title>
+<indexterm><primary>glfwGetEGLSurface</primary><secondary>egl_context.c</secondary></indexterm>
+<indexterm><primary>egl_context.c</primary><secondary>glfwGetEGLSurface</secondary></indexterm>
+<para><computeroutput><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_internal_8h_1a1bd45435703af31ea10bc2f2229f337b">EGLSurface</link> glfwGetEGLSurface (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> * handle)</computeroutput></para><para>
+Definition at line 855 of file egl_context.c.</para>
+<programlisting>856 {
+857 &#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link>*&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;(<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link>*)&#32;handle;
+858 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a69563c87fe776d416636a4d1b0e9e599">_GLFW_REQUIRE_INIT_OR_RETURN</link>(<link linkend="_internal_8h_1a7702c4a90b1a17bd2692fd01341b28b4">EGL_NO_SURFACE</link>);
+859 
+860 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.source&#32;!=&#32;<link linkend="_glfw3_8h_1a03cf65c9ab01fc8b872ba58842c531c9">GLFW_EGL_CONTEXT_API</link>)
+861 &#32;&#32;&#32;&#32;{
+862 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gacff24d2757da752ae4c80bf452356487">GLFW_NO_WINDOW_CONTEXT</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+863 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_internal_8h_1a7702c4a90b1a17bd2692fd01341b28b4">EGL_NO_SURFACE</link>;
+864 &#32;&#32;&#32;&#32;}
+865 
+866 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.egl.surface;
+867 }
+</programlisting></section>
+</section>
+</section>

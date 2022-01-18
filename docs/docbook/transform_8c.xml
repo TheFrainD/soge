@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_transform_8c">
+<title>src/vally/ecs/components/transform.c File Reference</title>
+<indexterm><primary>src/vally/ecs/components/transform.c</primary></indexterm>
+<programlisting>#include &lt;vally/ecs/components/transform.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structtransform__system">transform_system</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_transform_8c_1ad88de159bb7ccff0b5e423fdb29d4515">ecs_transform_add</link> (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> <link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>, <link linkend="_structvector2f">vector2f</link> position, <link linkend="_structvector2f">vector2f</link> <link linkend="_glext_8h_1a281421b881aa7a1266842b73a3bc7655">scale</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_structtransform">transform</link> * <link linkend="_transform_8c_1acb09864c56d8c4cb051135f84d1e42bb">ecs_transform_get</link> (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> <link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_transform_8c_1ad88de159bb7ccff0b5e423fdb29d4515"/>    <section>
+    <title>ecs_transform_add()</title>
+<indexterm><primary>ecs_transform_add</primary><secondary>transform.c</secondary></indexterm>
+<indexterm><primary>transform.c</primary><secondary>ecs_transform_add</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> ecs_transform_add (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> entity, <link linkend="_structvector2f">vector2f</link> position, <link linkend="_structvector2f">vector2f</link> scale)</computeroutput></para><para>
+Definition at line 9 of file transform.c.</para>
+<programlisting>9 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+10 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>&#32;==&#32;<link linkend="_ecs_8h_1a590682d0c22ffe315650ba42fae2b231">ECS_NULL_ENTITY</link>)&#32;{
+11 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+12 &#32;&#32;}
+13 
+14 &#32;&#32;<link linkend="_structtransform">transform</link>&#32;component;
+15 &#32;&#32;component.<link linkend="_structtransform_1a87255977c168389786210448fbc0e3c3">entity</link>&#32;=&#32;<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>;
+16 &#32;&#32;component.<link linkend="_structtransform_1aca5f2f1120ff401216dc0ea843860e59">position</link>&#32;=&#32;position;
+17 &#32;&#32;component.<link linkend="_structtransform_1a90cdde0e5c0820ce7dc0d1cd6e633250">scale</link>&#32;=&#32;<link linkend="_glext_8h_1a281421b881aa7a1266842b73a3bc7655">scale</link>;
+18 
+19 &#32;&#32;system.<link linkend="_structtransform__system_1a870c56af3366a04162cbb79db71ebf2e">components</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>]&#32;=&#32;component;
+20 &#32;&#32;<link linkend="_ecs_8h_1a979231663bba3c9cd75a00dc24ca266f">ecs_component_add</link>(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>,&#32;<link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352af0c45d171057b512b8e404b6e9b2e08c">ECS_TRANSFORM_COMPONENT</link>);
+21 }
+</programlisting>    </section><anchor xml:id="_transform_8c_1acb09864c56d8c4cb051135f84d1e42bb"/>    <section>
+    <title>ecs_transform_get()</title>
+<indexterm><primary>ecs_transform_get</primary><secondary>transform.c</secondary></indexterm>
+<indexterm><primary>transform.c</primary><secondary>ecs_transform_get</secondary></indexterm>
+<para><computeroutput><link linkend="_structtransform">transform</link>* ecs_transform_get (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> entity)</computeroutput></para><para>
+Definition at line 23 of file transform.c.</para>
+<programlisting>23 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+24 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>&#32;==&#32;<link linkend="_ecs_8h_1a590682d0c22ffe315650ba42fae2b231">ECS_NULL_ENTITY</link>&#32;||&#32;!<link linkend="_ecs_8h_1a8558da821ae97171a28630f8da7414c4">ecs_component_has</link>(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>,&#32;<link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352af0c45d171057b512b8e404b6e9b2e08c">ECS_TRANSFORM_COMPONENT</link>))&#32;{
+25 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+26 &#32;&#32;}
+27 
+28 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;&amp;system.<link linkend="_structtransform__system_1a870c56af3366a04162cbb79db71ebf2e">components</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>];
+29 }
+</programlisting></section>
+</section>
+</section>

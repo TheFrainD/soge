@@ -1,10 +1,10 @@
-\hypertarget{time_8h}{}\doxysection{include/vally/core/time.h File Reference}
-\label{time_8h}\index{include/vally/core/time.h@{include/vally/core/time.h}}
+\hypertarget{time_8h}{}\doxysection{src/vally/core/time.h File Reference}
+\label{time_8h}\index{src/vally/core/time.h@{src/vally/core/time.h}}
 {\ttfamily \#include $<$vally/config.\+h$>$}\newline
 \doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{config_8h_a94dab5770726ccbef8c7d026cfbdf8e5}{f64}} \mbox{\hyperlink{time_8h_a40c527fa3a4dfe786ce3f977c78e653a}{time\+\_\+now}} ()
+\mbox{\hyperlink{include_2vally_2config_8h_a94dab5770726ccbef8c7d026cfbdf8e5}{f64}} \mbox{\hyperlink{time_8h_a40c527fa3a4dfe786ce3f977c78e653a}{time\+\_\+now}} ()
 \end{DoxyCompactItemize}
 
 
@@ -13,5 +13,30 @@
 \index{time.h@{time.h}!time\_now@{time\_now}}
 \index{time\_now@{time\_now}!time.h@{time.h}}
 \doxysubsubsection{\texorpdfstring{time\_now()}{time\_now()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{config_8h_a94dab5770726ccbef8c7d026cfbdf8e5}{f64}} time\+\_\+now (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2vally_2config_8h_a94dab5770726ccbef8c7d026cfbdf8e5}{f64}} time\+\_\+now (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
+
+
+Definition at line 26 of file time.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{26                \{}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#ifdef \_\_linux\_\_}}
+\DoxyCodeLine{28   \textcolor{keyword}{struct }timespec now;}
+\DoxyCodeLine{29   clock\_gettime(CLOCK\_MONOTONIC, \&now);}
+\DoxyCodeLine{30   \textcolor{keywordflow}{return} now.tv\_sec + now.tv\_nsec * 0.000000001;}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{34   \textcolor{keywordflow}{if} (!clock\_frequency) \{}
+\DoxyCodeLine{35     time\_init();}
+\DoxyCodeLine{36   \}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38   LARGE\_INTEGER now\_time;}
+\DoxyCodeLine{39   QueryPerformanceCounter(\&now\_time);}
+\DoxyCodeLine{40   \textcolor{keywordflow}{return} (\mbox{\hyperlink{include_2vally_2config_8h_a94dab5770726ccbef8c7d026cfbdf8e5}{f64}})now\_time.QuadPart * clock\_frequency;}
+\DoxyCodeLine{41 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{42 \}}
+
+\end{DoxyCode}

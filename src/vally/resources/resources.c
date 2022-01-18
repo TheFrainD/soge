@@ -5,7 +5,6 @@
 #include <cvec.h>
 
 #include <vally/core/logger.h>
-#include <vally/resources/resource_types.h>
 
 typedef struct {
   cvec resources;
@@ -22,7 +21,7 @@ b8 resources_init() {
   initalized = TRUE;
   state.resources = cvec_create(resource);
 
-  VALLY_TRACE("Resource system initialized");
+  LOG_TRACE("Resource system initialized");
   return TRUE;
 }
 
@@ -47,8 +46,8 @@ void resources_terminate() {
     res.destructor(res.data);
   }
 
-  VALLY_INFO("Resource system: %d objects destroyed", cvec_size(state.resources));
+  LOG_INFO("Resource system: %d objects destroyed", cvec_size(state.resources));
   cvec_destroy(state.resources);
 
-  VALLY_TRACE("Resource system terminated");
+  LOG_TRACE("Resource system terminated");
 }

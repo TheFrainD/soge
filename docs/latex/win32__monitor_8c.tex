@@ -1,0 +1,604 @@
+\hypertarget{win32__monitor_8c}{}\doxysection{deps/glfw/src/win32\+\_\+monitor.c File Reference}
+\label{win32__monitor_8c}\index{deps/glfw/src/win32\_monitor.c@{deps/glfw/src/win32\_monitor.c}}
+{\ttfamily \#include \char`\"{}internal.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include $<$wchar.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{win32__monitor_8c_a345b11644c658a9a94b0eeb4ed4a0618}{\+\_\+glfw\+Poll\+Monitors\+Win32}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{win32__monitor_8c_a52d8e36bf649dcb15198832d92206ce2}{\+\_\+glfw\+Set\+Video\+Mode\+Win32}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor, const \mbox{\hyperlink{struct_g_l_f_wvidmode}{G\+L\+F\+Wvidmode}} $\ast$desired)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{win32__monitor_8c_af4b02765bc562c8265503bb97c0cd8e9}{\+\_\+glfw\+Restore\+Video\+Mode\+Win32}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{win32__monitor_8c_a666ce7b96d7717b71d8086be7b4e9fb3}{\+\_\+glfw\+Get\+H\+M\+O\+N\+I\+T\+O\+R\+Content\+Scale\+Win32}} (H\+M\+O\+N\+I\+T\+OR handle, float $\ast$xscale, float $\ast$yscale)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{win32__monitor_8c_a9df387b074c350e1cca8dbd26a375243}{\+\_\+glfw\+Free\+Monitor\+Win32}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{win32__monitor_8c_a4261cca207894705081bbe41a912529b}{\+\_\+glfw\+Get\+Monitor\+Pos\+Win32}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor, int $\ast$xpos, int $\ast$ypos)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{win32__monitor_8c_a3fe7a2258a3ce26e3a8257c3d0ea1ca0}{\+\_\+glfw\+Get\+Monitor\+Content\+Scale\+Win32}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor, float $\ast$xscale, float $\ast$yscale)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{win32__monitor_8c_a844e706059e08613de692291969111d2}{\+\_\+glfw\+Get\+Monitor\+Workarea\+Win32}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor, int $\ast$xpos, int $\ast$ypos, int $\ast$\mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}}, int $\ast$\mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}})
+\item 
+\mbox{\hyperlink{struct_g_l_f_wvidmode}{G\+L\+F\+Wvidmode}} $\ast$ \mbox{\hyperlink{win32__monitor_8c_ab4ce13c23c2b2bc9635e36ee5387375e}{\+\_\+glfw\+Get\+Video\+Modes\+Win32}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor, int $\ast$\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{win32__monitor_8c_a7b43d8548648f7a49903525cda10e09c}{\+\_\+glfw\+Get\+Video\+Mode\+Win32}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor, \mbox{\hyperlink{struct_g_l_f_wvidmode}{G\+L\+F\+Wvidmode}} $\ast$\mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}})
+\item 
+\mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \mbox{\hyperlink{win32__monitor_8c_afb31cbafed71b1ea3fd13f1110d44af8}{\+\_\+glfw\+Get\+Gamma\+Ramp\+Win32}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor, \mbox{\hyperlink{struct_g_l_f_wgammaramp}{G\+L\+F\+Wgammaramp}} $\ast$ramp)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{win32__monitor_8c_a605f08f68a28c0bde60a12a0a399938e}{\+\_\+glfw\+Set\+Gamma\+Ramp\+Win32}} (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor, const \mbox{\hyperlink{struct_g_l_f_wgammaramp}{G\+L\+F\+Wgammaramp}} $\ast$ramp)
+\item 
+const \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} char $\ast$ \mbox{\hyperlink{win32__monitor_8c_a0b1d43af32c6c7a6c70a74f47a6bddc9}{glfw\+Get\+Win32\+Adapter}} (\mbox{\hyperlink{group__monitor_ga8d9efd1cde9426692c73fe40437d0ae3}{G\+L\+F\+Wmonitor}} $\ast$handle)
+\item 
+const \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} char $\ast$ \mbox{\hyperlink{win32__monitor_8c_adaf1ded80f4a4e3e5cd5b4dc8e4f44c0}{glfw\+Get\+Win32\+Monitor}} (\mbox{\hyperlink{group__monitor_ga8d9efd1cde9426692c73fe40437d0ae3}{G\+L\+F\+Wmonitor}} $\ast$handle)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{win32__monitor_8c_a9df387b074c350e1cca8dbd26a375243}\label{win32__monitor_8c_a9df387b074c350e1cca8dbd26a375243}} 
+\index{win32\_monitor.c@{win32\_monitor.c}!\_glfwFreeMonitorWin32@{\_glfwFreeMonitorWin32}}
+\index{\_glfwFreeMonitorWin32@{\_glfwFreeMonitorWin32}!win32\_monitor.c@{win32\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwFreeMonitorWin32()}{\_glfwFreeMonitorWin32()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Free\+Monitor\+Win32 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor }\end{DoxyParamCaption})}
+
+
+
+Definition at line 352 of file win32\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{353 \{}
+\DoxyCodeLine{354 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__monitor_8c_afb31cbafed71b1ea3fd13f1110d44af8}\label{win32__monitor_8c_afb31cbafed71b1ea3fd13f1110d44af8}} 
+\index{win32\_monitor.c@{win32\_monitor.c}!\_glfwGetGammaRampWin32@{\_glfwGetGammaRampWin32}}
+\index{\_glfwGetGammaRampWin32@{\_glfwGetGammaRampWin32}!win32\_monitor.c@{win32\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetGammaRampWin32()}{\_glfwGetGammaRampWin32()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \+\_\+glfw\+Get\+Gamma\+Ramp\+Win32 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor,  }\item[{\mbox{\hyperlink{struct_g_l_f_wgammaramp}{G\+L\+F\+Wgammaramp}} $\ast$}]{ramp }\end{DoxyParamCaption})}
+
+
+
+Definition at line 490 of file win32\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{491 \{}
+\DoxyCodeLine{492     HDC \mbox{\hyperlink{truetype__test__win32_8c_a107e8c958b2db614ef53259d777a5752}{dc}};}
+\DoxyCodeLine{493     WORD \mbox{\hyperlink{glad_8h_a0aa8cf39c79d294b1d9f4daef5020bec}{values}}[3][256];}
+\DoxyCodeLine{494 }
+\DoxyCodeLine{495     \mbox{\hyperlink{truetype__test__win32_8c_a107e8c958b2db614ef53259d777a5752}{dc}} = CreateDCW(\mbox{\hyperlink{stb__vorbis_8c_aa73214aa5f2f94f63d90bb4e3d99fe53}{L}}\textcolor{stringliteral}{"DISPLAY"}, monitor-\/>win32.adapterName, \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}, \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{496     GetDeviceGammaRamp(\mbox{\hyperlink{truetype__test__win32_8c_a107e8c958b2db614ef53259d777a5752}{dc}}, \mbox{\hyperlink{glad_8h_a0aa8cf39c79d294b1d9f4daef5020bec}{values}});}
+\DoxyCodeLine{497     DeleteDC(\mbox{\hyperlink{truetype__test__win32_8c_a107e8c958b2db614ef53259d777a5752}{dc}});}
+\DoxyCodeLine{498 }
+\DoxyCodeLine{499     \mbox{\hyperlink{internal_8h_acb6a8b432b06fd0accdfc0e046785109}{\_glfwAllocGammaArrays}}(ramp, 256);}
+\DoxyCodeLine{500 }
+\DoxyCodeLine{501     memcpy(ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_a2cce5d968734b685623eef913e635138}{red}},   \mbox{\hyperlink{glad_8h_a0aa8cf39c79d294b1d9f4daef5020bec}{values}}[0], \textcolor{keyword}{sizeof}(\mbox{\hyperlink{glad_8h_a0aa8cf39c79d294b1d9f4daef5020bec}{values}}[0]));}
+\DoxyCodeLine{502     memcpy(ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_affccc6f5df47820b6562d709da3a5a3a}{green}}, \mbox{\hyperlink{glad_8h_a0aa8cf39c79d294b1d9f4daef5020bec}{values}}[1], \textcolor{keyword}{sizeof}(\mbox{\hyperlink{glad_8h_a0aa8cf39c79d294b1d9f4daef5020bec}{values}}[1]));}
+\DoxyCodeLine{503     memcpy(ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_acf0c836d0efe29c392fe8d1a1042744b}{blue}},  \mbox{\hyperlink{glad_8h_a0aa8cf39c79d294b1d9f4daef5020bec}{values}}[2], \textcolor{keyword}{sizeof}(\mbox{\hyperlink{glad_8h_a0aa8cf39c79d294b1d9f4daef5020bec}{values}}[2]));}
+\DoxyCodeLine{504 }
+\DoxyCodeLine{505     \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{506 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__monitor_8c_a666ce7b96d7717b71d8086be7b4e9fb3}\label{win32__monitor_8c_a666ce7b96d7717b71d8086be7b4e9fb3}} 
+\index{win32\_monitor.c@{win32\_monitor.c}!\_glfwGetHMONITORContentScaleWin32@{\_glfwGetHMONITORContentScaleWin32}}
+\index{\_glfwGetHMONITORContentScaleWin32@{\_glfwGetHMONITORContentScaleWin32}!win32\_monitor.c@{win32\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetHMONITORContentScaleWin32()}{\_glfwGetHMONITORContentScaleWin32()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Get\+H\+M\+O\+N\+I\+T\+O\+R\+Content\+Scale\+Win32 (\begin{DoxyParamCaption}\item[{H\+M\+O\+N\+I\+T\+OR}]{handle,  }\item[{float $\ast$}]{xscale,  }\item[{float $\ast$}]{yscale }\end{DoxyParamCaption})}
+
+
+
+Definition at line 316 of file win32\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{317 \{}
+\DoxyCodeLine{318     UINT xdpi, ydpi;}
+\DoxyCodeLine{319 }
+\DoxyCodeLine{320     \textcolor{keywordflow}{if} (xscale)}
+\DoxyCodeLine{321         *xscale = 0.f;}
+\DoxyCodeLine{322     \textcolor{keywordflow}{if} (yscale)}
+\DoxyCodeLine{323         *yscale = 0.f;}
+\DoxyCodeLine{324 }
+\DoxyCodeLine{325     \textcolor{keywordflow}{if} (\mbox{\hyperlink{win32__platform_8h_a5e26976cd63d69f6ff83f646e6a6f27f}{IsWindows8Point1OrGreater}}())}
+\DoxyCodeLine{326     \{}
+\DoxyCodeLine{327         \textcolor{keywordflow}{if} (\mbox{\hyperlink{win32__platform_8h_a0a09db022c26f82f539c0e925feae84a}{GetDpiForMonitor}}(handle, \mbox{\hyperlink{win32__platform_8h_a6d3b6e6160452fd0315bf529461dadcfa75d3ba3b96559377e5cac23d6e380162}{MDT\_EFFECTIVE\_DPI}}, \&xdpi, \&ydpi) != S\_OK)}
+\DoxyCodeLine{328         \{}
+\DoxyCodeLine{329             \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}}, \textcolor{stringliteral}{"Win32: Failed to query monitor DPI"});}
+\DoxyCodeLine{330             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{331         \}}
+\DoxyCodeLine{332     \}}
+\DoxyCodeLine{333     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{334     \{}
+\DoxyCodeLine{335         \textcolor{keyword}{const} HDC \mbox{\hyperlink{truetype__test__win32_8c_a107e8c958b2db614ef53259d777a5752}{dc}} = GetDC(\mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{336         xdpi = GetDeviceCaps(\mbox{\hyperlink{truetype__test__win32_8c_a107e8c958b2db614ef53259d777a5752}{dc}}, LOGPIXELSX);}
+\DoxyCodeLine{337         ydpi = GetDeviceCaps(\mbox{\hyperlink{truetype__test__win32_8c_a107e8c958b2db614ef53259d777a5752}{dc}}, LOGPIXELSY);}
+\DoxyCodeLine{338         ReleaseDC(\mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}, \mbox{\hyperlink{truetype__test__win32_8c_a107e8c958b2db614ef53259d777a5752}{dc}});}
+\DoxyCodeLine{339     \}}
+\DoxyCodeLine{340 }
+\DoxyCodeLine{341     \textcolor{keywordflow}{if} (xscale)}
+\DoxyCodeLine{342         *xscale = xdpi / (float) \mbox{\hyperlink{win32__platform_8h_ad7cf236b9f6824d4924c8397b9478e0c}{USER\_DEFAULT\_SCREEN\_DPI}};}
+\DoxyCodeLine{343     \textcolor{keywordflow}{if} (yscale)}
+\DoxyCodeLine{344         *yscale = ydpi / (float) \mbox{\hyperlink{win32__platform_8h_ad7cf236b9f6824d4924c8397b9478e0c}{USER\_DEFAULT\_SCREEN\_DPI}};}
+\DoxyCodeLine{345 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__monitor_8c_a3fe7a2258a3ce26e3a8257c3d0ea1ca0}\label{win32__monitor_8c_a3fe7a2258a3ce26e3a8257c3d0ea1ca0}} 
+\index{win32\_monitor.c@{win32\_monitor.c}!\_glfwGetMonitorContentScaleWin32@{\_glfwGetMonitorContentScaleWin32}}
+\index{\_glfwGetMonitorContentScaleWin32@{\_glfwGetMonitorContentScaleWin32}!win32\_monitor.c@{win32\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetMonitorContentScaleWin32()}{\_glfwGetMonitorContentScaleWin32()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Get\+Monitor\+Content\+Scale\+Win32 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor,  }\item[{float $\ast$}]{xscale,  }\item[{float $\ast$}]{yscale }\end{DoxyParamCaption})}
+
+
+
+Definition at line 373 of file win32\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{375 \{}
+\DoxyCodeLine{376     \mbox{\hyperlink{win32__monitor_8c_a666ce7b96d7717b71d8086be7b4e9fb3}{\_glfwGetHMONITORContentScaleWin32}}(monitor-\/>win32.handle, xscale, yscale);}
+\DoxyCodeLine{377 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__monitor_8c_a4261cca207894705081bbe41a912529b}\label{win32__monitor_8c_a4261cca207894705081bbe41a912529b}} 
+\index{win32\_monitor.c@{win32\_monitor.c}!\_glfwGetMonitorPosWin32@{\_glfwGetMonitorPosWin32}}
+\index{\_glfwGetMonitorPosWin32@{\_glfwGetMonitorPosWin32}!win32\_monitor.c@{win32\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetMonitorPosWin32()}{\_glfwGetMonitorPosWin32()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Get\+Monitor\+Pos\+Win32 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor,  }\item[{int $\ast$}]{xpos,  }\item[{int $\ast$}]{ypos }\end{DoxyParamCaption})}
+
+
+
+Definition at line 356 of file win32\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{357 \{}
+\DoxyCodeLine{358     DEVMODEW dm;}
+\DoxyCodeLine{359     ZeroMemory(\&dm, \textcolor{keyword}{sizeof}(dm));}
+\DoxyCodeLine{360     dm.dmSize = \textcolor{keyword}{sizeof}(dm);}
+\DoxyCodeLine{361 }
+\DoxyCodeLine{362     EnumDisplaySettingsExW(monitor-\/>win32.adapterName,}
+\DoxyCodeLine{363                            ENUM\_CURRENT\_SETTINGS,}
+\DoxyCodeLine{364                            \&dm,}
+\DoxyCodeLine{365                            \mbox{\hyperlink{win32__platform_8h_ae4a3f2aeae276c46f44d9d5c08452c12}{EDS\_ROTATEDMODE}});}
+\DoxyCodeLine{366 }
+\DoxyCodeLine{367     \textcolor{keywordflow}{if} (xpos)}
+\DoxyCodeLine{368         *xpos = dm.dmPosition.x;}
+\DoxyCodeLine{369     \textcolor{keywordflow}{if} (ypos)}
+\DoxyCodeLine{370         *ypos = dm.dmPosition.y;}
+\DoxyCodeLine{371 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__monitor_8c_a844e706059e08613de692291969111d2}\label{win32__monitor_8c_a844e706059e08613de692291969111d2}} 
+\index{win32\_monitor.c@{win32\_monitor.c}!\_glfwGetMonitorWorkareaWin32@{\_glfwGetMonitorWorkareaWin32}}
+\index{\_glfwGetMonitorWorkareaWin32@{\_glfwGetMonitorWorkareaWin32}!win32\_monitor.c@{win32\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetMonitorWorkareaWin32()}{\_glfwGetMonitorWorkareaWin32()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Get\+Monitor\+Workarea\+Win32 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor,  }\item[{int $\ast$}]{xpos,  }\item[{int $\ast$}]{ypos,  }\item[{int $\ast$}]{width,  }\item[{int $\ast$}]{height }\end{DoxyParamCaption})}
+
+
+
+Definition at line 379 of file win32\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{382 \{}
+\DoxyCodeLine{383     MONITORINFO mi = \{ \textcolor{keyword}{sizeof}(mi) \};}
+\DoxyCodeLine{384     GetMonitorInfo(monitor-\/>win32.handle, \&mi);}
+\DoxyCodeLine{385 }
+\DoxyCodeLine{386     \textcolor{keywordflow}{if} (xpos)}
+\DoxyCodeLine{387         *xpos = mi.rcWork.left;}
+\DoxyCodeLine{388     \textcolor{keywordflow}{if} (ypos)}
+\DoxyCodeLine{389         *ypos = mi.rcWork.top;}
+\DoxyCodeLine{390     \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}})}
+\DoxyCodeLine{391         *\mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}} = mi.rcWork.right -\/ mi.rcWork.left;}
+\DoxyCodeLine{392     \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}})}
+\DoxyCodeLine{393         *\mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}} = mi.rcWork.bottom -\/ mi.rcWork.top;}
+\DoxyCodeLine{394 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__monitor_8c_ab4ce13c23c2b2bc9635e36ee5387375e}\label{win32__monitor_8c_ab4ce13c23c2b2bc9635e36ee5387375e}} 
+\index{win32\_monitor.c@{win32\_monitor.c}!\_glfwGetVideoModesWin32@{\_glfwGetVideoModesWin32}}
+\index{\_glfwGetVideoModesWin32@{\_glfwGetVideoModesWin32}!win32\_monitor.c@{win32\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetVideoModesWin32()}{\_glfwGetVideoModesWin32()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_l_f_wvidmode}{G\+L\+F\+Wvidmode}}$\ast$ \+\_\+glfw\+Get\+Video\+Modes\+Win32 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor,  }\item[{int $\ast$}]{count }\end{DoxyParamCaption})}
+
+
+
+Definition at line 396 of file win32\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{397 \{}
+\DoxyCodeLine{398     \textcolor{keywordtype}{int} modeIndex = 0, \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}} = 0;}
+\DoxyCodeLine{399     \mbox{\hyperlink{struct_g_l_f_wvidmode}{GLFWvidmode}}* \mbox{\hyperlink{structresult}{result}} = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{400 }
+\DoxyCodeLine{401     *\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}} = 0;}
+\DoxyCodeLine{402 }
+\DoxyCodeLine{403     \textcolor{keywordflow}{for} (;;)}
+\DoxyCodeLine{404     \{}
+\DoxyCodeLine{405         \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{406         \mbox{\hyperlink{struct_g_l_f_wvidmode}{GLFWvidmode}} \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}};}
+\DoxyCodeLine{407         DEVMODEW dm;}
+\DoxyCodeLine{408 }
+\DoxyCodeLine{409         ZeroMemory(\&dm, \textcolor{keyword}{sizeof}(dm));}
+\DoxyCodeLine{410         dm.dmSize = \textcolor{keyword}{sizeof}(dm);}
+\DoxyCodeLine{411 }
+\DoxyCodeLine{412         \textcolor{keywordflow}{if} (!EnumDisplaySettingsW(monitor-\/>win32.adapterName, modeIndex, \&dm))}
+\DoxyCodeLine{413             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{414 }
+\DoxyCodeLine{415         modeIndex++;}
+\DoxyCodeLine{416 }
+\DoxyCodeLine{417         \textcolor{comment}{// Skip modes with less than 15 BPP}}
+\DoxyCodeLine{418         \textcolor{keywordflow}{if} (dm.dmBitsPerPel < 15)}
+\DoxyCodeLine{419             \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{420 }
+\DoxyCodeLine{421         \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}.width  = dm.dmPelsWidth;}
+\DoxyCodeLine{422         \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}.height = dm.dmPelsHeight;}
+\DoxyCodeLine{423         \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}.refreshRate = dm.dmDisplayFrequency;}
+\DoxyCodeLine{424         \mbox{\hyperlink{internal_8h_a3f83dfd3a9beffeba9bac74ec15071a0}{\_glfwSplitBPP}}(dm.dmBitsPerPel,}
+\DoxyCodeLine{425                       \&\mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}.redBits,}
+\DoxyCodeLine{426                       \&\mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}.greenBits,}
+\DoxyCodeLine{427                       \&\mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}.blueBits);}
+\DoxyCodeLine{428 }
+\DoxyCodeLine{429         \textcolor{keywordflow}{for} (i = 0;  i < *\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}};  i++)}
+\DoxyCodeLine{430         \{}
+\DoxyCodeLine{431             \textcolor{keywordflow}{if} (\mbox{\hyperlink{internal_8h_aaca82db2d0453cb2895b0aa5e495387f}{\_glfwCompareVideoModes}}(\mbox{\hyperlink{structresult}{result}} + i, \&\mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}) == 0)}
+\DoxyCodeLine{432                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{433         \}}
+\DoxyCodeLine{434 }
+\DoxyCodeLine{435         \textcolor{comment}{// Skip duplicate modes}}
+\DoxyCodeLine{436         \textcolor{keywordflow}{if} (i < *\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}})}
+\DoxyCodeLine{437             \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{438 }
+\DoxyCodeLine{439         \textcolor{keywordflow}{if} (monitor-\/>win32.modesPruned)}
+\DoxyCodeLine{440         \{}
+\DoxyCodeLine{441             \textcolor{comment}{// Skip modes not supported by the connected displays}}
+\DoxyCodeLine{442             \textcolor{keywordflow}{if} (ChangeDisplaySettingsExW(monitor-\/>win32.adapterName,}
+\DoxyCodeLine{443                                          \&dm,}
+\DoxyCodeLine{444                                          \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}},}
+\DoxyCodeLine{445                                          CDS\_TEST,}
+\DoxyCodeLine{446                                          \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}) != DISP\_CHANGE\_SUCCESSFUL)}
+\DoxyCodeLine{447             \{}
+\DoxyCodeLine{448                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{449             \}}
+\DoxyCodeLine{450         \}}
+\DoxyCodeLine{451 }
+\DoxyCodeLine{452         \textcolor{keywordflow}{if} (*\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}} == \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}})}
+\DoxyCodeLine{453         \{}
+\DoxyCodeLine{454             \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}} += 128;}
+\DoxyCodeLine{455             \mbox{\hyperlink{structresult}{result}} = (\mbox{\hyperlink{struct_g_l_f_wvidmode}{GLFWvidmode}}*) \mbox{\hyperlink{init_8c_a428a65f03ddd87abacc7db0251b4e9af}{\_glfw\_realloc}}(\mbox{\hyperlink{structresult}{result}}, \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}} * \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct_g_l_f_wvidmode}{GLFWvidmode}}));}
+\DoxyCodeLine{456         \}}
+\DoxyCodeLine{457 }
+\DoxyCodeLine{458         (*count)++;}
+\DoxyCodeLine{459         \mbox{\hyperlink{structresult}{result}}[*\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}} -\/ 1] = \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}};}
+\DoxyCodeLine{460     \}}
+\DoxyCodeLine{461 }
+\DoxyCodeLine{462     \textcolor{keywordflow}{if} (!*\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}})}
+\DoxyCodeLine{463     \{}
+\DoxyCodeLine{464         \textcolor{comment}{// HACK: Report the current mode if no valid modes were found}}
+\DoxyCodeLine{465         \mbox{\hyperlink{structresult}{result}} = \mbox{\hyperlink{init_8c_afdf24e4f0665535fd3d012b810ffb18f}{\_glfw\_calloc}}(1, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct_g_l_f_wvidmode}{GLFWvidmode}}));}
+\DoxyCodeLine{466         \mbox{\hyperlink{win32__monitor_8c_a7b43d8548648f7a49903525cda10e09c}{\_glfwGetVideoModeWin32}}(monitor, \mbox{\hyperlink{structresult}{result}});}
+\DoxyCodeLine{467         *\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}} = 1;}
+\DoxyCodeLine{468     \}}
+\DoxyCodeLine{469 }
+\DoxyCodeLine{470     \textcolor{keywordflow}{return} \mbox{\hyperlink{glext_8h_a321ff419cd5252e54cf95e64dc6687ee}{result}};}
+\DoxyCodeLine{471 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__monitor_8c_a7b43d8548648f7a49903525cda10e09c}\label{win32__monitor_8c_a7b43d8548648f7a49903525cda10e09c}} 
+\index{win32\_monitor.c@{win32\_monitor.c}!\_glfwGetVideoModeWin32@{\_glfwGetVideoModeWin32}}
+\index{\_glfwGetVideoModeWin32@{\_glfwGetVideoModeWin32}!win32\_monitor.c@{win32\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetVideoModeWin32()}{\_glfwGetVideoModeWin32()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Get\+Video\+Mode\+Win32 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor,  }\item[{\mbox{\hyperlink{struct_g_l_f_wvidmode}{G\+L\+F\+Wvidmode}} $\ast$}]{mode }\end{DoxyParamCaption})}
+
+
+
+Definition at line 473 of file win32\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{474 \{}
+\DoxyCodeLine{475     DEVMODEW dm;}
+\DoxyCodeLine{476     ZeroMemory(\&dm, \textcolor{keyword}{sizeof}(dm));}
+\DoxyCodeLine{477     dm.dmSize = \textcolor{keyword}{sizeof}(dm);}
+\DoxyCodeLine{478 }
+\DoxyCodeLine{479     EnumDisplaySettingsW(monitor-\/>win32.adapterName, ENUM\_CURRENT\_SETTINGS, \&dm);}
+\DoxyCodeLine{480 }
+\DoxyCodeLine{481     \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}-\/>width  = dm.dmPelsWidth;}
+\DoxyCodeLine{482     \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}-\/>height = dm.dmPelsHeight;}
+\DoxyCodeLine{483     \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}-\/>refreshRate = dm.dmDisplayFrequency;}
+\DoxyCodeLine{484     \mbox{\hyperlink{internal_8h_a3f83dfd3a9beffeba9bac74ec15071a0}{\_glfwSplitBPP}}(dm.dmBitsPerPel,}
+\DoxyCodeLine{485                   \&\mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}-\/>redBits,}
+\DoxyCodeLine{486                   \&\mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}-\/>greenBits,}
+\DoxyCodeLine{487                   \&\mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}-\/>blueBits);}
+\DoxyCodeLine{488 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__monitor_8c_a345b11644c658a9a94b0eeb4ed4a0618}\label{win32__monitor_8c_a345b11644c658a9a94b0eeb4ed4a0618}} 
+\index{win32\_monitor.c@{win32\_monitor.c}!\_glfwPollMonitorsWin32@{\_glfwPollMonitorsWin32}}
+\index{\_glfwPollMonitorsWin32@{\_glfwPollMonitorsWin32}!win32\_monitor.c@{win32\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwPollMonitorsWin32()}{\_glfwPollMonitorsWin32()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Poll\+Monitors\+Win32 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 136 of file win32\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{137 \{}
+\DoxyCodeLine{138     \textcolor{keywordtype}{int} i, disconnectedCount;}
+\DoxyCodeLine{139     \mbox{\hyperlink{struct___g_l_f_wmonitor}{\_GLFWmonitor}}** disconnected = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{140     DWORD adapterIndex, displayIndex;}
+\DoxyCodeLine{141     DISPLAY\_DEVICEW adapter, \mbox{\hyperlink{boing_8c_a4ea013001a5fb47853d0fab8f8de35cd}{display}};}
+\DoxyCodeLine{142     \mbox{\hyperlink{struct___g_l_f_wmonitor}{\_GLFWmonitor}}* monitor;}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144     disconnectedCount = \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_ae3f408467579cb3fb517fcd39fa23568}{monitorCount}};}
+\DoxyCodeLine{145     \textcolor{keywordflow}{if} (disconnectedCount)}
+\DoxyCodeLine{146     \{}
+\DoxyCodeLine{147         disconnected = \mbox{\hyperlink{init_8c_afdf24e4f0665535fd3d012b810ffb18f}{\_glfw\_calloc}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_ae3f408467579cb3fb517fcd39fa23568}{monitorCount}}, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct___g_l_f_wmonitor}{\_GLFWmonitor}}*));}
+\DoxyCodeLine{148         memcpy(disconnected,}
+\DoxyCodeLine{149                \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_acb84371972f4d704deb0cdc649a1f1da}{monitors}},}
+\DoxyCodeLine{150                \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_ae3f408467579cb3fb517fcd39fa23568}{monitorCount}} * \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct___g_l_f_wmonitor}{\_GLFWmonitor}}*));}
+\DoxyCodeLine{151     \}}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153     \textcolor{keywordflow}{for} (adapterIndex = 0;  ;  adapterIndex++)}
+\DoxyCodeLine{154     \{}
+\DoxyCodeLine{155         \textcolor{keywordtype}{int} \mbox{\hyperlink{glad_8h_ab7c1afc09f67635c2c376638fcc0db5f}{type}} = \mbox{\hyperlink{internal_8h_abc25b1b7cd5fe7f2fe3d010f0d1867ba}{\_GLFW\_INSERT\_LAST}};}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157         ZeroMemory(\&adapter, \textcolor{keyword}{sizeof}(adapter));}
+\DoxyCodeLine{158         adapter.cb = \textcolor{keyword}{sizeof}(adapter);}
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160         \textcolor{keywordflow}{if} (!EnumDisplayDevicesW(\mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}, adapterIndex, \&adapter, 0))}
+\DoxyCodeLine{161             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163         \textcolor{keywordflow}{if} (!(adapter.StateFlags \& \mbox{\hyperlink{win32__platform_8h_acfc9af5fc06a9d2336c4d876213a96f4}{DISPLAY\_DEVICE\_ACTIVE}}))}
+\DoxyCodeLine{164             \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166         \textcolor{keywordflow}{if} (adapter.StateFlags \& DISPLAY\_DEVICE\_PRIMARY\_DEVICE)}
+\DoxyCodeLine{167             \mbox{\hyperlink{glad_8h_ab7c1afc09f67635c2c376638fcc0db5f}{type}} = \mbox{\hyperlink{internal_8h_a9455a4c5815aa9184abd69811f939496}{\_GLFW\_INSERT\_FIRST}};}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169         \textcolor{keywordflow}{for} (displayIndex = 0;  ;  displayIndex++)}
+\DoxyCodeLine{170         \{}
+\DoxyCodeLine{171             ZeroMemory(\&\mbox{\hyperlink{boing_8c_a4ea013001a5fb47853d0fab8f8de35cd}{display}}, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{boing_8c_a4ea013001a5fb47853d0fab8f8de35cd}{display}}));}
+\DoxyCodeLine{172             \mbox{\hyperlink{boing_8c_a4ea013001a5fb47853d0fab8f8de35cd}{display}}.cb = \textcolor{keyword}{sizeof}(\mbox{\hyperlink{boing_8c_a4ea013001a5fb47853d0fab8f8de35cd}{display}});}
+\DoxyCodeLine{173 }
+\DoxyCodeLine{174             \textcolor{keywordflow}{if} (!EnumDisplayDevicesW(adapter.DeviceName, displayIndex, \&\mbox{\hyperlink{boing_8c_a4ea013001a5fb47853d0fab8f8de35cd}{display}}, 0))}
+\DoxyCodeLine{175                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177             \textcolor{keywordflow}{if} (!(\mbox{\hyperlink{boing_8c_a4ea013001a5fb47853d0fab8f8de35cd}{display}}.StateFlags \& \mbox{\hyperlink{win32__platform_8h_acfc9af5fc06a9d2336c4d876213a96f4}{DISPLAY\_DEVICE\_ACTIVE}}))}
+\DoxyCodeLine{178                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180             \textcolor{keywordflow}{for} (i = 0;  i < disconnectedCount;  i++)}
+\DoxyCodeLine{181             \{}
+\DoxyCodeLine{182                 \textcolor{keywordflow}{if} (disconnected[i] \&\&}
+\DoxyCodeLine{183                     wcscmp(disconnected[i]-\/>win32.displayName,}
+\DoxyCodeLine{184                            \mbox{\hyperlink{boing_8c_a4ea013001a5fb47853d0fab8f8de35cd}{display}}.DeviceName) == 0)}
+\DoxyCodeLine{185                 \{}
+\DoxyCodeLine{186                     disconnected[i] = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{187                     \textcolor{comment}{// handle may have changed, update}}
+\DoxyCodeLine{188                     EnumDisplayMonitors(\mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}, \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}, monitorCallback, (LPARAM) \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_acb84371972f4d704deb0cdc649a1f1da}{monitors}}[i]);}
+\DoxyCodeLine{189                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{190                 \}}
+\DoxyCodeLine{191             \}}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193             \textcolor{keywordflow}{if} (i < disconnectedCount)}
+\DoxyCodeLine{194                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196             monitor = createMonitor(\&adapter, \&\mbox{\hyperlink{boing_8c_a4ea013001a5fb47853d0fab8f8de35cd}{display}});}
+\DoxyCodeLine{197             \textcolor{keywordflow}{if} (!monitor)}
+\DoxyCodeLine{198             \{}
+\DoxyCodeLine{199                 \mbox{\hyperlink{init_8c_abcf72962b101a8a5c539da1a278b0e9e}{\_glfw\_free}}(disconnected);}
+\DoxyCodeLine{200                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{201             \}}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203             \mbox{\hyperlink{internal_8h_a2a45c0c0677b73011b7364e2cdd9760d}{\_glfwInputMonitor}}(monitor, \mbox{\hyperlink{glfw3_8h_abe11513fd1ffbee5bb9b173f06028b9e}{GLFW\_CONNECTED}}, \mbox{\hyperlink{glad_8h_ab7c1afc09f67635c2c376638fcc0db5f}{type}});}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205             \mbox{\hyperlink{glad_8h_ab7c1afc09f67635c2c376638fcc0db5f}{type}} = \mbox{\hyperlink{internal_8h_abc25b1b7cd5fe7f2fe3d010f0d1867ba}{\_GLFW\_INSERT\_LAST}};}
+\DoxyCodeLine{206         \}}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208         \textcolor{comment}{// HACK: If an active adapter does not have any display devices}}
+\DoxyCodeLine{209         \textcolor{comment}{//       (as sometimes happens), add it directly as a monitor}}
+\DoxyCodeLine{210         \textcolor{keywordflow}{if} (displayIndex == 0)}
+\DoxyCodeLine{211         \{}
+\DoxyCodeLine{212             \textcolor{keywordflow}{for} (i = 0;  i < disconnectedCount;  i++)}
+\DoxyCodeLine{213             \{}
+\DoxyCodeLine{214                 \textcolor{keywordflow}{if} (disconnected[i] \&\&}
+\DoxyCodeLine{215                     wcscmp(disconnected[i]-\/>win32.adapterName,}
+\DoxyCodeLine{216                            adapter.DeviceName) == 0)}
+\DoxyCodeLine{217                 \{}
+\DoxyCodeLine{218                     disconnected[i] = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{219                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{220                 \}}
+\DoxyCodeLine{221             \}}
+\DoxyCodeLine{222 }
+\DoxyCodeLine{223             \textcolor{keywordflow}{if} (i < disconnectedCount)}
+\DoxyCodeLine{224                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{225 }
+\DoxyCodeLine{226             monitor = createMonitor(\&adapter, \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{227             \textcolor{keywordflow}{if} (!monitor)}
+\DoxyCodeLine{228             \{}
+\DoxyCodeLine{229                 \mbox{\hyperlink{init_8c_abcf72962b101a8a5c539da1a278b0e9e}{\_glfw\_free}}(disconnected);}
+\DoxyCodeLine{230                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{231             \}}
+\DoxyCodeLine{232 }
+\DoxyCodeLine{233             \mbox{\hyperlink{internal_8h_a2a45c0c0677b73011b7364e2cdd9760d}{\_glfwInputMonitor}}(monitor, \mbox{\hyperlink{glfw3_8h_abe11513fd1ffbee5bb9b173f06028b9e}{GLFW\_CONNECTED}}, \mbox{\hyperlink{glad_8h_ab7c1afc09f67635c2c376638fcc0db5f}{type}});}
+\DoxyCodeLine{234         \}}
+\DoxyCodeLine{235     \}}
+\DoxyCodeLine{236 }
+\DoxyCodeLine{237     \textcolor{keywordflow}{for} (i = 0;  i < disconnectedCount;  i++)}
+\DoxyCodeLine{238     \{}
+\DoxyCodeLine{239         \textcolor{keywordflow}{if} (disconnected[i])}
+\DoxyCodeLine{240             \mbox{\hyperlink{internal_8h_a2a45c0c0677b73011b7364e2cdd9760d}{\_glfwInputMonitor}}(disconnected[i], \mbox{\hyperlink{glfw3_8h_aab64b25921ef21d89252d6f0a71bfc32}{GLFW\_DISCONNECTED}}, 0);}
+\DoxyCodeLine{241     \}}
+\DoxyCodeLine{242 }
+\DoxyCodeLine{243     \mbox{\hyperlink{init_8c_abcf72962b101a8a5c539da1a278b0e9e}{\_glfw\_free}}(disconnected);}
+\DoxyCodeLine{244 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__monitor_8c_af4b02765bc562c8265503bb97c0cd8e9}\label{win32__monitor_8c_af4b02765bc562c8265503bb97c0cd8e9}} 
+\index{win32\_monitor.c@{win32\_monitor.c}!\_glfwRestoreVideoModeWin32@{\_glfwRestoreVideoModeWin32}}
+\index{\_glfwRestoreVideoModeWin32@{\_glfwRestoreVideoModeWin32}!win32\_monitor.c@{win32\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwRestoreVideoModeWin32()}{\_glfwRestoreVideoModeWin32()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Restore\+Video\+Mode\+Win32 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor }\end{DoxyParamCaption})}
+
+
+
+Definition at line 306 of file win32\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{307 \{}
+\DoxyCodeLine{308     \textcolor{keywordflow}{if} (monitor-\/>win32.modeChanged)}
+\DoxyCodeLine{309     \{}
+\DoxyCodeLine{310         ChangeDisplaySettingsExW(monitor-\/>win32.adapterName,}
+\DoxyCodeLine{311                                  \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}, \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}, CDS\_FULLSCREEN, \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{312         monitor-\/>win32.modeChanged = \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{313     \}}
+\DoxyCodeLine{314 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__monitor_8c_a605f08f68a28c0bde60a12a0a399938e}\label{win32__monitor_8c_a605f08f68a28c0bde60a12a0a399938e}} 
+\index{win32\_monitor.c@{win32\_monitor.c}!\_glfwSetGammaRampWin32@{\_glfwSetGammaRampWin32}}
+\index{\_glfwSetGammaRampWin32@{\_glfwSetGammaRampWin32}!win32\_monitor.c@{win32\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetGammaRampWin32()}{\_glfwSetGammaRampWin32()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Gamma\+Ramp\+Win32 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor,  }\item[{const \mbox{\hyperlink{struct_g_l_f_wgammaramp}{G\+L\+F\+Wgammaramp}} $\ast$}]{ramp }\end{DoxyParamCaption})}
+
+
+
+Definition at line 508 of file win32\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{509 \{}
+\DoxyCodeLine{510     HDC \mbox{\hyperlink{truetype__test__win32_8c_a107e8c958b2db614ef53259d777a5752}{dc}};}
+\DoxyCodeLine{511     WORD \mbox{\hyperlink{glad_8h_a0aa8cf39c79d294b1d9f4daef5020bec}{values}}[3][256];}
+\DoxyCodeLine{512 }
+\DoxyCodeLine{513     \textcolor{keywordflow}{if} (ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_ad620e1cffbff9a32c51bca46301b59a5}{size}} != 256)}
+\DoxyCodeLine{514     \{}
+\DoxyCodeLine{515         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{516                         \textcolor{stringliteral}{"Win32: Gamma ramp size must be 256"});}
+\DoxyCodeLine{517         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{518     \}}
+\DoxyCodeLine{519 }
+\DoxyCodeLine{520     memcpy(\mbox{\hyperlink{glad_8h_a0aa8cf39c79d294b1d9f4daef5020bec}{values}}[0], ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_a2cce5d968734b685623eef913e635138}{red}},   \textcolor{keyword}{sizeof}(\mbox{\hyperlink{glad_8h_a0aa8cf39c79d294b1d9f4daef5020bec}{values}}[0]));}
+\DoxyCodeLine{521     memcpy(\mbox{\hyperlink{glad_8h_a0aa8cf39c79d294b1d9f4daef5020bec}{values}}[1], ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_affccc6f5df47820b6562d709da3a5a3a}{green}}, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{glad_8h_a0aa8cf39c79d294b1d9f4daef5020bec}{values}}[1]));}
+\DoxyCodeLine{522     memcpy(\mbox{\hyperlink{glad_8h_a0aa8cf39c79d294b1d9f4daef5020bec}{values}}[2], ramp-\/>\mbox{\hyperlink{struct_g_l_f_wgammaramp_acf0c836d0efe29c392fe8d1a1042744b}{blue}},  \textcolor{keyword}{sizeof}(\mbox{\hyperlink{glad_8h_a0aa8cf39c79d294b1d9f4daef5020bec}{values}}[2]));}
+\DoxyCodeLine{523 }
+\DoxyCodeLine{524     \mbox{\hyperlink{truetype__test__win32_8c_a107e8c958b2db614ef53259d777a5752}{dc}} = CreateDCW(\mbox{\hyperlink{stb__vorbis_8c_aa73214aa5f2f94f63d90bb4e3d99fe53}{L}}\textcolor{stringliteral}{"DISPLAY"}, monitor-\/>win32.adapterName, \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}, \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{525     SetDeviceGammaRamp(\mbox{\hyperlink{truetype__test__win32_8c_a107e8c958b2db614ef53259d777a5752}{dc}}, \mbox{\hyperlink{glad_8h_a0aa8cf39c79d294b1d9f4daef5020bec}{values}});}
+\DoxyCodeLine{526     DeleteDC(\mbox{\hyperlink{truetype__test__win32_8c_a107e8c958b2db614ef53259d777a5752}{dc}});}
+\DoxyCodeLine{527 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__monitor_8c_a52d8e36bf649dcb15198832d92206ce2}\label{win32__monitor_8c_a52d8e36bf649dcb15198832d92206ce2}} 
+\index{win32\_monitor.c@{win32\_monitor.c}!\_glfwSetVideoModeWin32@{\_glfwSetVideoModeWin32}}
+\index{\_glfwSetVideoModeWin32@{\_glfwSetVideoModeWin32}!win32\_monitor.c@{win32\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetVideoModeWin32()}{\_glfwSetVideoModeWin32()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Video\+Mode\+Win32 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor,  }\item[{const \mbox{\hyperlink{struct_g_l_f_wvidmode}{G\+L\+F\+Wvidmode}} $\ast$}]{desired }\end{DoxyParamCaption})}
+
+
+
+Definition at line 248 of file win32\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{249 \{}
+\DoxyCodeLine{250     \mbox{\hyperlink{struct_g_l_f_wvidmode}{GLFWvidmode}} current;}
+\DoxyCodeLine{251     \textcolor{keyword}{const} \mbox{\hyperlink{struct_g_l_f_wvidmode}{GLFWvidmode}}* best;}
+\DoxyCodeLine{252     DEVMODEW dm;}
+\DoxyCodeLine{253     LONG \mbox{\hyperlink{glext_8h_a321ff419cd5252e54cf95e64dc6687ee}{result}};}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255     best = \mbox{\hyperlink{internal_8h_acf6b57bbbf447209081a27abdc00465c}{\_glfwChooseVideoMode}}(monitor, desired);}
+\DoxyCodeLine{256     \mbox{\hyperlink{win32__monitor_8c_a7b43d8548648f7a49903525cda10e09c}{\_glfwGetVideoModeWin32}}(monitor, \&current);}
+\DoxyCodeLine{257     \textcolor{keywordflow}{if} (\mbox{\hyperlink{internal_8h_aaca82db2d0453cb2895b0aa5e495387f}{\_glfwCompareVideoModes}}(\&current, best) == 0)}
+\DoxyCodeLine{258         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{259 }
+\DoxyCodeLine{260     ZeroMemory(\&dm, \textcolor{keyword}{sizeof}(dm));}
+\DoxyCodeLine{261     dm.dmSize = \textcolor{keyword}{sizeof}(dm);}
+\DoxyCodeLine{262     dm.dmFields           = DM\_PELSWIDTH | DM\_PELSHEIGHT | DM\_BITSPERPEL |}
+\DoxyCodeLine{263                             DM\_DISPLAYFREQUENCY;}
+\DoxyCodeLine{264     dm.dmPelsWidth        = best-\/>\mbox{\hyperlink{struct_g_l_f_wvidmode_a698dcb200562051a7249cb6ae154c71d}{width}};}
+\DoxyCodeLine{265     dm.dmPelsHeight       = best-\/>\mbox{\hyperlink{struct_g_l_f_wvidmode_ac65942a5f6981695517437a9d571d03c}{height}};}
+\DoxyCodeLine{266     dm.dmBitsPerPel       = best-\/>\mbox{\hyperlink{struct_g_l_f_wvidmode_a6066c4ecd251098700062d3b735dba1b}{redBits}} + best-\/>\mbox{\hyperlink{struct_g_l_f_wvidmode_a292fdd281f3485fb3ff102a5bda43faa}{greenBits}} + best-\/>\mbox{\hyperlink{struct_g_l_f_wvidmode_af310977f58d2e3b188175b6e3d314047}{blueBits}};}
+\DoxyCodeLine{267     dm.dmDisplayFrequency = best-\/>\mbox{\hyperlink{struct_g_l_f_wvidmode_a791bdd6c7697b09f7e9c97054bf05649}{refreshRate}};}
+\DoxyCodeLine{268 }
+\DoxyCodeLine{269     \textcolor{keywordflow}{if} (dm.dmBitsPerPel < 15 || dm.dmBitsPerPel >= 24)}
+\DoxyCodeLine{270         dm.dmBitsPerPel = 32;}
+\DoxyCodeLine{271 }
+\DoxyCodeLine{272     \mbox{\hyperlink{structresult}{result}} = ChangeDisplaySettingsExW(monitor-\/>win32.adapterName,}
+\DoxyCodeLine{273                                       \&dm,}
+\DoxyCodeLine{274                                       \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}},}
+\DoxyCodeLine{275                                       CDS\_FULLSCREEN,}
+\DoxyCodeLine{276                                       \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{277     \textcolor{keywordflow}{if} (\mbox{\hyperlink{structresult}{result}} == DISP\_CHANGE\_SUCCESSFUL)}
+\DoxyCodeLine{278         monitor-\/>win32.modeChanged = \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{279     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{280     \{}
+\DoxyCodeLine{281         \textcolor{keyword}{const} \textcolor{keywordtype}{char}* description = \textcolor{stringliteral}{"Unknown error"};}
+\DoxyCodeLine{282 }
+\DoxyCodeLine{283         \textcolor{keywordflow}{if} (\mbox{\hyperlink{structresult}{result}} == DISP\_CHANGE\_BADDUALVIEW)}
+\DoxyCodeLine{284             description = \textcolor{stringliteral}{"The system uses DualView"};}
+\DoxyCodeLine{285         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{structresult}{result}} == DISP\_CHANGE\_BADFLAGS)}
+\DoxyCodeLine{286             description = \textcolor{stringliteral}{"Invalid flags"};}
+\DoxyCodeLine{287         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{structresult}{result}} == DISP\_CHANGE\_BADMODE)}
+\DoxyCodeLine{288             description = \textcolor{stringliteral}{"Graphics mode not supported"};}
+\DoxyCodeLine{289         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{structresult}{result}} == DISP\_CHANGE\_BADPARAM)}
+\DoxyCodeLine{290             description = \textcolor{stringliteral}{"Invalid parameter"};}
+\DoxyCodeLine{291         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{structresult}{result}} == DISP\_CHANGE\_FAILED)}
+\DoxyCodeLine{292             description = \textcolor{stringliteral}{"Graphics mode failed"};}
+\DoxyCodeLine{293         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{structresult}{result}} == DISP\_CHANGE\_NOTUPDATED)}
+\DoxyCodeLine{294             description = \textcolor{stringliteral}{"Failed to write to registry"};}
+\DoxyCodeLine{295         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{structresult}{result}} == DISP\_CHANGE\_RESTART)}
+\DoxyCodeLine{296             description = \textcolor{stringliteral}{"Computer restart required"};}
+\DoxyCodeLine{297 }
+\DoxyCodeLine{298         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{299                         \textcolor{stringliteral}{"Win32: Failed to set video mode: \%s"},}
+\DoxyCodeLine{300                         description);}
+\DoxyCodeLine{301     \}}
+\DoxyCodeLine{302 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__monitor_8c_a0b1d43af32c6c7a6c70a74f47a6bddc9}\label{win32__monitor_8c_a0b1d43af32c6c7a6c70a74f47a6bddc9}} 
+\index{win32\_monitor.c@{win32\_monitor.c}!glfwGetWin32Adapter@{glfwGetWin32Adapter}}
+\index{glfwGetWin32Adapter@{glfwGetWin32Adapter}!win32\_monitor.c@{win32\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{glfwGetWin32Adapter()}{glfwGetWin32Adapter()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} char$\ast$ glfw\+Get\+Win32\+Adapter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__monitor_ga8d9efd1cde9426692c73fe40437d0ae3}{G\+L\+F\+Wmonitor}} $\ast$}]{handle }\end{DoxyParamCaption})}
+
+
+
+Definition at line 534 of file win32\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{535 \{}
+\DoxyCodeLine{536     \mbox{\hyperlink{struct___g_l_f_wmonitor}{\_GLFWmonitor}}* monitor = (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\_GLFWmonitor}}*) handle;}
+\DoxyCodeLine{537     \mbox{\hyperlink{internal_8h_a69563c87fe776d416636a4d1b0e9e599}{\_GLFW\_REQUIRE\_INIT\_OR\_RETURN}}(\mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{538     \textcolor{keywordflow}{return} monitor-\/>win32.publicAdapterName;}
+\DoxyCodeLine{539 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__monitor_8c_adaf1ded80f4a4e3e5cd5b4dc8e4f44c0}\label{win32__monitor_8c_adaf1ded80f4a4e3e5cd5b4dc8e4f44c0}} 
+\index{win32\_monitor.c@{win32\_monitor.c}!glfwGetWin32Monitor@{glfwGetWin32Monitor}}
+\index{glfwGetWin32Monitor@{glfwGetWin32Monitor}!win32\_monitor.c@{win32\_monitor.c}}
+\doxysubsubsection{\texorpdfstring{glfwGetWin32Monitor()}{glfwGetWin32Monitor()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} char$\ast$ glfw\+Get\+Win32\+Monitor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__monitor_ga8d9efd1cde9426692c73fe40437d0ae3}{G\+L\+F\+Wmonitor}} $\ast$}]{handle }\end{DoxyParamCaption})}
+
+
+
+Definition at line 541 of file win32\+\_\+monitor.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{542 \{}
+\DoxyCodeLine{543     \mbox{\hyperlink{struct___g_l_f_wmonitor}{\_GLFWmonitor}}* monitor = (\mbox{\hyperlink{struct___g_l_f_wmonitor}{\_GLFWmonitor}}*) handle;}
+\DoxyCodeLine{544     \mbox{\hyperlink{internal_8h_a69563c87fe776d416636a4d1b0e9e599}{\_GLFW\_REQUIRE\_INIT\_OR\_RETURN}}(\mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{545     \textcolor{keywordflow}{return} monitor-\/>win32.publicDisplayName;}
+\DoxyCodeLine{546 \}}
+
+\end{DoxyCode}

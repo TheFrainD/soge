@@ -1,0 +1,1368 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_window_guide">
+
+<para>This guide introduces the window related functions of GLFW. For details on a specific function in this category, see the <link linkend="_group__window">Window reference</link>. There are also guides for the other areas of GLFW.</para>
+
+<para><itemizedlist>
+<listitem>
+<para><link linkend="_intro_guide">Introduction to the API</link></para>
+</listitem><listitem>
+<para><link linkend="_context_guide">Context guide</link></para>
+</listitem><listitem>
+<para><link linkend="_vulkan_guide">Vulkan guide</link></para>
+</listitem><listitem>
+<para><link linkend="_monitor_guide">Monitor guide</link></para>
+</listitem><listitem>
+<para><link linkend="_input_guide">Input guide</link></para>
+</listitem></itemizedlist>
+</para>
+<section xml:id="_window_guide_1window_object">
+<title>Window objects</title>
+
+<para>The <link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> object encapsulates both a window and a context. They are created with <link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link> and destroyed with <link linkend="_group__window_1ga806747476b7247d292be3711c323ea10">glfwDestroyWindow</link>, or <link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>, if any remain. As the window and context are inseparably linked, the object pointer is used as both a context and window handle.</para>
+
+<para>To see the event stream provided to the various window related callbacks, run the <computeroutput>events</computeroutput> test program.</para>
+<section xml:id="_window_guide_1window_creation">
+<title>Window creation</title>
+
+<para>A window and its OpenGL or OpenGL ES context are created with <link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link>, which returns a handle to the created window object. For example, this creates a 640 by 480 windowed mode window:</para>
+
+<para><literallayout><computeroutput>GLFWwindow*&#32;window&#32;=&#32;glfwCreateWindow(640,&#32;480,&#32;&quot;My&#32;Title&quot;,&#32;NULL,&#32;NULL);
+</computeroutput></literallayout></para>
+
+<para>If window creation fails, <computeroutput>NULL</computeroutput> will be returned, so it is necessary to check the return value.</para>
+
+<para>The window handle is passed to all window related functions and is provided to along with all input events, so event handlers can tell which window received the event.</para>
+<section xml:id="_window_guide_1window_full_screen">
+<title>Full screen windows</title>
+
+<para>To create a full screen window, you need to specify which monitor the window should use. In most cases, the user&apos;s primary monitor is a good choice. For more information about retrieving monitors, see <link linkend="_monitor_guide_1monitor_monitors">Retrieving monitors</link>.</para>
+
+<para><literallayout><computeroutput>GLFWwindow*&#32;window&#32;=&#32;glfwCreateWindow(640,&#32;480,&#32;&quot;My&#32;Title&quot;,&#32;glfwGetPrimaryMonitor(),&#32;NULL);
+</computeroutput></literallayout></para>
+
+<para>Full screen windows cover the entire display area of a monitor, have no border or decorations.</para>
+
+<para>Windowed mode windows can be made full screen by setting a monitor with <link linkend="_group__window_1ga12fabf78575e59c00f822f323ae0b6ae">glfwSetWindowMonitor</link>, and full screen ones can be made windowed by unsetting it with the same function.</para>
+
+<para>Each field of the <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> structure corresponds to a function parameter or window hint and combine to form the <emphasis>desired video mode</emphasis> for that window. The supported video mode most closely matching the desired video mode will be set for the chosen monitor as long as the window has input focus. For more information about retrieving video modes, see <link linkend="_monitor_guide_1monitor_modes">Video modes</link>.</para>
+
+<para><informaltable frame="all">
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<thead>
+      <row >
+<entry>
+<para>Video mode field </para>
+</entry><entry>
+<para>Corresponds to  </para>
+</entry></row>
+</thead><tbody>
+      <row >
+<entry>
+<para><link linkend="_struct_g_l_f_wvidmode_1a698dcb200562051a7249cb6ae154c71d">GLFWvidmode.width</link> </para>
+</entry><entry>
+<para><computeroutput>width</computeroutput> parameter of <link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link>  </para>
+</entry></row>
+      <row >
+<entry>
+<para><link linkend="_struct_g_l_f_wvidmode_1ac65942a5f6981695517437a9d571d03c">GLFWvidmode.height</link> </para>
+</entry><entry>
+<para><computeroutput>height</computeroutput> parameter of <link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link>  </para>
+</entry></row>
+      <row >
+<entry>
+<para><link linkend="_struct_g_l_f_wvidmode_1a6066c4ecd251098700062d3b735dba1b">GLFWvidmode.redBits</link> </para>
+</entry><entry>
+<para><link linkend="_window_guide_1GLFW_RED_BITS">GLFW_RED_BITS</link> hint  </para>
+</entry></row>
+      <row >
+<entry>
+<para><link linkend="_struct_g_l_f_wvidmode_1a292fdd281f3485fb3ff102a5bda43faa">GLFWvidmode.greenBits</link> </para>
+</entry><entry>
+<para><link linkend="_window_guide_1GLFW_GREEN_BITS">GLFW_GREEN_BITS</link> hint  </para>
+</entry></row>
+      <row >
+<entry>
+<para><link linkend="_struct_g_l_f_wvidmode_1af310977f58d2e3b188175b6e3d314047">GLFWvidmode.blueBits</link> </para>
+</entry><entry>
+<para><link linkend="_window_guide_1GLFW_BLUE_BITS">GLFW_BLUE_BITS</link> hint  </para>
+</entry></row>
+      <row >
+<entry>
+<para><link linkend="_struct_g_l_f_wvidmode_1a791bdd6c7697b09f7e9c97054bf05649">GLFWvidmode.refreshRate</link> </para>
+</entry><entry>
+<para><link linkend="_window_guide_1GLFW_REFRESH_RATE">GLFW_REFRESH_RATE</link> hint  </para>
+</entry></row>
+    </tbody>
+    </tgroup>
+</informaltable>
+</para>
+
+<para>Once you have a full screen window, you can change its resolution, refresh rate and monitor with <link linkend="_group__window_1ga12fabf78575e59c00f822f323ae0b6ae">glfwSetWindowMonitor</link>. If you only need change its resolution you can also call <link linkend="_group__window_1gae54d1f4915ded15e267ddd3f41496cd2">glfwSetWindowSize</link>. In all cases, the new video mode will be selected the same way as the video mode chosen by <link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link>. If the window has an OpenGL or OpenGL ES context, it will be unaffected.</para>
+
+<para>By default, the original video mode of the monitor will be restored and the window iconified if it loses input focus, to allow the user to switch back to the desktop. This behavior can be disabled with the <link linkend="_window_guide_1GLFW_AUTO_ICONIFY_hint">GLFW_AUTO_ICONIFY</link> window hint, for example if you wish to simultaneously cover multiple monitors with full screen windows.</para>
+
+<para>If a monitor is disconnected, all windows that are full screen on that monitor will be switched to windowed mode. See <link linkend="_monitor_guide_1monitor_event">Monitor configuration changes</link> for more information.</para>
+</section>
+<section xml:id="_window_guide_1window_windowed_full_screen">
+<title>&quot;Windowed full screen&quot; windows</title>
+
+<para>If the closest match for the desired video mode is the current one, the video mode will not be changed, making window creation faster and application switching much smoother. This is sometimes called <emphasis>windowed full screen</emphasis> or <emphasis>borderless full screen</emphasis> window and counts as a full screen window. To create such a window, request the current video mode.</para>
+
+<para><literallayout><computeroutput>const&#32;GLFWvidmode*&#32;mode&#32;=&#32;glfwGetVideoMode(monitor);
+
+glfwWindowHint(GLFW_RED_BITS,&#32;mode-&gt;redBits);
+glfwWindowHint(GLFW_GREEN_BITS,&#32;mode-&gt;greenBits);
+glfwWindowHint(GLFW_BLUE_BITS,&#32;mode-&gt;blueBits);
+glfwWindowHint(GLFW_REFRESH_RATE,&#32;mode-&gt;refreshRate);
+
+GLFWwindow*&#32;window&#32;=&#32;glfwCreateWindow(mode-&gt;width,&#32;mode-&gt;height,&#32;&quot;My&#32;Title&quot;,&#32;monitor,&#32;NULL);
+</computeroutput></literallayout></para>
+
+<para>This also works for windowed mode windows that are made full screen.</para>
+
+<para><literallayout><computeroutput>const&#32;GLFWvidmode*&#32;mode&#32;=&#32;glfwGetVideoMode(monitor);
+
+glfwSetWindowMonitor(window,&#32;monitor,&#32;0,&#32;0,&#32;mode-&gt;width,&#32;mode-&gt;height,&#32;mode-&gt;refreshRate);
+</computeroutput></literallayout></para>
+
+<para>Note that <link linkend="_group__monitor_1ga27319d7f045c4cbbeae5651696cacd5f">glfwGetVideoMode</link> returns the <emphasis>current</emphasis> video mode of a monitor, so if you already have a full screen window on that monitor that you want to make windowed full screen, you need to have saved the desktop resolution before.</para>
+</section>
+</section>
+<section xml:id="_window_guide_1window_destruction">
+<title>Window destruction</title>
+
+<para>When a window is no longer needed, destroy it with <link linkend="_group__window_1ga806747476b7247d292be3711c323ea10">glfwDestroyWindow</link>.</para>
+
+<para><literallayout><computeroutput>glfwDestroyWindow(window);
+</computeroutput></literallayout></para>
+
+<para>Window destruction always succeeds. Before the actual destruction, all callbacks are removed so no further events will be delivered for the window. All windows remaining when <link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link> is called are destroyed as well.</para>
+
+<para>When a full screen window is destroyed, the original video mode of its monitor is restored, but the gamma ramp is left untouched.</para>
+</section>
+<section xml:id="_window_guide_1window_hints">
+<title>Window creation hints</title>
+
+<para>There are a number of hints that can be set before the creation of a window and context. Some affect the window itself, others affect the framebuffer or context. These hints are set to their default values each time the library is initialized with <link linkend="_group__init_1gab41771f0215a2e0afb4cf1cf98082d40">glfwInit</link>. Integer value hints can be set individually with <link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link> and string value hints with <link linkend="_group__window_1ga3c2270562d7ba13d92680ba1090adafe">glfwWindowHintString</link>. You can reset all at once to their defaults with <link linkend="_group__window_1ga8050ddceed9dc6bd9d3aa35666195cd4">glfwDefaultWindowHints</link>.</para>
+
+<para>Some hints are platform specific. These are always valid to set on any platform but they will only affect their specific platform. Other platforms will ignore them. Setting these hints requires no platform specific headers or calls.</para>
+
+<para><note><title>Note</title>
+
+<para>Window hints need to be set before the creation of the window and context you wish to have the specified attributes. They function as additional arguments to <link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link>.</para>
+</note>
+</para>
+<section xml:id="_window_guide_1window_hints_hard">
+<title>Hard and soft constraints</title>
+
+<para>Some window hints are hard constraints. These must match the available capabilities <emphasis>exactly</emphasis> for window and context creation to succeed. Hints that are not hard constraints are matched as closely as possible, but the resulting context and framebuffer may differ from what these hints requested.</para>
+
+<para>The following hints are always hard constraints:<itemizedlist>
+<listitem>
+<para><link linkend="_window_guide_1GLFW_STEREO">GLFW_STEREO</link></para>
+</listitem><listitem>
+<para><link linkend="_window_guide_1GLFW_DOUBLEBUFFER">GLFW_DOUBLEBUFFER</link></para>
+</listitem><listitem>
+<para><link linkend="_window_guide_1GLFW_CLIENT_API_hint">GLFW_CLIENT_API</link></para>
+</listitem><listitem>
+<para><link linkend="_window_guide_1GLFW_CONTEXT_CREATION_API_hint">GLFW_CONTEXT_CREATION_API</link></para>
+</listitem></itemizedlist>
+</para>
+
+<para>The following additional hints are hard constraints when requesting an OpenGL context, but are ignored when requesting an OpenGL ES context:<itemizedlist>
+<listitem>
+<para><link linkend="_window_guide_1GLFW_OPENGL_FORWARD_COMPAT_hint">GLFW_OPENGL_FORWARD_COMPAT</link></para>
+</listitem><listitem>
+<para><link linkend="_window_guide_1GLFW_OPENGL_PROFILE_hint">GLFW_OPENGL_PROFILE</link></para>
+</listitem></itemizedlist>
+</para>
+</section>
+<section xml:id="_window_guide_1window_hints_wnd">
+<title>Window related hints</title>
+
+<para><anchor xml:id="_window_guide_1GLFW_RESIZABLE_hint"/><emphasis role="bold">GLFW_RESIZABLE</emphasis> specifies whether the windowed mode window will be resizable <emphasis>by the user</emphasis>. The window will still be resizable using the <link linkend="_group__window_1gae54d1f4915ded15e267ddd3f41496cd2">glfwSetWindowSize</link> function. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>. This hint is ignored for full screen and undecorated windows.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_VISIBLE_hint"/><emphasis role="bold">GLFW_VISIBLE</emphasis> specifies whether the windowed mode window will be initially visible. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>. This hint is ignored for full screen windows.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_DECORATED_hint"/><emphasis role="bold">GLFW_DECORATED</emphasis> specifies whether the windowed mode window will have window decorations such as a border, a close widget, etc. An undecorated window will not be resizable by the user but will still allow the user to generate close events on some platforms. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>. This hint is ignored for full screen windows.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_FOCUSED_hint"/><emphasis role="bold">GLFW_FOCUSED</emphasis> specifies whether the windowed mode window will be given input focus when created. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>. This hint is ignored for full screen and initially hidden windows.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_AUTO_ICONIFY_hint"/><emphasis role="bold">GLFW_AUTO_ICONIFY</emphasis> specifies whether the full screen window will automatically iconify and restore the previous video mode on input focus loss. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>. This hint is ignored for windowed mode windows.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_FLOATING_hint"/><emphasis role="bold">GLFW_FLOATING</emphasis> specifies whether the windowed mode window will be floating above other regular windows, also called topmost or always-on-top. This is intended primarily for debugging purposes and cannot be used to implement proper full screen windows. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>. This hint is ignored for full screen windows.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_MAXIMIZED_hint"/><emphasis role="bold">GLFW_MAXIMIZED</emphasis> specifies whether the windowed mode window will be maximized when created. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>. This hint is ignored for full screen windows.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_CENTER_CURSOR_hint"/><emphasis role="bold">GLFW_CENTER_CURSOR</emphasis> specifies whether the cursor should be centered over newly created full screen windows. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>. This hint is ignored for windowed mode windows.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_TRANSPARENT_FRAMEBUFFER_hint"/><emphasis role="bold">GLFW_TRANSPARENT_FRAMEBUFFER</emphasis> specifies whether the window framebuffer will be transparent. If enabled and supported by the system, the window framebuffer alpha channel will be used to combine the framebuffer with the background. This does not affect window decorations. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_FOCUS_ON_SHOW_hint"/><emphasis role="bold">GLFW_FOCUS_ON_SHOW</emphasis> specifies whether the window will be given input focus when <link linkend="_group__window_1ga7945bcdff9e5e058cf36505d6873ed8c">glfwShowWindow</link> is called. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_SCALE_TO_MONITOR"/><emphasis role="bold">GLFW_SCALE_TO_MONITOR</emphasis> specified whether the window content area should be resized based on the <link linkend="_monitor_guide_1monitor_scale">monitor content scale</link> of any monitor it is placed on. This includes the initial placement when the window is created. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>.</para>
+
+<para>This hint only has an effect on platforms where screen coordinates and pixels always map 1:1 such as Windows and X11. On platforms like macOS the resolution of the framebuffer is changed independently of the window size.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_MOUSE_PASSTHROUGH_hint"/><emphasis role="bold">GLFW_MOUSE_PASSTHROUGH</emphasis> specifies whether the window is transparent to mouse input, letting any mouse events pass through to whatever window is behind it. This is only supported for undecorated windows. Decorated windows with this enabled will behave differently between platforms. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>.</para>
+</section>
+<section xml:id="_window_guide_1window_hints_fb">
+<title>Framebuffer related hints</title>
+
+<para><anchor xml:id="_window_guide_1GLFW_RED_BITS"/><anchor xml:id="_window_guide_1GLFW_GREEN_BITS"/><anchor xml:id="_window_guide_1GLFW_BLUE_BITS"/><anchor xml:id="_window_guide_1GLFW_ALPHA_BITS"/><anchor xml:id="_window_guide_1GLFW_DEPTH_BITS"/><anchor xml:id="_window_guide_1GLFW_STENCIL_BITS"/><emphasis role="bold">GLFW_RED_BITS</emphasis>, <emphasis role="bold">GLFW_GREEN_BITS</emphasis>, <emphasis role="bold">GLFW_BLUE_BITS</emphasis>, <emphasis role="bold">GLFW_ALPHA_BITS</emphasis>, <emphasis role="bold">GLFW_DEPTH_BITS</emphasis> and <emphasis role="bold">GLFW_STENCIL_BITS</emphasis> specify the desired bit depths of the various components of the default framebuffer. A value of <computeroutput>GLFW_DONT_CARE</computeroutput> means the application has no preference.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_ACCUM_RED_BITS"/><anchor xml:id="_window_guide_1GLFW_ACCUM_GREEN_BITS"/><anchor xml:id="_window_guide_1GLFW_ACCUM_BLUE_BITS"/><anchor xml:id="_window_guide_1GLFW_ACCUM_ALPHA_BITS"/><emphasis role="bold">GLFW_ACCUM_RED_BITS</emphasis>, <emphasis role="bold">GLFW_ACCUM_GREEN_BITS</emphasis>, <emphasis role="bold">GLFW_ACCUM_BLUE_BITS</emphasis> and <emphasis role="bold">GLFW_ACCUM_ALPHA_BITS</emphasis> specify the desired bit depths of the various components of the accumulation buffer. A value of <computeroutput>GLFW_DONT_CARE</computeroutput> means the application has no preference.</para>
+
+<para>Accumulation buffers are a legacy OpenGL feature and should not be used in new code.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_AUX_BUFFERS"/><emphasis role="bold">GLFW_AUX_BUFFERS</emphasis> specifies the desired number of auxiliary buffers. A value of <computeroutput>GLFW_DONT_CARE</computeroutput> means the application has no preference.</para>
+
+<para>Auxiliary buffers are a legacy OpenGL feature and should not be used in new code.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_STEREO"/><emphasis role="bold">GLFW_STEREO</emphasis> specifies whether to use OpenGL stereoscopic rendering. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>. This is a hard constraint.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_SAMPLES"/><emphasis role="bold">GLFW_SAMPLES</emphasis> specifies the desired number of samples to use for multisampling. Zero disables multisampling. A value of <computeroutput>GLFW_DONT_CARE</computeroutput> means the application has no preference.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_SRGB_CAPABLE"/><emphasis role="bold">GLFW_SRGB_CAPABLE</emphasis> specifies whether the framebuffer should be sRGB capable. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>.</para>
+
+<para><note><title>Note</title>
+
+<para><emphasis role="bold">OpenGL:</emphasis> If enabled and supported by the system, the <computeroutput>GL_FRAMEBUFFER_SRGB</computeroutput> enable will control sRGB rendering. By default, sRGB rendering will be disabled.</para>
+
+<para><emphasis role="bold">OpenGL ES:</emphasis> If enabled and supported by the system, the context will always have sRGB rendering enabled.</para>
+</note>
+<anchor xml:id="_window_guide_1GLFW_DOUBLEBUFFER"/><anchor xml:id="_window_guide_1GLFW_DOUBLEBUFFER_hint"/><emphasis role="bold">GLFW_DOUBLEBUFFER</emphasis> specifies whether the framebuffer should be double buffered. You nearly always want to use double buffering. This is a hard constraint. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>.</para>
+</section>
+<section xml:id="_window_guide_1window_hints_mtr">
+<title>Monitor related hints</title>
+
+<para><anchor xml:id="_window_guide_1GLFW_REFRESH_RATE"/><emphasis role="bold">GLFW_REFRESH_RATE</emphasis> specifies the desired refresh rate for full screen windows. A value of <computeroutput>GLFW_DONT_CARE</computeroutput> means the highest available refresh rate will be used. This hint is ignored for windowed mode windows.</para>
+</section>
+<section xml:id="_window_guide_1window_hints_ctx">
+<title>Context related hints</title>
+
+<para><anchor xml:id="_window_guide_1GLFW_CLIENT_API_hint"/><emphasis role="bold">GLFW_CLIENT_API</emphasis> specifies which client API to create the context for. Possible values are <computeroutput>GLFW_OPENGL_API</computeroutput>, <computeroutput>GLFW_OPENGL_ES_API</computeroutput> and <computeroutput>GLFW_NO_API</computeroutput>. This is a hard constraint.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_CONTEXT_CREATION_API_hint"/><emphasis role="bold">GLFW_CONTEXT_CREATION_API</emphasis> specifies which context creation API to use to create the context. Possible values are <computeroutput>GLFW_NATIVE_CONTEXT_API</computeroutput>, <computeroutput>GLFW_EGL_CONTEXT_API</computeroutput> and <computeroutput>GLFW_OSMESA_CONTEXT_API</computeroutput>. This is a hard constraint. If no client API is requested, this hint is ignored.</para>
+
+<para>An <link linkend="_context_guide_1context_glext_auto">extension loader library</link> that assumes it knows which API was used to create the current context may fail if you change this hint. This can be resolved by having it load functions via <link linkend="_group__context_1ga0e8af175218929615c16e74938c10f2a">glfwGetProcAddress</link>.</para>
+
+<para><note><title>Note</title>
+
+<para>@wayland The EGL API <emphasis>is</emphasis> the native context creation API, so this hint will have no effect.</para>
+
+<para>@x11 On some Linux systems, creating contexts via both the native and EGL APIs in a single process will cause the application to segfault. Stick to one API or the other on Linux for now.</para>
+
+<para><emphasis role="bold">OSMesa:</emphasis> As its name implies, an OpenGL context created with OSMesa does not update the window contents when its buffers are swapped. Use OpenGL functions or the OSMesa native access functions <link linkend="_osmesa__context_8c_1abdce3d5716b1a4b53266c171c5de4c8c">glfwGetOSMesaColorBuffer</link> and <link linkend="_osmesa__context_8c_1a70e7b999151097a79a82572d7a70cb02">glfwGetOSMesaDepthBuffer</link> to retrieve the framebuffer contents.</para>
+</note>
+<anchor xml:id="_window_guide_1GLFW_CONTEXT_VERSION_MAJOR_hint"/><anchor xml:id="_window_guide_1GLFW_CONTEXT_VERSION_MINOR_hint"/><emphasis role="bold">GLFW_CONTEXT_VERSION_MAJOR</emphasis> and <emphasis role="bold">GLFW_CONTEXT_VERSION_MINOR</emphasis> specify the client API version that the created context must be compatible with. The exact behavior of these hints depend on the requested client API.</para>
+
+<para>While there is no way to ask the driver for a context of the highest supported version, GLFW will attempt to provide this when you ask for a version 1.0 context, which is the default for these hints.</para>
+
+<para>Do not confuse these hints with <link linkend="_group__init_1ga6337d9ea43b22fc529b2bba066b4a576">GLFW_VERSION_MAJOR</link> and <link linkend="_group__init_1gaf80d40f0aea7088ff337606e9c48f7a3">GLFW_VERSION_MINOR</link>, which provide the API version of the GLFW header.</para>
+
+<para><note><title>Note</title>
+
+<para><emphasis role="bold">OpenGL:</emphasis> These hints are not hard constraints, but creation will fail if the OpenGL version of the created context is less than the one requested. It is therefore perfectly safe to use the default of version 1.0 for legacy code and you will still get backwards-compatible contexts of version 3.0 and above when available.</para>
+
+<para><emphasis role="bold">OpenGL ES:</emphasis> These hints are not hard constraints, but creation will fail if the OpenGL ES version of the created context is less than the one requested. Additionally, OpenGL ES 1.x cannot be returned if 2.0 or later was requested, and vice versa. This is because OpenGL ES 3.x is backward compatible with 2.0, but OpenGL ES 2.0 is not backward compatible with 1.x.</para>
+
+<para>@macos The OS only supports core profile contexts for OpenGL versions 3.2 and later. Before creating an OpenGL context of version 3.2 or later you must set the <link linkend="_window_guide_1GLFW_OPENGL_PROFILE_hint">GLFW_OPENGL_PROFILE</link> hint accordingly. OpenGL 3.0 and 3.1 contexts are not supported at all on macOS.</para>
+</note>
+<anchor xml:id="_window_guide_1GLFW_OPENGL_FORWARD_COMPAT_hint"/><emphasis role="bold">GLFW_OPENGL_FORWARD_COMPAT</emphasis> specifies whether the OpenGL context should be forward-compatible, i.e. one where all functionality deprecated in the requested version of OpenGL is removed. This must only be used if the requested OpenGL version is 3.0 or above. If OpenGL ES is requested, this hint is ignored.</para>
+
+<para>Forward-compatibility is described in detail in the <link xlink:href="https://www.opengl.org/registry/">OpenGL Reference Manual</link>.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_CONTEXT_DEBUG_hint"/><anchor xml:id="_window_guide_1GLFW_OPENGL_DEBUG_CONTEXT_hint"/><emphasis role="bold">GLFW_CONTEXT_DEBUG</emphasis> specifies whether the context should be created in debug mode, which may provide additional error and diagnostic reporting functionality. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>.</para>
+
+<para>Debug contexts for OpenGL and OpenGL ES are described in detail by the <link xlink:href="https://www.khronos.org/registry/OpenGL/extensions/KHR/KHR_debug.txt">GL_KHR_debug</link> extension.</para>
+
+<para><note><title>Note</title>
+
+<para><computeroutput>GLFW_CONTEXT_DEBUG</computeroutput> is the new name introduced in GLFW 3.4. The older <computeroutput>GLFW_OPENGL_DEBUG_CONTEXT</computeroutput> name is also available for compatibility.</para>
+</note>
+<anchor xml:id="_window_guide_1GLFW_OPENGL_PROFILE_hint"/><emphasis role="bold">GLFW_OPENGL_PROFILE</emphasis> specifies which OpenGL profile to create the context for. Possible values are one of <computeroutput>GLFW_OPENGL_CORE_PROFILE</computeroutput> or <computeroutput>GLFW_OPENGL_COMPAT_PROFILE</computeroutput>, or <computeroutput>GLFW_OPENGL_ANY_PROFILE</computeroutput> to not request a specific profile. If requesting an OpenGL version below 3.2, <computeroutput>GLFW_OPENGL_ANY_PROFILE</computeroutput> must be used. If OpenGL ES is requested, this hint is ignored.</para>
+
+<para>OpenGL profiles are described in detail in the <link xlink:href="https://www.opengl.org/registry/">OpenGL Reference Manual</link>.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_CONTEXT_ROBUSTNESS_hint"/><emphasis role="bold">GLFW_CONTEXT_ROBUSTNESS</emphasis> specifies the robustness strategy to be used by the context. This can be one of <computeroutput>GLFW_NO_RESET_NOTIFICATION</computeroutput> or <computeroutput>GLFW_LOSE_CONTEXT_ON_RESET</computeroutput>, or <computeroutput>GLFW_NO_ROBUSTNESS</computeroutput> to not request a robustness strategy.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_CONTEXT_RELEASE_BEHAVIOR_hint"/><emphasis role="bold">GLFW_CONTEXT_RELEASE_BEHAVIOR</emphasis> specifies the release behavior to be used by the context. Possible values are one of <computeroutput>GLFW_ANY_RELEASE_BEHAVIOR</computeroutput>, <computeroutput>GLFW_RELEASE_BEHAVIOR_FLUSH</computeroutput> or <computeroutput>GLFW_RELEASE_BEHAVIOR_NONE</computeroutput>. If the behavior is <computeroutput>GLFW_ANY_RELEASE_BEHAVIOR</computeroutput>, the default behavior of the context creation API will be used. If the behavior is <computeroutput>GLFW_RELEASE_BEHAVIOR_FLUSH</computeroutput>, the pipeline will be flushed whenever the context is released from being the current one. If the behavior is <computeroutput>GLFW_RELEASE_BEHAVIOR_NONE</computeroutput>, the pipeline will not be flushed on release.</para>
+
+<para>Context release behaviors are described in detail by the <link xlink:href="https://www.opengl.org/registry/specs/KHR/context_flush_control.txt">GL_KHR_context_flush_control</link> extension.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_CONTEXT_NO_ERROR_hint"/><emphasis role="bold">GLFW_CONTEXT_NO_ERROR</emphasis> specifies whether errors should be generated by the context. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>. If enabled, situations that would have generated errors instead cause undefined behavior.</para>
+
+<para>The no error mode for OpenGL and OpenGL ES is described in detail by the <link xlink:href="https://www.opengl.org/registry/specs/KHR/no_error.txt">GL_KHR_no_error</link> extension.</para>
+</section>
+<section xml:id="_window_guide_1window_hints_win32">
+<title>Win32 specific hints</title>
+
+<para><anchor xml:id="_window_guide_1GLFW_WIN32_KEYBOARD_MENU_hint"/><emphasis role="bold">GLFW_WIN32_KEYBOARD_MENU</emphasis> specifies whether to allow access to the window menu via the Alt+Space and Alt-and-then-Space keyboard shortcuts. This is ignored on other platforms.</para>
+</section>
+<section xml:id="_window_guide_1window_hints_osx">
+<title>macOS specific hints</title>
+
+<para><anchor xml:id="_window_guide_1GLFW_COCOA_RETINA_FRAMEBUFFER_hint"/><emphasis role="bold">GLFW_COCOA_RETINA_FRAMEBUFFER</emphasis> specifies whether to use full resolution framebuffers on Retina displays. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>. This is ignored on other platforms.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_COCOA_FRAME_NAME_hint"/><emphasis role="bold">GLFW_COCOA_FRAME_NAME</emphasis> specifies the UTF-8 encoded name to use for autosaving the window frame, or if empty disables frame autosaving for the window. This is ignored on other platforms. This is set with <link linkend="_group__window_1ga3c2270562d7ba13d92680ba1090adafe">glfwWindowHintString</link>.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_COCOA_GRAPHICS_SWITCHING_hint"/><emphasis role="bold">GLFW_COCOA_GRAPHICS_SWITCHING</emphasis> specifies whether to in Automatic Graphics Switching, i.e. to allow the system to choose the integrated GPU for the OpenGL context and move it between GPUs if necessary or whether to force it to always run on the discrete GPU. This only affects systems with both integrated and discrete GPUs. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>. This is ignored on other platforms.</para>
+
+<para>Simpler programs and tools may want to enable this to save power, while games and other applications performing advanced rendering will want to leave it disabled.</para>
+
+<para>A bundled application that wishes to participate in Automatic Graphics Switching should also declare this in its <computeroutput>Info.plist</computeroutput> by setting the <computeroutput>NSSupportsAutomaticGraphicsSwitching</computeroutput> key to <computeroutput>true</computeroutput>.</para>
+</section>
+<section xml:id="_window_guide_1window_hints_x11">
+<title>X11 specific window hints</title>
+
+<para><anchor xml:id="_window_guide_1GLFW_X11_CLASS_NAME_hint"/><anchor xml:id="_window_guide_1GLFW_X11_INSTANCE_NAME_hint"/><emphasis role="bold">GLFW_X11_CLASS_NAME</emphasis> and <emphasis role="bold">GLFW_X11_INSTANCE_NAME</emphasis> specifies the desired ASCII encoded class and instance parts of the ICCCM <computeroutput>WM_CLASS</computeroutput> window property. These are set with <link linkend="_group__window_1ga3c2270562d7ba13d92680ba1090adafe">glfwWindowHintString</link>.</para>
+</section>
+<section xml:id="_window_guide_1window_hints_values">
+<title>Supported and default values</title>
+
+<para><informaltable frame="all">
+    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+      <colspec colname='c3'/>
+<thead>
+      <row >
+<entry>
+<para>Window hint </para>
+</entry><entry>
+<para>Default value </para>
+</entry><entry>
+<para>Supported values  </para>
+</entry></row>
+</thead><tbody>
+      <row >
+<entry>
+<para>GLFW_RESIZABLE </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_VISIBLE </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_DECORATED </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_FOCUSED </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_AUTO_ICONIFY </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_FLOATING </para>
+</entry><entry>
+<para><computeroutput>GLFW_FALSE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_MAXIMIZED </para>
+</entry><entry>
+<para><computeroutput>GLFW_FALSE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_CENTER_CURSOR </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_TRANSPARENT_FRAMEBUFFER </para>
+</entry><entry>
+<para><computeroutput>GLFW_FALSE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_FOCUS_ON_SHOW </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_SCALE_TO_MONITOR </para>
+</entry><entry>
+<para><computeroutput>GLFW_FALSE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_MOUSE_PASSTHROUGH </para>
+</entry><entry>
+<para><computeroutput>GLFW_FALSE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_RED_BITS </para>
+</entry><entry>
+<para>8 </para>
+</entry><entry>
+<para>0 to <computeroutput>INT_MAX</computeroutput> or <computeroutput>GLFW_DONT_CARE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_GREEN_BITS </para>
+</entry><entry>
+<para>8 </para>
+</entry><entry>
+<para>0 to <computeroutput>INT_MAX</computeroutput> or <computeroutput>GLFW_DONT_CARE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_BLUE_BITS </para>
+</entry><entry>
+<para>8 </para>
+</entry><entry>
+<para>0 to <computeroutput>INT_MAX</computeroutput> or <computeroutput>GLFW_DONT_CARE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_ALPHA_BITS </para>
+</entry><entry>
+<para>8 </para>
+</entry><entry>
+<para>0 to <computeroutput>INT_MAX</computeroutput> or <computeroutput>GLFW_DONT_CARE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_DEPTH_BITS </para>
+</entry><entry>
+<para>24 </para>
+</entry><entry>
+<para>0 to <computeroutput>INT_MAX</computeroutput> or <computeroutput>GLFW_DONT_CARE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_STENCIL_BITS </para>
+</entry><entry>
+<para>8 </para>
+</entry><entry>
+<para>0 to <computeroutput>INT_MAX</computeroutput> or <computeroutput>GLFW_DONT_CARE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_ACCUM_RED_BITS </para>
+</entry><entry>
+<para>0 </para>
+</entry><entry>
+<para>0 to <computeroutput>INT_MAX</computeroutput> or <computeroutput>GLFW_DONT_CARE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_ACCUM_GREEN_BITS </para>
+</entry><entry>
+<para>0 </para>
+</entry><entry>
+<para>0 to <computeroutput>INT_MAX</computeroutput> or <computeroutput>GLFW_DONT_CARE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_ACCUM_BLUE_BITS </para>
+</entry><entry>
+<para>0 </para>
+</entry><entry>
+<para>0 to <computeroutput>INT_MAX</computeroutput> or <computeroutput>GLFW_DONT_CARE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_ACCUM_ALPHA_BITS </para>
+</entry><entry>
+<para>0 </para>
+</entry><entry>
+<para>0 to <computeroutput>INT_MAX</computeroutput> or <computeroutput>GLFW_DONT_CARE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_AUX_BUFFERS </para>
+</entry><entry>
+<para>0 </para>
+</entry><entry>
+<para>0 to <computeroutput>INT_MAX</computeroutput> or <computeroutput>GLFW_DONT_CARE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_SAMPLES </para>
+</entry><entry>
+<para>0 </para>
+</entry><entry>
+<para>0 to <computeroutput>INT_MAX</computeroutput> or <computeroutput>GLFW_DONT_CARE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_REFRESH_RATE </para>
+</entry><entry>
+<para><computeroutput>GLFW_DONT_CARE</computeroutput> </para>
+</entry><entry>
+<para>0 to <computeroutput>INT_MAX</computeroutput> or <computeroutput>GLFW_DONT_CARE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_STEREO </para>
+</entry><entry>
+<para><computeroutput>GLFW_FALSE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_SRGB_CAPABLE </para>
+</entry><entry>
+<para><computeroutput>GLFW_FALSE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_DOUBLEBUFFER </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_CLIENT_API </para>
+</entry><entry>
+<para><computeroutput>GLFW_OPENGL_API</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_OPENGL_API</computeroutput>, <computeroutput>GLFW_OPENGL_ES_API</computeroutput> or <computeroutput>GLFW_NO_API</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_CONTEXT_CREATION_API </para>
+</entry><entry>
+<para><computeroutput>GLFW_NATIVE_CONTEXT_API</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_NATIVE_CONTEXT_API</computeroutput>, <computeroutput>GLFW_EGL_CONTEXT_API</computeroutput> or <computeroutput>GLFW_OSMESA_CONTEXT_API</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_CONTEXT_VERSION_MAJOR </para>
+</entry><entry>
+<para>1 </para>
+</entry><entry>
+<para>Any valid major version number of the chosen client API  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_CONTEXT_VERSION_MINOR </para>
+</entry><entry>
+<para>0 </para>
+</entry><entry>
+<para>Any valid minor version number of the chosen client API  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_CONTEXT_ROBUSTNESS </para>
+</entry><entry>
+<para><computeroutput>GLFW_NO_ROBUSTNESS</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_NO_ROBUSTNESS</computeroutput>, <computeroutput>GLFW_NO_RESET_NOTIFICATION</computeroutput> or <computeroutput>GLFW_LOSE_CONTEXT_ON_RESET</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_CONTEXT_RELEASE_BEHAVIOR </para>
+</entry><entry>
+<para><computeroutput>GLFW_ANY_RELEASE_BEHAVIOR</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_ANY_RELEASE_BEHAVIOR</computeroutput>, <computeroutput>GLFW_RELEASE_BEHAVIOR_FLUSH</computeroutput> or <computeroutput>GLFW_RELEASE_BEHAVIOR_NONE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_OPENGL_FORWARD_COMPAT </para>
+</entry><entry>
+<para><computeroutput>GLFW_FALSE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_CONTEXT_DEBUG </para>
+</entry><entry>
+<para><computeroutput>GLFW_FALSE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_OPENGL_PROFILE </para>
+</entry><entry>
+<para><computeroutput>GLFW_OPENGL_ANY_PROFILE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_OPENGL_ANY_PROFILE</computeroutput>, <computeroutput>GLFW_OPENGL_COMPAT_PROFILE</computeroutput> or <computeroutput>GLFW_OPENGL_CORE_PROFILE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_WIN32_KEYBOARD_MENU </para>
+</entry><entry>
+<para><computeroutput>GLFW_FALSE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_COCOA_RETINA_FRAMEBUFFER </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_COCOA_FRAME_NAME </para>
+</entry><entry>
+<para><computeroutput>&quot;&quot;</computeroutput> </para>
+</entry><entry>
+<para>A UTF-8 encoded frame autosave name  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_COCOA_GRAPHICS_SWITCHING </para>
+</entry><entry>
+<para><computeroutput>GLFW_FALSE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_TRUE</computeroutput> or <computeroutput>GLFW_FALSE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_X11_CLASS_NAME </para>
+</entry><entry>
+<para><computeroutput>&quot;&quot;</computeroutput> </para>
+</entry><entry>
+<para>An ASCII encoded <computeroutput>WM_CLASS</computeroutput> class name  </para>
+</entry></row>
+      <row >
+<entry>
+<para>GLFW_X11_INSTANCE_NAME </para>
+</entry><entry>
+<para><computeroutput>&quot;&quot;</computeroutput> </para>
+</entry><entry>
+<para>An ASCII encoded <computeroutput>WM_CLASS</computeroutput> instance name  </para>
+</entry></row>
+    </tbody>
+    </tgroup>
+</informaltable>
+</para>
+</section>
+</section>
+</section>
+<section xml:id="_window_guide_1window_events">
+<title>Window event processing</title>
+
+<para>See <link linkend="_input_guide_1events">Event processing</link>.</para>
+</section>
+<section xml:id="_window_guide_1window_properties">
+<title>Window properties and events</title>
+<section xml:id="_window_guide_1window_userptr">
+<title>User pointer</title>
+
+<para>Each window has a user pointer that can be set with <link linkend="_group__window_1gacc9e68faee3c1763b54cd9bc405cf43e">glfwSetWindowUserPointer</link> and queried with <link linkend="_group__window_1ga0a9ff3b4bf8589e9518e8816d06a8f50">glfwGetWindowUserPointer</link>. This can be used for any purpose you need and will not be modified by GLFW throughout the life-time of the window.</para>
+
+<para>The initial value of the pointer is <computeroutput>NULL</computeroutput>.</para>
+</section>
+<section xml:id="_window_guide_1window_close">
+<title>Window closing and close flag</title>
+
+<para>When the user attempts to close the window, for example by clicking the close widget or using a key chord like Alt+F4, the <emphasis>close flag</emphasis> of the window is set. The window is however not actually destroyed and, unless you watch for this state change, nothing further happens.</para>
+
+<para>The current state of the close flag is returned by <link linkend="_group__window_1gaa6162f67dfa38b8beda2fea623649332">glfwWindowShouldClose</link> and can be set or cleared directly with <link linkend="_group__window_1ga1cadeda7a1e2f224e06a8415d30741aa">glfwSetWindowShouldClose</link>. A common pattern is to use the close flag as a main loop condition.</para>
+
+<para><literallayout><computeroutput>while&#32;(!glfwWindowShouldClose(window))
+{
+&#32;&#32;&#32;&#32;render(window);
+
+&#32;&#32;&#32;&#32;glfwSwapBuffers(window);
+&#32;&#32;&#32;&#32;glfwPollEvents();
+}
+</computeroutput></literallayout></para>
+
+<para>If you wish to be notified when the user attempts to close a window, set a close callback.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowCloseCallback(window,&#32;window_close_callback);
+</computeroutput></literallayout></para>
+
+<para>The callback function is called directly <emphasis>after</emphasis> the close flag has been set. It can be used for example to filter close requests and clear the close flag again unless certain conditions are met.</para>
+
+<para><literallayout><computeroutput>void&#32;window_close_callback(GLFWwindow*&#32;window)
+{
+&#32;&#32;&#32;&#32;if&#32;(!time_to_close)
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;glfwSetWindowShouldClose(window,&#32;GLFW_FALSE);
+}
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_window_guide_1window_size">
+<title>Window size</title>
+
+<para>The size of a window can be changed with <link linkend="_group__window_1gae54d1f4915ded15e267ddd3f41496cd2">glfwSetWindowSize</link>. For windowed mode windows, this sets the size, in <link linkend="_intro_guide_1coordinate_systems">screen coordinates</link> of the <emphasis>content area</emphasis> or <emphasis>content area</emphasis> of the window. The window system may impose limits on window size.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowSize(window,&#32;640,&#32;480);
+</computeroutput></literallayout></para>
+
+<para>For full screen windows, the specified size becomes the new resolution of the window&apos;s desired video mode. The video mode most closely matching the new desired video mode is set immediately. The window is resized to fit the resolution of the set video mode.</para>
+
+<para>If you wish to be notified when a window is resized, whether by the user, the system or your own code, set a size callback.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowSizeCallback(window,&#32;window_size_callback);
+</computeroutput></literallayout></para>
+
+<para>The callback function receives the new size, in screen coordinates, of the content area of the window when the window is resized.</para>
+
+<para><literallayout><computeroutput>void&#32;window_size_callback(GLFWwindow*&#32;window,&#32;int&#32;width,&#32;int&#32;height)
+{
+}
+</computeroutput></literallayout></para>
+
+<para>There is also <link linkend="_group__window_1ga7feb769ebb3f3d21579b5a3fb07be76e">glfwGetWindowSize</link> for directly retrieving the current size of a window.</para>
+
+<para><literallayout><computeroutput>int&#32;width,&#32;height;
+glfwGetWindowSize(window,&#32;&amp;width,&#32;&amp;height);
+</computeroutput></literallayout></para>
+
+<para><note><title>Note</title>
+
+<para>Do not pass the window size to <computeroutput>glViewport</computeroutput> or other pixel-based OpenGL calls. The window size is in screen coordinates, not pixels. Use the <link linkend="_window_guide_1window_fbsize">framebuffer size</link>, which is in pixels, for pixel-based calls.</para>
+</note>
+The above functions work with the size of the content area, but decorated windows typically have title bars and window frames around this rectangle. You can retrieve the extents of these with <link linkend="_group__window_1gaad46cdaae2eb732f68d3a1499a7c5409">glfwGetWindowFrameSize</link>.</para>
+
+<para><literallayout><computeroutput>int&#32;left,&#32;top,&#32;right,&#32;bottom;
+glfwGetWindowFrameSize(window,&#32;&amp;left,&#32;&amp;top,&#32;&amp;right,&#32;&amp;bottom);
+</computeroutput></literallayout></para>
+
+<para>The returned values are the distances, in screen coordinates, from the edges of the content area to the corresponding edges of the full window. As they are distances and not coordinates, they are always zero or positive.</para>
+</section>
+<section xml:id="_window_guide_1window_fbsize">
+<title>Framebuffer size</title>
+
+<para>While the size of a window is measured in screen coordinates, OpenGL works with pixels. The size you pass into <computeroutput>glViewport</computeroutput>, for example, should be in pixels. On some machines screen coordinates and pixels are the same, but on others they will not be. There is a second set of functions to retrieve the size, in pixels, of the framebuffer of a window.</para>
+
+<para>If you wish to be notified when the framebuffer of a window is resized, whether by the user or the system, set a size callback.</para>
+
+<para><literallayout><computeroutput>glfwSetFramebufferSizeCallback(window,&#32;framebuffer_size_callback);
+</computeroutput></literallayout></para>
+
+<para>The callback function receives the new size of the framebuffer when it is resized, which can for example be used to update the OpenGL viewport.</para>
+
+<para><literallayout><computeroutput>void&#32;framebuffer_size_callback(GLFWwindow*&#32;window,&#32;int&#32;width,&#32;int&#32;height)
+{
+&#32;&#32;&#32;&#32;glViewport(0,&#32;0,&#32;width,&#32;height);
+}
+</computeroutput></literallayout></para>
+
+<para>There is also <link linkend="_group__window_1gaf7d17f3534b4b6dc9a6f905e3a240b7e">glfwGetFramebufferSize</link> for directly retrieving the current size of the framebuffer of a window.</para>
+
+<para><literallayout><computeroutput>int&#32;width,&#32;height;
+glfwGetFramebufferSize(window,&#32;&amp;width,&#32;&amp;height);
+glViewport(0,&#32;0,&#32;width,&#32;height);
+</computeroutput></literallayout></para>
+
+<para>The size of a framebuffer may change independently of the size of a window, for example if the window is dragged between a regular monitor and a high-DPI one.</para>
+</section>
+<section xml:id="_window_guide_1window_scale">
+<title>Window content scale</title>
+
+<para>The content scale for a window can be retrieved with <link linkend="_group__window_1ga72718c983a9fffaa27f786bfe7d1c9ee">glfwGetWindowContentScale</link>.</para>
+
+<para><literallayout><computeroutput>float&#32;xscale,&#32;yscale;
+glfwGetWindowContentScale(window,&#32;&amp;xscale,&#32;&amp;yscale);
+</computeroutput></literallayout></para>
+
+<para>The content scale is the ratio between the current DPI and the platform&apos;s default DPI. This is especially important for text and any UI elements. If the pixel dimensions of your UI scaled by this look appropriate on your machine then it should appear at a reasonable size on other machines regardless of their DPI and scaling settings. This relies on the system DPI and scaling settings being somewhat correct.</para>
+
+<para>On systems where each monitors can have its own content scale, the window content scale will depend on which monitor the system considers the window to be on.</para>
+
+<para>If you wish to be notified when the content scale of a window changes, whether because of a system setting change or because it was moved to a monitor with a different scale, set a content scale callback.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowContentScaleCallback(window,&#32;window_content_scale_callback);
+</computeroutput></literallayout></para>
+
+<para>The callback function receives the new content scale of the window.</para>
+
+<para><literallayout><computeroutput>void&#32;window_content_scale_callback(GLFWwindow*&#32;window,&#32;float&#32;xscale,&#32;float&#32;yscale)
+{
+&#32;&#32;&#32;&#32;set_interface_scale(xscale,&#32;yscale);
+}
+</computeroutput></literallayout></para>
+
+<para>On platforms where pixels and screen coordinates always map 1:1, the window will need to be resized to appear the same size when it is moved to a monitor with a different content scale. To have this done automatically both when the window is created and when its content scale later changes, set the <link linkend="_window_guide_1GLFW_SCALE_TO_MONITOR">GLFW_SCALE_TO_MONITOR</link> window hint.</para>
+</section>
+<section xml:id="_window_guide_1window_sizelimits">
+<title>Window size limits</title>
+
+<para>The minimum and maximum size of the content area of a windowed mode window can be enforced with <link linkend="_group__window_1ga8af814fc98d786d1de2505b40b707de8">glfwSetWindowSizeLimits</link>. The user may resize the window to any size and aspect ratio within the specified limits, unless the aspect ratio is also set.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowSizeLimits(window,&#32;200,&#32;200,&#32;400,&#32;400);
+</computeroutput></literallayout></para>
+
+<para>To specify only a minimum size or only a maximum one, set the other pair to <computeroutput>GLFW_DONT_CARE</computeroutput>.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowSizeLimits(window,&#32;640,&#32;480,&#32;GLFW_DONT_CARE,&#32;GLFW_DONT_CARE);
+</computeroutput></literallayout></para>
+
+<para>To disable size limits for a window, set them all to <computeroutput>GLFW_DONT_CARE</computeroutput>.</para>
+
+<para>The aspect ratio of the content area of a windowed mode window can be enforced with <link linkend="_group__window_1gad2ae94a2c5ee1c46a36e13a8f4ac68ac">glfwSetWindowAspectRatio</link>. The user may resize the window freely unless size limits are also set, but the size will be constrained to maintain the aspect ratio.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowAspectRatio(window,&#32;16,&#32;9);
+</computeroutput></literallayout></para>
+
+<para>The aspect ratio is specified as a numerator and denominator, corresponding to the width and height, respectively. If you want a window to maintain its current aspect ratio, use its current size as the ratio.</para>
+
+<para><literallayout><computeroutput>int&#32;width,&#32;height;
+glfwGetWindowSize(window,&#32;&amp;width,&#32;&amp;height);
+glfwSetWindowAspectRatio(window,&#32;width,&#32;height);
+</computeroutput></literallayout></para>
+
+<para>To disable the aspect ratio limit for a window, set both terms to <computeroutput>GLFW_DONT_CARE</computeroutput>.</para>
+
+<para>You can have both size limits and aspect ratio set for a window, but the results are undefined if they conflict.</para>
+</section>
+<section xml:id="_window_guide_1window_pos">
+<title>Window position</title>
+
+<para>The position of a windowed-mode window can be changed with <link linkend="_group__window_1ga0dc8d880a0d87be16d3ea8114561f6f0">glfwSetWindowPos</link>. This moves the window so that the upper-left corner of its content area has the specified <link linkend="_intro_guide_1coordinate_systems">screen coordinates</link>. The window system may put limitations on window placement.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowPos(window,&#32;100,&#32;100);
+</computeroutput></literallayout></para>
+
+<para>If you wish to be notified when a window is moved, whether by the user, the system or your own code, set a position callback.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowPosCallback(window,&#32;window_pos_callback);
+</computeroutput></literallayout></para>
+
+<para>The callback function receives the new position, in screen coordinates, of the upper-left corner of the content area when the window is moved.</para>
+
+<para><literallayout><computeroutput>void&#32;window_pos_callback(GLFWwindow*&#32;window,&#32;int&#32;xpos,&#32;int&#32;ypos)
+{
+}
+</computeroutput></literallayout></para>
+
+<para>There is also <link linkend="_group__window_1ga0076a8591ef7494d359730cf2250b45b">glfwGetWindowPos</link> for directly retrieving the current position of the content area of the window.</para>
+
+<para><literallayout><computeroutput>int&#32;xpos,&#32;ypos;
+glfwGetWindowPos(window,&#32;&amp;xpos,&#32;&amp;ypos);
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_window_guide_1window_title">
+<title>Window title</title>
+
+<para>All GLFW windows have a title, although undecorated or full screen windows may not display it or only display it in a task bar or similar interface. You can set a UTF-8 encoded window title with <link linkend="_group__window_1ga861ed3414ab8120e2f74151a666ed1dc">glfwSetWindowTitle</link>.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowTitle(window,&#32;&quot;My&#32;Window&quot;);
+</computeroutput></literallayout></para>
+
+<para>The specified string is copied before the function returns, so there is no need to keep it around.</para>
+
+<para>As long as your source file is encoded as UTF-8, you can use any Unicode characters directly in the source.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowTitle(window,&#32;&quot;ラストエグザイル&quot;);
+</computeroutput></literallayout></para>
+
+<para>If you are using C++11 or C11, you can use a UTF-8 string literal.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowTitle(window,&#32;u8&quot;This&#32;is&#32;always&#32;a&#32;UTF-8&#32;string&quot;);
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_window_guide_1window_icon">
+<title>Window icon</title>
+
+<para>Decorated windows have icons on some platforms. You can set this icon by specifying a list of candidate images with <link linkend="_group__window_1ga182987a1a62a41a924842b9473d560df">glfwSetWindowIcon</link>.</para>
+
+<para><literallayout><computeroutput>GLFWimage&#32;images[2];
+images[0]&#32;=&#32;load_icon(&quot;my_icon.png&quot;);
+images[1]&#32;=&#32;load_icon(&quot;my_icon_small.png&quot;);
+
+glfwSetWindowIcon(window,&#32;2,&#32;images);
+</computeroutput></literallayout></para>
+
+<para>The image data is 32-bit, little-endian, non-premultiplied RGBA, i.e. eight bits per channel with the red channel first. The pixels are arranged canonically as sequential rows, starting from the top-left corner.</para>
+
+<para>To revert to the default window icon, pass in an empty image array.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowIcon(window,&#32;0,&#32;NULL);
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_window_guide_1window_monitor">
+<title>Window monitor</title>
+
+<para>Full screen windows are associated with a specific monitor. You can get the handle for this monitor with <link linkend="_group__window_1gaf1525cb3bccd5789c702cc9676ef3403">glfwGetWindowMonitor</link>.</para>
+
+<para><literallayout><computeroutput>GLFWmonitor*&#32;monitor&#32;=&#32;glfwGetWindowMonitor(window);
+</computeroutput></literallayout></para>
+
+<para>This monitor handle is one of those returned by <link linkend="_group__monitor_1gab4d483284c57e28837bc2cd9639e9665">glfwGetMonitors</link>.</para>
+
+<para>For windowed mode windows, this function returns <computeroutput>NULL</computeroutput>. This is how to tell full screen windows from windowed mode windows.</para>
+
+<para>You can move windows between monitors or between full screen and windowed mode with <link linkend="_group__window_1ga12fabf78575e59c00f822f323ae0b6ae">glfwSetWindowMonitor</link>. When making a window full screen on the same or on a different monitor, specify the desired monitor, resolution and refresh rate. The position arguments are ignored.</para>
+
+<para><literallayout><computeroutput>const&#32;GLFWvidmode*&#32;mode&#32;=&#32;glfwGetVideoMode(monitor);
+
+glfwSetWindowMonitor(window,&#32;monitor,&#32;0,&#32;0,&#32;mode-&gt;width,&#32;mode-&gt;height,&#32;mode-&gt;refreshRate);
+</computeroutput></literallayout></para>
+
+<para>When making the window windowed, specify the desired position and size. The refresh rate argument is ignored.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowMonitor(window,&#32;NULL,&#32;xpos,&#32;ypos,&#32;width,&#32;height,&#32;0);
+</computeroutput></literallayout></para>
+
+<para>This restores any previous window settings such as whether it is decorated, floating, resizable, has size or aspect ratio limits, etc.. To restore a window that was originally windowed to its original size and position, save these before making it full screen and then pass them in as above.</para>
+</section>
+<section xml:id="_window_guide_1window_iconify">
+<title>Window iconification</title>
+
+<para>Windows can be iconified (i.e. minimized) with <link linkend="_group__window_1ga24274e3c6ecd44e11fec5e6b66e4d7f3">glfwIconifyWindow</link>.</para>
+
+<para><literallayout><computeroutput>glfwIconifyWindow(window);
+</computeroutput></literallayout></para>
+
+<para>When a full screen window is iconified, the original video mode of its monitor is restored until the user or application restores the window.</para>
+
+<para>Iconified windows can be restored with <link linkend="_group__window_1ga1e29caf0b819f578b04db52fff17256c">glfwRestoreWindow</link>. This function also restores windows from maximization.</para>
+
+<para><literallayout><computeroutput>glfwRestoreWindow(window);
+</computeroutput></literallayout></para>
+
+<para>When a full screen window is restored, the desired video mode is restored to its monitor as well.</para>
+
+<para>If you wish to be notified when a window is iconified or restored, whether by the user, system or your own code, set an iconify callback.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowIconifyCallback(window,&#32;window_iconify_callback);
+</computeroutput></literallayout></para>
+
+<para>The callback function receives changes in the iconification state of the window.</para>
+
+<para><literallayout><computeroutput>void&#32;window_iconify_callback(GLFWwindow*&#32;window,&#32;int&#32;iconified)
+{
+&#32;&#32;&#32;&#32;if&#32;(iconified)
+&#32;&#32;&#32;&#32;{
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;The&#32;window&#32;was&#32;iconified
+&#32;&#32;&#32;&#32;}
+&#32;&#32;&#32;&#32;else
+&#32;&#32;&#32;&#32;{
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;The&#32;window&#32;was&#32;restored
+&#32;&#32;&#32;&#32;}
+}
+</computeroutput></literallayout></para>
+
+<para>You can also get the current iconification state with <link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link>.</para>
+
+<para><literallayout><computeroutput>int&#32;iconified&#32;=&#32;glfwGetWindowAttrib(window,&#32;GLFW_ICONIFIED);
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_window_guide_1window_maximize">
+<title>Window maximization</title>
+
+<para>Windows can be maximized (i.e. zoomed) with <link linkend="_group__window_1ga4f825a55367d3fabde3d06e7f30128e8">glfwMaximizeWindow</link>.</para>
+
+<para><literallayout><computeroutput>glfwMaximizeWindow(window);
+</computeroutput></literallayout></para>
+
+<para>Full screen windows cannot be maximized and passing a full screen window to this function does nothing.</para>
+
+<para>Maximized windows can be restored with <link linkend="_group__window_1ga1e29caf0b819f578b04db52fff17256c">glfwRestoreWindow</link>. This function also restores windows from iconification.</para>
+
+<para><literallayout><computeroutput>glfwRestoreWindow(window);
+</computeroutput></literallayout></para>
+
+<para>If you wish to be notified when a window is maximized or restored, whether by the user, system or your own code, set a maximize callback.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowMaximizeCallback(window,&#32;window_maximize_callback);
+</computeroutput></literallayout></para>
+
+<para>The callback function receives changes in the maximization state of the window.</para>
+
+<para><literallayout><computeroutput>void&#32;window_maximize_callback(GLFWwindow*&#32;window,&#32;int&#32;maximized)
+{
+&#32;&#32;&#32;&#32;if&#32;(maximized)
+&#32;&#32;&#32;&#32;{
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;The&#32;window&#32;was&#32;maximized
+&#32;&#32;&#32;&#32;}
+&#32;&#32;&#32;&#32;else
+&#32;&#32;&#32;&#32;{
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;The&#32;window&#32;was&#32;restored
+&#32;&#32;&#32;&#32;}
+}
+</computeroutput></literallayout></para>
+
+<para>You can also get the current maximization state with <link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link>.</para>
+
+<para><literallayout><computeroutput>int&#32;maximized&#32;=&#32;glfwGetWindowAttrib(window,&#32;GLFW_MAXIMIZED);
+</computeroutput></literallayout></para>
+
+<para>By default, newly created windows are not maximized. You can change this behavior by setting the <link linkend="_window_guide_1GLFW_MAXIMIZED_hint">GLFW_MAXIMIZED</link> window hint before creating the window.</para>
+
+<para><literallayout><computeroutput>glfwWindowHint(GLFW_MAXIMIZED,&#32;GLFW_TRUE);
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_window_guide_1window_hide">
+<title>Window visibility</title>
+
+<para>Windowed mode windows can be hidden with <link linkend="_group__window_1gaa17e287d521544bdeceafa09ac036e20">glfwHideWindow</link>.</para>
+
+<para><literallayout><computeroutput>glfwHideWindow(window);
+</computeroutput></literallayout></para>
+
+<para>This makes the window completely invisible to the user, including removing it from the task bar, dock or window list. Full screen windows cannot be hidden and calling <link linkend="_group__window_1gaa17e287d521544bdeceafa09ac036e20">glfwHideWindow</link> on a full screen window does nothing.</para>
+
+<para>Hidden windows can be shown with <link linkend="_group__window_1ga7945bcdff9e5e058cf36505d6873ed8c">glfwShowWindow</link>.</para>
+
+<para><literallayout><computeroutput>glfwShowWindow(window);
+</computeroutput></literallayout></para>
+
+<para>By default, this function will also set the input focus to that window. Set the <link linkend="_window_guide_1GLFW_FOCUS_ON_SHOW_hint">GLFW_FOCUS_ON_SHOW</link> window hint to change this behavior for all newly created windows, or change the behavior for an existing window with <link linkend="_group__window_1gad39f43f07856efcf3d656426a9284c75">glfwSetWindowAttrib</link>.</para>
+
+<para>You can also get the current visibility state with <link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link>.</para>
+
+<para><literallayout><computeroutput>int&#32;visible&#32;=&#32;glfwGetWindowAttrib(window,&#32;GLFW_VISIBLE);
+</computeroutput></literallayout></para>
+
+<para>By default, newly created windows are visible. You can change this behavior by setting the <link linkend="_window_guide_1GLFW_VISIBLE_hint">GLFW_VISIBLE</link> window hint before creating the window.</para>
+
+<para><literallayout><computeroutput>glfwWindowHint(GLFW_VISIBLE,&#32;GLFW_FALSE);
+</computeroutput></literallayout></para>
+
+<para>Windows created hidden are completely invisible to the user until shown. This can be useful if you need to set up your window further before showing it, for example moving it to a specific location.</para>
+</section>
+<section xml:id="_window_guide_1window_focus">
+<title>Window input focus</title>
+
+<para>Windows can be given input focus and brought to the front with <link linkend="_group__window_1ga0da0e3daaa2d100f44a115c09077b510">glfwFocusWindow</link>.</para>
+
+<para><literallayout><computeroutput>glfwFocusWindow(window);
+</computeroutput></literallayout></para>
+
+<para>Keep in mind that it can be very disruptive to the user when a window is forced to the top. For a less disruptive way of getting the user&apos;s attention, see <link linkend="_window_guide_1window_attention">attention requests</link>.</para>
+
+<para>If you wish to be notified when a window gains or loses input focus, whether by the user, system or your own code, set a focus callback.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowFocusCallback(window,&#32;window_focus_callback);
+</computeroutput></literallayout></para>
+
+<para>The callback function receives changes in the input focus state of the window.</para>
+
+<para><literallayout><computeroutput>void&#32;window_focus_callback(GLFWwindow*&#32;window,&#32;int&#32;focused)
+{
+&#32;&#32;&#32;&#32;if&#32;(focused)
+&#32;&#32;&#32;&#32;{
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;The&#32;window&#32;gained&#32;input&#32;focus
+&#32;&#32;&#32;&#32;}
+&#32;&#32;&#32;&#32;else
+&#32;&#32;&#32;&#32;{
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;The&#32;window&#32;lost&#32;input&#32;focus
+&#32;&#32;&#32;&#32;}
+}
+</computeroutput></literallayout></para>
+
+<para>You can also get the current input focus state with <link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link>.</para>
+
+<para><literallayout><computeroutput>int&#32;focused&#32;=&#32;glfwGetWindowAttrib(window,&#32;GLFW_FOCUSED);
+</computeroutput></literallayout></para>
+
+<para>By default, newly created windows are given input focus. You can change this behavior by setting the <link linkend="_window_guide_1GLFW_FOCUSED_hint">GLFW_FOCUSED</link> window hint before creating the window.</para>
+
+<para><literallayout><computeroutput>glfwWindowHint(GLFW_FOCUSED,&#32;GLFW_FALSE);
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_window_guide_1window_attention">
+<title>Window attention request</title>
+
+<para>If you wish to notify the user of an event without interrupting, you can request attention with <link linkend="_group__window_1gad0c9629abb49447bedd28080642b8538">glfwRequestWindowAttention</link>.</para>
+
+<para><literallayout><computeroutput>glfwRequestWindowAttention(window);
+</computeroutput></literallayout></para>
+
+<para>The system will highlight the specified window, or on platforms where this is not supported, the application as a whole. Once the user has given it attention, the system will automatically end the request.</para>
+</section>
+<section xml:id="_window_guide_1window_refresh">
+<title>Window damage and refresh</title>
+
+<para>If you wish to be notified when the contents of a window is damaged and needs to be refreshed, set a window refresh callback.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowRefreshCallback(m_handle,&#32;window_refresh_callback);
+</computeroutput></literallayout></para>
+
+<para>The callback function is called when the contents of the window needs to be refreshed.</para>
+
+<para><literallayout><computeroutput>void&#32;window_refresh_callback(GLFWwindow*&#32;window)
+{
+&#32;&#32;&#32;&#32;draw_editor_ui(window);
+&#32;&#32;&#32;&#32;glfwSwapBuffers(window);
+}
+</computeroutput></literallayout></para>
+
+<para><note><title>Note</title>
+
+<para>On compositing window systems such as Aero, Compiz or Aqua, where the window contents are saved off-screen, this callback might only be called when the window or framebuffer is resized.</para>
+</note>
+</para>
+</section>
+<section xml:id="_window_guide_1window_transparency">
+<title>Window transparency</title>
+
+<para>GLFW supports two kinds of transparency for windows; framebuffer transparency and whole window transparency. A single window may not use both methods. The results of doing this are undefined.</para>
+
+<para>Both methods require the platform to support it and not every version of every platform GLFW supports does this, so there are mechanisms to check whether the window really is transparent.</para>
+
+<para>Window framebuffers can be made transparent on a per-pixel per-frame basis with the <link linkend="_window_guide_1GLFW_TRANSPARENT_FRAMEBUFFER_hint">GLFW_TRANSPARENT_FRAMEBUFFER</link> window hint.</para>
+
+<para><literallayout><computeroutput>glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER,&#32;GLFW_TRUE);
+</computeroutput></literallayout></para>
+
+<para>If supported by the system, the window content area will be composited with the background using the framebuffer per-pixel alpha channel. This requires desktop compositing to be enabled on the system. It does not affect window decorations.</para>
+
+<para>You can check whether the window framebuffer was successfully made transparent with the <link linkend="_window_guide_1GLFW_TRANSPARENT_FRAMEBUFFER_attrib">GLFW_TRANSPARENT_FRAMEBUFFER</link> window attribute.</para>
+
+<para><literallayout><computeroutput>if&#32;(glfwGetWindowAttrib(window,&#32;GLFW_TRANSPARENT_FRAMEBUFFER))
+{
+&#32;&#32;&#32;&#32;//&#32;window&#32;framebuffer&#32;is&#32;currently&#32;transparent
+}
+</computeroutput></literallayout></para>
+
+<para>GLFW comes with an example that enabled framebuffer transparency called <computeroutput>gears</computeroutput>.</para>
+
+<para>The opacity of the whole window, including any decorations, can be set with <link linkend="_group__window_1ga62a784fe328f227727cbcd0d07480ff3">glfwSetWindowOpacity</link>.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowOpacity(window,&#32;0.5f);
+</computeroutput></literallayout></para>
+
+<para>The opacity (or alpha) value is a positive finite number between zero and one, where 0 (zero) is fully transparent and 1 (one) is fully opaque. The initial opacity value for newly created windows is 1.</para>
+
+<para>The current opacity of a window can be queried with <link linkend="_group__window_1gad124d57a1c1c519f60c9765cd0c2a89c">glfwGetWindowOpacity</link>.</para>
+
+<para><literallayout><computeroutput>float&#32;opacity&#32;=&#32;glfwGetWindowOpacity(window);
+</computeroutput></literallayout></para>
+
+<para>If the system does not support whole window transparency, this function always returns one.</para>
+
+<para>GLFW comes with a test program that lets you control whole window transparency at run-time called <computeroutput>window</computeroutput>.</para>
+
+<para>If you want to use either of these transparency methods to display a temporary overlay like for example a notification, the <link linkend="_group__window_1ga7fb0be51407783b41adbf5bec0b09d80">GLFW_FLOATING</link> and <link linkend="_group__window_1ga88981797d29800808ec242274ab5c03a">GLFW_MOUSE_PASSTHROUGH</link> window hints and attributes may be useful.</para>
+</section>
+<section xml:id="_window_guide_1window_attribs">
+<title>Window attributes</title>
+
+<para>Windows have a number of attributes that can be returned using <link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link>. Some reflect state that may change as a result of user interaction, (e.g. whether it has input focus), while others reflect inherent properties of the window (e.g. what kind of border it has). Some are related to the window and others to its OpenGL or OpenGL ES context.</para>
+
+<para><literallayout><computeroutput>if&#32;(glfwGetWindowAttrib(window,&#32;GLFW_FOCUSED))
+{
+&#32;&#32;&#32;&#32;//&#32;window&#32;has&#32;input&#32;focus
+}
+</computeroutput></literallayout></para>
+
+<para>The <link linkend="_window_guide_1GLFW_DECORATED_attrib">GLFW_DECORATED</link>, <link linkend="_window_guide_1GLFW_RESIZABLE_attrib">GLFW_RESIZABLE</link>, <link linkend="_window_guide_1GLFW_FLOATING_attrib">GLFW_FLOATING</link>, <link linkend="_window_guide_1GLFW_AUTO_ICONIFY_attrib">GLFW_AUTO_ICONIFY</link> and <link linkend="_window_guide_1GLFW_FOCUS_ON_SHOW_attrib">GLFW_FOCUS_ON_SHOW</link> window attributes can be changed with <link linkend="_group__window_1gad39f43f07856efcf3d656426a9284c75">glfwSetWindowAttrib</link>.</para>
+
+<para><literallayout><computeroutput>glfwSetWindowAttrib(window,&#32;GLFW_RESIZABLE,&#32;GLFW_FALSE);
+</computeroutput></literallayout></para>
+<section xml:id="_window_guide_1window_attribs_wnd">
+<title>Window related attributes</title>
+
+<para><anchor xml:id="_window_guide_1GLFW_FOCUSED_attrib"/><emphasis role="bold">GLFW_FOCUSED</emphasis> indicates whether the specified window has input focus. See <link linkend="_window_guide_1window_focus">Window input focus</link> for details.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_ICONIFIED_attrib"/><emphasis role="bold">GLFW_ICONIFIED</emphasis> indicates whether the specified window is iconified. See <link linkend="_window_guide_1window_iconify">Window iconification</link> for details.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_MAXIMIZED_attrib"/><emphasis role="bold">GLFW_MAXIMIZED</emphasis> indicates whether the specified window is maximized. See <link linkend="_window_guide_1window_maximize">Window maximization</link> for details.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_HOVERED_attrib"/><emphasis role="bold">GLFW_HOVERED</emphasis> indicates whether the cursor is currently directly over the content area of the window, with no other windows between. See <link linkend="_input_guide_1cursor_enter">Cursor enter/leave events</link> for details.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_VISIBLE_attrib"/><emphasis role="bold">GLFW_VISIBLE</emphasis> indicates whether the specified window is visible. See <link linkend="_window_guide_1window_hide">Window visibility</link> for details.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_RESIZABLE_attrib"/><emphasis role="bold">GLFW_RESIZABLE</emphasis> indicates whether the specified window is resizable <emphasis>by the user</emphasis>. This can be set before creation with the <link linkend="_window_guide_1GLFW_RESIZABLE_hint">GLFW_RESIZABLE</link> window hint or after with <link linkend="_group__window_1gad39f43f07856efcf3d656426a9284c75">glfwSetWindowAttrib</link>.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_DECORATED_attrib"/><emphasis role="bold">GLFW_DECORATED</emphasis> indicates whether the specified window has decorations such as a border, a close widget, etc. This can be set before creation with the <link linkend="_window_guide_1GLFW_DECORATED_hint">GLFW_DECORATED</link> window hint or after with <link linkend="_group__window_1gad39f43f07856efcf3d656426a9284c75">glfwSetWindowAttrib</link>.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_AUTO_ICONIFY_attrib"/><emphasis role="bold">GLFW_AUTO_ICONIFY</emphasis> indicates whether the specified full screen window is iconified on focus loss, a close widget, etc. This can be set before creation with the <link linkend="_window_guide_1GLFW_AUTO_ICONIFY_hint">GLFW_AUTO_ICONIFY</link> window hint or after with <link linkend="_group__window_1gad39f43f07856efcf3d656426a9284c75">glfwSetWindowAttrib</link>.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_FLOATING_attrib"/><emphasis role="bold">GLFW_FLOATING</emphasis> indicates whether the specified window is floating, also called topmost or always-on-top. This can be set before creation with the <link linkend="_window_guide_1GLFW_FLOATING_hint">GLFW_FLOATING</link> window hint or after with <link linkend="_group__window_1gad39f43f07856efcf3d656426a9284c75">glfwSetWindowAttrib</link>.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_TRANSPARENT_FRAMEBUFFER_attrib"/><emphasis role="bold">GLFW_TRANSPARENT_FRAMEBUFFER</emphasis> indicates whether the specified window has a transparent framebuffer, i.e. the window contents is composited with the background using the window framebuffer alpha channel. See <link linkend="_window_guide_1window_transparency">Window transparency</link> for details.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_FOCUS_ON_SHOW_attrib"/><emphasis role="bold">GLFW_FOCUS_ON_SHOW</emphasis> specifies whether the window will be given input focus when <link linkend="_group__window_1ga7945bcdff9e5e058cf36505d6873ed8c">glfwShowWindow</link> is called. This can be set before creation with the <link linkend="_window_guide_1GLFW_FOCUS_ON_SHOW_hint">GLFW_FOCUS_ON_SHOW</link> window hint or after with <link linkend="_group__window_1gad39f43f07856efcf3d656426a9284c75">glfwSetWindowAttrib</link>.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_MOUSE_PASSTHROUGH_attrib"/><emphasis role="bold">GLFW_MOUSE_PASSTHROUGH</emphasis> specifies whether the window is transparent to mouse input, letting any mouse events pass through to whatever window is behind it. This can be set before creation with the <link linkend="_window_guide_1GLFW_MOUSE_PASSTHROUGH_hint">GLFW_MOUSE_PASSTHROUGH</link> window hint or after with <link linkend="_group__window_1gad39f43f07856efcf3d656426a9284c75">glfwSetWindowAttrib</link>. This is only supported for undecorated windows. Decorated windows with this enabled will behave differently between platforms.</para>
+</section>
+<section xml:id="_window_guide_1window_attribs_ctx">
+<title>Context related attributes</title>
+
+<para><anchor xml:id="_window_guide_1GLFW_CLIENT_API_attrib"/><emphasis role="bold">GLFW_CLIENT_API</emphasis> indicates the client API provided by the window&apos;s context; either <computeroutput>GLFW_OPENGL_API</computeroutput>, <computeroutput>GLFW_OPENGL_ES_API</computeroutput> or <computeroutput>GLFW_NO_API</computeroutput>.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_CONTEXT_CREATION_API_attrib"/><emphasis role="bold">GLFW_CONTEXT_CREATION_API</emphasis> indicates the context creation API used to create the window&apos;s context; either <computeroutput>GLFW_NATIVE_CONTEXT_API</computeroutput>, <computeroutput>GLFW_EGL_CONTEXT_API</computeroutput> or <computeroutput>GLFW_OSMESA_CONTEXT_API</computeroutput>.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_CONTEXT_VERSION_MAJOR_attrib"/><anchor xml:id="_window_guide_1GLFW_CONTEXT_VERSION_MINOR_attrib"/><anchor xml:id="_window_guide_1GLFW_CONTEXT_REVISION_attrib"/><emphasis role="bold">GLFW_CONTEXT_VERSION_MAJOR</emphasis>, <emphasis role="bold">GLFW_CONTEXT_VERSION_MINOR</emphasis> and <emphasis role="bold">GLFW_CONTEXT_REVISION</emphasis> indicate the client API version of the window&apos;s context.</para>
+
+<para><note><title>Note</title>
+
+<para>Do not confuse these attributes with <computeroutput>GLFW_VERSION_MAJOR</computeroutput>, <computeroutput>GLFW_VERSION_MINOR</computeroutput> and <computeroutput>GLFW_VERSION_REVISION</computeroutput> which provide the API version of the GLFW header.</para>
+</note>
+<anchor xml:id="_window_guide_1GLFW_OPENGL_FORWARD_COMPAT_attrib"/><emphasis role="bold">GLFW_OPENGL_FORWARD_COMPAT</emphasis> is <computeroutput>GLFW_TRUE</computeroutput> if the window&apos;s context is an OpenGL forward-compatible one, or <computeroutput>GLFW_FALSE</computeroutput> otherwise.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_CONTEXT_DEBUG_attrib"/><anchor xml:id="_window_guide_1GLFW_OPENGL_DEBUG_CONTEXT_attrib"/><emphasis role="bold">GLFW_CONTEXT_DEBUG</emphasis> is <computeroutput>GLFW_TRUE</computeroutput> if the window&apos;s context is in debug mode, or <computeroutput>GLFW_FALSE</computeroutput> otherwise.</para>
+
+<para><para>
+
+<para>This is the new name, introduced in GLFW 3.4. The older <computeroutput>GLFW_OPENGL_DEBUG_CONTEXT</computeroutput> name is also available for compatibility.</para>
+</para>
+<anchor xml:id="_window_guide_1GLFW_OPENGL_PROFILE_attrib"/><emphasis role="bold">GLFW_OPENGL_PROFILE</emphasis> indicates the OpenGL profile used by the context. This is <computeroutput>GLFW_OPENGL_CORE_PROFILE</computeroutput> or <computeroutput>GLFW_OPENGL_COMPAT_PROFILE</computeroutput> if the context uses a known profile, or <computeroutput>GLFW_OPENGL_ANY_PROFILE</computeroutput> if the OpenGL profile is unknown or the context is an OpenGL ES context. Note that the returned profile may not match the profile bits of the context flags, as GLFW will try other means of detecting the profile when no bits are set.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_CONTEXT_RELEASE_BEHAVIOR_attrib"/><emphasis role="bold">GLFW_CONTEXT_RELEASE_BEHAVIOR</emphasis> indicates the release used by the context. Possible values are one of <computeroutput>GLFW_ANY_RELEASE_BEHAVIOR</computeroutput>, <computeroutput>GLFW_RELEASE_BEHAVIOR_FLUSH</computeroutput> or <computeroutput>GLFW_RELEASE_BEHAVIOR_NONE</computeroutput>. If the behavior is <computeroutput>GLFW_ANY_RELEASE_BEHAVIOR</computeroutput>, the default behavior of the context creation API will be used. If the behavior is <computeroutput>GLFW_RELEASE_BEHAVIOR_FLUSH</computeroutput>, the pipeline will be flushed whenever the context is released from being the current one. If the behavior is <computeroutput>GLFW_RELEASE_BEHAVIOR_NONE</computeroutput>, the pipeline will not be flushed on release.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_CONTEXT_NO_ERROR_attrib"/><emphasis role="bold">GLFW_CONTEXT_NO_ERROR</emphasis> indicates whether errors are generated by the context. Possible values are <computeroutput>GLFW_TRUE</computeroutput> and <computeroutput>GLFW_FALSE</computeroutput>. If enabled, situations that would have generated errors instead cause undefined behavior.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_CONTEXT_ROBUSTNESS_attrib"/><emphasis role="bold">GLFW_CONTEXT_ROBUSTNESS</emphasis> indicates the robustness strategy used by the context. This is <computeroutput>GLFW_LOSE_CONTEXT_ON_RESET</computeroutput> or <computeroutput>GLFW_NO_RESET_NOTIFICATION</computeroutput> if the window&apos;s context supports robustness, or <computeroutput>GLFW_NO_ROBUSTNESS</computeroutput> otherwise.</para>
+</section>
+<section xml:id="_window_guide_1window_attribs_fb">
+<title>Framebuffer related attributes</title>
+
+<para>GLFW does not expose most attributes of the default framebuffer (i.e. the framebuffer attached to the window) as these can be queried directly with either OpenGL, OpenGL ES or Vulkan. The one exception is <link linkend="_window_guide_1GLFW_DOUBLEBUFFER_attrib">GLFW_DOUBLEBUFFER</link>, as this is not provided by OpenGL ES.</para>
+
+<para>If you are using version 3.0 or later of OpenGL or OpenGL ES, the <computeroutput>glGetFramebufferAttachmentParameteriv</computeroutput> function can be used to retrieve the number of bits for the red, green, blue, alpha, depth and stencil buffer channels. Otherwise, the <computeroutput>glGetIntegerv</computeroutput> function can be used.</para>
+
+<para>The number of MSAA samples are always retrieved with <computeroutput>glGetIntegerv</computeroutput>. For contexts supporting framebuffer objects, the number of samples of the currently bound framebuffer is returned.</para>
+
+<para><informaltable frame="all">
+    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+      <colspec colname='c3'/>
+<thead>
+      <row >
+<entry>
+<para>Attribute </para>
+</entry><entry>
+<para>glGetIntegerv </para>
+</entry><entry>
+<para>glGetFramebufferAttachmentParameteriv  </para>
+</entry></row>
+</thead><tbody>
+      <row >
+<entry>
+<para>Red bits </para>
+</entry><entry>
+<para><computeroutput>GL_RED_BITS</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GL_FRAMEBUFFER_ATTACHMENT_RED_SIZE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>Green bits </para>
+</entry><entry>
+<para><computeroutput>GL_GREEN_BITS</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GL_FRAMEBUFFER_ATTACHMENT_GREEN_SIZE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>Blue bits </para>
+</entry><entry>
+<para><computeroutput>GL_BLUE_BITS</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GL_FRAMEBUFFER_ATTACHMENT_BLUE_SIZE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>Alpha bits </para>
+</entry><entry>
+<para><computeroutput>GL_ALPHA_BITS</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GL_FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>Depth bits </para>
+</entry><entry>
+<para><computeroutput>GL_DEPTH_BITS</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GL_FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>Stencil bits </para>
+</entry><entry>
+<para><computeroutput>GL_STENCIL_BITS</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GL_FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para>MSAA samples </para>
+</entry><entry>
+<para><computeroutput>GL_SAMPLES</computeroutput> </para>
+</entry><entry>
+<para><emphasis>Not provided by this function</emphasis>  </para>
+</entry></row>
+    </tbody>
+    </tgroup>
+</informaltable>
+</para>
+
+<para>When calling <computeroutput>glGetFramebufferAttachmentParameteriv</computeroutput>, the red, green, blue and alpha sizes are queried from the <computeroutput>GL_BACK_LEFT</computeroutput>, while the depth and stencil sizes are queried from the <computeroutput>GL_DEPTH</computeroutput> and <computeroutput>GL_STENCIL</computeroutput> attachments, respectively.</para>
+
+<para><anchor xml:id="_window_guide_1GLFW_DOUBLEBUFFER_attrib"/><emphasis role="bold">GLFW_DOUBLEBUFFER</emphasis> indicates whether the specified window is double-buffered when rendering with OpenGL or OpenGL ES. This can be set before creation with the <link linkend="_window_guide_1GLFW_DOUBLEBUFFER_hint">GLFW_DOUBLEBUFFER</link> window hint.</para>
+</section>
+</section>
+</section>
+<section xml:id="_window_guide_1buffer_swap">
+<title>Buffer swapping</title>
+
+<para>GLFW windows are by default double buffered. That means that you have two rendering buffers; a front buffer and a back buffer. The front buffer is the one being displayed and the back buffer the one you render to.</para>
+
+<para>When the entire frame has been rendered, it is time to swap the back and the front buffers in order to display what has been rendered and begin rendering a new frame. This is done with <link linkend="_group__window_1gafb827800eedbfcbc97b1e5408df668d7">glfwSwapBuffers</link>.</para>
+
+<para><literallayout><computeroutput>glfwSwapBuffers(window);
+</computeroutput></literallayout></para>
+
+<para>Sometimes it can be useful to select when the buffer swap will occur. With the function <link linkend="_group__context_1ga12a595c06947cec4967c6e1f14210a8a">glfwSwapInterval</link> it is possible to select the minimum number of monitor refreshes the driver should wait from the time <link linkend="_group__window_1gafb827800eedbfcbc97b1e5408df668d7">glfwSwapBuffers</link> was called before swapping the buffers:</para>
+
+<para><literallayout><computeroutput>glfwSwapInterval(1);
+</computeroutput></literallayout></para>
+
+<para>If the interval is zero, the swap will take place immediately when <link linkend="_group__window_1gafb827800eedbfcbc97b1e5408df668d7">glfwSwapBuffers</link> is called without waiting for a refresh. Otherwise at least interval retraces will pass between each buffer swap. Using a swap interval of zero can be useful for benchmarking purposes, when it is not desirable to measure the time it takes to wait for the vertical retrace. However, a swap interval of one lets you avoid tearing.</para>
+
+<para>Note that this may not work on all machines, as some drivers have user-controlled settings that override any swap interval the application requests.</para>
+
+<para>A context that supports either the <computeroutput>WGL_EXT_swap_control_tear</computeroutput> or the <computeroutput>GLX_EXT_swap_control_tear</computeroutput> extension also accepts <emphasis>negative</emphasis> swap intervals, which allows the driver to swap immediately even if a frame arrives a little bit late. This trades the risk of visible tears for greater framerate stability. You can check for these extensions with <link linkend="_group__context_1ga9a28c712d35f9e43534e1d03b051c04c">glfwExtensionSupported</link>. </para>
+</section>
+</section>

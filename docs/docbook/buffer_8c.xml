@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_buffer_8c">
+<title>src/vally/renderer/buffer.c File Reference</title>
+<indexterm><primary>src/vally/renderer/buffer.c</primary></indexterm>
+<programlisting>#include &lt;vally/renderer/buffer.h&gt;
+#include &lt;stddef.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;glad/glad.h&gt;
+#include &lt;vally/core/logger.h&gt;
+#include &lt;vally/renderer/renderer.h&gt;
+#include &lt;vally/resources/resources.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_structbuffer">buffer</link> * <link linkend="_buffer_8c_1ae7ebc5e27c2b8f51dc67c8e1d8ee27b1">buffer_create</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_buffer_8c_1a537219af5df0e5eda574b334834490c5">buffer_destroy</link> (<link linkend="_structbuffer">buffer</link> *<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_buffer_8c_1a271c0cbf852a1bf93af8d27b78bc2d5c">buffer_bind</link> (<link linkend="_structbuffer">buffer</link> *<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_buffer_8c_1a819e182a31edeb87b39af26beb49f24e">buffer_unbind</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_buffer_8c_1a1167efc273616c5dc7541d68a5488ed4">buffer_set_data</link> (<link linkend="_structbuffer">buffer</link> *<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_include_2vally_2config_8h_1a48d6cd8e4135fb2ff7e7f2dac84089ec">i32</link> <link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>, const <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_buffer_8c_1a271c0cbf852a1bf93af8d27b78bc2d5c"/>    <section>
+    <title>buffer_bind()</title>
+<indexterm><primary>buffer_bind</primary><secondary>buffer.c</secondary></indexterm>
+<indexterm><primary>buffer.c</primary><secondary>buffer_bind</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> buffer_bind (<link linkend="_structbuffer">buffer</link> * buf)</computeroutput></para><para>
+Definition at line 67 of file buffer.c.</para>
+<programlisting>67 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+68 &#32;&#32;<link linkend="_glad_8h_1a4c13098a615d32e7f04aa4105149564f">glBindVertexArray</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>-&gt;vao);
+69 }
+</programlisting>    </section><anchor xml:id="_buffer_8c_1ae7ebc5e27c2b8f51dc67c8e1d8ee27b1"/>    <section>
+    <title>buffer_create()</title>
+<indexterm><primary>buffer_create</primary><secondary>buffer.c</secondary></indexterm>
+<indexterm><primary>buffer.c</primary><secondary>buffer_create</secondary></indexterm>
+<para><computeroutput><link linkend="_structbuffer">buffer</link>* buffer_create ( )</computeroutput></para><para>
+Definition at line 12 of file buffer.c.</para>
+<programlisting>12 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+13 &#32;&#32;<link linkend="_structbuffer">buffer</link>&#32;*<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>&#32;=&#32;(<link linkend="_structbuffer">buffer</link>&#32;*)<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>(<emphasis role="keyword">sizeof</emphasis>(<link linkend="_structbuffer">buffer</link>));
+14 
+15 &#32;&#32;<link linkend="_glad_8h_1a71a2d01a12606fc26c1a28dba23dfce2">glGenVertexArrays</link>(1,&#32;&amp;<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>-&gt;vao);
+16 &#32;&#32;<link linkend="_glad_8h_1a1b33d322b89d94ad4938461db0a0424a">glGenBuffers</link>(1,&#32;&amp;<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>-&gt;vbo);
+17 &#32;&#32;<link linkend="_glad_8h_1a1b33d322b89d94ad4938461db0a0424a">glGenBuffers</link>(1,&#32;&amp;<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>-&gt;ebo);
+18 
+19 &#32;&#32;<link linkend="_glad_8h_1a4c13098a615d32e7f04aa4105149564f">glBindVertexArray</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>-&gt;vao);
+20 
+21 &#32;&#32;<link linkend="_glad_8h_1a3b3a3f8200f094b781e9f61e2f19fc50">glBindBuffer</link>(<link linkend="_glad_8h_1a7180045dcb52b22af2cd0366026bc3ed">GL_ARRAY_BUFFER</link>,&#32;<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>-&gt;vbo);
+22 &#32;&#32;<link linkend="_glad_8h_1a9419a03f5c46e2758f884e9c56d92b6a">glBufferData</link>(<link linkend="_glad_8h_1a7180045dcb52b22af2cd0366026bc3ed">GL_ARRAY_BUFFER</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_structvertex">vertex</link>)&#32;*&#32;<link linkend="_renderer_8h_1aa16efc18b3000ebdeae4569d87d9fae7">RENDERER_MAX_VERTEX</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_glad_8h_1ac1915ebc9c952b9e7140f4bcc78319a6">GL_DYNAMIC_DRAW</link>);
+23 
+24 &#32;&#32;<link linkend="_glad_8h_1a8afadc1fe36886688a02097cc63a17cb">glVertexAttribPointer</link>(0,&#32;2,&#32;<link linkend="_glad_8h_1a6d19915d4237cb559505bd3e5dcfcf3c">GL_FLOAT</link>,&#32;<link linkend="_glad_8h_1abca6d43f43fae31f49dcb883b2f301f6">GL_FALSE</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_structvertex">vertex</link>),&#32;(<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">void</emphasis>*)offsetof(<link linkend="_structvertex">vertex</link>,&#32;pos));
+25 &#32;&#32;<link linkend="_glad_8h_1a6e8ee482001ee8fb9b3d4851116779b4">glEnableVertexAttribArray</link>(0);
+26 
+27 &#32;&#32;<link linkend="_glad_8h_1a8afadc1fe36886688a02097cc63a17cb">glVertexAttribPointer</link>(1,&#32;4,&#32;<link linkend="_glad_8h_1a6d19915d4237cb559505bd3e5dcfcf3c">GL_FLOAT</link>,&#32;<link linkend="_glad_8h_1abca6d43f43fae31f49dcb883b2f301f6">GL_FALSE</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_structvertex">vertex</link>),&#32;(<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">void</emphasis>*)offsetof(<link linkend="_structvertex">vertex</link>,&#32;<link linkend="_glad_8h_1a3ea846f998d64f079b86052b6c4193a8">color</link>));
+28 &#32;&#32;<link linkend="_glad_8h_1a6e8ee482001ee8fb9b3d4851116779b4">glEnableVertexAttribArray</link>(1);
+29 
+30 &#32;&#32;<link linkend="_glad_8h_1a8afadc1fe36886688a02097cc63a17cb">glVertexAttribPointer</link>(2,&#32;2,&#32;<link linkend="_glad_8h_1a6d19915d4237cb559505bd3e5dcfcf3c">GL_FLOAT</link>,&#32;<link linkend="_glad_8h_1abca6d43f43fae31f49dcb883b2f301f6">GL_FALSE</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_structvertex">vertex</link>),&#32;(<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">void</emphasis>*)offsetof(<link linkend="_structvertex">vertex</link>,&#32;uv));
+31 &#32;&#32;<link linkend="_glad_8h_1a6e8ee482001ee8fb9b3d4851116779b4">glEnableVertexAttribArray</link>(2);
+32 
+33 &#32;&#32;<link linkend="_glad_8h_1a8afadc1fe36886688a02097cc63a17cb">glVertexAttribPointer</link>(3,&#32;1,&#32;<link linkend="_glad_8h_1a6d19915d4237cb559505bd3e5dcfcf3c">GL_FLOAT</link>,&#32;<link linkend="_glad_8h_1abca6d43f43fae31f49dcb883b2f301f6">GL_FALSE</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_structvertex">vertex</link>),&#32;(<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">void</emphasis>*)offsetof(<link linkend="_structvertex">vertex</link>,&#32;tex_id));
+34 &#32;&#32;<link linkend="_glad_8h_1a6e8ee482001ee8fb9b3d4851116779b4">glEnableVertexAttribArray</link>(3);
+35 
+36 &#32;&#32;<link linkend="_include_2vally_2config_8h_1afaa62991928fb9fb18ff0db62a040aba">u32</link>&#32;<link linkend="_glad_8h_1aedcdb207abe418517ae3def4e91c9d12">indices</link>[<link linkend="_renderer_8h_1a01df4bd065557a795f6bccb267484ec3">RENDERER_MAX_INDEX</link>];
+37 &#32;&#32;<link linkend="_include_2vally_2config_8h_1afaa62991928fb9fb18ff0db62a040aba">u32</link>&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>&#32;=&#32;0;
+38 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;<link linkend="_renderer_8h_1a01df4bd065557a795f6bccb267484ec3">RENDERER_MAX_INDEX</link>;&#32;i&#32;+=&#32;6)&#32;{
+39 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1aedcdb207abe418517ae3def4e91c9d12">indices</link>[i&#32;+&#32;0]&#32;=&#32;0&#32;+&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>;
+40 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1aedcdb207abe418517ae3def4e91c9d12">indices</link>[i&#32;+&#32;1]&#32;=&#32;1&#32;+&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>;
+41 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1aedcdb207abe418517ae3def4e91c9d12">indices</link>[i&#32;+&#32;2]&#32;=&#32;2&#32;+&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>;
+42 
+43 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1aedcdb207abe418517ae3def4e91c9d12">indices</link>[i&#32;+&#32;3]&#32;=&#32;2&#32;+&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>;
+44 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1aedcdb207abe418517ae3def4e91c9d12">indices</link>[i&#32;+&#32;4]&#32;=&#32;3&#32;+&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>;
+45 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1aedcdb207abe418517ae3def4e91c9d12">indices</link>[i&#32;+&#32;5]&#32;=&#32;0&#32;+&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>;
+46 
+47 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>&#32;+=&#32;4;
+48 &#32;&#32;}
+49 
+50 &#32;&#32;<link linkend="_glad_8h_1a3b3a3f8200f094b781e9f61e2f19fc50">glBindBuffer</link>(<link linkend="_glad_8h_1ad26c63125c72cbf0347b589d51676e6a">GL_ELEMENT_ARRAY_BUFFER</link>,&#32;<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>-&gt;ebo);
+51 &#32;&#32;<link linkend="_glad_8h_1a9419a03f5c46e2758f884e9c56d92b6a">glBufferData</link>(<link linkend="_glad_8h_1ad26c63125c72cbf0347b589d51676e6a">GL_ELEMENT_ARRAY_BUFFER</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glad_8h_1aedcdb207abe418517ae3def4e91c9d12">indices</link>),&#32;<link linkend="_glad_8h_1aedcdb207abe418517ae3def4e91c9d12">indices</link>,&#32;<link linkend="_glad_8h_1ab7dffdc215fbbe75b6ccacfecfc14648">GL_STATIC_DRAW</link>);
+52 
+53 &#32;&#32;<link linkend="_glad_8h_1a3b3a3f8200f094b781e9f61e2f19fc50">glBindBuffer</link>(<link linkend="_glad_8h_1a7180045dcb52b22af2cd0366026bc3ed">GL_ARRAY_BUFFER</link>,&#32;0);
+54 &#32;&#32;<link linkend="_glad_8h_1a4c13098a615d32e7f04aa4105149564f">glBindVertexArray</link>(0);
+55 
+56 &#32;&#32;<link linkend="_resources_8c_1a16641af0e8abb4648df5964f32f30adb">resources_add</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>,&#32;<link linkend="_buffer_8c_1a537219af5df0e5eda574b334834490c5">buffer_destroy</link>);
+57 
+58 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>;
+59 }
+</programlisting>    </section><anchor xml:id="_buffer_8c_1a537219af5df0e5eda574b334834490c5"/>    <section>
+    <title>buffer_destroy()</title>
+<indexterm><primary>buffer_destroy</primary><secondary>buffer.c</secondary></indexterm>
+<indexterm><primary>buffer.c</primary><secondary>buffer_destroy</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> buffer_destroy (<link linkend="_structbuffer">buffer</link> * buf)</computeroutput></para><para>
+Definition at line 61 of file buffer.c.</para>
+<programlisting>61 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+62 &#32;&#32;<link linkend="_glad_8h_1a214386aefdc30034088a21a6bccfbcbd">glDeleteVertexArrays</link>(1,&#32;&amp;<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>-&gt;vao);
+63 &#32;&#32;<link linkend="_glad_8h_1a55652a3f087bb13267a5481b6ff1fe19">glDeleteBuffers</link>(1,&#32;&amp;<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>-&gt;vbo);
+64 &#32;&#32;<link linkend="_glad_8h_1a55652a3f087bb13267a5481b6ff1fe19">glDeleteBuffers</link>(1,&#32;&amp;<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>-&gt;ebo);
+65 }
+</programlisting>    </section><anchor xml:id="_buffer_8c_1a1167efc273616c5dc7541d68a5488ed4"/>    <section>
+    <title>buffer_set_data()</title>
+<indexterm><primary>buffer_set_data</primary><secondary>buffer.c</secondary></indexterm>
+<indexterm><primary>buffer.c</primary><secondary>buffer_set_data</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> buffer_set_data (<link linkend="_structbuffer">buffer</link> * buf, <link linkend="_include_2vally_2config_8h_1a48d6cd8e4135fb2ff7e7f2dac84089ec">i32</link> size, const <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * data)</computeroutput></para><para>
+Definition at line 74 of file buffer.c.</para>
+<programlisting>74 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+75 &#32;&#32;<link linkend="_glad_8h_1a3b3a3f8200f094b781e9f61e2f19fc50">glBindBuffer</link>(<link linkend="_glad_8h_1a7180045dcb52b22af2cd0366026bc3ed">GL_ARRAY_BUFFER</link>,&#32;<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>-&gt;vbo);
+76 &#32;&#32;<link linkend="_glad_8h_1ab275ed802ac5db3e6b97973aab9d48e2">glBufferSubData</link>(<link linkend="_glad_8h_1a7180045dcb52b22af2cd0366026bc3ed">GL_ARRAY_BUFFER</link>,&#32;0,&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>,&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>);
+77 }
+</programlisting>    </section><anchor xml:id="_buffer_8c_1a819e182a31edeb87b39af26beb49f24e"/>    <section>
+    <title>buffer_unbind()</title>
+<indexterm><primary>buffer_unbind</primary><secondary>buffer.c</secondary></indexterm>
+<indexterm><primary>buffer.c</primary><secondary>buffer_unbind</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> buffer_unbind ( )</computeroutput></para><para>
+Definition at line 71 of file buffer.c.</para>
+<programlisting>71 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+72 &#32;&#32;<link linkend="_glad_8h_1a4c13098a615d32e7f04aa4105149564f">glBindVertexArray</link>(0);
+73 }
+</programlisting></section>
+</section>
+</section>

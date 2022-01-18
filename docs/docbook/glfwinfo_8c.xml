@@ -1,0 +1,928 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_glfwinfo_8c">
+<title>deps/glfw/tests/glfwinfo.c File Reference</title>
+<indexterm><primary>deps/glfw/tests/glfwinfo.c</primary></indexterm>
+<programlisting>#include &lt;glad/gl.h&gt;
+#include &lt;glad/vulkan.h&gt;
+#include &lt;GLFW/glfw3.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdbool.h&gt;
+#include &quot;getopt.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1a09f9c3bf094ecaf707c673924ffd615a">GLAD_GL_IMPLEMENTATION</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1abbba9cf294570728cf5bd2f8538158bd">GLAD_VULKAN_IMPLEMENTATION</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1a088324ad8995e3eb76024e3e79083d48">GLFW_INCLUDE_NONE</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1ad86628ae9a6cd0856e18e3d4597592c2">API_NAME_OPENGL</link>   &quot;gl&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1a511755371b01da0ad04356d8748bf00e">API_NAME_OPENGL_ES</link>   &quot;es&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1a4759ca30eeb9b561d9f92620a0bf5a72">API_NAME_NATIVE</link>   &quot;native&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1ab81c2e58deb2f086cd66b5b02d02bbdd">API_NAME_EGL</link>   &quot;egl&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1ae378fdbbc6634c234caa5b184ccfa8cb">API_NAME_OSMESA</link>   &quot;osmesa&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1aa17e97eac64dd5c8a67d61aee4d04e18">PROFILE_NAME_CORE</link>   &quot;core&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1acfc211849aa8dff75e8f07fd2ef6d202">PROFILE_NAME_COMPAT</link>   &quot;compat&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1aeddf6d1cc208f883f552be3d8e85be20">STRATEGY_NAME_NONE</link>   &quot;none&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1ad1bebefcc4d979fa8d2b0903446c8503">STRATEGY_NAME_LOSE</link>   &quot;lose&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1ab69925e9bbb02d4b381d4ff402a20dc0">BEHAVIOR_NAME_NONE</link>   &quot;none&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1a38d80d41276fa757605653c264534b05">BEHAVIOR_NAME_FLUSH</link>   &quot;flush&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1ac87828683516dacd1c160fd8468ac1b4">ANGLE_TYPE_OPENGL</link>   &quot;gl&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1ad10f7dfd5a01a61de533a3305224fb2f">ANGLE_TYPE_OPENGLES</link>   &quot;es&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1ab634c975a83fe31e2ed466dc021be781">ANGLE_TYPE_D3D9</link>   &quot;d3d9&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1a9451fcd3819c6c6f9274f637a6be8208">ANGLE_TYPE_D3D11</link>   &quot;d3d11&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1a68a797e0d8d26a73371a118d12683cc9">ANGLE_TYPE_VULKAN</link>   &quot;vk&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1ac9c29d1a32bbb9753de904dda9a6442d">ANGLE_TYPE_METAL</link>   &quot;mtl&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1a001880f209dd16b55a01d2474b5f7023">PLATFORM_NAME_ANY</link>   &quot;any&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1a37d124eea3879336a05e8a1d66b0372d">PLATFORM_NAME_WIN32</link>   &quot;win32&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1a426361224e9af65d2d0d8bc151c2463e">PLATFORM_NAME_COCOA</link>   &quot;cooca&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1ac6f904571614f2f51b60d89a2c4180b8">PLATFORM_NAME_WL</link>   &quot;wayland&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1ad88d6566659a82178076296637152005">PLATFORM_NAME_X11</link>   &quot;x11&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_glfwinfo_8c_1a1d0ad63a34404afede76d0cb9bcd4d82">PLATFORM_NAME_NULL</link>   &quot;null&quot;</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_glfwinfo_8c_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_glfwinfo_8c_1a9451fcd3819c6c6f9274f637a6be8208"/>    <section>
+    <title>ANGLE_TYPE_D3D11</title>
+<indexterm><primary>ANGLE_TYPE_D3D11</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>ANGLE_TYPE_D3D11</secondary></indexterm>
+<para><computeroutput>#define ANGLE_TYPE_D3D11   &quot;d3d11&quot;</computeroutput></para><para>
+Definition at line 63 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1ab634c975a83fe31e2ed466dc021be781"/>    <section>
+    <title>ANGLE_TYPE_D3D9</title>
+<indexterm><primary>ANGLE_TYPE_D3D9</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>ANGLE_TYPE_D3D9</secondary></indexterm>
+<para><computeroutput>#define ANGLE_TYPE_D3D9   &quot;d3d9&quot;</computeroutput></para><para>
+Definition at line 62 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1ac9c29d1a32bbb9753de904dda9a6442d"/>    <section>
+    <title>ANGLE_TYPE_METAL</title>
+<indexterm><primary>ANGLE_TYPE_METAL</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>ANGLE_TYPE_METAL</secondary></indexterm>
+<para><computeroutput>#define ANGLE_TYPE_METAL   &quot;mtl&quot;</computeroutput></para><para>
+Definition at line 65 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1ac87828683516dacd1c160fd8468ac1b4"/>    <section>
+    <title>ANGLE_TYPE_OPENGL</title>
+<indexterm><primary>ANGLE_TYPE_OPENGL</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>ANGLE_TYPE_OPENGL</secondary></indexterm>
+<para><computeroutput>#define ANGLE_TYPE_OPENGL   &quot;gl&quot;</computeroutput></para><para>
+Definition at line 60 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1ad10f7dfd5a01a61de533a3305224fb2f"/>    <section>
+    <title>ANGLE_TYPE_OPENGLES</title>
+<indexterm><primary>ANGLE_TYPE_OPENGLES</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>ANGLE_TYPE_OPENGLES</secondary></indexterm>
+<para><computeroutput>#define ANGLE_TYPE_OPENGLES   &quot;es&quot;</computeroutput></para><para>
+Definition at line 61 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1a68a797e0d8d26a73371a118d12683cc9"/>    <section>
+    <title>ANGLE_TYPE_VULKAN</title>
+<indexterm><primary>ANGLE_TYPE_VULKAN</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>ANGLE_TYPE_VULKAN</secondary></indexterm>
+<para><computeroutput>#define ANGLE_TYPE_VULKAN   &quot;vk&quot;</computeroutput></para><para>
+Definition at line 64 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1ab81c2e58deb2f086cd66b5b02d02bbdd"/>    <section>
+    <title>API_NAME_EGL</title>
+<indexterm><primary>API_NAME_EGL</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>API_NAME_EGL</secondary></indexterm>
+<para><computeroutput>#define API_NAME_EGL   &quot;egl&quot;</computeroutput></para><para>
+Definition at line 48 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1a4759ca30eeb9b561d9f92620a0bf5a72"/>    <section>
+    <title>API_NAME_NATIVE</title>
+<indexterm><primary>API_NAME_NATIVE</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>API_NAME_NATIVE</secondary></indexterm>
+<para><computeroutput>#define API_NAME_NATIVE   &quot;native&quot;</computeroutput></para><para>
+Definition at line 47 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1ad86628ae9a6cd0856e18e3d4597592c2"/>    <section>
+    <title>API_NAME_OPENGL</title>
+<indexterm><primary>API_NAME_OPENGL</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>API_NAME_OPENGL</secondary></indexterm>
+<para><computeroutput>#define API_NAME_OPENGL   &quot;gl&quot;</computeroutput></para><para>
+Definition at line 44 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1a511755371b01da0ad04356d8748bf00e"/>    <section>
+    <title>API_NAME_OPENGL_ES</title>
+<indexterm><primary>API_NAME_OPENGL_ES</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>API_NAME_OPENGL_ES</secondary></indexterm>
+<para><computeroutput>#define API_NAME_OPENGL_ES   &quot;es&quot;</computeroutput></para><para>
+Definition at line 45 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1ae378fdbbc6634c234caa5b184ccfa8cb"/>    <section>
+    <title>API_NAME_OSMESA</title>
+<indexterm><primary>API_NAME_OSMESA</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>API_NAME_OSMESA</secondary></indexterm>
+<para><computeroutput>#define API_NAME_OSMESA   &quot;osmesa&quot;</computeroutput></para><para>
+Definition at line 49 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1a38d80d41276fa757605653c264534b05"/>    <section>
+    <title>BEHAVIOR_NAME_FLUSH</title>
+<indexterm><primary>BEHAVIOR_NAME_FLUSH</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>BEHAVIOR_NAME_FLUSH</secondary></indexterm>
+<para><computeroutput>#define BEHAVIOR_NAME_FLUSH   &quot;flush&quot;</computeroutput></para><para>
+Definition at line 58 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1ab69925e9bbb02d4b381d4ff402a20dc0"/>    <section>
+    <title>BEHAVIOR_NAME_NONE</title>
+<indexterm><primary>BEHAVIOR_NAME_NONE</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>BEHAVIOR_NAME_NONE</secondary></indexterm>
+<para><computeroutput>#define BEHAVIOR_NAME_NONE   &quot;none&quot;</computeroutput></para><para>
+Definition at line 57 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1a09f9c3bf094ecaf707c673924ffd615a"/>    <section>
+    <title>GLAD_GL_IMPLEMENTATION</title>
+<indexterm><primary>GLAD_GL_IMPLEMENTATION</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>GLAD_GL_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define GLAD_GL_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 26 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1abbba9cf294570728cf5bd2f8538158bd"/>    <section>
+    <title>GLAD_VULKAN_IMPLEMENTATION</title>
+<indexterm><primary>GLAD_VULKAN_IMPLEMENTATION</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>GLAD_VULKAN_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define GLAD_VULKAN_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 28 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1a088324ad8995e3eb76024e3e79083d48"/>    <section>
+    <title>GLFW_INCLUDE_NONE</title>
+<indexterm><primary>GLFW_INCLUDE_NONE</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>GLFW_INCLUDE_NONE</secondary></indexterm>
+<para><computeroutput>#define GLFW_INCLUDE_NONE</computeroutput></para><para>
+Definition at line 30 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1a001880f209dd16b55a01d2474b5f7023"/>    <section>
+    <title>PLATFORM_NAME_ANY</title>
+<indexterm><primary>PLATFORM_NAME_ANY</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>PLATFORM_NAME_ANY</secondary></indexterm>
+<para><computeroutput>#define PLATFORM_NAME_ANY   &quot;any&quot;</computeroutput></para><para>
+Definition at line 67 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1a426361224e9af65d2d0d8bc151c2463e"/>    <section>
+    <title>PLATFORM_NAME_COCOA</title>
+<indexterm><primary>PLATFORM_NAME_COCOA</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>PLATFORM_NAME_COCOA</secondary></indexterm>
+<para><computeroutput>#define PLATFORM_NAME_COCOA   &quot;cooca&quot;</computeroutput></para><para>
+Definition at line 69 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1a1d0ad63a34404afede76d0cb9bcd4d82"/>    <section>
+    <title>PLATFORM_NAME_NULL</title>
+<indexterm><primary>PLATFORM_NAME_NULL</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>PLATFORM_NAME_NULL</secondary></indexterm>
+<para><computeroutput>#define PLATFORM_NAME_NULL   &quot;null&quot;</computeroutput></para><para>
+Definition at line 72 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1a37d124eea3879336a05e8a1d66b0372d"/>    <section>
+    <title>PLATFORM_NAME_WIN32</title>
+<indexterm><primary>PLATFORM_NAME_WIN32</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>PLATFORM_NAME_WIN32</secondary></indexterm>
+<para><computeroutput>#define PLATFORM_NAME_WIN32   &quot;win32&quot;</computeroutput></para><para>
+Definition at line 68 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1ac6f904571614f2f51b60d89a2c4180b8"/>    <section>
+    <title>PLATFORM_NAME_WL</title>
+<indexterm><primary>PLATFORM_NAME_WL</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>PLATFORM_NAME_WL</secondary></indexterm>
+<para><computeroutput>#define PLATFORM_NAME_WL   &quot;wayland&quot;</computeroutput></para><para>
+Definition at line 70 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1ad88d6566659a82178076296637152005"/>    <section>
+    <title>PLATFORM_NAME_X11</title>
+<indexterm><primary>PLATFORM_NAME_X11</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>PLATFORM_NAME_X11</secondary></indexterm>
+<para><computeroutput>#define PLATFORM_NAME_X11   &quot;x11&quot;</computeroutput></para><para>
+Definition at line 71 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1acfc211849aa8dff75e8f07fd2ef6d202"/>    <section>
+    <title>PROFILE_NAME_COMPAT</title>
+<indexterm><primary>PROFILE_NAME_COMPAT</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>PROFILE_NAME_COMPAT</secondary></indexterm>
+<para><computeroutput>#define PROFILE_NAME_COMPAT   &quot;compat&quot;</computeroutput></para><para>
+Definition at line 52 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1aa17e97eac64dd5c8a67d61aee4d04e18"/>    <section>
+    <title>PROFILE_NAME_CORE</title>
+<indexterm><primary>PROFILE_NAME_CORE</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>PROFILE_NAME_CORE</secondary></indexterm>
+<para><computeroutput>#define PROFILE_NAME_CORE   &quot;core&quot;</computeroutput></para><para>
+Definition at line 51 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1ad1bebefcc4d979fa8d2b0903446c8503"/>    <section>
+    <title>STRATEGY_NAME_LOSE</title>
+<indexterm><primary>STRATEGY_NAME_LOSE</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>STRATEGY_NAME_LOSE</secondary></indexterm>
+<para><computeroutput>#define STRATEGY_NAME_LOSE   &quot;lose&quot;</computeroutput></para><para>
+Definition at line 55 of file glfwinfo.c.</para>
+    </section><anchor xml:id="_glfwinfo_8c_1aeddf6d1cc208f883f552be3d8e85be20"/>    <section>
+    <title>STRATEGY_NAME_NONE</title>
+<indexterm><primary>STRATEGY_NAME_NONE</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>STRATEGY_NAME_NONE</secondary></indexterm>
+<para><computeroutput>#define STRATEGY_NAME_NONE   &quot;none&quot;</computeroutput></para><para>
+Definition at line 54 of file glfwinfo.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_glfwinfo_8c_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>glfwinfo.c</secondary></indexterm>
+<indexterm><primary>glfwinfo.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 379 of file glfwinfo.c.</para>
+<programlisting>380 {
+381 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;ch;
+382 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;list_extensions&#32;=&#32;<emphasis role="keyword">false</emphasis>,&#32;list_layers&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+383 
+384 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;These&#32;duplicate&#32;the&#32;defaults&#32;for&#32;each&#32;hint</emphasis>
+385 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;platform&#32;=&#32;<link linkend="_group__init_1ga18b2d37374d0dea28cd69194fa85b859">GLFW_ANY_PLATFORM</link>;
+386 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;client_api&#32;=&#32;<link linkend="_glfw3_8h_1a01b3f66db266341425e9abee6b257db2">GLFW_OPENGL_API</link>;
+387 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;context_major&#32;=&#32;1;
+388 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;context_minor&#32;=&#32;0;
+389 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;context_release&#32;=&#32;<link linkend="_glfw3_8h_1a6b47d806f285efe9bfd7aeec667297ee">GLFW_ANY_RELEASE_BEHAVIOR</link>;
+390 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;context_creation_api&#32;=&#32;<link linkend="_glfw3_8h_1a0494c9bfd3f584ab41e6dbeeaa0e6a19">GLFW_NATIVE_CONTEXT_API</link>;
+391 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;context_robustness&#32;=&#32;<link linkend="_glfw3_8h_1a8b306cb27f5bb0d6d67c7356a0e0fc34">GLFW_NO_ROBUSTNESS</link>;
+392 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;context_debug&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+393 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;context_no_error&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+394 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;opengl_forward&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+395 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;opengl_profile&#32;=&#32;<link linkend="_glfw3_8h_1ad6f2335d6f21cc9bab96633b1c111d5f">GLFW_OPENGL_ANY_PROFILE</link>;
+396 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;fb_red_bits&#32;=&#32;8;
+397 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;fb_green_bits&#32;=&#32;8;
+398 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;fb_blue_bits&#32;=&#32;8;
+399 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;fb_alpha_bits&#32;=&#32;8;
+400 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;fb_depth_bits&#32;=&#32;24;
+401 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;fb_stencil_bits&#32;=&#32;8;
+402 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;fb_accum_red_bits&#32;=&#32;0;
+403 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;fb_accum_green_bits&#32;=&#32;0;
+404 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;fb_accum_blue_bits&#32;=&#32;0;
+405 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;fb_accum_alpha_bits&#32;=&#32;0;
+406 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;fb_aux_buffers&#32;=&#32;0;
+407 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;fb_samples&#32;=&#32;0;
+408 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;fb_stereo&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+409 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;fb_srgb&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+410 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;fb_doublebuffer&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+411 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;angle_type&#32;=&#32;<link linkend="_glfw3_8h_1ae78e673449c2a2b8c560ca1b1e283228">GLFW_ANGLE_PLATFORM_TYPE_NONE</link>;
+412 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;cocoa_graphics_switching&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+413 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;disable_xcb_surface&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+414 
+415 &#32;&#32;&#32;&#32;<emphasis role="keyword">enum</emphasis>&#32;{&#32;PLATFORM,&#32;CLIENT,&#32;CONTEXT,&#32;BEHAVIOR,&#32;DEBUG_CONTEXT,&#32;FORWARD,&#32;HELP,
+416 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;EXTENSIONS,&#32;LAYERS,
+417 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;MAJOR,&#32;MINOR,&#32;PROFILE,&#32;ROBUSTNESS,&#32;VERSION,
+418 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;REDBITS,&#32;GREENBITS,&#32;BLUEBITS,&#32;ALPHABITS,&#32;DEPTHBITS,&#32;STENCILBITS,
+419 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ACCUMREDBITS,&#32;ACCUMGREENBITS,&#32;ACCUMBLUEBITS,&#32;ACCUMALPHABITS,
+420 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;AUXBUFFERS,&#32;SAMPLES,&#32;STEREO,&#32;SRGB,&#32;SINGLEBUFFER,&#32;NOERROR_SRSLY,
+421 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ANGLE_TYPE,&#32;GRAPHICS_SWITCHING,&#32;XCB_SURFACE&#32;};
+422 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keyword">struct&#32;</emphasis><link linkend="_structoption">option</link>&#32;options[]&#32;=
+423 &#32;&#32;&#32;&#32;{
+424 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;platform&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;PLATFORM&#32;},
+425 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;behavior&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;BEHAVIOR&#32;},
+426 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;client-api&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;CLIENT&#32;},
+427 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;context-api&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;CONTEXT&#32;},
+428 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;debug&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;DEBUG_CONTEXT&#32;},
+429 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;forward&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;FORWARD&#32;},
+430 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;help&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;HELP&#32;},
+431 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;list-extensions&quot;</emphasis>,&#32;&#32;&#32;&#32;0,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;EXTENSIONS&#32;},
+432 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;list-layers&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;LAYERS&#32;},
+433 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;major&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;MAJOR&#32;},
+434 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;minor&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;MINOR&#32;},
+435 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;profile&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;PROFILE&#32;},
+436 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;robustness&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;ROBUSTNESS&#32;},
+437 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;version&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;VERSION&#32;},
+438 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;red-bits&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;REDBITS&#32;},
+439 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;green-bits&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;GREENBITS&#32;},
+440 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;blue-bits&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;BLUEBITS&#32;},
+441 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;alpha-bits&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;ALPHABITS&#32;},
+442 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;depth-bits&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;DEPTHBITS&#32;},
+443 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;stencil-bits&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;STENCILBITS&#32;},
+444 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;accum-red-bits&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;ACCUMREDBITS&#32;},
+445 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;accum-green-bits&quot;</emphasis>,&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;ACCUMGREENBITS&#32;},
+446 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;accum-blue-bits&quot;</emphasis>,&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;ACCUMBLUEBITS&#32;},
+447 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;accum-alpha-bits&quot;</emphasis>,&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;ACCUMALPHABITS&#32;},
+448 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;aux-buffers&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;AUXBUFFERS&#32;},
+449 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;samples&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;SAMPLES&#32;},
+450 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;stereo&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;STEREO&#32;},
+451 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;srgb&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;SRGB&#32;},
+452 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;singlebuffer&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;0,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;SINGLEBUFFER&#32;},
+453 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;no-error&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;NOERROR_SRSLY&#32;},
+454 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;angle-type&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;ANGLE_TYPE&#32;},
+455 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;graphics-switching&quot;</emphasis>,&#32;0,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;GRAPHICS_SWITCHING&#32;},
+456 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<emphasis role="stringliteral">&quot;vk-xcb-surface&quot;</emphasis>,&#32;&#32;&#32;&#32;&#32;0,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;XCB_SURFACE&#32;},
+457 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;0,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;0&#32;}
+458 &#32;&#32;&#32;&#32;};
+459 
+460 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;((ch&#32;=&#32;<link linkend="_getopt_8c_1a19a25d4c484d212220cad56a69c426b0">getopt_long</link>(argc,&#32;argv,&#32;<emphasis role="stringliteral">&quot;a:b:c:dfhlm:n:p:s:v&quot;</emphasis>,&#32;options,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>))&#32;!=&#32;-1)
+461 &#32;&#32;&#32;&#32;{
+462 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(ch)
+463 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+464 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;PLATFORM:
+465 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcasecmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1a001880f209dd16b55a01d2474b5f7023">PLATFORM_NAME_ANY</link>)&#32;==&#32;0)
+466 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;platform&#32;=&#32;<link linkend="_group__init_1ga18b2d37374d0dea28cd69194fa85b859">GLFW_ANY_PLATFORM</link>;
+467 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcasecmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1a37d124eea3879336a05e8a1d66b0372d">PLATFORM_NAME_WIN32</link>)&#32;==&#32;0)
+468 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;platform&#32;=&#32;<link linkend="_group__init_1ga8d3d17df2ab57492cef665da52c603a1">GLFW_PLATFORM_WIN32</link>;
+469 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcasecmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1a426361224e9af65d2d0d8bc151c2463e">PLATFORM_NAME_COCOA</link>)&#32;==&#32;0)
+470 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;platform&#32;=&#32;<link linkend="_group__init_1ga83b18714254f75bc2f0cdbafa0f10b6b">GLFW_PLATFORM_COCOA</link>;
+471 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcasecmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1ac6f904571614f2f51b60d89a2c4180b8">PLATFORM_NAME_WL</link>)&#32;==&#32;0)
+472 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;platform&#32;=&#32;<link linkend="_group__init_1gac4b08906a3cbf26c518a4a543eedd740">GLFW_PLATFORM_WAYLAND</link>;
+473 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcasecmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1ad88d6566659a82178076296637152005">PLATFORM_NAME_X11</link>)&#32;==&#32;0)
+474 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;platform&#32;=&#32;<link linkend="_group__init_1gaf5333f3933e9c248a00cfda6523f386b">GLFW_PLATFORM_X11</link>;
+475 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcasecmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1a1d0ad63a34404afede76d0cb9bcd4d82">PLATFORM_NAME_NULL</link>)&#32;==&#32;0)
+476 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;platform&#32;=&#32;<link linkend="_group__init_1gac06fad5a4866ae7a1d7b2675fac72d7f">GLFW_PLATFORM_NULL</link>;
+477 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+478 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+479 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afb85c5d9b1bce96aa3b530d581194d1a">usage</link>();
+480 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+481 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+482 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+483 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;a&apos;</emphasis>:
+484 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;CLIENT:
+485 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcasecmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1ad86628ae9a6cd0856e18e3d4597592c2">API_NAME_OPENGL</link>)&#32;==&#32;0)
+486 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;client_api&#32;=&#32;<link linkend="_glfw3_8h_1a01b3f66db266341425e9abee6b257db2">GLFW_OPENGL_API</link>;
+487 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcasecmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1a511755371b01da0ad04356d8748bf00e">API_NAME_OPENGL_ES</link>)&#32;==&#32;0)
+488 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;client_api&#32;=&#32;<link linkend="_glfw3_8h_1a28d9b3bc6c2a522d815c8e146595051f">GLFW_OPENGL_ES_API</link>;
+489 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+490 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+491 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afb85c5d9b1bce96aa3b530d581194d1a">usage</link>();
+492 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+493 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+494 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+495 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;b&apos;</emphasis>:
+496 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;BEHAVIOR:
+497 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcasecmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1ab69925e9bbb02d4b381d4ff402a20dc0">BEHAVIOR_NAME_NONE</link>)&#32;==&#32;0)
+498 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;context_release&#32;=&#32;<link linkend="_glfw3_8h_1afca09088eccacdce4b59036cfae349c5">GLFW_RELEASE_BEHAVIOR_NONE</link>;
+499 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcasecmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1a38d80d41276fa757605653c264534b05">BEHAVIOR_NAME_FLUSH</link>)&#32;==&#32;0)
+500 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;context_release&#32;=&#32;<link linkend="_glfw3_8h_1a999961d391db49cb4f949c1dece0e13b">GLFW_RELEASE_BEHAVIOR_FLUSH</link>;
+501 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+502 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+503 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afb85c5d9b1bce96aa3b530d581194d1a">usage</link>();
+504 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+505 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+506 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+507 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;c&apos;</emphasis>:
+508 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;CONTEXT:
+509 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcasecmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1a4759ca30eeb9b561d9f92620a0bf5a72">API_NAME_NATIVE</link>)&#32;==&#32;0)
+510 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;context_creation_api&#32;=&#32;<link linkend="_glfw3_8h_1a0494c9bfd3f584ab41e6dbeeaa0e6a19">GLFW_NATIVE_CONTEXT_API</link>;
+511 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcasecmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1ab81c2e58deb2f086cd66b5b02d02bbdd">API_NAME_EGL</link>)&#32;==&#32;0)
+512 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;context_creation_api&#32;=&#32;<link linkend="_glfw3_8h_1a03cf65c9ab01fc8b872ba58842c531c9">GLFW_EGL_CONTEXT_API</link>;
+513 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcasecmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1ae378fdbbc6634c234caa5b184ccfa8cb">API_NAME_OSMESA</link>)&#32;==&#32;0)
+514 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;context_creation_api&#32;=&#32;<link linkend="_glfw3_8h_1afd34a473af9fa81f317910ea371b19e3">GLFW_OSMESA_CONTEXT_API</link>;
+515 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+516 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+517 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afb85c5d9b1bce96aa3b530d581194d1a">usage</link>();
+518 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+519 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+520 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+521 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;d&apos;</emphasis>:
+522 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;DEBUG_CONTEXT:
+523 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;context_debug&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+524 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+525 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;f&apos;</emphasis>:
+526 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;FORWARD:
+527 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;opengl_forward&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+528 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+529 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;h&apos;</emphasis>:
+530 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;HELP:
+531 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afb85c5d9b1bce96aa3b530d581194d1a">usage</link>();
+532 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_SUCCESS);
+533 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;l&apos;</emphasis>:
+534 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;EXTENSIONS:
+535 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;list_extensions&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+536 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+537 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;LAYERS:
+538 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;list_layers&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+539 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+540 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;m&apos;</emphasis>:
+541 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;MAJOR:
+542 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;context_major&#32;=&#32;atoi(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>);
+543 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+544 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;n&apos;</emphasis>:
+545 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;MINOR:
+546 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;context_minor&#32;=&#32;atoi(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>);
+547 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+548 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;p&apos;</emphasis>:
+549 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;PROFILE:
+550 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcasecmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1aa17e97eac64dd5c8a67d61aee4d04e18">PROFILE_NAME_CORE</link>)&#32;==&#32;0)
+551 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;opengl_profile&#32;=&#32;<link linkend="_glfw3_8h_1af094bb16da76f66ebceb19ee213b3de8">GLFW_OPENGL_CORE_PROFILE</link>;
+552 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcasecmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1acfc211849aa8dff75e8f07fd2ef6d202">PROFILE_NAME_COMPAT</link>)&#32;==&#32;0)
+553 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;opengl_profile&#32;=&#32;<link linkend="_glfw3_8h_1ac06b663d79c8fcf04669cc8fcc0b7670">GLFW_OPENGL_COMPAT_PROFILE</link>;
+554 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+555 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+556 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afb85c5d9b1bce96aa3b530d581194d1a">usage</link>();
+557 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+558 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+559 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+560 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;s&apos;</emphasis>:
+561 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;ROBUSTNESS:
+562 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcasecmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1aeddf6d1cc208f883f552be3d8e85be20">STRATEGY_NAME_NONE</link>)&#32;==&#32;0)
+563 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;context_robustness&#32;=&#32;<link linkend="_glfw3_8h_1aee84a679230d205005e22487ff678a85">GLFW_NO_RESET_NOTIFICATION</link>;
+564 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcasecmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1ad1bebefcc4d979fa8d2b0903446c8503">STRATEGY_NAME_LOSE</link>)&#32;==&#32;0)
+565 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;context_robustness&#32;=&#32;<link linkend="_glfw3_8h_1aec1132f245143fc915b2f0995228564c">GLFW_LOSE_CONTEXT_ON_RESET</link>;
+566 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+567 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+568 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afb85c5d9b1bce96aa3b530d581194d1a">usage</link>();
+569 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+570 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+571 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+572 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;v&apos;</emphasis>:
+573 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;VERSION:
+574 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;print_version();
+575 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_SUCCESS);
+576 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;REDBITS:
+577 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<emphasis role="stringliteral">&quot;-&quot;</emphasis>)&#32;==&#32;0)
+578 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_red_bits&#32;=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>;
+579 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+580 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_red_bits&#32;=&#32;atoi(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>);
+581 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+582 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;GREENBITS:
+583 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<emphasis role="stringliteral">&quot;-&quot;</emphasis>)&#32;==&#32;0)
+584 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_green_bits&#32;=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>;
+585 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+586 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_green_bits&#32;=&#32;atoi(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>);
+587 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+588 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;BLUEBITS:
+589 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<emphasis role="stringliteral">&quot;-&quot;</emphasis>)&#32;==&#32;0)
+590 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_blue_bits&#32;=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>;
+591 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+592 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_blue_bits&#32;=&#32;atoi(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>);
+593 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+594 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;ALPHABITS:
+595 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<emphasis role="stringliteral">&quot;-&quot;</emphasis>)&#32;==&#32;0)
+596 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_alpha_bits&#32;=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>;
+597 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+598 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_alpha_bits&#32;=&#32;atoi(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>);
+599 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+600 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;DEPTHBITS:
+601 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<emphasis role="stringliteral">&quot;-&quot;</emphasis>)&#32;==&#32;0)
+602 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_depth_bits&#32;=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>;
+603 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+604 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_depth_bits&#32;=&#32;atoi(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>);
+605 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+606 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;STENCILBITS:
+607 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<emphasis role="stringliteral">&quot;-&quot;</emphasis>)&#32;==&#32;0)
+608 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_stencil_bits&#32;=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>;
+609 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+610 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_stencil_bits&#32;=&#32;atoi(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>);
+611 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+612 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;ACCUMREDBITS:
+613 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<emphasis role="stringliteral">&quot;-&quot;</emphasis>)&#32;==&#32;0)
+614 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_accum_red_bits&#32;=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>;
+615 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+616 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_accum_red_bits&#32;=&#32;atoi(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>);
+617 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+618 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;ACCUMGREENBITS:
+619 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<emphasis role="stringliteral">&quot;-&quot;</emphasis>)&#32;==&#32;0)
+620 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_accum_green_bits&#32;=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>;
+621 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+622 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_accum_green_bits&#32;=&#32;atoi(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>);
+623 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+624 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;ACCUMBLUEBITS:
+625 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<emphasis role="stringliteral">&quot;-&quot;</emphasis>)&#32;==&#32;0)
+626 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_accum_blue_bits&#32;=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>;
+627 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+628 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_accum_blue_bits&#32;=&#32;atoi(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>);
+629 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+630 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;ACCUMALPHABITS:
+631 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<emphasis role="stringliteral">&quot;-&quot;</emphasis>)&#32;==&#32;0)
+632 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_accum_alpha_bits&#32;=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>;
+633 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+634 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_accum_alpha_bits&#32;=&#32;atoi(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>);
+635 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+636 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;AUXBUFFERS:
+637 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<emphasis role="stringliteral">&quot;-&quot;</emphasis>)&#32;==&#32;0)
+638 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_aux_buffers&#32;=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>;
+639 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+640 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_aux_buffers&#32;=&#32;atoi(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>);
+641 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+642 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SAMPLES:
+643 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<emphasis role="stringliteral">&quot;-&quot;</emphasis>)&#32;==&#32;0)
+644 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_samples&#32;=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>;
+645 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+646 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_samples&#32;=&#32;atoi(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>);
+647 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+648 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;STEREO:
+649 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_stereo&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+650 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+651 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SRGB:
+652 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_srgb&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+653 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+654 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SINGLEBUFFER:
+655 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fb_doublebuffer&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+656 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+657 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;NOERROR_SRSLY:
+658 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;context_no_error&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+659 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+660 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;ANGLE_TYPE:
+661 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1ac87828683516dacd1c160fd8468ac1b4">ANGLE_TYPE_OPENGL</link>)&#32;==&#32;0)
+662 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;angle_type&#32;=&#32;<link linkend="_glfw3_8h_1ad8d9e97ed7790811470366b338833623">GLFW_ANGLE_PLATFORM_TYPE_OPENGL</link>;
+663 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1ad10f7dfd5a01a61de533a3305224fb2f">ANGLE_TYPE_OPENGLES</link>)&#32;==&#32;0)
+664 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;angle_type&#32;=&#32;<link linkend="_glfw3_8h_1a0003c089da020cbf957218e70245bb65">GLFW_ANGLE_PLATFORM_TYPE_OPENGLES</link>;
+665 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1ab634c975a83fe31e2ed466dc021be781">ANGLE_TYPE_D3D9</link>)&#32;==&#32;0)
+666 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;angle_type&#32;=&#32;<link linkend="_glfw3_8h_1a6e8fdc83113d247ad792bb5c4e82c894">GLFW_ANGLE_PLATFORM_TYPE_D3D9</link>;
+667 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1a9451fcd3819c6c6f9274f637a6be8208">ANGLE_TYPE_D3D11</link>)&#32;==&#32;0)
+668 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;angle_type&#32;=&#32;<link linkend="_glfw3_8h_1ad6eae659811a52a5cdc43c362aedfa33">GLFW_ANGLE_PLATFORM_TYPE_D3D11</link>;
+669 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1a68a797e0d8d26a73371a118d12683cc9">ANGLE_TYPE_VULKAN</link>)&#32;==&#32;0)
+670 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;angle_type&#32;=&#32;<link linkend="_glfw3_8h_1a579ac83506c7546709dad91960cc7ca1">GLFW_ANGLE_PLATFORM_TYPE_VULKAN</link>;
+671 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_glfwinfo_8c_1ac9c29d1a32bbb9753de904dda9a6442d">ANGLE_TYPE_METAL</link>)&#32;==&#32;0)
+672 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;angle_type&#32;=&#32;<link linkend="_glfw3_8h_1ab56d91b26cf223dc67590a93a2f8507d">GLFW_ANGLE_PLATFORM_TYPE_METAL</link>;
+673 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+674 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+675 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afb85c5d9b1bce96aa3b530d581194d1a">usage</link>();
+676 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+677 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+678 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+679 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;GRAPHICS_SWITCHING:
+680 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cocoa_graphics_switching&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+681 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+682 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;XCB_SURFACE:
+683 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;disable_xcb_surface&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+684 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+685 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">default</emphasis>:
+686 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afb85c5d9b1bce96aa3b530d581194d1a">usage</link>();
+687 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+688 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+689 &#32;&#32;&#32;&#32;}
+690 
+691 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Initialize&#32;GLFW&#32;and&#32;create&#32;window</emphasis>
+692 
+693 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!valid_version())
+694 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+695 
+696 &#32;&#32;&#32;&#32;<link linkend="_group__init_1ga746e2757d069eaea423349aca6ae097a">glfwSetErrorCallback</link>(<link linkend="_inputlag_8c_1a4ee391c8bab624943c822faafb2c320e">error_callback</link>);
+697 
+698 &#32;&#32;&#32;&#32;<link linkend="_group__init_1gac85e41aab1c2bd6fc740f4377d9e7e9f">glfwInitHint</link>(<link linkend="_group__init_1ga9d38bf1fdf4f91d6565401734a7cd967">GLFW_PLATFORM</link>,&#32;platform);
+699 
+700 &#32;&#32;&#32;&#32;<link linkend="_group__init_1gac85e41aab1c2bd6fc740f4377d9e7e9f">glfwInitHint</link>(<link linkend="_group__init_1ga71e0b4ce2f2696a84a9b8c5e12dc70cf">GLFW_COCOA_MENUBAR</link>,&#32;<emphasis role="keyword">false</emphasis>);
+701 
+702 &#32;&#32;&#32;&#32;<link linkend="_group__init_1gac85e41aab1c2bd6fc740f4377d9e7e9f">glfwInitHint</link>(<link linkend="_group__init_1gaec269b24cf549ab46292c0125d8bbdce">GLFW_ANGLE_PLATFORM_TYPE</link>,&#32;angle_type);
+703 &#32;&#32;&#32;&#32;<link linkend="_group__init_1gac85e41aab1c2bd6fc740f4377d9e7e9f">glfwInitHint</link>(<link linkend="_group__init_1gaa341e303ebeb8e4199b8ab8be84351f6">GLFW_X11_XCB_VULKAN_SURFACE</link>,&#32;!disable_xcb_surface);
+704 
+705 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_group__init_1gab41771f0215a2e0afb4cf1cf98082d40">glfwInit</link>())
+706 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+707 
+708 &#32;&#32;&#32;&#32;print_version();
+709 &#32;&#32;&#32;&#32;print_platform();
+710 
+711 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gafb3cdc45297e06d8f1eb13adc69ca6c4">GLFW_VISIBLE</link>,&#32;<emphasis role="keyword">false</emphasis>);
+712 
+713 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga649309cf72a3d3de5b1348ca7936c95b">GLFW_CLIENT_API</link>,&#32;client_api);
+714 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gafe5e4922de1f9932d7e9849bb053b0c0">GLFW_CONTEXT_VERSION_MAJOR</link>,&#32;context_major);
+715 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga31aca791e4b538c4e4a771eb95cc2d07">GLFW_CONTEXT_VERSION_MINOR</link>,&#32;context_minor);
+716 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga72b648a8378fe3310c7c7bbecc0f7be6">GLFW_CONTEXT_RELEASE_BEHAVIOR</link>,&#32;context_release);
+717 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga5154cebfcd831c1cc63a4d5ac9bb4486">GLFW_CONTEXT_CREATION_API</link>,&#32;context_creation_api);
+718 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gade3593916b4c507900aa2d6844810e00">GLFW_CONTEXT_ROBUSTNESS</link>,&#32;context_robustness);
+719 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga8d55e3afec73c7de0509c3b7ad1d9e3f">GLFW_CONTEXT_DEBUG</link>,&#32;context_debug);
+720 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga5a52fdfd46d8249c211f923675728082">GLFW_CONTEXT_NO_ERROR</link>,&#32;context_no_error);
+721 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga13d24b12465da8b28985f46c8557925b">GLFW_OPENGL_FORWARD_COMPAT</link>,&#32;opengl_forward);
+722 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga44f3a6b4261fbe351e0b950b0f372e12">GLFW_OPENGL_PROFILE</link>,&#32;opengl_profile);
+723 
+724 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gaf78ed8e417dbcc1e354906cc2708c982">GLFW_RED_BITS</link>,&#32;fb_red_bits);
+725 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gab292ea403db6d514537b515311bf9ae3">GLFW_BLUE_BITS</link>,&#32;fb_blue_bits);
+726 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gafba3b72638c914e5fb8a237dd4c50d4d">GLFW_GREEN_BITS</link>,&#32;fb_green_bits);
+727 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gafed79a3f468997877da86c449bd43e8c">GLFW_ALPHA_BITS</link>,&#32;fb_alpha_bits);
+728 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga318a55eac1fee57dfe593b6d38149d07">GLFW_DEPTH_BITS</link>,&#32;fb_depth_bits);
+729 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga5339890a45a1fb38e93cb9fcc5fd069d">GLFW_STENCIL_BITS</link>,&#32;fb_stencil_bits);
+730 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gaead34a9a683b2bc20eecf30ba738bfc6">GLFW_ACCUM_RED_BITS</link>,&#32;fb_accum_red_bits);
+731 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga65713cee1326f8e9d806fdf93187b471">GLFW_ACCUM_GREEN_BITS</link>,&#32;fb_accum_green_bits);
+732 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga22bbe9104a8ce1f8b88fb4f186aa36ce">GLFW_ACCUM_BLUE_BITS</link>,&#32;fb_accum_blue_bits);
+733 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gae829b55591c18169a40ab4067a041b1f">GLFW_ACCUM_ALPHA_BITS</link>,&#32;fb_accum_alpha_bits);
+734 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gab05108c5029443b371112b031d1fa174">GLFW_AUX_BUFFERS</link>,&#32;fb_aux_buffers);
+735 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga2cdf86fdcb7722fb8829c4e201607535">GLFW_SAMPLES</link>,&#32;fb_samples);
+736 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga83d991efca02537e2d69969135b77b03">GLFW_STEREO</link>,&#32;fb_stereo);
+737 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga444a8f00414a63220591f9fdb7b5642b">GLFW_SRGB_CAPABLE</link>,&#32;fb_srgb);
+738 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga714a5d569e8a274ea58fdfa020955339">GLFW_DOUBLEBUFFER</link>,&#32;fb_doublebuffer);
+739 
+740 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga53c84ed2ddd94e15bbd44b1f6f7feafc">GLFW_COCOA_GRAPHICS_SWITCHING</link>,&#32;cocoa_graphics_switching);
+741 
+742 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>*&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;<link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link>(200,&#32;200,&#32;<emphasis role="stringliteral">&quot;Version&quot;</emphasis>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+743 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)
+744 &#32;&#32;&#32;&#32;{
+745 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+746 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+747 &#32;&#32;&#32;&#32;}
+748 
+749 &#32;&#32;&#32;&#32;<link linkend="_group__context_1gafd76c93e15ec8b0b90506a9936a46185">glfwMakeContextCurrent</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+750 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a7e9e0ebe65864f5f2bcd289c5736041b">gladLoadGL</link>(<link linkend="_group__context_1ga0e8af175218929615c16e74938c10f2a">glfwGetProcAddress</link>);
+751 
+752 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_glad_8h_1a5d5233918a454ad3975c620a69ac5f0b">GLenum</link>&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;=&#32;<link linkend="_glad_8h_1a0aac05c6a9cb27add42d6e1e4970d9cb">glGetError</link>();
+753 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;!=&#32;<link linkend="_glad_8h_1a8868c96a8632a9a5b2af712c62dfd36a">GL_NO_ERROR</link>)
+754 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;***&#32;OpenGL&#32;error&#32;after&#32;make&#32;current:&#32;0x%08x&#32;***\n&quot;</emphasis>,&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>);
+755 
+756 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Report&#32;client&#32;API&#32;version</emphasis>
+757 
+758 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;client&#32;=&#32;<link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_group__window_1ga649309cf72a3d3de5b1348ca7936c95b">GLFW_CLIENT_API</link>);
+759 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;major&#32;=&#32;<link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_group__window_1gafe5e4922de1f9932d7e9849bb053b0c0">GLFW_CONTEXT_VERSION_MAJOR</link>);
+760 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;minor&#32;=&#32;<link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_group__window_1ga31aca791e4b538c4e4a771eb95cc2d07">GLFW_CONTEXT_VERSION_MINOR</link>);
+761 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;revision&#32;=&#32;<link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_group__window_1gafb9475071aa77c6fb05ca5a5c8678a08">GLFW_CONTEXT_REVISION</link>);
+762 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;profile&#32;=&#32;<link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_group__window_1ga44f3a6b4261fbe351e0b950b0f372e12">GLFW_OPENGL_PROFILE</link>);
+763 
+764 &#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%s&#32;context&#32;version&#32;string:&#32;\&quot;%s\&quot;\n&quot;</emphasis>,
+765 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;get_api_name(client),
+766 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a766db4e4de8f98981e53ea03bd47a004">glGetString</link>(<link linkend="_glad_8h_1a18f8c168894e0666430a156138cb8cb7">GL_VERSION</link>));
+767 
+768 &#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%s&#32;context&#32;version&#32;parsed&#32;by&#32;GLFW:&#32;%u.%u.%u\n&quot;</emphasis>,
+769 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;get_api_name(client),
+770 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;major,&#32;minor,&#32;revision);
+771 
+772 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Report&#32;client&#32;API&#32;context&#32;properties</emphasis>
+773 
+774 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(client&#32;==&#32;<link linkend="_glfw3_8h_1a01b3f66db266341425e9abee6b257db2">GLFW_OPENGL_API</link>)
+775 &#32;&#32;&#32;&#32;{
+776 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(major&#32;&gt;=&#32;3)
+777 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+778 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1acebcc1c5663f14ebde1d16831e5fed94">GLint</link>&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>;
+779 
+780 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_glad_8h_1adc35186e7c186e46a8908aee0a0bca78">GL_CONTEXT_FLAGS</link>,&#32;&amp;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>);
+781 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%s&#32;context&#32;flags&#32;(0x%08x):&quot;</emphasis>,&#32;get_api_name(client),&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>);
+782 
+783 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;&amp;&#32;<link linkend="_glad_8h_1ae256d4675c220f2b4e0ac5a55f758e43">GL_CONTEXT_FLAG_FORWARD_COMPATIBLE_BIT</link>)
+784 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&#32;forward-compatible&quot;</emphasis>);
+785 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;&amp;&#32;2<emphasis role="comment">/*GL_CONTEXT_FLAG_DEBUG_BIT*/</emphasis>)
+786 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&#32;debug&quot;</emphasis>);
+787 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;&amp;&#32;<link linkend="_gl_8h_1aea9bf956d4ee0c7ebc1683c3e5b093ba">GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT_ARB</link>)
+788 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&#32;robustness&quot;</emphasis>);
+789 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;&amp;&#32;8<emphasis role="comment">/*GL_CONTEXT_FLAG_NO_ERROR_BIT_KHR*/</emphasis>)
+790 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&#32;no-error&quot;</emphasis>);
+791 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;putchar(<emphasis role="charliteral">&apos;\n&apos;</emphasis>);
+792 
+793 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%s&#32;context&#32;flags&#32;parsed&#32;by&#32;GLFW:&quot;</emphasis>,&#32;get_api_name(client));
+794 
+795 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_group__window_1ga13d24b12465da8b28985f46c8557925b">GLFW_OPENGL_FORWARD_COMPAT</link>))
+796 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&#32;forward-compatible&quot;</emphasis>);
+797 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_group__window_1ga8d55e3afec73c7de0509c3b7ad1d9e3f">GLFW_CONTEXT_DEBUG</link>))
+798 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&#32;debug&quot;</emphasis>);
+799 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_group__window_1gade3593916b4c507900aa2d6844810e00">GLFW_CONTEXT_ROBUSTNESS</link>)&#32;==&#32;<link linkend="_glfw3_8h_1aec1132f245143fc915b2f0995228564c">GLFW_LOSE_CONTEXT_ON_RESET</link>)
+800 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&#32;robustness&quot;</emphasis>);
+801 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_group__window_1ga5a52fdfd46d8249c211f923675728082">GLFW_CONTEXT_NO_ERROR</link>))
+802 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&#32;no-error&quot;</emphasis>);
+803 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;putchar(<emphasis role="charliteral">&apos;\n&apos;</emphasis>);
+804 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+805 
+806 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(major&#32;&gt;=&#32;4&#32;||&#32;(major&#32;==&#32;3&#32;&amp;&amp;&#32;minor&#32;&gt;=&#32;2))
+807 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+808 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1acebcc1c5663f14ebde1d16831e5fed94">GLint</link>&#32;<link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>;
+809 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_glad_8h_1a426e3339384069032cc9cbe21878d8bf">GL_CONTEXT_PROFILE_MASK</link>,&#32;&amp;<link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>);
+810 
+811 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%s&#32;profile&#32;mask&#32;(0x%08x):&#32;%s\n&quot;</emphasis>,
+812 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;get_api_name(client),
+813 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>,
+814 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;get_profile_name_gl(<link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>));
+815 
+816 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%s&#32;profile&#32;mask&#32;parsed&#32;by&#32;GLFW:&#32;%s\n&quot;</emphasis>,
+817 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;get_api_name(client),
+818 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;get_profile_name_glfw(profile));
+819 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+820 
+821 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_gl_8h_1a61304cfdff1a04c9bc6aa0eea3e05370">GLAD_GL_ARB_robustness</link>)
+822 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+823 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;robustness&#32;=&#32;<link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_group__window_1gade3593916b4c507900aa2d6844810e00">GLFW_CONTEXT_ROBUSTNESS</link>);
+824 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1acebcc1c5663f14ebde1d16831e5fed94">GLint</link>&#32;strategy;
+825 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_gl_8h_1a11002a19dbd1099812415687b4e06c2f">GL_RESET_NOTIFICATION_STRATEGY_ARB</link>,&#32;&amp;strategy);
+826 
+827 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%s&#32;robustness&#32;strategy&#32;(0x%08x):&#32;%s\n&quot;</emphasis>,
+828 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;get_api_name(client),
+829 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strategy,
+830 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;get_strategy_name_gl(strategy));
+831 
+832 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%s&#32;robustness&#32;strategy&#32;parsed&#32;by&#32;GLFW:&#32;%s\n&quot;</emphasis>,
+833 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;get_api_name(client),
+834 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;get_strategy_name_glfw(robustness));
+835 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+836 &#32;&#32;&#32;&#32;}
+837 
+838 &#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%s&#32;context&#32;renderer&#32;string:&#32;\&quot;%s\&quot;\n&quot;</emphasis>,
+839 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;get_api_name(client),
+840 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a766db4e4de8f98981e53ea03bd47a004">glGetString</link>(<link linkend="_glad_8h_1ad9a4639428d8407083b0c842e8926973">GL_RENDERER</link>));
+841 &#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%s&#32;context&#32;vendor&#32;string:&#32;\&quot;%s\&quot;\n&quot;</emphasis>,
+842 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;get_api_name(client),
+843 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a766db4e4de8f98981e53ea03bd47a004">glGetString</link>(<link linkend="_glad_8h_1aebb8c3cc66d0e8a44e0d320d855ab359">GL_VENDOR</link>));
+844 
+845 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(major&#32;&gt;=&#32;2)
+846 &#32;&#32;&#32;&#32;{
+847 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%s&#32;context&#32;shading&#32;language&#32;version:&#32;\&quot;%s\&quot;\n&quot;</emphasis>,
+848 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;get_api_name(client),
+849 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a766db4e4de8f98981e53ea03bd47a004">glGetString</link>(<link linkend="_glad_8h_1acd91f154544ab6a152e97adcb742c891">GL_SHADING_LANGUAGE_VERSION</link>));
+850 &#32;&#32;&#32;&#32;}
+851 
+852 &#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%s&#32;framebuffer:\n&quot;</emphasis>,&#32;get_api_name(client));
+853 
+854 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1acebcc1c5663f14ebde1d16831e5fed94">GLint</link>&#32;redbits,&#32;greenbits,&#32;bluebits,&#32;alphabits,&#32;depthbits,&#32;stencilbits;
+855 
+856 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(client&#32;==&#32;<link linkend="_glfw3_8h_1a01b3f66db266341425e9abee6b257db2">GLFW_OPENGL_API</link>&#32;&amp;&amp;&#32;profile&#32;==&#32;<link linkend="_glfw3_8h_1af094bb16da76f66ebceb19ee213b3de8">GLFW_OPENGL_CORE_PROFILE</link>)
+857 &#32;&#32;&#32;&#32;{
+858 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a8910269a2ab541e1bf74e0bacd12f2c5">glGetFramebufferAttachmentParameteriv</link>(<link linkend="_glad_8h_1a9e626474ad3066f31b46293d535b009f">GL_FRAMEBUFFER</link>,
+859 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a5bdb7358ec350ac69e6161c731a6221d">GL_BACK_LEFT</link>,
+860 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1acb4ce18e4b67aa00514389976f723115">GL_FRAMEBUFFER_ATTACHMENT_RED_SIZE</link>,
+861 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;redbits);
+862 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a8910269a2ab541e1bf74e0bacd12f2c5">glGetFramebufferAttachmentParameteriv</link>(<link linkend="_glad_8h_1a9e626474ad3066f31b46293d535b009f">GL_FRAMEBUFFER</link>,
+863 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a5bdb7358ec350ac69e6161c731a6221d">GL_BACK_LEFT</link>,
+864 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a117a77e99f3fa4a9dea4351292641126">GL_FRAMEBUFFER_ATTACHMENT_GREEN_SIZE</link>,
+865 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;greenbits);
+866 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a8910269a2ab541e1bf74e0bacd12f2c5">glGetFramebufferAttachmentParameteriv</link>(<link linkend="_glad_8h_1a9e626474ad3066f31b46293d535b009f">GL_FRAMEBUFFER</link>,
+867 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a5bdb7358ec350ac69e6161c731a6221d">GL_BACK_LEFT</link>,
+868 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a5e50f9fb4cd85b8b6f5115fd9b6f39d8">GL_FRAMEBUFFER_ATTACHMENT_BLUE_SIZE</link>,
+869 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;bluebits);
+870 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a8910269a2ab541e1bf74e0bacd12f2c5">glGetFramebufferAttachmentParameteriv</link>(<link linkend="_glad_8h_1a9e626474ad3066f31b46293d535b009f">GL_FRAMEBUFFER</link>,
+871 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a5bdb7358ec350ac69e6161c731a6221d">GL_BACK_LEFT</link>,
+872 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a511902bc60b9f6454f8ea4dbe3e3d86b">GL_FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE</link>,
+873 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;alphabits);
+874 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a8910269a2ab541e1bf74e0bacd12f2c5">glGetFramebufferAttachmentParameteriv</link>(<link linkend="_glad_8h_1a9e626474ad3066f31b46293d535b009f">GL_FRAMEBUFFER</link>,
+875 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a982341cb30016caa07a4e46228a71ffa">GL_DEPTH</link>,
+876 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a06c432af640d51520221051e03b0d28a">GL_FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE</link>,
+877 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;depthbits);
+878 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a8910269a2ab541e1bf74e0bacd12f2c5">glGetFramebufferAttachmentParameteriv</link>(<link linkend="_glad_8h_1a9e626474ad3066f31b46293d535b009f">GL_FRAMEBUFFER</link>,
+879 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a5f70831ab0735b4ed4292888578477d4">GL_STENCIL</link>,
+880 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1af425b868a0d18fb3e443512fb9ae7ad1">GL_FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE</link>,
+881 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;stencilbits);
+882 &#32;&#32;&#32;&#32;}
+883 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+884 &#32;&#32;&#32;&#32;{
+885 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_gl_8h_1af63a8c8d4d7c5cc5bbe36837ea7c545c">GL_RED_BITS</link>,&#32;&amp;redbits);
+886 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_gl_8h_1a276d98ce988c340a6711ffe2d60ff2ea">GL_GREEN_BITS</link>,&#32;&amp;greenbits);
+887 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_gl_8h_1a89619a89c625860afb6c45b3fba7e415">GL_BLUE_BITS</link>,&#32;&amp;bluebits);
+888 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_gl_8h_1abbbf633c2fcacf1bc9c48b114f8a0ded">GL_ALPHA_BITS</link>,&#32;&amp;alphabits);
+889 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_gl_8h_1a7fdcf82f09cf5359bc11b9e3ca38cf0d">GL_DEPTH_BITS</link>,&#32;&amp;depthbits);
+890 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_gl_8h_1a0c718f41fc88ec3b52160a8772ee9a8b">GL_STENCIL_BITS</link>,&#32;&amp;stencilbits);
+891 &#32;&#32;&#32;&#32;}
+892 
+893 &#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&#32;red:&#32;%u&#32;green:&#32;%u&#32;blue:&#32;%u&#32;alpha:&#32;%u&#32;depth:&#32;%u&#32;stencil:&#32;%u\n&quot;</emphasis>,
+894 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;redbits,&#32;greenbits,&#32;bluebits,&#32;alphabits,&#32;depthbits,&#32;stencilbits);
+895 
+896 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(client&#32;==&#32;<link linkend="_glfw3_8h_1a28d9b3bc6c2a522d815c8e146595051f">GLFW_OPENGL_ES_API</link>&#32;||
+897 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_gl_8h_1aa496c23a9b9b1064e5cec457ecc1ff2f">GLAD_GL_ARB_multisample</link>&#32;||
+898 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;major&#32;&gt;&#32;1&#32;||&#32;minor&#32;&gt;=&#32;3)
+899 &#32;&#32;&#32;&#32;{
+900 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1acebcc1c5663f14ebde1d16831e5fed94">GLint</link>&#32;<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>,&#32;samplebuffers;
+901 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_glad_8h_1a1527624bc8306b779ce730bcc4f757a4">GL_SAMPLES</link>,&#32;&amp;<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>);
+902 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_glad_8h_1a826c1addfb8459689d3268cd592ebe3c">GL_SAMPLE_BUFFERS</link>,&#32;&amp;samplebuffers);
+903 
+904 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&#32;samples:&#32;%u&#32;sample&#32;buffers:&#32;%u\n&quot;</emphasis>,&#32;<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>,&#32;samplebuffers);
+905 &#32;&#32;&#32;&#32;}
+906 
+907 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(client&#32;==&#32;<link linkend="_glfw3_8h_1a01b3f66db266341425e9abee6b257db2">GLFW_OPENGL_API</link>&#32;&amp;&amp;&#32;profile&#32;!=&#32;<link linkend="_glfw3_8h_1af094bb16da76f66ebceb19ee213b3de8">GLFW_OPENGL_CORE_PROFILE</link>)
+908 &#32;&#32;&#32;&#32;{
+909 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1acebcc1c5663f14ebde1d16831e5fed94">GLint</link>&#32;accumredbits,&#32;accumgreenbits,&#32;accumbluebits,&#32;accumalphabits;
+910 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1acebcc1c5663f14ebde1d16831e5fed94">GLint</link>&#32;auxbuffers;
+911 
+912 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_gl_8h_1afc8bf4c843007fa8c4f6b4347b955e81">GL_ACCUM_RED_BITS</link>,&#32;&amp;accumredbits);
+913 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_gl_8h_1adc84df91ad551c2d307e6e097f2aa3ec">GL_ACCUM_GREEN_BITS</link>,&#32;&amp;accumgreenbits);
+914 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_gl_8h_1adcc18d6474fe5eb22cea4d61cd00138b">GL_ACCUM_BLUE_BITS</link>,&#32;&amp;accumbluebits);
+915 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_gl_8h_1a738c198acc16f61b8e40bf2e847466d8">GL_ACCUM_ALPHA_BITS</link>,&#32;&amp;accumalphabits);
+916 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_gl_8h_1a47e8b8a26e218f729e8c44e64fab1809">GL_AUX_BUFFERS</link>,&#32;&amp;auxbuffers);
+917 
+918 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&#32;accum&#32;red:&#32;%u&#32;accum&#32;green:&#32;%u&#32;accum&#32;blue:&#32;%u&#32;accum&#32;alpha:&#32;%u&#32;aux&#32;buffers:&#32;%u\n&quot;</emphasis>,
+919 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;accumredbits,&#32;accumgreenbits,&#32;accumbluebits,&#32;accumalphabits,&#32;auxbuffers);
+920 &#32;&#32;&#32;&#32;}
+921 
+922 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(list_extensions)
+923 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;list_context_extensions(client,&#32;major,&#32;minor);
+924 
+925 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga806747476b7247d292be3711c323ea10">glfwDestroyWindow</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+926 
+927 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga649309cf72a3d3de5b1348ca7936c95b">GLFW_CLIENT_API</link>,&#32;<link linkend="_glfw3_8h_1a8f6dcdc968d214ff14779564f1389264">GLFW_NO_API</link>);
+928 
+929 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;<link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link>(200,&#32;200,&#32;<emphasis role="stringliteral">&quot;Version&quot;</emphasis>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+930 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)
+931 &#32;&#32;&#32;&#32;{
+932 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+933 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+934 &#32;&#32;&#32;&#32;}
+935 
+936 &#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Vulkan&#32;loader:&#32;%s\n&quot;</emphasis>,
+937 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__vulkan_1ga72e7c3757d9ff2333181a5569bb7c403">glfwVulkanSupported</link>()&#32;?&#32;<emphasis role="stringliteral">&quot;available&quot;</emphasis>&#32;:&#32;<emphasis role="stringliteral">&quot;missing&quot;</emphasis>);
+938 
+939 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_group__vulkan_1ga72e7c3757d9ff2333181a5569bb7c403">glfwVulkanSupported</link>())
+940 &#32;&#32;&#32;&#32;{
+941 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_vulkan_8h_1a2176caf185525a359800c3824988bfb8">gladLoadVulkanUserPtr</link>(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;(<link linkend="_gl_8h_1a03952ee64de15eb14cf7add74902c311">GLADuserptrloadfunc</link>)&#32;<link linkend="_vulkan_8c_1ab1fbd7c0ba5c40c91c6b85b897364039">glfwGetInstanceProcAddress</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+942 
+943 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link>&#32;loader_version&#32;=&#32;<link linkend="_vulkan_8h_1a01d71c2a5de9d6a9d38bf637c34b4805">VK_API_VERSION_1_0</link>;
+944 
+945 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_vulkan_8h_1acfafe5babab94f8d5cd1854792043c91">vkEnumerateInstanceVersion</link>)
+946 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+947 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link>&#32;<link linkend="_namespaceconf_1ade15c5b54093b64d7c428ec19ca5b1cb">version</link>;
+948 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_vulkan_8h_1acfafe5babab94f8d5cd1854792043c91">vkEnumerateInstanceVersion</link>(&amp;<link linkend="_namespaceconf_1ade15c5b54093b64d7c428ec19ca5b1cb">version</link>)&#32;==&#32;<link linkend="_vulkan_8h_1abe3614d1bd40772bc2398a4a86ea4a45a3671aecac45b2f102cbe941e2ed4d32a">VK_SUCCESS</link>)
+949 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;loader_version&#32;=&#32;<link linkend="_namespaceconf_1ade15c5b54093b64d7c428ec19ca5b1cb">version</link>;
+950 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+951 
+952 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Vulkan&#32;loader&#32;API&#32;version:&#32;%i.%i\n&quot;</emphasis>,
+953 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_vulkan_8h_1a11bb9ae8bb7d5746b3dc6b2f180c45f7">VK_VERSION_MAJOR</link>(loader_version),
+954 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_vulkan_8h_1a66e538a155eec6219e1ab6d6e0245622">VK_VERSION_MINOR</link>(loader_version));
+955 
+956 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link>&#32;re_count;
+957 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>**&#32;re&#32;=&#32;<link linkend="_group__vulkan_1gac47c204c9c417fced07e25de8fce526a">glfwGetRequiredInstanceExtensions</link>(&amp;re_count);
+958 
+959 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(re)
+960 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+961 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Vulkan&#32;window&#32;surface&#32;required&#32;instance&#32;extensions:\n&quot;</emphasis>);
+962 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link>&#32;i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;re_count;&#32;&#32;i++)
+963 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&#32;%s\n&quot;</emphasis>,&#32;re[i]);
+964 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+965 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+966 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Vulkan&#32;window&#32;surface&#32;extensions&#32;missing\n&quot;</emphasis>);
+967 
+968 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(list_extensions)
+969 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;list_vulkan_instance_extensions();
+970 
+971 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(list_layers)
+972 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;list_vulkan_instance_layers();
+973 
+974 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_struct_vk_application_info">VkApplicationInfo</link>&#32;ai&#32;=&#32;{&#32;<link linkend="_vulkan_8h_1aff9f2b99398eb80a2b5a146bc5534ce8a78c8932b566c53df567ae55c8ad681d1">VK_STRUCTURE_TYPE_APPLICATION_INFO</link>&#32;};
+975 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ai.<link linkend="_struct_vk_application_info_1a297e767dce1af800704d162e4cf50d07">pApplicationName</link>&#32;=&#32;<emphasis role="stringliteral">&quot;glfwinfo&quot;</emphasis>;
+976 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ai.<link linkend="_struct_vk_application_info_1ab3743deffa7b138d9bf5f0527645341a">applicationVersion</link>&#32;=&#32;<link linkend="_vulkan_8h_1a9c5f176f4fec7aa8e17db3c4022117ca">VK_MAKE_VERSION</link>(<link linkend="_group__init_1ga6337d9ea43b22fc529b2bba066b4a576">GLFW_VERSION_MAJOR</link>,
+977 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gaf80d40f0aea7088ff337606e9c48f7a3">GLFW_VERSION_MINOR</link>,
+978 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gab72ae2e2035d9ea461abc3495eac0502">GLFW_VERSION_REVISION</link>);
+979 
+980 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(loader_version&#32;&gt;=&#32;<link linkend="_vulkan_8h_1af5ccc4c7daa5f5cdc0a11e0ba70c7745">VK_API_VERSION_1_1</link>)
+981 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ai.<link linkend="_struct_vk_application_info_1a800383dc7646476e4277233a1a541bca">apiVersion</link>&#32;=&#32;<link linkend="_vulkan_8h_1af5ccc4c7daa5f5cdc0a11e0ba70c7745">VK_API_VERSION_1_1</link>;
+982 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+983 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ai.<link linkend="_struct_vk_application_info_1a800383dc7646476e4277233a1a541bca">apiVersion</link>&#32;=&#32;<link linkend="_vulkan_8h_1a01d71c2a5de9d6a9d38bf637c34b4805">VK_API_VERSION_1_0</link>;
+984 
+985 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_struct_vk_instance_create_info">VkInstanceCreateInfo</link>&#32;ici&#32;=&#32;{&#32;<link linkend="_vulkan_8h_1aff9f2b99398eb80a2b5a146bc5534ce8a94b85da0ddefb29a63f1a11d8517c3da">VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO</link>&#32;};
+986 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ici.<link linkend="_struct_vk_instance_create_info_1adfc9746fc9e915c11cbdd89be702cf78">pApplicationInfo</link>&#32;=&#32;&amp;ai;
+987 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ici.<link linkend="_struct_vk_instance_create_info_1a61acf255c166d205d753238b7ec2374a">enabledExtensionCount</link>&#32;=&#32;re_count;
+988 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ici.<link linkend="_struct_vk_instance_create_info_1a0646363d6acede786f5c0df7b07c9d6a">ppEnabledExtensionNames</link>&#32;=&#32;re;
+989 
+990 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a25ae5082a7c01af345570ed09d724881">VkInstance</link>&#32;instance&#32;=&#32;<link linkend="_vulkan_8h_1ad1021f65d668acdf1644d94e0828bff0">VK_NULL_HANDLE</link>;
+991 
+992 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_vulkan_8h_1a1431bb87ed29e0b4637634730d3fe235">vkCreateInstance</link>(&amp;ici,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;&amp;instance)&#32;!=&#32;<link linkend="_vulkan_8h_1abe3614d1bd40772bc2398a4a86ea4a45a3671aecac45b2f102cbe941e2ed4d32a">VK_SUCCESS</link>)
+993 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+994 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+995 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+996 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+997 
+998 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_vulkan_8h_1a2176caf185525a359800c3824988bfb8">gladLoadVulkanUserPtr</link>(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;(<link linkend="_gl_8h_1a03952ee64de15eb14cf7add74902c311">GLADuserptrloadfunc</link>)&#32;<link linkend="_vulkan_8c_1ab1fbd7c0ba5c40c91c6b85b897364039">glfwGetInstanceProcAddress</link>,&#32;instance);
+999 
+1000 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(re)
+1001 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1002 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a09787d7da5f3146095ed80ceccc2d794">VkSurfaceKHR</link>&#32;surface&#32;=&#32;<link linkend="_vulkan_8h_1ad1021f65d668acdf1644d94e0828bff0">VK_NULL_HANDLE</link>;
+1003 
+1004 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_vulkan_8c_1a5a47c783767442b8b8e9ab3cf2e4959b">glfwCreateWindowSurface</link>(instance,&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;&amp;surface)&#32;==&#32;<link linkend="_vulkan_8h_1abe3614d1bd40772bc2398a4a86ea4a45a3671aecac45b2f102cbe941e2ed4d32a">VK_SUCCESS</link>)
+1005 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1006 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Vulkan&#32;window&#32;surface&#32;created&#32;successfully\n&quot;</emphasis>);
+1007 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_vulkan_8h_1a645c0f33aa8031e111b100f562bbbf50">vkDestroySurfaceKHR</link>(instance,&#32;surface,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+1008 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1009 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1010 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Failed&#32;to&#32;create&#32;Vulkan&#32;window&#32;surface\n&quot;</emphasis>);
+1011 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1012 
+1013 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link>&#32;pd_count;
+1014 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_vulkan_8h_1a8fb745e854f3ba9fd9f7a9e4a2784485">vkEnumeratePhysicalDevices</link>(instance,&#32;&amp;pd_count,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+1015 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1aa9acbee1e762fde021511a1b47678a38">VkPhysicalDevice</link>*&#32;pd&#32;=&#32;calloc(pd_count,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_internal_8h_1aa9acbee1e762fde021511a1b47678a38">VkPhysicalDevice</link>));
+1016 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_vulkan_8h_1a8fb745e854f3ba9fd9f7a9e4a2784485">vkEnumeratePhysicalDevices</link>(instance,&#32;&amp;pd_count,&#32;pd);
+1017 
+1018 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link>&#32;i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;pd_count;&#32;&#32;i++)
+1019 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1020 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_struct_vk_physical_device_properties">VkPhysicalDeviceProperties</link>&#32;pdp;
+1021 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_vulkan_8h_1abeb16d18ad3891f77479b19f2ac9243b">vkGetPhysicalDeviceProperties</link>(pd[i],&#32;&amp;pdp);
+1022 
+1023 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Vulkan&#32;%s&#32;device:&#32;\&quot;%s\&quot;&#32;(API&#32;version&#32;%i.%i)\n&quot;</emphasis>,
+1024 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;get_device_type_name(pdp.<link linkend="_struct_vk_physical_device_properties_1a7716dcdfa2845afc7834e3183cdd59ad">deviceType</link>),
+1025 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pdp.<link linkend="_struct_vk_physical_device_properties_1a9bdd626460f6c168db338f45235e388c">deviceName</link>,
+1026 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_vulkan_8h_1a11bb9ae8bb7d5746b3dc6b2f180c45f7">VK_VERSION_MAJOR</link>(pdp.<link linkend="_struct_vk_physical_device_properties_1a2d58614618bc123f6983fe12e1a23597">apiVersion</link>),
+1027 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_vulkan_8h_1a66e538a155eec6219e1ab6d6e0245622">VK_VERSION_MINOR</link>(pdp.<link linkend="_struct_vk_physical_device_properties_1a2d58614618bc123f6983fe12e1a23597">apiVersion</link>));
+1028 
+1029 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link>&#32;qfp_count;
+1030 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_vulkan_8h_1ae97a536631e9b171c8492b2508096c87">vkGetPhysicalDeviceQueueFamilyProperties</link>(pd[i],&#32;&amp;qfp_count,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+1031 
+1032 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(re)
+1033 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1034 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Vulkan&#32;device&#32;queue&#32;family&#32;presentation&#32;support:\n&quot;</emphasis>);
+1035 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link>&#32;j&#32;=&#32;0;&#32;&#32;j&#32;&lt;&#32;qfp_count;&#32;&#32;j++)
+1036 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1037 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&#32;%u:&#32;&quot;</emphasis>,&#32;j);
+1038 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_vulkan_8c_1a6a7033429666ac6b31d4250aeb5b37d1">glfwGetPhysicalDevicePresentationSupport</link>(instance,&#32;pd[i],&#32;j))
+1039 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;supported\n&quot;</emphasis>);
+1040 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1041 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;no\n&quot;</emphasis>);
+1042 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1043 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1044 
+1045 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(list_extensions)
+1046 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;list_vulkan_device_extensions(instance,&#32;pd[i]);
+1047 
+1048 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(list_layers)
+1049 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;list_vulkan_device_layers(instance,&#32;pd[i]);
+1050 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1051 
+1052 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(pd);
+1053 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_vulkan_8h_1a27e6538d37f7fa2d1dd3da5f7813e8dc">vkDestroyInstance</link>(instance,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+1054 &#32;&#32;&#32;&#32;}
+1055 
+1056 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga806747476b7247d292be3711c323ea10">glfwDestroyWindow</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1057 
+1058 &#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+1059 &#32;&#32;&#32;&#32;exit(EXIT_SUCCESS);
+1060 }
+</programlisting></section>
+</section>
+</section>

@@ -1,0 +1,445 @@
+This guide introduces the basic concepts of G\+L\+FW and describes initialization, error handling and A\+PI guarantees and limitations. For a broad but shallow tutorial, see \mbox{\hyperlink{quick_guide}{Getting started}} instead. For details on a specific function in this category, see the \mbox{\hyperlink{group__init}{Initialization, version and error reference}}.
+
+There are also guides for the other areas of G\+L\+FW.
+
+
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{window_guide}{Window guide}}
+\item \mbox{\hyperlink{context_guide}{Context guide}}
+\item \mbox{\hyperlink{vulkan_guide}{Vulkan guide}}
+\item \mbox{\hyperlink{monitor_guide}{Monitor guide}}
+\item \mbox{\hyperlink{input_guide}{Input guide}}
+\end{DoxyItemize}\hypertarget{intro_guide_intro_init}{}\doxysection{Initialization and termination}\label{intro_guide_intro_init}
+Before most G\+L\+FW functions may be called, the library must be initialized. This initialization checks what features are available on the machine, enumerates monitors, initializes the timer and performs any required platform-\/specific initialization.
+
+Only the following functions may be called before the library has been successfully initialized, and only from the main thread.
+
+
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{group__init_ga2402c7824ac0194c13722790ff9559ff}{glfw\+Get\+Version}}
+\item \mbox{\hyperlink{group__init_ga7de7ba982c0cf66b35afdaa8bea071ae}{glfw\+Get\+Version\+String}}
+\item \mbox{\hyperlink{group__init_ga7b57ba0946498e8621f4d969bbcecfba}{glfw\+Platform\+Supported}}
+\item \mbox{\hyperlink{group__init_gaee7bac4c7e1b2769207747c1b5ae2f9e}{glfw\+Get\+Error}}
+\item \mbox{\hyperlink{group__init_ga746e2757d069eaea423349aca6ae097a}{glfw\+Set\+Error\+Callback}}
+\item \mbox{\hyperlink{group__init_gac85e41aab1c2bd6fc740f4377d9e7e9f}{glfw\+Init\+Hint}}
+\item \mbox{\hyperlink{group__init_ga0f4c8556a21d9e774a0ba0332da1748e}{glfw\+Init\+Allocator}}
+\item \mbox{\hyperlink{init_8c_a1712210f34c339a05adda69e3587ec00}{glfw\+Init\+Vulkan\+Loader}}
+\item \mbox{\hyperlink{group__init_gab41771f0215a2e0afb4cf1cf98082d40}{glfw\+Init}}
+\item \mbox{\hyperlink{group__init_gafd90e6fd4819ea9e22e5e739519a6504}{glfw\+Terminate}}
+\end{DoxyItemize}
+
+Calling any other function before successful initialization will cause a \mbox{\hyperlink{group__errors_ga2374ee02c177f12e1fa76ff3ed15e14a}{G\+L\+F\+W\+\_\+\+N\+O\+T\+\_\+\+I\+N\+I\+T\+I\+A\+L\+I\+Z\+ED}} error.\hypertarget{intro_guide_intro_init_init}{}\doxysubsection{Initializing G\+L\+FW}\label{intro_guide_intro_init_init}
+The library is initialized with \mbox{\hyperlink{group__init_gab41771f0215a2e0afb4cf1cf98082d40}{glfw\+Init}}, which returns {\ttfamily G\+L\+F\+W\+\_\+\+F\+A\+L\+SE} if an error occurred.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{if} (!\mbox{\hyperlink{group__init_gab41771f0215a2e0afb4cf1cf98082d40}{glfwInit}}())}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    \textcolor{comment}{// Handle initialization failure}}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+If any part of initialization fails, any parts that succeeded are terminated as if \mbox{\hyperlink{group__init_gafd90e6fd4819ea9e22e5e739519a6504}{glfw\+Terminate}} had been called. The library only needs to be initialized once and additional calls to an already initialized library will return {\ttfamily G\+L\+F\+W\+\_\+\+T\+R\+UE} immediately.
+
+Once the library has been successfully initialized, it should be terminated before the application exits. Modern systems are very good at freeing resources allocated by programs that exit, but G\+L\+FW sometimes has to change global system settings and these might not be restored without termination.
+
+@macos When the library is initialized the main menu and dock icon are created. These are not desirable for a command-\/line only program. The creation of the main menu and dock icon can be disabled with the \mbox{\hyperlink{group__init_ga71e0b4ce2f2696a84a9b8c5e12dc70cf}{G\+L\+F\+W\+\_\+\+C\+O\+C\+O\+A\+\_\+\+M\+E\+N\+U\+B\+AR}} init hint.\hypertarget{intro_guide_init_hints}{}\doxysubsection{Initialization hints}\label{intro_guide_init_hints}
+Initialization hints are set before \mbox{\hyperlink{group__init_gab41771f0215a2e0afb4cf1cf98082d40}{glfw\+Init}} and affect how the library behaves until termination. Hints are set with \mbox{\hyperlink{group__init_gac85e41aab1c2bd6fc740f4377d9e7e9f}{glfw\+Init\+Hint}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{group__init_gac85e41aab1c2bd6fc740f4377d9e7e9f}{glfwInitHint}}(\mbox{\hyperlink{group__init_gab9c0534709fda03ec8959201da3a9a18}{GLFW\_JOYSTICK\_HAT\_BUTTONS}}, \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}});}
+\end{DoxyCode}
+
+
+The values you set hints to are never reset by G\+L\+FW, but they only take effect during initialization. Once G\+L\+FW has been initialized, any values you set will be ignored until the library is terminated and initialized again.
+
+Some hints are platform specific. These may be set on any platform but they will only affect their specific platform. Other platforms will ignore them. Setting these hints requires no platform specific headers or functions.\hypertarget{intro_guide_init_hints_shared}{}\doxysubsubsection{Shared init hints}\label{intro_guide_init_hints_shared}
+\label{intro_guide_GLFW_PLATFORM}%
+\Hypertarget{intro_guide_GLFW_PLATFORM}%
+{\bfseries{G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+RM}} specifies the platform to use for windowing and input. Possible values are {\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+Y\+\_\+\+P\+L\+A\+T\+F\+O\+RM}, {\ttfamily G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+W\+I\+N32}, {\ttfamily G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+C\+O\+C\+OA}, {\ttfamily G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+X11}, {\ttfamily G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+W\+A\+Y\+L\+A\+ND} and {\ttfamily G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+N\+U\+LL}. The default value is {\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+Y\+\_\+\+P\+L\+A\+T\+F\+O\+RM}, which will choose any platform the library includes support for except for the Null backend.
+
+\label{intro_guide_GLFW_JOYSTICK_HAT_BUTTONS}%
+\Hypertarget{intro_guide_GLFW_JOYSTICK_HAT_BUTTONS}%
+{\bfseries{G\+L\+F\+W\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+H\+A\+T\+\_\+\+B\+U\+T\+T\+O\+NS}} specifies whether to also expose joystick hats as buttons, for compatibility with earlier versions of G\+L\+FW that did not have \mbox{\hyperlink{group__input_gad415b53795a1aeced53b7b66c7943931}{glfw\+Get\+Joystick\+Hats}}. Possible values are {\ttfamily G\+L\+F\+W\+\_\+\+T\+R\+UE} and {\ttfamily G\+L\+F\+W\+\_\+\+F\+A\+L\+SE}.
+
+\label{intro_guide_GLFW_ANGLE_PLATFORM_TYPE_hint}%
+\Hypertarget{intro_guide_GLFW_ANGLE_PLATFORM_TYPE_hint}%
+{\bfseries{G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+PE}} specifies the platform type (rendering backend) to request when using Open\+GL ES and E\+GL via \href{https://chromium.googlesource.com/angle/angle/}{\texttt{ A\+N\+G\+LE}}. If the requested platform type is unavailable, A\+N\+G\+LE will use its default. Possible values are one of {\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+N\+O\+NE}, {\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+O\+P\+E\+N\+GL}, {\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+O\+P\+E\+N\+G\+L\+ES}, {\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+D3\+D9}, {\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+D3\+D11}, {\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+V\+U\+L\+K\+AN} and {\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+M\+E\+T\+AL}.
+
+The A\+N\+G\+LE platform type is specified via the {\ttfamily E\+G\+L\+\_\+\+A\+N\+G\+L\+E\+\_\+platform\+\_\+angle} extension. This extension is not used if this hint is {\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+N\+O\+NE}, which is the default value.\hypertarget{intro_guide_init_hints_osx}{}\doxysubsubsection{mac\+O\+S specific init hints}\label{intro_guide_init_hints_osx}
+\label{intro_guide_GLFW_COCOA_CHDIR_RESOURCES_hint}%
+\Hypertarget{intro_guide_GLFW_COCOA_CHDIR_RESOURCES_hint}%
+{\bfseries{G\+L\+F\+W\+\_\+\+C\+O\+C\+O\+A\+\_\+\+C\+H\+D\+I\+R\+\_\+\+R\+E\+S\+O\+U\+R\+C\+ES}} specifies whether to set the current directory to the application to the {\ttfamily Contents/\+Resources} subdirectory of the application\textquotesingle{}s bundle, if present. Possible values are {\ttfamily G\+L\+F\+W\+\_\+\+T\+R\+UE} and {\ttfamily G\+L\+F\+W\+\_\+\+F\+A\+L\+SE}. This is ignored on other platforms.
+
+\label{intro_guide_GLFW_COCOA_MENUBAR_hint}%
+\Hypertarget{intro_guide_GLFW_COCOA_MENUBAR_hint}%
+{\bfseries{G\+L\+F\+W\+\_\+\+C\+O\+C\+O\+A\+\_\+\+M\+E\+N\+U\+B\+AR}} specifies whether to create the menu bar and dock icon when G\+L\+FW is initialized. This applies whether the menu bar is created from a nib or manually by G\+L\+FW. Possible values are {\ttfamily G\+L\+F\+W\+\_\+\+T\+R\+UE} and {\ttfamily G\+L\+F\+W\+\_\+\+F\+A\+L\+SE}. This is ignored on other platforms.\hypertarget{intro_guide_init_hints_x11}{}\doxysubsubsection{X11 specific init hints}\label{intro_guide_init_hints_x11}
+\label{intro_guide_GLFW_X11_XCB_VULKAN_SURFACE_hint}%
+\Hypertarget{intro_guide_GLFW_X11_XCB_VULKAN_SURFACE_hint}%
+{\bfseries{G\+L\+F\+W\+\_\+\+X11\+\_\+\+X\+C\+B\+\_\+\+V\+U\+L\+K\+A\+N\+\_\+\+S\+U\+R\+F\+A\+CE}} specifies whether to prefer the {\ttfamily V\+K\+\_\+\+K\+H\+R\+\_\+xcb\+\_\+surface} extension for creating Vulkan surfaces, or whether to use the {\ttfamily V\+K\+\_\+\+K\+H\+R\+\_\+xlib\+\_\+surface} extension. Possible values are {\ttfamily G\+L\+F\+W\+\_\+\+T\+R\+UE} and {\ttfamily G\+L\+F\+W\+\_\+\+F\+A\+L\+SE}. This is ignored on other platforms.\hypertarget{intro_guide_init_hints_values}{}\doxysubsubsection{Supported and default values}\label{intro_guide_init_hints_values}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Initialization hint }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Default value }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Supported values  }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Initialization hint }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Default value }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Supported values  }\\\cline{1-3}
+\endhead
+\mbox{\hyperlink{intro_guide_GLFW_PLATFORM}{G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+RM}} &{\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+Y\+\_\+\+P\+L\+A\+T\+F\+O\+RM} &{\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+Y\+\_\+\+P\+L\+A\+T\+F\+O\+RM}, {\ttfamily G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+W\+I\+N32}, {\ttfamily G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+C\+O\+C\+OA}, {\ttfamily G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+X11}, {\ttfamily G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+W\+A\+Y\+L\+A\+ND} or {\ttfamily G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+N\+U\+LL}  \\\cline{1-3}
+\mbox{\hyperlink{intro_guide_GLFW_JOYSTICK_HAT_BUTTONS}{G\+L\+F\+W\+\_\+\+J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+H\+A\+T\+\_\+\+B\+U\+T\+T\+O\+NS}} &{\ttfamily G\+L\+F\+W\+\_\+\+T\+R\+UE} &{\ttfamily G\+L\+F\+W\+\_\+\+T\+R\+UE} or {\ttfamily G\+L\+F\+W\+\_\+\+F\+A\+L\+SE}  \\\cline{1-3}
+\mbox{\hyperlink{group__init_gaec269b24cf549ab46292c0125d8bbdce}{G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+PE}} &{\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+N\+O\+NE} &{\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+N\+O\+NE}, {\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+O\+P\+E\+N\+GL}, {\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+O\+P\+E\+N\+G\+L\+ES}, {\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+D3\+D9}, {\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+D3\+D11}, {\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+V\+U\+L\+K\+AN} or {\ttfamily G\+L\+F\+W\+\_\+\+A\+N\+G\+L\+E\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+\+M\+E\+T\+AL}  \\\cline{1-3}
+\mbox{\hyperlink{group__init_gab937983147a3158d45f88fad7129d9f2}{G\+L\+F\+W\+\_\+\+C\+O\+C\+O\+A\+\_\+\+C\+H\+D\+I\+R\+\_\+\+R\+E\+S\+O\+U\+R\+C\+ES}} &{\ttfamily G\+L\+F\+W\+\_\+\+T\+R\+UE} &{\ttfamily G\+L\+F\+W\+\_\+\+T\+R\+UE} or {\ttfamily G\+L\+F\+W\+\_\+\+F\+A\+L\+SE}  \\\cline{1-3}
+\mbox{\hyperlink{group__init_ga71e0b4ce2f2696a84a9b8c5e12dc70cf}{G\+L\+F\+W\+\_\+\+C\+O\+C\+O\+A\+\_\+\+M\+E\+N\+U\+B\+AR}} &{\ttfamily G\+L\+F\+W\+\_\+\+T\+R\+UE} &{\ttfamily G\+L\+F\+W\+\_\+\+T\+R\+UE} or {\ttfamily G\+L\+F\+W\+\_\+\+F\+A\+L\+SE}  \\\cline{1-3}
+\mbox{\hyperlink{group__init_gaa341e303ebeb8e4199b8ab8be84351f6}{G\+L\+F\+W\+\_\+\+X11\+\_\+\+X\+C\+B\+\_\+\+V\+U\+L\+K\+A\+N\+\_\+\+S\+U\+R\+F\+A\+CE}} &{\ttfamily G\+L\+F\+W\+\_\+\+T\+R\+UE} &{\ttfamily G\+L\+F\+W\+\_\+\+T\+R\+UE} or {\ttfamily G\+L\+F\+W\+\_\+\+F\+A\+L\+SE}  \\\cline{1-3}
+\end{longtabu}
+\hypertarget{intro_guide_platform}{}\doxysubsection{Runtime platform selection}\label{intro_guide_platform}
+G\+L\+FW can be compiled for more than one platform (window system) at once. This lets a single library binary support both X11 and Wayland on Linux and other Unix-\/like systems.
+
+You can control platform selection via the \mbox{\hyperlink{intro_guide_GLFW_PLATFORM}{G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+RM}} initialization hint. By default this is set to \mbox{\hyperlink{group__init_ga18b2d37374d0dea28cd69194fa85b859}{G\+L\+F\+W\+\_\+\+A\+N\+Y\+\_\+\+P\+L\+A\+T\+F\+O\+RM}}, which will look for supported window systems in order of priority and select the first one it finds. It can also be set to any specific platform to have G\+L\+FW only look for that one.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{group__init_gac85e41aab1c2bd6fc740f4377d9e7e9f}{glfwInitHint}}(\mbox{\hyperlink{group__init_ga9d38bf1fdf4f91d6565401734a7cd967}{GLFW\_PLATFORM}}, \mbox{\hyperlink{group__init_gaf5333f3933e9c248a00cfda6523f386b}{GLFW\_PLATFORM\_X11}});}
+\end{DoxyCode}
+
+
+This mechanism also provides the Null platform, which is always supported but needs to be explicitly requested. This platform is effectively a stub, emulating a window system on a single 1080p monitor, but will not interact with any actual window system.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{group__init_gac85e41aab1c2bd6fc740f4377d9e7e9f}{glfwInitHint}}(\mbox{\hyperlink{group__init_ga9d38bf1fdf4f91d6565401734a7cd967}{GLFW\_PLATFORM}}, \mbox{\hyperlink{group__init_gac06fad5a4866ae7a1d7b2675fac72d7f}{GLFW\_PLATFORM\_NULL}});}
+\end{DoxyCode}
+
+
+You can test whether a library binary was compiled with support for a specific platform with \mbox{\hyperlink{group__init_ga7b57ba0946498e8621f4d969bbcecfba}{glfw\+Platform\+Supported}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{if} (\mbox{\hyperlink{group__init_ga7b57ba0946498e8621f4d969bbcecfba}{glfwPlatformSupported}}(\mbox{\hyperlink{group__init_gac4b08906a3cbf26c518a4a543eedd740}{GLFW\_PLATFORM\_WAYLAND}}))}
+\DoxyCodeLine{    \mbox{\hyperlink{group__init_gac85e41aab1c2bd6fc740f4377d9e7e9f}{glfwInitHint}}(\mbox{\hyperlink{group__init_ga9d38bf1fdf4f91d6565401734a7cd967}{GLFW\_PLATFORM}}, \mbox{\hyperlink{group__init_gac4b08906a3cbf26c518a4a543eedd740}{GLFW\_PLATFORM\_WAYLAND}});}
+\end{DoxyCode}
+
+
+Once G\+L\+FW has been initialized, you can query which platform was selected with \mbox{\hyperlink{group__init_gac2d1735162a981fcaa8fb386740aa5ce}{glfw\+Get\+Platform}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} platform = \mbox{\hyperlink{group__init_gac2d1735162a981fcaa8fb386740aa5ce}{glfwGetPlatform}}();}
+\end{DoxyCode}
+
+
+If you are using any \mbox{\hyperlink{group__native}{native access functions}}, especially on Linux and other Unix-\/like systems, then you may need to check that you are calling the ones matching the selected platform.\hypertarget{intro_guide_init_allocator}{}\doxysubsection{Custom heap memory allocator}\label{intro_guide_init_allocator}
+The heap memory allocator can be customized before initialization with \mbox{\hyperlink{group__init_ga0f4c8556a21d9e774a0ba0332da1748e}{glfw\+Init\+Allocator}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{struct_g_l_f_wallocator}{GLFWallocator}} allocator;}
+\DoxyCodeLine{allocator.\mbox{\hyperlink{struct_g_l_f_wallocator_a18a798136f17a9cb105be18312193bf7}{allocate}} = \mbox{\hyperlink{test__cpp__compilation_8cpp_a37293e69542d189287ca4613aaab09ae}{my\_malloc}};}
+\DoxyCodeLine{allocator.\mbox{\hyperlink{struct_g_l_f_wallocator_af5a674af9e170095b968f467233437be}{reallocate}} = \mbox{\hyperlink{test__cpp__compilation_8cpp_a6a5e321a1b65dd7c20fe41713149860a}{my\_realloc}};}
+\DoxyCodeLine{allocator.\mbox{\hyperlink{struct_g_l_f_wallocator_ab74cf9a969e73e6eb65a6112a591a988}{deallocate}} = \mbox{\hyperlink{test__cpp__compilation_8cpp_ae989e2f27b5dbb16ab96c84f62d3bf3a}{my\_free}};}
+\DoxyCodeLine{allocator.\mbox{\hyperlink{struct_g_l_f_wallocator_af6153be74dbaf7f0a7e8bd3bfc039910}{user}} = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{group__init_ga0f4c8556a21d9e774a0ba0332da1748e}{glfwInitAllocator}}(\&allocator);}
+\end{DoxyCode}
+
+
+The allocator will be picked up at the beginning of initialization and will be used until G\+L\+FW has been fully terminated. Any allocator set after initialization will be picked up only at the next initialization.
+
+The allocator will only be used for allocations that would have been made with the C standard library. Memory allocations that must be made with platform specific A\+P\+Is will still use those.
+
+The allocation function must have a signature matching \mbox{\hyperlink{group__init_gad3ff6f19415d52fbdcf3f0b57d8802aa}{G\+L\+F\+Wallocatefun}}. It receives the desired size, in bytes, and the user pointer passed to \mbox{\hyperlink{group__init_ga0f4c8556a21d9e774a0ba0332da1748e}{glfw\+Init\+Allocator}} and returns the address to the allocated memory block.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}* \mbox{\hyperlink{test__cpp__compilation_8cpp_a37293e69542d189287ca4613aaab09ae}{my\_malloc}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}}, \textcolor{keywordtype}{void}* user)}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    ...}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+The reallocation function must have a function signature matching \mbox{\hyperlink{group__init_gad17723fa35a481b6c8d438a000a8201f}{G\+L\+F\+Wreallocatefun}}. It receives the memory block to be reallocated, the new desired size, in bytes, and the user pointer passed to \mbox{\hyperlink{group__init_ga0f4c8556a21d9e774a0ba0332da1748e}{glfw\+Init\+Allocator}} and returns the address to the resized memory block.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}* \mbox{\hyperlink{test__cpp__compilation_8cpp_a6a5e321a1b65dd7c20fe41713149860a}{my\_realloc}}(\textcolor{keywordtype}{void}* block, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}}, \textcolor{keywordtype}{void}* user)}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    ...}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+The deallocation function must have a function signature matching \mbox{\hyperlink{group__init_ga7181615eda94c4b07bd72bdcee39fa28}{G\+L\+F\+Wdeallocatefun}}. It receives the memory block to be deallocated and the user pointer passed to \mbox{\hyperlink{group__init_ga0f4c8556a21d9e774a0ba0332da1748e}{glfw\+Init\+Allocator}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void} \mbox{\hyperlink{test__cpp__compilation_8cpp_ae989e2f27b5dbb16ab96c84f62d3bf3a}{my\_free}}(\textcolor{keywordtype}{void}* block, \textcolor{keywordtype}{void}* user)}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    ...}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+\hypertarget{intro_guide_intro_init_terminate}{}\doxysubsection{Terminating G\+L\+FW}\label{intro_guide_intro_init_terminate}
+Before your application exits, you should terminate the G\+L\+FW library if it has been initialized. This is done with \mbox{\hyperlink{group__init_gafd90e6fd4819ea9e22e5e739519a6504}{glfw\+Terminate}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{group__init_gafd90e6fd4819ea9e22e5e739519a6504}{glfwTerminate}}();}
+\end{DoxyCode}
+
+
+This will destroy any remaining window, monitor and cursor objects, restore any modified gamma ramps, re-\/enable the screensaver if it had been disabled and free any other resources allocated by G\+L\+FW.
+
+Once the library is terminated, it is as if it had never been initialized and you will need to initialize it again before being able to use G\+L\+FW. If the library was not initialized or had already been terminated, it return immediately.\hypertarget{intro_guide_error_handling}{}\doxysection{Error handling}\label{intro_guide_error_handling}
+Some G\+L\+FW functions have return values that indicate an error, but this is often not very helpful when trying to figure out what happened or why it occurred. Other functions have no return value reserved for errors, so error notification needs a separate channel. Finally, far from all G\+L\+FW functions have return values.
+
+The last \mbox{\hyperlink{group__errors}{error code}} for the calling thread can be queried at any time with \mbox{\hyperlink{group__init_gaee7bac4c7e1b2769207747c1b5ae2f9e}{glfw\+Get\+Error}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} code = \mbox{\hyperlink{group__init_gaee7bac4c7e1b2769207747c1b5ae2f9e}{glfwGetError}}(\mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordflow}{if} (code != \mbox{\hyperlink{group__errors_gafa30deee5db4d69c4c93d116ed87dbf4}{GLFW\_NO\_ERROR}})}
+\DoxyCodeLine{    handle\_error(code);}
+\end{DoxyCode}
+
+
+If no error has occurred since the last call, \mbox{\hyperlink{group__errors_gafa30deee5db4d69c4c93d116ed87dbf4}{G\+L\+F\+W\+\_\+\+N\+O\+\_\+\+E\+R\+R\+OR}} (zero) is returned. The error is cleared before the function returns.
+
+The error code indicates the general category of the error. Some error codes, such as \mbox{\hyperlink{group__errors_ga2374ee02c177f12e1fa76ff3ed15e14a}{G\+L\+F\+W\+\_\+\+N\+O\+T\+\_\+\+I\+N\+I\+T\+I\+A\+L\+I\+Z\+ED}} has only a single meaning, whereas others like \mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{G\+L\+F\+W\+\_\+\+P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+E\+R\+R\+OR}} are used for many different errors.
+
+G\+L\+FW often has more information about an error than its general category. You can retrieve a U\+T\+F-\/8 encoded human-\/readable description along with the error code. If no error has occurred since the last call, the description is set to {\ttfamily N\+U\+LL}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{const} \textcolor{keywordtype}{char}* description;}
+\DoxyCodeLine{\textcolor{keywordtype}{int} code = \mbox{\hyperlink{group__init_gaee7bac4c7e1b2769207747c1b5ae2f9e}{glfwGetError}}(\&description);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordflow}{if} (description)}
+\DoxyCodeLine{    display\_error\_message(code, description);}
+\end{DoxyCode}
+
+
+The retrieved description string is only valid until the next error occurs. This means you must make a copy of it if you want to keep it.
+
+You can also set an error callback, which will be called each time an error occurs. It is set with \mbox{\hyperlink{group__init_ga746e2757d069eaea423349aca6ae097a}{glfw\+Set\+Error\+Callback}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{group__init_ga746e2757d069eaea423349aca6ae097a}{glfwSetErrorCallback}}(\mbox{\hyperlink{inputlag_8c_a4ee391c8bab624943c822faafb2c320e}{error\_callback}});}
+\end{DoxyCode}
+
+
+The error callback receives the same error code and human-\/readable description returned by \mbox{\hyperlink{group__init_gaee7bac4c7e1b2769207747c1b5ae2f9e}{glfw\+Get\+Error}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void} \mbox{\hyperlink{inputlag_8c_a4ee391c8bab624943c822faafb2c320e}{error\_callback}}(\textcolor{keywordtype}{int} code, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* description)}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    display\_error\_message(code, description);}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+The error callback is called after the error is stored, so calling \mbox{\hyperlink{group__init_gaee7bac4c7e1b2769207747c1b5ae2f9e}{glfw\+Get\+Error}} from within the error callback returns the same values as the callback argument.
+
+The description string passed to the callback is only valid until the error callback returns. This means you must make a copy of it if you want to keep it.
+
+{\bfseries{Reported errors are never fatal.}} As long as G\+L\+FW was successfully initialized, it will remain initialized and in a safe state until terminated regardless of how many errors occur. If an error occurs during initialization that causes \mbox{\hyperlink{group__init_gab41771f0215a2e0afb4cf1cf98082d40}{glfw\+Init}} to fail, any part of the library that was initialized will be safely terminated.
+
+Do not rely on a currently invalid call to generate a specific error, as in the future that same call may generate a different error or become valid.\hypertarget{intro_guide_coordinate_systems}{}\doxysection{Coordinate systems}\label{intro_guide_coordinate_systems}
+G\+L\+FW has two primary coordinate systems\+: the {\itshape virtual screen} and the window {\itshape content area} or {\itshape content area}. Both use the same unit\+: {\itshape virtual screen coordinates}, or just {\itshape screen coordinates}, which don\textquotesingle{}t necessarily correspond to pixels.
+
+
+
+Both the virtual screen and the content area coordinate systems have the X-\/axis pointing to the right and the Y-\/axis pointing down.
+
+Window and monitor positions are specified as the position of the upper-\/left corners of their content areas relative to the virtual screen, while cursor positions are specified relative to a window\textquotesingle{}s content area.
+
+Because the origin of the window\textquotesingle{}s content area coordinate system is also the point from which the window position is specified, you can translate content area coordinates to the virtual screen by adding the window position. The window frame, when present, extends out from the content area but does not affect the window position.
+
+Almost all positions and sizes in G\+L\+FW are measured in screen coordinates relative to one of the two origins above. This includes cursor positions, window positions and sizes, window frame sizes, monitor positions and video mode resolutions.
+
+Two exceptions are the \mbox{\hyperlink{monitor_guide_monitor_size}{monitor physical size}}, which is measured in millimetres, and \mbox{\hyperlink{window_guide_window_fbsize}{framebuffer size}}, which is measured in pixels.
+
+Pixels and screen coordinates may map 1\+:1 on your machine, but they won\textquotesingle{}t on every other machine, for example on a Mac with a Retina display. The ratio between screen coordinates and pixels may also change at run-\/time depending on which monitor the window is currently considered to be on.\hypertarget{intro_guide_guarantees_limitations}{}\doxysection{Guarantees and limitations}\label{intro_guide_guarantees_limitations}
+This section describes the conditions under which G\+L\+FW can be expected to function, barring bugs in the operating system or drivers. Use of G\+L\+FW outside of these limits may work on some platforms, or on some machines, or some of the time, or on some versions of G\+L\+FW, but it may break at any time and this will not be considered a bug.\hypertarget{intro_guide_lifetime}{}\doxysubsection{Pointer lifetimes}\label{intro_guide_lifetime}
+G\+L\+FW will never free any pointer you provide to it and you must never free any pointer it provides to you.
+
+Many G\+L\+FW functions return pointers to dynamically allocated structures, strings or arrays, and some callbacks are provided with strings or arrays. These are always managed by G\+L\+FW and should never be freed by the application. The lifetime of these pointers is documented for each G\+L\+FW function and callback. If you need to keep this data, you must copy it before its lifetime expires.
+
+Many G\+L\+FW functions accept pointers to structures or strings allocated by the application. These are never freed by G\+L\+FW and are always the responsibility of the application. If G\+L\+FW needs to keep the data in these structures or strings, it is copied before the function returns.
+
+Pointer lifetimes are guaranteed not to be shortened in future minor or patch releases.\hypertarget{intro_guide_reentrancy}{}\doxysubsection{Reentrancy}\label{intro_guide_reentrancy}
+G\+L\+FW event processing and object destruction are not reentrant. This means that the following functions must not be called from any callback function\+:
+
+
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{group__window_ga806747476b7247d292be3711c323ea10}{glfw\+Destroy\+Window}}
+\item \mbox{\hyperlink{group__input_ga27556b7122117bc1bbb4bb3cc003ea43}{glfw\+Destroy\+Cursor}}
+\item \mbox{\hyperlink{group__window_ga872d16e4c77f58c0436f356255920cfc}{glfw\+Poll\+Events}}
+\item \mbox{\hyperlink{group__window_ga6e042d05823c11e11c7339b81a237738}{glfw\+Wait\+Events}}
+\item \mbox{\hyperlink{group__window_ga05223a0a4c5e50f10f289e60398153aa}{glfw\+Wait\+Events\+Timeout}}
+\item \mbox{\hyperlink{group__init_gafd90e6fd4819ea9e22e5e739519a6504}{glfw\+Terminate}}
+\end{DoxyItemize}
+
+These functions may be made reentrant in future minor or patch releases, but functions not on this list will not be made non-\/reentrant.\hypertarget{intro_guide_thread_safety}{}\doxysubsection{Thread safety}\label{intro_guide_thread_safety}
+Most G\+L\+FW functions must only be called from the main thread (the thread that calls main), but some may be called from any thread once the library has been initialized. Before initialization the whole library is thread-\/unsafe.
+
+The reference documentation for every G\+L\+FW function states whether it is limited to the main thread.
+
+Initialization, termination, event processing and the creation and destruction of windows, cursors and Open\+GL and Open\+GL ES contexts are all restricted to the main thread due to limitations of one or several platforms.
+
+Because event processing must be performed on the main thread, all callbacks except for the error callback will only be called on that thread. The error callback may be called on any thread, as any G\+L\+FW function may generate errors.
+
+The error code and description may be queried from any thread.
+
+
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{group__init_gaee7bac4c7e1b2769207747c1b5ae2f9e}{glfw\+Get\+Error}}
+\end{DoxyItemize}
+
+Empty events may be posted from any thread.
+
+
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{group__window_gad6f6b997278c91c43b35970eb9713d7e}{glfw\+Post\+Empty\+Event}}
+\end{DoxyItemize}
+
+The window user pointer and close flag may be read and written from any thread, but this is not synchronized by G\+L\+FW.
+
+
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{group__window_ga0a9ff3b4bf8589e9518e8816d06a8f50}{glfw\+Get\+Window\+User\+Pointer}}
+\item \mbox{\hyperlink{group__window_gacc9e68faee3c1763b54cd9bc405cf43e}{glfw\+Set\+Window\+User\+Pointer}}
+\item \mbox{\hyperlink{group__window_gaa6162f67dfa38b8beda2fea623649332}{glfw\+Window\+Should\+Close}}
+\item \mbox{\hyperlink{group__window_ga1cadeda7a1e2f224e06a8415d30741aa}{glfw\+Set\+Window\+Should\+Close}}
+\end{DoxyItemize}
+
+These functions for working with Open\+GL and Open\+GL ES contexts may be called from any thread, but the window object is not synchronized by G\+L\+FW.
+
+
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{group__context_gafd76c93e15ec8b0b90506a9936a46185}{glfw\+Make\+Context\+Current}}
+\item \mbox{\hyperlink{group__context_gac28d98c655377d81a516bf5ef90780c8}{glfw\+Get\+Current\+Context}}
+\item \mbox{\hyperlink{group__window_gafb827800eedbfcbc97b1e5408df668d7}{glfw\+Swap\+Buffers}}
+\item \mbox{\hyperlink{group__context_ga12a595c06947cec4967c6e1f14210a8a}{glfw\+Swap\+Interval}}
+\item \mbox{\hyperlink{group__context_ga9a28c712d35f9e43534e1d03b051c04c}{glfw\+Extension\+Supported}}
+\item \mbox{\hyperlink{group__context_ga0e8af175218929615c16e74938c10f2a}{glfw\+Get\+Proc\+Address}}
+\end{DoxyItemize}
+
+The raw timer functions may be called from any thread.
+
+
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{group__input_gaa92d10b10013372778efbf6367714371}{glfw\+Get\+Timer\+Frequency}}
+\item \mbox{\hyperlink{group__input_gaa00c3e32227eb70b3968fca0bfe4ae26}{glfw\+Get\+Timer\+Value}}
+\end{DoxyItemize}
+
+The regular timer may be used from any thread, but reading and writing the timer offset is not synchronized by G\+L\+FW.
+
+
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{group__input_ga03d4a1039b8662c71eeb40beea8cb622}{glfw\+Get\+Time}}
+\item \mbox{\hyperlink{group__input_ga94360a3628a09f32708f83cc3fa48590}{glfw\+Set\+Time}}
+\end{DoxyItemize}
+
+Library version information may be queried from any thread.
+
+
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{group__init_ga2402c7824ac0194c13722790ff9559ff}{glfw\+Get\+Version}}
+\item \mbox{\hyperlink{group__init_ga7de7ba982c0cf66b35afdaa8bea071ae}{glfw\+Get\+Version\+String}}
+\end{DoxyItemize}
+
+Platform information may be queried from any thread.
+
+
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{group__init_ga7b57ba0946498e8621f4d969bbcecfba}{glfw\+Platform\+Supported}}
+\item \mbox{\hyperlink{group__init_gac2d1735162a981fcaa8fb386740aa5ce}{glfw\+Get\+Platform}}
+\end{DoxyItemize}
+
+All Vulkan related functions may be called from any thread.
+
+
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{group__vulkan_ga72e7c3757d9ff2333181a5569bb7c403}{glfw\+Vulkan\+Supported}}
+\item \mbox{\hyperlink{group__vulkan_gac47c204c9c417fced07e25de8fce526a}{glfw\+Get\+Required\+Instance\+Extensions}}
+\item \mbox{\hyperlink{vulkan_8c_ab1fbd7c0ba5c40c91c6b85b897364039}{glfw\+Get\+Instance\+Proc\+Address}}
+\item \mbox{\hyperlink{vulkan_8c_a6a7033429666ac6b31d4250aeb5b37d1}{glfw\+Get\+Physical\+Device\+Presentation\+Support}}
+\item \mbox{\hyperlink{vulkan_8c_a5a47c783767442b8b8e9ab3cf2e4959b}{glfw\+Create\+Window\+Surface}}
+\end{DoxyItemize}
+
+G\+L\+FW uses synchronization objects internally only to manage the per-\/thread context and error states. Additional synchronization is left to the application.
+
+Functions that may currently be called from any thread will always remain so, but functions that are currently limited to the main thread may be updated to allow calls from any thread in future releases.\hypertarget{intro_guide_compatibility}{}\doxysubsection{Version compatibility}\label{intro_guide_compatibility}
+G\+L\+FW uses \href{https://semver.org/}{\texttt{ Semantic Versioning}}. This guarantees source and binary backward compatibility with earlier minor versions of the A\+PI. This means that you can drop in a newer version of the library and existing programs will continue to compile and existing binaries will continue to run.
+
+Once a function or constant has been added, the signature of that function or value of that constant will remain unchanged until the next major version of G\+L\+FW. No compatibility of any kind is guaranteed between major versions.
+
+Undocumented behavior, i.\+e. behavior that is not described in the documentation, may change at any time until it is documented.
+
+If the reference documentation and the implementation differ, the reference documentation will almost always take precedence and the implementation will be fixed in the next release. The reference documentation will also take precedence over anything stated in a guide.\hypertarget{intro_guide_event_order}{}\doxysubsection{Event order}\label{intro_guide_event_order}
+The order of arrival of related events is not guaranteed to be consistent across platforms. The exception is synthetic key and mouse button release events, which are always delivered after the window defocus event.\hypertarget{intro_guide_intro_version}{}\doxysection{Version management}\label{intro_guide_intro_version}
+G\+L\+FW provides mechanisms for identifying what version of G\+L\+FW your application was compiled against as well as what version it is currently running against. If you are loading G\+L\+FW dynamically (not just linking dynamically), you can use this to verify that the library binary is compatible with your application.\hypertarget{intro_guide_intro_version_compile}{}\doxysubsection{Compile-\/time version}\label{intro_guide_intro_version_compile}
+The compile-\/time version of G\+L\+FW is provided by the G\+L\+FW header with the {\ttfamily G\+L\+F\+W\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+M\+A\+J\+OR}, {\ttfamily G\+L\+F\+W\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+M\+I\+N\+OR} and {\ttfamily G\+L\+F\+W\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+R\+E\+V\+I\+S\+I\+ON} macros.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{printf(\textcolor{stringliteral}{"Compiled against GLFW \%i.\%i.\%i\(\backslash\)n"},}
+\DoxyCodeLine{       \mbox{\hyperlink{group__init_ga6337d9ea43b22fc529b2bba066b4a576}{GLFW\_VERSION\_MAJOR}},}
+\DoxyCodeLine{       \mbox{\hyperlink{group__init_gaf80d40f0aea7088ff337606e9c48f7a3}{GLFW\_VERSION\_MINOR}},}
+\DoxyCodeLine{       \mbox{\hyperlink{group__init_gab72ae2e2035d9ea461abc3495eac0502}{GLFW\_VERSION\_REVISION}});}
+\end{DoxyCode}
+\hypertarget{intro_guide_intro_version_runtime}{}\doxysubsection{Run-\/time version}\label{intro_guide_intro_version_runtime}
+The run-\/time version can be retrieved with \mbox{\hyperlink{group__init_ga2402c7824ac0194c13722790ff9559ff}{glfw\+Get\+Version}}, a function that may be called regardless of whether G\+L\+FW is initialized.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} major, minor, revision;}
+\DoxyCodeLine{\mbox{\hyperlink{group__init_ga2402c7824ac0194c13722790ff9559ff}{glfwGetVersion}}(\&major, \&minor, \&revision);}
+\DoxyCodeLine{}
+\DoxyCodeLine{printf(\textcolor{stringliteral}{"Running against GLFW \%i.\%i.\%i\(\backslash\)n"}, major, minor, revision);}
+\end{DoxyCode}
+\hypertarget{intro_guide_intro_version_string}{}\doxysubsection{Version string}\label{intro_guide_intro_version_string}
+G\+L\+FW 3 also provides a compile-\/time generated version string that describes the version, platform, compiler and any platform-\/specific compile-\/time options. This is primarily intended for submitting bug reports, to allow developers to see which code paths are enabled in a binary.
+
+The version string is returned by \mbox{\hyperlink{group__init_ga7de7ba982c0cf66b35afdaa8bea071ae}{glfw\+Get\+Version\+String}}, a function that may be called regardless of whether G\+L\+FW is initialized.
+
+{\bfseries{Do not use the version string}} to parse the G\+L\+FW library version. The \mbox{\hyperlink{group__init_ga2402c7824ac0194c13722790ff9559ff}{glfw\+Get\+Version}} function already provides the version of the running library binary.
+
+{\bfseries{Do not use the version string}} to parse what platforms are supported. The \mbox{\hyperlink{group__init_ga7b57ba0946498e8621f4d969bbcecfba}{glfw\+Platform\+Supported}} function lets you query platform support.
+
+{\bfseries{G\+L\+FW 3.\+4\+:}} The format of this string was changed to support the addition of \mbox{\hyperlink{intro_guide_platform}{runtime platform selection}}.
+
+The format of the string is as follows\+:
+\begin{DoxyItemize}
+\item The version of G\+L\+FW
+\item For each supported platform\+:
+\begin{DoxyItemize}
+\item The name of the window system A\+PI
+\item The name of the window system specific context creation A\+PI, if applicable
+\end{DoxyItemize}
+\item The names of the always supported context creation A\+P\+Is E\+GL and O\+S\+Mesa
+\item Any additional compile-\/time options, A\+P\+Is and (on Windows) what compiler was used
+\end{DoxyItemize}
+
+For example, G\+L\+FW 3.\+4 compiled as a D\+LL for Windows with Min\+GW may have a version string like this\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{3.4.0 Win32 WGL Null EGL OSMesa MinGW DLL}
+\end{DoxyCode}
+
+
+While G\+L\+FW compiled as as static library for Linux with both Wayland and X11 enabled may have a version string like this\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{3.4.0 Wayland X11 GLX Null EGL OSMesa monotonic}
+\end{DoxyCode}
+ 

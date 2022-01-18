@@ -1,0 +1,598 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_x11__init_8c">
+<title>deps/glfw/src/x11_init.c File Reference</title>
+<indexterm><primary>deps/glfw/src/x11_init.c</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;limits.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;locale.h&gt;
+#include &lt;unistd.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_x11__init_8c_1ac91795c020fc3d64cabfe8bacb141185">_glfwGrabErrorHandlerX11</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_x11__init_8c_1a2fec8c7a77c8004f943f25914dc947d9">_glfwReleaseErrorHandlerX11</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_x11__init_8c_1a21e402dbb0117b1706d8506024c5689d">_glfwInputErrorX11</link> (int <link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>, const char *<link linkend="_glad_8h_1ab5d4c2bfcb78f279c688575297d42f74">message</link>)</para>
+</listitem>
+            <listitem><para>Cursor <link linkend="_x11__init_8c_1a81db925a94ffe794ab77424802434780">_glfwCreateNativeCursorX11</link> (const <link linkend="_struct_g_l_f_wimage">GLFWimage</link> *<link linkend="_structimage">image</link>, int xhot, int yhot)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_x11__init_8c_1a3ef34494ec1a6b49e24c3139b0bbdb56">_glfwConnectX11</link> (int platformID, <link linkend="_struct___g_l_f_wplatform">_GLFWplatform</link> *platform)</para>
+</listitem>
+            <listitem><para>int <link linkend="_x11__init_8c_1af20065dc55a35809e4ba688ec0142ada">_glfwInitX11</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_x11__init_8c_1a1609e3af2c42255d87f2121bdc734901">_glfwTerminateX11</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_x11__init_8c_1a3ef34494ec1a6b49e24c3139b0bbdb56"/>    <section>
+    <title>_glfwConnectX11()</title>
+<indexterm><primary>_glfwConnectX11</primary><secondary>x11_init.c</secondary></indexterm>
+<indexterm><primary>x11_init.c</primary><secondary>_glfwConnectX11</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwConnectX11 (int platformID, <link linkend="_struct___g_l_f_wplatform">_GLFWplatform</link> * platform)</computeroutput></para><para>
+Definition at line 1129 of file x11_init.c.</para>
+<programlisting>1130 {
+1131 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_struct___g_l_f_wplatform">_GLFWplatform</link>&#32;x11&#32;=
+1132 &#32;&#32;&#32;&#32;{
+1133 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gaf5333f3933e9c248a00cfda6523f386b">GLFW_PLATFORM_X11</link>,
+1134 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__init_8c_1af20065dc55a35809e4ba688ec0142ada">_glfwInitX11</link>,
+1135 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__init_8c_1a1609e3af2c42255d87f2121bdc734901">_glfwTerminateX11</link>,
+1136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a76bad938f2429ee94e235804f076e513">_glfwGetCursorPosX11</link>,
+1137 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1ab931108a908d86680a800aea8a1c509e">_glfwSetCursorPosX11</link>,
+1138 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a41ea58eb9244ae51a118e9682738fb89">_glfwSetCursorModeX11</link>,
+1139 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a7ec18d1c290a44b2e90029de5ff81411">_glfwSetRawMouseMotionX11</link>,
+1140 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a9dad95a9049f27c06185d2842eba73cb">_glfwRawMouseMotionSupportedX11</link>,
+1141 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a7704488730c8804020004f906cd09480">_glfwCreateCursorX11</link>,
+1142 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a8b0d2401ae65692af43d78c23dd9665f">_glfwCreateStandardCursorX11</link>,
+1143 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a8885807132ee184cff656f6513b8112b">_glfwDestroyCursorX11</link>,
+1144 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a3a9f7225c28fa00129c29d0c83a1bac1">_glfwSetCursorX11</link>,
+1145 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a0c238ff46e589c64bc559b6544cbecc4">_glfwGetScancodeNameX11</link>,
+1146 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a71aa37ee9b9f941fe92fdc560f00de85">_glfwGetKeyScancodeX11</link>,
+1147 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1adc8f2633b397a7d7b13815151b22c462">_glfwSetClipboardStringX11</link>,
+1148 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1af4300a11f34d05c873e7ae8a385e390c">_glfwGetClipboardStringX11</link>,
+1149 <emphasis role="preprocessor">#if&#32;defined(__linux__)</emphasis>
+1150 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linux__joystick_8c_1a17dc11e9772c08f5afdbe17d6830a8f5">_glfwInitJoysticksLinux</link>,
+1151 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linux__joystick_8c_1a64271879f7bf9f6a9e9631310a7e75f1">_glfwTerminateJoysticksLinux</link>,
+1152 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linux__joystick_8c_1a399ffcc99f12447944f2e7c2df237940">_glfwPollJoystickLinux</link>,
+1153 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linux__joystick_8c_1a3a9d5c327233cb7a3ead13f06928180d">_glfwGetMappingNameLinux</link>,
+1154 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linux__joystick_8c_1a4cf7ebdca81871f2a190618877764aa3">_glfwUpdateGamepadGUIDLinux</link>,
+1155 <emphasis role="preprocessor">#else</emphasis>
+1156 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_null__joystick_8c_1a708c96026644a7d2ab0b026911462616">_glfwInitJoysticksNull</link>,
+1157 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_null__joystick_8c_1af9151a206b9a9d8a0af0f51a12ab72fc">_glfwTerminateJoysticksNull</link>,
+1158 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_null__joystick_8c_1afebb7d158999e7225a3be48fe36005c7">_glfwPollJoystickNull</link>,
+1159 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_null__joystick_8c_1a1a02177d4c3e4dc7558203c00df1912b">_glfwGetMappingNameNull</link>,
+1160 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_null__joystick_8c_1a7d51d60bb59d35cb3e0af3782716f585">_glfwUpdateGamepadGUIDNull</link>,
+1161 <emphasis role="preprocessor">#endif</emphasis>
+1162 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__monitor_8c_1a5450ef92b12de637409609e32d0a371f">_glfwFreeMonitorX11</link>,
+1163 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__monitor_8c_1a5a5996335db505831185dc58da020cfe">_glfwGetMonitorPosX11</link>,
+1164 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__monitor_8c_1a4e16e691c38b20d8996c2067ea9165b0">_glfwGetMonitorContentScaleX11</link>,
+1165 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__monitor_8c_1a4017373b08c7c5941a5789f8ce7ef1fa">_glfwGetMonitorWorkareaX11</link>,
+1166 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__monitor_8c_1a3a95b3fd09b98fd39b08ed0287a746e8">_glfwGetVideoModesX11</link>,
+1167 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__monitor_8c_1a448dc823ed0a17ad344e0f483a206a06">_glfwGetVideoModeX11</link>,
+1168 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__monitor_8c_1ad0cdfa6cb50ed204c90f2094cae885f0">_glfwGetGammaRampX11</link>,
+1169 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__monitor_8c_1a0c98119b648608e9090d83dd1ee9e1cf">_glfwSetGammaRampX11</link>,
+1170 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a244c4a37df8b1b687d5ae857e4c1beef">_glfwCreateWindowX11</link>,
+1171 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a1ad585e31a0ef366b7faa9e9068dcbce">_glfwDestroyWindowX11</link>,
+1172 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a4badec7bf08e7474f6e81b7f1de3b46e">_glfwSetWindowTitleX11</link>,
+1173 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a5fe463737d807a0ef2a4571dce6544df">_glfwSetWindowIconX11</link>,
+1174 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a5e78c3b99df8aa358ce12fa8b9a45cb0">_glfwGetWindowPosX11</link>,
+1175 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1ad800e4257745e15b95c892d3d0c3ed3c">_glfwSetWindowPosX11</link>,
+1176 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a125270daf8648431cface131ee9f4530">_glfwGetWindowSizeX11</link>,
+1177 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1af651ee2787bb80d68e410aa6d59d8f2c">_glfwSetWindowSizeX11</link>,
+1178 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a23924c95f1a773326d0243fbb1cf6e2f">_glfwSetWindowSizeLimitsX11</link>,
+1179 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a8bbf618c5d675c3e0f1afb5da49f889a">_glfwSetWindowAspectRatioX11</link>,
+1180 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1ab5994ee1430e37d2d12abec71e86a71e">_glfwGetFramebufferSizeX11</link>,
+1181 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a1532ddd05367af8b6cd22cacc00a502b">_glfwGetWindowFrameSizeX11</link>,
+1182 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1ab9d780d530a93b66f16358e49450b0e4">_glfwGetWindowContentScaleX11</link>,
+1183 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a8eb859342ad26e24f158b62bb4f4f936">_glfwIconifyWindowX11</link>,
+1184 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1ac2c7e634ddda62be7b0d169efdfc73b3">_glfwRestoreWindowX11</link>,
+1185 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1aea91b608141af2d2213a1162d556941b">_glfwMaximizeWindowX11</link>,
+1186 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a34bb415958ed3a377cc99442778f058c">_glfwShowWindowX11</link>,
+1187 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1af5b7dcae618ec977adacc5a69ae52cb8">_glfwHideWindowX11</link>,
+1188 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a71e07f021148c43f1ab19e27a2b2fa26">_glfwRequestWindowAttentionX11</link>,
+1189 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a78e4ccda400f292ca03d17f18c57f017">_glfwFocusWindowX11</link>,
+1190 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1ac885a06af26a8a12987388bdaf3e6b04">_glfwSetWindowMonitorX11</link>,
+1191 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1aafe5a5b783aefa0de1db8052e672b43d">_glfwWindowFocusedX11</link>,
+1192 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a4eb265fb72bcf2b67814da8a4ef20820">_glfwWindowIconifiedX11</link>,
+1193 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a6a32922e51a0082089847a84495eeb60">_glfwWindowVisibleX11</link>,
+1194 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1ac14bf368e5e4f92682c9c7d9f9d1e545">_glfwWindowMaximizedX11</link>,
+1195 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1ab32c0aad046a078667051c3606f18c1f">_glfwWindowHoveredX11</link>,
+1196 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1ad3e15b02bff6b2be3671eb2991cd308a">_glfwFramebufferTransparentX11</link>,
+1197 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1aeb4f6250bd184fcf5e2c8a9225c249de">_glfwGetWindowOpacityX11</link>,
+1198 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1ab948125b6e8c83729aea56ae257ba77d">_glfwSetWindowResizableX11</link>,
+1199 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a01326101632e59be2b39ec9f849c0312">_glfwSetWindowDecoratedX11</link>,
+1200 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a8ac65a4deb7f1671e1fa29c95b4a5a5e">_glfwSetWindowFloatingX11</link>,
+1201 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a13fe2eeb468f7373d3d8b9a5a41e8f1d">_glfwSetWindowOpacityX11</link>,
+1202 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a93716010a05a7c04a315a3be96392ed4">_glfwSetWindowMousePassthroughX11</link>,
+1203 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1ad84c2d4d3e0f5648751c195d4c61b234">_glfwPollEventsX11</link>,
+1204 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a7c877f83811e16fcbfd53642378545bf">_glfwWaitEventsX11</link>,
+1205 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1aa44a5f074685d0bda9da5970249faf14">_glfwWaitEventsTimeoutX11</link>,
+1206 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1adee7c4a9ea01e36a33f28a88ce8df7fd">_glfwPostEmptyEventX11</link>,
+1207 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1afc8902c6b24144f224d74adcedc70795">_glfwGetEGLPlatformX11</link>,
+1208 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a640483a58923eee966e251ee0bfacf17">_glfwGetEGLNativeDisplayX11</link>,
+1209 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a1af8e2c05e54c61da0ff943b413e1c03">_glfwGetEGLNativeWindowX11</link>,
+1210 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1aa4d2ee2c633bdbdce0150cc1d3647040">_glfwGetRequiredInstanceExtensionsX11</link>,
+1211 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1ae58a75d52f865baec6e773cd70847d05">_glfwGetPhysicalDevicePresentationSupportX11</link>,
+1212 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a2990030f2d239a43e2b59b4498873233">_glfwCreateWindowSurfaceX11</link>,
+1213 &#32;&#32;&#32;&#32;};
+1214 
+1215 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;HACK:&#32;If&#32;the&#32;application&#32;has&#32;left&#32;the&#32;locale&#32;as&#32;&quot;C&quot;&#32;then&#32;both&#32;wide</emphasis>
+1216 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;character&#32;text&#32;input&#32;and&#32;explicit&#32;UTF-8&#32;input&#32;via&#32;XIM&#32;will&#32;break</emphasis>
+1217 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;This&#32;sets&#32;the&#32;CTYPE&#32;part&#32;of&#32;the&#32;current&#32;locale&#32;from&#32;the&#32;environment</emphasis>
+1218 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;in&#32;the&#32;hope&#32;that&#32;it&#32;is&#32;set&#32;to&#32;something&#32;more&#32;sane&#32;than&#32;&quot;C&quot;</emphasis>
+1219 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(setlocale(LC_CTYPE,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>),&#32;<emphasis role="stringliteral">&quot;C&quot;</emphasis>)&#32;==&#32;0)
+1220 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;setlocale(LC_CTYPE,&#32;<emphasis role="stringliteral">&quot;&quot;</emphasis>);
+1221 
+1222 <emphasis role="preprocessor">#if&#32;defined(__CYGWIN__)</emphasis>
+1223 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>*&#32;module&#32;=&#32;<link linkend="_internal_8h_1a0ca69d860ad190bdb5beab6de9160842">_glfwPlatformLoadModule</link>(<emphasis role="stringliteral">&quot;libX11-6.so&quot;</emphasis>);
+1224 <emphasis role="preprocessor">#elif&#32;defined(__OpenBSD__)</emphasis>
+1225 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>*&#32;module&#32;=&#32;<link linkend="_internal_8h_1a0ca69d860ad190bdb5beab6de9160842">_glfwPlatformLoadModule</link>(<emphasis role="stringliteral">&quot;libX11.so&quot;</emphasis>);
+1226 <emphasis role="preprocessor">#else</emphasis>
+1227 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>*&#32;module&#32;=&#32;<link linkend="_internal_8h_1a0ca69d860ad190bdb5beab6de9160842">_glfwPlatformLoadModule</link>(<emphasis role="stringliteral">&quot;libX11.so.6&quot;</emphasis>);
+1228 <emphasis role="preprocessor">#endif</emphasis>
+1229 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!module)
+1230 &#32;&#32;&#32;&#32;{
+1231 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(platformID&#32;==&#32;<link linkend="_group__init_1gaf5333f3933e9c248a00cfda6523f386b">GLFW_PLATFORM_X11</link>)
+1232 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,&#32;<emphasis role="stringliteral">&quot;X11:&#32;Failed&#32;to&#32;load&#32;Xlib&quot;</emphasis>);
+1233 
+1234 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1235 &#32;&#32;&#32;&#32;}
+1236 
+1237 &#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1aafe0d705daddbf3042d9f5d4687b8e37">PFN_XInitThreads</link>&#32;XInitThreads&#32;=&#32;(<link linkend="_x11__platform_8h_1aafe0d705daddbf3042d9f5d4687b8e37">PFN_XInitThreads</link>)
+1238 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(module,&#32;<emphasis role="stringliteral">&quot;XInitThreads&quot;</emphasis>);
+1239 &#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1aa76798d42b38649eb8ab577967b874e3">PFN_XrmInitialize</link>&#32;XrmInitialize&#32;=&#32;(<link linkend="_x11__platform_8h_1aa76798d42b38649eb8ab577967b874e3">PFN_XrmInitialize</link>)
+1240 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(module,&#32;<emphasis role="stringliteral">&quot;XrmInitialize&quot;</emphasis>);
+1241 &#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a48e9b2a28d3729a5c5f3deb7072f6a40">PFN_XOpenDisplay</link>&#32;XOpenDisplay&#32;=&#32;(<link linkend="_x11__platform_8h_1a48e9b2a28d3729a5c5f3deb7072f6a40">PFN_XOpenDisplay</link>)
+1242 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(module,&#32;<emphasis role="stringliteral">&quot;XOpenDisplay&quot;</emphasis>);
+1243 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!XInitThreads&#32;||&#32;!XrmInitialize&#32;||&#32;!XOpenDisplay)
+1244 &#32;&#32;&#32;&#32;{
+1245 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(platformID&#32;==&#32;<link linkend="_group__init_1gaf5333f3933e9c248a00cfda6523f386b">GLFW_PLATFORM_X11</link>)
+1246 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,&#32;<emphasis role="stringliteral">&quot;X11:&#32;Failed&#32;to&#32;load&#32;Xlib&#32;entry&#32;point&quot;</emphasis>);
+1247 
+1248 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ad4b9e48b150850f6ee00874f85036715">_glfwPlatformFreeModule</link>(module);
+1249 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1250 &#32;&#32;&#32;&#32;}
+1251 
+1252 &#32;&#32;&#32;&#32;XInitThreads();
+1253 &#32;&#32;&#32;&#32;XrmInitialize();
+1254 
+1255 &#32;&#32;&#32;&#32;Display*&#32;<link linkend="_boing_8c_1a4ea013001a5fb47853d0fab8f8de35cd">display</link>&#32;=&#32;XOpenDisplay(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+1256 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_boing_8c_1a4ea013001a5fb47853d0fab8f8de35cd">display</link>)
+1257 &#32;&#32;&#32;&#32;{
+1258 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(platformID&#32;==&#32;<link linkend="_group__init_1gaf5333f3933e9c248a00cfda6523f386b">GLFW_PLATFORM_X11</link>)
+1259 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1260 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>*&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;getenv(<emphasis role="stringliteral">&quot;DISPLAY&quot;</emphasis>);
+1261 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>)
+1262 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1263 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga3608c6c29ab7a72f3bf019f4c3a2563d">GLFW_PLATFORM_UNAVAILABLE</link>,
+1264 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;X11:&#32;Failed&#32;to&#32;open&#32;display&#32;%s&quot;</emphasis>,&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>);
+1265 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1266 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1267 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1268 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga3608c6c29ab7a72f3bf019f4c3a2563d">GLFW_PLATFORM_UNAVAILABLE</link>,
+1269 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;X11:&#32;The&#32;DISPLAY&#32;environment&#32;variable&#32;is&#32;missing&quot;</emphasis>);
+1270 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1271 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1272 
+1273 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ad4b9e48b150850f6ee00874f85036715">_glfwPlatformFreeModule</link>(module);
+1274 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1275 &#32;&#32;&#32;&#32;}
+1276 
+1277 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>&#32;=&#32;<link linkend="_boing_8c_1a4ea013001a5fb47853d0fab8f8de35cd">display</link>;
+1278 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>&#32;=&#32;module;
+1279 
+1280 &#32;&#32;&#32;&#32;*platform&#32;=&#32;x11;
+1281 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+1282 }
+</programlisting>    </section><anchor xml:id="_x11__init_8c_1a81db925a94ffe794ab77424802434780"/>    <section>
+    <title>_glfwCreateNativeCursorX11()</title>
+<indexterm><primary>_glfwCreateNativeCursorX11</primary><secondary>x11_init.c</secondary></indexterm>
+<indexterm><primary>x11_init.c</primary><secondary>_glfwCreateNativeCursorX11</secondary></indexterm>
+<para><computeroutput>Cursor _glfwCreateNativeCursorX11 (const <link linkend="_struct_g_l_f_wimage">GLFWimage</link> * image, int xhot, int yhot)</computeroutput></para><para>
+Definition at line 1091 of file x11_init.c.</para>
+<programlisting>1092 {
+1093 &#32;&#32;&#32;&#32;Cursor&#32;cursor;
+1094 
+1095 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xcursor.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+1096 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;None;
+1097 
+1098 &#32;&#32;&#32;&#32;XcursorImage*&#32;native&#32;=&#32;<link linkend="_x11__platform_8h_1af5c32d1bdeb458433b577792edb398f0">XcursorImageCreate</link>(<link linkend="_structimage">image</link>-&gt;<link linkend="_structimage_1a42ecfe2675278f6b7e70033e3ff89e4a">width</link>,&#32;<link linkend="_structimage">image</link>-&gt;<link linkend="_structimage_1aa478e4be0fe527274f9233cc11ec71e9">height</link>);
+1099 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(native&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+1100 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;None;
+1101 
+1102 &#32;&#32;&#32;&#32;native-&gt;xhot&#32;=&#32;xhot;
+1103 &#32;&#32;&#32;&#32;native-&gt;yhot&#32;=&#32;yhot;
+1104 
+1105 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>*&#32;<link linkend="_glad_8h_1afdd0f0e67e302eefcb4f6b23732e7ea3">source</link>&#32;=&#32;(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>*)&#32;<link linkend="_structimage">image</link>-&gt;pixels;
+1106 &#32;&#32;&#32;&#32;XcursorPixel*&#32;<link linkend="_glad_8h_1aa43eab0fe80422366a4602998d53b133">target</link>&#32;=&#32;native-&gt;pixels;
+1107 
+1108 &#32;&#32;&#32;&#32;for&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;<link linkend="_structimage">image</link>-&gt;<link linkend="_structimage_1a42ecfe2675278f6b7e70033e3ff89e4a">width</link>&#32;*&#32;<link linkend="_structimage">image</link>-&gt;<link linkend="_structimage_1aa478e4be0fe527274f9233cc11ec71e9">height</link>;&#32;&#32;i++,&#32;<link linkend="_glad_8h_1aa43eab0fe80422366a4602998d53b133">target</link>++,&#32;<link linkend="_glad_8h_1afdd0f0e67e302eefcb4f6b23732e7ea3">source</link>&#32;+=&#32;4)
+1109 &#32;&#32;&#32;&#32;{
+1110 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1ac03904b1f7e359bb2acf10a755e97c5a">alpha</link>&#32;=&#32;<link linkend="_glad_8h_1afdd0f0e67e302eefcb4f6b23732e7ea3">source</link>[3];
+1111 
+1112 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1aa43eab0fe80422366a4602998d53b133">target</link>&#32;=&#32;(<link linkend="_glad_8h_1ac03904b1f7e359bb2acf10a755e97c5a">alpha</link>&#32;&lt;&lt;&#32;24)&#32;|
+1113 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;((<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>)&#32;((<link linkend="_glad_8h_1afdd0f0e67e302eefcb4f6b23732e7ea3">source</link>[0]&#32;*&#32;<link linkend="_glad_8h_1ac03904b1f7e359bb2acf10a755e97c5a">alpha</link>)&#32;/&#32;255)&#32;&lt;&lt;&#32;16)&#32;|
+1114 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;((<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>)&#32;((<link linkend="_glad_8h_1afdd0f0e67e302eefcb4f6b23732e7ea3">source</link>[1]&#32;*&#32;<link linkend="_glad_8h_1ac03904b1f7e359bb2acf10a755e97c5a">alpha</link>)&#32;/&#32;255)&#32;&lt;&lt;&#32;&#32;8)&#32;|
+1115 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;((<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>)&#32;((<link linkend="_glad_8h_1afdd0f0e67e302eefcb4f6b23732e7ea3">source</link>[2]&#32;*&#32;<link linkend="_glad_8h_1ac03904b1f7e359bb2acf10a755e97c5a">alpha</link>)&#32;/&#32;255)&#32;&lt;&lt;&#32;&#32;0);
+1116 &#32;&#32;&#32;&#32;}
+1117 
+1118 &#32;&#32;&#32;&#32;cursor&#32;=&#32;<link linkend="_x11__platform_8h_1aa0d505683108c876545279c1c299428e">XcursorImageLoadCursor</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;native);
+1119 &#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a97ae67418232354dc0593f7523bbe110">XcursorImageDestroy</link>(native);
+1120 
+1121 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;cursor;
+1122 }
+</programlisting>    </section><anchor xml:id="_x11__init_8c_1ac91795c020fc3d64cabfe8bacb141185"/>    <section>
+    <title>_glfwGrabErrorHandlerX11()</title>
+<indexterm><primary>_glfwGrabErrorHandlerX11</primary><secondary>x11_init.c</secondary></indexterm>
+<indexterm><primary>x11_init.c</primary><secondary>_glfwGrabErrorHandlerX11</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGrabErrorHandlerX11 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 1063 of file x11_init.c.</para>
+<programlisting>1064 {
+1065 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.errorCode&#32;=&#32;Success;
+1066 &#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a8de5e849aafe2dd39eab284932fa4847">XSetErrorHandler</link>(errorHandler);
+1067 }
+</programlisting>    </section><anchor xml:id="_x11__init_8c_1af20065dc55a35809e4ba688ec0142ada"/>    <section>
+    <title>_glfwInitX11()</title>
+<indexterm><primary>_glfwInitX11</primary><secondary>x11_init.c</secondary></indexterm>
+<indexterm><primary>x11_init.c</primary><secondary>_glfwInitX11</secondary></indexterm>
+<para><computeroutput>int _glfwInitX11 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 1284 of file x11_init.c.</para>
+<programlisting>1285 {
+1286 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.AllocClassHint&#32;=&#32;(<link linkend="_x11__platform_8h_1a16fd0f747d779da597d597cf2c1953ee">PFN_XAllocClassHint</link>)
+1287 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XAllocClassHint&quot;</emphasis>);
+1288 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.AllocSizeHints&#32;=&#32;(<link linkend="_x11__platform_8h_1abdc1a77c5eb86a59c23a9c172ef61329">PFN_XAllocSizeHints</link>)
+1289 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XAllocSizeHints&quot;</emphasis>);
+1290 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.AllocWMHints&#32;=&#32;(<link linkend="_x11__platform_8h_1a743437e50dd43e74b0610f2986a829b4">PFN_XAllocWMHints</link>)
+1291 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XAllocWMHints&quot;</emphasis>);
+1292 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.ChangeProperty&#32;=&#32;(<link linkend="_x11__platform_8h_1a97c62d10370ea216772f9ce6d0df72ac">PFN_XChangeProperty</link>)
+1293 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XChangeProperty&quot;</emphasis>);
+1294 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.ChangeWindowAttributes&#32;=&#32;(<link linkend="_x11__platform_8h_1a88d9aa3f9dd24e40c254f1a4806ce204">PFN_XChangeWindowAttributes</link>)
+1295 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XChangeWindowAttributes&quot;</emphasis>);
+1296 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.CheckIfEvent&#32;=&#32;(<link linkend="_x11__platform_8h_1ad9d33994e524ae447429998da024fadc">PFN_XCheckIfEvent</link>)
+1297 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XCheckIfEvent&quot;</emphasis>);
+1298 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.CheckTypedWindowEvent&#32;=&#32;(<link linkend="_x11__platform_8h_1a815f51bec32c39950b1867d637993c74">PFN_XCheckTypedWindowEvent</link>)
+1299 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XCheckTypedWindowEvent&quot;</emphasis>);
+1300 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.CloseDisplay&#32;=&#32;(<link linkend="_x11__platform_8h_1a052147636bc316c4c200fdd93b89a10b">PFN_XCloseDisplay</link>)
+1301 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XCloseDisplay&quot;</emphasis>);
+1302 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.CloseIM&#32;=&#32;(<link linkend="_x11__platform_8h_1aa076f14799d2ff50290821a124788c18">PFN_XCloseIM</link>)
+1303 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XCloseIM&quot;</emphasis>);
+1304 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.ConvertSelection&#32;=&#32;(<link linkend="_x11__platform_8h_1a5640c2dc376fef4446e7f5dd404aeab1">PFN_XConvertSelection</link>)
+1305 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XConvertSelection&quot;</emphasis>);
+1306 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.CreateColormap&#32;=&#32;(<link linkend="_x11__platform_8h_1ade92e1fbb23ee12ee57f66776c548898">PFN_XCreateColormap</link>)
+1307 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XCreateColormap&quot;</emphasis>);
+1308 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.CreateFontCursor&#32;=&#32;(<link linkend="_x11__platform_8h_1a8f84376b66eb39e7640ae236e68abf4f">PFN_XCreateFontCursor</link>)
+1309 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XCreateFontCursor&quot;</emphasis>);
+1310 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.CreateIC&#32;=&#32;(<link linkend="_x11__platform_8h_1ad3cc1c310a7b27da4cc16c92a518b344">PFN_XCreateIC</link>)
+1311 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XCreateIC&quot;</emphasis>);
+1312 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.CreateRegion&#32;=&#32;(<link linkend="_x11__platform_8h_1a1fcedf1928d9da75b859869eac572f29">PFN_XCreateRegion</link>)
+1313 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XCreateRegion&quot;</emphasis>);
+1314 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.CreateWindow&#32;=&#32;(<link linkend="_x11__platform_8h_1a57855abd63404de53ede3950303d5886">PFN_XCreateWindow</link>)
+1315 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XCreateWindow&quot;</emphasis>);
+1316 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.DefineCursor&#32;=&#32;(<link linkend="_x11__platform_8h_1a15e52bfd33bfa630b995dba811c31fc6">PFN_XDefineCursor</link>)
+1317 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XDefineCursor&quot;</emphasis>);
+1318 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.DeleteContext&#32;=&#32;(<link linkend="_x11__platform_8h_1a83d66fd44cfeb4804375ea464b350aa6">PFN_XDeleteContext</link>)
+1319 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XDeleteContext&quot;</emphasis>);
+1320 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.DeleteProperty&#32;=&#32;(<link linkend="_x11__platform_8h_1a924b897ca7d5befafe36d8595d560002">PFN_XDeleteProperty</link>)
+1321 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XDeleteProperty&quot;</emphasis>);
+1322 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.DestroyIC&#32;=&#32;(<link linkend="_x11__platform_8h_1a94c7ecd0e3da7ed977ce3d3252bc4966">PFN_XDestroyIC</link>)
+1323 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XDestroyIC&quot;</emphasis>);
+1324 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.DestroyRegion&#32;=&#32;(<link linkend="_x11__platform_8h_1ab2992f329d640123d600dfa2b0dd1479">PFN_XDestroyRegion</link>)
+1325 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XDestroyRegion&quot;</emphasis>);
+1326 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.DestroyWindow&#32;=&#32;(<link linkend="_x11__platform_8h_1a838a2c2887abb4a21c82beabd3e92848">PFN_XDestroyWindow</link>)
+1327 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XDestroyWindow&quot;</emphasis>);
+1328 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.DisplayKeycodes&#32;=&#32;(<link linkend="_x11__platform_8h_1a5609fc2f23bc87262302a46eb4d2bb33">PFN_XDisplayKeycodes</link>)
+1329 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XDisplayKeycodes&quot;</emphasis>);
+1330 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.EventsQueued&#32;=&#32;(<link linkend="_x11__platform_8h_1ae0e2dab9517370e18a2157a72d6e845c">PFN_XEventsQueued</link>)
+1331 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XEventsQueued&quot;</emphasis>);
+1332 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.FilterEvent&#32;=&#32;(<link linkend="_x11__platform_8h_1a70a9a52d2299fcc0e4d3f1e66f250f65">PFN_XFilterEvent</link>)
+1333 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XFilterEvent&quot;</emphasis>);
+1334 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.FindContext&#32;=&#32;(<link linkend="_x11__platform_8h_1a79502ac765305fefba62a0043e004828">PFN_XFindContext</link>)
+1335 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XFindContext&quot;</emphasis>);
+1336 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.Flush&#32;=&#32;(<link linkend="_x11__platform_8h_1a9ae556748685ef8a67ca1717451f2158">PFN_XFlush</link>)
+1337 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XFlush&quot;</emphasis>);
+1338 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.Free&#32;=&#32;(<link linkend="_x11__platform_8h_1a595b90758e007fd825f180eda356ce2c">PFN_XFree</link>)
+1339 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XFree&quot;</emphasis>);
+1340 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.FreeColormap&#32;=&#32;(<link linkend="_x11__platform_8h_1a7e12e64eac5ee16248b5dc1c0aec1ce2">PFN_XFreeColormap</link>)
+1341 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XFreeColormap&quot;</emphasis>);
+1342 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.FreeCursor&#32;=&#32;(<link linkend="_x11__platform_8h_1a145402b69248a14594b12685fb377603">PFN_XFreeCursor</link>)
+1343 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XFreeCursor&quot;</emphasis>);
+1344 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.FreeEventData&#32;=&#32;(<link linkend="_x11__platform_8h_1ad7e37bc858e00b063102844e81903451">PFN_XFreeEventData</link>)
+1345 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XFreeEventData&quot;</emphasis>);
+1346 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.GetErrorText&#32;=&#32;(<link linkend="_x11__platform_8h_1a0f6b41c679102a374a2bbfbb1f7e3890">PFN_XGetErrorText</link>)
+1347 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XGetErrorText&quot;</emphasis>);
+1348 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.GetEventData&#32;=&#32;(<link linkend="_x11__platform_8h_1a316baaef08c9a6810903eca28f728f81">PFN_XGetEventData</link>)
+1349 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XGetEventData&quot;</emphasis>);
+1350 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.GetICValues&#32;=&#32;(<link linkend="_x11__platform_8h_1abee202adb859a8c0913ae908fdb7d1db">PFN_XGetICValues</link>)
+1351 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XGetICValues&quot;</emphasis>);
+1352 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.GetIMValues&#32;=&#32;(<link linkend="_x11__platform_8h_1a28030a5b75f84d227a74bf1fb85962ac">PFN_XGetIMValues</link>)
+1353 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XGetIMValues&quot;</emphasis>);
+1354 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.GetInputFocus&#32;=&#32;(<link linkend="_x11__platform_8h_1a21f4a955220f18a6d35047714602c7fc">PFN_XGetInputFocus</link>)
+1355 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XGetInputFocus&quot;</emphasis>);
+1356 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.GetKeyboardMapping&#32;=&#32;(<link linkend="_x11__platform_8h_1a20bb7ef32c282ca342b7fdb7259fc103">PFN_XGetKeyboardMapping</link>)
+1357 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XGetKeyboardMapping&quot;</emphasis>);
+1358 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.GetScreenSaver&#32;=&#32;(<link linkend="_x11__platform_8h_1a1c8e8b5b5b3f46c07acbffc5e6c56301">PFN_XGetScreenSaver</link>)
+1359 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XGetScreenSaver&quot;</emphasis>);
+1360 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.GetSelectionOwner&#32;=&#32;(<link linkend="_x11__platform_8h_1a75baf1f3089fa2691256ac59f482f375">PFN_XGetSelectionOwner</link>)
+1361 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XGetSelectionOwner&quot;</emphasis>);
+1362 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.GetVisualInfo&#32;=&#32;(<link linkend="_x11__platform_8h_1a2bca39e7e05602ab42c169d816ed96bc">PFN_XGetVisualInfo</link>)
+1363 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XGetVisualInfo&quot;</emphasis>);
+1364 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.GetWMNormalHints&#32;=&#32;(<link linkend="_x11__platform_8h_1a49fe38792dc6f7f52fa5195a582f5aba">PFN_XGetWMNormalHints</link>)
+1365 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XGetWMNormalHints&quot;</emphasis>);
+1366 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.GetWindowAttributes&#32;=&#32;(<link linkend="_x11__platform_8h_1af682267dbf56c01cc0431c010d1c2f07">PFN_XGetWindowAttributes</link>)
+1367 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XGetWindowAttributes&quot;</emphasis>);
+1368 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.GetWindowProperty&#32;=&#32;(<link linkend="_x11__platform_8h_1a8f22a5e197f2e1b469de32b7ce0c684f">PFN_XGetWindowProperty</link>)
+1369 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XGetWindowProperty&quot;</emphasis>);
+1370 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.GrabPointer&#32;=&#32;(<link linkend="_x11__platform_8h_1a869db175597873999ed2c690c441748e">PFN_XGrabPointer</link>)
+1371 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XGrabPointer&quot;</emphasis>);
+1372 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.IconifyWindow&#32;=&#32;(<link linkend="_x11__platform_8h_1ae3200e625ae80c4364c67f89451b681e">PFN_XIconifyWindow</link>)
+1373 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XIconifyWindow&quot;</emphasis>);
+1374 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.InternAtom&#32;=&#32;(<link linkend="_x11__platform_8h_1af6df07066fcf0a5b5f2a8c1c9823f911">PFN_XInternAtom</link>)
+1375 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XInternAtom&quot;</emphasis>);
+1376 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.LookupString&#32;=&#32;(<link linkend="_x11__platform_8h_1aa637ec037d2d9f9cd667ec2ef6a43273">PFN_XLookupString</link>)
+1377 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XLookupString&quot;</emphasis>);
+1378 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.MapRaised&#32;=&#32;(<link linkend="_x11__platform_8h_1af1f15ecb1fcf9a6206ac6c659a7501ff">PFN_XMapRaised</link>)
+1379 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XMapRaised&quot;</emphasis>);
+1380 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.MapWindow&#32;=&#32;(<link linkend="_x11__platform_8h_1ac351a5e90465fefc5a171f196eafa687">PFN_XMapWindow</link>)
+1381 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XMapWindow&quot;</emphasis>);
+1382 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.MoveResizeWindow&#32;=&#32;(<link linkend="_x11__platform_8h_1a8aa3f9af73eb5c71e3415d8ea3a97f6c">PFN_XMoveResizeWindow</link>)
+1383 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XMoveResizeWindow&quot;</emphasis>);
+1384 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.MoveWindow&#32;=&#32;(<link linkend="_x11__platform_8h_1a0376f534b810d3f405348ad686e993e3">PFN_XMoveWindow</link>)
+1385 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XMoveWindow&quot;</emphasis>);
+1386 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.NextEvent&#32;=&#32;(<link linkend="_x11__platform_8h_1a07ade1c0a29f137cf81418b6b8d862c1">PFN_XNextEvent</link>)
+1387 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XNextEvent&quot;</emphasis>);
+1388 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.OpenIM&#32;=&#32;(<link linkend="_x11__platform_8h_1adfdfbe640a533cddb763c8073a755623">PFN_XOpenIM</link>)
+1389 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XOpenIM&quot;</emphasis>);
+1390 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.PeekEvent&#32;=&#32;(<link linkend="_x11__platform_8h_1ae253299e62cf33df1ca750dcbcd08eab">PFN_XPeekEvent</link>)
+1391 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XPeekEvent&quot;</emphasis>);
+1392 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.Pending&#32;=&#32;(<link linkend="_x11__platform_8h_1acaa9ff04769ee1d94664588a68d5212a">PFN_XPending</link>)
+1393 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XPending&quot;</emphasis>);
+1394 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.QueryExtension&#32;=&#32;(<link linkend="_x11__platform_8h_1a5e238dfe4a1459d0f8f29f0343b8f4c7">PFN_XQueryExtension</link>)
+1395 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XQueryExtension&quot;</emphasis>);
+1396 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.QueryPointer&#32;=&#32;(<link linkend="_x11__platform_8h_1a93384cc69c9ddb4e90a391357582fad2">PFN_XQueryPointer</link>)
+1397 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XQueryPointer&quot;</emphasis>);
+1398 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.RaiseWindow&#32;=&#32;(<link linkend="_x11__platform_8h_1a2b5609cae62ea3e05620d49ff11fea36">PFN_XRaiseWindow</link>)
+1399 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XRaiseWindow&quot;</emphasis>);
+1400 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.RegisterIMInstantiateCallback&#32;=&#32;(<link linkend="_x11__platform_8h_1a5856f594a3e0b1250d6d0afa9202a358">PFN_XRegisterIMInstantiateCallback</link>)
+1401 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XRegisterIMInstantiateCallback&quot;</emphasis>);
+1402 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.ResizeWindow&#32;=&#32;(<link linkend="_x11__platform_8h_1a16aab553f4784a27c3505f4be486eb12">PFN_XResizeWindow</link>)
+1403 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XResizeWindow&quot;</emphasis>);
+1404 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.ResourceManagerString&#32;=&#32;(<link linkend="_x11__platform_8h_1a5dca7ba4f5a84a6c446276f6e5d08de6">PFN_XResourceManagerString</link>)
+1405 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XResourceManagerString&quot;</emphasis>);
+1406 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.SaveContext&#32;=&#32;(<link linkend="_x11__platform_8h_1aecf6f97c79d6fa5d26cbe61c7d16d15d">PFN_XSaveContext</link>)
+1407 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XSaveContext&quot;</emphasis>);
+1408 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.SelectInput&#32;=&#32;(<link linkend="_x11__platform_8h_1afd5a3f7bd8c56d6ba8c1312d7ac70897">PFN_XSelectInput</link>)
+1409 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XSelectInput&quot;</emphasis>);
+1410 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.SendEvent&#32;=&#32;(<link linkend="_x11__platform_8h_1ae0649b0b066390b95088503cf0da95cb">PFN_XSendEvent</link>)
+1411 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XSendEvent&quot;</emphasis>);
+1412 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.SetClassHint&#32;=&#32;(<link linkend="_x11__platform_8h_1ad0388fe1943c309a8ecb1caa2ce30f84">PFN_XSetClassHint</link>)
+1413 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XSetClassHint&quot;</emphasis>);
+1414 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.SetErrorHandler&#32;=&#32;(<link linkend="_x11__platform_8h_1aee9f10a6f5f4f4099e7ba02e23b7800b">PFN_XSetErrorHandler</link>)
+1415 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XSetErrorHandler&quot;</emphasis>);
+1416 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.SetICFocus&#32;=&#32;(<link linkend="_x11__platform_8h_1a61d6cc837402b78dbe3a27e4bf8dfaa8">PFN_XSetICFocus</link>)
+1417 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XSetICFocus&quot;</emphasis>);
+1418 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.SetIMValues&#32;=&#32;(<link linkend="_x11__platform_8h_1a6967c6e974cb3d6975301ee020508df6">PFN_XSetIMValues</link>)
+1419 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XSetIMValues&quot;</emphasis>);
+1420 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.SetInputFocus&#32;=&#32;(<link linkend="_x11__platform_8h_1ab73aca8c7e748bb2b428245fbb6581c1">PFN_XSetInputFocus</link>)
+1421 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XSetInputFocus&quot;</emphasis>);
+1422 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.SetLocaleModifiers&#32;=&#32;(<link linkend="_x11__platform_8h_1acb17ba9aac1cae18e8b39058a055aa3f">PFN_XSetLocaleModifiers</link>)
+1423 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XSetLocaleModifiers&quot;</emphasis>);
+1424 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.SetScreenSaver&#32;=&#32;(<link linkend="_x11__platform_8h_1af554129f68e3e2d313116a7a751adf9d">PFN_XSetScreenSaver</link>)
+1425 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XSetScreenSaver&quot;</emphasis>);
+1426 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.SetSelectionOwner&#32;=&#32;(<link linkend="_x11__platform_8h_1a0e1685f3657e4ee3fb19cf8f62d2c436">PFN_XSetSelectionOwner</link>)
+1427 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XSetSelectionOwner&quot;</emphasis>);
+1428 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.SetWMHints&#32;=&#32;(<link linkend="_x11__platform_8h_1a7f1ad0c255c813283db0948329786274">PFN_XSetWMHints</link>)
+1429 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XSetWMHints&quot;</emphasis>);
+1430 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.SetWMNormalHints&#32;=&#32;(<link linkend="_x11__platform_8h_1a718a53f211cece8190dd56cbd6251427">PFN_XSetWMNormalHints</link>)
+1431 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XSetWMNormalHints&quot;</emphasis>);
+1432 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.SetWMProtocols&#32;=&#32;(<link linkend="_x11__platform_8h_1a453dca1990ef7693a69fe1097eb784a2">PFN_XSetWMProtocols</link>)
+1433 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XSetWMProtocols&quot;</emphasis>);
+1434 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.SupportsLocale&#32;=&#32;(<link linkend="_x11__platform_8h_1a8c205b4d2a5f01ccabd66987e3a8ae85">PFN_XSupportsLocale</link>)
+1435 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XSupportsLocale&quot;</emphasis>);
+1436 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.Sync&#32;=&#32;(<link linkend="_x11__platform_8h_1a16e18bc7f72003a207121870b6704ed4">PFN_XSync</link>)
+1437 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XSync&quot;</emphasis>);
+1438 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.TranslateCoordinates&#32;=&#32;(<link linkend="_x11__platform_8h_1ab7b55db726c1d48237db12c1e50e6d84">PFN_XTranslateCoordinates</link>)
+1439 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XTranslateCoordinates&quot;</emphasis>);
+1440 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.UndefineCursor&#32;=&#32;(<link linkend="_x11__platform_8h_1a0cd91d9680d608a75f488b3a5265706a">PFN_XUndefineCursor</link>)
+1441 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XUndefineCursor&quot;</emphasis>);
+1442 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.UngrabPointer&#32;=&#32;(<link linkend="_x11__platform_8h_1a71d894463c0d84f881a3960a9d532fb8">PFN_XUngrabPointer</link>)
+1443 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XUngrabPointer&quot;</emphasis>);
+1444 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.UnmapWindow&#32;=&#32;(<link linkend="_x11__platform_8h_1a7047c705f24703b1903003f20ab99b87">PFN_XUnmapWindow</link>)
+1445 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XUnmapWindow&quot;</emphasis>);
+1446 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.UnsetICFocus&#32;=&#32;(<link linkend="_x11__platform_8h_1a6bd0a01c9725dec1e0c6fed8d05faeb1">PFN_XUnsetICFocus</link>)
+1447 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XUnsetICFocus&quot;</emphasis>);
+1448 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.VisualIDFromVisual&#32;=&#32;(<link linkend="_x11__platform_8h_1aadefa004a9c36186fbdfc52e9d6be41c">PFN_XVisualIDFromVisual</link>)
+1449 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XVisualIDFromVisual&quot;</emphasis>);
+1450 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.WarpPointer&#32;=&#32;(<link linkend="_x11__platform_8h_1a5acc98db88da5da275de8aec5f8cfdf5">PFN_XWarpPointer</link>)
+1451 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XWarpPointer&quot;</emphasis>);
+1452 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xkb.FreeKeyboard&#32;=&#32;(<link linkend="_x11__platform_8h_1aef840e3218e69636e92c54c5a9bdc0d4">PFN_XkbFreeKeyboard</link>)
+1453 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XkbFreeKeyboard&quot;</emphasis>);
+1454 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xkb.FreeNames&#32;=&#32;(<link linkend="_x11__platform_8h_1a76667c9464a48ffa20c62052f35ca702">PFN_XkbFreeNames</link>)
+1455 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XkbFreeNames&quot;</emphasis>);
+1456 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xkb.GetMap&#32;=&#32;(<link linkend="_x11__platform_8h_1a0b38e5aacba7d93beb554a0b74e7f540">PFN_XkbGetMap</link>)
+1457 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XkbGetMap&quot;</emphasis>);
+1458 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xkb.GetNames&#32;=&#32;(<link linkend="_x11__platform_8h_1a0d32a6d5a4abb2cf0382233b2f8cf6d3">PFN_XkbGetNames</link>)
+1459 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XkbGetNames&quot;</emphasis>);
+1460 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xkb.GetState&#32;=&#32;(<link linkend="_x11__platform_8h_1abe1cb057c7431163531255e1fe0e04ef">PFN_XkbGetState</link>)
+1461 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XkbGetState&quot;</emphasis>);
+1462 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xkb.KeycodeToKeysym&#32;=&#32;(<link linkend="_x11__platform_8h_1ad695fa3ff8a745ca5c0a6279f9159ce5">PFN_XkbKeycodeToKeysym</link>)
+1463 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XkbKeycodeToKeysym&quot;</emphasis>);
+1464 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xkb.QueryExtension&#32;=&#32;(<link linkend="_x11__platform_8h_1ac8bddb934c219b68a0d3c8d6113884a9">PFN_XkbQueryExtension</link>)
+1465 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XkbQueryExtension&quot;</emphasis>);
+1466 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xkb.SelectEventDetails&#32;=&#32;(<link linkend="_x11__platform_8h_1aafa80b5c494c6042cac1c9c7a0761035">PFN_XkbSelectEventDetails</link>)
+1467 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XkbSelectEventDetails&quot;</emphasis>);
+1468 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xkb.SetDetectableAutoRepeat&#32;=&#32;(<link linkend="_x11__platform_8h_1ae615987d8e5c854f27e819a1878c90af">PFN_XkbSetDetectableAutoRepeat</link>)
+1469 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XkbSetDetectableAutoRepeat&quot;</emphasis>);
+1470 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xrm.DestroyDatabase&#32;=&#32;(<link linkend="_x11__platform_8h_1ad9a19d101f706fa564ec9893fd13e82b">PFN_XrmDestroyDatabase</link>)
+1471 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XrmDestroyDatabase&quot;</emphasis>);
+1472 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xrm.GetResource&#32;=&#32;(<link linkend="_x11__platform_8h_1a75c6ba535f805b2d0c707e4f3b162c00">PFN_XrmGetResource</link>)
+1473 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XrmGetResource&quot;</emphasis>);
+1474 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xrm.GetStringDatabase&#32;=&#32;(<link linkend="_x11__platform_8h_1a8c3e26e81ecb2089644b77658ea57fae">PFN_XrmGetStringDatabase</link>)
+1475 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XrmGetStringDatabase&quot;</emphasis>);
+1476 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xrm.UniqueQuark&#32;=&#32;(<link linkend="_x11__platform_8h_1aab480593648e1e9dcb16634665439683">PFN_XrmUniqueQuark</link>)
+1477 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XrmUniqueQuark&quot;</emphasis>);
+1478 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.UnregisterIMInstantiateCallback&#32;=&#32;(<link linkend="_x11__platform_8h_1a5f76738a16ef1d8faf1b29d22c5305c7">PFN_XUnregisterIMInstantiateCallback</link>)
+1479 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;XUnregisterIMInstantiateCallback&quot;</emphasis>);
+1480 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.utf8LookupString&#32;=&#32;(<link linkend="_x11__platform_8h_1a035b7937541372aac51e1979e850edc5">PFN_Xutf8LookupString</link>)
+1481 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;Xutf8LookupString&quot;</emphasis>);
+1482 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.utf8SetWMProperties&#32;=&#32;(<link linkend="_x11__platform_8h_1ad9f49e9bbad3b910c6d03f5e4d3691cd">PFN_Xutf8SetWMProperties</link>)
+1483 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;Xutf8SetWMProperties&quot;</emphasis>);
+1484 
+1485 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.utf8LookupString&#32;&amp;&amp;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.utf8SetWMProperties)
+1486 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.utf8&#32;=&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+1487 
+1488 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.screen&#32;=&#32;DefaultScreen(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>);
+1489 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.root&#32;=&#32;RootWindow(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.screen);
+1490 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a681e7c0153724884070e9c94069693fb">context</link>&#32;=&#32;XUniqueContext();
+1491 
+1492 &#32;&#32;&#32;&#32;getSystemContentScale(&amp;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.contentScaleX,&#32;&amp;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.contentScaleY);
+1493 
+1494 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initExtensions())
+1495 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1496 
+1497 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.helperWindowHandle&#32;=&#32;createHelperWindow();
+1498 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.hiddenCursorHandle&#32;=&#32;createHiddenCursor();
+1499 
+1500 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_x11__platform_8h_1a1399a3220632b23a5a6c40e84e90d126">XSupportsLocale</link>()&#32;&amp;&amp;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.utf8)
+1501 &#32;&#32;&#32;&#32;{
+1502 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a1ba766c2c5c151e91f82349958eb02f7">XSetLocaleModifiers</link>(<emphasis role="stringliteral">&quot;&quot;</emphasis>);
+1503 
+1504 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;If&#32;an&#32;IM&#32;is&#32;already&#32;present&#32;our&#32;callback&#32;will&#32;be&#32;called&#32;right&#32;away</emphasis>
+1505 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1aec60f5cd6b536e16fd52ff2906e3d708">XRegisterIMInstantiateCallback</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,
+1506 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,
+1507 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;inputMethodInstantiateCallback,
+1508 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+1509 &#32;&#32;&#32;&#32;}
+1510 
+1511 &#32;&#32;&#32;&#32;<link linkend="_x11__monitor_8c_1ade7b239b6691fb34b66f3022ad97949d">_glfwPollMonitorsX11</link>();
+1512 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+1513 }
+</programlisting>    </section><anchor xml:id="_x11__init_8c_1a21e402dbb0117b1706d8506024c5689d"/>    <section>
+    <title>_glfwInputErrorX11()</title>
+<indexterm><primary>_glfwInputErrorX11</primary><secondary>x11_init.c</secondary></indexterm>
+<indexterm><primary>x11_init.c</primary><secondary>_glfwInputErrorX11</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwInputErrorX11 (int error, const char * message)</computeroutput></para><para>
+Definition at line 1080 of file x11_init.c.</para>
+<programlisting>1081 {
+1082 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_structbuffer">buffer</link>[<link linkend="_internal_8h_1af6333ef81718d365141bb1a64ed0c2e3">_GLFW_MESSAGE_SIZE</link>];
+1083 &#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a19e0ef2a915cecfa812e2e191c3df455">XGetErrorText</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.errorCode,
+1084 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structbuffer">buffer</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_structbuffer">buffer</link>));
+1085 
+1086 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>,&#32;<emphasis role="stringliteral">&quot;%s:&#32;%s&quot;</emphasis>,&#32;<link linkend="_glad_8h_1ab5d4c2bfcb78f279c688575297d42f74">message</link>,&#32;<link linkend="_structbuffer">buffer</link>);
+1087 }
+</programlisting>    </section><anchor xml:id="_x11__init_8c_1a2fec8c7a77c8004f943f25914dc947d9"/>    <section>
+    <title>_glfwReleaseErrorHandlerX11()</title>
+<indexterm><primary>_glfwReleaseErrorHandlerX11</primary><secondary>x11_init.c</secondary></indexterm>
+<indexterm><primary>x11_init.c</primary><secondary>_glfwReleaseErrorHandlerX11</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwReleaseErrorHandlerX11 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 1071 of file x11_init.c.</para>
+<programlisting>1072 {
+1073 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Synchronize&#32;to&#32;make&#32;sure&#32;all&#32;commands&#32;are&#32;processed</emphasis>
+1074 &#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1ad3048a3f0a680f50bf2cb7f713a87086">XSync</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;False);
+1075 &#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a8de5e849aafe2dd39eab284932fa4847">XSetErrorHandler</link>(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+1076 }
+</programlisting>    </section><anchor xml:id="_x11__init_8c_1a1609e3af2c42255d87f2121bdc734901"/>    <section>
+    <title>_glfwTerminateX11()</title>
+<indexterm><primary>_glfwTerminateX11</primary><secondary>x11_init.c</secondary></indexterm>
+<indexterm><primary>x11_init.c</primary><secondary>_glfwTerminateX11</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwTerminateX11 (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 1515 of file x11_init.c.</para>
+<programlisting>1516 {
+1517 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.helperWindowHandle)
+1518 &#32;&#32;&#32;&#32;{
+1519 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_x11__platform_8h_1ab468f859fad6bccf9742764ff42ec311">XGetSelectionOwner</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.CLIPBOARD)&#32;==
+1520 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.helperWindowHandle)
+1521 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1522 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1ae8c308d237bfd06661aa590bfa582579">_glfwPushSelectionToManagerX11</link>();
+1523 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1524 
+1525 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a8ede0965d44919da97dc465113a8e318">XDestroyWindow</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.helperWindowHandle);
+1526 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.helperWindowHandle&#32;=&#32;None;
+1527 &#32;&#32;&#32;&#32;}
+1528 
+1529 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.hiddenCursorHandle)
+1530 &#32;&#32;&#32;&#32;{
+1531 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a2f8b4428e4167196f99c6c30031a7c45">XFreeCursor</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.hiddenCursorHandle);
+1532 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.hiddenCursorHandle&#32;=&#32;(Cursor)&#32;0;
+1533 &#32;&#32;&#32;&#32;}
+1534 
+1535 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.primarySelectionString);
+1536 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.clipboardString);
+1537 
+1538 &#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a3ee24963c2b7a3ae51617d5dcf0887e9">XUnregisterIMInstantiateCallback</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>,
+1539 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,
+1540 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;inputMethodInstantiateCallback,
+1541 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+1542 
+1543 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.im)
+1544 &#32;&#32;&#32;&#32;{
+1545 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a89bda0dfd369b54f04c0c2d55ab888c3">XCloseIM</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.im);
+1546 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.im&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1547 &#32;&#32;&#32;&#32;}
+1548 
+1549 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>)
+1550 &#32;&#32;&#32;&#32;{
+1551 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_x11__platform_8h_1a1b53c822363646cc01070ecc8c9ac8b6">XCloseDisplay</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>);
+1552 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1553 &#32;&#32;&#32;&#32;}
+1554 
+1555 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.x11xcb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+1556 &#32;&#32;&#32;&#32;{
+1557 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ad4b9e48b150850f6ee00874f85036715">_glfwPlatformFreeModule</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.x11xcb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>);
+1558 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.x11xcb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1559 &#32;&#32;&#32;&#32;}
+1560 
+1561 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xcursor.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+1562 &#32;&#32;&#32;&#32;{
+1563 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ad4b9e48b150850f6ee00874f85036715">_glfwPlatformFreeModule</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xcursor.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>);
+1564 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xcursor.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1565 &#32;&#32;&#32;&#32;}
+1566 
+1567 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+1568 &#32;&#32;&#32;&#32;{
+1569 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ad4b9e48b150850f6ee00874f85036715">_glfwPlatformFreeModule</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>);
+1570 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.randr.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1571 &#32;&#32;&#32;&#32;}
+1572 
+1573 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xinerama.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+1574 &#32;&#32;&#32;&#32;{
+1575 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ad4b9e48b150850f6ee00874f85036715">_glfwPlatformFreeModule</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xinerama.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>);
+1576 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xinerama.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1577 &#32;&#32;&#32;&#32;}
+1578 
+1579 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xrender.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+1580 &#32;&#32;&#32;&#32;{
+1581 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ad4b9e48b150850f6ee00874f85036715">_glfwPlatformFreeModule</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xrender.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>);
+1582 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xrender.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1583 &#32;&#32;&#32;&#32;}
+1584 
+1585 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.vidmode.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+1586 &#32;&#32;&#32;&#32;{
+1587 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ad4b9e48b150850f6ee00874f85036715">_glfwPlatformFreeModule</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.vidmode.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>);
+1588 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.vidmode.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1589 &#32;&#32;&#32;&#32;}
+1590 
+1591 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xi.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+1592 &#32;&#32;&#32;&#32;{
+1593 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ad4b9e48b150850f6ee00874f85036715">_glfwPlatformFreeModule</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xi.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>);
+1594 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xi.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1595 &#32;&#32;&#32;&#32;}
+1596 
+1597 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NOTE:&#32;These&#32;need&#32;to&#32;be&#32;unloaded&#32;after&#32;XCloseDisplay,&#32;as&#32;they&#32;register</emphasis>
+1598 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;cleanup&#32;callbacks&#32;that&#32;get&#32;called&#32;by&#32;that&#32;function</emphasis>
+1599 &#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1ab095be9ec2b3a40942da090ee7ab2960">_glfwTerminateEGL</link>();
+1600 &#32;&#32;&#32;&#32;<link linkend="_glx__context_8c_1a1c28ebef40fad0f6876ffe81f3f719bd">_glfwTerminateGLX</link>();
+1601 
+1602 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+1603 &#32;&#32;&#32;&#32;{
+1604 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ad4b9e48b150850f6ee00874f85036715">_glfwPlatformFreeModule</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>);
+1605 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.x11.xlib.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1606 &#32;&#32;&#32;&#32;}
+1607 }
+</programlisting></section>
+</section>
+</section>

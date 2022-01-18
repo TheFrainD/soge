@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_posix__module_8c">
+<title>deps/glfw/src/posix_module.c File Reference</title>
+<indexterm><primary>deps/glfw/src/posix_module.c</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+#include &lt;dlfcn.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * <link linkend="_posix__module_8c_1a0ca69d860ad190bdb5beab6de9160842">_glfwPlatformLoadModule</link> (const char *<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_posix__module_8c_1ad4b9e48b150850f6ee00874f85036715">_glfwPlatformFreeModule</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *module)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1aff7410367a85e3ab66ffa3331aba8186">GLFWproc</link> <link linkend="_posix__module_8c_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *module, const char *<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_posix__module_8c_1ad4b9e48b150850f6ee00874f85036715"/>    <section>
+    <title>_glfwPlatformFreeModule()</title>
+<indexterm><primary>_glfwPlatformFreeModule</primary><secondary>posix_module.c</secondary></indexterm>
+<indexterm><primary>posix_module.c</primary><secondary>_glfwPlatformFreeModule</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwPlatformFreeModule (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * module)</computeroutput></para><para>
+Definition at line 42 of file posix_module.c.</para>
+<programlisting>43 {
+44 &#32;&#32;&#32;&#32;dlclose(module);
+45 }
+</programlisting>    </section><anchor xml:id="_posix__module_8c_1a370840ea8f3f1016d07030f7a06bf36e"/>    <section>
+    <title>_glfwPlatformGetModuleSymbol()</title>
+<indexterm><primary>_glfwPlatformGetModuleSymbol</primary><secondary>posix_module.c</secondary></indexterm>
+<indexterm><primary>posix_module.c</primary><secondary>_glfwPlatformGetModuleSymbol</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1aff7410367a85e3ab66ffa3331aba8186">GLFWproc</link> _glfwPlatformGetModuleSymbol (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * module, const char * name)</computeroutput></para><para>
+Definition at line 47 of file posix_module.c.</para>
+<programlisting>48 {
+49 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;dlsym(module,&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>);
+50 }
+</programlisting>    </section><anchor xml:id="_posix__module_8c_1a0ca69d860ad190bdb5beab6de9160842"/>    <section>
+    <title>_glfwPlatformLoadModule()</title>
+<indexterm><primary>_glfwPlatformLoadModule</primary><secondary>posix_module.c</secondary></indexterm>
+<indexterm><primary>posix_module.c</primary><secondary>_glfwPlatformLoadModule</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>* _glfwPlatformLoadModule (const char * path)</computeroutput></para><para>
+Definition at line 37 of file posix_module.c.</para>
+<programlisting>38 {
+39 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;dlopen(<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>,&#32;RTLD_LAZY&#32;|&#32;RTLD_LOCAL);
+40 }
+</programlisting></section>
+</section>
+</section>

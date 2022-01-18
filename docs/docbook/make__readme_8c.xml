@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_make__readme_8c">
+<title>deps/stb/tools/make_readme.c File Reference</title>
+<indexterm><primary>deps/stb/tools/make_readme.c</primary></indexterm>
+<programlisting>#include &quot;../stb.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_make__readme_8c_1a5640e9acc84db268e2628d4c5dad308c">STB_DEFINE</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_make__readme_8c_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_make__readme_8c_1a5640e9acc84db268e2628d4c5dad308c"/>    <section>
+    <title>STB_DEFINE</title>
+<indexterm><primary>STB_DEFINE</primary><secondary>make_readme.c</secondary></indexterm>
+<indexterm><primary>make_readme.c</primary><secondary>STB_DEFINE</secondary></indexterm>
+<para><computeroutput>#define STB_DEFINE</computeroutput></para><para>
+Definition at line 1 of file make_readme.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_make__readme_8c_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>make_readme.c</secondary></indexterm>
+<indexterm><primary>make_readme.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 4 of file make_readme.c.</para>
+<programlisting>5 {
+6 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+7 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;hlen,&#32;flen,&#32;listlen,&#32;total_lines&#32;=&#32;0;
+8 &#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;*header&#32;=&#32;<link linkend="_stb_8h_1a80d53e18fd67d6511e4c15dd04bc1d45">stb_file</link>(<emphasis role="stringliteral">&quot;README.header.md&quot;</emphasis>,&#32;&amp;hlen);&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;stb_file&#32;-&#32;read&#32;file&#32;into&#32;malloc()ed&#32;buffer</emphasis>
+9 &#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;*footer&#32;=&#32;<link linkend="_stb_8h_1a80d53e18fd67d6511e4c15dd04bc1d45">stb_file</link>(<emphasis role="stringliteral">&quot;README.footer.md&quot;</emphasis>,&#32;&amp;flen);&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;stb_file&#32;-&#32;read&#32;file&#32;into&#32;malloc()ed&#32;buffer</emphasis>
+10 &#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;**list&#32;&#32;=&#32;<link linkend="_stb_8h_1a3d3b7a43779945f90b5c35c0b1d47a37">stb_stringfile</link>(<emphasis role="stringliteral">&quot;README.list&quot;</emphasis>,&#32;&amp;listlen);&#32;&#32;<emphasis role="comment">//&#32;stb_stringfile&#32;-&#32;read&#32;file&#32;lines&#32;into&#32;malloced&#32;array&#32;of&#32;strings</emphasis>
+11 
+12 &#32;&#32;&#32;FILE&#32;*<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;=&#32;fopen(<emphasis role="stringliteral">&quot;../README.md&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;wb&quot;</emphasis>);
+13 
+14 &#32;&#32;&#32;fprintf(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<emphasis role="stringliteral">&quot;&lt;!---&#32;&#32;&#32;THIS&#32;FILE&#32;IS&#32;AUTOMATICALLY&#32;GENERATED,&#32;DO&#32;NOT&#32;CHANGE&#32;IT&#32;BY&#32;HAND&#32;&#32;&#32;---&gt;\r\n\r\n&quot;</emphasis>);
+15 &#32;&#32;&#32;fwrite(header,&#32;1,&#32;hlen,&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+16 
+17 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;listlen;&#32;++i)&#32;{
+18 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1abb50fc1ead3a02a46fb52daa2045f95c">num</link>,j;
+19 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;**tokens&#32;=&#32;<link linkend="_stb_8h_1ae01118f4ea89b6e29a06c8b58543e61f">stb_tokens_stripwhite</link>(list[i],&#32;<emphasis role="stringliteral">&quot;|&quot;</emphasis>,&#32;&amp;<link linkend="_glext_8h_1abb50fc1ead3a02a46fb52daa2045f95c">num</link>);&#32;&#32;<emphasis role="comment">//&#32;stb_tokens&#32;--&#32;tokenize&#32;string&#32;into&#32;malloced&#32;array&#32;of&#32;strings</emphasis>
+20 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;num_lines;
+21 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;**lines&#32;=&#32;<link linkend="_stb_8h_1a3d3b7a43779945f90b5c35c0b1d47a37">stb_stringfile</link>(<link linkend="_stb_8h_1adaabe895f1a146aa609843309b34a5d3">stb_sprintf</link>(<emphasis role="stringliteral">&quot;../%s&quot;</emphasis>,&#32;tokens[0]),&#32;&amp;num_lines);
+22 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;*<link linkend="_glext_8h_1a4ed25fb4dc5bf1a768a78d2e2f0ca003">s1</link>,&#32;*s2,*s3;
+23 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(lines&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;<link linkend="_stb_8h_1ad1583ce7c103777e5eeeca9fe489d274">stb_fatal</link>(<emphasis role="stringliteral">&quot;Couldn&apos;t&#32;open&#32;&apos;%s&apos;&quot;</emphasis>,&#32;tokens[0]);
+24 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a4ed25fb4dc5bf1a768a78d2e2f0ca003">s1</link>&#32;=&#32;strchr(lines[0],&#32;<emphasis role="charliteral">&apos;-&apos;</emphasis>);
+25 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_glext_8h_1a4ed25fb4dc5bf1a768a78d2e2f0ca003">s1</link>)&#32;<link linkend="_stb_8h_1ad1583ce7c103777e5eeeca9fe489d274">stb_fatal</link>(<emphasis role="stringliteral">&quot;Couldn&apos;t&#32;find&#32;&apos;-&apos;&#32;before&#32;version&#32;number&#32;in&#32;%s&quot;</emphasis>,&#32;tokens[0]);&#32;<emphasis role="comment">//&#32;stb_fatal&#32;--&#32;print&#32;error&#32;message&#32;&amp;&#32;exit</emphasis>
+26 &#32;&#32;&#32;&#32;&#32;&#32;s2&#32;=&#32;strchr(<link linkend="_glext_8h_1a4ed25fb4dc5bf1a768a78d2e2f0ca003">s1</link>+2,&#32;<emphasis role="charliteral">&apos;-&apos;</emphasis>);
+27 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!s2)&#32;<link linkend="_stb_8h_1ad1583ce7c103777e5eeeca9fe489d274">stb_fatal</link>(<emphasis role="stringliteral">&quot;Couldn&apos;t&#32;find&#32;&apos;-&apos;&#32;after&#32;version&#32;number&#32;in&#32;%s&quot;</emphasis>,&#32;tokens[0]);&#32;&#32;<emphasis role="comment">//&#32;stb_fatal&#32;--&#32;print&#32;error&#32;message&#32;&amp;&#32;exit</emphasis>
+28 &#32;&#32;&#32;&#32;&#32;&#32;*s2&#32;=&#32;0;
+29 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a4ed25fb4dc5bf1a768a78d2e2f0ca003">s1</link>&#32;+=&#32;1;
+30 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a4ed25fb4dc5bf1a768a78d2e2f0ca003">s1</link>&#32;=&#32;<link linkend="_stb_8h_1aa388feb75cd06529b263d327cfe9afd6">stb_trimwhite</link>(<link linkend="_glext_8h_1a4ed25fb4dc5bf1a768a78d2e2f0ca003">s1</link>);&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;stb_trimwhite&#32;--&#32;advance&#32;pointer&#32;to&#32;after&#32;whitespace&#32;&amp;&#32;delete&#32;trailing&#32;whitespace</emphasis>
+31 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(*<link linkend="_glext_8h_1a4ed25fb4dc5bf1a768a78d2e2f0ca003">s1</link>&#32;==&#32;<emphasis role="charliteral">&apos;v&apos;</emphasis>)&#32;++<link linkend="_glext_8h_1a4ed25fb4dc5bf1a768a78d2e2f0ca003">s1</link>;
+32 &#32;&#32;&#32;&#32;&#32;&#32;s3&#32;=&#32;tokens[0];
+33 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1aa388feb75cd06529b263d327cfe9afd6">stb_trimwhite</link>(s3);
+34 &#32;&#32;&#32;&#32;&#32;&#32;fprintf(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<emphasis role="stringliteral">&quot;**[&quot;</emphasis>);
+35 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strlen(s3)&#32;&lt;&#32;21)&#32;{
+36 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fprintf(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<emphasis role="stringliteral">&quot;%s&quot;</emphasis>,&#32;tokens[0]);
+37 &#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+38 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_structbuffer">buffer</link>[256];
+39 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strncpy(<link linkend="_structbuffer">buffer</link>,&#32;s3,&#32;18);
+40 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structbuffer">buffer</link>[18]&#32;=&#32;0;&#32;&#32;&#32;
+41 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strcat(<link linkend="_structbuffer">buffer</link>,&#32;<emphasis role="stringliteral">&quot;...&quot;</emphasis>);
+42 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fprintf(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<emphasis role="stringliteral">&quot;%s&quot;</emphasis>,&#32;<link linkend="_structbuffer">buffer</link>);
+43 &#32;&#32;&#32;&#32;&#32;&#32;}
+44 &#32;&#32;&#32;&#32;&#32;&#32;fprintf(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<emphasis role="stringliteral">&quot;](%s)**&quot;</emphasis>,&#32;tokens[0]);
+45 &#32;&#32;&#32;&#32;&#32;&#32;fprintf(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<emphasis role="stringliteral">&quot;&#32;|&#32;%s&quot;</emphasis>,&#32;<link linkend="_glext_8h_1a4ed25fb4dc5bf1a768a78d2e2f0ca003">s1</link>);
+46 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a4ed25fb4dc5bf1a768a78d2e2f0ca003">s1</link>&#32;=&#32;<link linkend="_stb_8h_1aa388feb75cd06529b263d327cfe9afd6">stb_trimwhite</link>(tokens[1]);&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;stb_trimwhite&#32;--&#32;advance&#32;pointer&#32;to&#32;after&#32;whitespace&#32;&amp;&#32;delete&#32;trailing&#32;whitespace</emphasis>
+47 &#32;&#32;&#32;&#32;&#32;&#32;s2&#32;=&#32;<link linkend="_stb_8h_1a8c59de974358446c19ca7c2e64ff75a6">stb_dupreplace</link>(<link linkend="_glext_8h_1a4ed25fb4dc5bf1a768a78d2e2f0ca003">s1</link>,&#32;<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;&amp;nbsp;&quot;</emphasis>);&#32;&#32;<emphasis role="comment">//&#32;stb_dupreplace&#32;--&#32;search&#32;&amp;&#32;replace&#32;string&#32;and&#32;malloc&#32;result</emphasis>
+48 &#32;&#32;&#32;&#32;&#32;&#32;fprintf(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<emphasis role="stringliteral">&quot;&#32;|&#32;%s&quot;</emphasis>,&#32;s2);
+49 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(s2);
+50 &#32;&#32;&#32;&#32;&#32;&#32;fprintf(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<emphasis role="stringliteral">&quot;&#32;|&#32;%d&quot;</emphasis>,&#32;num_lines);
+51 &#32;&#32;&#32;&#32;&#32;&#32;total_lines&#32;+=&#32;num_lines;
+52 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(j=2;&#32;j&#32;&lt;&#32;<link linkend="_glext_8h_1abb50fc1ead3a02a46fb52daa2045f95c">num</link>;&#32;++j)
+53 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fprintf(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<emphasis role="stringliteral">&quot;&#32;|&#32;%s&quot;</emphasis>,&#32;tokens[j]);
+54 &#32;&#32;&#32;&#32;&#32;&#32;fprintf(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<emphasis role="stringliteral">&quot;\r\n&quot;</emphasis>);
+55 &#32;&#32;&#32;}
+56 
+57 &#32;&#32;&#32;fprintf(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<emphasis role="stringliteral">&quot;\r\n&quot;</emphasis>);
+58 &#32;&#32;&#32;fprintf(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<emphasis role="stringliteral">&quot;Total&#32;libraries:&#32;%d\r\n&quot;</emphasis>,&#32;listlen);
+59 &#32;&#32;&#32;fprintf(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<emphasis role="stringliteral">&quot;Total&#32;lines&#32;of&#32;C&#32;code:&#32;%d\r\n\r\n&quot;</emphasis>,&#32;total_lines);
+60 
+61 &#32;&#32;&#32;fwrite(footer,&#32;1,&#32;flen,&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+62 &#32;&#32;&#32;fclose(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+63 
+64 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+65 }
+</programlisting></section>
+</section>
+</section>

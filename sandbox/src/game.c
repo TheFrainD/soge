@@ -1,4 +1,7 @@
+#include "vally/ecs/components/rigidbody.h"
+#include "vally/math/math.h"
 #include <vally/vally.h>
+#include <vally/renderer/camera.h>
 
 entity knight;
 animation run_right;
@@ -29,6 +32,9 @@ b8 start() {
   ecs_animator_add(knight);
   ecs_transform_get(knight)->position = vector2f_create(640.0f / 2.0f - 32.0f, 126.0f);
   ecs_transform_get(knight)->scale = vector2f_create(4.0f, 4.0f);
+  ecs_rigidbody_add(knight);
+  /* ecs_rigidbody_get(knight)->is_static = TRUE; */
+  ecs_rigidbody_get(knight)->mass = 0.3f;
 
   return TRUE;
 }
@@ -46,7 +52,11 @@ b8 update(f32 dt) {
     ecs_animator_stop(knight);
   }
 
-  ecs_transform_get(knight)->position.x += translation;\
+  /* ecs_transform_get(knight)->position.x += translation; */
+  ecs_rigidbody_get(knight)->velocity = vector2f_create(translation, 0);
+  if (translation != 0.0f) {
+    camera_translate(vector2f_create(translation, 0));
+  }
 
   return TRUE;
 }

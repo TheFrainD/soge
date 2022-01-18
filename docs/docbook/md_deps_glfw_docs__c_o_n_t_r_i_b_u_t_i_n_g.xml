@@ -1,0 +1,282 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g">
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md46">
+<title>Contents</title>
+
+<para><itemizedlist>
+<listitem>
+<para><link xlink:href="#asking-a-question">Asking a question</link></para>
+</listitem><listitem>
+<para><link xlink:href="#reporting-a-bug">Reporting a bug</link><itemizedlist>
+<listitem>
+<para><link xlink:href="#reporting-a-compile-or-link-bug">Reporting a compile or link bug</link></para>
+</listitem><listitem>
+<para><link xlink:href="#reporting-a-segfault-or-other-crash-bug">Reporting a segfault or other crash bug</link></para>
+</listitem><listitem>
+<para><link xlink:href="#reporting-a-context-creation-bug">Reporting a context creation bug</link></para>
+</listitem><listitem>
+<para><link xlink:href="#reporting-a-monitor-or-video-mode-bug">Reporting a monitor or video mode bug</link></para>
+</listitem><listitem>
+<para><link xlink:href="#reporting-a-window-input-or-event-bug">Reporting a window, input or event bug</link></para>
+</listitem><listitem>
+<para><link xlink:href="#reporting-some-other-library-bug">Reporting some other library bug</link></para>
+</listitem><listitem>
+<para><link xlink:href="#reporting-a-documentation-bug">Reporting a documentation bug</link></para>
+</listitem><listitem>
+<para><link xlink:href="#reporting-a-website-bug">Reporting a website bug</link></para>
+</listitem></itemizedlist>
+</para>
+</listitem><listitem>
+<para><link xlink:href="#requesting-a-feature">Requesting a feature</link></para>
+</listitem><listitem>
+<para><link xlink:href="#contributing-a-bug-fix">Contributing a bug fix</link></para>
+</listitem><listitem>
+<para><link xlink:href="#contributing-a-feature">Contributing a feature</link></para>
+</listitem></itemizedlist>
+</para>
+</section>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md47">
+<title>Asking a question</title>
+
+<para>Questions about how to use GLFW should be asked either in the <link xlink:href="https://discourse.glfw.org/c/support">support section</link> of the forum, under the <link xlink:href="https://stackoverflow.com/questions/tagged/glfw">Stack Overflow tag</link> or <link xlink:href="https://gamedev.stackexchange.com/questions/tagged/glfw">Game Development tag</link> on Stack Exchange or in the IRC channel <computeroutput>#glfw</computeroutput> on <link xlink:href="https://libera.chat/">Libera.Chat</link>.</para>
+
+<para>Questions about the design or implementation of GLFW or about future plans should be asked in the <link xlink:href="https://discourse.glfw.org/c/dev">dev section</link> of the forum or in the IRC channel. Please don&apos;t open a GitHub issue to discuss design questions without first checking with a maintainer.</para>
+</section>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md48">
+<title>Reporting a bug</title>
+
+<para>If GLFW is behaving unexpectedly at run-time, start by setting an <link xlink:href="https://www.glfw.org/docs/latest/intro_guide.html#error_handling">error callback</link>. GLFW will often tell you the cause of an error via this callback. If it doesn&apos;t, that might be a separate bug.</para>
+
+<para>If GLFW is crashing or triggering asserts, make sure that all your object handles and other pointers are valid.</para>
+
+<para>For bugs where it makes sense, a short, self contained example is absolutely invaluable. Just put it inline in the body text. Note that if the bug is reproducible with one of the test programs that come with GLFW, just mention that instead.</para>
+
+<para><emphasis role="bold">Don&apos;t worry about adding too much information</emphasis>. Unimportant information can be abbreviated or removed later, but missing information can stall bug fixing, especially when your schedule doesn&apos;t align with that of the maintainer.</para>
+
+<para><emphasis role="bold">Please provide text as text, not as images</emphasis>. This includes code, error messages and any other text. Text in images cannot be found by other users searching for the same problem and may have to be re-typed by maintainers when debugging.</para>
+
+<para>You don&apos;t need to manually indent your code or other text to quote it with GitHub Markdown; just surround it with triple backticks: <literallayout><computeroutput>```
+Some quoted text.
+```
+</computeroutput></literallayout></para>
+
+<para>You can also add syntax highlighting by appending the common file extension: <literallayout><computeroutput>```c
+int five(void)
+{
+    return 5;
+}
+```
+</computeroutput></literallayout></para>
+
+<para>There are issue labels for both platforms and GPU manufacturers, so there is no need to mention these in the subject line. If you do, it will be removed when the issue is labeled.</para>
+
+<para>If your bug is already reported, please add any new information you have, or if it already has everything, give it a :+1:.</para>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md49">
+<title>Reporting a compile or link bug</title>
+
+<para><emphasis role="bold">Note:</emphasis> GLFW needs many system APIs to do its job, which on some platforms means linking to many system libraries. If you are using GLFW as a static library, that means your application needs to link to these in addition to GLFW.</para>
+
+<para><emphasis role="bold">Note:</emphasis> Check the <link xlink:href="https://www.glfw.org/docs/latest/compile.html">Compiling GLFW</link> guide and or <link xlink:href="https://www.glfw.org/docs/latest/build.html">Building applications</link> guide for before opening an issue of this kind. Most issues are caused by a missing package or linker flag.</para>
+
+<para>Always include the <emphasis role="bold">operating system name and version</emphasis> (e.g. <computeroutput>Windows 7 64-bit</computeroutput> or <computeroutput>Ubuntu 15.10</computeroutput>) and the <emphasis role="bold">compiler name and version</emphasis> (e.g. <computeroutput>Visual C++ 2015 Update 2</computeroutput>). If you are using an official release of GLFW, include the <emphasis role="bold">GLFW release version</emphasis> (e.g. <computeroutput>3.1.2</computeroutput>), otherwise include the <emphasis role="bold">GLFW commit ID</emphasis> (e.g. <computeroutput>3795d78b14ef06008889cc422a1fb8d642597751</computeroutput>) from Git.</para>
+
+<para>Please also include the <emphasis role="bold">complete build log</emphasis> from your compiler and linker, even if it&apos;s long. It can always be shortened later, if necessary.</para>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md50">
+<title>Quick template</title>
+
+<para><literallayout><computeroutput>OS&#32;and&#32;version:
+Compiler&#32;version:
+Release&#32;or&#32;commit:
+Build&#32;log:
+</computeroutput></literallayout></para>
+</section>
+</section>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md51">
+<title>Reporting a segfault or other crash bug</title>
+
+<para>Always include the <emphasis role="bold">operating system name and version</emphasis> (e.g. <computeroutput>Windows 7 64-bit</computeroutput> or <computeroutput>Ubuntu 15.10</computeroutput>). If you are using an official release of GLFW, include the <emphasis role="bold">GLFW release version</emphasis> (e.g. <computeroutput>3.1.2</computeroutput>), otherwise include the <emphasis role="bold">GLFW commit ID</emphasis> (e.g. <computeroutput>3795d78b14ef06008889cc422a1fb8d642597751</computeroutput>) from Git.</para>
+
+<para>Please also include any <emphasis role="bold">error messages</emphasis> provided to your application via the <link xlink:href="https://www.glfw.org/docs/latest/intro_guide.html#error_handling">error callback</link> and the <emphasis role="bold">full call stack</emphasis> of the crash, or if the crash does not occur in debug mode, mention that instead.</para>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md52">
+<title>Quick template</title>
+
+<para><literallayout><computeroutput>OS&#32;and&#32;version:
+Release&#32;or&#32;commit:
+Error&#32;messages:
+Call&#32;stack:
+</computeroutput></literallayout></para>
+</section>
+</section>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md53">
+<title>Reporting a context creation bug</title>
+
+<para><emphasis role="bold">Note:</emphasis> Windows ships with graphics drivers that do not support OpenGL. If GLFW says that your machine lacks support for OpenGL, it very likely does. Install drivers from the computer manufacturer or graphics card manufacturer (<link xlink:href="https://www.geforce.com/drivers">Nvidia</link>, <link xlink:href="https://www.amd.com/en/support">AMD</link>, <link xlink:href="https://www-ssl.intel.com/content/www/us/en/support/detect.html">Intel</link>) to fix this.</para>
+
+<para><emphasis role="bold">Note:</emphasis> AMD only supports OpenGL ES on Windows via EGL. See the <link xlink:href="https://www.glfw.org/docs/latest/window_guide.html#window_hints_ctx">GLFW_CONTEXT_CREATION_API</link> hint for how to select EGL.</para>
+
+<para>Please verify that context creation also fails with the <computeroutput>glfwinfo</computeroutput> tool before reporting it as a bug. This tool is included in the GLFW source tree as <computeroutput>tests/glfwinfo.c</computeroutput> and is built along with the library. It has switches for all GLFW context and framebuffer hints. Run <computeroutput>glfwinfo -h</computeroutput> for a complete list.</para>
+
+<para>Always include the <emphasis role="bold">operating system name and version</emphasis> (e.g. <computeroutput>Windows 7 64-bit</computeroutput> or <computeroutput>Ubuntu 15.10</computeroutput>). If you are using an official release of GLFW, include the <emphasis role="bold">GLFW release version</emphasis> (e.g. <computeroutput>3.1.2</computeroutput>), otherwise include the <emphasis role="bold">GLFW commit ID</emphasis> (e.g. <computeroutput>3795d78b14ef06008889cc422a1fb8d642597751</computeroutput>) from Git.</para>
+
+<para>If you are running your program in a virtual machine, please mention this and include the <emphasis role="bold">VM name and version</emphasis> (e.g. <computeroutput>VirtualBox 5.1</computeroutput>).</para>
+
+<para>Please also include the <emphasis role="bold">GLFW version string</emphasis> (<computeroutput>3.2.0 X11 EGL clock_gettime /dev/js</computeroutput>), as described <link xlink:href="https://www.glfw.org/docs/latest/intro.html#intro_version_string">here</link>, the <emphasis role="bold">GPU model and driver version</emphasis> (e.g. <computeroutput>GeForce GTX660 with 352.79</computeroutput>), and the <emphasis role="bold">output of <computeroutput>glfwinfo</computeroutput></emphasis> (with switches matching any hints you set in your code) when reporting this kind of bug. If this tool doesn&apos;t run on the machine, mention that instead.</para>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md54">
+<title>Quick template</title>
+
+<para><literallayout><computeroutput>OS&#32;and&#32;version:
+GPU&#32;and&#32;driver:
+Release&#32;or&#32;commit:
+Version&#32;string:
+glfwinfo&#32;output:
+</computeroutput></literallayout></para>
+</section>
+</section>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md55">
+<title>Reporting a monitor or video mode bug</title>
+
+<para><emphasis role="bold">Note:</emphasis> On headless systems on some platforms, no monitors are reported. This causes glfwGetPrimaryMonitor to return <computeroutput>NULL</computeroutput>, which not all applications are prepared for.</para>
+
+<para><emphasis role="bold">Note:</emphasis> Some third-party tools report more video modes than are approved of by the OS. For safety and compatibility, GLFW only reports video modes the OS wants programs to use. This is not a bug.</para>
+
+<para>The <computeroutput>monitors</computeroutput> tool is included in the GLFW source tree as <computeroutput>tests/monitors.c</computeroutput> and is built along with the library. It lists all information GLFW provides about monitors it detects.</para>
+
+<para>Always include the <emphasis role="bold">operating system name and version</emphasis> (e.g. <computeroutput>Windows 7 64-bit</computeroutput> or <computeroutput>Ubuntu 15.10</computeroutput>). If you are using an official release of GLFW, include the <emphasis role="bold">GLFW release version</emphasis> (e.g. <computeroutput>3.1.2</computeroutput>), otherwise include the <emphasis role="bold">GLFW commit ID</emphasis> (e.g. <computeroutput>3795d78b14ef06008889cc422a1fb8d642597751</computeroutput>) from Git.</para>
+
+<para>If you are running your program in a virtual machine, please mention this and include the <emphasis role="bold">VM name and version</emphasis> (e.g. <computeroutput>VirtualBox 5.1</computeroutput>).</para>
+
+<para>Please also include any <emphasis role="bold">error messages</emphasis> provided to your application via the <link xlink:href="https://www.glfw.org/docs/latest/intro_guide.html#error_handling">error callback</link> and the <emphasis role="bold">output of <computeroutput>monitors</computeroutput></emphasis> when reporting this kind of bug. If this tool doesn&apos;t run on the machine, mention this instead.</para>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md56">
+<title>Quick template</title>
+
+<para><literallayout><computeroutput>OS&#32;and&#32;version:
+Release&#32;or&#32;commit:
+Error&#32;messages:
+monitors&#32;output:
+</computeroutput></literallayout></para>
+</section>
+</section>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md57">
+<title>Reporting a window, input or event bug</title>
+
+<para><emphasis role="bold">Note:</emphasis> The exact ordering of related window events will sometimes differ.</para>
+
+<para><emphasis role="bold">Note:</emphasis> Window moving and resizing (by the user) will block the main thread on some platforms. This is not a bug. Set a <link xlink:href="https://www.glfw.org/docs/latest/window.html#window_refresh">refresh callback</link> if you want to keep the window contents updated during a move or size operation.</para>
+
+<para>The <computeroutput>events</computeroutput> tool is included in the GLFW source tree as <computeroutput>tests/events.c</computeroutput> and is built along with the library. It prints all information provided to every callback supported by GLFW as events occur. Each event is listed with the time and a unique number to make discussions about event logs easier. The tool has command-line options for creating multiple windows and full screen windows.</para>
+
+<para>Always include the <emphasis role="bold">operating system name and version</emphasis> (e.g. <computeroutput>Windows 7 64-bit</computeroutput> or <computeroutput>Ubuntu 15.10</computeroutput>). If you are using an official release of GLFW, include the <emphasis role="bold">GLFW release version</emphasis> (e.g. <computeroutput>3.1.2</computeroutput>), otherwise include the <emphasis role="bold">GLFW commit ID</emphasis> (e.g. <computeroutput>3795d78b14ef06008889cc422a1fb8d642597751</computeroutput>) from Git.</para>
+
+<para>If you are running your program in a virtual machine, please mention this and include the <emphasis role="bold">VM name and version</emphasis> (e.g. <computeroutput>VirtualBox 5.1</computeroutput>).</para>
+
+<para>Please also include any <emphasis role="bold">error messages</emphasis> provided to your application via the <link xlink:href="https://www.glfw.org/docs/latest/intro_guide.html#error_handling">error callback</link> and if relevant, the <emphasis role="bold">output of <computeroutput>events</computeroutput></emphasis> when reporting this kind of bug. If this tool doesn&apos;t run on the machine, mention this instead.</para>
+
+<para><emphasis role="bold">X11:</emphasis> If possible, please include what desktop environment (e.g. GNOME, Unity, KDE) and/or window manager (e.g. Openbox, dwm, Window Maker) you are running. If the bug is related to keyboard input, please include any input method (e.g. ibus, SCIM) you are using.</para>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md58">
+<title>Quick template</title>
+
+<para><literallayout><computeroutput>OS&#32;and&#32;version:
+Release&#32;or&#32;commit:
+Error&#32;messages:
+events&#32;output:
+</computeroutput></literallayout></para>
+</section>
+</section>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md59">
+<title>Reporting some other library bug</title>
+
+<para>Always include the <emphasis role="bold">operating system name and version</emphasis> (e.g. <computeroutput>Windows 7 64-bit</computeroutput> or <computeroutput>Ubuntu 15.10</computeroutput>). If you are using an official release of GLFW, include the <emphasis role="bold">GLFW release version</emphasis> (e.g. <computeroutput>3.1.2</computeroutput>), otherwise include the <emphasis role="bold">GLFW commit ID</emphasis> (e.g. <computeroutput>3795d78b14ef06008889cc422a1fb8d642597751</computeroutput>) from Git.</para>
+
+<para>Please also include any <emphasis role="bold">error messages</emphasis> provided to your application via the <link xlink:href="https://www.glfw.org/docs/latest/intro_guide.html#error_handling">error callback</link>, if relevant.</para>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md60">
+<title>Quick template</title>
+
+<para><literallayout><computeroutput>OS&#32;and&#32;version:
+Release&#32;or&#32;commit:
+Error&#32;messages:
+</computeroutput></literallayout></para>
+</section>
+</section>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md61">
+<title>Reporting a documentation bug</title>
+
+<para>If you found a bug in the documentation, including this file, then it&apos;s fine to just link to that web page or mention that source file. You don&apos;t need to match the source to the output or vice versa.</para>
+</section>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md62">
+<title>Reporting a website bug</title>
+
+<para>If the bug is in the documentation (anything under <computeroutput>/docs/</computeroutput>) then please see the section above. Bugs in the rest of the site are reported to the <link xlink:href="https://github.com/glfw/website/issues">website source repository</link>.</para>
+</section>
+</section>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md63">
+<title>Requesting a feature</title>
+
+<para>Please explain why you need the feature and how you intend to use it. If you have a specific API design in mind, please add that as well. If you have or are planning to write code for the feature, see the section below.</para>
+
+<para>If there already is a request for the feature you need, add your specific use case unless it is already mentioned. If it is, give it a :+1:.</para>
+</section>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md64">
+<title>Contributing a bug fix</title>
+
+<para><emphasis role="bold">Note:</emphasis> You must have all necessary <link xlink:href="https://en.wikipedia.org/wiki/Intellectual_property">intellectual property rights</link> to any code you contribute. If you did not write the code yourself, you must explain where it came from and under what license you received it. Even code using the same license as GLFW may not be copied without attribution.</para>
+
+<para><emphasis role="bold">There is no preferred patch size</emphasis>. A one character fix is just as welcome as a thousand line one, if that is the appropriate size for the fix.</para>
+
+<para>In addition to the code, a complete bug fix includes:</para>
+
+<para><itemizedlist>
+<listitem>
+<para>Change log entry in <computeroutput>README.md</computeroutput>, describing the incorrect behavior</para>
+</listitem><listitem>
+<para>Credits entries for all authors of the bug fix</para>
+</listitem></itemizedlist>
+</para>
+
+<para>Bug fixes will not be rejected because they don&apos;t include all the above parts, but please keep in mind that maintainer time is finite and that there are many other bugs and features to work on.</para>
+
+<para>If the patch fixes a bug introduced after the last release, it should not get a change log entry.</para>
+
+<para>If you haven&apos;t already, read the excellent article <link xlink:href="https://chris.beams.io/posts/git-commit/">How to Write a Git Commit Message</link>.</para>
+</section>
+<section xml:id="_md_deps_glfw_docs__c_o_n_t_r_i_b_u_t_i_n_g_1autotoc_md65">
+<title>Contributing a feature</title>
+
+<para><emphasis role="bold">Note:</emphasis> You must have all necessary rights to any code you contribute. If you did not write the code yourself, you must explain where it came from and under what license. Even code using the same license as GLFW may not be copied without attribution.</para>
+
+<para><emphasis role="bold">Note:</emphasis> If you haven&apos;t already implemented the feature, check first if there already is an open issue for it and if it&apos;s already being developed in an <link xlink:href="https://github.com/glfw/glfw/branches/all">experimental branch</link>.</para>
+
+<para><emphasis role="bold">There is no preferred patch size</emphasis>. A one character change is just as welcome as one adding a thousand line one, if that is the appropriate size for the feature.</para>
+
+<para>In addition to the code, a complete feature includes:</para>
+
+<para><itemizedlist>
+<listitem>
+<para>Change log entry in <computeroutput>README.md</computeroutput>, listing all new symbols</para>
+</listitem><listitem>
+<para>News page entry, briefly describing the feature</para>
+</listitem><listitem>
+<para>Guide documentation, with minimal examples, in the relevant guide</para>
+</listitem><listitem>
+<para>Reference documentation, with all applicable tags</para>
+</listitem><listitem>
+<para>Cross-references and mentions in appropriate places</para>
+</listitem><listitem>
+<para>Credits entries for all authors of the feature</para>
+</listitem></itemizedlist>
+</para>
+
+<para>If the feature requires platform-specific code, at minimum stubs must be added for the new platform function to all supported and experimental platforms.</para>
+
+<para>If it adds a new callback, support for it must be added to <computeroutput>tests/event.c</computeroutput>.</para>
+
+<para>If it adds a new monitor property, support for it must be added to <computeroutput>tests/monitor.c</computeroutput>.</para>
+
+<para>If it adds a new OpenGL, OpenGL ES or Vulkan option or extension, support for it must be added to <computeroutput>tests/glfwinfo.c</computeroutput> and the behavior of the library when the extension is missing documented in <computeroutput><link linkend="_compat_8dox">docs/compat.dox</link></computeroutput>.</para>
+
+<para>If you haven&apos;t already, read the excellent article <link xlink:href="https://chris.beams.io/posts/git-commit/">How to Write a Git Commit Message</link>.</para>
+
+<para>Features will not be rejected because they don&apos;t include all the above parts, but please keep in mind that maintainer time is finite and that there are many other features and bugs to work on.</para>
+
+<para>Please also keep in mind that any part of the public API that has been included in a release cannot be changed until the next <emphasis>major</emphasis> version. Features can be added and existing parts can sometimes be overloaded (in the general sense of doing more things, not in the C++ sense), but code written to the API of one minor release should both compile and run on subsequent minor releases. </para>
+</section>
+</section>

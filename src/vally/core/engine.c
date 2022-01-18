@@ -1,30 +1,16 @@
-//================================================================================
-// Vally 0.1indev
-//--------------------------------------------------------------------------------
-// Copyright (c) 2022 Dmytro Zykov
-
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
-//=================================================================================
+/*********************************************************************
+ * engine.c                                                          *
+ *                                                                   *
+ * Copyright (c) 2022 Dmytro Zykov                                   *
+ *                                                                   *
+ * This file is a part of the vally project, and may only be used,   *
+ * modified and distributed under the terms of the MIT License,      *
+ * LICENSE.md. By continuing to use, modify and distribute this file *
+ * you inidicate that you have read the license and accept it fully. *
+ *********************************************************************/
 
 #include <vally/core/engine.h>
 
-//-----Internal includes----------
 #include <vally/core/assertions.h>
 #include <vally/core/logger.h>
 #include <vally/core/window.h>
@@ -34,10 +20,13 @@
 #include <vally/resources/resources.h>
 #include <vally/renderer/renderer.h>
 #include <vally/ecs/ecs.h>
-//--------------------------------
 
-// Engine state struct.
-// Contains all vital data
+/**
+ * @brief Engine state struct.
+ * 
+ * Contains all neccessary data.
+ * 
+ */
 typedef struct {
   b8 is_runing;
   b8 is_suspended;
@@ -55,55 +44,62 @@ typedef struct {
 static b8 initialized = FALSE;
 static engine_state state;
 
-b8 engine_create(i16 width, i16 height, const char *title) {
+static b8 engine_window_resized(u16 code, void *sender, void *listener, event_context context) {
+  state.width = (i32)context.data.f32[0];
+  state.height = (i32)context.data.f32[1];
+
+  return TRUE;
+}
+
+b8 engine_create(i16 width, i16 height, char *title) {
   if (initialized) {
-    VALLY_ERROR("engine_create cannot be called more than once");
+    LOG_ERROR("engine_create cannot be called more than once");
     return FALSE;
   }
 
   state.is_runing = TRUE;
   state.is_suspended = FALSE;
 
-  //=======Initialze subsystems===========
+  // Initialize engine subsystems
   logger_init();
-
-  VALLY_INFO("VALLY starts");
+  
+  LOG_INFO("VALLY starts");
 
   state.width = width;
   state.height = height;
   if (!window_create(width, height, title)) {
-    VALLY_FATAL("Could not initialize the window system!");
+    LOG_FATAL("Could not initialize the window system!");
     return FALSE;
   }
 
   if (!event_init()) {
-    VALLY_ERROR("Could not initialize the event system!");
+    LOG_ERROR("Could not initialize the event system!");
     return FALSE;
   }
-
+  
   if (!input_init()) {
-    VALLY_ERROR("Could not initialize the input system!");
+    LOG_ERROR("Could not initialize the input system!");
     return FALSE;
   }
 
   if (!resources_init()) {
-    VALLY_ERROR("Could not initialize the resource system!");
+    LOG_ERROR("Could not initialize the resource system!");
     return FALSE;
   }
 
   if (!renderer_init()) {
-    VALLY_ERROR("Could not initialize the renderer system!");
+    LOG_ERROR("Could not initialize the renderer system!");
     return FALSE;
   }
 
   if (!ecs_init()) {
-    VALLY_ERROR("Could not initialize ECS!");
+    LOG_ERROR("Could not initialize ECS!");
     return FALSE;
   }
-  //=====================================
-
 
   state.last_time = time_now();
+
+  event_subscribe(EVENT_CODE_WINDOW_RESIZED, &state, engine_window_resized);
 
   initialized = TRUE;
 
@@ -112,12 +108,13 @@ b8 engine_create(i16 width, i16 height, const char *title) {
 
 b8 engine_run(engine_start start, engine_update update, engine_render render) {
   if (!start || !update || !render) {
-    VALLY_FATAL("Could not run the engine! Functions must not be NULL!");
+    LOG_FATAL("Could not run the engine! Functions must not be NULL!");
     return FALSE;
   }
 
   start();
 
+  // Main loop
   while (state.is_runing) {
     f64 current_time = time_now();
     f64 delta_time = current_time - state.last_time;
@@ -128,6 +125,7 @@ b8 engine_run(engine_start start, engine_update update, engine_render render) {
 
     update(delta_time);
 
+    ecs_rigidbody_update(delta_time);
     ecs_animator_update(delta_time);
 
     renderer_clear_screen();
@@ -150,7 +148,7 @@ b8 engine_run(engine_start start, engine_update update, engine_render render) {
   renderer_terminate();
   resources_terminate();
   window_terminate();
-  VALLY_INFO("Shutting down");
+  LOG_INFO("Shutting down");
 
   return TRUE;
 }

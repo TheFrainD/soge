@@ -1,0 +1,419 @@
+
+
+ 
+
+~\newline
+ 
+
+\href{https://travis-ci.com/recp/cglm}{\texttt{  }} \href{https://ci.appveyor.com/project/recp/cglm/branch/master}{\texttt{  }} \href{http://cglm.readthedocs.io/en/latest/?badge=latest}{\texttt{  }} \href{https://www.codacy.com/app/recp/cglm?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=recp/cglm&amp;utm_campaign=Badge_Grade}{\texttt{  }} \href{https://coveralls.io/github/recp/cglm?branch=master}{\texttt{  }} \href{https://codecov.io/gh/recp/cglm}{\texttt{  }} ~\newline
+~\newline
+ \href{\#sponsors}{\texttt{  }} \href{\#backers}{\texttt{  }} 
+
+~\newline
+
+
+
+
+Highly optimized 2D$\vert$3D math library, also known as {\bfseries{Open\+GL Mathematics (glm) for {\ttfamily C}}}. {\bfseries{cglm}} provides lot of utils to help math operations to be fast and quick to write. It is community friendly, feel free to bring any issues, bugs you faced. 
+
+\DoxyHorRuler{0}
+\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md5}{}\doxysubsubsection{📚 Documentation}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md5}
+Almost all functions (inline versions) and parameters are documented inside the corresponding headers. ~\newline
+ Complete documentation\+: \href{http://cglm.readthedocs.io}{\texttt{ http\+://cglm.\+readthedocs.\+io}}\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md6}{}\doxysubsubsection{📌 Note for previous versions\+:}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md6}
+
+\begin{DoxyItemize}
+\item {\itshape dup (duplicate) is changed to \+\_\+copy. For instance {\ttfamily glm\+\_\+vec\+\_\+dup -\/$>$ glm\+\_\+vec3\+\_\+copy}}
+\item {\itshape Open\+GL related functions are dropped to make this lib platform/third-\/party independent}
+\item {\itshape make sure you have latest version and feel free to report bugs, troubles}
+\item {\itshape {\bfseries{\mbox{[}bugfix\mbox{]}}} euler angles was implemented in reverse order (extrinsic) it was fixed, now they are intrinsic. Make sure that you have the latest version}
+\item {\itshape {\bfseries{\mbox{[}major change\mbox{]}}} by starting v0.\+4.\+0, quaternions are stored as \mbox{[}x, y, z, w\mbox{]}, it was \mbox{[}w, x, y, z\mbox{]} in v0.\+3.\+5 and earlier versions}
+\item {\itshape {\bfseries{\mbox{[}api rename\mbox{]}}} by starting v0.\+4.\+5, {\bfseries{glm\+\_\+simd}} functions are renamed to $\ast$$\ast$glmm}$\ast$$\ast$ ~\newline
+
+\item {\bfseries{\mbox{[}new option\mbox{]}}} by starting v0.\+4.\+5, you can disable alignment requirement, check options in docs. ~\newline
+
+\item {\bfseries{\mbox{[}major change\mbox{]}}} by starting v0.\+5.\+0, vec3 functions use {\bfseries{glm\+\_\+vec3\+\_\+}} namespace, it was {\bfseries{glm\+\_\+vec\+\_\+}} until v0.\+5.\+0
+\item {\bfseries{\mbox{[}major change\mbox{]}}} by starting v0.\+5.\+1, built-\/in alignment is removed from {\bfseries{vec3}} and {\bfseries{mat3}} types
+\item {\bfseries{\mbox{[}major change\mbox{]}}} by starting v0.\+7.\+3, inline print functions are disabled in release/production mode to eliminate print costs (see options in documentation). Print output also improved. You can disable colors if you need (see documentation)
+\item {\bfseries{\mbox{[}major change\mbox{]}}} by starting v0.\+8.\+3, {\bfseries{cglm}} supports alternative clipspace configuations e.\+g. Left Handed, Zero-\/to-\/\+One (\+\_\+zo)... {\ttfamily C\+G\+L\+M\+\_\+\+F\+O\+R\+C\+E\+\_\+\+D\+E\+P\+T\+H\+\_\+\+Z\+E\+R\+O\+\_\+\+T\+O\+\_\+\+O\+NE} and {\ttfamily C\+G\+L\+M\+\_\+\+F\+O\+R\+C\+E\+\_\+\+L\+E\+F\+T\+\_\+\+H\+A\+N\+D\+ED} is provided to control clipspace. You should be able to use {\bfseries{cglm}} with Vulkan, DirectX and Metal now... see \href{https://cglm.readthedocs.io/en/latest/opt.html\#clipspace-option-s}{\texttt{ https\+://cglm.\+readthedocs.\+io/en/latest/opt.\+html\#clipspace-\/option-\/s}}
+\end{DoxyItemize}\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md7}{}\doxysubsubsection{📌 Note for C++ developers\+:}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md7}
+If you are not aware of the original G\+LM library yet, you may also want to look at\+: \href{https://github.com/g-truc/glm}{\texttt{ https\+://github.\+com/g-\/truc/glm}}\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md8}{}\doxysubsubsection{📌 Note for new comers (\+Important)\+:}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md8}
+
+\begin{DoxyItemize}
+\item {\ttfamily vec4} and {\ttfamily mat4} variables must be aligned. (There will be unaligned versions later)
+\item {\bfseries{in}} and {\bfseries{\mbox{[}in, out\mbox{]}}} parameters must be initialized (please). But {\bfseries{\mbox{[}out\mbox{]}}} parameters not, initializing out param is also redundant
+\item All functions are inline if you don\textquotesingle{}t want to use pre-\/compiled versions with glmc\+\_\+ prefix, you can ignore build process. Just include headers.
+\item if your debugger takes you to cglm headers then make sure you are not trying to copy vec4 to vec3 or alig issues...
+\item Welcome!
+\end{DoxyItemize}\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md9}{}\doxysubsubsection{📌 Note for experienced developers\+:}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md9}
+
+\begin{DoxyItemize}
+\item Since I\textquotesingle{}m testing this library in my projects, sometimes bugs occurs; finding that bug\mbox{[}s\mbox{]} and making improvements would be more easy with multiple developer/contributor and their projects or knowledge. Consider to make some tests if you suspect something is wrong and any feedbacks, contributions and bug reports are always welcome.
+\end{DoxyItemize}\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md10}{}\doxysubsubsection{📌 Allocations?}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md10}
+{\ttfamily cglm} doesn\textquotesingle{}t alloc any memory on heap. So it doesn\textquotesingle{}t provide any allocator. You should alloc memory for {\bfseries{out}} parameters too if you pass pointer of memory location. Don\textquotesingle{}t forget that {\bfseries{vec4}} (also quat/$\ast$$\ast$versor$\ast$$\ast$) and {\bfseries{mat4}} must be aligned (16-\/bytes), because {\itshape cglm} uses S\+I\+MD instructions to optimize most operations if available.\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md11}{}\doxysubsubsection{📌 Returning vector or matrix... ?}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md11}
+{\bfseries{cglm}} supports both {\itshape A\+R\+R\+AY A\+PI} and {\itshape S\+T\+R\+U\+CT A\+PI}, so you can return structs if you utilize struct api ({\ttfamily glms\+\_\+}).
+
+\DoxyHorRuler{0}
+
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{0}{|X[-1]}|}
+\hline
+\end{longtabu}
+
+
+Like some other graphics libraries (especially Open\+GL) this library use Column-\/\+Major layout to keep matrices in the memory.  ~ In the future the library may support an option to use row-\/major layout, C\+U\+R\+R\+E\+N\+T\+LY if you need to row-\/major layout you will need to transpose it.   
+
+   $<$/tbody$>$ \hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md12}{}\doxysection{🚀 Features}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md12}
+
+\begin{DoxyItemize}
+\item {\bfseries{scalar}} and {\bfseries{simd}} (sse, avx, neon...) optimizations
+\item option to use different clipspaces e.\+g. Left Handed, Zero-\/to-\/\+One... (currrently right handed negative-\/one is default)
+\item array api and struct api, you can use arrays or structs.
+\item general purpose matrix operations (mat4, mat3)
+\item chain matrix multiplication (square only)
+\item general purpose vector operations (cross, dot, rotate, proj, angle...)
+\item affine transformations
+\item matrix decomposition (extract rotation, scaling factor)
+\item optimized affine transform matrices (mul, rigid-\/body inverse)
+\item camera (lookat)
+\item projections (ortho, perspective)
+\item quaternions
+\item euler angles / yaw-\/pitch-\/roll to matrix
+\item extract euler angles
+\item inline or pre-\/compiled function call
+\item frustum (extract view frustum planes, corners...)
+\item bounding box (A\+A\+BB in Frustum (culling), crop, merge...)
+\item bounding sphere
+\item project, unproject
+\item easing functions
+\item curves
+\item curve interpolation helpers (S$\ast$\+M$\ast$C, de\+Casteljau...)
+\item helpers to convert cglm types to Apple\textquotesingle{}s simd library to pass cglm types to Metal GL without packing them on both sides
+\item ray intersection helpers
+\item and others...
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+
+
+You have two options to call a function/operation\+: inline or library call (link) Almost all functions are marked inline (always\+\_\+inline) so compiler will probably inline. To call pre-\/compiled versions, just use {\ttfamily glmc\+\_\+} (c stands for \textquotesingle{}call\textquotesingle{}) instead of {\ttfamily glm\+\_\+}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <\mbox{\hyperlink{cglm_8h}{cglm/cglm.h}}>}   \textcolor{comment}{/* for inline */}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <\mbox{\hyperlink{call_8h}{cglm/call.h}}>}   \textcolor{comment}{/* for library call (this also includes cglm.h) */}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} rot, trans, rt;}
+\DoxyCodeLine{\textcolor{comment}{/* ... */}}
+\DoxyCodeLine{\mbox{\hyperlink{affine-mat_8h_a7b037f8a0cc9322c8e39e23d5aa5a678}{glm\_mul}}(trans, rot, rt);  \textcolor{comment}{/* inline */}}
+\DoxyCodeLine{\mbox{\hyperlink{call_2affine_8h_aa15589dbd2fa8a8bad50e678e50ef076}{glmc\_mul}}(trans, rot, rt); \textcolor{comment}{/* call from library */}}
+\end{DoxyCode}
+
+
+Most of math functions are optimized manualy with S\+S\+E2 if available, if not? Dont worry there are non-\/sse versions of all operations
+
+You can pass matrices and vectors as array to functions rather than get address.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} \mbox{\hyperlink{glext_8h_af593500c283bf1a787a6f947f503a5c2}{m}} = \{}
+\DoxyCodeLine{  1, 0, 0, 0,}
+\DoxyCodeLine{  0, 1, 0, 0,}
+\DoxyCodeLine{  0, 0, 1, 0,}
+\DoxyCodeLine{  0, 0, 0, 1}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{affine_8h_a0ce47d9b56e358ae2953be8835e799d7}{glm\_translate}}(\mbox{\hyperlink{glext_8h_af593500c283bf1a787a6f947f503a5c2}{m}}, (\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}})\{1.0f, 0.0f, 0.0f\});}
+\end{DoxyCode}
+
+
+Library contains general purpose mat4 mul and inverse functions, and also contains some special forms (optimized) of these functions for affine transformations\textquotesingle{} matrices. If you want to multiply two affine transformation matrices you can use glm\+\_\+mul instead of glm\+\_\+mat4\+\_\+mul and glm\+\_\+inv\+\_\+tr (R\+OT + TR) instead glm\+\_\+mat4\+\_\+inv 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{/* multiplication */}}
+\DoxyCodeLine{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} modelMat;}
+\DoxyCodeLine{\mbox{\hyperlink{affine-mat_8h_a7b037f8a0cc9322c8e39e23d5aa5a678}{glm\_mul}}(T, \mbox{\hyperlink{stb__vorbis_8c_a5c71a5e59a53413cd6c270266d63b031}{R}}, modelMat);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{/* othonormal rot + tr matrix inverse (rigid-\/body) */}}
+\DoxyCodeLine{\mbox{\hyperlink{affine-mat_8h_a0690b48c1733e0f31a8e5e9f68ff6aa4}{glm\_inv\_tr}}(modelMat);}
+\end{DoxyCode}
+\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md13}{}\doxysubsection{Struct A\+PI}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md13}
+The struct A\+PI works as follows, note the {\ttfamily s} suffix on types, the {\ttfamily glms\+\_\+} prefix on functions and the {\ttfamily G\+L\+M\+S\+\_\+} prefix on constants\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <\mbox{\hyperlink{struct_8h}{cglm/struct.h}}>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{unionmat4s}{mat4s}} mat = \mbox{\hyperlink{struct_2mat4_8h_acbe83b65512ee407e36288f7db11d784}{GLMS\_MAT4\_IDENTITY\_INIT}};}
+\DoxyCodeLine{\mbox{\hyperlink{unionmat4s}{mat4s}} inv = \mbox{\hyperlink{struct_2mat4_8h_a9cb2c8b1b4316b87687d3fb9ff5acc70}{glms\_mat4\_inv}}(mat);}
+\end{DoxyCode}
+
+
+Struct functions generally take their parameters as {\itshape values} and {\itshape return} their results, rather than taking pointers and writing to out parameters. That means your parameters can usually be {\ttfamily const}, if you\textquotesingle{}re into that.
+
+The types used are actually unions that allow access to the same data multiple ways. One of those ways involves anonymous structures, available since C11. M\+S\+VC also supports it for earlier C versions out of the box and G\+C\+C/\+Clang do if you enable {\ttfamily -\/fms-\/extensions}. To explicitly enable these anonymous structures, {\ttfamily \#define C\+G\+L\+M\+\_\+\+U\+S\+E\+\_\+\+A\+N\+O\+N\+Y\+M\+O\+U\+S\+\_\+\+S\+T\+R\+U\+CT} to {\ttfamily 1}, to disable them, to {\ttfamily 0}. For backward compatibility, you can also {\ttfamily \#define C\+G\+L\+M\+\_\+\+N\+O\+\_\+\+A\+N\+O\+N\+Y\+M\+O\+U\+S\+\_\+\+S\+T\+R\+U\+CT} (value is irrelevant) to disable them. If you don\textquotesingle{}t specify explicitly, cglm will do a best guess based on your compiler and the C version you\textquotesingle{}re using.\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md14}{}\doxysection{🔨 Build}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md14}
+\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md15}{}\doxysubsection{C\+Make (\+All platforms)}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md15}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ mkdir build}
+\DoxyCodeLine{\$ cd build}
+\DoxyCodeLine{\$ cmake .. \# [Optional] -\/DCGLM\_SHARED=ON}
+\DoxyCodeLine{\$ make}
+\DoxyCodeLine{\$ sudo make install \# [Optional]}
+\end{DoxyCode}
+\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md16}{}\doxyparagraph{Cmake options with Defaults\+:}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md16}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{option(CGLM\_SHARED "Shared build" ON)}
+\DoxyCodeLine{option(CGLM\_STATIC "Static build" OFF)}
+\DoxyCodeLine{option(CGLM\_USE\_C99 "" OFF) \# C11 }
+\DoxyCodeLine{option(CGLM\_USE\_TEST "Enable Tests" OFF) \# for make check -\/ make test}
+\end{DoxyCode}
+\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md17}{}\doxysubsubsection{Use as header-\/only library with your C\+Make project}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md17}
+This requires no building or installation of cglm.
+
+
+\begin{DoxyItemize}
+\item Example\+:
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake\_minimum\_required(VERSION 3.8.2)}
+\DoxyCodeLine{}
+\DoxyCodeLine{project(<Your Project Name>)}
+\DoxyCodeLine{}
+\DoxyCodeLine{add\_executable(\$\{PROJECT\_NAME\} src/main.c)}
+\DoxyCodeLine{target\_link\_libraries(\$\{LIBRARY\_NAME\} PRIVATE}
+\DoxyCodeLine{  cglm\_headers)}
+\DoxyCodeLine{}
+\DoxyCodeLine{add\_subdirectory(external/cglm/ EXCLUDE\_FROM\_ALL)}
+\end{DoxyCode}
+\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md18}{}\doxysubsubsection{Use with your C\+Make project}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md18}
+
+\begin{DoxyItemize}
+\item Example\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake\_minimum\_required(VERSION 3.8.2)}
+\DoxyCodeLine{}
+\DoxyCodeLine{project(<Your Project Name>)}
+\DoxyCodeLine{}
+\DoxyCodeLine{add\_executable(\$\{PROJECT\_NAME\} src/main.c)}
+\DoxyCodeLine{target\_link\_libraries(\$\{LIBRARY\_NAME\} PRIVATE}
+\DoxyCodeLine{  cglm)}
+\DoxyCodeLine{}
+\DoxyCodeLine{add\_subdirectory(external/cglm/)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\# or you can use find\_package to configure cglm}
+\end{DoxyCode}
+
+\end{DoxyItemize}\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md19}{}\doxysubsection{Meson (\+All platforms)}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md19}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ meson build \# [Optional] -\/-\/default-\/library=static}
+\DoxyCodeLine{\$ cd build}
+\DoxyCodeLine{\$ ninja}
+\DoxyCodeLine{\$ sudo ninja install \# [Optional]}
+\end{DoxyCode}
+\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md20}{}\doxyparagraph{Meson options with Defaults\+:}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md20}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{c\_std=c11}
+\DoxyCodeLine{buildtype=release}
+\DoxyCodeLine{default\_library=shared}
+\DoxyCodeLine{enable\_tests=false \# to run tests: ninja test}
+\end{DoxyCode}
+\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md21}{}\doxysubsubsection{Use with your Meson project}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md21}
+
+\begin{DoxyItemize}
+\item Example\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\# Clone cglm or create a cglm.wrap under <source\_root>/subprojects}
+\DoxyCodeLine{project('name', 'c')}
+\DoxyCodeLine{}
+\DoxyCodeLine{cglm\_dep = dependency('cglm', fallback : 'cglm', 'cglm\_dep')}
+\DoxyCodeLine{}
+\DoxyCodeLine{executable('exe', 'src/main.c', dependencies : cglm\_dep)}
+\end{DoxyCode}
+
+\end{DoxyItemize}\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md22}{}\doxysubsection{Swift (\+Swift Package Manager)}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md22}
+Currently only default build options are supported. Add {\bfseries{cglm}} dependency to your project\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{...}
+\DoxyCodeLine{Package( }
+\DoxyCodeLine{  ...}
+\DoxyCodeLine{  dependencies: [}
+\DoxyCodeLine{    ...}
+\DoxyCodeLine{    .package(url: "https://github.com/recp/cglm", .branch("master")),}
+\DoxyCodeLine{  ]}
+\DoxyCodeLine{  ...}
+\DoxyCodeLine{)}
+\end{DoxyCode}
+
+
+Now add {\bfseries{cgml}} as a dependency to your target. Product choices are\+:
+\begin{DoxyItemize}
+\item {\bfseries{cglm}} for inlined version of the library which can be linked only statically
+\item {\bfseries{cglmc}} for a compiled version of the library with no linking limitation
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{...}
+\DoxyCodeLine{.target(}
+\DoxyCodeLine{  ...}
+\DoxyCodeLine{  dependencies: [}
+\DoxyCodeLine{    ...}
+\DoxyCodeLine{    .product(name: "cglm", package: "cglm"),}
+\DoxyCodeLine{  ]}
+\DoxyCodeLine{  ...}
+\DoxyCodeLine{)}
+\DoxyCodeLine{...}
+\end{DoxyCode}
+\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md23}{}\doxysubsection{Unix (\+Autotools)}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md23}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ sh autogen.sh}
+\DoxyCodeLine{\$ ./configure}
+\DoxyCodeLine{\$ make}
+\DoxyCodeLine{\$ make check \# [Optional]}
+\DoxyCodeLine{\$ [sudo] make install \# [Optional]}
+\end{DoxyCode}
+
+
+This will also install pkg-\/config files so you can use {\ttfamily pkg-\/config -\/-\/cflags cglm} and {\ttfamily pkg-\/config -\/-\/libs cglm} to retrieve compiler and linker flags.
+
+The files will be installed into the given prefix (usually {\ttfamily /usr/local} by default on Linux), but your pkg-\/config may not be configured to actually check there. You can figure out where it\textquotesingle{}s looking by running {\ttfamily pkg-\/config -\/-\/variable pc\+\_\+path pkg-\/config} and change the path the files are installed to via {\ttfamily ./configure -\/-\/with-\/pkgconfigdir=/your/path}. Alternatively, you can add the prefix path to your {\ttfamily P\+K\+G\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+P\+A\+TH} environment variable.\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md24}{}\doxysubsection{Windows (\+M\+S\+Build)}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md24}
+Windows related build file and project files are located in {\ttfamily win} folder, make sure you are inside {\ttfamily cglm/win} folder. Code Analysis is enabled, so it may take awhile to build.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ cd win}
+\DoxyCodeLine{\$ .\(\backslash\)build.bat}
+\end{DoxyCode}
+
+
+if {\ttfamily msbuild} won\textquotesingle{}t work (because of multi version VS) then try to build with {\ttfamily devenv}\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ devenv cglm.sln /Build Release}
+\end{DoxyCode}
+\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md25}{}\doxysubsubsection{Running Tests on Windows}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md25}
+You can see test project in same visual studio solution file. It is enough to run that project to run tests.\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md26}{}\doxysubsection{Building Docs}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md26}
+First you need install Sphinx\+: \href{http://www.sphinx-doc.org/en/master/usage/installation.html}{\texttt{ http\+://www.\+sphinx-\/doc.\+org/en/master/usage/installation.\+html}} then\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ cd docs}
+\DoxyCodeLine{\$ sphinx-\/build source build}
+\end{DoxyCode}
+
+
+it will compile docs into build folder, you can run index.\+html inside that function.\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md27}{}\doxysection{How to use}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md27}
+If you want to use the inline versions of functions, then include the main header 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <\mbox{\hyperlink{cglm_8h}{cglm/cglm.h}}>}}
+\end{DoxyCode}
+
+
+the header will include all headers. Then call the func you want e.\+g. rotate vector by axis\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{vec3_8h_a054d99f2c112be28fe55df6f7c0630d3}{glm\_vec3\_rotate}}(\mbox{\hyperlink{glad_8h_a435c176a02c061b43e19bdf7c86cceae}{v1}}, \mbox{\hyperlink{util_8h_a96ef52a4c391eca254a1d722b9a005e1}{glm\_rad}}(45), (\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}})\{1.0f, 0.0f, 0.0f\});}
+\end{DoxyCode}
+
+
+some functions are overloaded \+:) e.\+g you can normalize vector\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{vec3_8h_ab2e8e301fdde8d7c65b7baade6b1d94e}{glm\_vec3\_normalize}}(vec);}
+\end{DoxyCode}
+
+
+this will normalize vec and store normalized vector into {\ttfamily vec} but if you will store normalized vector into another vector do this\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{vec3_8h_aead71de99414cfc01adc721cc7cfc506}{glm\_vec3\_normalize\_to}}(vec, \mbox{\hyperlink{structresult}{result}});}
+\end{DoxyCode}
+
+
+like this function you may see {\ttfamily \+\_\+to} postfix, this functions store results to another variables and save temp memory
+
+to call pre-\/compiled versions include header with {\ttfamily c} postfix, c means call. Pre-\/compiled versions are just wrappers. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <\mbox{\hyperlink{call_8h}{cglm/call.h}}>}}
+\end{DoxyCode}
+
+
+this header will include all headers with c postfix. You need to call functions with c posfix\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{call_2vec3_8h_aad5d1637718cf5e40678d83de63a1a63}{glmc\_vec3\_normalize}}(vec);}
+\end{DoxyCode}
+
+
+Function usage and parameters are documented inside related headers. You may see same parameter passed twice in some examples like this\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{mat4_8h_a45b2af2e5b51848b3fb69c7207c68785}{glm\_mat4\_mul}}(m1, m2, m1);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{/* or */}}
+\DoxyCodeLine{\mbox{\hyperlink{mat4_8h_a45b2af2e5b51848b3fb69c7207c68785}{glm\_mat4\_mul}}(m1, m1, m1);}
+\end{DoxyCode}
+
+
+the first two parameter are {\bfseries{\mbox{[}in\mbox{]}}} and the last one is {\bfseries{\mbox{[}out\mbox{]}}} parameter. After multiplying {\itshape m1} and {\itshape m2}, the result is stored in {\itshape m1}. This is why we send {\itshape m1} twice. You may store the result in a different matrix, this is just an example.\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md28}{}\doxysubsection{Example\+: Computing M\+V\+P matrix}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md28}
+\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md29}{}\doxysubsubsection{Option 1}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md29}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} proj, view, model, mvp;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{/* init proj, view and model ... */}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{mat4_8h_a45b2af2e5b51848b3fb69c7207c68785}{glm\_mat4\_mul}}(proj, view, viewProj);}
+\DoxyCodeLine{\mbox{\hyperlink{mat4_8h_a45b2af2e5b51848b3fb69c7207c68785}{glm\_mat4\_mul}}(viewProj, model, mvp);}
+\end{DoxyCode}
+\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md30}{}\doxysubsubsection{Option 2}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md30}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} proj, view, model, mvp;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{/* init proj, view and model ... */}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{mat4_8h_a089e093063d5cfabdb6d32104f7744d4}{glm\_mat4\_mulN}}((\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} *[])\{\&proj, \&view, \&model\}, 3, mvp);}
+\end{DoxyCode}
+\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md31}{}\doxysection{How to send matrix to Open\+GL}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md31}
+mat4 is array of vec4 and vec4 is array of floats. {\ttfamily gl\+Uniform\+Matrix4fv} functions accecpts {\ttfamily float$\ast$} as {\ttfamily value} (last param), so you can cast mat4 to float$\ast$ or you can pass first column of matrix as beginning of memory of matrix\+:
+
+Option 1\+: Send first column 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{glad_8h_a1cd4c6b9e1fb6b4eb927ab0997de48ef}{glUniformMatrix4fv}}(\mbox{\hyperlink{glad_8h_a050778a7129cc14e57da7024beb87ce8}{location}}, 1, \mbox{\hyperlink{glad_8h_abca6d43f43fae31f49dcb883b2f301f6}{GL\_FALSE}}, \mbox{\hyperlink{glext_8h_a7b24a3f2f56eb1244ae69dacb4fecb6f}{matrix}}[0]);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{/* array of matrices */}}
+\DoxyCodeLine{\mbox{\hyperlink{glad_8h_a1cd4c6b9e1fb6b4eb927ab0997de48ef}{glUniformMatrix4fv}}(\mbox{\hyperlink{glad_8h_a050778a7129cc14e57da7024beb87ce8}{location}}, 1, \mbox{\hyperlink{glad_8h_abca6d43f43fae31f49dcb883b2f301f6}{GL\_FALSE}}, \mbox{\hyperlink{glext_8h_a7b24a3f2f56eb1244ae69dacb4fecb6f}{matrix}}[0][0]);}
+\end{DoxyCode}
+
+
+Option 2\+: Cast matrix to pointer type (also valid for multiple dimensional arrays) 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{glad_8h_a1cd4c6b9e1fb6b4eb927ab0997de48ef}{glUniformMatrix4fv}}(\mbox{\hyperlink{glad_8h_a050778a7129cc14e57da7024beb87ce8}{location}}, 1, \mbox{\hyperlink{glad_8h_abca6d43f43fae31f49dcb883b2f301f6}{GL\_FALSE}}, (\textcolor{keywordtype}{float} *)\mbox{\hyperlink{glext_8h_a7b24a3f2f56eb1244ae69dacb4fecb6f}{matrix}});}
+\end{DoxyCode}
+
+
+You can pass matrices the same way to other A\+P\+Is e.\+g. Vulkan, DX...\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md32}{}\doxysection{Notes}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md32}
+
+\begin{DoxyItemize}
+\item This library uses float types only, does not support Integers, Double... yet
+\item If headers are not working properly with your compiler, I\+DE please open an issue, because I\textquotesingle{}m using G\+CC and clang to test it maybe sometimes M\+S\+VC
+\end{DoxyItemize}
+
+{\bfseries{T\+O\+DO\+:}}
+\begin{DoxyItemize}
+\item \mbox{[} \mbox{]} Unit tests (In Progress)
+\item \mbox{[} \mbox{]} Unit tests for comparing cglm with glm results
+\item \mbox{[}x\mbox{]} Add version info
+\item \mbox{[} \mbox{]} Unaligned operations (e.\+g. {\ttfamily glm\+\_\+umat4\+\_\+mul})
+\item \mbox{[}x\mbox{]} Extra documentation
+\item \mbox{[}x\mbox{]} A\+RM Neon Arch
+\end{DoxyItemize}\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md33}{}\doxysection{Contributors}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md33}
+This project exists thanks to all the people who contribute. \mbox{[}\mbox{\hyperlink{glfw_2docs_2_c_o_n_t_r_i_b_u_t_i_n_g_8md}{Contribute}}\mbox{]}. \href{https://github.com/recp/cglm/graphs/contributors}{\texttt{ }}\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md34}{}\doxysection{Backers}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md34}
+Thank you to all our backers! 🙏 \mbox{[}\href{https://opencollective.com/cglm\#backer}{\texttt{ Become a backer}}\mbox{]}
+
+\href{https://opencollective.com/cglm\#backers}{\texttt{ }}\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md35}{}\doxysection{Sponsors}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md35}
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. \mbox{[}\href{https://opencollective.com/cglm\#sponsor}{\texttt{ Become a sponsor}}\mbox{]}
+
+\href{https://opencollective.com/cglm/sponsor/0/website}{\texttt{ }} \href{https://opencollective.com/cglm/sponsor/1/website}{\texttt{ }} \href{https://opencollective.com/cglm/sponsor/2/website}{\texttt{ }} \href{https://opencollective.com/cglm/sponsor/3/website}{\texttt{ }} \href{https://opencollective.com/cglm/sponsor/4/website}{\texttt{ }} \href{https://opencollective.com/cglm/sponsor/5/website}{\texttt{ }} \href{https://opencollective.com/cglm/sponsor/6/website}{\texttt{ }} \href{https://opencollective.com/cglm/sponsor/7/website}{\texttt{ }} \href{https://opencollective.com/cglm/sponsor/8/website}{\texttt{ }} \href{https://opencollective.com/cglm/sponsor/9/website}{\texttt{ }}\hypertarget{md_deps_cglm__r_e_a_d_m_e_autotoc_md36}{}\doxysection{License}\label{md_deps_cglm__r_e_a_d_m_e_autotoc_md36}
+M\+IT. check the L\+I\+C\+E\+N\+SE file 

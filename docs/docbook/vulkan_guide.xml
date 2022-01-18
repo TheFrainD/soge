@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_vulkan_guide">
+
+<para>This guide is intended to fill the gaps between the official <link xlink:href="https://www.khronos.org/vulkan/">Vulkan resources</link> and the rest of the GLFW documentation and is not a replacement for either. It assumes some familiarity with Vulkan concepts like loaders, devices, queues and surfaces and leaves it to the Vulkan documentation to explain the details of Vulkan functions.</para>
+
+<para>To develop for Vulkan you should download the <link xlink:href="https://vulkan.lunarg.com/">LunarG Vulkan SDK</link> for your platform. Apart from headers and link libraries, they also provide the validation layers necessary for development.</para>
+
+<para>The <link xlink:href="https://vulkan-tutorial.com/">Vulkan Tutorial</link> has more information on how to use GLFW and Vulkan. The <link xlink:href="https://github.com/KhronosGroup/Vulkan-Samples">Khronos Vulkan Samples</link> also use GLFW, although with a small framework in between.</para>
+
+<para>For details on a specific Vulkan support function, see the <link linkend="_group__vulkan">Vulkan support reference</link>. There are also guides for the other areas of the GLFW API.</para>
+
+<para><itemizedlist>
+<listitem>
+<para><link linkend="_intro_guide">Introduction to the API</link></para>
+</listitem><listitem>
+<para><link linkend="_window_guide">Window guide</link></para>
+</listitem><listitem>
+<para><link linkend="_context_guide">Context guide</link></para>
+</listitem><listitem>
+<para><link linkend="_monitor_guide">Monitor guide</link></para>
+</listitem><listitem>
+<para><link linkend="_input_guide">Input guide</link></para>
+</listitem></itemizedlist>
+</para>
+<section xml:id="_vulkan_guide_1vulkan_loader">
+<title>Finding the Vulkan loader</title>
+
+<para>GLFW itself does not ever need to be linked against the Vulkan loader.</para>
+
+<para>By default, GLFW will load the Vulkan loader dynamically at runtime via its standard name: <computeroutput>vulkan-1.dll</computeroutput> on Windows, <computeroutput>libvulkan.so.1</computeroutput> on Linux and other Unix-like systems and <computeroutput>libvulkan.1.dylib</computeroutput> on macOS.</para>
+
+<para>@macos GLFW will also look up and search the executable subdirectory of your application bundle.</para>
+
+<para>If your code is using a Vulkan loader with a different name or in a non-standard location you will need to direct GLFW to it. Pass your version of <computeroutput>vkGetInstanceProcAddr</computeroutput> to <link linkend="_init_8c_1a1712210f34c339a05adda69e3587ec00">glfwInitVulkanLoader</link> before initializing GLFW and it will use that function for all Vulkan entry point retrieval. This prevents GLFW from dynamically loading the Vulkan loader.</para>
+
+<para><literallayout><computeroutput>glfwInitVulkanLoader(vkGetInstanceProcAddr);
+</computeroutput></literallayout></para>
+
+<para>@macos To make your application be redistributable you will need to set up the application bundle according to the LunarG SDK documentation. This is explained in more detail in the <link xlink:href="https://vulkan.lunarg.com/doc/sdk/latest/mac/getting_started.html">SDK documentation for macOS</link>.</para>
+</section>
+<section xml:id="_vulkan_guide_1vulkan_include">
+<title>Including the Vulkan header file</title>
+
+<para>To have GLFW include the Vulkan header, define <link linkend="_build_guide_1GLFW_INCLUDE_VULKAN">GLFW_INCLUDE_VULKAN</link> before including the GLFW header.</para>
+
+<para><literallayout><computeroutput>#define&#32;GLFW_INCLUDE_VULKAN
+#include&#32;&lt;GLFW/glfw3.h&gt;
+</computeroutput></literallayout></para>
+
+<para>If you instead want to include the Vulkan header from a custom location or use your own custom Vulkan header then do this before the GLFW header.</para>
+
+<para><literallayout><computeroutput>#include&#32;&lt;path/to/vulkan.h&gt;
+#include&#32;&lt;GLFW/glfw3.h&gt;
+</computeroutput></literallayout></para>
+
+<para>Unless a Vulkan header is included, either by the GLFW header or above it, the following GLFW functions will not be declared, as depend on Vulkan types.</para>
+
+<para><itemizedlist>
+<listitem>
+<para><link linkend="_init_8c_1a1712210f34c339a05adda69e3587ec00">glfwInitVulkanLoader</link></para>
+</listitem><listitem>
+<para><link linkend="_vulkan_8c_1ab1fbd7c0ba5c40c91c6b85b897364039">glfwGetInstanceProcAddress</link></para>
+</listitem><listitem>
+<para><link linkend="_vulkan_8c_1a6a7033429666ac6b31d4250aeb5b37d1">glfwGetPhysicalDevicePresentationSupport</link></para>
+</listitem><listitem>
+<para><link linkend="_vulkan_8c_1a5a47c783767442b8b8e9ab3cf2e4959b">glfwCreateWindowSurface</link></para>
+</listitem></itemizedlist>
+</para>
+
+<para>The <computeroutput>VK_USE_PLATFORM_*_KHR</computeroutput> macros do not need to be defined for the Vulkan part of GLFW to work. Define them only if you are using these extensions directly.</para>
+</section>
+<section xml:id="_vulkan_guide_1vulkan_support">
+<title>Querying for Vulkan support</title>
+
+<para>If you are linking directly against the Vulkan loader then you can skip this section. The canonical desktop loader library exports all Vulkan core and Khronos extension functions, allowing them to be called directly.</para>
+
+<para>If you are loading the Vulkan loader dynamically instead of linking directly against it, you can check for the availability of a loader and ICD with <link linkend="_group__vulkan_1ga72e7c3757d9ff2333181a5569bb7c403">glfwVulkanSupported</link>.</para>
+
+<para><literallayout><computeroutput>if&#32;(glfwVulkanSupported())
+{
+&#32;&#32;&#32;&#32;//&#32;Vulkan&#32;is&#32;available,&#32;at&#32;least&#32;for&#32;compute
+}
+</computeroutput></literallayout></para>
+
+<para>This function returns <computeroutput>GLFW_TRUE</computeroutput> if the Vulkan loader and any minimally functional ICD was found.</para>
+
+<para>If one or both were not found, calling any other Vulkan related GLFW function will generate a <link linkend="_group__errors_1ga56882b290db23261cc6c053c40c2d08e">GLFW_API_UNAVAILABLE</link> error.</para>
+<section xml:id="_vulkan_guide_1vulkan_proc">
+<title>Querying Vulkan function pointers</title>
+
+<para>To load any Vulkan core or extension function from the found loader, call <link linkend="_vulkan_8c_1ab1fbd7c0ba5c40c91c6b85b897364039">glfwGetInstanceProcAddress</link>. To load functions needed for instance creation, pass <computeroutput>NULL</computeroutput> as the instance.</para>
+
+<para><literallayout><computeroutput>PFN_vkCreateInstance&#32;pfnCreateInstance&#32;=&#32;(PFN_vkCreateInstance)
+&#32;&#32;&#32;&#32;glfwGetInstanceProcAddress(NULL,&#32;&quot;vkCreateInstance&quot;);
+</computeroutput></literallayout></para>
+
+<para>Once you have created an instance, you can load from it all other Vulkan core functions and functions from any instance extensions you enabled.</para>
+
+<para><literallayout><computeroutput>PFN_vkCreateDevice&#32;pfnCreateDevice&#32;=&#32;(PFN_vkCreateDevice)
+&#32;&#32;&#32;&#32;glfwGetInstanceProcAddress(instance,&#32;&quot;vkCreateDevice&quot;);
+</computeroutput></literallayout></para>
+
+<para>This function in turn calls <computeroutput>vkGetInstanceProcAddr</computeroutput>. If that fails, the function falls back to a platform-specific query of the Vulkan loader (i.e. <computeroutput>dlsym</computeroutput> or <computeroutput>GetProcAddress</computeroutput>). If that also fails, the function returns <computeroutput>NULL</computeroutput>. For more information about <computeroutput>vkGetInstanceProcAddr</computeroutput>, see the Vulkan documentation.</para>
+
+<para>Vulkan also provides <computeroutput>vkGetDeviceProcAddr</computeroutput> for loading device-specific versions of Vulkan function. This function can be retrieved from an instance with <link linkend="_vulkan_8c_1ab1fbd7c0ba5c40c91c6b85b897364039">glfwGetInstanceProcAddress</link>.</para>
+
+<para><literallayout><computeroutput>PFN_vkGetDeviceProcAddr&#32;pfnGetDeviceProcAddr&#32;=&#32;(PFN_vkGetDeviceProcAddr)
+&#32;&#32;&#32;&#32;glfwGetInstanceProcAddress(instance,&#32;&quot;vkGetDeviceProcAddr&quot;);
+</computeroutput></literallayout></para>
+
+<para>Device-specific functions may execute a little bit faster, due to not having to dispatch internally based on the device passed to them. For more information about <computeroutput>vkGetDeviceProcAddr</computeroutput>, see the Vulkan documentation.</para>
+</section>
+</section>
+<section xml:id="_vulkan_guide_1vulkan_ext">
+<title>Querying required Vulkan extensions</title>
+
+<para>To do anything useful with Vulkan you need to create an instance. If you want to use Vulkan to render to a window, you must enable the instance extensions GLFW requires to create Vulkan surfaces.</para>
+
+<para>To query the instance extensions required, call <link linkend="_group__vulkan_1gac47c204c9c417fced07e25de8fce526a">glfwGetRequiredInstanceExtensions</link>.</para>
+
+<para><literallayout><computeroutput>uint32_t&#32;count;
+const&#32;char**&#32;extensions&#32;=&#32;glfwGetRequiredInstanceExtensions(&amp;count);
+</computeroutput></literallayout></para>
+
+<para>These extensions must all be enabled when creating instances that are going to be passed to <link linkend="_vulkan_8c_1a6a7033429666ac6b31d4250aeb5b37d1">glfwGetPhysicalDevicePresentationSupport</link> and <link linkend="_vulkan_8c_1a5a47c783767442b8b8e9ab3cf2e4959b">glfwCreateWindowSurface</link>. The set of extensions will vary depending on platform and may also vary depending on graphics drivers and other factors.</para>
+
+<para>If it fails it will return <computeroutput>NULL</computeroutput> and GLFW will not be able to create Vulkan window surfaces. You can still use Vulkan for off-screen rendering and compute work.</para>
+
+<para>If successful the returned array will always include <computeroutput>VK_KHR_surface</computeroutput>, so if you don&apos;t require any additional extensions you can pass this list directly to the <computeroutput><link linkend="_struct_vk_instance_create_info">VkInstanceCreateInfo</link></computeroutput> struct.</para>
+
+<para><literallayout><computeroutput>VkInstanceCreateInfo&#32;ici;
+
+memset(&amp;ici,&#32;0,&#32;sizeof(ici));
+ici.enabledExtensionCount&#32;=&#32;count;
+ici.ppEnabledExtensionNames&#32;=&#32;extensions;
+...
+</computeroutput></literallayout></para>
+
+<para>Additional extensions may be required by future versions of GLFW. You should check whether any extensions you wish to enable are already in the returned array, as it is an error to specify an extension more than once in the <computeroutput><link linkend="_struct_vk_instance_create_info">VkInstanceCreateInfo</link></computeroutput> struct.</para>
+</section>
+<section xml:id="_vulkan_guide_1vulkan_present">
+<title>Querying for Vulkan presentation support</title>
+
+<para>Not every queue family of every Vulkan device can present images to surfaces. To check whether a specific queue family of a physical device supports image presentation without first having to create a window and surface, call <link linkend="_vulkan_8c_1a6a7033429666ac6b31d4250aeb5b37d1">glfwGetPhysicalDevicePresentationSupport</link>.</para>
+
+<para><literallayout><computeroutput>if&#32;(glfwGetPhysicalDevicePresentationSupport(instance,&#32;physical_device,&#32;queue_family_index))
+{
+&#32;&#32;&#32;&#32;//&#32;Queue&#32;family&#32;supports&#32;image&#32;presentation
+}
+</computeroutput></literallayout></para>
+
+<para>The <computeroutput>VK_KHR_surface</computeroutput> extension additionally provides the <computeroutput>vkGetPhysicalDeviceSurfaceSupportKHR</computeroutput> function, which performs the same test on an existing Vulkan surface.</para>
+</section>
+<section xml:id="_vulkan_guide_1vulkan_window">
+<title>Creating the window</title>
+
+<para>Unless you will be using OpenGL or OpenGL ES with the same window as Vulkan, there is no need to create a context. You can disable context creation with the <link linkend="_window_guide_1GLFW_CLIENT_API_hint">GLFW_CLIENT_API</link> hint.</para>
+
+<para><literallayout><computeroutput>glfwWindowHint(GLFW_CLIENT_API,&#32;GLFW_NO_API);
+GLFWwindow*&#32;window&#32;=&#32;glfwCreateWindow(640,&#32;480,&#32;&quot;Window&#32;Title&quot;,&#32;NULL,&#32;NULL);
+</computeroutput></literallayout></para>
+
+<para>See <link linkend="_context_guide_1context_less">Windows without contexts</link> for more information.</para>
+</section>
+<section xml:id="_vulkan_guide_1vulkan_surface">
+<title>Creating a Vulkan window surface</title>
+
+<para>You can create a Vulkan surface (as defined by the <computeroutput>VK_KHR_surface</computeroutput> extension) for a GLFW window with <link linkend="_vulkan_8c_1a5a47c783767442b8b8e9ab3cf2e4959b">glfwCreateWindowSurface</link>.</para>
+
+<para><literallayout><computeroutput>VkSurfaceKHR&#32;surface;
+VkResult&#32;err&#32;=&#32;glfwCreateWindowSurface(instance,&#32;window,&#32;NULL,&#32;&amp;surface);
+if&#32;(err)
+{
+&#32;&#32;&#32;&#32;//&#32;Window&#32;surface&#32;creation&#32;failed
+}
+</computeroutput></literallayout></para>
+
+<para>If an OpenGL or OpenGL ES context was created on the window, the context has ownership of the presentation on the window and a Vulkan surface cannot be created.</para>
+
+<para>It is your responsibility to destroy the surface. GLFW does not destroy it for you. Call <computeroutput>vkDestroySurfaceKHR</computeroutput> function from the same extension to destroy it. </para>
+</section>
+</section>

@@ -1,0 +1,113 @@
+A simple vector library for C. It has simillar interface to C++ stl vector. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include  <stdio.h>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include  <\mbox{\hyperlink{cvec_8h}{cvec.h}}>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int}  \mbox{\hyperlink{runner_8c_ac0f2228420376f4db7e1274f2b41667c}{main}}(\textcolor{keywordtype}{void})  \{}
+\DoxyCodeLine{  \mbox{\hyperlink{struct__cvec}{cvec}}  vec  =  \mbox{\hyperlink{cvec_8h_a3d7122698c976f6369cf5356c1d7f44c}{cvec\_create}}(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{}
+\DoxyCodeLine{  \mbox{\hyperlink{cvec_8h_a589dd3e539e29524d806dd67fef1161f}{cvec\_push\_back}}(vec, 10);}
+\DoxyCodeLine{  \mbox{\hyperlink{cvec_8h_a589dd3e539e29524d806dd67fef1161f}{cvec\_push\_back}}(vec, 57);}
+\DoxyCodeLine{  \mbox{\hyperlink{cvec_8h_a589dd3e539e29524d806dd67fef1161f}{cvec\_push\_back}}(vec, -\/75);}
+\DoxyCodeLine{  \mbox{\hyperlink{cvec_8h_a589dd3e539e29524d806dd67fef1161f}{cvec\_push\_back}}(vec, 11);}
+\DoxyCodeLine{  \mbox{\hyperlink{cvec_8h_a589dd3e539e29524d806dd67fef1161f}{cvec\_push\_back}}(vec, 5);}
+\DoxyCodeLine{  \mbox{\hyperlink{cvec_8c_a28f8770830b2a9992a4dfcf975f82f22}{cvec\_pop\_back}}(vec);}
+\DoxyCodeLine{  \mbox{\hyperlink{cvec_8h_a12de857223b6fb6f6f92cb0c310560cb}{cvec\_insert}}(vec, 4, 42);}
+\DoxyCodeLine{}
+\DoxyCodeLine{  \mbox{\hyperlink{cvec_8c_a17c81de6fcbe0e5df5f4f0f7a71ac996}{cvec\_destroy}}(vec);}
+\DoxyCodeLine{  \textcolor{keywordflow}{return}  0;}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+\hypertarget{md_deps_cvec__r_e_a_d_m_e_autotoc_md38}{}\doxysection{Usage}\label{md_deps_cvec__r_e_a_d_m_e_autotoc_md38}
+\hypertarget{md_deps_cvec__r_e_a_d_m_e_autotoc_md39}{}\doxysubsection{Initializing}\label{md_deps_cvec__r_e_a_d_m_e_autotoc_md39}
+You can create vector like this\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{struct__cvec}{cvec}} vec =  \mbox{\hyperlink{cvec_8h_a3d7122698c976f6369cf5356c1d7f44c}{cvec\_create}}(\textcolor{keywordtype}{int});}
+\end{DoxyCode}
+
+
+You can create vectors of different type by specifing it as an argument in {\ttfamily cvec\+\_\+create} \+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{// int vector}}
+\DoxyCodeLine{\mbox{\hyperlink{struct__cvec}{cvec}} ivec = \mbox{\hyperlink{cvec_8h_a3d7122698c976f6369cf5356c1d7f44c}{cvec\_create}}(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{// float vector}}
+\DoxyCodeLine{\mbox{\hyperlink{struct__cvec}{cvec}} fvec = \mbox{\hyperlink{cvec_8h_a3d7122698c976f6369cf5356c1d7f44c}{cvec\_create}}(\textcolor{keywordtype}{float});}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{// char vector}}
+\DoxyCodeLine{\mbox{\hyperlink{struct__cvec}{cvec}} chvec = \mbox{\hyperlink{cvec_8h_a3d7122698c976f6369cf5356c1d7f44c}{cvec\_create}}(\textcolor{keywordtype}{char});}
+\end{DoxyCode}
+\hypertarget{md_deps_cvec__r_e_a_d_m_e_autotoc_md40}{}\doxysubsection{Destroying}\label{md_deps_cvec__r_e_a_d_m_e_autotoc_md40}
+Every vector must be destroy after using with {\ttfamily cvec\+\_\+destoy} \+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{cvec_8c_a17c81de6fcbe0e5df5f4f0f7a71ac996}{cvec\_destroy}}(vec);}
+\end{DoxyCode}
+\hypertarget{md_deps_cvec__r_e_a_d_m_e_autotoc_md41}{}\doxysubsection{Adding and accessing elements}\label{md_deps_cvec__r_e_a_d_m_e_autotoc_md41}
+To add element to a vector you need to use {\ttfamily cvec\+\_\+push\+\_\+back} or {\ttfamily cvec\+\_\+insert} and to access element by its index you need to use {\ttfamily cvec\+\_\+at} \+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{struct__cvec}{cvec}}  vec  =  \mbox{\hyperlink{cvec_8h_a3d7122698c976f6369cf5356c1d7f44c}{cvec\_create}}(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{// simply adds an element to vector's end}}
+\DoxyCodeLine{\mbox{\hyperlink{cvec_8h_a589dd3e539e29524d806dd67fef1161f}{cvec\_push\_back}}(vec, 42);}
+\DoxyCodeLine{\mbox{\hyperlink{cvec_8h_a589dd3e539e29524d806dd67fef1161f}{cvec\_push\_back}}(vec, 3);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{// inserts an element at specified index}}
+\DoxyCodeLine{\mbox{\hyperlink{cvec_8h_a12de857223b6fb6f6f92cb0c310560cb}{cvec\_insert}}(vec, 1, 11);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{// you also need to specify type of an element you want to access}}
+\DoxyCodeLine{printf(\textcolor{stringliteral}{"\%d\(\backslash\)n"}, \mbox{\hyperlink{cvec_8h_abb99bfeea098f652e3efedb6e23004f2}{cvec\_at}}(vec, 1, \textcolor{keywordtype}{int}));}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{// not a part of a library}}
+\DoxyCodeLine{vec\_print(vec);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{cvec_8c_a17c81de6fcbe0e5df5f4f0f7a71ac996}{cvec\_destroy}}(vec);}
+\end{DoxyCode}
+
+
+Output\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{42 11 3}
+\DoxyCodeLine{11}
+\end{DoxyCode}
+\hypertarget{md_deps_cvec__r_e_a_d_m_e_autotoc_md42}{}\doxysubsection{Removing elements}\label{md_deps_cvec__r_e_a_d_m_e_autotoc_md42}
+To remove an element you can use {\ttfamily cvec\+\_\+pop\+\_\+back} or {\ttfamily cvec\+\_\+erase}\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{struct__cvec}{cvec}}  vec  =  \mbox{\hyperlink{cvec_8h_a3d7122698c976f6369cf5356c1d7f44c}{cvec\_create}}(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{cvec_8h_a589dd3e539e29524d806dd67fef1161f}{cvec\_push\_back}}(vec,  42);}
+\DoxyCodeLine{\mbox{\hyperlink{cvec_8h_a589dd3e539e29524d806dd67fef1161f}{cvec\_push\_back}}(vec,  3);}
+\DoxyCodeLine{\mbox{\hyperlink{cvec_8h_a12de857223b6fb6f6f92cb0c310560cb}{cvec\_insert}}(vec,  1,  11);}
+\DoxyCodeLine{vec\_print(vec);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{// removes last element}}
+\DoxyCodeLine{\mbox{\hyperlink{cvec_8c_a28f8770830b2a9992a4dfcf975f82f22}{cvec\_pop\_back}}(vec);}
+\DoxyCodeLine{vec\_print(vec);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{// removes element at specified index}}
+\DoxyCodeLine{\mbox{\hyperlink{cvec_8c_abc55d3779eb6a21832e665685faf88d7}{cvec\_erase}}(vec,  0);}
+\DoxyCodeLine{vec\_print(vec);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{cvec_8c_a17c81de6fcbe0e5df5f4f0f7a71ac996}{cvec\_destroy}}(vec);}
+\end{DoxyCode}
+
+
+Output\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{42 11 3 }
+\DoxyCodeLine{42 11 }
+\DoxyCodeLine{11 }
+\end{DoxyCode}
+\hypertarget{md_deps_cvec__r_e_a_d_m_e_autotoc_md43}{}\doxysubsection{Other}\label{md_deps_cvec__r_e_a_d_m_e_autotoc_md43}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{// returns vector's size}}
+\DoxyCodeLine{\mbox{\hyperlink{cvec_8c_a8a6a2015774042d6bfc978989e91e561}{cvec\_size}}(vec);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{// sets elements value}}
+\DoxyCodeLine{\textcolor{comment}{// works as "type[index] = value"}}
+\DoxyCodeLine{\mbox{\hyperlink{cvec_8h_aec3fdca00837d5fa0c64ede3a21b686f}{cvec\_set\_at}}(vec, \mbox{\hyperlink{glad_8h_a57f14e05b1900f16a2da82ade47d0c6d}{index}}, \mbox{\hyperlink{glad_8h_a79169be77d7e02a24f68a5bfe627dc29}{value}});}
+\end{DoxyCode}
+ 

@@ -1,0 +1,52 @@
+\hypertarget{md_deps_stb_tests_caveview__r_e_a_d_m_e_autotoc_md106}{}\doxysubsection{How to run it?}\label{md_deps_stb_tests_caveview__r_e_a_d_m_e_autotoc_md106}
+There\textquotesingle{}s no G\+UI. Find a directory with Minecraft Anvil files (.mca). Copy a Minecraft \char`\"{}terrain.\+png\char`\"{} into that directory (do a google image search). Run from that directory.\hypertarget{md_deps_stb_tests_caveview__r_e_a_d_m_e_autotoc_md107}{}\doxysubsection{How accurate is this as a Minecraft viewer?}\label{md_deps_stb_tests_caveview__r_e_a_d_m_e_autotoc_md107}
+Not very. Many Minecraft blocks are not handled correctly\+:
+
+
+\begin{DoxyItemize}
+\item No redstone, rails, or other \char`\"{}flat\char`\"{} blocks
+\item No signs, doors, fences, carpets, or other complicated geometry
+\item Stairs are turned into ramps
+\item Upper slabs turn into lower slabs
+\item Wood types only for blocks, not stairs, slabs, etc
+\item Colored glass becomes regular glass
+\item Glass panes become glass blocks
+\item Water is opaque
+\item Water level is incorrect
+\item No biome coloration
+\item Cactus is not shrunk, shows holes
+\item Chests are not shrunk
+\item Double-\/chests draw as two chests
+\item Pumpkins etc. are not rotated properly
+\item Torches are drawn hackily, do not attach to walls
+\item Incorrect textures for blocks that postdate terrain.\+png
+\item Transparent textures have black fringes due to non-\/premultiplied-\/alpha
+\item Skylight and block light are combined in a single value
+\item Only blocks at y=1..255 are shown (not y=0)
+\item If a 32x32x256 \char`\"{}quad-\/chunk\char`\"{} needs more than 800K quads, isn\textquotesingle{}t handled (very unlikely)
+\end{DoxyItemize}
+
+Some of these are due to engine limitations, and some of these are because I didn\textquotesingle{}t make the effort since my goal was to make a demo for stb\+\_\+voxel\+\_\+render.\+h, not to make a proper Minecraft viewer.\hypertarget{md_deps_stb_tests_caveview__r_e_a_d_m_e_autotoc_md108}{}\doxysubsection{Could this be turned into a proper Minecraft viewer?}\label{md_deps_stb_tests_caveview__r_e_a_d_m_e_autotoc_md108}
+Yes and no. Yes, you could do it, but no, it wouldn\textquotesingle{}t really resemble this code that much anymore.
+
+You could certainly use this engine to render the parts of Minecraft it works for, but many of the things it doesn\textquotesingle{}t handle it can\textquotesingle{}t handle at all (stairs, water, fences, carpets, etc) because it uses low-\/precision coordinates to store voxel data.
+
+You would have to render all of the stuff it doesn\textquotesingle{}t handle through another rendering path. In a game (not a viewer) you would need such a path for movable entities like doors and carts anyway, so possibly handling other things that way wouldn\textquotesingle{}t be so bad.
+
+Rails, ladders, and redstone lines could be implemented by using tex2 to overlay those effects, but you can\textquotesingle{}t rotate tex1 and tex2 independently, so there may be cases where the underlying texture needs a different rotation from the overlaid texture, which would require separate rendering. Handling redstone\textquotesingle{}s brightness being different from underlying block\textquotesingle{}s brightness would require separate rendering.
+
+You can use the face-\/color effect to do biome coloration, but the change won\textquotesingle{}t be smooth the way it is in Minecraft.\hypertarget{md_deps_stb_tests_caveview__r_e_a_d_m_e_autotoc_md109}{}\doxysubsection{Why isn\textquotesingle{}t building the mesh data faster?}\label{md_deps_stb_tests_caveview__r_e_a_d_m_e_autotoc_md109}
+Partly because converting from minecraft data is expensive.
+
+Here is the approximate breakdown of an older version of this executable and lib that did the building single-\/threaded.
+
+
+\begin{DoxyItemize}
+\item 25\% loading \& parsing minecraft files (4/5ths of this is my crappy zlib)
+\item 18\% converting from minecraft blockids \& lighting to stb blockids \& lighting
+\item 10\% reordering from data\mbox{[}z\mbox{]}\mbox{[}y\mbox{]}\mbox{[}x\mbox{]} (minecraft-\/style) to data\mbox{[}y\mbox{]}\mbox{[}x\mbox{]}\mbox{[}z\mbox{]} (stb-\/style)
+\item 40\% building mesh data
+\item 7\% uploading mesh data to Open\+GL
+\end{DoxyItemize}
+
+I did do significant optimizations after the above, so the final breakdown is different, but it should give you some sense of the costs. 

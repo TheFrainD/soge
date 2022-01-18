@@ -1,4 +1,17 @@
+/*********************************************************************
+ * shader.c                                                          *
+ *                                                                   *
+ * Copyright (c) 2022 Dmytro Zykov                                   *
+ *                                                                   *
+ * This file is a part of the vally project, and may only be used,   *
+ * modified and distributed under the terms of the MIT License,      *
+ * LICENSE.md. By continuing to use, modify and distribute this file *
+ * you inidicate that you have read the license and accept it fully. *
+ *********************************************************************/
+
 #include <vally/renderer/shader.h>
+
+#include <stdlib.h>
 
 #include <glad/glad.h>
 
@@ -9,7 +22,7 @@ static b8 check_gl_errors() {
   b8 error = FALSE;
   i32 glerr = glGetError();
   while (glerr != GL_NO_ERROR) {
-    VALLY_ERROR("OpenGL error: %d", glerr);
+    LOG_ERROR("OpenGL error: %d", glerr);
     error = TRUE;
     glerr = glGetError();
   }
@@ -27,7 +40,7 @@ static b8 shader_err_log(GLuint handle, GLenum shader_type) {
     error = TRUE;
     log = (char *)malloc(len);
     glGetShaderInfoLog(handle, len, &ch, log);
-    VALLY_ERROR("%s shader log: %s", shader_type == GL_VERTEX_SHADER ? "Vertex" : "Fragment", log);
+    LOG_ERROR("%s shader log: %s", shader_type == GL_VERTEX_SHADER ? "Vertex" : "Fragment", log);
     free(log);
   }
   return error;
@@ -43,7 +56,7 @@ static b8 program_err_log(i32 program) {
     error = TRUE;
     log = (char *)malloc(len);
     glGetProgramInfoLog(program, len, &ch, log);
-    VALLY_ERROR("Shader program log: %s", log);
+    LOG_ERROR("Shader program log: %s", log);
     free(log);
   }
   return error;
@@ -53,22 +66,27 @@ static GLuint compile_shader(const char *source, GLenum shader_type) {
   GLuint handle = glCreateShader(shader_type);
   glShaderSource(handle, 1, (const GLchar *const *)&source, 0);
 
-  GLuint compiled;
+  GLint compiled;
   glCompileShader(handle);
   check_gl_errors();
   glGetShaderiv(handle, GL_COMPILE_STATUS, &compiled);
   if (!compiled) {
-    VALLY_ERROR("%s shader compilation failed!", shader_type == GL_VERTEX_SHADER ? "Vertex" : "Fragment");
+    LOG_ERROR("%s shader compilation failed!", shader_type == GL_VERTEX_SHADER ? "Vertex" : "Fragment");
     shader_err_log(handle, shader_type);
-    VALLY_ERROR("Source code: %s", source);
+    LOG_ERROR("Source code: %s", source);
   }
 
   return handle;
 }
 
-shader shader_create(const char *vertex_path, const char *fragment_path) {
-  shader shdr;
-  shdr.attached = FALSE;
+shader *shader_create(const char *vertex_path, const char *fragment_path) {
+  shader *shdr = (shader *)malloc(sizeof(shader));
+  if (!shdr) {
+    LOG_ERROR("Could not create shader!");
+    return NULL;
+  }
+
+  shdr->attached = FALSE;
 
   const char* vsource = load_text_file(vertex_path);
   const char* fsource = load_text_file(fragment_path);
@@ -76,17 +94,17 @@ shader shader_create(const char *vertex_path, const char *fragment_path) {
   GLuint vshader = compile_shader(vsource, GL_VERTEX_SHADER);
   GLuint fshader = compile_shader(fsource, GL_FRAGMENT_SHADER);
 
-  GLuint linked;
-  shdr.id = glCreateProgram();
-  glAttachShader(shdr.id, vshader);
-  glAttachShader(shdr.id, fshader);
+  GLint linked;
+  shdr->id = glCreateProgram();
+  glAttachShader(shdr->id, vshader);
+  glAttachShader(shdr->id, fshader);
 
-  glLinkProgram(shdr.id);
+  glLinkProgram(shdr->id);
   check_gl_errors();
-  glGetProgramiv(shdr.id, GL_LINK_STATUS, &linked);
+  glGetProgramiv(shdr->id, GL_LINK_STATUS, &linked);
   if (!linked) {
-    VALLY_ERROR("Shader program linking failed!");
-    program_err_log(shdr.id);
+    LOG_ERROR("Shader program linking failed!");
+    program_err_log(shdr->id);
   }
 
   glDeleteShader(vshader);

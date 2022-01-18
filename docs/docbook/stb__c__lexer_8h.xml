@@ -1,0 +1,219 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_stb__c__lexer_8h">
+<title>deps/stb/stb_c_lexer.h File Reference</title>
+<indexterm><primary>deps/stb/stb_c_lexer.h</primary></indexterm>
+<programlisting>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structstb__lexer">stb_lexer</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structstb__lex__location">stb_lex_location</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_stb__c__lexer_8h_1ac4a2c6b06ee3d405bfcb4014bfc3c51a">INCLUDE_STB_C_LEXER_H</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Enumerations    </title>
+        <itemizedlist>
+            <listitem><para>enum { 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3adeffe462157b4282fe17faa58792f6a0">CLEX_eof</link> = 256, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a78dbfa9627c833153a5a17442a3a7c1c">CLEX_parse_error</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a47a7ea015d7e914b96656b6c4cf0aa0b">CLEX_intlit</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a7b4f242944a151d74e2fb592a729694b">CLEX_floatlit</link>, 
+
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3af36cebef8b93c3341b9a6613435b85a2">CLEX_id</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a1fdc3342334a2bed8669f1b81c3727f4">CLEX_dqstring</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a67aa2d591e7991e7c07817ba5baa430f">CLEX_sqstring</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a9d45a8ae9f18188d013dd4aa407a96c3">CLEX_charlit</link>, 
+
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a1f378eedfa3673967e3e4cb8f953500b">CLEX_eq</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3ad087b330b736d4f0f5df24754c6d36b9">CLEX_noteq</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a21adc60fd2f6e3516cdc11d94d99466e">CLEX_lesseq</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3af8a378279d9dbfad910cf698de3b3965">CLEX_greatereq</link>, 
+
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a704ed0457a67bbfc23c0d3f4b9c1671f">CLEX_andand</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a00f35948683455b3aef904d33d8f87d3">CLEX_oror</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a2328691bfb9fa35ad072e372852950c9">CLEX_shl</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a9ece5194e61287ceea54aec28c5717bd">CLEX_shr</link>, 
+
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a2abb74f61e32dc78e2f1186c2e90640d">CLEX_plusplus</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a5e2f2ff3b723ae541b6fbe5da444d96a">CLEX_minusminus</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a4acdf7c8c4bc8c01d205be89daf417ca">CLEX_pluseq</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3aee82dcd073fa564ebd65cf2969faae73">CLEX_minuseq</link>, 
+
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a8bdbca44295460da4156160d86dd78fc">CLEX_muleq</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3acf503be7c220c51f1652b7cd7203cf67">CLEX_diveq</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a51f9d9fb76b9f487d3334357743b2389">CLEX_modeq</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a536883b76bf2bf4478003d64dfa892ef">CLEX_andeq</link>, 
+
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a0fa0e30a299017466bce8e2e1a29aa92">CLEX_oreq</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3af4933a75b17afe5ee48740d488ceb5fc">CLEX_xoreq</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a16bf915fa6ee4d44a4d09040a59666b3">CLEX_arrow</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3aea319df544f1e27b234db7e07ecdeedb">CLEX_eqarrow</link>, 
+
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a940f7d40b3f330b0cf08bf42cb4834aa">CLEX_shleq</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3af5af6b90ae02c215243417e058439fae">CLEX_shreq</link>, 
+<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3ade71c084961b4e62dd88ba7242835676">CLEX_first_unused_token</link>
+ }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__c__lexer_8h_1aceb0ec34ddd2da2ccce7648fa26494ee">stb_c_lexer_init</link> (<link linkend="_structstb__lexer">stb_lexer</link> *lexer, const char *input_stream, const char *input_stream_end, char *string_store, int store_length)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__c__lexer_8h_1aa99130f041253ed326a09e3dcb865ec1">stb_c_lexer_get_token</link> (<link linkend="_structstb__lexer">stb_lexer</link> *lexer)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__c__lexer_8h_1a28b364fa7a3a881d42f3b4b070581e66">stb_c_lexer_get_location</link> (const <link linkend="_structstb__lexer">stb_lexer</link> *lexer, const char *where, <link linkend="_structstb__lex__location">stb_lex_location</link> *loc)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_stb__c__lexer_8h_1ac4a2c6b06ee3d405bfcb4014bfc3c51a"/>    <section>
+    <title>INCLUDE_STB_C_LEXER_H</title>
+<indexterm><primary>INCLUDE_STB_C_LEXER_H</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>INCLUDE_STB_C_LEXER_H</secondary></indexterm>
+<para><computeroutput>#define INCLUDE_STB_C_LEXER_H</computeroutput></para><para>
+Definition at line 110 of file stb_c_lexer.h.</para>
+</section>
+</section>
+<section>
+<title>Enumeration Type Documentation</title>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3"/>    <section>
+    <title>anonymous enum</title>
+<para><computeroutput>anonymous enum</computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>CLEX_eof</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_eof</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3adeffe462157b4282fe17faa58792f6a0"/>CLEX_eof</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_parse_error</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_parse_error</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a78dbfa9627c833153a5a17442a3a7c1c"/>CLEX_parse_error</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_intlit</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_intlit</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a47a7ea015d7e914b96656b6c4cf0aa0b"/>CLEX_intlit</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_floatlit</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_floatlit</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a7b4f242944a151d74e2fb592a729694b"/>CLEX_floatlit</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_id</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_id</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3af36cebef8b93c3341b9a6613435b85a2"/>CLEX_id</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_dqstring</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_dqstring</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a1fdc3342334a2bed8669f1b81c3727f4"/>CLEX_dqstring</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_sqstring</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_sqstring</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a67aa2d591e7991e7c07817ba5baa430f"/>CLEX_sqstring</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_charlit</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_charlit</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a9d45a8ae9f18188d013dd4aa407a96c3"/>CLEX_charlit</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_eq</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_eq</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a1f378eedfa3673967e3e4cb8f953500b"/>CLEX_eq</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_noteq</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_noteq</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3ad087b330b736d4f0f5df24754c6d36b9"/>CLEX_noteq</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_lesseq</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_lesseq</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a21adc60fd2f6e3516cdc11d94d99466e"/>CLEX_lesseq</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_greatereq</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_greatereq</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3af8a378279d9dbfad910cf698de3b3965"/>CLEX_greatereq</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_andand</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_andand</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a704ed0457a67bbfc23c0d3f4b9c1671f"/>CLEX_andand</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_oror</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_oror</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a00f35948683455b3aef904d33d8f87d3"/>CLEX_oror</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_shl</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_shl</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a2328691bfb9fa35ad072e372852950c9"/>CLEX_shl</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_shr</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_shr</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a9ece5194e61287ceea54aec28c5717bd"/>CLEX_shr</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_plusplus</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_plusplus</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a2abb74f61e32dc78e2f1186c2e90640d"/>CLEX_plusplus</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_minusminus</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_minusminus</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a5e2f2ff3b723ae541b6fbe5da444d96a"/>CLEX_minusminus</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_pluseq</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_pluseq</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a4acdf7c8c4bc8c01d205be89daf417ca"/>CLEX_pluseq</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_minuseq</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_minuseq</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3aee82dcd073fa564ebd65cf2969faae73"/>CLEX_minuseq</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_muleq</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_muleq</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a8bdbca44295460da4156160d86dd78fc"/>CLEX_muleq</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_diveq</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_diveq</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3acf503be7c220c51f1652b7cd7203cf67"/>CLEX_diveq</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_modeq</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_modeq</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a51f9d9fb76b9f487d3334357743b2389"/>CLEX_modeq</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_andeq</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_andeq</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a536883b76bf2bf4478003d64dfa892ef"/>CLEX_andeq</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_oreq</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_oreq</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a0fa0e30a299017466bce8e2e1a29aa92"/>CLEX_oreq</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_xoreq</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_xoreq</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3af4933a75b17afe5ee48740d488ceb5fc"/>CLEX_xoreq</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_arrow</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_arrow</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a16bf915fa6ee4d44a4d09040a59666b3"/>CLEX_arrow</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_eqarrow</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_eqarrow</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3aea319df544f1e27b234db7e07ecdeedb"/>CLEX_eqarrow</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_shleq</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_shleq</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a940f7d40b3f330b0cf08bf42cb4834aa"/>CLEX_shleq</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_shreq</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_shreq</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3af5af6b90ae02c215243417e058439fae"/>CLEX_shreq</entry><entry></entry></row><row><entry><indexterm><primary>CLEX_first_unused_token</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>CLEX_first_unused_token</secondary></indexterm>
+<anchor xml:id="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3ade71c084961b4e62dd88ba7242835676"/>CLEX_first_unused_token</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 176 of file stb_c_lexer.h.</para>
+<programlisting>177 {
+178 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3adeffe462157b4282fe17faa58792f6a0">CLEX_eof</link>&#32;=&#32;256,
+179 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a78dbfa9627c833153a5a17442a3a7c1c">CLEX_parse_error</link>,
+180 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a47a7ea015d7e914b96656b6c4cf0aa0b">CLEX_intlit</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+181 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a7b4f242944a151d74e2fb592a729694b">CLEX_floatlit</link>&#32;&#32;&#32;&#32;&#32;&#32;,
+182 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3af36cebef8b93c3341b9a6613435b85a2">CLEX_id</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+183 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a1fdc3342334a2bed8669f1b81c3727f4">CLEX_dqstring</link>&#32;&#32;&#32;&#32;&#32;&#32;,
+184 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a67aa2d591e7991e7c07817ba5baa430f">CLEX_sqstring</link>&#32;&#32;&#32;&#32;&#32;&#32;,
+185 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a9d45a8ae9f18188d013dd4aa407a96c3">CLEX_charlit</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+186 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a1f378eedfa3673967e3e4cb8f953500b">CLEX_eq</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+187 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3ad087b330b736d4f0f5df24754c6d36b9">CLEX_noteq</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+188 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a21adc60fd2f6e3516cdc11d94d99466e">CLEX_lesseq</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+189 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3af8a378279d9dbfad910cf698de3b3965">CLEX_greatereq</link>&#32;&#32;&#32;&#32;&#32;,
+190 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a704ed0457a67bbfc23c0d3f4b9c1671f">CLEX_andand</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+191 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a00f35948683455b3aef904d33d8f87d3">CLEX_oror</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+192 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a2328691bfb9fa35ad072e372852950c9">CLEX_shl</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+193 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a9ece5194e61287ceea54aec28c5717bd">CLEX_shr</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+194 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a2abb74f61e32dc78e2f1186c2e90640d">CLEX_plusplus</link>&#32;&#32;&#32;&#32;&#32;&#32;,
+195 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a5e2f2ff3b723ae541b6fbe5da444d96a">CLEX_minusminus</link>&#32;&#32;&#32;&#32;,
+196 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a4acdf7c8c4bc8c01d205be89daf417ca">CLEX_pluseq</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+197 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3aee82dcd073fa564ebd65cf2969faae73">CLEX_minuseq</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+198 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a8bdbca44295460da4156160d86dd78fc">CLEX_muleq</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+199 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3acf503be7c220c51f1652b7cd7203cf67">CLEX_diveq</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+200 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a51f9d9fb76b9f487d3334357743b2389">CLEX_modeq</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+201 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a536883b76bf2bf4478003d64dfa892ef">CLEX_andeq</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+202 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a0fa0e30a299017466bce8e2e1a29aa92">CLEX_oreq</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+203 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3af4933a75b17afe5ee48740d488ceb5fc">CLEX_xoreq</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+204 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a16bf915fa6ee4d44a4d09040a59666b3">CLEX_arrow</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+205 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3aea319df544f1e27b234db7e07ecdeedb">CLEX_eqarrow</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+206 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a940f7d40b3f330b0cf08bf42cb4834aa">CLEX_shleq</link>,&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3af5af6b90ae02c215243417e058439fae">CLEX_shreq</link>,
+207 
+208 &#32;&#32;&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3ade71c084961b4e62dd88ba7242835676">CLEX_first_unused_token</link>
+209 
+210 };
+</programlisting></section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_stb__c__lexer_8h_1a28b364fa7a3a881d42f3b4b070581e66"/>    <section>
+    <title>stb_c_lexer_get_location()</title>
+<indexterm><primary>stb_c_lexer_get_location</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>stb_c_lexer_get_location</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stb_c_lexer_get_location (const <link linkend="_structstb__lexer">stb_lexer</link> * lexer, const char * where, <link linkend="_structstb__lex__location">stb_lex_location</link> * loc)</computeroutput></para>    </section><anchor xml:id="_stb__c__lexer_8h_1aa99130f041253ed326a09e3dcb865ec1"/>    <section>
+    <title>stb_c_lexer_get_token()</title>
+<indexterm><primary>stb_c_lexer_get_token</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>stb_c_lexer_get_token</secondary></indexterm>
+<para><computeroutput>int stb_c_lexer_get_token (<link linkend="_structstb__lexer">stb_lexer</link> * lexer)</computeroutput></para>    </section><anchor xml:id="_stb__c__lexer_8h_1aceb0ec34ddd2da2ccce7648fa26494ee"/>    <section>
+    <title>stb_c_lexer_init()</title>
+<indexterm><primary>stb_c_lexer_init</primary><secondary>stb_c_lexer.h</secondary></indexterm>
+<indexterm><primary>stb_c_lexer.h</primary><secondary>stb_c_lexer_init</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stb_c_lexer_init (<link linkend="_structstb__lexer">stb_lexer</link> * lexer, const char * input_stream, const char * input_stream_end, char * string_store, int store_length)</computeroutput></para></section>
+</section>
+</section>

@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_test__cam__rh__zo_8c">
+<title>deps/cglm/test/src/test_cam_rh_zo.c File Reference</title>
+<indexterm><primary>deps/cglm/test/src/test_cam_rh_zo.c</primary></indexterm>
+<programlisting>#include &quot;test_common.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_test__cam__rh__zo_8c_1a6d2ab0bcd0796de2a9b805d5cd76c465">TEST_IMPL</link> (perspective_rh_zo)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_test__cam__rh__zo_8c_1a6d2ab0bcd0796de2a9b805d5cd76c465"/>    <section>
+    <title>TEST_IMPL()</title>
+<indexterm><primary>TEST_IMPL</primary><secondary>test_cam_rh_zo.c</secondary></indexterm>
+<indexterm><primary>test_cam_rh_zo.c</primary><secondary>TEST_IMPL</secondary></indexterm>
+<para><computeroutput>TEST_IMPL (perspective_rh_zo )</computeroutput></para><para>
+Definition at line 10 of file test_cam_rh_zo.c.</para>
+<programlisting>10 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+11 &#32;&#32;<link linkend="_types_8h_1ae30f88fc32dfb3008b133367bbf0c3a1">mat4</link>&#32;<link linkend="_glad_8h_1a92034251bfd455d524a9b5610cddba00">dst</link>;
+12 &#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">float</emphasis>&#32;fovy&#32;&#32;&#32;&#32;&#32;=&#32;<link linkend="_util_8h_1a96ef52a4c391eca254a1d722b9a005e1">glm_rad</link>(45.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+13 &#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">float</emphasis>&#32;aspect&#32;&#32;&#32;=&#32;640/480.0f;
+14 &#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">float</emphasis>&#32;zNearVal&#32;=&#32;0.1f;
+15 &#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">float</emphasis>&#32;zFarVal&#32;&#32;=&#32;100.0f;
+16 
+17 &#32;&#32;<link linkend="_clipspace_2persp__rh__zo_8h_1a5d43b22748a9b2f37a423baa9d779839">glm_perspective_rh_zo</link>(fovy,&#32;aspect,&#32;zNearVal,&#32;zFarVal,&#32;<link linkend="_glad_8h_1a92034251bfd455d524a9b5610cddba00">dst</link>);
+18 
+19 &#32;&#32;<emphasis role="comment">/*&#32;Sanity&#32;mk.&#32;I:&#32;longhand&#32;version&#32;*/</emphasis>
+20 &#32;&#32;<link linkend="_test_2include_2common_8h_1a821326052e3e2bf1fb2d678e9e9a6004">ASSERT</link>(<link linkend="_test__common_8h_1a8b5ca35f1cc6f58d128c0adf26c5f44a">test_eq</link>(<link linkend="_glad_8h_1a92034251bfd455d524a9b5610cddba00">dst</link>[0][0],&#32;&#32;1&#32;/&#32;(tanf(fovy&#32;/&#32;2)&#32;*&#32;aspect)))
+21 &#32;&#32;<link linkend="_test_2include_2common_8h_1a821326052e3e2bf1fb2d678e9e9a6004">ASSERT</link>(<link linkend="_test__common_8h_1a8b5ca35f1cc6f58d128c0adf26c5f44a">test_eq</link>(<link linkend="_glad_8h_1a92034251bfd455d524a9b5610cddba00">dst</link>[1][1],&#32;&#32;1&#32;/&#32;tanf(fovy&#32;/&#32;2)))
+22 &#32;&#32;<link linkend="_test_2include_2common_8h_1a821326052e3e2bf1fb2d678e9e9a6004">ASSERT</link>(<link linkend="_test__common_8h_1a8b5ca35f1cc6f58d128c0adf26c5f44a">test_eq</link>(<link linkend="_glad_8h_1a92034251bfd455d524a9b5610cddba00">dst</link>[2][2],&#32;zFarVal&#32;/&#32;(zNearVal&#32;-&#32;zFarVal)))
+23 &#32;&#32;<link linkend="_test_2include_2common_8h_1a821326052e3e2bf1fb2d678e9e9a6004">ASSERT</link>(<link linkend="_test__common_8h_1a8b5ca35f1cc6f58d128c0adf26c5f44a">test_eq</link>(<link linkend="_glad_8h_1a92034251bfd455d524a9b5610cddba00">dst</link>[2][3],&#32;-1.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>))
+24 &#32;&#32;<link linkend="_test_2include_2common_8h_1a821326052e3e2bf1fb2d678e9e9a6004">ASSERT</link>(<link linkend="_test__common_8h_1a8b5ca35f1cc6f58d128c0adf26c5f44a">test_eq</link>(<link linkend="_glad_8h_1a92034251bfd455d524a9b5610cddba00">dst</link>[3][2],&#32;-1&#32;*&#32;zFarVal&#32;*&#32;zNearVal&#32;/&#32;(zFarVal&#32;-&#32;zNearVal)))
+25 
+26 &#32;&#32;<emphasis role="comment">/*&#32;Sanity&#32;mk.&#32;II&#32;*/</emphasis>
+27 &#32;&#32;<emphasis role="comment">/*reference&#32;test&#32;data&#32;for&#32;glm_perspective_rh_zo*/</emphasis>
+28 &#32;&#32;<link linkend="_types_8h_1ae30f88fc32dfb3008b133367bbf0c3a1">mat4</link>&#32;cmp&#32;=&#32;{0};
+29 &#32;&#32;cmp[0][0]&#32;=&#32;&#32;1.8106601f;
+30 &#32;&#32;cmp[1][1]&#32;=&#32;&#32;2.4142134f;
+31 &#32;&#32;cmp[2][2]&#32;=&#32;-1.0010010f;
+32 &#32;&#32;cmp[2][3]&#32;=&#32;-1.0000000f;
+33 &#32;&#32;cmp[3][2]&#32;=&#32;-0.1001001f;
+34 
+35 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_test__common_8c_1ab6c735c5e9684b49694b21d4de506820">test_assert_mat4_eq</link>(<link linkend="_glad_8h_1a92034251bfd455d524a9b5610cddba00">dst</link>,&#32;cmp);
+36 }
+</programlisting></section>
+</section>
+</section>

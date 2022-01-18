@@ -1,5 +1,16 @@
-#ifndef VALLY_RENDERER_BUFFER_H_
-#define VALLY_RENDERER_BUFFER_H_
+/*********************************************************************
+ * buffer.h                                                          *
+ *                                                                   *
+ * Copyright (c) 2022 Dmytro Zykov                                   *
+ *                                                                   *
+ * This file is a part of the vally project, and may only be used,   *
+ * modified and distributed under the terms of the MIT License,      *
+ * LICENSE.md. By continuing to use, modify and distribute this file *
+ * you inidicate that you have read the license and accept it fully. *
+ *********************************************************************/
+
+#ifndef VALLY_BUFFER_H_
+#define VALLY_BUFFER_H_
 
 #include <vally/config.h>
 
@@ -24,4 +35,4 @@ void buffer_bind(buffer *buf);
 void buffer_unbind();
 void buffer_set_data(buffer *buf, i32 size, const void *data);
 
-#endif // !VALLY_RENDERER_BUFFER_H_
+#endif // VALLY_BUFFER_H_

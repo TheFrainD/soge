@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_test__sprintf_8c">
+<title>deps/stb/tests/test_sprintf.c File Reference</title>
+<indexterm><primary>deps/stb/tests/test_sprintf.c</primary></indexterm>
+<programlisting>#include &quot;stb_sprintf.h&quot;
+#include &lt;assert.h&gt;
+#include &lt;math.h&gt;
+#include &lt;stddef.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdint.h&gt;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_test__sprintf_8c_1ac159c04d4d4416b6a312db14408b8d5e">USE_STB</link>   1</para>
+</listitem>
+            <listitem><para>#define <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>   stbsp_sprintf</para>
+</listitem>
+            <listitem><para>#define <link linkend="_test__sprintf_8c_1a770571e12ff9370899184528f4b4626d">SNPRINTF</link>   stbsp_snprintf</para>
+</listitem>
+            <listitem><para>#define <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_test__sprintf_8c_1a9ff79c3fb2a4d7db77ca3ed04dd339a6">CHECK9</link>(str,  <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>,  <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>,  <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>,  v4,  v5,  v6,  v7,  v8,  v9)   { int ret = <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>, <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>, <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>, v4, v5, v6, v7, v8, v9); <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str); }</para>
+</listitem>
+            <listitem><para>#define <link linkend="_test__sprintf_8c_1a551b02fe8e23ff9f536a123645162d20">CHECK8</link>(str,  <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>,  <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>,  <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>,  v4,  v5,  v6,  v7,  v8)   { int ret = <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>, <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>, <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>, v4, v5, v6, v7, v8    ); <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str); }</para>
+</listitem>
+            <listitem><para>#define <link linkend="_test__sprintf_8c_1a99b45c4ac4e649bb45de2ce0b63548fe">CHECK7</link>(str,  <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>,  <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>,  <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>,  v4,  v5,  v6,  v7)   { int ret = <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>, <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>, <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>, v4, v5, v6, v7        ); <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str); }</para>
+</listitem>
+            <listitem><para>#define <link linkend="_test__sprintf_8c_1ab0c33256a9a5aa4a10c6897f20d37be3">CHECK6</link>(str,  <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>,  <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>,  <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>,  v4,  v5,  v6)   { int ret = <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>, <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>, <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>, v4, v5, v6            ); <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str); }</para>
+</listitem>
+            <listitem><para>#define <link linkend="_test__sprintf_8c_1ad344905e89e481ac6e788599cab6e826">CHECK5</link>(str,  <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>,  <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>,  <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>,  v4,  v5)   { int ret = <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>, <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>, <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>, v4, v5                ); <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str); }</para>
+</listitem>
+            <listitem><para>#define <link linkend="_test__sprintf_8c_1ada4ce89f96c115271cb2c4ac02f41b40">CHECK4</link>(str,  <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>,  <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>,  <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>,  v4)   { int ret = <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>, <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>, <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>, v4                    ); <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str); }</para>
+</listitem>
+            <listitem><para>#define <link linkend="_test__sprintf_8c_1a1d7248ad5e22f5fc64683a613127ad3f">CHECK3</link>(str,  <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>,  <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>,  <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>)   { int ret = <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>, <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>, <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>                        ); <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str); }</para>
+</listitem>
+            <listitem><para>#define <link linkend="_test__sprintf_8c_1ae185aed33e20d3037b257e1e30b9b5bb">CHECK2</link>(str,  <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>,  <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>)   { int ret = <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>, <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>                            ); <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str); }</para>
+</listitem>
+            <listitem><para>#define <link linkend="_test__sprintf_8c_1a9850364f2c42696040e708d50b7c105d">CHECK1</link>(str,  <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>)   { int ret = <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>                                ); <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str); }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_test__sprintf_8c_1a9850364f2c42696040e708d50b7c105d"/>    <section>
+    <title>CHECK1</title>
+<indexterm><primary>CHECK1</primary><secondary>test_sprintf.c</secondary></indexterm>
+<indexterm><primary>test_sprintf.c</primary><secondary>CHECK1</secondary></indexterm>
+<para><computeroutput>#define CHECK1( str,  <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>)   { int ret = <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>                                ); <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str); }</computeroutput></para><para>
+Definition at line 42 of file test_sprintf.c.</para>
+    </section><anchor xml:id="_test__sprintf_8c_1ae185aed33e20d3037b257e1e30b9b5bb"/>    <section>
+    <title>CHECK2</title>
+<indexterm><primary>CHECK2</primary><secondary>test_sprintf.c</secondary></indexterm>
+<indexterm><primary>test_sprintf.c</primary><secondary>CHECK2</secondary></indexterm>
+<para><computeroutput>#define CHECK2( str,  <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>,  <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>)   { int ret = <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>, <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>                            ); <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str); }</computeroutput></para><para>
+Definition at line 41 of file test_sprintf.c.</para>
+    </section><anchor xml:id="_test__sprintf_8c_1a1d7248ad5e22f5fc64683a613127ad3f"/>    <section>
+    <title>CHECK3</title>
+<indexterm><primary>CHECK3</primary><secondary>test_sprintf.c</secondary></indexterm>
+<indexterm><primary>test_sprintf.c</primary><secondary>CHECK3</secondary></indexterm>
+<para><computeroutput>#define CHECK3( str,  <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>,  <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>,  <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>)   { int ret = <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>, <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>, <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>                        ); <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str); }</computeroutput></para><para>
+Definition at line 40 of file test_sprintf.c.</para>
+    </section><anchor xml:id="_test__sprintf_8c_1ada4ce89f96c115271cb2c4ac02f41b40"/>    <section>
+    <title>CHECK4</title>
+<indexterm><primary>CHECK4</primary><secondary>test_sprintf.c</secondary></indexterm>
+<indexterm><primary>test_sprintf.c</primary><secondary>CHECK4</secondary></indexterm>
+<para><computeroutput>#define CHECK4( str,  <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>,  <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>,  <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>,  v4)   { int ret = <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>, <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>, <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>, v4                    ); <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str); }</computeroutput></para><para>
+Definition at line 39 of file test_sprintf.c.</para>
+    </section><anchor xml:id="_test__sprintf_8c_1ad344905e89e481ac6e788599cab6e826"/>    <section>
+    <title>CHECK5</title>
+<indexterm><primary>CHECK5</primary><secondary>test_sprintf.c</secondary></indexterm>
+<indexterm><primary>test_sprintf.c</primary><secondary>CHECK5</secondary></indexterm>
+<para><computeroutput>#define CHECK5( str,  <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>,  <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>,  <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>,  v4,  v5)   { int ret = <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>, <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>, <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>, v4, v5                ); <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str); }</computeroutput></para><para>
+Definition at line 38 of file test_sprintf.c.</para>
+    </section><anchor xml:id="_test__sprintf_8c_1ab0c33256a9a5aa4a10c6897f20d37be3"/>    <section>
+    <title>CHECK6</title>
+<indexterm><primary>CHECK6</primary><secondary>test_sprintf.c</secondary></indexterm>
+<indexterm><primary>test_sprintf.c</primary><secondary>CHECK6</secondary></indexterm>
+<para><computeroutput>#define CHECK6( str,  <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>,  <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>,  <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>,  v4,  v5,  v6)   { int ret = <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>, <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>, <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>, v4, v5, v6            ); <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str); }</computeroutput></para><para>
+Definition at line 37 of file test_sprintf.c.</para>
+    </section><anchor xml:id="_test__sprintf_8c_1a99b45c4ac4e649bb45de2ce0b63548fe"/>    <section>
+    <title>CHECK7</title>
+<indexterm><primary>CHECK7</primary><secondary>test_sprintf.c</secondary></indexterm>
+<indexterm><primary>test_sprintf.c</primary><secondary>CHECK7</secondary></indexterm>
+<para><computeroutput>#define CHECK7( str,  <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>,  <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>,  <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>,  v4,  v5,  v6,  v7)   { int ret = <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>, <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>, <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>, v4, v5, v6, v7        ); <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str); }</computeroutput></para><para>
+Definition at line 36 of file test_sprintf.c.</para>
+    </section><anchor xml:id="_test__sprintf_8c_1a551b02fe8e23ff9f536a123645162d20"/>    <section>
+    <title>CHECK8</title>
+<indexterm><primary>CHECK8</primary><secondary>test_sprintf.c</secondary></indexterm>
+<indexterm><primary>test_sprintf.c</primary><secondary>CHECK8</secondary></indexterm>
+<para><computeroutput>#define CHECK8( str,  <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>,  <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>,  <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>,  v4,  v5,  v6,  v7,  v8)   { int ret = <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>, <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>, <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>, v4, v5, v6, v7, v8    ); <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str); }</computeroutput></para><para>
+Definition at line 35 of file test_sprintf.c.</para>
+    </section><anchor xml:id="_test__sprintf_8c_1a9ff79c3fb2a4d7db77ca3ed04dd339a6"/>    <section>
+    <title>CHECK9</title>
+<indexterm><primary>CHECK9</primary><secondary>test_sprintf.c</secondary></indexterm>
+<indexterm><primary>test_sprintf.c</primary><secondary>CHECK9</secondary></indexterm>
+<para><computeroutput>#define CHECK9( str,  <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>,  <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>,  <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>,  v4,  v5,  v6,  v7,  v8,  v9)   { int ret = <link linkend="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da">SPRINTF</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>, <link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>, <link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>, <link linkend="_glad_8h_1acc806b31cbf466ceba6555983d8b814d">v3</link>, v4, v5, v6, v7, v8, v9); <link linkend="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73">CHECK_END</link>(str); }</computeroutput></para><para>
+Definition at line 34 of file test_sprintf.c.</para>
+    </section><anchor xml:id="_test__sprintf_8c_1a10e5611c28b6db6e8b059f3e4dc52a73"/>    <section>
+    <title>CHECK_END</title>
+<indexterm><primary>CHECK_END</primary><secondary>test_sprintf.c</secondary></indexterm>
+<indexterm><primary>test_sprintf.c</primary><secondary>CHECK_END</secondary></indexterm>
+<para><computeroutput>#define CHECK_END( str)</computeroutput></para><emphasis role="strong">Value:</emphasis><programlisting>&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>,&#32;str)&#32;!=&#32;0&#32;||&#32;(<emphasis role="keywordtype">unsigned</emphasis>)&#32;ret&#32;!=&#32;strlen(str))&#32;{&#32;\
+&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&lt;&#32;&apos;%s&apos;\n&gt;&#32;&apos;%s&apos;\n&quot;</emphasis>,&#32;str,&#32;<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>);&#32;\
+&#32;&#32;&#32;&#32;&#32;&#32;assert(!<emphasis role="stringliteral">&quot;Fail&quot;</emphasis>);&#32;\
+&#32;&#32;&#32;}
+</programlisting><para>
+Definition at line 28 of file test_sprintf.c.</para>
+    </section><anchor xml:id="_test__sprintf_8c_1a770571e12ff9370899184528f4b4626d"/>    <section>
+    <title>SNPRINTF</title>
+<indexterm><primary>SNPRINTF</primary><secondary>test_sprintf.c</secondary></indexterm>
+<indexterm><primary>test_sprintf.c</primary><secondary>SNPRINTF</secondary></indexterm>
+<para><computeroutput>#define SNPRINTF   stbsp_snprintf</computeroutput></para><para>
+Definition at line 7 of file test_sprintf.c.</para>
+    </section><anchor xml:id="_test__sprintf_8c_1a92d04fe74201d58bc774099a3f5a52da"/>    <section>
+    <title>SPRINTF</title>
+<indexterm><primary>SPRINTF</primary><secondary>test_sprintf.c</secondary></indexterm>
+<indexterm><primary>test_sprintf.c</primary><secondary>SPRINTF</secondary></indexterm>
+<para><computeroutput>#define SPRINTF   stbsp_sprintf</computeroutput></para><para>
+Definition at line 6 of file test_sprintf.c.</para>
+    </section><anchor xml:id="_test__sprintf_8c_1ac159c04d4d4416b6a312db14408b8d5e"/>    <section>
+    <title>USE_STB</title>
+<indexterm><primary>USE_STB</primary><secondary>test_sprintf.c</secondary></indexterm>
+<indexterm><primary>test_sprintf.c</primary><secondary>USE_STB</secondary></indexterm>
+<para><computeroutput>#define USE_STB   1</computeroutput></para><para>
+Definition at line 2 of file test_sprintf.c.</para>
+</section>
+</section>
+</section>

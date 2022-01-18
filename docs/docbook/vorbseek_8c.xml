@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_vorbseek_8c">
+<title>deps/stb/tests/vorbseek/vorbseek.c File Reference</title>
+<indexterm><primary>deps/stb/tests/vorbseek/vorbseek.c</primary></indexterm>
+<programlisting>#include &lt;assert.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &quot;stb_vorbis.c&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_vorbseek_8c_1a18995c0b9e97a05eeeab2fbd4c97e92e">STB_VORBIS_HEADER_ONLY</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_vorbseek_8c_1a27531e21430e184380049b67027e6110">SAMPLES_TO_TEST</link>   3000</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_vorbseek_8c_1af200cdea9c5fbc81b686a05091f389cf">try_seeking</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>, unsigned int pos, short *<link linkend="_structoutput">output</link>, unsigned int num_samples)</para>
+</listitem>
+            <listitem><para>int <link linkend="_vorbseek_8c_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_vorbseek_8c_1a061de03a27e77fc8813602e3ef18604c">test_count</link> [5] = { 5000, 3000, 2000, 50000, 50000 }</para>
+</listitem>
+            <listitem><para>int <link linkend="_vorbseek_8c_1a8a23674399b083cd337c0f6038d13969">test_spacing</link> [5] = { 1, 111, 3337, 7779, 72717 }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_vorbseek_8c_1a27531e21430e184380049b67027e6110"/>    <section>
+    <title>SAMPLES_TO_TEST</title>
+<indexterm><primary>SAMPLES_TO_TEST</primary><secondary>vorbseek.c</secondary></indexterm>
+<indexterm><primary>vorbseek.c</primary><secondary>SAMPLES_TO_TEST</secondary></indexterm>
+<para><computeroutput>#define SAMPLES_TO_TEST   3000</computeroutput></para><para>
+Definition at line 9 of file vorbseek.c.</para>
+    </section><anchor xml:id="_vorbseek_8c_1a18995c0b9e97a05eeeab2fbd4c97e92e"/>    <section>
+    <title>STB_VORBIS_HEADER_ONLY</title>
+<indexterm><primary>STB_VORBIS_HEADER_ONLY</primary><secondary>vorbseek.c</secondary></indexterm>
+<indexterm><primary>vorbseek.c</primary><secondary>STB_VORBIS_HEADER_ONLY</secondary></indexterm>
+<para><computeroutput>#define STB_VORBIS_HEADER_ONLY</computeroutput></para><para>
+Definition at line 6 of file vorbseek.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_vorbseek_8c_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>vorbseek.c</secondary></indexterm>
+<indexterm><primary>vorbseek.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 55 of file vorbseek.c.</para>
+<programlisting>56 {
+57 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;num_chan,&#32;samprate;
+58 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i,&#32;j,&#32;test,&#32;phase;
+59 &#32;&#32;&#32;<emphasis role="keywordtype">short</emphasis>&#32;*<link linkend="_structoutput">output</link>;
+60 
+61 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(argc&#32;==&#32;1)&#32;{
+62 &#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<emphasis role="stringliteral">&quot;Usage:&#32;vorbseek&#32;{vorbisfile}&#32;[{vorbisfile]*]\n&quot;</emphasis>);
+63 &#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<emphasis role="stringliteral">&quot;Tests&#32;various&#32;seek&#32;offsets&#32;to&#32;make&#32;sure&#32;they&apos;re&#32;sample&#32;exact.\n&quot;</emphasis>);
+64 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+65 &#32;&#32;&#32;}
+66 
+67 <emphasis role="preprocessor">&#32;&#32;&#32;#if&#32;0</emphasis>
+68 &#32;&#32;&#32;{
+69 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;check&#32;that&#32;outofmem&#32;occurs&#32;correctly</emphasis>
+70 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structstb__vorbis__alloc">stb_vorbis_alloc</link>&#32;va;
+71 &#32;&#32;&#32;&#32;&#32;&#32;va.<link linkend="_structstb__vorbis__alloc_1a0bb516f56fb154f942d7c8641d33a26e">alloc_buffer</link>&#32;=&#32;<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>(1024*1024);
+72 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;1024*1024;&#32;i&#32;+=&#32;10)&#32;{
+73 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>=0;
+74 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structstb__vorbis">stb_vorbis</link>&#32;*<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>;
+75 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;va.<link linkend="_structstb__vorbis__alloc_1a04baf605f33de80c7161b27fb2ec5d86">alloc_buffer_length_in_bytes</link>&#32;=&#32;i;
+76 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>&#32;=&#32;<link linkend="_stb__vorbis_8c_1ae32061695d3dca3f5aa042793ef30329">stb_vorbis_open_filename</link>(argv[1],&#32;&amp;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>,&#32;&amp;va);
+77 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>&#32;!=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+78 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+79 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Error&#32;%d&#32;at&#32;%d\n&quot;</emphasis>,&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>,&#32;i);
+80 &#32;&#32;&#32;&#32;&#32;&#32;}
+81 &#32;&#32;&#32;}
+82 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+83 
+84 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(j=1;&#32;j&#32;&lt;&#32;argc;&#32;++j)&#32;{
+85 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;successes=0,&#32;attempts&#32;=&#32;0;
+86 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;num_samples&#32;=&#32;<link linkend="_stb__vorbis_8c_1a690147b6b125eb33e5f77d8f8453e97f">stb_vorbis_decode_filename</link>(argv[j],&#32;&amp;num_chan,&#32;&amp;samprate,&#32;&amp;<link linkend="_structoutput">output</link>);
+87 
+88 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+89 
+90 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(num_samples&#32;==&#32;0xffffffff)&#32;{
+91 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<emphasis role="stringliteral">&quot;Error:&#32;couldn&apos;t&#32;open&#32;file&#32;or&#32;not&#32;vorbis&#32;file:&#32;%s\n&quot;</emphasis>,&#32;argv[j]);
+92 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;fail;
+93 &#32;&#32;&#32;&#32;&#32;&#32;}
+94 
+95 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(num_chan&#32;!=&#32;2)&#32;{
+96 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<emphasis role="stringliteral">&quot;vorbseek&#32;testing&#32;only&#32;works&#32;with&#32;files&#32;with&#32;2&#32;channels,&#32;%s&#32;has&#32;%d\n&quot;</emphasis>,&#32;argv[j],&#32;num_chan);
+97 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;fail;
+98 &#32;&#32;&#32;&#32;&#32;&#32;}
+99 
+100 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(test=0;&#32;test&#32;&lt;&#32;5;&#32;++test)&#32;{
+101 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>;
+102 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structstb__vorbis">stb_vorbis</link>&#32;*<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>&#32;=&#32;<link linkend="_stb__vorbis_8c_1ae32061695d3dca3f5aa042793ef30329">stb_vorbis_open_filename</link>(argv[j],&#32;&amp;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+103 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;{
+104 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<emphasis role="stringliteral">&quot;Couldn&apos;t&#32;re-open&#32;%s&#32;for&#32;test&#32;#%d\n&quot;</emphasis>,&#32;argv[j],&#32;test);
+105 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;fail;
+106 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+107 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(phase=0;&#32;phase&#32;&lt;&#32;3;&#32;++phase)&#32;{
+108 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;base&#32;=&#32;phase&#32;==&#32;0&#32;?&#32;0&#32;:&#32;phase&#32;==&#32;1&#32;?&#32;num_samples&#32;-&#32;<link linkend="_vorbseek_8c_1a061de03a27e77fc8813602e3ef18604c">test_count</link>[test]*<link linkend="_vorbseek_8c_1a8a23674399b083cd337c0f6038d13969">test_spacing</link>[test]&#32;:&#32;num_samples/3;
+109 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_vorbseek_8c_1a061de03a27e77fc8813602e3ef18604c">test_count</link>[test];&#32;++i)&#32;{
+110 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;pos&#32;=&#32;base&#32;+&#32;i*<link linkend="_vorbseek_8c_1a8a23674399b083cd337c0f6038d13969">test_spacing</link>[test];
+111 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(pos&#32;&gt;&#32;num_samples)&#32;<emphasis role="comment">//&#32;this&#32;also&#32;catches&#32;underflows</emphasis>
+112 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+113 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;successes&#32;+=&#32;<link linkend="_vorbseek_8c_1af200cdea9c5fbc81b686a05091f389cf">try_seeking</link>(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>,&#32;pos,&#32;<link linkend="_structoutput">output</link>,&#32;num_samples);
+114 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;attempts&#32;+=&#32;1;
+115 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+116 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+117 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1ac4dca2244a6db648d2e6f3cbf6961e3e">stb_vorbis_close</link>(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>);
+118 &#32;&#32;&#32;&#32;&#32;&#32;}
+119 &#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%d&#32;of&#32;%d&#32;seeks&#32;failed&#32;in&#32;%s&#32;(%d&#32;samples)\n&quot;</emphasis>,&#32;attempts-successes,&#32;attempts,&#32;argv[j],&#32;num_samples);
+120 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(<link linkend="_structoutput">output</link>);
+121 &#32;&#32;&#32;}
+122 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+123 &#32;&#32;fail:
+124 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;1;
+125 }
+</programlisting>    </section><anchor xml:id="_vorbseek_8c_1af200cdea9c5fbc81b686a05091f389cf"/>    <section>
+    <title>try_seeking()</title>
+<indexterm><primary>try_seeking</primary><secondary>vorbseek.c</secondary></indexterm>
+<indexterm><primary>vorbseek.c</primary><secondary>try_seeking</secondary></indexterm>
+<para><computeroutput>int try_seeking (<link linkend="_structstb__vorbis">stb_vorbis</link> * v, unsigned int pos, short * output, unsigned int num_samples)</computeroutput></para><para>
+Definition at line 14 of file vorbseek.c.</para>
+<programlisting>15 {
+16 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>;
+17 &#32;&#32;&#32;<emphasis role="keywordtype">short</emphasis>&#32;<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>[<link linkend="_vorbseek_8c_1a27531e21430e184380049b67027e6110">SAMPLES_TO_TEST</link>*2];
+18 &#32;&#32;&#32;assert(pos&#32;&lt;=&#32;num_samples);
+19 
+20 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_stb__vorbis_8c_1a2a1f6add009ac3e63ed57cabf9941566">stb_vorbis_seek</link>(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>,&#32;pos))&#32;{
+21 &#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<emphasis role="stringliteral">&quot;Seek&#32;to&#32;%u&#32;returned&#32;error&#32;from&#32;stb_vorbis\n&quot;</emphasis>,&#32;pos);
+22 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+23 &#32;&#32;&#32;}
+24 
+25 &#32;&#32;&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;=&#32;<link linkend="_stb__vorbis_8c_1ade776d535501af37f599e05ff289f3fe">stb_vorbis_get_samples_short_interleaved</link>(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>,&#32;2,&#32;<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>,&#32;<link linkend="_vorbseek_8c_1a27531e21430e184380049b67027e6110">SAMPLES_TO_TEST</link>*2);
+26 
+27 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;&gt;&#32;(<emphasis role="keywordtype">int</emphasis>)&#32;(num_samples&#32;-&#32;pos))&#32;{
+28 &#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<emphasis role="stringliteral">&quot;Seek&#32;to&#32;%u&#32;allowed&#32;decoding&#32;%d&#32;samples&#32;when&#32;only&#32;%d&#32;should&#32;have&#32;been&#32;valid.\n&quot;</emphasis>,
+29 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pos,&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>,&#32;(<emphasis role="keywordtype">int</emphasis>)&#32;(num_samples&#32;-&#32;pos));
+30 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+31 &#32;&#32;&#32;}
+32 
+33 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;&lt;&#32;<link linkend="_vorbseek_8c_1a27531e21430e184380049b67027e6110">SAMPLES_TO_TEST</link>&#32;&amp;&amp;&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;&lt;&#32;(<emphasis role="keywordtype">int</emphasis>)&#32;(num_samples&#32;-&#32;pos))&#32;{
+34 &#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<emphasis role="stringliteral">&quot;Seek&#32;to&#32;%u&#32;only&#32;decoded&#32;%d&#32;samples&#32;of&#32;%d&#32;attempted&#32;when&#32;at&#32;least&#32;%d&#32;should&#32;have&#32;been&#32;valid.\n&quot;</emphasis>,
+35 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pos,&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>,&#32;<link linkend="_vorbseek_8c_1a27531e21430e184380049b67027e6110">SAMPLES_TO_TEST</link>,&#32;num_samples&#32;-&#32;pos);
+36 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+37 &#32;&#32;&#32;}
+38 
+39 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(0&#32;!=&#32;memcmp(<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>,&#32;<link linkend="_structoutput">output</link>&#32;+&#32;pos*2,&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>*2))&#32;{
+40 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;k;
+41 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(k=0;&#32;k&#32;&lt;&#32;<link linkend="_vorbseek_8c_1a27531e21430e184380049b67027e6110">SAMPLES_TO_TEST</link>*2;&#32;++k)&#32;{
+42 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>[k]&#32;!=&#32;<link linkend="_structoutput">output</link>[k])&#32;{
+43 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<emphasis role="stringliteral">&quot;Seek&#32;to&#32;%u&#32;produced&#32;incorrect&#32;samples&#32;starting&#32;at&#32;sample&#32;%u&#32;(short&#32;#%d&#32;in&#32;buffer).\n&quot;</emphasis>,
+44 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pos,&#32;pos&#32;+&#32;(k/2),&#32;k);
+45 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+46 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+47 &#32;&#32;&#32;&#32;&#32;&#32;}
+48 &#32;&#32;&#32;&#32;&#32;&#32;assert(k&#32;!=&#32;<link linkend="_vorbseek_8c_1a27531e21430e184380049b67027e6110">SAMPLES_TO_TEST</link>*2);
+49 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+50 &#32;&#32;&#32;}
+51 
+52 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;1;
+53 }
+</programlisting></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_vorbseek_8c_1a061de03a27e77fc8813602e3ef18604c"/>    <section>
+    <title>test_count</title>
+<indexterm><primary>test_count</primary><secondary>vorbseek.c</secondary></indexterm>
+<indexterm><primary>vorbseek.c</primary><secondary>test_count</secondary></indexterm>
+<para><computeroutput>int test_count[5] = { 5000, 3000, 2000, 50000, 50000 }</computeroutput></para><para>
+Definition at line 11 of file vorbseek.c.</para>
+    </section><anchor xml:id="_vorbseek_8c_1a8a23674399b083cd337c0f6038d13969"/>    <section>
+    <title>test_spacing</title>
+<indexterm><primary>test_spacing</primary><secondary>vorbseek.c</secondary></indexterm>
+<indexterm><primary>vorbseek.c</primary><secondary>test_spacing</secondary></indexterm>
+<para><computeroutput>int test_spacing[5] = { 1, 111, 3337, 7779, 72717 }</computeroutput></para><para>
+Definition at line 12 of file vorbseek.c.</para>
+</section>
+</section>
+</section>

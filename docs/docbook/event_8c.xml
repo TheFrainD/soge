@@ -1,0 +1,309 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_event_8c">
+<title>src/vally/core/event.c File Reference</title>
+<indexterm><primary>src/vally/core/event.c</primary></indexterm>
+<programlisting>#include &lt;vally/core/event.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;cvec.h&gt;
+#include &lt;vally/core/logger.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structregistered__event">registered_event</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structevent__code__entry">event_code_entry</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structevent__system__state">event_system_state</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_event_8c_1a59db8f883e31171b78490d26c0251f64">MAX_MESSAGE_CODES</link>   16384</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_event_8c_1a5b0f78273328aee6d4f9ce3949a6b727">event_init</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_event_8c_1af5c0fd0bca4f543c61042cf947de7ef9">event_terminate</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_event_8c_1aaa4dcb88a77bd7acfae9c3c0589da891">event_subscribe</link> (<link linkend="_include_2vally_2config_8h_1ace9d960e74685e2cd84b36132dbbf8aa">u16</link> code, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *listener, <link linkend="_event_8h_1a0510ba71fcdd70efda521389ea14e7a5">on_event_fun</link> callback)</para>
+
+<para>Subscribes for certain event types. </para>
+</listitem>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_event_8c_1a8393ea3aa1cf5939fc961b02788ef360">event_unsubscribe</link> (<link linkend="_include_2vally_2config_8h_1ace9d960e74685e2cd84b36132dbbf8aa">u16</link> code, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *listener, <link linkend="_event_8h_1a0510ba71fcdd70efda521389ea14e7a5">on_event_fun</link> callback)</para>
+
+<para>Unsubscribes from certain event types. </para>
+</listitem>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_event_8c_1a7131032d2f9fc63fda885be905de017f">event_publish</link> (<link linkend="_include_2vally_2config_8h_1ace9d960e74685e2cd84b36132dbbf8aa">u16</link> code, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *sender, <link linkend="_structevent__context">event_context</link> context)</para>
+
+<para>Publishes event of certain type. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_event_8c_1a59db8f883e31171b78490d26c0251f64"/>    <section>
+    <title>MAX_MESSAGE_CODES</title>
+<indexterm><primary>MAX_MESSAGE_CODES</primary><secondary>event.c</secondary></indexterm>
+<indexterm><primary>event.c</primary><secondary>MAX_MESSAGE_CODES</secondary></indexterm>
+<para><computeroutput>#define MAX_MESSAGE_CODES   16384</computeroutput></para><para>
+Definition at line 19 of file event.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_event_8c_1a5b0f78273328aee6d4f9ce3949a6b727"/>    <section>
+    <title>event_init()</title>
+<indexterm><primary>event_init</primary><secondary>event.c</secondary></indexterm>
+<indexterm><primary>event.c</primary><secondary>event_init</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> event_init ( )</computeroutput></para><para>
+Definition at line 28 of file event.c.</para>
+<programlisting>28 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+29 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(initialized)&#32;{
+30 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+31 &#32;&#32;}
+32 
+33 &#32;&#32;memset(&amp;state,&#32;0,&#32;<emphasis role="keyword">sizeof</emphasis>(state));
+34 &#32;&#32;initialized&#32;=&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+35 &#32;&#32;<link linkend="_logger_8h_1af933c6341b0deeb4ee1a540da61b9536">VALLY_TRACE</link>(<emphasis role="stringliteral">&quot;Event&#32;system&#32;initialized&quot;</emphasis>);
+36 
+37 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+38 }
+</programlisting>    </section><anchor xml:id="_event_8c_1a7131032d2f9fc63fda885be905de017f"/>    <section>
+    <title>event_publish()</title>
+<indexterm><primary>event_publish</primary><secondary>event.c</secondary></indexterm>
+<indexterm><primary>event.c</primary><secondary>event_publish</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> event_publish (<link linkend="_include_2vally_2config_8h_1ace9d960e74685e2cd84b36132dbbf8aa">u16</link> code, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * sender, <link linkend="_structevent__context">event_context</link> context)</computeroutput></para><para>
+
+<para>Publishes event of certain type. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>code</entry>
+                                <entry>
+<para>Event code </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sender</entry>
+                                <entry>
+<para>Object that published the event </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>context</entry>
+                                <entry>
+<para>Context information sent alongside the event</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>TRUE - if success, FALSE - in case of fatal errors </para>
+</formalpara>
+</para>
+<para>
+Definition at line 96 of file event.c.</para>
+<programlisting>96 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+97 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized)&#32;{
+98 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+99 &#32;&#32;}
+100 
+101 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(state.<link linkend="_structevent__system__state_1a20a86f05bfac98ca3c7d82ab3a5d293a">registered</link>[code].<link linkend="_structevent__code__entry_1af9e6e5bd1d2970b193d0aba78a865283">events</link>&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;{
+102 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+103 &#32;&#32;}
+104 
+105 &#32;&#32;<link linkend="_include_2vally_2config_8h_1a3f7e2bcbb0b4c338f3c4f6c937cd4234">u64</link>&#32;registered_count&#32;=&#32;<link linkend="_cvec_8c_1a8a6a2015774042d6bfc978989e91e561">cvec_size</link>(state.<link linkend="_structevent__system__state_1a20a86f05bfac98ca3c7d82ab3a5d293a">registered</link>[code].<link linkend="_structevent__code__entry_1af9e6e5bd1d2970b193d0aba78a865283">events</link>);
+106 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;registered_count;&#32;i++)&#32;{
+107 &#32;&#32;&#32;&#32;<link linkend="_structregistered__event">registered_event</link>&#32;<emphasis role="keyword">event</emphasis>&#32;=&#32;<link linkend="_cvec_8h_1abb99bfeea098f652e3efedb6e23004f2">cvec_at</link>(state.<link linkend="_structevent__system__state_1a20a86f05bfac98ca3c7d82ab3a5d293a">registered</link>[code].<link linkend="_structevent__code__entry_1af9e6e5bd1d2970b193d0aba78a865283">events</link>,&#32;i,&#32;<link linkend="_structregistered__event">registered_event</link>);
+108 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a03b04a5a978bad576866339075de01f6">event</link>.callback(code,&#32;sender,&#32;<link linkend="_glext_8h_1a03b04a5a978bad576866339075de01f6">event</link>.listener,&#32;context))&#32;{
+109 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+110 &#32;&#32;&#32;&#32;}
+111 &#32;&#32;}
+112 
+113 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+114 }
+</programlisting>    </section><anchor xml:id="_event_8c_1aaa4dcb88a77bd7acfae9c3c0589da891"/>    <section>
+    <title>event_subscribe()</title>
+<indexterm><primary>event_subscribe</primary><secondary>event.c</secondary></indexterm>
+<indexterm><primary>event.c</primary><secondary>event_subscribe</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> event_subscribe (<link linkend="_include_2vally_2config_8h_1ace9d960e74685e2cd84b36132dbbf8aa">u16</link> code, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * listener, <link linkend="_event_8h_1a0510ba71fcdd70efda521389ea14e7a5">on_event_fun</link> callback)</computeroutput></para><para>
+
+<para>Subscribes for certain event types. </para>
+</para>
+
+<para>Executes the callback function when event is published</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>code</entry>
+                                <entry>
+<para>Event code </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>listener</entry>
+                                <entry>
+<para>Object that subscribes for an event </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>callback</entry>
+                                <entry>
+<para>Event callback function</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>TRUE - if success, FALSE - in case of fatal errors </para>
+</formalpara>
+</para>
+<para>
+Definition at line 50 of file event.c.</para>
+<programlisting>50 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+51 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized)&#32;{
+52 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+53 &#32;&#32;}
+54 
+55 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(state.<link linkend="_structevent__system__state_1a20a86f05bfac98ca3c7d82ab3a5d293a">registered</link>[code].<link linkend="_structevent__code__entry_1af9e6e5bd1d2970b193d0aba78a865283">events</link>&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;{
+56 &#32;&#32;&#32;&#32;state.<link linkend="_structevent__system__state_1a20a86f05bfac98ca3c7d82ab3a5d293a">registered</link>[code].<link linkend="_structevent__code__entry_1af9e6e5bd1d2970b193d0aba78a865283">events</link>&#32;=&#32;<link linkend="_cvec_8h_1a3d7122698c976f6369cf5356c1d7f44c">cvec_create</link>(<link linkend="_structregistered__event">registered_event</link>);
+57 &#32;&#32;}
+58 
+59 &#32;&#32;<link linkend="_include_2vally_2config_8h_1a3f7e2bcbb0b4c338f3c4f6c937cd4234">u64</link>&#32;registered_count&#32;=&#32;<link linkend="_cvec_8c_1a8a6a2015774042d6bfc978989e91e561">cvec_size</link>(state.<link linkend="_structevent__system__state_1a20a86f05bfac98ca3c7d82ab3a5d293a">registered</link>[code].<link linkend="_structevent__code__entry_1af9e6e5bd1d2970b193d0aba78a865283">events</link>);
+60 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;registered_count;&#32;i++)&#32;{
+61 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cvec_8h_1abb99bfeea098f652e3efedb6e23004f2">cvec_at</link>(state.<link linkend="_structevent__system__state_1a20a86f05bfac98ca3c7d82ab3a5d293a">registered</link>[code].<link linkend="_structevent__code__entry_1af9e6e5bd1d2970b193d0aba78a865283">events</link>,&#32;i,&#32;<link linkend="_structregistered__event">registered_event</link>).listener&#32;==&#32;listener)&#32;{
+62 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TODO:&#32;warn</emphasis>
+63 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+64 &#32;&#32;&#32;&#32;}
+65 &#32;&#32;}
+66 
+67 &#32;&#32;<link linkend="_structregistered__event">registered_event</link>&#32;<link linkend="_glext_8h_1a03b04a5a978bad576866339075de01f6">event</link>;
+68 &#32;&#32;<emphasis role="keyword">event</emphasis>.listener&#32;=&#32;listener;
+69 &#32;&#32;<emphasis role="keyword">event</emphasis>.callback&#32;=&#32;callback;
+70 &#32;&#32;<link linkend="_cvec_8h_1a589dd3e539e29524d806dd67fef1161f">cvec_push_back</link>(state.<link linkend="_structevent__system__state_1a20a86f05bfac98ca3c7d82ab3a5d293a">registered</link>[code].<link linkend="_structevent__code__entry_1af9e6e5bd1d2970b193d0aba78a865283">events</link>,&#32;<link linkend="_glext_8h_1a03b04a5a978bad576866339075de01f6">event</link>);
+71 
+72 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+73 }
+</programlisting>    </section><anchor xml:id="_event_8c_1af5c0fd0bca4f543c61042cf947de7ef9"/>    <section>
+    <title>event_terminate()</title>
+<indexterm><primary>event_terminate</primary><secondary>event.c</secondary></indexterm>
+<indexterm><primary>event.c</primary><secondary>event_terminate</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> event_terminate ( )</computeroutput></para><para>
+Definition at line 40 of file event.c.</para>
+<programlisting>40 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+41 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;<link linkend="_event_8c_1a59db8f883e31171b78490d26c0251f64">MAX_MESSAGE_CODES</link>;&#32;i++)&#32;{
+42 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(state.<link linkend="_structevent__system__state_1a20a86f05bfac98ca3c7d82ab3a5d293a">registered</link>[i].<link linkend="_structevent__code__entry_1af9e6e5bd1d2970b193d0aba78a865283">events</link>&#32;!=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;{
+43 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cvec_8c_1a17c81de6fcbe0e5df5f4f0f7a71ac996">cvec_destroy</link>(state.<link linkend="_structevent__system__state_1a20a86f05bfac98ca3c7d82ab3a5d293a">registered</link>[i].<link linkend="_structevent__code__entry_1af9e6e5bd1d2970b193d0aba78a865283">events</link>);
+44 &#32;&#32;&#32;&#32;&#32;&#32;state.<link linkend="_structevent__system__state_1a20a86f05bfac98ca3c7d82ab3a5d293a">registered</link>[i].<link linkend="_structevent__code__entry_1af9e6e5bd1d2970b193d0aba78a865283">events</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+45 &#32;&#32;&#32;&#32;}
+46 &#32;&#32;}
+47 &#32;&#32;<link linkend="_logger_8h_1af933c6341b0deeb4ee1a540da61b9536">VALLY_TRACE</link>(<emphasis role="stringliteral">&quot;Event&#32;system&#32;terminated&quot;</emphasis>);
+48 }
+</programlisting>    </section><anchor xml:id="_event_8c_1a8393ea3aa1cf5939fc961b02788ef360"/>    <section>
+    <title>event_unsubscribe()</title>
+<indexterm><primary>event_unsubscribe</primary><secondary>event.c</secondary></indexterm>
+<indexterm><primary>event.c</primary><secondary>event_unsubscribe</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> event_unsubscribe (<link linkend="_include_2vally_2config_8h_1ace9d960e74685e2cd84b36132dbbf8aa">u16</link> code, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * listener, <link linkend="_event_8h_1a0510ba71fcdd70efda521389ea14e7a5">on_event_fun</link> callback)</computeroutput></para><para>
+
+<para>Unsubscribes from certain event types. </para>
+</para>
+
+<para>Stops executing the callback function when event is published</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>code</entry>
+                                <entry>
+<para>Event code </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>listener</entry>
+                                <entry>
+<para>Object that unsubscribes from an event </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>callback</entry>
+                                <entry>
+<para>Event callback function</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>TRUE - if success, FALSE - in case of fatal errors </para>
+</formalpara>
+</para>
+<para>
+Definition at line 75 of file event.c.</para>
+<programlisting>75 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+76 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized)&#32;{
+77 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+78 &#32;&#32;}
+79 
+80 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(state.<link linkend="_structevent__system__state_1a20a86f05bfac98ca3c7d82ab3a5d293a">registered</link>[code].<link linkend="_structevent__code__entry_1af9e6e5bd1d2970b193d0aba78a865283">events</link>&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;{
+81 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+82 &#32;&#32;}
+83 
+84 &#32;&#32;<link linkend="_include_2vally_2config_8h_1a3f7e2bcbb0b4c338f3c4f6c937cd4234">u64</link>&#32;registered_count&#32;=&#32;<link linkend="_cvec_8c_1a8a6a2015774042d6bfc978989e91e561">cvec_size</link>(state.<link linkend="_structevent__system__state_1a20a86f05bfac98ca3c7d82ab3a5d293a">registered</link>[code].<link linkend="_structevent__code__entry_1af9e6e5bd1d2970b193d0aba78a865283">events</link>);
+85 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;registered_count;&#32;i++)&#32;{
+86 &#32;&#32;&#32;&#32;<link linkend="_structregistered__event">registered_event</link>&#32;<emphasis role="keyword">event</emphasis>&#32;=&#32;<link linkend="_cvec_8h_1abb99bfeea098f652e3efedb6e23004f2">cvec_at</link>(state.<link linkend="_structevent__system__state_1a20a86f05bfac98ca3c7d82ab3a5d293a">registered</link>[code].<link linkend="_structevent__code__entry_1af9e6e5bd1d2970b193d0aba78a865283">events</link>,&#32;i,&#32;<link linkend="_structregistered__event">registered_event</link>);
+87 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a03b04a5a978bad576866339075de01f6">event</link>.listener&#32;==&#32;listener&#32;&amp;&amp;&#32;<link linkend="_glext_8h_1a03b04a5a978bad576866339075de01f6">event</link>.callback&#32;==&#32;callback)&#32;{
+88 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cvec_8c_1abc55d3779eb6a21832e665685faf88d7">cvec_erase</link>(state.<link linkend="_structevent__system__state_1a20a86f05bfac98ca3c7d82ab3a5d293a">registered</link>[code].<link linkend="_structevent__code__entry_1af9e6e5bd1d2970b193d0aba78a865283">events</link>,&#32;i);
+89 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+90 &#32;&#32;&#32;&#32;}
+91 &#32;&#32;}
+92 
+93 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+94 }
+</programlisting></section>
+</section>
+</section>

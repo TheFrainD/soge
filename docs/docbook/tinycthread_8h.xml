@@ -1,0 +1,1489 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_tinycthread_8h">
+<title>deps/glfw/deps/tinycthread.h File Reference</title>
+<indexterm><primary>deps/glfw/deps/tinycthread.h</primary></indexterm>
+<programlisting>#include &lt;time.h&gt;
+#include &lt;sys/time.h&gt;
+#include &lt;pthread.h&gt;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1a5ae43c395d15a661ba4877c72d8214ed">_TTHREAD_POSIX_</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1a7c27184597c6f4cb260d6b41aea5d9b8">_TTHREAD_PLATFORM_DEFINED_</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1a369266c24eacffb87046522897a570d5">_GNU_SOURCE</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1a3024ccd4a9af5109d24e6c57565d74a1">_POSIX_C_SOURCE</link>   199309<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1a78c99ffd76a7bb3c8c74db76207e9ab4">_XOPEN_SOURCE</link>   500</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1aa43107f3cb85397223bf6d40be480480">TIME_UTC</link>   0</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1a953f67c466c6b20cb8b45bae7322a4bb">TINYCTHREAD_VERSION_MAJOR</link>   1</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1a4b0bb3afcfbecfad0a260c56a2600485">TINYCTHREAD_VERSION_MINOR</link>   1</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1a68b525cf21cb295d457f87c45ca45604">TINYCTHREAD_VERSION</link>   (<link linkend="_tinycthread_8h_1a953f67c466c6b20cb8b45bae7322a4bb">TINYCTHREAD_VERSION_MAJOR</link> * 100 + <link linkend="_tinycthread_8h_1a4b0bb3afcfbecfad0a260c56a2600485">TINYCTHREAD_VERSION_MINOR</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1a6ee13d5bcebab292dbc98e06c6cf9fe7">_Thread_local</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1a11de84b15b6b59861b4366a192aadd58">TSS_DTOR_ITERATIONS</link>   0</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>   0</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>   1</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1aec454a4baf61e6d518bbfb8768bd6a1f">thrd_timeout</link>   2</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1a3c563aa25920a041d83d4019b113ab5d">thrd_busy</link>   3</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1ad6010b6ba8c0508cef692f066b09e2ef">thrd_nomem</link>   4</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1af5ebc375e7a7dca3e9fdcc0bc338f201">mtx_plain</link>   1</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1adf070d6198d7c0419e5eed91db5ac223">mtx_timed</link>   2</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1a2334ad10806834ffe52feac22fc5c198">mtx_try</link>   4</para>
+</listitem>
+            <listitem><para>#define <link linkend="_tinycthread_8h_1a23baf902554dba287faa32c646e35f61">mtx_recursive</link>   8</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Typedefs    </title>
+        <itemizedlist>
+            <listitem><para>typedef pthread_mutex_t <link linkend="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2">mtx_t</link></para>
+</listitem>
+            <listitem><para>typedef pthread_cond_t <link linkend="_tinycthread_8h_1aa5c55d7c9eb959c15c4d5b73c02e8a41">cnd_t</link></para>
+</listitem>
+            <listitem><para>typedef pthread_t <link linkend="_tinycthread_8h_1a40f328ffa956af453fe5c14704f88231">thrd_t</link></para>
+</listitem>
+            <listitem><para>typedef int(* <link linkend="_tinycthread_8h_1ab26bdfa456502f8c483f45bb39ca7336">thrd_start_t</link>) (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *arg)</para>
+</listitem>
+            <listitem><para>typedef pthread_key_t <link linkend="_tinycthread_8h_1a0475af0e9cd14ba35427de7c8c49dab1">tss_t</link></para>
+</listitem>
+            <listitem><para>typedef <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>(* <link linkend="_tinycthread_8h_1a7bd9f13e4169f842cbb831ea348049dd">tss_dtor_t</link>) (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_glad_8h_1a26942fd2ed566ef553eae82d2c109c8f">val</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_tinycthread_8h_1a89200caf0dc25fcc97df171d0034bff2">mtx_init</link> (<link linkend="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2">mtx_t</link> *mtx, int <link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_tinycthread_8h_1ae8b3732298d1d316db6438b4c561c0dd">mtx_destroy</link> (<link linkend="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2">mtx_t</link> *mtx)</para>
+</listitem>
+            <listitem><para>int <link linkend="_tinycthread_8h_1a8945984db67db8ee774872da64d0e424">mtx_lock</link> (<link linkend="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2">mtx_t</link> *mtx)</para>
+</listitem>
+            <listitem><para>int <link linkend="_tinycthread_8h_1a98f9757dde089254735199ac738ff65f">mtx_timedlock</link> (<link linkend="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2">mtx_t</link> *mtx, const struct timespec *ts)</para>
+</listitem>
+            <listitem><para>int <link linkend="_tinycthread_8h_1ac577690ddd48f5a1fdf3dc97881a2199">mtx_trylock</link> (<link linkend="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2">mtx_t</link> *mtx)</para>
+</listitem>
+            <listitem><para>int <link linkend="_tinycthread_8h_1ae2fb1d2854461fa583017cc9b0bc6cca">mtx_unlock</link> (<link linkend="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2">mtx_t</link> *mtx)</para>
+</listitem>
+            <listitem><para>int <link linkend="_tinycthread_8h_1a146f4cd218c2a2f770be14c1dee26d08">cnd_init</link> (<link linkend="_tinycthread_8h_1aa5c55d7c9eb959c15c4d5b73c02e8a41">cnd_t</link> *cond)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_tinycthread_8h_1aa925921fa9edc189f474ae10a23bcfd3">cnd_destroy</link> (<link linkend="_tinycthread_8h_1aa5c55d7c9eb959c15c4d5b73c02e8a41">cnd_t</link> *cond)</para>
+</listitem>
+            <listitem><para>int <link linkend="_tinycthread_8h_1af76e066715b1190d38a69da1c511e30f">cnd_signal</link> (<link linkend="_tinycthread_8h_1aa5c55d7c9eb959c15c4d5b73c02e8a41">cnd_t</link> *cond)</para>
+</listitem>
+            <listitem><para>int <link linkend="_tinycthread_8h_1a66228b340509733bdf529b93bca8df14">cnd_broadcast</link> (<link linkend="_tinycthread_8h_1aa5c55d7c9eb959c15c4d5b73c02e8a41">cnd_t</link> *cond)</para>
+</listitem>
+            <listitem><para>int <link linkend="_tinycthread_8h_1ac4dfb82fc3d92bb688cb07308af6a659">cnd_wait</link> (<link linkend="_tinycthread_8h_1aa5c55d7c9eb959c15c4d5b73c02e8a41">cnd_t</link> *cond, <link linkend="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2">mtx_t</link> *mtx)</para>
+</listitem>
+            <listitem><para>int <link linkend="_tinycthread_8h_1a2bdc352d949424855c957b0d1916d443">cnd_timedwait</link> (<link linkend="_tinycthread_8h_1aa5c55d7c9eb959c15c4d5b73c02e8a41">cnd_t</link> *cond, <link linkend="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2">mtx_t</link> *mtx, const struct timespec *ts)</para>
+</listitem>
+            <listitem><para>int <link linkend="_tinycthread_8h_1a1a52b6cd2d15cc6c4741d5124f85d183">thrd_create</link> (<link linkend="_tinycthread_8h_1a40f328ffa956af453fe5c14704f88231">thrd_t</link> *thr, <link linkend="_tinycthread_8h_1ab26bdfa456502f8c483f45bb39ca7336">thrd_start_t</link> <link linkend="_glad_8h_1a18ae3ab36a07e388833b568cfdfa90c8">func</link>, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *arg)</para>
+</listitem>
+            <listitem><para><link linkend="_tinycthread_8h_1a40f328ffa956af453fe5c14704f88231">thrd_t</link> <link linkend="_tinycthread_8h_1ab67b6f182a848d979155d03598325fa7">thrd_current</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_tinycthread_8h_1ad5380997f9e32a31f802bdd9cb266902">thrd_detach</link> (<link linkend="_tinycthread_8h_1a40f328ffa956af453fe5c14704f88231">thrd_t</link> thr)</para>
+</listitem>
+            <listitem><para>int <link linkend="_tinycthread_8h_1a153e65a389814ce51ad07791e42b2118">thrd_equal</link> (<link linkend="_tinycthread_8h_1a40f328ffa956af453fe5c14704f88231">thrd_t</link> thr0, <link linkend="_tinycthread_8h_1a40f328ffa956af453fe5c14704f88231">thrd_t</link> thr1)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_tinycthread_8h_1ae13e483223c39327e190e79e18f20b15">thrd_exit</link> (int <link linkend="_glext_8h_1a1dbb21208b9047cc8031ca9c840d3c2f">res</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_tinycthread_8h_1aa2e83a544f49f74cf217a69a882b5d80">thrd_join</link> (<link linkend="_tinycthread_8h_1a40f328ffa956af453fe5c14704f88231">thrd_t</link> thr, int *<link linkend="_glext_8h_1a1dbb21208b9047cc8031ca9c840d3c2f">res</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_tinycthread_8h_1a58d00bd1fc0cc3c91d4c34d5faf117c3">thrd_sleep</link> (const struct timespec *time_point, struct timespec *remaining)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_tinycthread_8h_1acbfb78346e6b76b23da1d2d8df03549a">thrd_yield</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_tinycthread_8h_1a286fe7927e9af276a9cfdbc8b9eb08ad">tss_create</link> (<link linkend="_tinycthread_8h_1a0475af0e9cd14ba35427de7c8c49dab1">tss_t</link> *<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>, <link linkend="_tinycthread_8h_1a7bd9f13e4169f842cbb831ea348049dd">tss_dtor_t</link> dtor)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_tinycthread_8h_1aecebbc66b206171d9381ba94528c6cb7">tss_delete</link> (<link linkend="_tinycthread_8h_1a0475af0e9cd14ba35427de7c8c49dab1">tss_t</link> <link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * <link linkend="_tinycthread_8h_1a183e71f731ed566a1d14b056606806f8">tss_get</link> (<link linkend="_tinycthread_8h_1a0475af0e9cd14ba35427de7c8c49dab1">tss_t</link> <link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_tinycthread_8h_1a608e01c49b84a5ad4f085a9aedc6a680">tss_set</link> (<link linkend="_tinycthread_8h_1a0475af0e9cd14ba35427de7c8c49dab1">tss_t</link> <link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_glad_8h_1a26942fd2ed566ef553eae82d2c109c8f">val</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_tinycthread_8h_1a369266c24eacffb87046522897a570d5"/>    <section>
+    <title>_GNU_SOURCE</title>
+<indexterm><primary>_GNU_SOURCE</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>_GNU_SOURCE</secondary></indexterm>
+<para><computeroutput>#define _GNU_SOURCE</computeroutput></para><para>
+Definition at line 64 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1a3024ccd4a9af5109d24e6c57565d74a1"/>    <section>
+    <title>_POSIX_C_SOURCE</title>
+<indexterm><primary>_POSIX_C_SOURCE</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>_POSIX_C_SOURCE</secondary></indexterm>
+<para><computeroutput>#define _POSIX_C_SOURCE   199309<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link></computeroutput></para><para>
+Definition at line 68 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1a6ee13d5bcebab292dbc98e06c6cf9fe7"/>    <section>
+    <title>_Thread_local</title>
+<indexterm><primary>_Thread_local</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>_Thread_local</secondary></indexterm>
+<para><computeroutput>#define _Thread_local</computeroutput></para>
+<para><link linkend="_struct_thread">Thread</link> local storage keyword. A variable that is declared with the <computeroutput>_Thread_local</computeroutput> keyword makes the value of the variable local to each thread (known as thread-local storage, or TLS). Example usage: <literallayout><computeroutput>//&#32;This&#32;variable&#32;is&#32;local&#32;to&#32;each&#32;thread.
+_Thread_local&#32;int&#32;variable;
+</computeroutput></literallayout> <note><title>Note</title>
+
+<para>The <computeroutput>_Thread_local</computeroutput> keyword is a macro that maps to the corresponding compiler directive (e.g. <computeroutput>__declspec(thread)</computeroutput>). </para>
+
+<para>This directive is currently not supported on Mac OS X (it will give a compiler error), since compile-time TLS is not supported in the Mac OS X executable format. Also, some older versions of MinGW (before GCC 4.x) do not support this directive. </para>
+</note>
+</para>
+<para>
+Definition at line 163 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1a7c27184597c6f4cb260d6b41aea5d9b8"/>    <section>
+    <title>_TTHREAD_PLATFORM_DEFINED_</title>
+<indexterm><primary>_TTHREAD_PLATFORM_DEFINED_</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>_TTHREAD_PLATFORM_DEFINED_</secondary></indexterm>
+<para><computeroutput>#define _TTHREAD_PLATFORM_DEFINED_</computeroutput></para><para>
+Definition at line 57 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1a5ae43c395d15a661ba4877c72d8214ed"/>    <section>
+    <title>_TTHREAD_POSIX_</title>
+<indexterm><primary>_TTHREAD_POSIX_</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>_TTHREAD_POSIX_</secondary></indexterm>
+<para><computeroutput>#define _TTHREAD_POSIX_</computeroutput></para><para>
+Definition at line 55 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1a78c99ffd76a7bb3c8c74db76207e9ab4"/>    <section>
+    <title>_XOPEN_SOURCE</title>
+<indexterm><primary>_XOPEN_SOURCE</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>_XOPEN_SOURCE</secondary></indexterm>
+<para><computeroutput>#define _XOPEN_SOURCE   500</computeroutput></para><para>
+Definition at line 72 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1af5ebc375e7a7dca3e9fdcc0bc338f201"/>    <section>
+    <title>mtx_plain</title>
+<indexterm><primary>mtx_plain</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>mtx_plain</secondary></indexterm>
+<para><computeroutput>#define mtx_plain   1</computeroutput></para><para>
+Definition at line 178 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1a23baf902554dba287faa32c646e35f61"/>    <section>
+    <title>mtx_recursive</title>
+<indexterm><primary>mtx_recursive</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>mtx_recursive</secondary></indexterm>
+<para><computeroutput>#define mtx_recursive   8</computeroutput></para><para>
+Definition at line 181 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1adf070d6198d7c0419e5eed91db5ac223"/>    <section>
+    <title>mtx_timed</title>
+<indexterm><primary>mtx_timed</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>mtx_timed</secondary></indexterm>
+<para><computeroutput>#define mtx_timed   2</computeroutput></para><para>
+Definition at line 179 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1a2334ad10806834ffe52feac22fc5c198"/>    <section>
+    <title>mtx_try</title>
+<indexterm><primary>mtx_try</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>mtx_try</secondary></indexterm>
+<para><computeroutput>#define mtx_try   4</computeroutput></para><para>
+Definition at line 180 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1a3c563aa25920a041d83d4019b113ab5d"/>    <section>
+    <title>thrd_busy</title>
+<indexterm><primary>thrd_busy</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>thrd_busy</secondary></indexterm>
+<para><computeroutput>#define thrd_busy   3</computeroutput></para>
+<para>The requested operation failed because a tesource requested by a test and return function is already in use </para>
+<para>
+Definition at line 174 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96"/>    <section>
+    <title>thrd_error</title>
+<indexterm><primary>thrd_error</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>thrd_error</secondary></indexterm>
+<para><computeroutput>#define thrd_error   0</computeroutput></para>
+<para>The requested operation failed </para>
+<para>
+Definition at line 171 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1ad6010b6ba8c0508cef692f066b09e2ef"/>    <section>
+    <title>thrd_nomem</title>
+<indexterm><primary>thrd_nomem</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>thrd_nomem</secondary></indexterm>
+<para><computeroutput>#define thrd_nomem   4</computeroutput></para>
+<para>The requested operation failed because it was unable to allocate memory </para>
+<para>
+Definition at line 175 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc"/>    <section>
+    <title>thrd_success</title>
+<indexterm><primary>thrd_success</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>thrd_success</secondary></indexterm>
+<para><computeroutput>#define thrd_success   1</computeroutput></para>
+<para>The requested operation succeeded </para>
+<para>
+Definition at line 172 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1aec454a4baf61e6d518bbfb8768bd6a1f"/>    <section>
+    <title>thrd_timeout</title>
+<indexterm><primary>thrd_timeout</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>thrd_timeout</secondary></indexterm>
+<para><computeroutput>#define thrd_timeout   2</computeroutput></para>
+<para>The time specified in the call was reached without acquiring the requested resource </para>
+<para>
+Definition at line 173 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1aa43107f3cb85397223bf6d40be480480"/>    <section>
+    <title>TIME_UTC</title>
+<indexterm><primary>TIME_UTC</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>TIME_UTC</secondary></indexterm>
+<para><computeroutput>#define TIME_UTC   0</computeroutput></para><para>
+Definition at line 103 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1a68b525cf21cb295d457f87c45ca45604"/>    <section>
+    <title>TINYCTHREAD_VERSION</title>
+<indexterm><primary>TINYCTHREAD_VERSION</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>TINYCTHREAD_VERSION</secondary></indexterm>
+<para><computeroutput>#define TINYCTHREAD_VERSION   (<link linkend="_tinycthread_8h_1a953f67c466c6b20cb8b45bae7322a4bb">TINYCTHREAD_VERSION_MAJOR</link> * 100 + <link linkend="_tinycthread_8h_1a4b0bb3afcfbecfad0a260c56a2600485">TINYCTHREAD_VERSION_MINOR</link>)</computeroutput></para>
+<para>TinyCThread version (full version). </para>
+<para>
+Definition at line 137 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1a953f67c466c6b20cb8b45bae7322a4bb"/>    <section>
+    <title>TINYCTHREAD_VERSION_MAJOR</title>
+<indexterm><primary>TINYCTHREAD_VERSION_MAJOR</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>TINYCTHREAD_VERSION_MAJOR</secondary></indexterm>
+<para><computeroutput>#define TINYCTHREAD_VERSION_MAJOR   1</computeroutput></para>
+<para>TinyCThread version (major number). </para>
+<para>
+Definition at line 133 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1a4b0bb3afcfbecfad0a260c56a2600485"/>    <section>
+    <title>TINYCTHREAD_VERSION_MINOR</title>
+<indexterm><primary>TINYCTHREAD_VERSION_MINOR</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>TINYCTHREAD_VERSION_MINOR</secondary></indexterm>
+<para><computeroutput>#define TINYCTHREAD_VERSION_MINOR   1</computeroutput></para>
+<para>TinyCThread version (minor number). </para>
+<para>
+Definition at line 135 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1a11de84b15b6b59861b4366a192aadd58"/>    <section>
+    <title>TSS_DTOR_ITERATIONS</title>
+<indexterm><primary>TSS_DTOR_ITERATIONS</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>TSS_DTOR_ITERATIONS</secondary></indexterm>
+<para><computeroutput>#define TSS_DTOR_ITERATIONS   0</computeroutput></para><para>
+Definition at line 168 of file tinycthread.h.</para>
+</section>
+</section>
+<section>
+<title>Typedef Documentation</title>
+<anchor xml:id="_tinycthread_8h_1aa5c55d7c9eb959c15c4d5b73c02e8a41"/>    <section>
+    <title>cnd_t</title>
+<indexterm><primary>cnd_t</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>cnd_t</secondary></indexterm>
+<para><computeroutput>typedef pthread_cond_t <link linkend="_tinycthread_8h_1aa5c55d7c9eb959c15c4d5b73c02e8a41">cnd_t</link></computeroutput></para><para>
+Definition at line 252 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2"/>    <section>
+    <title>mtx_t</title>
+<indexterm><primary>mtx_t</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>mtx_t</secondary></indexterm>
+<para><computeroutput>typedef pthread_mutex_t <link linkend="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2">mtx_t</link></computeroutput></para><para>
+Definition at line 191 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1ab26bdfa456502f8c483f45bb39ca7336"/>    <section>
+    <title>thrd_start_t</title>
+<indexterm><primary>thrd_start_t</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>thrd_start_t</secondary></indexterm>
+<para><computeroutput>typedef int(* thrd_start_t) (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *arg)</computeroutput></para>
+<para><link linkend="_struct_thread">Thread</link> start function. Any thread that is started with the <link linkend="_tinycthread_8c_1a1a52b6cd2d15cc6c4741d5124f85d183">thrd_create()</link> function must be started through a function of this type. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>arg</entry>
+                                <entry>
+<para>The thread argument (the <computeroutput>arg</computeroutput> argument of the corresponding <link linkend="_tinycthread_8c_1a1a52b6cd2d15cc6c4741d5124f85d183">thrd_create()</link> call). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>The thread return value, which can be obtained by another thread by using the <link linkend="_tinycthread_8c_1aa2e83a544f49f74cf217a69a882b5d80">thrd_join()</link> function. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 328 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1a40f328ffa956af453fe5c14704f88231"/>    <section>
+    <title>thrd_t</title>
+<indexterm><primary>thrd_t</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>thrd_t</secondary></indexterm>
+<para><computeroutput>typedef pthread_t <link linkend="_tinycthread_8h_1a40f328ffa956af453fe5c14704f88231">thrd_t</link></computeroutput></para><para>
+Definition at line 317 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1a7bd9f13e4169f842cbb831ea348049dd"/>    <section>
+    <title>tss_dtor_t</title>
+<indexterm><primary>tss_dtor_t</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>tss_dtor_t</secondary></indexterm>
+<para><computeroutput>typedef <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>(* tss_dtor_t) (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_glad_8h_1a26942fd2ed566ef553eae82d2c109c8f">val</link>)</computeroutput></para>
+<para>Destructor function for a thread-specific storage. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>val</entry>
+                                <entry>
+<para>The value of the destructed thread-specific storage. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line 404 of file tinycthread.h.</para>
+    </section><anchor xml:id="_tinycthread_8h_1a0475af0e9cd14ba35427de7c8c49dab1"/>    <section>
+    <title>tss_t</title>
+<indexterm><primary>tss_t</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>tss_t</secondary></indexterm>
+<para><computeroutput>typedef pthread_key_t <link linkend="_tinycthread_8h_1a0475af0e9cd14ba35427de7c8c49dab1">tss_t</link></computeroutput></para><para>
+Definition at line 398 of file tinycthread.h.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_tinycthread_8h_1a66228b340509733bdf529b93bca8df14"/>    <section>
+    <title>cnd_broadcast()</title>
+<indexterm><primary>cnd_broadcast</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>cnd_broadcast</secondary></indexterm>
+<para><computeroutput>int cnd_broadcast (<link linkend="_tinycthread_8h_1aa5c55d7c9eb959c15c4d5b73c02e8a41">cnd_t</link> * cond)</computeroutput></para>
+<para>Broadcast a condition variable. Unblocks all of the threads that are blocked on the given condition variable at the time of the call. If no threads are blocked on the condition variable at the time of the call, the function does nothing and return success. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>cond</entry>
+                                <entry>
+<para>A condition variable object. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link> on success, or <link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link> if the request could not be honored. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 211 of file tinycthread.c.</para>
+<programlisting>212 {
+213 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+214 &#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;haveWaiters;
+215 
+216 &#32;&#32;<emphasis role="comment">/*&#32;Are&#32;there&#32;any&#32;waiters?&#32;*/</emphasis>
+217 &#32;&#32;EnterCriticalSection(&amp;cond-&gt;mWaitersCountLock);
+218 &#32;&#32;haveWaiters&#32;=&#32;(cond-&gt;mWaitersCount&#32;&gt;&#32;0);
+219 &#32;&#32;LeaveCriticalSection(&amp;cond-&gt;mWaitersCountLock);
+220 
+221 &#32;&#32;<emphasis role="comment">/*&#32;If&#32;we&#32;have&#32;any&#32;waiting&#32;threads,&#32;send&#32;them&#32;a&#32;signal&#32;*/</emphasis>
+222 &#32;&#32;<emphasis role="keywordflow">if</emphasis>(haveWaiters)
+223 &#32;&#32;{
+224 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(SetEvent(cond-&gt;mEvents[_CONDITION_EVENT_ALL])&#32;==&#32;0)
+225 &#32;&#32;&#32;&#32;{
+226 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+227 &#32;&#32;&#32;&#32;}
+228 &#32;&#32;}
+229 
+230 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>;
+231 <emphasis role="preprocessor">#else</emphasis>
+232 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;pthread_cond_signal(cond)&#32;==&#32;0&#32;?&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>&#32;:&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+233 <emphasis role="preprocessor">#endif</emphasis>
+234 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1aa925921fa9edc189f474ae10a23bcfd3"/>    <section>
+    <title>cnd_destroy()</title>
+<indexterm><primary>cnd_destroy</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>cnd_destroy</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> cnd_destroy (<link linkend="_tinycthread_8h_1aa5c55d7c9eb959c15c4d5b73c02e8a41">cnd_t</link> * cond)</computeroutput></para>
+<para>Release any resources used by the given condition variable. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>cond</entry>
+                                <entry>
+<para>A condition variable object. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line 169 of file tinycthread.c.</para>
+<programlisting>170 {
+171 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+172 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cond-&gt;mEvents[_CONDITION_EVENT_ONE]&#32;!=&#32;<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+173 &#32;&#32;{
+174 &#32;&#32;&#32;&#32;CloseHandle(cond-&gt;mEvents[_CONDITION_EVENT_ONE]);
+175 &#32;&#32;}
+176 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cond-&gt;mEvents[_CONDITION_EVENT_ALL]&#32;!=&#32;<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+177 &#32;&#32;{
+178 &#32;&#32;&#32;&#32;CloseHandle(cond-&gt;mEvents[_CONDITION_EVENT_ALL]);
+179 &#32;&#32;}
+180 &#32;&#32;DeleteCriticalSection(&amp;cond-&gt;mWaitersCountLock);
+181 <emphasis role="preprocessor">#else</emphasis>
+182 &#32;&#32;pthread_cond_destroy(cond);
+183 <emphasis role="preprocessor">#endif</emphasis>
+184 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1a146f4cd218c2a2f770be14c1dee26d08"/>    <section>
+    <title>cnd_init()</title>
+<indexterm><primary>cnd_init</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>cnd_init</secondary></indexterm>
+<para><computeroutput>int cnd_init (<link linkend="_tinycthread_8h_1aa5c55d7c9eb959c15c4d5b73c02e8a41">cnd_t</link> * cond)</computeroutput></para>
+<para>Create a condition variable object. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>cond</entry>
+                                <entry>
+<para>A condition variable object. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link> on success, or <link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link> if the request could not be honored. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 140 of file tinycthread.c.</para>
+<programlisting>141 {
+142 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+143 &#32;&#32;cond-&gt;mWaitersCount&#32;=&#32;0;
+144 
+145 &#32;&#32;<emphasis role="comment">/*&#32;Init&#32;critical&#32;section&#32;*/</emphasis>
+146 &#32;&#32;InitializeCriticalSection(&amp;cond-&gt;mWaitersCountLock);
+147 
+148 &#32;&#32;<emphasis role="comment">/*&#32;Init&#32;events&#32;*/</emphasis>
+149 &#32;&#32;cond-&gt;mEvents[_CONDITION_EVENT_ONE]&#32;=&#32;CreateEvent(<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_tinycthread_8c_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>,&#32;<link linkend="_tinycthread_8c_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>,&#32;<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+150 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cond-&gt;mEvents[_CONDITION_EVENT_ONE]&#32;==&#32;<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+151 &#32;&#32;{
+152 &#32;&#32;&#32;&#32;cond-&gt;mEvents[_CONDITION_EVENT_ALL]&#32;=&#32;<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+153 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+154 &#32;&#32;}
+155 &#32;&#32;cond-&gt;mEvents[_CONDITION_EVENT_ALL]&#32;=&#32;CreateEvent(<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_tinycthread_8c_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>,&#32;<link linkend="_tinycthread_8c_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>,&#32;<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+156 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cond-&gt;mEvents[_CONDITION_EVENT_ALL]&#32;==&#32;<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+157 &#32;&#32;{
+158 &#32;&#32;&#32;&#32;CloseHandle(cond-&gt;mEvents[_CONDITION_EVENT_ONE]);
+159 &#32;&#32;&#32;&#32;cond-&gt;mEvents[_CONDITION_EVENT_ONE]&#32;=&#32;<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+160 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+161 &#32;&#32;}
+162 
+163 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>;
+164 <emphasis role="preprocessor">#else</emphasis>
+165 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;pthread_cond_init(cond,&#32;<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;==&#32;0&#32;?&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>&#32;:&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+166 <emphasis role="preprocessor">#endif</emphasis>
+167 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1af76e066715b1190d38a69da1c511e30f"/>    <section>
+    <title>cnd_signal()</title>
+<indexterm><primary>cnd_signal</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>cnd_signal</secondary></indexterm>
+<para><computeroutput>int cnd_signal (<link linkend="_tinycthread_8h_1aa5c55d7c9eb959c15c4d5b73c02e8a41">cnd_t</link> * cond)</computeroutput></para>
+<para>Signal a condition variable. Unblocks one of the threads that are blocked on the given condition variable at the time of the call. If no threads are blocked on the condition variable at the time of the call, the function does nothing and return success. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>cond</entry>
+                                <entry>
+<para>A condition variable object. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link> on success, or <link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link> if the request could not be honored. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 186 of file tinycthread.c.</para>
+<programlisting>187 {
+188 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+189 &#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;haveWaiters;
+190 
+191 &#32;&#32;<emphasis role="comment">/*&#32;Are&#32;there&#32;any&#32;waiters?&#32;*/</emphasis>
+192 &#32;&#32;EnterCriticalSection(&amp;cond-&gt;mWaitersCountLock);
+193 &#32;&#32;haveWaiters&#32;=&#32;(cond-&gt;mWaitersCount&#32;&gt;&#32;0);
+194 &#32;&#32;LeaveCriticalSection(&amp;cond-&gt;mWaitersCountLock);
+195 
+196 &#32;&#32;<emphasis role="comment">/*&#32;If&#32;we&#32;have&#32;any&#32;waiting&#32;threads,&#32;send&#32;them&#32;a&#32;signal&#32;*/</emphasis>
+197 &#32;&#32;<emphasis role="keywordflow">if</emphasis>(haveWaiters)
+198 &#32;&#32;{
+199 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(SetEvent(cond-&gt;mEvents[_CONDITION_EVENT_ONE])&#32;==&#32;0)
+200 &#32;&#32;&#32;&#32;{
+201 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+202 &#32;&#32;&#32;&#32;}
+203 &#32;&#32;}
+204 
+205 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>;
+206 <emphasis role="preprocessor">#else</emphasis>
+207 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;pthread_cond_signal(cond)&#32;==&#32;0&#32;?&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>&#32;:&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+208 <emphasis role="preprocessor">#endif</emphasis>
+209 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1a2bdc352d949424855c957b0d1916d443"/>    <section>
+    <title>cnd_timedwait()</title>
+<indexterm><primary>cnd_timedwait</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>cnd_timedwait</secondary></indexterm>
+<para><computeroutput>int cnd_timedwait (<link linkend="_tinycthread_8h_1aa5c55d7c9eb959c15c4d5b73c02e8a41">cnd_t</link> * cond, <link linkend="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2">mtx_t</link> * mtx, const struct timespec * ts)</computeroutput></para>
+<para>Wait for a condition variable to become signaled. The function atomically unlocks the given mutex and endeavors to block until the given condition variable is signaled by a call to cnd_signal or to cnd_broadcast, or until after the specified time. When the calling thread becomes unblocked it locks the mutex before it returns. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>cond</entry>
+                                <entry>
+<para>A condition variable object. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mtx</entry>
+                                <entry>
+<para>A mutex object. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>xt</entry>
+                                <entry>
+<para>A point in time at which the request will time out (absolute time). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link> upon success, or <link linkend="_tinycthread_8h_1aec454a4baf61e6d518bbfb8768bd6a1f">thrd_timeout</link> if the time specified in the call was reached without acquiring the requested resource, or <link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link> if the request could not be honored. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 294 of file tinycthread.c.</para>
+<programlisting>295 {
+296 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+297 &#32;&#32;<emphasis role="keyword">struct&#32;</emphasis>timespec&#32;now;
+298 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(clock_gettime(CLOCK_REALTIME,&#32;&amp;now)&#32;==&#32;0)
+299 &#32;&#32;{
+300 &#32;&#32;&#32;&#32;DWORD&#32;delta&#32;=&#32;(DWORD)&#32;((ts-&gt;tv_sec&#32;-&#32;now.tv_sec)&#32;*&#32;1000&#32;+
+301 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(ts-&gt;tv_nsec&#32;-&#32;now.tv_nsec&#32;+&#32;500000)&#32;/&#32;1000000);
+302 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;_cnd_timedwait_win32(cond,&#32;mtx,&#32;delta);
+303 &#32;&#32;}
+304 &#32;&#32;<emphasis role="keywordflow">else</emphasis>
+305 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+306 <emphasis role="preprocessor">#else</emphasis>
+307 &#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;ret;
+308 &#32;&#32;ret&#32;=&#32;pthread_cond_timedwait(cond,&#32;mtx,&#32;ts);
+309 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ret&#32;==&#32;ETIMEDOUT)
+310 &#32;&#32;{
+311 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1aec454a4baf61e6d518bbfb8768bd6a1f">thrd_timeout</link>;
+312 &#32;&#32;}
+313 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;ret&#32;==&#32;0&#32;?&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>&#32;:&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+314 <emphasis role="preprocessor">#endif</emphasis>
+315 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1ac4dfb82fc3d92bb688cb07308af6a659"/>    <section>
+    <title>cnd_wait()</title>
+<indexterm><primary>cnd_wait</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>cnd_wait</secondary></indexterm>
+<para><computeroutput>int cnd_wait (<link linkend="_tinycthread_8h_1aa5c55d7c9eb959c15c4d5b73c02e8a41">cnd_t</link> * cond, <link linkend="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2">mtx_t</link> * mtx)</computeroutput></para>
+<para>Wait for a condition variable to become signaled. The function atomically unlocks the given mutex and endeavors to block until the given condition variable is signaled by a call to cnd_signal or to cnd_broadcast. When the calling thread becomes unblocked it locks the mutex before it returns. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>cond</entry>
+                                <entry>
+<para>A condition variable object. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mtx</entry>
+                                <entry>
+<para>A mutex object. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link> on success, or <link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link> if the request could not be honored. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 285 of file tinycthread.c.</para>
+<programlisting>286 {
+287 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+288 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;_cnd_timedwait_win32(cond,&#32;mtx,&#32;INFINITE);
+289 <emphasis role="preprocessor">#else</emphasis>
+290 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;pthread_cond_wait(cond,&#32;mtx)&#32;==&#32;0&#32;?&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>&#32;:&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+291 <emphasis role="preprocessor">#endif</emphasis>
+292 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1ae8b3732298d1d316db6438b4c561c0dd"/>    <section>
+    <title>mtx_destroy()</title>
+<indexterm><primary>mtx_destroy</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>mtx_destroy</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> mtx_destroy (<link linkend="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2">mtx_t</link> * mtx)</computeroutput></para>
+<para>Release any resources used by the given mutex. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>mtx</entry>
+                                <entry>
+<para>A mutex object. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line 77 of file tinycthread.c.</para>
+<programlisting>78 {
+79 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+80 &#32;&#32;DeleteCriticalSection(&amp;mtx-&gt;mHandle);
+81 <emphasis role="preprocessor">#else</emphasis>
+82 &#32;&#32;pthread_mutex_destroy(mtx);
+83 <emphasis role="preprocessor">#endif</emphasis>
+84 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1a89200caf0dc25fcc97df171d0034bff2"/>    <section>
+    <title>mtx_init()</title>
+<indexterm><primary>mtx_init</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>mtx_init</secondary></indexterm>
+<para><computeroutput>int mtx_init (<link linkend="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2">mtx_t</link> * mtx, int type)</computeroutput></para>
+<para>Create a mutex object. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>mtx</entry>
+                                <entry>
+<para>A mutex object. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>type</entry>
+                                <entry>
+<para>Bit-mask that must have one of the following six values: <itemizedlist>
+<listitem>
+<para><computeroutput>mtx_plain</computeroutput> for a simple non-recursive mutex </para>
+</listitem>
+<listitem>
+<para><computeroutput>mtx_timed</computeroutput> for a non-recursive mutex that supports timeout </para>
+</listitem>
+<listitem>
+<para><computeroutput>mtx_try</computeroutput> for a non-recursive mutex that supports test and return </para>
+</listitem>
+<listitem>
+<para><computeroutput>mtx_plain</computeroutput> | <computeroutput>mtx_recursive</computeroutput> (same as <computeroutput>mtx_plain</computeroutput>, but recursive) </para>
+</listitem>
+<listitem>
+<para><computeroutput>mtx_timed</computeroutput> | <computeroutput>mtx_recursive</computeroutput> (same as <computeroutput>mtx_timed</computeroutput>, but recursive) </para>
+</listitem>
+<listitem>
+<para><computeroutput>mtx_try</computeroutput> | <computeroutput>mtx_recursive</computeroutput> (same as <computeroutput>mtx_try</computeroutput>, but recursive) </para>
+</listitem>
+</itemizedlist>
+</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link> on success, or <link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link> if the request could not be honored. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 56 of file tinycthread.c.</para>
+<programlisting>57 {
+58 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+59 &#32;&#32;mtx-&gt;mAlreadyLocked&#32;=&#32;<link linkend="_tinycthread_8c_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+60 &#32;&#32;mtx-&gt;mRecursive&#32;=&#32;<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>&#32;&amp;&#32;<link linkend="_tinycthread_8h_1a23baf902554dba287faa32c646e35f61">mtx_recursive</link>;
+61 &#32;&#32;InitializeCriticalSection(&amp;mtx-&gt;mHandle);
+62 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>;
+63 <emphasis role="preprocessor">#else</emphasis>
+64 &#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;ret;
+65 &#32;&#32;pthread_mutexattr_t&#32;attr;
+66 &#32;&#32;pthread_mutexattr_init(&amp;attr);
+67 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>&#32;&amp;&#32;<link linkend="_tinycthread_8h_1a23baf902554dba287faa32c646e35f61">mtx_recursive</link>)
+68 &#32;&#32;{
+69 &#32;&#32;&#32;&#32;pthread_mutexattr_settype(&amp;attr,&#32;PTHREAD_MUTEX_RECURSIVE);
+70 &#32;&#32;}
+71 &#32;&#32;ret&#32;=&#32;pthread_mutex_init(mtx,&#32;&amp;attr);
+72 &#32;&#32;pthread_mutexattr_destroy(&amp;attr);
+73 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;ret&#32;==&#32;0&#32;?&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>&#32;:&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+74 <emphasis role="preprocessor">#endif</emphasis>
+75 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1a8945984db67db8ee774872da64d0e424"/>    <section>
+    <title>mtx_lock()</title>
+<indexterm><primary>mtx_lock</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>mtx_lock</secondary></indexterm>
+<para><computeroutput>int mtx_lock (<link linkend="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2">mtx_t</link> * mtx)</computeroutput></para>
+<para>Lock the given mutex. Blocks until the given mutex can be locked. If the mutex is non-recursive, and the calling thread already has a lock on the mutex, this call will block forever. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>mtx</entry>
+                                <entry>
+<para>A mutex object. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link> on success, or <link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link> if the request could not be honored. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 86 of file tinycthread.c.</para>
+<programlisting>87 {
+88 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+89 &#32;&#32;EnterCriticalSection(&amp;mtx-&gt;mHandle);
+90 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!mtx-&gt;mRecursive)
+91 &#32;&#32;{
+92 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>(mtx-&gt;mAlreadyLocked)&#32;Sleep(1000);&#32;<emphasis role="comment">/*&#32;Simulate&#32;deadlock...&#32;*/</emphasis>
+93 &#32;&#32;&#32;&#32;mtx-&gt;mAlreadyLocked&#32;=&#32;<link linkend="_tinycthread_8c_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+94 &#32;&#32;}
+95 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>;
+96 <emphasis role="preprocessor">#else</emphasis>
+97 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;pthread_mutex_lock(mtx)&#32;==&#32;0&#32;?&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>&#32;:&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+98 <emphasis role="preprocessor">#endif</emphasis>
+99 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1a98f9757dde089254735199ac738ff65f"/>    <section>
+    <title>mtx_timedlock()</title>
+<indexterm><primary>mtx_timedlock</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>mtx_timedlock</secondary></indexterm>
+<para><computeroutput>int mtx_timedlock (<link linkend="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2">mtx_t</link> * mtx, const struct timespec * ts)</computeroutput></para>
+<para>NOT YET IMPLEMENTED. </para>
+<para>
+Definition at line 101 of file tinycthread.c.</para>
+<programlisting>102 {
+103 &#32;&#32;<emphasis role="comment">/*&#32;FIXME!&#32;*/</emphasis>
+104 &#32;&#32;(<link linkend="_glad_8h_1aef30cfca5b4a4c292babb2f60f6d3296">void</link>)mtx;
+105 &#32;&#32;(<link linkend="_glad_8h_1aef30cfca5b4a4c292babb2f60f6d3296">void</link>)ts;
+106 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+107 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1ac577690ddd48f5a1fdf3dc97881a2199"/>    <section>
+    <title>mtx_trylock()</title>
+<indexterm><primary>mtx_trylock</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>mtx_trylock</secondary></indexterm>
+<para><computeroutput>int mtx_trylock (<link linkend="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2">mtx_t</link> * mtx)</computeroutput></para>
+<para>Try to lock the given mutex. The specified mutex shall support either test and return or timeout. If the mutex is already locked, the function returns without blocking. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>mtx</entry>
+                                <entry>
+<para>A mutex object. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link> on success, or <link linkend="_tinycthread_8h_1a3c563aa25920a041d83d4019b113ab5d">thrd_busy</link> if the resource requested is already in use, or <link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link> if the request could not be honored. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 109 of file tinycthread.c.</para>
+<programlisting>110 {
+111 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+112 &#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;ret&#32;=&#32;TryEnterCriticalSection(&amp;mtx-&gt;mHandle)&#32;?&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>&#32;:&#32;<link linkend="_tinycthread_8h_1a3c563aa25920a041d83d4019b113ab5d">thrd_busy</link>;
+113 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((!mtx-&gt;mRecursive)&#32;&amp;&amp;&#32;(ret&#32;==&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>)&#32;&amp;&amp;&#32;mtx-&gt;mAlreadyLocked)
+114 &#32;&#32;{
+115 &#32;&#32;&#32;&#32;LeaveCriticalSection(&amp;mtx-&gt;mHandle);
+116 &#32;&#32;&#32;&#32;ret&#32;=&#32;<link linkend="_tinycthread_8h_1a3c563aa25920a041d83d4019b113ab5d">thrd_busy</link>;
+117 &#32;&#32;}
+118 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;ret;
+119 <emphasis role="preprocessor">#else</emphasis>
+120 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;(pthread_mutex_trylock(mtx)&#32;==&#32;0)&#32;?&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>&#32;:&#32;<link linkend="_tinycthread_8h_1a3c563aa25920a041d83d4019b113ab5d">thrd_busy</link>;
+121 <emphasis role="preprocessor">#endif</emphasis>
+122 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1ae2fb1d2854461fa583017cc9b0bc6cca"/>    <section>
+    <title>mtx_unlock()</title>
+<indexterm><primary>mtx_unlock</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>mtx_unlock</secondary></indexterm>
+<para><computeroutput>int mtx_unlock (<link linkend="_tinycthread_8h_1ae653b263c1432a99c799cbf028bc65e2">mtx_t</link> * mtx)</computeroutput></para>
+<para>Unlock the given mutex. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>mtx</entry>
+                                <entry>
+<para>A mutex object. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link> on success, or <link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link> if the request could not be honored. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 124 of file tinycthread.c.</para>
+<programlisting>125 {
+126 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+127 &#32;&#32;mtx-&gt;mAlreadyLocked&#32;=&#32;<link linkend="_tinycthread_8c_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+128 &#32;&#32;LeaveCriticalSection(&amp;mtx-&gt;mHandle);
+129 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>;
+130 <emphasis role="preprocessor">#else</emphasis>
+131 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;pthread_mutex_unlock(mtx)&#32;==&#32;0&#32;?&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>&#32;:&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;;
+132 <emphasis role="preprocessor">#endif</emphasis>
+133 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1a1a52b6cd2d15cc6c4741d5124f85d183"/>    <section>
+    <title>thrd_create()</title>
+<indexterm><primary>thrd_create</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>thrd_create</secondary></indexterm>
+<para><computeroutput>int thrd_create (<link linkend="_tinycthread_8h_1a40f328ffa956af453fe5c14704f88231">thrd_t</link> * thr, <link linkend="_tinycthread_8h_1ab26bdfa456502f8c483f45bb39ca7336">thrd_start_t</link> func, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * arg)</computeroutput></para>
+<para>Create a new thread. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>thr</entry>
+                                <entry>
+<para>Identifier of the newly created thread. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>func</entry>
+                                <entry>
+<para>A function pointer to the function that will be executed in the new thread. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>arg</entry>
+                                <entry>
+<para>An argument to the thread function. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link> on success, or <link linkend="_tinycthread_8h_1ad6010b6ba8c0508cef692f066b09e2ef">thrd_nomem</link> if no memory could be allocated for the thread requested, or <link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link> if the request could not be honored. </para>
+</formalpara>
+<note><title>Note</title>
+
+<para>A thread’s identifier may be reused for a different thread once the original thread has exited and either been detached or joined to another thread. </para>
+</note>
+</para>
+<para>
+Definition at line 361 of file tinycthread.c.</para>
+<programlisting>362 {
+363 &#32;&#32;<emphasis role="comment">/*&#32;Fill&#32;out&#32;the&#32;thread&#32;startup&#32;information&#32;(passed&#32;to&#32;the&#32;thread&#32;wrapper,</emphasis>
+364 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;which&#32;will&#32;eventually&#32;free&#32;it)&#32;*/</emphasis>
+365 &#32;&#32;<link linkend="_struct__thread__start__info">_thread_start_info</link>*&#32;ti&#32;=&#32;(<link linkend="_struct__thread__start__info">_thread_start_info</link>*)<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>(<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct__thread__start__info">_thread_start_info</link>));
+366 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ti&#32;==&#32;<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+367 &#32;&#32;{
+368 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1ad6010b6ba8c0508cef692f066b09e2ef">thrd_nomem</link>;
+369 &#32;&#32;}
+370 &#32;&#32;ti-&gt;<link linkend="_struct__thread__start__info_1af8538b214eba5919c21dde7cf7102c83">mFunction</link>&#32;=&#32;<link linkend="_glad_8h_1a18ae3ab36a07e388833b568cfdfa90c8">func</link>;
+371 &#32;&#32;ti-&gt;<link linkend="_struct__thread__start__info_1a0d38b31c203749b40fd7926c8f4579fa">mArg</link>&#32;=&#32;arg;
+372 
+373 &#32;&#32;<emphasis role="comment">/*&#32;Create&#32;the&#32;thread&#32;*/</emphasis>
+374 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+375 &#32;&#32;*thr&#32;=&#32;(HANDLE)_beginthreadex(<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;0,&#32;_thrd_wrapper_function,&#32;(<emphasis role="keywordtype">void</emphasis>&#32;*)ti,&#32;0,&#32;<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+376 <emphasis role="preprocessor">#elif&#32;defined(_TTHREAD_POSIX_)</emphasis>
+377 &#32;&#32;<emphasis role="keywordflow">if</emphasis>(pthread_create(thr,&#32;<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;_thrd_wrapper_function,&#32;(<emphasis role="keywordtype">void</emphasis>&#32;*)ti)&#32;!=&#32;0)
+378 &#32;&#32;{
+379 &#32;&#32;&#32;&#32;*thr&#32;=&#32;0;
+380 &#32;&#32;}
+381 <emphasis role="preprocessor">#endif</emphasis>
+382 
+383 &#32;&#32;<emphasis role="comment">/*&#32;Did&#32;we&#32;fail&#32;to&#32;create&#32;the&#32;thread?&#32;*/</emphasis>
+384 &#32;&#32;<emphasis role="keywordflow">if</emphasis>(!*thr)
+385 &#32;&#32;{
+386 &#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(ti);
+387 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+388 &#32;&#32;}
+389 
+390 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>;
+391 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1ab67b6f182a848d979155d03598325fa7"/>    <section>
+    <title>thrd_current()</title>
+<indexterm><primary>thrd_current</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>thrd_current</secondary></indexterm>
+<para><computeroutput><link linkend="_tinycthread_8h_1a40f328ffa956af453fe5c14704f88231">thrd_t</link> thrd_current (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para>
+<para>Identify the calling thread. <formalpara><title>Returns</title>
+
+<para>The identifier of the calling thread. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 393 of file tinycthread.c.</para>
+<programlisting>394 {
+395 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+396 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;GetCurrentThread();
+397 <emphasis role="preprocessor">#else</emphasis>
+398 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;pthread_self();
+399 <emphasis role="preprocessor">#endif</emphasis>
+400 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1ad5380997f9e32a31f802bdd9cb266902"/>    <section>
+    <title>thrd_detach()</title>
+<indexterm><primary>thrd_detach</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>thrd_detach</secondary></indexterm>
+<para><computeroutput>int thrd_detach (<link linkend="_tinycthread_8h_1a40f328ffa956af453fe5c14704f88231">thrd_t</link> thr)</computeroutput></para>
+<para>NOT YET IMPLEMENTED. </para>
+<para>
+Definition at line 402 of file tinycthread.c.</para>
+<programlisting>403 {
+404 &#32;&#32;<emphasis role="comment">/*&#32;FIXME!&#32;*/</emphasis>
+405 &#32;&#32;(<link linkend="_glad_8h_1aef30cfca5b4a4c292babb2f60f6d3296">void</link>)thr;
+406 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+407 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1a153e65a389814ce51ad07791e42b2118"/>    <section>
+    <title>thrd_equal()</title>
+<indexterm><primary>thrd_equal</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>thrd_equal</secondary></indexterm>
+<para><computeroutput>int thrd_equal (<link linkend="_tinycthread_8h_1a40f328ffa956af453fe5c14704f88231">thrd_t</link> thr0, <link linkend="_tinycthread_8h_1a40f328ffa956af453fe5c14704f88231">thrd_t</link> thr1)</computeroutput></para>
+<para>Compare two thread identifiers. The function determines if two thread identifiers refer to the same thread. <formalpara><title>Returns</title>
+
+<para>Zero if the two thread identifiers refer to different threads. Otherwise a nonzero value is returned. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 409 of file tinycthread.c.</para>
+<programlisting>410 {
+411 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+412 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;thr0&#32;==&#32;thr1;
+413 <emphasis role="preprocessor">#else</emphasis>
+414 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;pthread_equal(thr0,&#32;thr1);
+415 <emphasis role="preprocessor">#endif</emphasis>
+416 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1ae13e483223c39327e190e79e18f20b15"/>    <section>
+    <title>thrd_exit()</title>
+<indexterm><primary>thrd_exit</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>thrd_exit</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> thrd_exit (int res)</computeroutput></para>
+<para>Terminate execution of the calling thread. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>res</entry>
+                                <entry>
+<para>Result code of the calling thread. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line 418 of file tinycthread.c.</para>
+<programlisting>419 {
+420 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+421 &#32;&#32;ExitThread(<link linkend="_glext_8h_1a1dbb21208b9047cc8031ca9c840d3c2f">res</link>);
+422 <emphasis role="preprocessor">#else</emphasis>
+423 &#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;*pres&#32;=&#32;<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>(<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keywordtype">int</emphasis>));
+424 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(pres&#32;!=&#32;<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+425 &#32;&#32;{
+426 &#32;&#32;&#32;&#32;*(<emphasis role="keywordtype">int</emphasis>*)pres&#32;=&#32;<link linkend="_glext_8h_1a1dbb21208b9047cc8031ca9c840d3c2f">res</link>;
+427 &#32;&#32;}
+428 &#32;&#32;pthread_exit(pres);
+429 <emphasis role="preprocessor">#endif</emphasis>
+430 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1aa2e83a544f49f74cf217a69a882b5d80"/>    <section>
+    <title>thrd_join()</title>
+<indexterm><primary>thrd_join</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>thrd_join</secondary></indexterm>
+<para><computeroutput>int thrd_join (<link linkend="_tinycthread_8h_1a40f328ffa956af453fe5c14704f88231">thrd_t</link> thr, int * res)</computeroutput></para>
+<para>Wait for a thread to terminate. The function joins the given thread with the current thread by blocking until the other thread has terminated. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>thr</entry>
+                                <entry>
+<para>The thread to join with. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res</entry>
+                                <entry>
+<para>If this pointer is not NULL, the function will store the result code of the given thread in the integer pointed to by <computeroutput>res</computeroutput>. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link> on success, or <link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link> if the request could not be honored. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 432 of file tinycthread.c.</para>
+<programlisting>433 {
+434 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+435 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(WaitForSingleObject(thr,&#32;INFINITE)&#32;==&#32;WAIT_FAILED)
+436 &#32;&#32;{
+437 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+438 &#32;&#32;}
+439 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a1dbb21208b9047cc8031ca9c840d3c2f">res</link>&#32;!=&#32;<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+440 &#32;&#32;{
+441 &#32;&#32;&#32;&#32;DWORD&#32;dwRes;
+442 &#32;&#32;&#32;&#32;GetExitCodeThread(thr,&#32;&amp;dwRes);
+443 &#32;&#32;&#32;&#32;*<link linkend="_glext_8h_1a1dbb21208b9047cc8031ca9c840d3c2f">res</link>&#32;=&#32;dwRes;
+444 &#32;&#32;}
+445 <emphasis role="preprocessor">#elif&#32;defined(_TTHREAD_POSIX_)</emphasis>
+446 &#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;*pres;
+447 &#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;ires&#32;=&#32;0;
+448 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(pthread_join(thr,&#32;&amp;pres)&#32;!=&#32;0)
+449 &#32;&#32;{
+450 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+451 &#32;&#32;}
+452 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(pres&#32;!=&#32;<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+453 &#32;&#32;{
+454 &#32;&#32;&#32;&#32;ires&#32;=&#32;*(<emphasis role="keywordtype">int</emphasis>*)pres;
+455 &#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(pres);
+456 &#32;&#32;}
+457 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a1dbb21208b9047cc8031ca9c840d3c2f">res</link>&#32;!=&#32;<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+458 &#32;&#32;{
+459 &#32;&#32;&#32;&#32;*<link linkend="_glext_8h_1a1dbb21208b9047cc8031ca9c840d3c2f">res</link>&#32;=&#32;ires;
+460 &#32;&#32;}
+461 <emphasis role="preprocessor">#endif</emphasis>
+462 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>;
+463 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1a58d00bd1fc0cc3c91d4c34d5faf117c3"/>    <section>
+    <title>thrd_sleep()</title>
+<indexterm><primary>thrd_sleep</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>thrd_sleep</secondary></indexterm>
+<para><computeroutput>int thrd_sleep (const struct timespec * time_point, struct timespec * remaining)</computeroutput></para>
+<para>Put the calling thread to sleep. Suspend execution of the calling thread. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>time_point</entry>
+                                <entry>
+<para>A point in time at which the thread will resume (absolute time). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>remaining</entry>
+                                <entry>
+<para>If non-NULL, this parameter will hold the remaining time until time_point upon return. This will typically be zero, but if the thread was woken up by a signal that is not ignored before time_point was reached <computeroutput>remaining</computeroutput> will hold a positive time. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>0 (zero) on successful sleep, or -1 if an interrupt occurred. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 465 of file tinycthread.c.</para>
+<programlisting>466 {
+467 &#32;&#32;<emphasis role="keyword">struct&#32;</emphasis>timespec&#32;now;
+468 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+469 &#32;&#32;DWORD&#32;delta;
+470 <emphasis role="preprocessor">#else</emphasis>
+471 &#32;&#32;<emphasis role="keywordtype">long</emphasis>&#32;delta;
+472 <emphasis role="preprocessor">#endif</emphasis>
+473 
+474 &#32;&#32;<emphasis role="comment">/*&#32;Get&#32;the&#32;current&#32;time&#32;*/</emphasis>
+475 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(clock_gettime(CLOCK_REALTIME,&#32;&amp;now)&#32;!=&#32;0)
+476 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;-2;&#32;&#32;<emphasis role="comment">//&#32;FIXME:&#32;Some&#32;specific&#32;error&#32;code?</emphasis>
+477 
+478 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+479 &#32;&#32;<emphasis role="comment">/*&#32;Delta&#32;in&#32;milliseconds&#32;*/</emphasis>
+480 &#32;&#32;delta&#32;=&#32;(DWORD)&#32;((time_point-&gt;tv_sec&#32;-&#32;now.tv_sec)&#32;*&#32;1000&#32;+
+481 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(time_point-&gt;tv_nsec&#32;-&#32;now.tv_nsec&#32;+&#32;500000)&#32;/&#32;1000000);
+482 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(delta&#32;&gt;&#32;0)
+483 &#32;&#32;{
+484 &#32;&#32;&#32;&#32;Sleep(delta);
+485 &#32;&#32;}
+486 <emphasis role="preprocessor">#else</emphasis>
+487 &#32;&#32;<emphasis role="comment">/*&#32;Delta&#32;in&#32;microseconds&#32;*/</emphasis>
+488 &#32;&#32;delta&#32;=&#32;(time_point-&gt;tv_sec&#32;-&#32;now.tv_sec)&#32;*&#32;1000000<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>&#32;+
+489 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(time_point-&gt;tv_nsec&#32;-&#32;now.tv_nsec&#32;+&#32;500<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>)&#32;/&#32;1000<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>;
+490 
+491 &#32;&#32;<emphasis role="comment">/*&#32;On&#32;some&#32;systems,&#32;the&#32;usleep&#32;argument&#32;must&#32;be&#32;&lt;&#32;1000000&#32;*/</emphasis>
+492 &#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(delta&#32;&gt;&#32;999999<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>)
+493 &#32;&#32;{
+494 &#32;&#32;&#32;&#32;usleep(999999);
+495 &#32;&#32;&#32;&#32;delta&#32;-=&#32;999999<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>;
+496 &#32;&#32;}
+497 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(delta&#32;&gt;&#32;0<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>)
+498 &#32;&#32;{
+499 &#32;&#32;&#32;&#32;usleep((useconds_t)delta);
+500 &#32;&#32;}
+501 <emphasis role="preprocessor">#endif</emphasis>
+502 
+503 &#32;&#32;<emphasis role="comment">/*&#32;We&#32;don&apos;t&#32;support&#32;waking&#32;up&#32;prematurely&#32;(yet)&#32;*/</emphasis>
+504 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(remaining)
+505 &#32;&#32;{
+506 &#32;&#32;&#32;&#32;remaining-&gt;tv_sec&#32;=&#32;0;
+507 &#32;&#32;&#32;&#32;remaining-&gt;tv_nsec&#32;=&#32;0;
+508 &#32;&#32;}
+509 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+510 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1acbfb78346e6b76b23da1d2d8df03549a"/>    <section>
+    <title>thrd_yield()</title>
+<indexterm><primary>thrd_yield</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>thrd_yield</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> thrd_yield (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para>
+<para>Yield execution to another thread. Permit other threads to run, even if the current thread would ordinarily continue to run. </para>
+<para>
+Definition at line 512 of file tinycthread.c.</para>
+<programlisting>513 {
+514 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+515 &#32;&#32;Sleep(0);
+516 <emphasis role="preprocessor">#else</emphasis>
+517 &#32;&#32;sched_yield();
+518 <emphasis role="preprocessor">#endif</emphasis>
+519 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1a286fe7927e9af276a9cfdbc8b9eb08ad"/>    <section>
+    <title>tss_create()</title>
+<indexterm><primary>tss_create</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>tss_create</secondary></indexterm>
+<para><computeroutput>int tss_create (<link linkend="_tinycthread_8h_1a0475af0e9cd14ba35427de7c8c49dab1">tss_t</link> * key, <link linkend="_tinycthread_8h_1a7bd9f13e4169f842cbb831ea348049dd">tss_dtor_t</link> dtor)</computeroutput></para>
+<para>Create a thread-specific storage. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>key</entry>
+                                <entry>
+<para>The unique key identifier that will be set if the function is successful. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>dtor</entry>
+                                <entry>
+<para>Destructor function. This can be NULL. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link> on success, or <link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link> if the request could not be honored. </para>
+</formalpara>
+<note><title>Note</title>
+
+<para>The destructor function is not supported under Windows. If <computeroutput>dtor</computeroutput> is not NULL when calling this function under Windows, the function will fail and return <link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>. </para>
+</note>
+</para>
+<para>
+Definition at line 521 of file tinycthread.c.</para>
+<programlisting>522 {
+523 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+524 &#32;&#32;<emphasis role="comment">/*&#32;FIXME:&#32;The&#32;destructor&#32;function&#32;is&#32;not&#32;supported&#32;yet...&#32;*/</emphasis>
+525 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(dtor&#32;!=&#32;<link linkend="_tinycthread_8c_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+526 &#32;&#32;{
+527 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+528 &#32;&#32;}
+529 &#32;&#32;*<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>&#32;=&#32;TlsAlloc();
+530 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(*<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>&#32;==&#32;TLS_OUT_OF_INDEXES)
+531 &#32;&#32;{
+532 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+533 &#32;&#32;}
+534 <emphasis role="preprocessor">#else</emphasis>
+535 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(pthread_key_create(<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>,&#32;dtor)&#32;!=&#32;0)
+536 &#32;&#32;{
+537 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+538 &#32;&#32;}
+539 <emphasis role="preprocessor">#endif</emphasis>
+540 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>;
+541 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1aecebbc66b206171d9381ba94528c6cb7"/>    <section>
+    <title>tss_delete()</title>
+<indexterm><primary>tss_delete</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>tss_delete</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> tss_delete (<link linkend="_tinycthread_8h_1a0475af0e9cd14ba35427de7c8c49dab1">tss_t</link> key)</computeroutput></para>
+<para>Delete a thread-specific storage. The function releases any resources used by the given thread-specific storage. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>key</entry>
+                                <entry>
+<para>The key that shall be deleted. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line 543 of file tinycthread.c.</para>
+<programlisting>544 {
+545 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+546 &#32;&#32;TlsFree(<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>);
+547 <emphasis role="preprocessor">#else</emphasis>
+548 &#32;&#32;pthread_key_delete(<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>);
+549 <emphasis role="preprocessor">#endif</emphasis>
+550 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1a183e71f731ed566a1d14b056606806f8"/>    <section>
+    <title>tss_get()</title>
+<indexterm><primary>tss_get</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>tss_get</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>* tss_get (<link linkend="_tinycthread_8h_1a0475af0e9cd14ba35427de7c8c49dab1">tss_t</link> key)</computeroutput></para>
+<para>Get the value for a thread-specific storage. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>key</entry>
+                                <entry>
+<para>The thread-specific storage identifier. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>The value for the current thread held in the given thread-specific storage. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 552 of file tinycthread.c.</para>
+<programlisting>553 {
+554 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+555 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;TlsGetValue(<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>);
+556 <emphasis role="preprocessor">#else</emphasis>
+557 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;pthread_getspecific(<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>);
+558 <emphasis role="preprocessor">#endif</emphasis>
+559 }
+</programlisting>    </section><anchor xml:id="_tinycthread_8h_1a608e01c49b84a5ad4f085a9aedc6a680"/>    <section>
+    <title>tss_set()</title>
+<indexterm><primary>tss_set</primary><secondary>tinycthread.h</secondary></indexterm>
+<indexterm><primary>tinycthread.h</primary><secondary>tss_set</secondary></indexterm>
+<para><computeroutput>int tss_set (<link linkend="_tinycthread_8h_1a0475af0e9cd14ba35427de7c8c49dab1">tss_t</link> key, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * val)</computeroutput></para>
+<para>Set the value for a thread-specific storage. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>key</entry>
+                                <entry>
+<para>The thread-specific storage identifier. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>val</entry>
+                                <entry>
+<para>The value of the thread-specific storage to set for the current thread. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link> on success, or <link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link> if the request could not be honored. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 561 of file tinycthread.c.</para>
+<programlisting>562 {
+563 <emphasis role="preprocessor">#if&#32;defined(_TTHREAD_WIN32_)</emphasis>
+564 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(TlsSetValue(<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>,&#32;<link linkend="_glad_8h_1a26942fd2ed566ef553eae82d2c109c8f">val</link>)&#32;==&#32;0)
+565 &#32;&#32;{
+566 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+567 &#32;&#32;}
+568 <emphasis role="preprocessor">#else</emphasis>
+569 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(pthread_setspecific(<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>,&#32;<link linkend="_glad_8h_1a26942fd2ed566ef553eae82d2c109c8f">val</link>)&#32;!=&#32;0)
+570 &#32;&#32;{
+571 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a0944e70c2ce4eed616f7bcfd604fba96">thrd_error</link>;
+572 &#32;&#32;}
+573 <emphasis role="preprocessor">#endif</emphasis>
+574 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_tinycthread_8h_1a6f15c94421801f7f6a4338653b9017dc">thrd_success</link>;
+575 }
+</programlisting></section>
+</section>
+</section>

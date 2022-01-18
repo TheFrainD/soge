@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_platform_8c">
+<title>deps/glfw/src/platform.c File Reference</title>
+<indexterm><primary>deps/glfw/src/platform.c</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_platform_8c_1ac0e7d5f9c3735b1959f87e959b90ce53">_glfwSelectPlatform</link> (int desiredID, <link linkend="_struct___g_l_f_wplatform">_GLFWplatform</link> *platform)</para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> int <link linkend="_group__init_1gac2d1735162a981fcaa8fb386740aa5ce">glfwGetPlatform</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+
+<para>Returns the currently selected platform. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> int <link linkend="_group__init_1ga7b57ba0946498e8621f4d969bbcecfba">glfwPlatformSupported</link> (int platformID)</para>
+
+<para>Returns whether the library includes support for the specified platform. </para>
+</listitem>
+            <listitem><para>const <link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> char * <link linkend="_group__init_1ga7de7ba982c0cf66b35afdaa8bea071ae">glfwGetVersionString</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+
+<para>Returns a string describing the compile-time configuration. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_platform_8c_1ac0e7d5f9c3735b1959f87e959b90ce53"/>    <section>
+    <title>_glfwSelectPlatform()</title>
+<indexterm><primary>_glfwSelectPlatform</primary><secondary>platform.c</secondary></indexterm>
+<indexterm><primary>platform.c</primary><secondary>_glfwSelectPlatform</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwSelectPlatform (int desiredID, <link linkend="_struct___g_l_f_wplatform">_GLFWplatform</link> * platform)</computeroutput></para><para>
+Definition at line 56 of file platform.c.</para>
+<programlisting>57 {
+58 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">size_t</emphasis>&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;=&#32;<emphasis role="keyword">sizeof</emphasis>(supportedPlatforms)&#32;/&#32;<emphasis role="keyword">sizeof</emphasis>(supportedPlatforms[0]);
+59 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">size_t</emphasis>&#32;i;
+60 
+61 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(desiredID&#32;!=&#32;<link linkend="_group__init_1ga18b2d37374d0dea28cd69194fa85b859">GLFW_ANY_PLATFORM</link>&#32;&amp;&amp;
+62 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;desiredID&#32;!=&#32;<link linkend="_group__init_1ga8d3d17df2ab57492cef665da52c603a1">GLFW_PLATFORM_WIN32</link>&#32;&amp;&amp;
+63 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;desiredID&#32;!=&#32;<link linkend="_group__init_1ga83b18714254f75bc2f0cdbafa0f10b6b">GLFW_PLATFORM_COCOA</link>&#32;&amp;&amp;
+64 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;desiredID&#32;!=&#32;<link linkend="_group__init_1gac4b08906a3cbf26c518a4a543eedd740">GLFW_PLATFORM_WAYLAND</link>&#32;&amp;&amp;
+65 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;desiredID&#32;!=&#32;<link linkend="_group__init_1gaf5333f3933e9c248a00cfda6523f386b">GLFW_PLATFORM_X11</link>&#32;&amp;&amp;
+66 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;desiredID&#32;!=&#32;<link linkend="_group__init_1gac06fad5a4866ae7a1d7b2675fac72d7f">GLFW_PLATFORM_NULL</link>)
+67 &#32;&#32;&#32;&#32;{
+68 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga76f6bb9c4eea73db675f096b404593ce">GLFW_INVALID_ENUM</link>,&#32;<emphasis role="stringliteral">&quot;Invalid&#32;platform&#32;ID&#32;0x%08X&quot;</emphasis>,&#32;desiredID);
+69 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+70 &#32;&#32;&#32;&#32;}
+71 
+72 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Only&#32;allow&#32;the&#32;Null&#32;platform&#32;if&#32;specifically&#32;requested</emphasis>
+73 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(desiredID&#32;==&#32;<link linkend="_group__init_1gac06fad5a4866ae7a1d7b2675fac72d7f">GLFW_PLATFORM_NULL</link>)
+74 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_null__init_8c_1ab1d5e6831b39be2c5c38a03e6c2d0b86">_glfwConnectNull</link>(desiredID,&#32;platform);
+75 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;==&#32;0)
+76 &#32;&#32;&#32;&#32;{
+77 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga3608c6c29ab7a72f3bf019f4c3a2563d">GLFW_PLATFORM_UNAVAILABLE</link>,&#32;<emphasis role="stringliteral">&quot;This&#32;binary&#32;only&#32;supports&#32;the&#32;Null&#32;platform&quot;</emphasis>);
+78 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+79 &#32;&#32;&#32;&#32;}
+80 
+81 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(desiredID&#32;==&#32;<link linkend="_group__init_1ga18b2d37374d0dea28cd69194fa85b859">GLFW_ANY_PLATFORM</link>)
+82 &#32;&#32;&#32;&#32;{
+83 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;If&#32;there&#32;is&#32;exactly&#32;one&#32;platform&#32;available&#32;for&#32;auto-selection,&#32;let&#32;it&#32;emit&#32;the</emphasis>
+84 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;error&#32;on&#32;failure&#32;as&#32;the&#32;platform-specific&#32;error&#32;description&#32;may&#32;be&#32;more&#32;helpful</emphasis>
+85 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;==&#32;1)
+86 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;supportedPlatforms[0].connect(supportedPlatforms[0].<link linkend="_platform_8c_1af180e926633cde08a05ccbc3af397ee4">ID</link>,&#32;platform);
+87 
+88 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>;&#32;&#32;i++)
+89 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+90 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(supportedPlatforms[i].<link linkend="_platform_8c_1a09fba7fe010bf5874aedf846155a0950">connect</link>(desiredID,&#32;platform))
+91 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+92 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+93 
+94 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga3608c6c29ab7a72f3bf019f4c3a2563d">GLFW_PLATFORM_UNAVAILABLE</link>,&#32;<emphasis role="stringliteral">&quot;Failed&#32;to&#32;detect&#32;any&#32;supported&#32;platform&quot;</emphasis>);
+95 &#32;&#32;&#32;&#32;}
+96 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+97 &#32;&#32;&#32;&#32;{
+98 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>;&#32;&#32;i++)
+99 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+100 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(supportedPlatforms[i].<link linkend="_platform_8c_1af180e926633cde08a05ccbc3af397ee4">ID</link>&#32;==&#32;desiredID)
+101 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;supportedPlatforms[i].connect(desiredID,&#32;platform);
+102 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+103 
+104 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga3608c6c29ab7a72f3bf019f4c3a2563d">GLFW_PLATFORM_UNAVAILABLE</link>,&#32;<emphasis role="stringliteral">&quot;The&#32;requested&#32;platform&#32;is&#32;not&#32;supported&quot;</emphasis>);
+105 &#32;&#32;&#32;&#32;}
+106 
+107 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+108 }
+</programlisting></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_platform_8c_1a09fba7fe010bf5874aedf846155a0950"/>    <section>
+    <title>connect</title>
+<indexterm><primary>connect</primary><secondary>platform.c</secondary></indexterm>
+<indexterm><primary>platform.c</primary><secondary>connect</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link>(* connect) (int, <link linkend="_struct___g_l_f_wplatform">_GLFWplatform</link> *)</computeroutput></para><para>
+Definition at line 39 of file platform.c.</para>
+    </section><anchor xml:id="_platform_8c_1af180e926633cde08a05ccbc3af397ee4"/>    <section>
+    <title>ID</title>
+<indexterm><primary>ID</primary><secondary>platform.c</secondary></indexterm>
+<indexterm><primary>platform.c</primary><secondary>ID</secondary></indexterm>
+<para><computeroutput>int ID</computeroutput></para><para>
+Definition at line 38 of file platform.c.</para>
+</section>
+</section>
+</section>

@@ -1,0 +1,500 @@
+\hypertarget{textedit__sample_8c}{}\doxysection{deps/stb/tests/textedit\+\_\+sample.c File Reference}
+\label{textedit__sample_8c}\index{deps/stb/tests/textedit\_sample.c@{deps/stb/tests/textedit\_sample.c}}
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$ctype.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}stb\+\_\+textedit.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structtext__control}{text\+\_\+control}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_a6e64031a061922e3a48d88fd8623f4c3}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+C\+H\+A\+R\+T\+Y\+PE}}~char
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_ab58b961887715e3f06f0a60a773c6de1}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+S\+T\+R\+I\+NG}}~\mbox{\hyperlink{structtext__control}{text\+\_\+control}}
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}}~0x80000000
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_a7a2dfcd72ddf88946c61dd211cfebc29}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+S\+T\+R\+I\+N\+G\+L\+EN}}(\mbox{\hyperlink{glext_8h_a45e774067520be559b8e78373132a9ec}{tc}})~((\mbox{\hyperlink{glext_8h_a45e774067520be559b8e78373132a9ec}{tc}})-\/$>$\mbox{\hyperlink{glext_8h_a0fa7e7ab44d05aec9b9988630e42a820}{stringlen}})
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_ac881dfa6b09fe6ded1c7bce53026183e}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+L\+A\+Y\+O\+U\+T\+R\+OW}}~\mbox{\hyperlink{textedit__sample_8c_a9cf8755d5364c9766d8dba8309670a1d}{layout\+\_\+func}}
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_ae696f0d4a714a9410eda06888bc06588}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+G\+E\+T\+W\+I\+D\+TH}}(\mbox{\hyperlink{glext_8h_a45e774067520be559b8e78373132a9ec}{tc}},  \mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  i)~(1)
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_ab8311ae6b6ce2c9cadfc176331945eca}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+E\+Y\+T\+O\+T\+E\+XT}}(\mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}})~(((\mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}}) \& \mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}}) ? 0 \+: (\mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}}))
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_ae3ca31117527780ae203e0e8a040d11f}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+G\+E\+T\+C\+H\+AR}}(\mbox{\hyperlink{glext_8h_a45e774067520be559b8e78373132a9ec}{tc}},  i)~((\mbox{\hyperlink{glext_8h_a45e774067520be559b8e78373132a9ec}{tc}})-\/$>$\mbox{\hyperlink{glad_8h_ae84541b4f3d8e1ea24ec0f466a8c568b}{string}}\mbox{[}i\mbox{]})
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_abb17caa71f7b09773848f8ddcbeb0be0}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+N\+E\+W\+L\+I\+NE}}~\textquotesingle{}\textbackslash{}\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}}\textquotesingle{}
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_aee5f80efacf21dd92b5b3dee06c73807}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+I\+S\+\_\+\+S\+P\+A\+CE}}(ch)~isspace(ch)
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_a0e9782080bc2f211e9b2c7b534611f9f}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+D\+E\+L\+E\+T\+E\+C\+H\+A\+RS}}~\mbox{\hyperlink{textedit__sample_8c_a9f737629af524b3be93960610bf6653f}{delete\+\_\+chars}}
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_afbf5b1efdc094bccaddc6d4c3b6b5a2a}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+I\+N\+S\+E\+R\+T\+C\+H\+A\+RS}}~\mbox{\hyperlink{textedit__sample_8c_ad02cd3f3823ec835f8fd3d86447d1a7e}{insert\+\_\+chars}}
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_a295377d91a81714e475c3675142944aa}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+S\+H\+I\+FT}}~0x40000000
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_ab62487ccaf090818d712c8bcd2a0c0ea}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+C\+O\+N\+T\+R\+OL}}~0x20000000
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_ab78e75643116b67f27faa253997d6bf4}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+L\+E\+FT}}~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 1)
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_a2372bf34dbfe9ee393e5e893a59519ff}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+R\+I\+G\+HT}}~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 2)
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_a579019adb9b5fbb8432121dc10d59755}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+UP}}~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 3)
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_a1b0a25c8debb2e6b33d5b9678ff31eb6}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+D\+O\+WN}}~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 4)
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_ae5c188433685fd5694d9323078e7faa4}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+L\+I\+N\+E\+S\+T\+A\+RT}}~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 5)
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_a86649bcd5a713ef6ebc40271b8d33448}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+L\+I\+N\+E\+E\+ND}}~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 6)
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_adb6231fb52ce1b5fe340d158db4fa113}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+T\+E\+X\+T\+S\+T\+A\+RT}}~(\mbox{\hyperlink{textedit__sample_8c_ae5c188433685fd5694d9323078e7faa4}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+L\+I\+N\+E\+S\+T\+A\+RT}} $\vert$ \mbox{\hyperlink{textedit__sample_8c_ab62487ccaf090818d712c8bcd2a0c0ea}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+C\+O\+N\+T\+R\+OL}})
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_a74b070e036f6ac29eb876a94cb856600}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+T\+E\+X\+T\+E\+ND}}~(\mbox{\hyperlink{textedit__sample_8c_a86649bcd5a713ef6ebc40271b8d33448}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+L\+I\+N\+E\+E\+ND}}   $\vert$ \mbox{\hyperlink{textedit__sample_8c_ab62487ccaf090818d712c8bcd2a0c0ea}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+C\+O\+N\+T\+R\+OL}})
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_a1e7e825b3df67f64a15b84c548e51c26}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+D\+E\+L\+E\+TE}}~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 7)
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_a436a147e85256c7a3e2fee4a69e3aa72}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+B\+A\+C\+K\+S\+P\+A\+CE}}~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 8)
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_aabfc2cec24f396fb94d03d9f103a910e}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+U\+N\+DO}}~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ \mbox{\hyperlink{textedit__sample_8c_ab62487ccaf090818d712c8bcd2a0c0ea}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+C\+O\+N\+T\+R\+OL}} $\vert$ \textquotesingle{}\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}\textquotesingle{})
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_a349b079acfb7872afca79e1db09c5d6d}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+R\+E\+DO}}~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ \mbox{\hyperlink{textedit__sample_8c_ab62487ccaf090818d712c8bcd2a0c0ea}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+C\+O\+N\+T\+R\+OL}} $\vert$ \textquotesingle{}\mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}}\textquotesingle{})
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_a112200f1032a74b1c4d95775258307d6}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+I\+N\+S\+E\+RT}}~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 9)
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_acbb30e32121ef025272892af98f2ac58}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+W\+O\+R\+D\+L\+E\+FT}}~(\mbox{\hyperlink{textedit__sample_8c_ab78e75643116b67f27faa253997d6bf4}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+L\+E\+FT}}  $\vert$ \mbox{\hyperlink{textedit__sample_8c_ab62487ccaf090818d712c8bcd2a0c0ea}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+C\+O\+N\+T\+R\+OL}})
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_a4ac168018b20e53285d76c46aa24a122}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+W\+O\+R\+D\+R\+I\+G\+HT}}~(\mbox{\hyperlink{textedit__sample_8c_a2372bf34dbfe9ee393e5e893a59519ff}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+R\+I\+G\+HT}} $\vert$ \mbox{\hyperlink{textedit__sample_8c_ab62487ccaf090818d712c8bcd2a0c0ea}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+C\+O\+N\+T\+R\+OL}})
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_ac4c3f430bf4d3264b9555e8fdf0fdef9}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+P\+G\+UP}}~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 10)
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_aff21d9af1b439f88b59765b52de1df51}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+P\+G\+D\+O\+WN}}~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 11)
+\item 
+\#define \mbox{\hyperlink{textedit__sample_8c_ade8f1a617b962d4405a2492cc3ed0468}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+A\+T\+I\+ON}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{textedit__sample_8c_a9cf8755d5364c9766d8dba8309670a1d}{layout\+\_\+func}} (\mbox{\hyperlink{struct_stb_textedit_row}{Stb\+Textedit\+Row}} $\ast$\mbox{\hyperlink{glad_8h_a90d3e7e4182a9630993f640fa0443b0b}{row}}, \mbox{\hyperlink{textedit__sample_8c_ab58b961887715e3f06f0a60a773c6de1}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+S\+T\+R\+I\+NG}} $\ast$str, int start\+\_\+i)
+\item 
+int \mbox{\hyperlink{textedit__sample_8c_a9f737629af524b3be93960610bf6653f}{delete\+\_\+chars}} (\mbox{\hyperlink{textedit__sample_8c_ab58b961887715e3f06f0a60a773c6de1}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+S\+T\+R\+I\+NG}} $\ast$str, int pos, int \mbox{\hyperlink{glext_8h_abb50fc1ead3a02a46fb52daa2045f95c}{num}})
+\item 
+int \mbox{\hyperlink{textedit__sample_8c_ad02cd3f3823ec835f8fd3d86447d1a7e}{insert\+\_\+chars}} (\mbox{\hyperlink{textedit__sample_8c_ab58b961887715e3f06f0a60a773c6de1}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+S\+T\+R\+I\+NG}} $\ast$str, int pos, \mbox{\hyperlink{textedit__sample_8c_a6e64031a061922e3a48d88fd8623f4c3}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+C\+H\+A\+R\+T\+Y\+PE}} $\ast$newtext, int \mbox{\hyperlink{glext_8h_abb50fc1ead3a02a46fb52daa2045f95c}{num}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{textedit__sample_8c_afe31529d85579422267dcc8fc1370b75}{dummy3}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}\label{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!KEYDOWN\_BIT@{KEYDOWN\_BIT}}
+\index{KEYDOWN\_BIT@{KEYDOWN\_BIT}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{KEYDOWN\_BIT}{KEYDOWN\_BIT}}
+{\footnotesize\ttfamily \#define K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT~0x80000000}
+
+
+
+Definition at line 51 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_a6e64031a061922e3a48d88fd8623f4c3}\label{textedit__sample_8c_a6e64031a061922e3a48d88fd8623f4c3}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_CHARTYPE@{STB\_TEXTEDIT\_CHARTYPE}}
+\index{STB\_TEXTEDIT\_CHARTYPE@{STB\_TEXTEDIT\_CHARTYPE}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_CHARTYPE}{STB\_TEXTEDIT\_CHARTYPE}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+C\+H\+A\+R\+T\+Y\+PE~char}
+
+
+
+Definition at line 7 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_a0e9782080bc2f211e9b2c7b534611f9f}\label{textedit__sample_8c_a0e9782080bc2f211e9b2c7b534611f9f}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_DELETECHARS@{STB\_TEXTEDIT\_DELETECHARS}}
+\index{STB\_TEXTEDIT\_DELETECHARS@{STB\_TEXTEDIT\_DELETECHARS}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_DELETECHARS}{STB\_TEXTEDIT\_DELETECHARS}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+D\+E\+L\+E\+T\+E\+C\+H\+A\+RS~\mbox{\hyperlink{textedit__sample_8c_a9f737629af524b3be93960610bf6653f}{delete\+\_\+chars}}}
+
+
+
+Definition at line 60 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_ae3ca31117527780ae203e0e8a040d11f}\label{textedit__sample_8c_ae3ca31117527780ae203e0e8a040d11f}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_GETCHAR@{STB\_TEXTEDIT\_GETCHAR}}
+\index{STB\_TEXTEDIT\_GETCHAR@{STB\_TEXTEDIT\_GETCHAR}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_GETCHAR}{STB\_TEXTEDIT\_GETCHAR}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+G\+E\+T\+C\+H\+AR(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{glext_8h_a45e774067520be559b8e78373132a9ec}{tc}},  }\item[{}]{i }\end{DoxyParamCaption})~((\mbox{\hyperlink{glext_8h_a45e774067520be559b8e78373132a9ec}{tc}})-\/$>$\mbox{\hyperlink{glad_8h_ae84541b4f3d8e1ea24ec0f466a8c568b}{string}}\mbox{[}i\mbox{]})}
+
+
+
+Definition at line 57 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_ae696f0d4a714a9410eda06888bc06588}\label{textedit__sample_8c_ae696f0d4a714a9410eda06888bc06588}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_GETWIDTH@{STB\_TEXTEDIT\_GETWIDTH}}
+\index{STB\_TEXTEDIT\_GETWIDTH@{STB\_TEXTEDIT\_GETWIDTH}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_GETWIDTH}{STB\_TEXTEDIT\_GETWIDTH}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+G\+E\+T\+W\+I\+D\+TH(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{glext_8h_a45e774067520be559b8e78373132a9ec}{tc}},  }\item[{}]{\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  }\item[{}]{i }\end{DoxyParamCaption})~(1)}
+
+
+
+Definition at line 55 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_ade8f1a617b962d4405a2492cc3ed0468}\label{textedit__sample_8c_ade8f1a617b962d4405a2492cc3ed0468}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_IMPLEMENTATION@{STB\_TEXTEDIT\_IMPLEMENTATION}}
+\index{STB\_TEXTEDIT\_IMPLEMENTATION@{STB\_TEXTEDIT\_IMPLEMENTATION}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_IMPLEMENTATION}{STB\_TEXTEDIT\_IMPLEMENTATION}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+A\+T\+I\+ON}
+
+
+
+Definition at line 83 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_afbf5b1efdc094bccaddc6d4c3b6b5a2a}\label{textedit__sample_8c_afbf5b1efdc094bccaddc6d4c3b6b5a2a}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_INSERTCHARS@{STB\_TEXTEDIT\_INSERTCHARS}}
+\index{STB\_TEXTEDIT\_INSERTCHARS@{STB\_TEXTEDIT\_INSERTCHARS}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_INSERTCHARS}{STB\_TEXTEDIT\_INSERTCHARS}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+I\+N\+S\+E\+R\+T\+C\+H\+A\+RS~\mbox{\hyperlink{textedit__sample_8c_ad02cd3f3823ec835f8fd3d86447d1a7e}{insert\+\_\+chars}}}
+
+
+
+Definition at line 61 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_aee5f80efacf21dd92b5b3dee06c73807}\label{textedit__sample_8c_aee5f80efacf21dd92b5b3dee06c73807}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_IS\_SPACE@{STB\_TEXTEDIT\_IS\_SPACE}}
+\index{STB\_TEXTEDIT\_IS\_SPACE@{STB\_TEXTEDIT\_IS\_SPACE}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_IS\_SPACE}{STB\_TEXTEDIT\_IS\_SPACE}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+I\+S\+\_\+\+S\+P\+A\+CE(\begin{DoxyParamCaption}\item[{}]{ch }\end{DoxyParamCaption})~isspace(ch)}
+
+
+
+Definition at line 59 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_a436a147e85256c7a3e2fee4a69e3aa72}\label{textedit__sample_8c_a436a147e85256c7a3e2fee4a69e3aa72}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_BACKSPACE@{STB\_TEXTEDIT\_K\_BACKSPACE}}
+\index{STB\_TEXTEDIT\_K\_BACKSPACE@{STB\_TEXTEDIT\_K\_BACKSPACE}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_BACKSPACE}{STB\_TEXTEDIT\_K\_BACKSPACE}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+B\+A\+C\+K\+S\+P\+A\+CE~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 8)}
+
+
+
+Definition at line 74 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_ab62487ccaf090818d712c8bcd2a0c0ea}\label{textedit__sample_8c_ab62487ccaf090818d712c8bcd2a0c0ea}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_CONTROL@{STB\_TEXTEDIT\_K\_CONTROL}}
+\index{STB\_TEXTEDIT\_K\_CONTROL@{STB\_TEXTEDIT\_K\_CONTROL}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_CONTROL}{STB\_TEXTEDIT\_K\_CONTROL}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+C\+O\+N\+T\+R\+OL~0x20000000}
+
+
+
+Definition at line 64 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_a1e7e825b3df67f64a15b84c548e51c26}\label{textedit__sample_8c_a1e7e825b3df67f64a15b84c548e51c26}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_DELETE@{STB\_TEXTEDIT\_K\_DELETE}}
+\index{STB\_TEXTEDIT\_K\_DELETE@{STB\_TEXTEDIT\_K\_DELETE}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_DELETE}{STB\_TEXTEDIT\_K\_DELETE}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+D\+E\+L\+E\+TE~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 7)}
+
+
+
+Definition at line 73 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_a1b0a25c8debb2e6b33d5b9678ff31eb6}\label{textedit__sample_8c_a1b0a25c8debb2e6b33d5b9678ff31eb6}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_DOWN@{STB\_TEXTEDIT\_K\_DOWN}}
+\index{STB\_TEXTEDIT\_K\_DOWN@{STB\_TEXTEDIT\_K\_DOWN}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_DOWN}{STB\_TEXTEDIT\_K\_DOWN}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+D\+O\+WN~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 4)}
+
+
+
+Definition at line 68 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_a112200f1032a74b1c4d95775258307d6}\label{textedit__sample_8c_a112200f1032a74b1c4d95775258307d6}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_INSERT@{STB\_TEXTEDIT\_K\_INSERT}}
+\index{STB\_TEXTEDIT\_K\_INSERT@{STB\_TEXTEDIT\_K\_INSERT}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_INSERT}{STB\_TEXTEDIT\_K\_INSERT}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+I\+N\+S\+E\+RT~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 9)}
+
+
+
+Definition at line 77 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_ab78e75643116b67f27faa253997d6bf4}\label{textedit__sample_8c_ab78e75643116b67f27faa253997d6bf4}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_LEFT@{STB\_TEXTEDIT\_K\_LEFT}}
+\index{STB\_TEXTEDIT\_K\_LEFT@{STB\_TEXTEDIT\_K\_LEFT}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_LEFT}{STB\_TEXTEDIT\_K\_LEFT}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+L\+E\+FT~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 1)}
+
+
+
+Definition at line 65 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_a86649bcd5a713ef6ebc40271b8d33448}\label{textedit__sample_8c_a86649bcd5a713ef6ebc40271b8d33448}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_LINEEND@{STB\_TEXTEDIT\_K\_LINEEND}}
+\index{STB\_TEXTEDIT\_K\_LINEEND@{STB\_TEXTEDIT\_K\_LINEEND}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_LINEEND}{STB\_TEXTEDIT\_K\_LINEEND}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+L\+I\+N\+E\+E\+ND~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 6)}
+
+
+
+Definition at line 70 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_ae5c188433685fd5694d9323078e7faa4}\label{textedit__sample_8c_ae5c188433685fd5694d9323078e7faa4}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_LINESTART@{STB\_TEXTEDIT\_K\_LINESTART}}
+\index{STB\_TEXTEDIT\_K\_LINESTART@{STB\_TEXTEDIT\_K\_LINESTART}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_LINESTART}{STB\_TEXTEDIT\_K\_LINESTART}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+L\+I\+N\+E\+S\+T\+A\+RT~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 5)}
+
+
+
+Definition at line 69 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_aff21d9af1b439f88b59765b52de1df51}\label{textedit__sample_8c_aff21d9af1b439f88b59765b52de1df51}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_PGDOWN@{STB\_TEXTEDIT\_K\_PGDOWN}}
+\index{STB\_TEXTEDIT\_K\_PGDOWN@{STB\_TEXTEDIT\_K\_PGDOWN}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_PGDOWN}{STB\_TEXTEDIT\_K\_PGDOWN}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+P\+G\+D\+O\+WN~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 11)}
+
+
+
+Definition at line 81 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_ac4c3f430bf4d3264b9555e8fdf0fdef9}\label{textedit__sample_8c_ac4c3f430bf4d3264b9555e8fdf0fdef9}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_PGUP@{STB\_TEXTEDIT\_K\_PGUP}}
+\index{STB\_TEXTEDIT\_K\_PGUP@{STB\_TEXTEDIT\_K\_PGUP}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_PGUP}{STB\_TEXTEDIT\_K\_PGUP}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+P\+G\+UP~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 10)}
+
+
+
+Definition at line 80 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_a349b079acfb7872afca79e1db09c5d6d}\label{textedit__sample_8c_a349b079acfb7872afca79e1db09c5d6d}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_REDO@{STB\_TEXTEDIT\_K\_REDO}}
+\index{STB\_TEXTEDIT\_K\_REDO@{STB\_TEXTEDIT\_K\_REDO}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_REDO}{STB\_TEXTEDIT\_K\_REDO}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+R\+E\+DO~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ \mbox{\hyperlink{textedit__sample_8c_ab62487ccaf090818d712c8bcd2a0c0ea}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+C\+O\+N\+T\+R\+OL}} $\vert$ \textquotesingle{}\mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}}\textquotesingle{})}
+
+
+
+Definition at line 76 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_a2372bf34dbfe9ee393e5e893a59519ff}\label{textedit__sample_8c_a2372bf34dbfe9ee393e5e893a59519ff}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_RIGHT@{STB\_TEXTEDIT\_K\_RIGHT}}
+\index{STB\_TEXTEDIT\_K\_RIGHT@{STB\_TEXTEDIT\_K\_RIGHT}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_RIGHT}{STB\_TEXTEDIT\_K\_RIGHT}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+R\+I\+G\+HT~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 2)}
+
+
+
+Definition at line 66 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_a295377d91a81714e475c3675142944aa}\label{textedit__sample_8c_a295377d91a81714e475c3675142944aa}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_SHIFT@{STB\_TEXTEDIT\_K\_SHIFT}}
+\index{STB\_TEXTEDIT\_K\_SHIFT@{STB\_TEXTEDIT\_K\_SHIFT}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_SHIFT}{STB\_TEXTEDIT\_K\_SHIFT}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+S\+H\+I\+FT~0x40000000}
+
+
+
+Definition at line 63 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_a74b070e036f6ac29eb876a94cb856600}\label{textedit__sample_8c_a74b070e036f6ac29eb876a94cb856600}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_TEXTEND@{STB\_TEXTEDIT\_K\_TEXTEND}}
+\index{STB\_TEXTEDIT\_K\_TEXTEND@{STB\_TEXTEDIT\_K\_TEXTEND}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_TEXTEND}{STB\_TEXTEDIT\_K\_TEXTEND}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+T\+E\+X\+T\+E\+ND~(\mbox{\hyperlink{textedit__sample_8c_a86649bcd5a713ef6ebc40271b8d33448}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+L\+I\+N\+E\+E\+ND}}   $\vert$ \mbox{\hyperlink{textedit__sample_8c_ab62487ccaf090818d712c8bcd2a0c0ea}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+C\+O\+N\+T\+R\+OL}})}
+
+
+
+Definition at line 72 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_adb6231fb52ce1b5fe340d158db4fa113}\label{textedit__sample_8c_adb6231fb52ce1b5fe340d158db4fa113}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_TEXTSTART@{STB\_TEXTEDIT\_K\_TEXTSTART}}
+\index{STB\_TEXTEDIT\_K\_TEXTSTART@{STB\_TEXTEDIT\_K\_TEXTSTART}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_TEXTSTART}{STB\_TEXTEDIT\_K\_TEXTSTART}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+T\+E\+X\+T\+S\+T\+A\+RT~(\mbox{\hyperlink{textedit__sample_8c_ae5c188433685fd5694d9323078e7faa4}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+L\+I\+N\+E\+S\+T\+A\+RT}} $\vert$ \mbox{\hyperlink{textedit__sample_8c_ab62487ccaf090818d712c8bcd2a0c0ea}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+C\+O\+N\+T\+R\+OL}})}
+
+
+
+Definition at line 71 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_aabfc2cec24f396fb94d03d9f103a910e}\label{textedit__sample_8c_aabfc2cec24f396fb94d03d9f103a910e}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_UNDO@{STB\_TEXTEDIT\_K\_UNDO}}
+\index{STB\_TEXTEDIT\_K\_UNDO@{STB\_TEXTEDIT\_K\_UNDO}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_UNDO}{STB\_TEXTEDIT\_K\_UNDO}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+U\+N\+DO~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ \mbox{\hyperlink{textedit__sample_8c_ab62487ccaf090818d712c8bcd2a0c0ea}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+C\+O\+N\+T\+R\+OL}} $\vert$ \textquotesingle{}\mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}}\textquotesingle{})}
+
+
+
+Definition at line 75 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_a579019adb9b5fbb8432121dc10d59755}\label{textedit__sample_8c_a579019adb9b5fbb8432121dc10d59755}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_UP@{STB\_TEXTEDIT\_K\_UP}}
+\index{STB\_TEXTEDIT\_K\_UP@{STB\_TEXTEDIT\_K\_UP}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_UP}{STB\_TEXTEDIT\_K\_UP}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+UP~(\mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}} $\vert$ 3)}
+
+
+
+Definition at line 67 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_acbb30e32121ef025272892af98f2ac58}\label{textedit__sample_8c_acbb30e32121ef025272892af98f2ac58}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_WORDLEFT@{STB\_TEXTEDIT\_K\_WORDLEFT}}
+\index{STB\_TEXTEDIT\_K\_WORDLEFT@{STB\_TEXTEDIT\_K\_WORDLEFT}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_WORDLEFT}{STB\_TEXTEDIT\_K\_WORDLEFT}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+W\+O\+R\+D\+L\+E\+FT~(\mbox{\hyperlink{textedit__sample_8c_ab78e75643116b67f27faa253997d6bf4}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+L\+E\+FT}}  $\vert$ \mbox{\hyperlink{textedit__sample_8c_ab62487ccaf090818d712c8bcd2a0c0ea}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+C\+O\+N\+T\+R\+OL}})}
+
+
+
+Definition at line 78 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_a4ac168018b20e53285d76c46aa24a122}\label{textedit__sample_8c_a4ac168018b20e53285d76c46aa24a122}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_K\_WORDRIGHT@{STB\_TEXTEDIT\_K\_WORDRIGHT}}
+\index{STB\_TEXTEDIT\_K\_WORDRIGHT@{STB\_TEXTEDIT\_K\_WORDRIGHT}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_K\_WORDRIGHT}{STB\_TEXTEDIT\_K\_WORDRIGHT}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+W\+O\+R\+D\+R\+I\+G\+HT~(\mbox{\hyperlink{textedit__sample_8c_a2372bf34dbfe9ee393e5e893a59519ff}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+R\+I\+G\+HT}} $\vert$ \mbox{\hyperlink{textedit__sample_8c_ab62487ccaf090818d712c8bcd2a0c0ea}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+\_\+\+C\+O\+N\+T\+R\+OL}})}
+
+
+
+Definition at line 79 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_ab8311ae6b6ce2c9cadfc176331945eca}\label{textedit__sample_8c_ab8311ae6b6ce2c9cadfc176331945eca}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_KEYTOTEXT@{STB\_TEXTEDIT\_KEYTOTEXT}}
+\index{STB\_TEXTEDIT\_KEYTOTEXT@{STB\_TEXTEDIT\_KEYTOTEXT}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_KEYTOTEXT}{STB\_TEXTEDIT\_KEYTOTEXT}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+K\+E\+Y\+T\+O\+T\+E\+XT(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}} }\end{DoxyParamCaption})~(((\mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}}) \& \mbox{\hyperlink{textedit__sample_8c_a5f424160d8a298497d42dd94d3ba9942}{K\+E\+Y\+D\+O\+W\+N\+\_\+\+B\+IT}}) ? 0 \+: (\mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}}))}
+
+
+
+Definition at line 56 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_ac881dfa6b09fe6ded1c7bce53026183e}\label{textedit__sample_8c_ac881dfa6b09fe6ded1c7bce53026183e}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_LAYOUTROW@{STB\_TEXTEDIT\_LAYOUTROW}}
+\index{STB\_TEXTEDIT\_LAYOUTROW@{STB\_TEXTEDIT\_LAYOUTROW}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_LAYOUTROW}{STB\_TEXTEDIT\_LAYOUTROW}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+L\+A\+Y\+O\+U\+T\+R\+OW~\mbox{\hyperlink{textedit__sample_8c_a9cf8755d5364c9766d8dba8309670a1d}{layout\+\_\+func}}}
+
+
+
+Definition at line 54 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_abb17caa71f7b09773848f8ddcbeb0be0}\label{textedit__sample_8c_abb17caa71f7b09773848f8ddcbeb0be0}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_NEWLINE@{STB\_TEXTEDIT\_NEWLINE}}
+\index{STB\_TEXTEDIT\_NEWLINE@{STB\_TEXTEDIT\_NEWLINE}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_NEWLINE}{STB\_TEXTEDIT\_NEWLINE}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+N\+E\+W\+L\+I\+NE~\textquotesingle{}\textbackslash{}\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}}\textquotesingle{}}
+
+
+
+Definition at line 58 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_ab58b961887715e3f06f0a60a773c6de1}\label{textedit__sample_8c_ab58b961887715e3f06f0a60a773c6de1}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_STRING@{STB\_TEXTEDIT\_STRING}}
+\index{STB\_TEXTEDIT\_STRING@{STB\_TEXTEDIT\_STRING}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_STRING}{STB\_TEXTEDIT\_STRING}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+S\+T\+R\+I\+NG~\mbox{\hyperlink{structtext__control}{text\+\_\+control}}}
+
+
+
+Definition at line 8 of file textedit\+\_\+sample.\+c.
+
+\mbox{\Hypertarget{textedit__sample_8c_a7a2dfcd72ddf88946c61dd211cfebc29}\label{textedit__sample_8c_a7a2dfcd72ddf88946c61dd211cfebc29}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!STB\_TEXTEDIT\_STRINGLEN@{STB\_TEXTEDIT\_STRINGLEN}}
+\index{STB\_TEXTEDIT\_STRINGLEN@{STB\_TEXTEDIT\_STRINGLEN}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TEXTEDIT\_STRINGLEN}{STB\_TEXTEDIT\_STRINGLEN}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+S\+T\+R\+I\+N\+G\+L\+EN(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{glext_8h_a45e774067520be559b8e78373132a9ec}{tc}} }\end{DoxyParamCaption})~((\mbox{\hyperlink{glext_8h_a45e774067520be559b8e78373132a9ec}{tc}})-\/$>$\mbox{\hyperlink{glext_8h_a0fa7e7ab44d05aec9b9988630e42a820}{stringlen}})}
+
+
+
+Definition at line 53 of file textedit\+\_\+sample.\+c.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{textedit__sample_8c_a9f737629af524b3be93960610bf6653f}\label{textedit__sample_8c_a9f737629af524b3be93960610bf6653f}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!delete\_chars@{delete\_chars}}
+\index{delete\_chars@{delete\_chars}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{delete\_chars()}{delete\_chars()}}
+{\footnotesize\ttfamily int delete\+\_\+chars (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{textedit__sample_8c_ab58b961887715e3f06f0a60a773c6de1}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+S\+T\+R\+I\+NG}} $\ast$}]{str,  }\item[{int}]{pos,  }\item[{int}]{num }\end{DoxyParamCaption})}
+
+
+
+Definition at line 33 of file textedit\+\_\+sample.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{34 \{}
+\DoxyCodeLine{35    memmove(\&str-\/>string[pos], \&str-\/>string[pos+\mbox{\hyperlink{glext_8h_abb50fc1ead3a02a46fb52daa2045f95c}{num}}], str-\/>stringlen -\/ (pos+\mbox{\hyperlink{glext_8h_abb50fc1ead3a02a46fb52daa2045f95c}{num}}));}
+\DoxyCodeLine{36    str-\/>stringlen -\/= \mbox{\hyperlink{glext_8h_abb50fc1ead3a02a46fb52daa2045f95c}{num}};}
+\DoxyCodeLine{37    \textcolor{keywordflow}{return} 1; \textcolor{comment}{// always succeeds}}
+\DoxyCodeLine{38 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{textedit__sample_8c_afe31529d85579422267dcc8fc1370b75}\label{textedit__sample_8c_afe31529d85579422267dcc8fc1370b75}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!dummy3@{dummy3}}
+\index{dummy3@{dummy3}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{dummy3()}{dummy3()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} dummy3 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 86 of file textedit\+\_\+sample.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{87 \{}
+\DoxyCodeLine{88   stb\_textedit\_click(0,0,0,0);}
+\DoxyCodeLine{89   stb\_textedit\_drag(0,0,0,0);}
+\DoxyCodeLine{90   stb\_textedit\_cut(0,0);}
+\DoxyCodeLine{91   stb\_textedit\_key(0,0,0);}
+\DoxyCodeLine{92   stb\_textedit\_initialize\_state(0,0);}
+\DoxyCodeLine{93   stb\_textedit\_paste(0,0,0,0);}
+\DoxyCodeLine{94 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{textedit__sample_8c_ad02cd3f3823ec835f8fd3d86447d1a7e}\label{textedit__sample_8c_ad02cd3f3823ec835f8fd3d86447d1a7e}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!insert\_chars@{insert\_chars}}
+\index{insert\_chars@{insert\_chars}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{insert\_chars()}{insert\_chars()}}
+{\footnotesize\ttfamily int insert\+\_\+chars (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{textedit__sample_8c_ab58b961887715e3f06f0a60a773c6de1}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+S\+T\+R\+I\+NG}} $\ast$}]{str,  }\item[{int}]{pos,  }\item[{\mbox{\hyperlink{textedit__sample_8c_a6e64031a061922e3a48d88fd8623f4c3}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+C\+H\+A\+R\+T\+Y\+PE}} $\ast$}]{newtext,  }\item[{int}]{num }\end{DoxyParamCaption})}
+
+
+
+Definition at line 40 of file textedit\+\_\+sample.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{41 \{}
+\DoxyCodeLine{42    str-\/>string = \mbox{\hyperlink{stb__leakcheck_8h_a3110046d1aa9a56183099e72074bd982}{realloc}}(str-\/>string, str-\/>stringlen + \mbox{\hyperlink{glext_8h_abb50fc1ead3a02a46fb52daa2045f95c}{num}});}
+\DoxyCodeLine{43    memmove(\&str-\/>string[pos+\mbox{\hyperlink{glext_8h_abb50fc1ead3a02a46fb52daa2045f95c}{num}}], \&str-\/>string[pos], str-\/>stringlen -\/ pos);}
+\DoxyCodeLine{44    memcpy(\&str-\/>string[pos], newtext, \mbox{\hyperlink{glext_8h_abb50fc1ead3a02a46fb52daa2045f95c}{num}});}
+\DoxyCodeLine{45    str-\/>stringlen += \mbox{\hyperlink{glext_8h_abb50fc1ead3a02a46fb52daa2045f95c}{num}};}
+\DoxyCodeLine{46    \textcolor{keywordflow}{return} 1; \textcolor{comment}{// always succeeds}}
+\DoxyCodeLine{47 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{textedit__sample_8c_a9cf8755d5364c9766d8dba8309670a1d}\label{textedit__sample_8c_a9cf8755d5364c9766d8dba8309670a1d}} 
+\index{textedit\_sample.c@{textedit\_sample.c}!layout\_func@{layout\_func}}
+\index{layout\_func@{layout\_func}!textedit\_sample.c@{textedit\_sample.c}}
+\doxysubsubsection{\texorpdfstring{layout\_func()}{layout\_func()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} layout\+\_\+func (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_stb_textedit_row}{Stb\+Textedit\+Row}} $\ast$}]{row,  }\item[{\mbox{\hyperlink{textedit__sample_8c_ab58b961887715e3f06f0a60a773c6de1}{S\+T\+B\+\_\+\+T\+E\+X\+T\+E\+D\+I\+T\+\_\+\+S\+T\+R\+I\+NG}} $\ast$}]{str,  }\item[{int}]{start\+\_\+i }\end{DoxyParamCaption})}
+
+
+
+Definition at line 22 of file textedit\+\_\+sample.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{23 \{}
+\DoxyCodeLine{24    \textcolor{keywordtype}{int} remaining\_chars = str-\/>stringlen -\/ start\_i;}
+\DoxyCodeLine{25    \mbox{\hyperlink{glad_8h_a90d3e7e4182a9630993f640fa0443b0b}{row}}-\/>num\_chars = remaining\_chars > 20 ? 20 : remaining\_chars; \textcolor{comment}{// should do real word wrap here}}
+\DoxyCodeLine{26    \mbox{\hyperlink{glad_8h_a90d3e7e4182a9630993f640fa0443b0b}{row}}-\/>x0 = 0;}
+\DoxyCodeLine{27    \mbox{\hyperlink{glad_8h_a90d3e7e4182a9630993f640fa0443b0b}{row}}-\/>x1 = 20; \textcolor{comment}{// need to account for actual size of characters}}
+\DoxyCodeLine{28    \mbox{\hyperlink{glad_8h_a90d3e7e4182a9630993f640fa0443b0b}{row}}-\/>baseline\_y\_delta = 1.25;}
+\DoxyCodeLine{29    \mbox{\hyperlink{glad_8h_a90d3e7e4182a9630993f640fa0443b0b}{row}}-\/>ymin = -\/1;}
+\DoxyCodeLine{30    \mbox{\hyperlink{glad_8h_a90d3e7e4182a9630993f640fa0443b0b}{row}}-\/>ymax =  0;}
+\DoxyCodeLine{31 \}}
+
+\end{DoxyCode}

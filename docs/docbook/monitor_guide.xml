@@ -1,0 +1,196 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_monitor_guide">
+
+<para>This guide introduces the monitor related functions of GLFW. For details on a specific function in this category, see the <link linkend="_group__monitor">Monitor reference</link>. There are also guides for the other areas of GLFW.</para>
+
+<para><itemizedlist>
+<listitem>
+<para><link linkend="_intro_guide">Introduction to the API</link></para>
+</listitem><listitem>
+<para><link linkend="_window_guide">Window guide</link></para>
+</listitem><listitem>
+<para><link linkend="_context_guide">Context guide</link></para>
+</listitem><listitem>
+<para><link linkend="_vulkan_guide">Vulkan guide</link></para>
+</listitem><listitem>
+<para><link linkend="_input_guide">Input guide</link></para>
+</listitem></itemizedlist>
+</para>
+<section xml:id="_monitor_guide_1monitor_object">
+<title>Monitor objects</title>
+
+<para>A monitor object represents a currently connected monitor and is represented as a pointer to the <link xlink:href="https://en.wikipedia.org/wiki/Opaque_data_type">opaque</link> type <link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link>. Monitor objects cannot be created or destroyed by the application and retain their addresses until the monitors they represent are disconnected or until the library is <link linkend="_intro_guide_1intro_init_terminate">terminated</link>.</para>
+
+<para>Each monitor has a current video mode, a list of supported video modes, a virtual position, a human-readable name, an estimated physical size and a gamma ramp. One of the monitors is the primary monitor.</para>
+
+<para>The virtual position of a monitor is in <link linkend="_intro_guide_1coordinate_systems">screen coordinates</link> and, together with the current video mode, describes the viewports that the connected monitors provide into the virtual desktop that spans them.</para>
+
+<para>To see how GLFW views your monitor setup and its available video modes, run the <computeroutput>monitors</computeroutput> test program.</para>
+<section xml:id="_monitor_guide_1monitor_monitors">
+<title>Retrieving monitors</title>
+
+<para>The primary monitor is returned by <link linkend="_group__monitor_1ga59ea49f377fe701dd76764183e64d9f4">glfwGetPrimaryMonitor</link>. It is the user&apos;s preferred monitor and is usually the one with global UI elements like task bar or menu bar.</para>
+
+<para><literallayout><computeroutput>GLFWmonitor*&#32;primary&#32;=&#32;glfwGetPrimaryMonitor();
+</computeroutput></literallayout></para>
+
+<para>You can retrieve all currently connected monitors with <link linkend="_group__monitor_1gab4d483284c57e28837bc2cd9639e9665">glfwGetMonitors</link>. See the reference documentation for the lifetime of the returned array.</para>
+
+<para><literallayout><computeroutput>int&#32;count;
+GLFWmonitor**&#32;monitors&#32;=&#32;glfwGetMonitors(&amp;count);
+</computeroutput></literallayout></para>
+
+<para>The primary monitor is always the first monitor in the returned array, but other monitors may be moved to a different index when a monitor is connected or disconnected.</para>
+</section>
+<section xml:id="_monitor_guide_1monitor_event">
+<title>Monitor configuration changes</title>
+
+<para>If you wish to be notified when a monitor is connected or disconnected, set a monitor callback.</para>
+
+<para><literallayout><computeroutput>glfwSetMonitorCallback(monitor_callback);
+</computeroutput></literallayout></para>
+
+<para>The callback function receives the handle for the monitor that has been connected or disconnected and the event that occurred.</para>
+
+<para><literallayout><computeroutput>void&#32;monitor_callback(GLFWmonitor*&#32;monitor,&#32;int&#32;event)
+{
+&#32;&#32;&#32;&#32;if&#32;(event&#32;==&#32;GLFW_CONNECTED)
+&#32;&#32;&#32;&#32;{
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;The&#32;monitor&#32;was&#32;connected
+&#32;&#32;&#32;&#32;}
+&#32;&#32;&#32;&#32;else&#32;if&#32;(event&#32;==&#32;GLFW_DISCONNECTED)
+&#32;&#32;&#32;&#32;{
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;The&#32;monitor&#32;was&#32;disconnected
+&#32;&#32;&#32;&#32;}
+}
+</computeroutput></literallayout></para>
+
+<para>If a monitor is disconnected, all windows that are full screen on it will be switched to windowed mode before the callback is called. Only <link linkend="_group__monitor_1ga9bb1b5712a5a4f1478ed74513e02d148">glfwGetMonitorName</link> and <link linkend="_group__monitor_1ga11bc263d3967b86e2ec3e5e48762206d">glfwGetMonitorUserPointer</link> will return useful values for a disconnected monitor and only before the monitor callback returns.</para>
+</section>
+</section>
+<section xml:id="_monitor_guide_1monitor_properties">
+<title>Monitor properties</title>
+
+<para>Each monitor has a current video mode, a list of supported video modes, a virtual position, a content scale, a human-readable name, a user pointer, an estimated physical size and a gamma ramp.</para>
+<section xml:id="_monitor_guide_1monitor_modes">
+<title>Video modes</title>
+
+<para>GLFW generally does a good job selecting a suitable video mode when you create a full screen window, change its video mode or make a windowed one full screen, but it is sometimes useful to know exactly which video modes are supported.</para>
+
+<para>Video modes are represented as <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> structures. You can get an array of the video modes supported by a monitor with <link linkend="_group__monitor_1ga4fcbc9865c18acb7fbf60cb6c156cef7">glfwGetVideoModes</link>. See the reference documentation for the lifetime of the returned array.</para>
+
+<para><literallayout><computeroutput>int&#32;count;
+GLFWvidmode*&#32;modes&#32;=&#32;glfwGetVideoModes(monitor,&#32;&amp;count);
+</computeroutput></literallayout></para>
+
+<para>To get the current video mode of a monitor call <link linkend="_group__monitor_1ga27319d7f045c4cbbeae5651696cacd5f">glfwGetVideoMode</link>. See the reference documentation for the lifetime of the returned pointer.</para>
+
+<para><literallayout><computeroutput>const&#32;GLFWvidmode*&#32;mode&#32;=&#32;glfwGetVideoMode(monitor);
+</computeroutput></literallayout></para>
+
+<para>The resolution of a video mode is specified in <link linkend="_intro_guide_1coordinate_systems">screen coordinates</link>, not pixels.</para>
+</section>
+<section xml:id="_monitor_guide_1monitor_size">
+<title>Physical size</title>
+
+<para>The physical size of a monitor in millimetres, or an estimation of it, can be retrieved with <link linkend="_group__monitor_1gad0e93a9e42b32394369cabbbdc1ab702">glfwGetMonitorPhysicalSize</link>. This has no relation to its current <emphasis>resolution</emphasis>, i.e. the width and height of its current <link linkend="_monitor_guide_1monitor_modes">video mode</link>.</para>
+
+<para><literallayout><computeroutput>int&#32;width_mm,&#32;height_mm;
+glfwGetMonitorPhysicalSize(monitor,&#32;&amp;width_mm,&#32;&amp;height_mm);
+</computeroutput></literallayout></para>
+
+<para>While this can be used to calculate the raw DPI of a monitor, this is often not useful. Instead use the <link linkend="_monitor_guide_1monitor_scale">monitor content scale</link> and <link linkend="_window_guide_1window_scale">window content scale</link> to scale your content.</para>
+</section>
+<section xml:id="_monitor_guide_1monitor_scale">
+<title>Content scale</title>
+
+<para>The content scale for a monitor can be retrieved with <link linkend="_group__monitor_1ga28d856d94bea2ce8f09a67bb0346aaff">glfwGetMonitorContentScale</link>.</para>
+
+<para><literallayout><computeroutput>float&#32;xscale,&#32;yscale;
+glfwGetMonitorContentScale(monitor,&#32;&amp;xscale,&#32;&amp;yscale);
+</computeroutput></literallayout></para>
+
+<para>The content scale is the ratio between the current DPI and the platform&apos;s default DPI. This is especially important for text and any UI elements. If the pixel dimensions of your UI scaled by this look appropriate on your machine then it should appear at a reasonable size on other machines regardless of their DPI and scaling settings. This relies on the system DPI and scaling settings being somewhat correct.</para>
+
+<para>The content scale may depend on both the monitor resolution and pixel density and on user settings. It may be very different from the raw DPI calculated from the physical size and current resolution.</para>
+</section>
+<section xml:id="_monitor_guide_1monitor_pos">
+<title>Virtual position</title>
+
+<para>The position of the monitor on the virtual desktop, in <link linkend="_intro_guide_1coordinate_systems">screen coordinates</link>, can be retrieved with <link linkend="_group__monitor_1ga45b5481a614ad7beb2aade9746d07563">glfwGetMonitorPos</link>.</para>
+
+<para><literallayout><computeroutput>int&#32;xpos,&#32;ypos;
+glfwGetMonitorPos(monitor,&#32;&amp;xpos,&#32;&amp;ypos);
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_monitor_guide_1monitor_workarea">
+<title>Work area</title>
+
+<para>The area of a monitor not occupied by global task bars or menu bars is the work area. This is specified in <link linkend="_intro_guide_1coordinate_systems">screen coordinates</link> and can be retrieved with <link linkend="_group__monitor_1ga5a3ac0f6e3786df47aabccfb5760b31d">glfwGetMonitorWorkarea</link>.</para>
+
+<para><literallayout><computeroutput>int&#32;xpos,&#32;ypos,&#32;width,&#32;height;
+glfwGetMonitorWorkarea(monitor,&#32;&amp;xpos,&#32;&amp;ypos,&#32;&amp;width,&#32;&amp;height);
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_monitor_guide_1monitor_name">
+<title>Human-readable name</title>
+
+<para>The human-readable, UTF-8 encoded name of a monitor is returned by <link linkend="_group__monitor_1ga9bb1b5712a5a4f1478ed74513e02d148">glfwGetMonitorName</link>. See the reference documentation for the lifetime of the returned string.</para>
+
+<para><literallayout><computeroutput>const&#32;char*&#32;name&#32;=&#32;glfwGetMonitorName(monitor);
+</computeroutput></literallayout></para>
+
+<para>Monitor names are not guaranteed to be unique. Two monitors of the same model and make may have the same name. Only the monitor handle is guaranteed to be unique, and only until that monitor is disconnected.</para>
+</section>
+<section xml:id="_monitor_guide_1monitor_userptr">
+<title>User pointer</title>
+
+<para>Each monitor has a user pointer that can be set with <link linkend="_group__monitor_1ga6d89c74c1c293f0ab78a00c3c6d1ae44">glfwSetMonitorUserPointer</link> and queried with <link linkend="_group__monitor_1ga11bc263d3967b86e2ec3e5e48762206d">glfwGetMonitorUserPointer</link>. This can be used for any purpose you need and will not be modified by GLFW. The value will be kept until the monitor is disconnected or until the library is terminated.</para>
+
+<para>The initial value of the pointer is <computeroutput>NULL</computeroutput>.</para>
+</section>
+<section xml:id="_monitor_guide_1monitor_gamma">
+<title>Gamma ramp</title>
+
+<para>The gamma ramp of a monitor can be set with <link linkend="_group__monitor_1gac9f36a1cfa10eab191d3029ea8bc9558">glfwSetGammaRamp</link>, which accepts a monitor handle and a pointer to a <link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> structure.</para>
+
+<para><literallayout><computeroutput>GLFWgammaramp&#32;ramp;
+unsigned&#32;short&#32;red[256],&#32;green[256],&#32;blue[256];
+
+ramp.size&#32;=&#32;256;
+ramp.red&#32;=&#32;red;
+ramp.green&#32;=&#32;green;
+ramp.blue&#32;=&#32;blue;
+
+for&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;ramp.size;&#32;&#32;i++)
+{
+&#32;&#32;&#32;&#32;//&#32;Fill&#32;out&#32;gamma&#32;ramp&#32;arrays&#32;as&#32;desired
+}
+
+glfwSetGammaRamp(monitor,&#32;&amp;ramp);
+</computeroutput></literallayout></para>
+
+<para>The gamma ramp data is copied before the function returns, so there is no need to keep it around once the ramp has been set.</para>
+
+<para>It is recommended that your gamma ramp have the same size as the current gamma ramp for that monitor.</para>
+
+<para>The current gamma ramp for a monitor is returned by <link linkend="_group__monitor_1gab8c94ec5ac1d43f70ce03a3e845837b2">glfwGetGammaRamp</link>. See the reference documentation for the lifetime of the returned structure.</para>
+
+<para><literallayout><computeroutput>const&#32;GLFWgammaramp*&#32;ramp&#32;=&#32;glfwGetGammaRamp(monitor);
+</computeroutput></literallayout></para>
+
+<para>If you wish to set a regular gamma ramp, you can have GLFW calculate it for you from the desired exponent with <link linkend="_group__monitor_1ga3e4ab484476c935b4cd0bf49a5c429d6">glfwSetGamma</link>, which in turn calls <link linkend="_group__monitor_1gac9f36a1cfa10eab191d3029ea8bc9558">glfwSetGammaRamp</link> with the resulting ramp.</para>
+
+<para><literallayout><computeroutput>glfwSetGamma(monitor,&#32;1.0);
+</computeroutput></literallayout></para>
+
+<para>To experiment with gamma correction via the <link linkend="_group__monitor_1ga3e4ab484476c935b4cd0bf49a5c429d6">glfwSetGamma</link> function, run the <computeroutput>gamma</computeroutput> test program.</para>
+
+<para><note><title>Note</title>
+
+<para>The software controlled gamma ramp is applied <emphasis>in addition</emphasis> to the hardware gamma correction, which today is usually an approximation of sRGB gamma. This means that setting a perfectly linear ramp, or gamma 1.0, will produce the default (usually sRGB-like) behavior. </para>
+</note>
+</para>
+</section>
+</section>
+</section>

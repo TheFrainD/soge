@@ -1,0 +1,112 @@
+\hypertarget{runner_8c}{}\doxysection{deps/cglm/test/runner.c File Reference}
+\label{runner_8c}\index{deps/cglm/test/runner.c@{deps/cglm/test/runner.c}}
+{\ttfamily \#include \char`\"{}include/common.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}tests.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{runner_8c_ac0f2228420376f4db7e1274f2b41667c}{main}} (int argc, const char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{runner_8c_ac0f2228420376f4db7e1274f2b41667c}\label{runner_8c_ac0f2228420376f4db7e1274f2b41667c}} 
+\index{runner.c@{runner.c}!main@{main}}
+\index{main@{main}!runner.c@{runner.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{const char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 16 of file runner.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{16                                     \{}
+\DoxyCodeLine{17   \mbox{\hyperlink{structtest__entry__t}{test\_entry\_t}} *entry;}
+\DoxyCodeLine{18   \mbox{\hyperlink{structtest__status__t}{test\_status\_t}} st;}
+\DoxyCodeLine{19   \mbox{\hyperlink{stdint_8h_ab1967d8591af1a4e48c37fd2b0f184d0}{int32\_t}}       i, \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}}, passed, failed, maxlen;}
+\DoxyCodeLine{20   \textcolor{keywordtype}{double}        \mbox{\hyperlink{glad_8h_ac55adc720a3098c1b454d2a4647f4361}{start}}, \mbox{\hyperlink{glad_8h_a432111147038972f06e049e18a837002}{end}}, elapsed, total;}
+\DoxyCodeLine{21   (\mbox{\hyperlink{glad_8h_aef30cfca5b4a4c292babb2f60f6d3296}{void}})argc;}
+\DoxyCodeLine{22   (\mbox{\hyperlink{glad_8h_aef30cfca5b4a4c292babb2f60f6d3296}{void}})argv;}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24   passed = failed = maxlen  = 0;}
+\DoxyCodeLine{25   total  = 0.0;}
+\DoxyCodeLine{26   \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}}  = \textcolor{keyword}{sizeof}(tests) / \textcolor{keyword}{sizeof}(tests[0]);}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28   fprintf(stderr, \mbox{\hyperlink{test_2include_2common_8h_ad243f93c16bc4c1d3e0a13b84421d760}{CYAN}} \textcolor{stringliteral}{"\(\backslash\)nWelcome to cglm tests\(\backslash\)n\(\backslash\)n"} \mbox{\hyperlink{test_2include_2common_8h_ab702106cf3b3e96750b6845ded4e0299}{RESET}});}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30   srand((\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int})time(\mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}));}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32   \textcolor{keywordflow}{for} (i = 0; i < \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}}; i++) \{}
+\DoxyCodeLine{33     \mbox{\hyperlink{stdint_8h_ab1967d8591af1a4e48c37fd2b0f184d0}{int32\_t}} \mbox{\hyperlink{glext_8h_a652168017ea9a8bbcead03d5c16269fb}{len}};}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     entry = tests + i;}
+\DoxyCodeLine{36     \mbox{\hyperlink{glext_8h_a652168017ea9a8bbcead03d5c16269fb}{len}}   = (\mbox{\hyperlink{stdint_8h_ab1967d8591af1a4e48c37fd2b0f184d0}{int32\_t}})strlen(entry-\/>\mbox{\hyperlink{structtest__entry__t_ab11d2dca8c1a6697c24c534059fe5b4a}{name}});}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     maxlen = \mbox{\hyperlink{util_8h_a6a32c426e572c3500d7e693158c424b5}{GLM\_MAX}}(maxlen, \mbox{\hyperlink{glext_8h_a652168017ea9a8bbcead03d5c16269fb}{len}});}
+\DoxyCodeLine{39   \}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41   maxlen += 5;}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43   fprintf(stderr,}
+\DoxyCodeLine{44           \mbox{\hyperlink{test_2include_2common_8h_aa4ef051614aa0bd503b0a18ee158c5d7}{BOLDWHITE}}  \textcolor{stringliteral}{"  \%-\/*s    \%-\/*s\(\backslash\)n"},}
+\DoxyCodeLine{45           maxlen, \textcolor{stringliteral}{"Test Name"}, maxlen, \textcolor{stringliteral}{"Elapsed Time"});}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47   \textcolor{keywordflow}{for} (i = 0; i < \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}}; i++) \{}
+\DoxyCodeLine{48     entry   = tests + i;}
+\DoxyCodeLine{49     \mbox{\hyperlink{glad_8h_ac55adc720a3098c1b454d2a4647f4361}{start}}   = clock();}
+\DoxyCodeLine{50     st      = entry-\/>\mbox{\hyperlink{structtest__entry__t_a7305123018f227e7d3453dad783bd4b4}{entry}}();}
+\DoxyCodeLine{51     \mbox{\hyperlink{glad_8h_a432111147038972f06e049e18a837002}{end}}     = clock();}
+\DoxyCodeLine{52     elapsed = (\mbox{\hyperlink{glad_8h_a432111147038972f06e049e18a837002}{end}} -\/ \mbox{\hyperlink{glad_8h_ac55adc720a3098c1b454d2a4647f4361}{start}}) / CLOCKS\_PER\_SEC;}
+\DoxyCodeLine{53     total  += elapsed;}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \textcolor{keywordflow}{if} (!st.\mbox{\hyperlink{structtest__status__t_aee3e899f37c6bfddee322d8e95ab5912}{status}}) \{}
+\DoxyCodeLine{56       fprintf(stderr,}
+\DoxyCodeLine{57               \mbox{\hyperlink{test_2include_2common_8h_ab912d02c7998c3d47d05f87be4e2c920}{BOLDRED}}  \textcolor{stringliteral}{"  "} \mbox{\hyperlink{test_2include_2common_8h_a4a521453b6d80c450b2fea32eaa16658}{FAIL\_TEXT}} \mbox{\hyperlink{test_2include_2common_8h_aa4ef051614aa0bd503b0a18ee158c5d7}{BOLDWHITE}} \textcolor{stringliteral}{" \%s "} \mbox{\hyperlink{test_2include_2common_8h_ab702106cf3b3e96750b6845ded4e0299}{RESET}}, entry-\/>\mbox{\hyperlink{structtest__entry__t_ab11d2dca8c1a6697c24c534059fe5b4a}{name}});}
+\DoxyCodeLine{58       \textcolor{keywordflow}{if} (st.\mbox{\hyperlink{structtest__status__t_aaefb00957e32a9810fe5449554f25295}{msg}}) \{}
+\DoxyCodeLine{59         fprintf(stderr,}
+\DoxyCodeLine{60                 \mbox{\hyperlink{test_2include_2common_8h_abf681265909adf3d3e8116c93c0ba179}{YELLOW}} \textcolor{stringliteral}{"-\/ \%s"} \mbox{\hyperlink{test_2include_2common_8h_ab702106cf3b3e96750b6845ded4e0299}{RESET}},}
+\DoxyCodeLine{61                 st.\mbox{\hyperlink{structtest__status__t_aaefb00957e32a9810fe5449554f25295}{msg}});}
+\DoxyCodeLine{62       \}}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64       fprintf(stderr, \textcolor{stringliteral}{"\(\backslash\)n"});}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66       failed++;}
+\DoxyCodeLine{67     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{68       fprintf(stderr, \mbox{\hyperlink{test_2include_2common_8h_acfbc006ea433ad708fdee3e82996e721}{GREEN}}  \textcolor{stringliteral}{"  "} \mbox{\hyperlink{test_2include_2common_8h_ab27d9ed950c8dc84877de8230866e50a}{OK\_TEXT}} \mbox{\hyperlink{test_2include_2common_8h_ab702106cf3b3e96750b6845ded4e0299}{RESET}} \textcolor{stringliteral}{" \%-\/*s  "}, maxlen, entry-\/>\mbox{\hyperlink{structtest__entry__t_ab11d2dca8c1a6697c24c534059fe5b4a}{name}});}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70       \textcolor{keywordflow}{if} (elapsed > 0.01)}
+\DoxyCodeLine{71         fprintf(stderr, \mbox{\hyperlink{test_2include_2common_8h_abf681265909adf3d3e8116c93c0ba179}{YELLOW}} \textcolor{stringliteral}{"\%.2fs"}, elapsed);}
+\DoxyCodeLine{72       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{73         fprintf(stderr, \textcolor{stringliteral}{"0"});}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75       fprintf(stderr, \textcolor{stringliteral}{"\(\backslash\)n"} \mbox{\hyperlink{test_2include_2common_8h_ab702106cf3b3e96750b6845ded4e0299}{RESET}});}
+\DoxyCodeLine{76       passed++;}
+\DoxyCodeLine{77     \}}
+\DoxyCodeLine{78   \}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80   \textcolor{keywordflow}{if} (failed == 0) \{}
+\DoxyCodeLine{81     fprintf(stderr,}
+\DoxyCodeLine{82             \mbox{\hyperlink{test_2include_2common_8h_a4a6c893a1703c33ede7d702fe5f97c91}{BOLDGREEN}} \textcolor{stringliteral}{"\(\backslash\)n  All tests passed "} \mbox{\hyperlink{test_2include_2common_8h_a753a15aa6534b6c69875f3e7c7bb5d2d}{FINAL\_TEXT}} \textcolor{stringliteral}{"\(\backslash\)n"} \mbox{\hyperlink{test_2include_2common_8h_ab702106cf3b3e96750b6845ded4e0299}{RESET}});}
+\DoxyCodeLine{83   \}}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85   fprintf(stderr,}
+\DoxyCodeLine{86           \mbox{\hyperlink{test_2include_2common_8h_ad243f93c16bc4c1d3e0a13b84421d760}{CYAN}} \textcolor{stringliteral}{"\(\backslash\)ncglm test results (\%0.2fs):\(\backslash\)n"} \mbox{\hyperlink{test_2include_2common_8h_ab702106cf3b3e96750b6845ded4e0299}{RESET}}}
+\DoxyCodeLine{87           \textcolor{stringliteral}{"-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"}}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89           \mbox{\hyperlink{test_2include_2common_8h_a6f699060902f800f12aaae150f3a708e}{MAGENTA}} \textcolor{stringliteral}{"\%d"} \mbox{\hyperlink{test_2include_2common_8h_ab702106cf3b3e96750b6845ded4e0299}{RESET}} \textcolor{stringliteral}{" tests ran, "}}
+\DoxyCodeLine{90           \mbox{\hyperlink{test_2include_2common_8h_acfbc006ea433ad708fdee3e82996e721}{GREEN}}   \textcolor{stringliteral}{"\%d"} \mbox{\hyperlink{test_2include_2common_8h_ab702106cf3b3e96750b6845ded4e0299}{RESET}} \textcolor{stringliteral}{" passed, "}}
+\DoxyCodeLine{91           \mbox{\hyperlink{test_2include_2common_8h_a8d23feea868a983c8c2b661e1e16972f}{RED}}     \textcolor{stringliteral}{"\%d"} \mbox{\hyperlink{test_2include_2common_8h_ab702106cf3b3e96750b6845ded4e0299}{RESET}} \textcolor{stringliteral}{" failed\(\backslash\)n\(\backslash\)n"} \mbox{\hyperlink{test_2include_2common_8h_ab702106cf3b3e96750b6845ded4e0299}{RESET}},}
+\DoxyCodeLine{92           total,}
+\DoxyCodeLine{93           \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}},}
+\DoxyCodeLine{94           passed,}
+\DoxyCodeLine{95           failed);}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97   \textcolor{keywordflow}{return} failed;}
+\DoxyCodeLine{98 \}}
+
+\end{DoxyCode}

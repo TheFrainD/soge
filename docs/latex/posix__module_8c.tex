@@ -1,0 +1,67 @@
+\hypertarget{posix__module_8c}{}\doxysection{deps/glfw/src/posix\+\_\+module.c File Reference}
+\label{posix__module_8c}\index{deps/glfw/src/posix\_module.c@{deps/glfw/src/posix\_module.c}}
+{\ttfamily \#include \char`\"{}internal.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$dlfcn.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} $\ast$ \mbox{\hyperlink{posix__module_8c_a0ca69d860ad190bdb5beab6de9160842}{\+\_\+glfw\+Platform\+Load\+Module}} (const char $\ast$\mbox{\hyperlink{glext_8h_ab25d8cd967ccbd19b630d7100ff8f67e}{path}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{posix__module_8c_ad4b9e48b150850f6ee00874f85036715}{\+\_\+glfw\+Platform\+Free\+Module}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} $\ast$module)
+\item 
+\mbox{\hyperlink{internal_8h_aff7410367a85e3ab66ffa3331aba8186}{G\+L\+F\+Wproc}} \mbox{\hyperlink{posix__module_8c_a370840ea8f3f1016d07030f7a06bf36e}{\+\_\+glfw\+Platform\+Get\+Module\+Symbol}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} $\ast$module, const char $\ast$\mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{posix__module_8c_ad4b9e48b150850f6ee00874f85036715}\label{posix__module_8c_ad4b9e48b150850f6ee00874f85036715}} 
+\index{posix\_module.c@{posix\_module.c}!\_glfwPlatformFreeModule@{\_glfwPlatformFreeModule}}
+\index{\_glfwPlatformFreeModule@{\_glfwPlatformFreeModule}!posix\_module.c@{posix\_module.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwPlatformFreeModule()}{\_glfwPlatformFreeModule()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Platform\+Free\+Module (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} $\ast$}]{module }\end{DoxyParamCaption})}
+
+
+
+Definition at line 42 of file posix\+\_\+module.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{43 \{}
+\DoxyCodeLine{44     dlclose(module);}
+\DoxyCodeLine{45 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{posix__module_8c_a370840ea8f3f1016d07030f7a06bf36e}\label{posix__module_8c_a370840ea8f3f1016d07030f7a06bf36e}} 
+\index{posix\_module.c@{posix\_module.c}!\_glfwPlatformGetModuleSymbol@{\_glfwPlatformGetModuleSymbol}}
+\index{\_glfwPlatformGetModuleSymbol@{\_glfwPlatformGetModuleSymbol}!posix\_module.c@{posix\_module.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwPlatformGetModuleSymbol()}{\_glfwPlatformGetModuleSymbol()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{internal_8h_aff7410367a85e3ab66ffa3331aba8186}{G\+L\+F\+Wproc}} \+\_\+glfw\+Platform\+Get\+Module\+Symbol (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} $\ast$}]{module,  }\item[{const char $\ast$}]{name }\end{DoxyParamCaption})}
+
+
+
+Definition at line 47 of file posix\+\_\+module.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{48 \{}
+\DoxyCodeLine{49     \textcolor{keywordflow}{return} dlsym(module, \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}});}
+\DoxyCodeLine{50 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{posix__module_8c_a0ca69d860ad190bdb5beab6de9160842}\label{posix__module_8c_a0ca69d860ad190bdb5beab6de9160842}} 
+\index{posix\_module.c@{posix\_module.c}!\_glfwPlatformLoadModule@{\_glfwPlatformLoadModule}}
+\index{\_glfwPlatformLoadModule@{\_glfwPlatformLoadModule}!posix\_module.c@{posix\_module.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwPlatformLoadModule()}{\_glfwPlatformLoadModule()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}$\ast$ \+\_\+glfw\+Platform\+Load\+Module (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path }\end{DoxyParamCaption})}
+
+
+
+Definition at line 37 of file posix\+\_\+module.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{38 \{}
+\DoxyCodeLine{39     \textcolor{keywordflow}{return} dlopen(\mbox{\hyperlink{glext_8h_ab25d8cd967ccbd19b630d7100ff8f67e}{path}}, RTLD\_LAZY | RTLD\_LOCAL);}
+\DoxyCodeLine{40 \}}
+
+\end{DoxyCode}

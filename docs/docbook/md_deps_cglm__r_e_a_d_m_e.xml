@@ -1,0 +1,528 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_md_deps_cglm__r_e_a_d_m_e">
+
+<para></para>
+
+<para> </para>
+
+<para>
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+
+<para><link xlink:href="https://travis-ci.com/recp/cglm"> </link> <link xlink:href="https://ci.appveyor.com/project/recp/cglm/branch/master"> </link> <link xlink:href="http://cglm.readthedocs.io/en/latest/?badge=latest"> </link> <link xlink:href="https://www.codacy.com/app/recp/cglm?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=recp/cglm&amp;utm_campaign=Badge_Grade"> </link> <link xlink:href="https://coveralls.io/github/recp/cglm?branch=master"> </link> <link xlink:href="https://codecov.io/gh/recp/cglm"> </link> 
+<literallayout>&#160;&#xa;</literallayout>
+
+<literallayout>&#160;&#xa;</literallayout>
+ <link xlink:href="#sponsors"> </link> <link xlink:href="#backers"> </link> </para>
+
+<para>
+<literallayout>&#160;&#xa;</literallayout>
+</para>
+
+<para></para>
+
+<para>Highly optimized 2D|3D math library, also known as <emphasis role="bold">OpenGL Mathematics (glm) for <computeroutput>C</computeroutput></emphasis>. <emphasis role="bold">cglm</emphasis> provides lot of utils to help math operations to be fast and quick to write. It is community friendly, feel free to bring any issues, bugs you faced. </para>
+
+<para><informaltable frame='bottom'><tgroup cols='1'><colspec align='center'/><tbody><row><entry align='center'>
+</entry></row></tbody></tgroup></informaltable>
+</para>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md5">
+<title>📚 Documentation</title>
+
+<para>Almost all functions (inline versions) and parameters are documented inside the corresponding headers. 
+<literallayout>&#160;&#xa;</literallayout>
+ Complete documentation: <link xlink:href="http://cglm.readthedocs.io">http://cglm.readthedocs.io</link></para>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md6">
+<title>📌 Note for previous versions:</title>
+
+<para><itemizedlist>
+<listitem>
+<para><emphasis>dup (duplicate) is changed to _copy. For instance <computeroutput>glm_vec_dup -&gt; glm_vec3_copy</computeroutput></emphasis></para>
+</listitem><listitem>
+<para><emphasis>OpenGL related functions are dropped to make this lib platform/third-party independent</emphasis></para>
+</listitem><listitem>
+<para><emphasis>make sure you have latest version and feel free to report bugs, troubles</emphasis></para>
+</listitem><listitem>
+<para><emphasis><emphasis role="bold">[bugfix]</emphasis> euler angles was implemented in reverse order (extrinsic) it was fixed, now they are intrinsic. Make sure that you have the latest version</emphasis></para>
+</listitem><listitem>
+<para><emphasis><emphasis role="bold">[major change]</emphasis> by starting v0.4.0, quaternions are stored as [x, y, z, w], it was [w, x, y, z] in v0.3.5 and earlier versions</emphasis></para>
+</listitem><listitem>
+<para><emphasis><emphasis role="bold">[api rename]</emphasis> by starting v0.4.5, <emphasis role="bold">glm_simd</emphasis> functions are renamed to **glmm</emphasis>** 
+<literallayout>&#160;&#xa;</literallayout>
+</para>
+</listitem><listitem>
+<para><emphasis role="bold">[new option]</emphasis> by starting v0.4.5, you can disable alignment requirement, check options in docs. 
+<literallayout>&#160;&#xa;</literallayout>
+</para>
+</listitem><listitem>
+<para><emphasis role="bold">[major change]</emphasis> by starting v0.5.0, vec3 functions use <emphasis role="bold">glm_vec3_</emphasis> namespace, it was <emphasis role="bold">glm_vec_</emphasis> until v0.5.0</para>
+</listitem><listitem>
+<para><emphasis role="bold">[major change]</emphasis> by starting v0.5.1, built-in alignment is removed from <emphasis role="bold">vec3</emphasis> and <emphasis role="bold">mat3</emphasis> types</para>
+</listitem><listitem>
+<para><emphasis role="bold">[major change]</emphasis> by starting v0.7.3, inline print functions are disabled in release/production mode to eliminate print costs (see options in documentation). Print output also improved. You can disable colors if you need (see documentation)</para>
+</listitem><listitem>
+<para><emphasis role="bold">[major change]</emphasis> by starting v0.8.3, <emphasis role="bold">cglm</emphasis> supports alternative clipspace configuations e.g. Left Handed, Zero-to-One (_zo)... <computeroutput>CGLM_FORCE_DEPTH_ZERO_TO_ONE</computeroutput> and <computeroutput>CGLM_FORCE_LEFT_HANDED</computeroutput> is provided to control clipspace. You should be able to use <emphasis role="bold">cglm</emphasis> with Vulkan, DirectX and Metal now... see <link xlink:href="https://cglm.readthedocs.io/en/latest/opt.html#clipspace-option-s">https://cglm.readthedocs.io/en/latest/opt.html#clipspace-option-s</link></para>
+</listitem></itemizedlist>
+</para>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md7">
+<title>📌 Note for C++ developers:</title>
+
+<para>If you are not aware of the original GLM library yet, you may also want to look at: <link xlink:href="https://github.com/g-truc/glm">https://github.com/g-truc/glm</link></para>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md8">
+<title>📌 Note for new comers (Important):</title>
+
+<para><itemizedlist>
+<listitem>
+<para><computeroutput>vec4</computeroutput> and <computeroutput>mat4</computeroutput> variables must be aligned. (There will be unaligned versions later)</para>
+</listitem><listitem>
+<para><emphasis role="bold">in</emphasis> and <emphasis role="bold">[in, out]</emphasis> parameters must be initialized (please). But <emphasis role="bold">[out]</emphasis> parameters not, initializing out param is also redundant</para>
+</listitem><listitem>
+<para>All functions are inline if you don&apos;t want to use pre-compiled versions with glmc_ prefix, you can ignore build process. Just include headers.</para>
+</listitem><listitem>
+<para>if your debugger takes you to cglm headers then make sure you are not trying to copy vec4 to vec3 or alig issues...</para>
+</listitem><listitem>
+<para>Welcome!</para>
+</listitem></itemizedlist>
+</para>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md9">
+<title>📌 Note for experienced developers:</title>
+
+<para><itemizedlist>
+<listitem>
+<para>Since I&apos;m testing this library in my projects, sometimes bugs occurs; finding that bug[s] and making improvements would be more easy with multiple developer/contributor and their projects or knowledge. Consider to make some tests if you suspect something is wrong and any feedbacks, contributions and bug reports are always welcome.</para>
+</listitem></itemizedlist>
+</para>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md10">
+<title>📌 Allocations?</title>
+
+<para><computeroutput>cglm</computeroutput> doesn&apos;t alloc any memory on heap. So it doesn&apos;t provide any allocator. You should alloc memory for <emphasis role="bold">out</emphasis> parameters too if you pass pointer of memory location. Don&apos;t forget that <emphasis role="bold">vec4</emphasis> (also quat/**versor**) and <emphasis role="bold">mat4</emphasis> must be aligned (16-bytes), because <emphasis>cglm</emphasis> uses SIMD instructions to optimize most operations if available.</para>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md11">
+<title>📌 Returning vector or matrix... ?</title>
+
+<para><emphasis role="bold">cglm</emphasis> supports both <emphasis>ARRAY API</emphasis> and <emphasis>STRUCT API</emphasis>, so you can return structs if you utilize struct api (<computeroutput>glms_</computeroutput>).</para>
+
+<para><informaltable frame='bottom'><tgroup cols='1'><colspec align='center'/><tbody><row><entry align='center'>
+</entry></row></tbody></tgroup></informaltable>
+</para>
+
+<para><informaltable frame="all">
+    <tgroup cols="0" align="left" colsep="1" rowsep="1">
+    </tgroup>
+</informaltable>
+</para>
+
+<para>Like some other graphics libraries (especially OpenGL) this library use Column-Major layout to keep matrices in the memory.  &#160; In the future the library may support an option to use row-major layout, CURRENTLY if you need to row-major layout you will need to transpose it.   </para>
+
+<para>   &lt;/tbody&gt; </para>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md12">
+<title>🚀 Features</title>
+
+<para><itemizedlist>
+<listitem>
+<para><emphasis role="bold">scalar</emphasis> and <emphasis role="bold">simd</emphasis> (sse, avx, neon...) optimizations</para>
+</listitem><listitem>
+<para>option to use different clipspaces e.g. Left Handed, Zero-to-One... (currrently right handed negative-one is default)</para>
+</listitem><listitem>
+<para>array api and struct api, you can use arrays or structs.</para>
+</listitem><listitem>
+<para>general purpose matrix operations (mat4, mat3)</para>
+</listitem><listitem>
+<para>chain matrix multiplication (square only)</para>
+</listitem><listitem>
+<para>general purpose vector operations (cross, dot, rotate, proj, angle...)</para>
+</listitem><listitem>
+<para>affine transformations</para>
+</listitem><listitem>
+<para>matrix decomposition (extract rotation, scaling factor)</para>
+</listitem><listitem>
+<para>optimized affine transform matrices (mul, rigid-body inverse)</para>
+</listitem><listitem>
+<para>camera (lookat)</para>
+</listitem><listitem>
+<para>projections (ortho, perspective)</para>
+</listitem><listitem>
+<para>quaternions</para>
+</listitem><listitem>
+<para>euler angles / yaw-pitch-roll to matrix</para>
+</listitem><listitem>
+<para>extract euler angles</para>
+</listitem><listitem>
+<para>inline or pre-compiled function call</para>
+</listitem><listitem>
+<para>frustum (extract view frustum planes, corners...)</para>
+</listitem><listitem>
+<para>bounding box (AABB in Frustum (culling), crop, merge...)</para>
+</listitem><listitem>
+<para>bounding sphere</para>
+</listitem><listitem>
+<para>project, unproject</para>
+</listitem><listitem>
+<para>easing functions</para>
+</listitem><listitem>
+<para>curves</para>
+</listitem><listitem>
+<para>curve interpolation helpers (S*M*C, deCasteljau...)</para>
+</listitem><listitem>
+<para>helpers to convert cglm types to Apple&apos;s simd library to pass cglm types to Metal GL without packing them on both sides</para>
+</listitem><listitem>
+<para>ray intersection helpers</para>
+</listitem><listitem>
+<para>and others...</para>
+</listitem></itemizedlist>
+</para>
+
+<para><informaltable frame='bottom'><tgroup cols='1'><colspec align='center'/><tbody><row><entry align='center'>
+</entry></row></tbody></tgroup></informaltable>
+</para>
+
+<para>You have two options to call a function/operation: inline or library call (link) Almost all functions are marked inline (always_inline) so compiler will probably inline. To call pre-compiled versions, just use <computeroutput>glmc_</computeroutput> (c stands for &apos;call&apos;) instead of <computeroutput>glm_</computeroutput>.</para>
+
+<para><literallayout><computeroutput>#include&#32;&lt;cglm/cglm.h&gt;&#32;&#32;&#32;/*&#32;for&#32;inline&#32;*/
+#include&#32;&lt;cglm/call.h&gt;&#32;&#32;&#32;/*&#32;for&#32;library&#32;call&#32;(this&#32;also&#32;includes&#32;cglm.h)&#32;*/
+
+mat4&#32;rot,&#32;trans,&#32;rt;
+/*&#32;...&#32;*/
+glm_mul(trans,&#32;rot,&#32;rt);&#32;&#32;/*&#32;inline&#32;*/
+glmc_mul(trans,&#32;rot,&#32;rt);&#32;/*&#32;call&#32;from&#32;library&#32;*/
+</computeroutput></literallayout></para>
+
+<para>Most of math functions are optimized manualy with SSE2 if available, if not? Dont worry there are non-sse versions of all operations</para>
+
+<para>You can pass matrices and vectors as array to functions rather than get address.</para>
+
+<para><literallayout><computeroutput>mat4&#32;m&#32;=&#32;{
+&#32;&#32;1,&#32;0,&#32;0,&#32;0,
+&#32;&#32;0,&#32;1,&#32;0,&#32;0,
+&#32;&#32;0,&#32;0,&#32;1,&#32;0,
+&#32;&#32;0,&#32;0,&#32;0,&#32;1
+};
+
+glm_translate(m,&#32;(vec3){1.0f,&#32;0.0f,&#32;0.0f});
+</computeroutput></literallayout></para>
+
+<para>Library contains general purpose mat4 mul and inverse functions, and also contains some special forms (optimized) of these functions for affine transformations&apos; matrices. If you want to multiply two affine transformation matrices you can use glm_mul instead of glm_mat4_mul and glm_inv_tr (ROT + TR) instead glm_mat4_inv <literallayout><computeroutput>/*&#32;multiplication&#32;*/
+mat4&#32;modelMat;
+glm_mul(T,&#32;R,&#32;modelMat);
+
+/*&#32;othonormal&#32;rot&#32;+&#32;tr&#32;matrix&#32;inverse&#32;(rigid-body)&#32;*/
+glm_inv_tr(modelMat);
+</computeroutput></literallayout></para>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md13">
+<title>Struct API</title>
+
+<para>The struct API works as follows, note the <computeroutput>s</computeroutput> suffix on types, the <computeroutput>glms_</computeroutput> prefix on functions and the <computeroutput>GLMS_</computeroutput> prefix on constants:</para>
+
+<para><literallayout><computeroutput>#include&#32;&lt;cglm/struct.h&gt;
+
+mat4s&#32;mat&#32;=&#32;GLMS_MAT4_IDENTITY_INIT;
+mat4s&#32;inv&#32;=&#32;glms_mat4_inv(mat);
+</computeroutput></literallayout></para>
+
+<para>Struct functions generally take their parameters as <emphasis>values</emphasis> and <emphasis>return</emphasis> their results, rather than taking pointers and writing to out parameters. That means your parameters can usually be <computeroutput>const</computeroutput>, if you&apos;re into that.</para>
+
+<para>The types used are actually unions that allow access to the same data multiple ways. One of those ways involves anonymous structures, available since C11. MSVC also supports it for earlier C versions out of the box and GCC/Clang do if you enable <computeroutput>-fms-extensions</computeroutput>. To explicitly enable these anonymous structures, <computeroutput>#define CGLM_USE_ANONYMOUS_STRUCT</computeroutput> to <computeroutput>1</computeroutput>, to disable them, to <computeroutput>0</computeroutput>. For backward compatibility, you can also <computeroutput>#define CGLM_NO_ANONYMOUS_STRUCT</computeroutput> (value is irrelevant) to disable them. If you don&apos;t specify explicitly, cglm will do a best guess based on your compiler and the C version you&apos;re using.</para>
+</section>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md14">
+<title>🔨 Build</title>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md15">
+<title>CMake (All platforms)</title>
+
+<para><literallayout><computeroutput>$&#32;mkdir&#32;build
+$&#32;cd&#32;build
+$&#32;cmake&#32;..&#32;#&#32;[Optional]&#32;-DCGLM_SHARED=ON
+$&#32;make
+$&#32;sudo&#32;make&#32;install&#32;#&#32;[Optional]
+</computeroutput></literallayout></para>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md16">
+<title>Cmake options with Defaults:</title>
+
+<para><literallayout><computeroutput>option(CGLM_SHARED&#32;&quot;Shared&#32;build&quot;&#32;ON)
+option(CGLM_STATIC&#32;&quot;Static&#32;build&quot;&#32;OFF)
+option(CGLM_USE_C99&#32;&quot;&quot;&#32;OFF)&#32;# C11&#32;
+option(CGLM_USE_TEST&#32;&quot;Enable&#32;Tests&quot;&#32;OFF)&#32;# for&#32;make&#32;check&#32;-&#32;make&#32;test
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md17">
+<title>Use as header-only library with your CMake project</title>
+
+<para>This requires no building or installation of cglm.</para>
+
+<para><itemizedlist>
+<listitem>
+<para>Example:</para>
+</listitem></itemizedlist>
+</para>
+
+<para><literallayout><computeroutput>cmake_minimum_required(VERSION&#32;3.8.2)
+
+project(&lt;Your&#32;Project&#32;Name&gt;)
+
+add_executable(${PROJECT_NAME}&#32;src/main.c)
+target_link_libraries(${LIBRARY_NAME}&#32;PRIVATE
+&#32;&#32;cglm_headers)
+
+add_subdirectory(external/cglm/&#32;EXCLUDE_FROM_ALL)
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md18">
+<title>Use with your CMake project</title>
+
+<para><itemizedlist>
+<listitem>
+<para>Example: <literallayout><computeroutput>cmake_minimum_required(VERSION&#32;3.8.2)
+
+project(&lt;Your&#32;Project&#32;Name&gt;)
+
+add_executable(${PROJECT_NAME}&#32;src/main.c)
+target_link_libraries(${LIBRARY_NAME}&#32;PRIVATE
+&#32;&#32;cglm)
+
+add_subdirectory(external/cglm/)
+
+#&#32;or&#32;you&#32;can&#32;use&#32;find_package&#32;to&#32;configure&#32;cglm
+</computeroutput></literallayout></para>
+</listitem></itemizedlist>
+</para>
+</section>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md19">
+<title>Meson (All platforms)</title>
+
+<para><literallayout><computeroutput>$&#32;meson&#32;build&#32;#&#32;[Optional]&#32;--default-library=static
+$&#32;cd&#32;build
+$&#32;ninja
+$&#32;sudo&#32;ninja&#32;install&#32;#&#32;[Optional]
+</computeroutput></literallayout></para>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md20">
+<title>Meson options with Defaults:</title>
+
+<para><literallayout><computeroutput>c_std=c11
+buildtype=release
+default_library=shared
+enable_tests=false&#32;# to&#32;run&#32;tests:&#32;ninja&#32;test
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md21">
+<title>Use with your Meson project</title>
+
+<para><itemizedlist>
+<listitem>
+<para>Example: <literallayout><computeroutput>#&#32;Clone&#32;cglm&#32;or&#32;create&#32;a&#32;cglm.wrap&#32;under&#32;&lt;source_root&gt;/subprojects
+project(&apos;name&apos;,&#32;&apos;c&apos;)
+
+cglm_dep&#32;=&#32;dependency(&apos;cglm&apos;,&#32;fallback&#32;:&#32;&apos;cglm&apos;,&#32;&apos;cglm_dep&apos;)
+
+executable(&apos;exe&apos;,&#32;&apos;src/main.c&apos;,&#32;dependencies&#32;:&#32;cglm_dep)
+</computeroutput></literallayout></para>
+</listitem></itemizedlist>
+</para>
+</section>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md22">
+<title>Swift (Swift Package Manager)</title>
+
+<para>Currently only default build options are supported. Add <emphasis role="bold">cglm</emphasis> dependency to your project:</para>
+
+<para><literallayout><computeroutput>...
+Package(&#32;
+&#32;&#32;...
+&#32;&#32;dependencies:&#32;[
+&#32;&#32;&#32;&#32;...
+&#32;&#32;&#32;&#32;.package(url:&#32;&quot;https://github.com/recp/cglm&quot;,&#32;.branch(&quot;master&quot;)),
+&#32;&#32;]
+&#32;&#32;...
+)
+</computeroutput></literallayout></para>
+
+<para>Now add <emphasis role="bold">cgml</emphasis> as a dependency to your target. Product choices are:<itemizedlist>
+<listitem>
+<para><emphasis role="bold">cglm</emphasis> for inlined version of the library which can be linked only statically</para>
+</listitem><listitem>
+<para><emphasis role="bold">cglmc</emphasis> for a compiled version of the library with no linking limitation</para>
+</listitem></itemizedlist>
+</para>
+
+<para><literallayout><computeroutput>...
+.target(
+&#32;&#32;...
+&#32;&#32;dependencies:&#32;[
+&#32;&#32;&#32;&#32;...
+&#32;&#32;&#32;&#32;.product(name:&#32;&quot;cglm&quot;,&#32;package:&#32;&quot;cglm&quot;),
+&#32;&#32;]
+&#32;&#32;...
+)
+...
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md23">
+<title>Unix (Autotools)</title>
+
+<para><literallayout><computeroutput>$&#32;sh&#32;autogen.sh
+$&#32;./configure
+$&#32;make
+$&#32;make&#32;check&#32;#&#32;[Optional]
+$&#32;[sudo]&#32;make&#32;install&#32;#&#32;[Optional]
+</computeroutput></literallayout></para>
+
+<para>This will also install pkg-config files so you can use <computeroutput>pkg-config --cflags cglm</computeroutput> and <computeroutput>pkg-config --libs cglm</computeroutput> to retrieve compiler and linker flags.</para>
+
+<para>The files will be installed into the given prefix (usually <computeroutput>/usr/local</computeroutput> by default on Linux), but your pkg-config may not be configured to actually check there. You can figure out where it&apos;s looking by running <computeroutput>pkg-config --variable pc_path pkg-config</computeroutput> and change the path the files are installed to via <computeroutput>./configure --with-pkgconfigdir=/your/path</computeroutput>. Alternatively, you can add the prefix path to your <computeroutput>PKG_CONFIG_PATH</computeroutput> environment variable.</para>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md24">
+<title>Windows (MSBuild)</title>
+
+<para>Windows related build file and project files are located in <computeroutput>win</computeroutput> folder, make sure you are inside <computeroutput>cglm/win</computeroutput> folder. Code Analysis is enabled, so it may take awhile to build.</para>
+
+<para><literallayout><computeroutput>$&#32;cd&#32;win
+$&#32;.\build.bat
+</computeroutput></literallayout></para>
+
+<para>if <computeroutput>msbuild</computeroutput> won&apos;t work (because of multi version VS) then try to build with <computeroutput>devenv</computeroutput>: <literallayout><computeroutput>$&#32;devenv&#32;cglm.sln&#32;/Build&#32;Release
+</computeroutput></literallayout></para>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md25">
+<title>Running Tests on Windows</title>
+
+<para>You can see test project in same visual studio solution file. It is enough to run that project to run tests.</para>
+</section>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md26">
+<title>Building Docs</title>
+
+<para>First you need install Sphinx: <link xlink:href="http://www.sphinx-doc.org/en/master/usage/installation.html">http://www.sphinx-doc.org/en/master/usage/installation.html</link> then: <literallayout><computeroutput>$&#32;cd&#32;docs
+$&#32;sphinx-build&#32;source&#32;build
+</computeroutput></literallayout></para>
+
+<para>it will compile docs into build folder, you can run index.html inside that function.</para>
+</section>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md27">
+<title>How to use</title>
+
+<para>If you want to use the inline versions of functions, then include the main header <literallayout><computeroutput>#include&#32;&lt;cglm/cglm.h&gt;
+</computeroutput></literallayout></para>
+
+<para>the header will include all headers. Then call the func you want e.g. rotate vector by axis: <literallayout><computeroutput>glm_vec3_rotate(v1,&#32;glm_rad(45),&#32;(vec3){1.0f,&#32;0.0f,&#32;0.0f});
+</computeroutput></literallayout></para>
+
+<para>some functions are overloaded :) e.g you can normalize vector: <literallayout><computeroutput>glm_vec3_normalize(vec);
+</computeroutput></literallayout></para>
+
+<para>this will normalize vec and store normalized vector into <computeroutput>vec</computeroutput> but if you will store normalized vector into another vector do this: <literallayout><computeroutput>glm_vec3_normalize_to(vec,&#32;result);
+</computeroutput></literallayout></para>
+
+<para>like this function you may see <computeroutput>_to</computeroutput> postfix, this functions store results to another variables and save temp memory</para>
+
+<para>to call pre-compiled versions include header with <computeroutput>c</computeroutput> postfix, c means call. Pre-compiled versions are just wrappers. <literallayout><computeroutput>#include&#32;&lt;cglm/call.h&gt;
+</computeroutput></literallayout></para>
+
+<para>this header will include all headers with c postfix. You need to call functions with c posfix: <literallayout><computeroutput>glmc_vec3_normalize(vec);
+</computeroutput></literallayout></para>
+
+<para>Function usage and parameters are documented inside related headers. You may see same parameter passed twice in some examples like this: <literallayout><computeroutput>glm_mat4_mul(m1,&#32;m2,&#32;m1);
+
+/*&#32;or&#32;*/
+glm_mat4_mul(m1,&#32;m1,&#32;m1);
+</computeroutput></literallayout></para>
+
+<para>the first two parameter are <emphasis role="bold">[in]</emphasis> and the last one is <emphasis role="bold">[out]</emphasis> parameter. After multiplying <emphasis>m1</emphasis> and <emphasis>m2</emphasis>, the result is stored in <emphasis>m1</emphasis>. This is why we send <emphasis>m1</emphasis> twice. You may store the result in a different matrix, this is just an example.</para>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md28">
+<title>Example: Computing MVP matrix</title>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md29">
+<title>Option 1</title>
+
+<para><literallayout><computeroutput>mat4&#32;proj,&#32;view,&#32;model,&#32;mvp;
+
+/*&#32;init&#32;proj,&#32;view&#32;and&#32;model&#32;...&#32;*/
+
+glm_mat4_mul(proj,&#32;view,&#32;viewProj);
+glm_mat4_mul(viewProj,&#32;model,&#32;mvp);
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md30">
+<title>Option 2</title>
+
+<para><literallayout><computeroutput>mat4&#32;proj,&#32;view,&#32;model,&#32;mvp;
+
+/*&#32;init&#32;proj,&#32;view&#32;and&#32;model&#32;...&#32;*/
+
+glm_mat4_mulN((mat4&#32;*[]){&amp;proj,&#32;&amp;view,&#32;&amp;model},&#32;3,&#32;mvp);
+</computeroutput></literallayout></para>
+</section>
+</section>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md31">
+<title>How to send matrix to OpenGL</title>
+
+<para>mat4 is array of vec4 and vec4 is array of floats. <computeroutput>glUniformMatrix4fv</computeroutput> functions accecpts <computeroutput>float*</computeroutput> as <computeroutput>value</computeroutput> (last param), so you can cast mat4 to float* or you can pass first column of matrix as beginning of memory of matrix:</para>
+
+<para>Option 1: Send first column <literallayout><computeroutput>glUniformMatrix4fv(location,&#32;1,&#32;GL_FALSE,&#32;matrix[0]);
+
+/*&#32;array&#32;of&#32;matrices&#32;*/
+glUniformMatrix4fv(location,&#32;1,&#32;GL_FALSE,&#32;matrix[0][0]);
+</computeroutput></literallayout></para>
+
+<para>Option 2: Cast matrix to pointer type (also valid for multiple dimensional arrays) <literallayout><computeroutput>glUniformMatrix4fv(location,&#32;1,&#32;GL_FALSE,&#32;(float&#32;*)matrix);
+</computeroutput></literallayout></para>
+
+<para>You can pass matrices the same way to other APIs e.g. Vulkan, DX...</para>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md32">
+<title>Notes</title>
+
+<para><itemizedlist>
+<listitem>
+<para>This library uses float types only, does not support Integers, Double... yet</para>
+</listitem><listitem>
+<para>If headers are not working properly with your compiler, IDE please open an issue, because I&apos;m using GCC and clang to test it maybe sometimes MSVC</para>
+</listitem></itemizedlist>
+</para>
+
+<para><emphasis role="bold">TODO:</emphasis><itemizedlist>
+<listitem>
+<para>[ ] Unit tests (In Progress)</para>
+</listitem><listitem>
+<para>[ ] Unit tests for comparing cglm with glm results</para>
+</listitem><listitem>
+<para>[x] Add version info</para>
+</listitem><listitem>
+<para>[ ] Unaligned operations (e.g. <computeroutput>glm_umat4_mul</computeroutput>)</para>
+</listitem><listitem>
+<para>[x] Extra documentation</para>
+</listitem><listitem>
+<para>[x] ARM Neon Arch</para>
+</listitem></itemizedlist>
+</para>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md33">
+<title>Contributors</title>
+
+<para>This project exists thanks to all the people who contribute. [<link linkend="_glfw_2docs_2_c_o_n_t_r_i_b_u_t_i_n_g_8md">Contribute</link>]. <link xlink:href="https://github.com/recp/cglm/graphs/contributors"></link></para>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md34">
+<title>Backers</title>
+
+<para>Thank you to all our backers! 🙏 [<link xlink:href="https://opencollective.com/cglm#backer">Become a backer</link>]</para>
+
+<para><link xlink:href="https://opencollective.com/cglm#backers"></link></para>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md35">
+<title>Sponsors</title>
+
+<para>Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [<link xlink:href="https://opencollective.com/cglm#sponsor">Become a sponsor</link>]</para>
+
+<para><link xlink:href="https://opencollective.com/cglm/sponsor/0/website"></link> <link xlink:href="https://opencollective.com/cglm/sponsor/1/website"></link> <link xlink:href="https://opencollective.com/cglm/sponsor/2/website"></link> <link xlink:href="https://opencollective.com/cglm/sponsor/3/website"></link> <link xlink:href="https://opencollective.com/cglm/sponsor/4/website"></link> <link xlink:href="https://opencollective.com/cglm/sponsor/5/website"></link> <link xlink:href="https://opencollective.com/cglm/sponsor/6/website"></link> <link xlink:href="https://opencollective.com/cglm/sponsor/7/website"></link> <link xlink:href="https://opencollective.com/cglm/sponsor/8/website"></link> <link xlink:href="https://opencollective.com/cglm/sponsor/9/website"></link></para>
+</section>
+<section xml:id="_md_deps_cglm__r_e_a_d_m_e_1autotoc_md36">
+<title>License</title>
+
+<para>MIT. check the LICENSE file </para>
+</section>
+</section>

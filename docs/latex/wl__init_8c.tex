@@ -1,0 +1,547 @@
+\hypertarget{wl__init_8c}{}\doxysection{deps/glfw/src/wl\+\_\+init.c File Reference}
+\label{wl__init_8c}\index{deps/glfw/src/wl\_init.c@{deps/glfw/src/wl\_init.c}}
+{\ttfamily \#include \char`\"{}internal.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include $<$linux/input.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$sys/mman.\+h$>$}\newline
+{\ttfamily \#include $<$sys/timerfd.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}wayland-\/client-\/protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/xdg-\/shell-\/client-\/protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/xdg-\/decoration-\/client-\/protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/viewporter-\/client-\/protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/relative-\/pointer-\/unstable-\/v1-\/client-\/protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/pointer-\/constraints-\/unstable-\/v1-\/client-\/protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/idle-\/inhibit-\/unstable-\/v1-\/client-\/protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/client-\/protocol-\/code.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/xdg-\/shell-\/client-\/protocol-\/code.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/xdg-\/decoration-\/client-\/protocol-\/code.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/viewporter-\/client-\/protocol-\/code.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/relative-\/pointer-\/unstable-\/v1-\/client-\/protocol-\/code.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/pointer-\/constraints-\/unstable-\/v1-\/client-\/protocol-\/code.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/idle-\/inhibit-\/unstable-\/v1-\/client-\/protocol-\/code.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \mbox{\hyperlink{wl__init_8c_a590adac355ae7255f974357d3cc9bb82}{\+\_\+glfw\+Input\+Text\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{stdint_8h_a435d1572bf3f880d55459d9805097f62}{uint32\+\_\+t}} scancode)
+\item 
+\mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \mbox{\hyperlink{wl__init_8c_aa808bd5a1ba23557d20738142c2066e7}{\+\_\+glfw\+Connect\+Wayland}} (int platform\+ID, \mbox{\hyperlink{struct___g_l_f_wplatform}{\+\_\+\+G\+L\+F\+Wplatform}} $\ast$platform)
+\item 
+int \mbox{\hyperlink{wl__init_8c_a8d640825daae6f39a0c20edba245470d}{\+\_\+glfw\+Init\+Wayland}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__init_8c_a21e32d7cde0c918c630329a1cde99f10}{\+\_\+glfw\+Terminate\+Wayland}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{wl__init_8c_aa808bd5a1ba23557d20738142c2066e7}\label{wl__init_8c_aa808bd5a1ba23557d20738142c2066e7}} 
+\index{wl\_init.c@{wl\_init.c}!\_glfwConnectWayland@{\_glfwConnectWayland}}
+\index{\_glfwConnectWayland@{\_glfwConnectWayland}!wl\_init.c@{wl\_init.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwConnectWayland()}{\_glfwConnectWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \+\_\+glfw\+Connect\+Wayland (\begin{DoxyParamCaption}\item[{int}]{platform\+ID,  }\item[{\mbox{\hyperlink{struct___g_l_f_wplatform}{\+\_\+\+G\+L\+F\+Wplatform}} $\ast$}]{platform }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1032 of file wl\+\_\+init.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1033 \{}
+\DoxyCodeLine{1034     \textcolor{keyword}{const} \mbox{\hyperlink{struct___g_l_f_wplatform}{\_GLFWplatform}} wayland =}
+\DoxyCodeLine{1035     \{}
+\DoxyCodeLine{1036         \mbox{\hyperlink{group__init_gac4b08906a3cbf26c518a4a543eedd740}{GLFW\_PLATFORM\_WAYLAND}},}
+\DoxyCodeLine{1037         \mbox{\hyperlink{wl__init_8c_a8d640825daae6f39a0c20edba245470d}{\_glfwInitWayland}},}
+\DoxyCodeLine{1038         \mbox{\hyperlink{wl__init_8c_a21e32d7cde0c918c630329a1cde99f10}{\_glfwTerminateWayland}},}
+\DoxyCodeLine{1039         \mbox{\hyperlink{wl__platform_8h_a68e7966431b3829e09186d88c057e683}{\_glfwGetCursorPosWayland}},}
+\DoxyCodeLine{1040         \mbox{\hyperlink{wl__platform_8h_aab3ae730f795e2f68b395f1c0f7694c1}{\_glfwSetCursorPosWayland}},}
+\DoxyCodeLine{1041         \mbox{\hyperlink{wl__platform_8h_ae993bd14d7db090c84fb9799fc556bbd}{\_glfwSetCursorModeWayland}},}
+\DoxyCodeLine{1042         \mbox{\hyperlink{wl__platform_8h_aeb3438865c89b17a2142cfc4509dbd28}{\_glfwSetRawMouseMotionWayland}},}
+\DoxyCodeLine{1043         \mbox{\hyperlink{wl__platform_8h_aa0c6e411bf8eef4b73bc98e0974f2a78}{\_glfwRawMouseMotionSupportedWayland}},}
+\DoxyCodeLine{1044         \mbox{\hyperlink{wl__platform_8h_abdb1b358173a9cd27ed43e2492c40c20}{\_glfwCreateCursorWayland}},}
+\DoxyCodeLine{1045         \mbox{\hyperlink{wl__platform_8h_aadea2d69e02bfba04cf90e07501aa467}{\_glfwCreateStandardCursorWayland}},}
+\DoxyCodeLine{1046         \mbox{\hyperlink{wl__platform_8h_ac215aeab29ad474956c27f4f6ddfc65a}{\_glfwDestroyCursorWayland}},}
+\DoxyCodeLine{1047         \mbox{\hyperlink{wl__platform_8h_aabccf38d8d6f6e29e4a63345a850bfa9}{\_glfwSetCursorWayland}},}
+\DoxyCodeLine{1048         \mbox{\hyperlink{wl__platform_8h_a066d33db2119fb1bba6a5127abd3530c}{\_glfwGetScancodeNameWayland}},}
+\DoxyCodeLine{1049         \mbox{\hyperlink{wl__platform_8h_a3e2e4e589e75df85898b33ff459f60ee}{\_glfwGetKeyScancodeWayland}},}
+\DoxyCodeLine{1050         \mbox{\hyperlink{wl__platform_8h_a74f40e21bcc7f5a646ecc5f80f25a6c3}{\_glfwSetClipboardStringWayland}},}
+\DoxyCodeLine{1051         \mbox{\hyperlink{wl__platform_8h_a491fcd8a56c175d24dc286660fe7475b}{\_glfwGetClipboardStringWayland}},}
+\DoxyCodeLine{1052 \textcolor{preprocessor}{\#if defined(\_\_linux\_\_)}}
+\DoxyCodeLine{1053         \mbox{\hyperlink{linux__joystick_8c_a17dc11e9772c08f5afdbe17d6830a8f5}{\_glfwInitJoysticksLinux}},}
+\DoxyCodeLine{1054         \mbox{\hyperlink{linux__joystick_8c_a64271879f7bf9f6a9e9631310a7e75f1}{\_glfwTerminateJoysticksLinux}},}
+\DoxyCodeLine{1055         \mbox{\hyperlink{linux__joystick_8c_a399ffcc99f12447944f2e7c2df237940}{\_glfwPollJoystickLinux}},}
+\DoxyCodeLine{1056         \mbox{\hyperlink{linux__joystick_8c_a3a9d5c327233cb7a3ead13f06928180d}{\_glfwGetMappingNameLinux}},}
+\DoxyCodeLine{1057         \mbox{\hyperlink{linux__joystick_8c_a4cf7ebdca81871f2a190618877764aa3}{\_glfwUpdateGamepadGUIDLinux}},}
+\DoxyCodeLine{1058 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{1059         \mbox{\hyperlink{null__joystick_8c_a708c96026644a7d2ab0b026911462616}{\_glfwInitJoysticksNull}},}
+\DoxyCodeLine{1060         \mbox{\hyperlink{null__joystick_8c_af9151a206b9a9d8a0af0f51a12ab72fc}{\_glfwTerminateJoysticksNull}},}
+\DoxyCodeLine{1061         \mbox{\hyperlink{null__joystick_8c_afebb7d158999e7225a3be48fe36005c7}{\_glfwPollJoystickNull}},}
+\DoxyCodeLine{1062         \mbox{\hyperlink{null__joystick_8c_a1a02177d4c3e4dc7558203c00df1912b}{\_glfwGetMappingNameNull}},}
+\DoxyCodeLine{1063         \mbox{\hyperlink{null__joystick_8c_a7d51d60bb59d35cb3e0af3782716f585}{\_glfwUpdateGamepadGUIDNull}},}
+\DoxyCodeLine{1064 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1065         \mbox{\hyperlink{wl__monitor_8c_acaaad2590b0a15c2588e3d9f12c79863}{\_glfwFreeMonitorWayland}},}
+\DoxyCodeLine{1066         \mbox{\hyperlink{wl__monitor_8c_a35f10d415428b18f4a8d83e5e308f87f}{\_glfwGetMonitorPosWayland}},}
+\DoxyCodeLine{1067         \mbox{\hyperlink{wl__monitor_8c_ad2feca038ef5480163f360d16b7f6f4b}{\_glfwGetMonitorContentScaleWayland}},}
+\DoxyCodeLine{1068         \mbox{\hyperlink{wl__monitor_8c_afce0463dcba6f72acf3127c094635b47}{\_glfwGetMonitorWorkareaWayland}},}
+\DoxyCodeLine{1069         \mbox{\hyperlink{wl__monitor_8c_ab8c6631cf6c4432d0c4d8f10f4fb90fb}{\_glfwGetVideoModesWayland}},}
+\DoxyCodeLine{1070         \mbox{\hyperlink{wl__monitor_8c_aabd466779c94e6b0bf54f6fece70027c}{\_glfwGetVideoModeWayland}},}
+\DoxyCodeLine{1071         \mbox{\hyperlink{wl__monitor_8c_a70e276054b29b00bb118f4261643c428}{\_glfwGetGammaRampWayland}},}
+\DoxyCodeLine{1072         \mbox{\hyperlink{wl__monitor_8c_afa0e67469f56d48d100cfd1cb1ff25bc}{\_glfwSetGammaRampWayland}},}
+\DoxyCodeLine{1073         \mbox{\hyperlink{wl__platform_8h_a8fbd5336c54afc9760a89acca1b5bd20}{\_glfwCreateWindowWayland}},}
+\DoxyCodeLine{1074         \mbox{\hyperlink{wl__platform_8h_a4f9e23a94f70832b66ea4ff6f7e6c98d}{\_glfwDestroyWindowWayland}},}
+\DoxyCodeLine{1075         \mbox{\hyperlink{wl__platform_8h_a2a03cb3eb1fa3720991ad2503dd65e2a}{\_glfwSetWindowTitleWayland}},}
+\DoxyCodeLine{1076         \mbox{\hyperlink{wl__platform_8h_af3bdf666499b335663748945d01b1aab}{\_glfwSetWindowIconWayland}},}
+\DoxyCodeLine{1077         \mbox{\hyperlink{wl__platform_8h_a325fef5dd107caef5a4620ec0e5ee9bd}{\_glfwGetWindowPosWayland}},}
+\DoxyCodeLine{1078         \mbox{\hyperlink{wl__platform_8h_a5adb7549f1afecf80241a68fe7d2f2e0}{\_glfwSetWindowPosWayland}},}
+\DoxyCodeLine{1079         \mbox{\hyperlink{wl__platform_8h_a7139656b9b92a558042462c05e71f17e}{\_glfwGetWindowSizeWayland}},}
+\DoxyCodeLine{1080         \mbox{\hyperlink{wl__platform_8h_a782e4e77e16e03c5340748e43e808828}{\_glfwSetWindowSizeWayland}},}
+\DoxyCodeLine{1081         \mbox{\hyperlink{wl__platform_8h_acd2b24bb6d3dc8bf27de6306a5d5397d}{\_glfwSetWindowSizeLimitsWayland}},}
+\DoxyCodeLine{1082         \mbox{\hyperlink{wl__platform_8h_a67850a44f6265bfa151ef3e3637bca55}{\_glfwSetWindowAspectRatioWayland}},}
+\DoxyCodeLine{1083         \mbox{\hyperlink{wl__platform_8h_afa69ff28fa47d232843f620120391e97}{\_glfwGetFramebufferSizeWayland}},}
+\DoxyCodeLine{1084         \mbox{\hyperlink{wl__platform_8h_a1c0713597287aec915fa764efdebf1f9}{\_glfwGetWindowFrameSizeWayland}},}
+\DoxyCodeLine{1085         \mbox{\hyperlink{wl__platform_8h_ab3e8d510f751fca3c9b60aa03d321cba}{\_glfwGetWindowContentScaleWayland}},}
+\DoxyCodeLine{1086         \mbox{\hyperlink{wl__platform_8h_a2786524a443b7f4a2ff53055366e1169}{\_glfwIconifyWindowWayland}},}
+\DoxyCodeLine{1087         \mbox{\hyperlink{wl__platform_8h_a25c9fe00185d9a1b8badf038b7634b88}{\_glfwRestoreWindowWayland}},}
+\DoxyCodeLine{1088         \mbox{\hyperlink{wl__platform_8h_a8dcc43854cfabe4d324154d2eeebd44e}{\_glfwMaximizeWindowWayland}},}
+\DoxyCodeLine{1089         \mbox{\hyperlink{wl__platform_8h_a7a956e757e29f06d5efcae33b58025cb}{\_glfwShowWindowWayland}},}
+\DoxyCodeLine{1090         \mbox{\hyperlink{wl__platform_8h_ad519388eb25d04c1a4db2df34169efb4}{\_glfwHideWindowWayland}},}
+\DoxyCodeLine{1091         \mbox{\hyperlink{wl__platform_8h_a8a1b249be1215f514f923f91656030c3}{\_glfwRequestWindowAttentionWayland}},}
+\DoxyCodeLine{1092         \mbox{\hyperlink{wl__platform_8h_a29aeccafd183ea2e1f5bab9a44ad6122}{\_glfwFocusWindowWayland}},}
+\DoxyCodeLine{1093         \mbox{\hyperlink{wl__platform_8h_a76e4715c3d943636ba1b71afea0c97c2}{\_glfwSetWindowMonitorWayland}},}
+\DoxyCodeLine{1094         \mbox{\hyperlink{wl__platform_8h_ab0d72e6bf663506ff3f138bc670b2f6c}{\_glfwWindowFocusedWayland}},}
+\DoxyCodeLine{1095         \mbox{\hyperlink{wl__platform_8h_a44752c656c8cee3498776b851285dca6}{\_glfwWindowIconifiedWayland}},}
+\DoxyCodeLine{1096         \mbox{\hyperlink{wl__platform_8h_abb9d2bf1aac035ff3ae3abcc9e0a7f09}{\_glfwWindowVisibleWayland}},}
+\DoxyCodeLine{1097         \mbox{\hyperlink{wl__platform_8h_a7676d7f4167b65f29aedf393e14174ed}{\_glfwWindowMaximizedWayland}},}
+\DoxyCodeLine{1098         \mbox{\hyperlink{wl__platform_8h_af427fb6a233af50a51858a9908d196fb}{\_glfwWindowHoveredWayland}},}
+\DoxyCodeLine{1099         \mbox{\hyperlink{wl__platform_8h_a2a78a10b4fa6a214a2bebf4f1ec9b868}{\_glfwFramebufferTransparentWayland}},}
+\DoxyCodeLine{1100         \mbox{\hyperlink{wl__platform_8h_a741ad4527adc24d5f6732ac27fa32678}{\_glfwGetWindowOpacityWayland}},}
+\DoxyCodeLine{1101         \mbox{\hyperlink{wl__platform_8h_aa7d932102710313b7cc131d45413cd06}{\_glfwSetWindowResizableWayland}},}
+\DoxyCodeLine{1102         \mbox{\hyperlink{wl__platform_8h_afcacd9ea3cb285c1266871d13a723e4c}{\_glfwSetWindowDecoratedWayland}},}
+\DoxyCodeLine{1103         \mbox{\hyperlink{wl__platform_8h_aebcd0db81b67e416f775e4b0d8facdc1}{\_glfwSetWindowFloatingWayland}},}
+\DoxyCodeLine{1104         \mbox{\hyperlink{wl__platform_8h_a43f0c40c30c7bc0216b51cfae59c3629}{\_glfwSetWindowOpacityWayland}},}
+\DoxyCodeLine{1105         \mbox{\hyperlink{wl__platform_8h_acad95c7e85177725f95463ffe86015d4}{\_glfwSetWindowMousePassthroughWayland}},}
+\DoxyCodeLine{1106         \mbox{\hyperlink{wl__platform_8h_a7a315f4b4c3263efc0960094698de618}{\_glfwPollEventsWayland}},}
+\DoxyCodeLine{1107         \mbox{\hyperlink{wl__platform_8h_a7cc624f3d8429b0d35ad163092b4821a}{\_glfwWaitEventsWayland}},}
+\DoxyCodeLine{1108         \mbox{\hyperlink{wl__platform_8h_a43d44933860ce6e5802733777edae04b}{\_glfwWaitEventsTimeoutWayland}},}
+\DoxyCodeLine{1109         \mbox{\hyperlink{wl__platform_8h_a34984c3cc558a291b1721288c8b5ebe6}{\_glfwPostEmptyEventWayland}},}
+\DoxyCodeLine{1110         \mbox{\hyperlink{wl__platform_8h_ad3a432eeab11d12463568f267ba0dc59}{\_glfwGetEGLPlatformWayland}},}
+\DoxyCodeLine{1111         \mbox{\hyperlink{wl__platform_8h_a504e09d478703e56da9a9b8204bdddd5}{\_glfwGetEGLNativeDisplayWayland}},}
+\DoxyCodeLine{1112         \mbox{\hyperlink{wl__platform_8h_a1aa2aacf3bb7726a0cb96c138cda4f43}{\_glfwGetEGLNativeWindowWayland}},}
+\DoxyCodeLine{1113         \mbox{\hyperlink{wl__platform_8h_a82b45703386cfc7543957d2160b482a5}{\_glfwGetRequiredInstanceExtensionsWayland}},}
+\DoxyCodeLine{1114         \mbox{\hyperlink{wl__platform_8h_a5b300bf0217ad4d0c73c7c44eb53062d}{\_glfwGetPhysicalDevicePresentationSupportWayland}},}
+\DoxyCodeLine{1115         \mbox{\hyperlink{wl__platform_8h_a88b24d7cb3bc64abfc826fd23cf17ad4}{\_glfwCreateWindowSurfaceWayland}},}
+\DoxyCodeLine{1116     \};}
+\DoxyCodeLine{1117 }
+\DoxyCodeLine{1118     \textcolor{keywordtype}{void}* module = \mbox{\hyperlink{internal_8h_a0ca69d860ad190bdb5beab6de9160842}{\_glfwPlatformLoadModule}}(\textcolor{stringliteral}{"libwayland-\/client.so.0"});}
+\DoxyCodeLine{1119     \textcolor{keywordflow}{if} (!module)}
+\DoxyCodeLine{1120     \{}
+\DoxyCodeLine{1121         \textcolor{keywordflow}{if} (platformID == \mbox{\hyperlink{group__init_gac4b08906a3cbf26c518a4a543eedd740}{GLFW\_PLATFORM\_WAYLAND}})}
+\DoxyCodeLine{1122         \{}
+\DoxyCodeLine{1123             \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1124                             \textcolor{stringliteral}{"Wayland: Failed to open libwayland-\/client"});}
+\DoxyCodeLine{1125         \}}
+\DoxyCodeLine{1126 }
+\DoxyCodeLine{1127         \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{1128     \}}
+\DoxyCodeLine{1129 }
+\DoxyCodeLine{1130     \mbox{\hyperlink{wl__platform_8h_af300d1e95fd8bdf3acc4d79692a8b444}{PFN\_wl\_display\_connect}} wl\_display\_connect = (\mbox{\hyperlink{wl__platform_8h_af300d1e95fd8bdf3acc4d79692a8b444}{PFN\_wl\_display\_connect}})}
+\DoxyCodeLine{1131         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(module, \textcolor{stringliteral}{"wl\_display\_connect"});}
+\DoxyCodeLine{1132     \textcolor{keywordflow}{if} (!wl\_display\_connect)}
+\DoxyCodeLine{1133     \{}
+\DoxyCodeLine{1134         \textcolor{keywordflow}{if} (platformID == \mbox{\hyperlink{group__init_gac4b08906a3cbf26c518a4a543eedd740}{GLFW\_PLATFORM\_WAYLAND}})}
+\DoxyCodeLine{1135         \{}
+\DoxyCodeLine{1136             \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1137                             \textcolor{stringliteral}{"Wayland: Failed to load libwayland-\/client entry point"});}
+\DoxyCodeLine{1138         \}}
+\DoxyCodeLine{1139 }
+\DoxyCodeLine{1140         \mbox{\hyperlink{internal_8h_ad4b9e48b150850f6ee00874f85036715}{\_glfwPlatformFreeModule}}(module);}
+\DoxyCodeLine{1141         \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{1142     \}}
+\DoxyCodeLine{1143 }
+\DoxyCodeLine{1144     \textcolor{keyword}{struct }wl\_display* \mbox{\hyperlink{boing_8c_a4ea013001a5fb47853d0fab8f8de35cd}{display}} = wl\_display\_connect(\mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{1145     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{boing_8c_a4ea013001a5fb47853d0fab8f8de35cd}{display}})}
+\DoxyCodeLine{1146     \{}
+\DoxyCodeLine{1147         \textcolor{keywordflow}{if} (platformID == \mbox{\hyperlink{group__init_gac4b08906a3cbf26c518a4a543eedd740}{GLFW\_PLATFORM\_WAYLAND}})}
+\DoxyCodeLine{1148             \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}}, \textcolor{stringliteral}{"Wayland: Failed to connect to display"});}
+\DoxyCodeLine{1149 }
+\DoxyCodeLine{1150         \mbox{\hyperlink{internal_8h_ad4b9e48b150850f6ee00874f85036715}{\_glfwPlatformFreeModule}}(module);}
+\DoxyCodeLine{1151         \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{1152     \}}
+\DoxyCodeLine{1153 }
+\DoxyCodeLine{1154     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}} = \mbox{\hyperlink{boing_8c_a4ea013001a5fb47853d0fab8f8de35cd}{display}};}
+\DoxyCodeLine{1155     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}} = module;}
+\DoxyCodeLine{1156 }
+\DoxyCodeLine{1157     *platform = wayland;}
+\DoxyCodeLine{1158     \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{1159 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__init_8c_a8d640825daae6f39a0c20edba245470d}\label{wl__init_8c_a8d640825daae6f39a0c20edba245470d}} 
+\index{wl\_init.c@{wl\_init.c}!\_glfwInitWayland@{\_glfwInitWayland}}
+\index{\_glfwInitWayland@{\_glfwInitWayland}!wl\_init.c@{wl\_init.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwInitWayland()}{\_glfwInitWayland()}}
+{\footnotesize\ttfamily int \+\_\+glfw\+Init\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1161 of file wl\+\_\+init.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1162 \{}
+\DoxyCodeLine{1163     \textcolor{keyword}{const} \textcolor{keywordtype}{char} *cursorTheme;}
+\DoxyCodeLine{1164     \textcolor{keyword}{const} \textcolor{keywordtype}{char} *cursorSizeStr;}
+\DoxyCodeLine{1165     \textcolor{keywordtype}{char} *cursorSizeEnd;}
+\DoxyCodeLine{1166     \textcolor{keywordtype}{long} cursorSizeLong;}
+\DoxyCodeLine{1167     \textcolor{keywordtype}{int} cursorSize;}
+\DoxyCodeLine{1168 }
+\DoxyCodeLine{1169     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.display\_flush = (\mbox{\hyperlink{wl__platform_8h_a2febf2819b199bcb0ad33bc9ec83ab13}{PFN\_wl\_display\_flush}})}
+\DoxyCodeLine{1170         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_display\_flush"});}
+\DoxyCodeLine{1171     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.display\_cancel\_read = (\mbox{\hyperlink{wl__platform_8h_a059454d3d45c515a1c9769b06f870f1a}{PFN\_wl\_display\_cancel\_read}})}
+\DoxyCodeLine{1172         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_display\_cancel\_read"});}
+\DoxyCodeLine{1173     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.display\_dispatch\_pending = (\mbox{\hyperlink{wl__platform_8h_ac1a1070aa10fb7385a25d8dcc6e75c75}{PFN\_wl\_display\_dispatch\_pending}})}
+\DoxyCodeLine{1174         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_display\_dispatch\_pending"});}
+\DoxyCodeLine{1175     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.display\_read\_events = (\mbox{\hyperlink{wl__platform_8h_a0f078a0719d6f9bbb387265c3db30704}{PFN\_wl\_display\_read\_events}})}
+\DoxyCodeLine{1176         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_display\_read\_events"});}
+\DoxyCodeLine{1177     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.display\_disconnect = (\mbox{\hyperlink{wl__platform_8h_a884612b7f8d6ac2d1a09d43372c340f8}{PFN\_wl\_display\_disconnect}})}
+\DoxyCodeLine{1178         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_display\_disconnect"});}
+\DoxyCodeLine{1179     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.display\_roundtrip = (\mbox{\hyperlink{wl__platform_8h_ac8941d25e88d5e10f33c5270efc46f45}{PFN\_wl\_display\_roundtrip}})}
+\DoxyCodeLine{1180         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_display\_roundtrip"});}
+\DoxyCodeLine{1181     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.display\_get\_fd = (\mbox{\hyperlink{wl__platform_8h_a8043dd7b64a5d5594d4db20613adfb7a}{PFN\_wl\_display\_get\_fd}})}
+\DoxyCodeLine{1182         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_display\_get\_fd"});}
+\DoxyCodeLine{1183     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.display\_prepare\_read = (\mbox{\hyperlink{wl__platform_8h_aaa3bfda091c49bf98074ff95c20be78f}{PFN\_wl\_display\_prepare\_read}})}
+\DoxyCodeLine{1184         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_display\_prepare\_read"});}
+\DoxyCodeLine{1185     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.proxy\_marshal = (\mbox{\hyperlink{wl__platform_8h_a1e2c3d1ff026e91762ba9bb04b299e28}{PFN\_wl\_proxy\_marshal}})}
+\DoxyCodeLine{1186         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_proxy\_marshal"});}
+\DoxyCodeLine{1187     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.proxy\_add\_listener = (\mbox{\hyperlink{wl__platform_8h_a425b1cea5c34f65c0fb5fa08b5932a82}{PFN\_wl\_proxy\_add\_listener}})}
+\DoxyCodeLine{1188         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_proxy\_add\_listener"});}
+\DoxyCodeLine{1189     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.proxy\_destroy = (\mbox{\hyperlink{wl__platform_8h_ad7a4e34186cb77594ffbccc472b10928}{PFN\_wl\_proxy\_destroy}})}
+\DoxyCodeLine{1190         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_proxy\_destroy"});}
+\DoxyCodeLine{1191     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.proxy\_marshal\_constructor = (\mbox{\hyperlink{wl__platform_8h_a2a355482006415dd4a3ebdc3d5db319c}{PFN\_wl\_proxy\_marshal\_constructor}})}
+\DoxyCodeLine{1192         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_proxy\_marshal\_constructor"});}
+\DoxyCodeLine{1193     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.proxy\_marshal\_constructor\_versioned = (\mbox{\hyperlink{wl__platform_8h_ac37612cd6f868464f393263dcb5115ce}{PFN\_wl\_proxy\_marshal\_constructor\_versioned}})}
+\DoxyCodeLine{1194         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_proxy\_marshal\_constructor\_versioned"});}
+\DoxyCodeLine{1195     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.proxy\_get\_user\_data = (\mbox{\hyperlink{wl__platform_8h_a66f071e0eac6f315abe216dd6e978985}{PFN\_wl\_proxy\_get\_user\_data}})}
+\DoxyCodeLine{1196         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_proxy\_get\_user\_data"});}
+\DoxyCodeLine{1197     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.proxy\_set\_user\_data = (\mbox{\hyperlink{wl__platform_8h_a1652428fcf022f5c562ac5bd5efc0659}{PFN\_wl\_proxy\_set\_user\_data}})}
+\DoxyCodeLine{1198         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_proxy\_set\_user\_data"});}
+\DoxyCodeLine{1199     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.proxy\_get\_version = (\mbox{\hyperlink{wl__platform_8h_aaee9c638becf09cec42feb11c91a5860}{PFN\_wl\_proxy\_get\_version}})}
+\DoxyCodeLine{1200         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_proxy\_get\_version"});}
+\DoxyCodeLine{1201     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.proxy\_marshal\_flags = (\mbox{\hyperlink{wl__platform_8h_ae6ee6cd4db3115093cb0e3c6fa5e9f8a}{PFN\_wl\_proxy\_marshal\_flags}})}
+\DoxyCodeLine{1202         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_proxy\_marshal\_flags"});}
+\DoxyCodeLine{1203 }
+\DoxyCodeLine{1204     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.display\_flush ||}
+\DoxyCodeLine{1205         !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.display\_cancel\_read ||}
+\DoxyCodeLine{1206         !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.display\_dispatch\_pending ||}
+\DoxyCodeLine{1207         !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.display\_read\_events ||}
+\DoxyCodeLine{1208         !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.display\_disconnect ||}
+\DoxyCodeLine{1209         !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.display\_roundtrip ||}
+\DoxyCodeLine{1210         !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.display\_get\_fd ||}
+\DoxyCodeLine{1211         !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.display\_prepare\_read ||}
+\DoxyCodeLine{1212         !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.proxy\_marshal ||}
+\DoxyCodeLine{1213         !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.proxy\_add\_listener ||}
+\DoxyCodeLine{1214         !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.proxy\_destroy ||}
+\DoxyCodeLine{1215         !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.proxy\_marshal\_constructor ||}
+\DoxyCodeLine{1216         !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.proxy\_marshal\_constructor\_versioned ||}
+\DoxyCodeLine{1217         !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.proxy\_get\_user\_data ||}
+\DoxyCodeLine{1218         !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.client.proxy\_set\_user\_data)}
+\DoxyCodeLine{1219     \{}
+\DoxyCodeLine{1220         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1221                         \textcolor{stringliteral}{"Wayland: Failed to load libwayland-\/client entry point"});}
+\DoxyCodeLine{1222         \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{1223     \}}
+\DoxyCodeLine{1224 }
+\DoxyCodeLine{1225     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursor.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}} = \mbox{\hyperlink{internal_8h_a0ca69d860ad190bdb5beab6de9160842}{\_glfwPlatformLoadModule}}(\textcolor{stringliteral}{"libwayland-\/cursor.so.0"});}
+\DoxyCodeLine{1226     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursor.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}})}
+\DoxyCodeLine{1227     \{}
+\DoxyCodeLine{1228         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1229                         \textcolor{stringliteral}{"Wayland: Failed to open libwayland-\/cursor"});}
+\DoxyCodeLine{1230         \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{1231     \}}
+\DoxyCodeLine{1232 }
+\DoxyCodeLine{1233     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursor.theme\_load = (\mbox{\hyperlink{wl__platform_8h_a3d5be4ad6514481271f04e01687ba3cf}{PFN\_wl\_cursor\_theme\_load}})}
+\DoxyCodeLine{1234         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursor.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_cursor\_theme\_load"});}
+\DoxyCodeLine{1235     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursor.theme\_destroy = (\mbox{\hyperlink{wl__platform_8h_a028b3d9313486c63f918b370f4290b46}{PFN\_wl\_cursor\_theme\_destroy}})}
+\DoxyCodeLine{1236         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursor.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_cursor\_theme\_destroy"});}
+\DoxyCodeLine{1237     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursor.theme\_get\_cursor = (\mbox{\hyperlink{wl__platform_8h_ad888f8476b9b83ca152e92f6b4d04b50}{PFN\_wl\_cursor\_theme\_get\_cursor}})}
+\DoxyCodeLine{1238         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursor.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_cursor\_theme\_get\_cursor"});}
+\DoxyCodeLine{1239     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursor.image\_get\_buffer = (\mbox{\hyperlink{wl__platform_8h_a71881ab6635d2de5a303349e16807430}{PFN\_wl\_cursor\_image\_get\_buffer}})}
+\DoxyCodeLine{1240         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursor.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_cursor\_image\_get\_buffer"});}
+\DoxyCodeLine{1241 }
+\DoxyCodeLine{1242     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7a5951c916147abd6d4d7330f687807d}{egl}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}} = \mbox{\hyperlink{internal_8h_a0ca69d860ad190bdb5beab6de9160842}{\_glfwPlatformLoadModule}}(\textcolor{stringliteral}{"libwayland-\/egl.so.1"});}
+\DoxyCodeLine{1243     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7a5951c916147abd6d4d7330f687807d}{egl}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}})}
+\DoxyCodeLine{1244     \{}
+\DoxyCodeLine{1245         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1246                         \textcolor{stringliteral}{"Wayland: Failed to open libwayland-\/egl"});}
+\DoxyCodeLine{1247         \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{1248     \}}
+\DoxyCodeLine{1249 }
+\DoxyCodeLine{1250     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7a5951c916147abd6d4d7330f687807d}{egl}}.window\_create = (\mbox{\hyperlink{wl__platform_8h_a6b577197886e83e6550758fde49fcbf9}{PFN\_wl\_egl\_window\_create}})}
+\DoxyCodeLine{1251         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7a5951c916147abd6d4d7330f687807d}{egl}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_egl\_window\_create"});}
+\DoxyCodeLine{1252     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7a5951c916147abd6d4d7330f687807d}{egl}}.window\_destroy = (\mbox{\hyperlink{wl__platform_8h_a2727d08bef446572e6f9e26801506ae1}{PFN\_wl\_egl\_window\_destroy}})}
+\DoxyCodeLine{1253         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7a5951c916147abd6d4d7330f687807d}{egl}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_egl\_window\_destroy"});}
+\DoxyCodeLine{1254     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7a5951c916147abd6d4d7330f687807d}{egl}}.window\_resize = (\mbox{\hyperlink{wl__platform_8h_adcf78e57b989ea0e561208099dada945}{PFN\_wl\_egl\_window\_resize}})}
+\DoxyCodeLine{1255         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7a5951c916147abd6d4d7330f687807d}{egl}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"wl\_egl\_window\_resize"});}
+\DoxyCodeLine{1256 }
+\DoxyCodeLine{1257     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}} = \mbox{\hyperlink{internal_8h_a0ca69d860ad190bdb5beab6de9160842}{\_glfwPlatformLoadModule}}(\textcolor{stringliteral}{"libxkbcommon.so.0"});}
+\DoxyCodeLine{1258     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}})}
+\DoxyCodeLine{1259     \{}
+\DoxyCodeLine{1260         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1261                         \textcolor{stringliteral}{"Wayland: Failed to open libxkbcommon"});}
+\DoxyCodeLine{1262         \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{1263     \}}
+\DoxyCodeLine{1264 }
+\DoxyCodeLine{1265     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.context\_new = (\mbox{\hyperlink{wl__platform_8h_a0f6a5db093091ec57ac908e20bc205df}{PFN\_xkb\_context\_new}})}
+\DoxyCodeLine{1266         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_context\_new"});}
+\DoxyCodeLine{1267     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.context\_unref = (\mbox{\hyperlink{wl__platform_8h_aeb826e6dece848b0e71cf98fcf3b6a34}{PFN\_xkb\_context\_unref}})}
+\DoxyCodeLine{1268         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_context\_unref"});}
+\DoxyCodeLine{1269     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.keymap\_new\_from\_string = (\mbox{\hyperlink{wl__platform_8h_a7b808d4fcf4963467503704373c5cdd7}{PFN\_xkb\_keymap\_new\_from\_string}})}
+\DoxyCodeLine{1270         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_keymap\_new\_from\_string"});}
+\DoxyCodeLine{1271     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.keymap\_unref = (\mbox{\hyperlink{wl__platform_8h_aa0778d7d934b96bf500f046368de1f45}{PFN\_xkb\_keymap\_unref}})}
+\DoxyCodeLine{1272         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_keymap\_unref"});}
+\DoxyCodeLine{1273     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.keymap\_mod\_get\_index = (\mbox{\hyperlink{wl__platform_8h_a41d7cec916693645a46216cec1c0c6d7}{PFN\_xkb\_keymap\_mod\_get\_index}})}
+\DoxyCodeLine{1274         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_keymap\_mod\_get\_index"});}
+\DoxyCodeLine{1275     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.keymap\_key\_repeats = (\mbox{\hyperlink{wl__platform_8h_a10dd25305b8984d748e0c35db025106e}{PFN\_xkb\_keymap\_key\_repeats}})}
+\DoxyCodeLine{1276         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_keymap\_key\_repeats"});}
+\DoxyCodeLine{1277     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.keymap\_key\_get\_syms\_by\_level = (\mbox{\hyperlink{wl__platform_8h_a9866b14ec9bf5013c49523c9a71c2660}{PFN\_xkb\_keymap\_key\_get\_syms\_by\_level}})}
+\DoxyCodeLine{1278         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_keymap\_key\_get\_syms\_by\_level"});}
+\DoxyCodeLine{1279     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.state\_new = (\mbox{\hyperlink{wl__platform_8h_a2a900ea023b56cb0c6ec6feaf6b45854}{PFN\_xkb\_state\_new}})}
+\DoxyCodeLine{1280         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_state\_new"});}
+\DoxyCodeLine{1281     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.state\_unref = (\mbox{\hyperlink{wl__platform_8h_a04a57f9f8326bd39a1525e4e0edd4951}{PFN\_xkb\_state\_unref}})}
+\DoxyCodeLine{1282         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_state\_unref"});}
+\DoxyCodeLine{1283     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.state\_key\_get\_syms = (\mbox{\hyperlink{wl__platform_8h_ac93bb3679df2634f72bb35e1587b0459}{PFN\_xkb\_state\_key\_get\_syms}})}
+\DoxyCodeLine{1284         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_state\_key\_get\_syms"});}
+\DoxyCodeLine{1285     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.state\_update\_mask = (\mbox{\hyperlink{wl__platform_8h_a872e4657e3e1127caeb678c0b253b4f0}{PFN\_xkb\_state\_update\_mask}})}
+\DoxyCodeLine{1286         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_state\_update\_mask"});}
+\DoxyCodeLine{1287     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.state\_serialize\_mods = (\mbox{\hyperlink{wl__platform_8h_a963602febce41dbde7c037aaba7b7c0d}{PFN\_xkb\_state\_serialize\_mods}})}
+\DoxyCodeLine{1288         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_state\_serialize\_mods"});}
+\DoxyCodeLine{1289     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.state\_key\_get\_layout = (\mbox{\hyperlink{wl__platform_8h_a1ddf8a57641c77805f0aedf68d7c715e}{PFN\_xkb\_state\_key\_get\_layout}})}
+\DoxyCodeLine{1290         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_state\_key\_get\_layout"});}
+\DoxyCodeLine{1291     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.compose\_table\_new\_from\_locale = (\mbox{\hyperlink{wl__platform_8h_a8a717fe416e52e9d6e5258caeb5281d4}{PFN\_xkb\_compose\_table\_new\_from\_locale}})}
+\DoxyCodeLine{1292         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_compose\_table\_new\_from\_locale"});}
+\DoxyCodeLine{1293     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.compose\_table\_unref = (\mbox{\hyperlink{wl__platform_8h_a94826943d69f9fce48bb246457692c2e}{PFN\_xkb\_compose\_table\_unref}})}
+\DoxyCodeLine{1294         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_compose\_table\_unref"});}
+\DoxyCodeLine{1295     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.compose\_state\_new = (\mbox{\hyperlink{wl__platform_8h_acde584df56f61030dd063d5bbf6ac838}{PFN\_xkb\_compose\_state\_new}})}
+\DoxyCodeLine{1296         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_compose\_state\_new"});}
+\DoxyCodeLine{1297     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.compose\_state\_unref = (\mbox{\hyperlink{wl__platform_8h_a5b405c88d81a608a1a447ac889f6485b}{PFN\_xkb\_compose\_state\_unref}})}
+\DoxyCodeLine{1298         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_compose\_state\_unref"});}
+\DoxyCodeLine{1299     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.compose\_state\_feed = (\mbox{\hyperlink{wl__platform_8h_a58829e3e18572f5e5e8d7d0349b3f092}{PFN\_xkb\_compose\_state\_feed}})}
+\DoxyCodeLine{1300         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_compose\_state\_feed"});}
+\DoxyCodeLine{1301     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.compose\_state\_get\_status = (\mbox{\hyperlink{wl__platform_8h_aad8c18022b37e3cd5d8e38a621fa42ed}{PFN\_xkb\_compose\_state\_get\_status}})}
+\DoxyCodeLine{1302         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_compose\_state\_get\_status"});}
+\DoxyCodeLine{1303     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.compose\_state\_get\_one\_sym = (\mbox{\hyperlink{wl__platform_8h_a88d4343fefb99b57a83cb2609eebdf87}{PFN\_xkb\_compose\_state\_get\_one\_sym}})}
+\DoxyCodeLine{1304         \mbox{\hyperlink{internal_8h_a370840ea8f3f1016d07030f7a06bf36e}{\_glfwPlatformGetModuleSymbol}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}}, \textcolor{stringliteral}{"xkb\_compose\_state\_get\_one\_sym"});}
+\DoxyCodeLine{1305 }
+\DoxyCodeLine{1306     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.registry = wl\_display\_get\_registry(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}});}
+\DoxyCodeLine{1307     wl\_registry\_add\_listener(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.registry, \&registryListener, \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{1308 }
+\DoxyCodeLine{1309     createKeyTables();}
+\DoxyCodeLine{1310 }
+\DoxyCodeLine{1311     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a681e7c0153724884070e9c94069693fb}{context}} = \mbox{\hyperlink{wl__platform_8h_ad3db83b8a04c02fad16d7f0eb9253651}{xkb\_context\_new}}(0);}
+\DoxyCodeLine{1312     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a681e7c0153724884070e9c94069693fb}{context}})}
+\DoxyCodeLine{1313     \{}
+\DoxyCodeLine{1314         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1315                         \textcolor{stringliteral}{"Wayland: Failed to initialize xkb context"});}
+\DoxyCodeLine{1316         \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{1317     \}}
+\DoxyCodeLine{1318 }
+\DoxyCodeLine{1319     \textcolor{comment}{// Sync so we got all registry objects}}
+\DoxyCodeLine{1320     \mbox{\hyperlink{wl__platform_8h_afbff16ff914a6de7fb8b0947aa872df3}{wl\_display\_roundtrip}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}});}
+\DoxyCodeLine{1321 }
+\DoxyCodeLine{1322     \textcolor{comment}{// Sync so we got all initial output events}}
+\DoxyCodeLine{1323     \mbox{\hyperlink{wl__platform_8h_afbff16ff914a6de7fb8b0947aa872df3}{wl\_display\_roundtrip}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}});}
+\DoxyCodeLine{1324 }
+\DoxyCodeLine{1325     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.timerfd = -\/1;}
+\DoxyCodeLine{1326     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.seatVersion >= 4)}
+\DoxyCodeLine{1327         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.timerfd = timerfd\_create(CLOCK\_MONOTONIC, TFD\_CLOEXEC | TFD\_NONBLOCK);}
+\DoxyCodeLine{1328 }
+\DoxyCodeLine{1329     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.wmBase)}
+\DoxyCodeLine{1330     \{}
+\DoxyCodeLine{1331         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1332                         \textcolor{stringliteral}{"Wayland: Failed to find xdg-\/shell in your compositor"});}
+\DoxyCodeLine{1333         \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{1334     \}}
+\DoxyCodeLine{1335 }
+\DoxyCodeLine{1336     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.pointer \&\& \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.shm)}
+\DoxyCodeLine{1337     \{}
+\DoxyCodeLine{1338         cursorTheme = getenv(\textcolor{stringliteral}{"XCURSOR\_THEME"});}
+\DoxyCodeLine{1339         cursorSizeStr = getenv(\textcolor{stringliteral}{"XCURSOR\_SIZE"});}
+\DoxyCodeLine{1340         cursorSize = 32;}
+\DoxyCodeLine{1341         \textcolor{keywordflow}{if} (cursorSizeStr)}
+\DoxyCodeLine{1342         \{}
+\DoxyCodeLine{1343             errno = 0;}
+\DoxyCodeLine{1344             cursorSizeLong = strtol(cursorSizeStr, \&cursorSizeEnd, 10);}
+\DoxyCodeLine{1345             \textcolor{keywordflow}{if} (!*cursorSizeEnd \&\& !errno \&\& cursorSizeLong > 0 \&\& cursorSizeLong <= INT\_MAX)}
+\DoxyCodeLine{1346                 cursorSize = (int)cursorSizeLong;}
+\DoxyCodeLine{1347         \}}
+\DoxyCodeLine{1348         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorTheme =}
+\DoxyCodeLine{1349             \mbox{\hyperlink{wl__platform_8h_af0849f9b39044874257dae01cf1ab056}{wl\_cursor\_theme\_load}}(cursorTheme, cursorSize, \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.shm);}
+\DoxyCodeLine{1350         \textcolor{keywordflow}{if} (!\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorTheme)}
+\DoxyCodeLine{1351         \{}
+\DoxyCodeLine{1352             \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1353                             \textcolor{stringliteral}{"Wayland: Unable to load default cursor theme"});}
+\DoxyCodeLine{1354             \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{1355         \}}
+\DoxyCodeLine{1356         \textcolor{comment}{// If this happens to be NULL, we just fallback to the scale=1 version.}}
+\DoxyCodeLine{1357         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorThemeHiDPI =}
+\DoxyCodeLine{1358             \mbox{\hyperlink{wl__platform_8h_af0849f9b39044874257dae01cf1ab056}{wl\_cursor\_theme\_load}}(cursorTheme, 2 * cursorSize, \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.shm);}
+\DoxyCodeLine{1359         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorSurface =}
+\DoxyCodeLine{1360             wl\_compositor\_create\_surface(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.compositor);}
+\DoxyCodeLine{1361         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorTimerfd = timerfd\_create(CLOCK\_MONOTONIC, TFD\_CLOEXEC | TFD\_NONBLOCK);}
+\DoxyCodeLine{1362     \}}
+\DoxyCodeLine{1363 }
+\DoxyCodeLine{1364     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.seat \&\& \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataDeviceManager)}
+\DoxyCodeLine{1365     \{}
+\DoxyCodeLine{1366         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataDevice =}
+\DoxyCodeLine{1367             wl\_data\_device\_manager\_get\_data\_device(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataDeviceManager,}
+\DoxyCodeLine{1368                                                    \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.seat);}
+\DoxyCodeLine{1369         wl\_data\_device\_add\_listener(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataDevice, \&dataDeviceListener, \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{1370         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardString = \mbox{\hyperlink{init_8c_afdf24e4f0665535fd3d012b810ffb18f}{\_glfw\_calloc}}(4096, 1);}
+\DoxyCodeLine{1371         \textcolor{keywordflow}{if} (!\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardString)}
+\DoxyCodeLine{1372         \{}
+\DoxyCodeLine{1373             \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1374                             \textcolor{stringliteral}{"Wayland: Unable to allocate clipboard memory"});}
+\DoxyCodeLine{1375             \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{1376         \}}
+\DoxyCodeLine{1377         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardSize = 4096;}
+\DoxyCodeLine{1378     \}}
+\DoxyCodeLine{1379 }
+\DoxyCodeLine{1380     \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{1381 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__init_8c_a590adac355ae7255f974357d3cc9bb82}\label{wl__init_8c_a590adac355ae7255f974357d3cc9bb82}} 
+\index{wl\_init.c@{wl\_init.c}!\_glfwInputTextWayland@{\_glfwInputTextWayland}}
+\index{\_glfwInputTextWayland@{\_glfwInputTextWayland}!wl\_init.c@{wl\_init.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwInputTextWayland()}{\_glfwInputTextWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \+\_\+glfw\+Input\+Text\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{\mbox{\hyperlink{stdint_8h_a435d1572bf3f880d55459d9805097f62}{uint32\+\_\+t}}}]{scancode }\end{DoxyParamCaption})}
+
+
+
+Definition at line 538 of file wl\+\_\+init.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{539 \{}
+\DoxyCodeLine{540     \textcolor{keyword}{const} xkb\_keysym\_t* keysyms;}
+\DoxyCodeLine{541     \textcolor{keyword}{const} xkb\_keycode\_t keycode = scancode + 8;}
+\DoxyCodeLine{542 }
+\DoxyCodeLine{543     \textcolor{keywordflow}{if} (\mbox{\hyperlink{wl__platform_8h_aae3ce4ad2452936ecc298d83cec75af8}{xkb\_state\_key\_get\_syms}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.state, keycode, \&keysyms) == 1)}
+\DoxyCodeLine{544     \{}
+\DoxyCodeLine{545         \textcolor{keyword}{const} xkb\_keysym\_t keysym = composeSymbol(keysyms[0]);}
+\DoxyCodeLine{546         \textcolor{keyword}{const} \mbox{\hyperlink{stdint_8h_a435d1572bf3f880d55459d9805097f62}{uint32\_t}} codepoint = \mbox{\hyperlink{xkb__unicode_8c_acc4747eb62386c01c9dd0cd6997c8983}{\_glfwKeySym2Unicode}}(keysym);}
+\DoxyCodeLine{547         \textcolor{keywordflow}{if} (codepoint != \mbox{\hyperlink{xkb__unicode_8h_a45fc2e5a3ba025f1ac362831cfe04416}{GLFW\_INVALID\_CODEPOINT}})}
+\DoxyCodeLine{548         \{}
+\DoxyCodeLine{549             \textcolor{keyword}{const} \textcolor{keywordtype}{int} mods = \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.modifiers;}
+\DoxyCodeLine{550             \textcolor{keyword}{const} \textcolor{keywordtype}{int} plain = !(mods \& (\mbox{\hyperlink{group__mods_ga6ed94871c3208eefd85713fa929d45aa}{GLFW\_MOD\_CONTROL}} | \mbox{\hyperlink{group__mods_gad2acd5633463c29e07008687ea73c0f4}{GLFW\_MOD\_ALT}}));}
+\DoxyCodeLine{551             \mbox{\hyperlink{deps_2glfw_2src_2input_8c_aa778fa9144afadb49baa95f0178d3d3e}{\_glfwInputChar}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, codepoint, mods, plain);}
+\DoxyCodeLine{552         \}}
+\DoxyCodeLine{553     \}}
+\DoxyCodeLine{554 }
+\DoxyCodeLine{555     \textcolor{keywordflow}{return} \mbox{\hyperlink{wl__platform_8h_a454cb66a6161b4d9fbfde69bf1b1adb1}{xkb\_keymap\_key\_repeats}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.keymap, keycode);}
+\DoxyCodeLine{556 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__init_8c_a21e32d7cde0c918c630329a1cde99f10}\label{wl__init_8c_a21e32d7cde0c918c630329a1cde99f10}} 
+\index{wl\_init.c@{wl\_init.c}!\_glfwTerminateWayland@{\_glfwTerminateWayland}}
+\index{\_glfwTerminateWayland@{\_glfwTerminateWayland}!wl\_init.c@{wl\_init.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwTerminateWayland()}{\_glfwTerminateWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Terminate\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1383 of file wl\+\_\+init.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1384 \{}
+\DoxyCodeLine{1385     \mbox{\hyperlink{egl__context_8c_ab095be9ec2b3a40942da090ee7ab2960}{\_glfwTerminateEGL}}();}
+\DoxyCodeLine{1386     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7a5951c916147abd6d4d7330f687807d}{egl}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}})}
+\DoxyCodeLine{1387     \{}
+\DoxyCodeLine{1388         \mbox{\hyperlink{internal_8h_ad4b9e48b150850f6ee00874f85036715}{\_glfwPlatformFreeModule}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7a5951c916147abd6d4d7330f687807d}{egl}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}});}
+\DoxyCodeLine{1389         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7a5951c916147abd6d4d7330f687807d}{egl}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}} = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1390     \}}
+\DoxyCodeLine{1391 }
+\DoxyCodeLine{1392     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.composeState)}
+\DoxyCodeLine{1393         \mbox{\hyperlink{wl__platform_8h_a73858a1a46e83ed97773dbbbdc541bbd}{xkb\_compose\_state\_unref}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.composeState);}
+\DoxyCodeLine{1394     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.keymap)}
+\DoxyCodeLine{1395         \mbox{\hyperlink{wl__platform_8h_a9707d19b164550101c688f6a8ad4cb56}{xkb\_keymap\_unref}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.keymap);}
+\DoxyCodeLine{1396     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.state)}
+\DoxyCodeLine{1397         \mbox{\hyperlink{wl__platform_8h_a924ddb1dc7e73e83e207b2a1dc911504}{xkb\_state\_unref}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.state);}
+\DoxyCodeLine{1398     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a681e7c0153724884070e9c94069693fb}{context}})}
+\DoxyCodeLine{1399         \mbox{\hyperlink{wl__platform_8h_a7d4180d6a0192d57ed6bab2162b12444}{xkb\_context\_unref}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a681e7c0153724884070e9c94069693fb}{context}});}
+\DoxyCodeLine{1400     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}})}
+\DoxyCodeLine{1401     \{}
+\DoxyCodeLine{1402         \mbox{\hyperlink{internal_8h_ad4b9e48b150850f6ee00874f85036715}{\_glfwPlatformFreeModule}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}});}
+\DoxyCodeLine{1403         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}} = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1404     \}}
+\DoxyCodeLine{1405 }
+\DoxyCodeLine{1406     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorTheme)}
+\DoxyCodeLine{1407         \mbox{\hyperlink{wl__platform_8h_af4ea3aeb622e33ebef78a5456e1f177f}{wl\_cursor\_theme\_destroy}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorTheme);}
+\DoxyCodeLine{1408     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorThemeHiDPI)}
+\DoxyCodeLine{1409         \mbox{\hyperlink{wl__platform_8h_af4ea3aeb622e33ebef78a5456e1f177f}{wl\_cursor\_theme\_destroy}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorThemeHiDPI);}
+\DoxyCodeLine{1410     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursor.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}})}
+\DoxyCodeLine{1411     \{}
+\DoxyCodeLine{1412         \mbox{\hyperlink{internal_8h_ad4b9e48b150850f6ee00874f85036715}{\_glfwPlatformFreeModule}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursor.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}});}
+\DoxyCodeLine{1413         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursor.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5a67e92b012563943f1e1b26b0bf2645}{handle}} = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1414     \}}
+\DoxyCodeLine{1415 }
+\DoxyCodeLine{1416     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorSurface)}
+\DoxyCodeLine{1417         wl\_surface\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorSurface);}
+\DoxyCodeLine{1418     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.subcompositor)}
+\DoxyCodeLine{1419         wl\_subcompositor\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.subcompositor);}
+\DoxyCodeLine{1420     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.compositor)}
+\DoxyCodeLine{1421         wl\_compositor\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.compositor);}
+\DoxyCodeLine{1422     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.shm)}
+\DoxyCodeLine{1423         wl\_shm\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.shm);}
+\DoxyCodeLine{1424     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.viewporter)}
+\DoxyCodeLine{1425         wp\_viewporter\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.viewporter);}
+\DoxyCodeLine{1426     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.decorationManager)}
+\DoxyCodeLine{1427         zxdg\_decoration\_manager\_v1\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.decorationManager);}
+\DoxyCodeLine{1428     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.wmBase)}
+\DoxyCodeLine{1429         xdg\_wm\_base\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.wmBase);}
+\DoxyCodeLine{1430     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataSource)}
+\DoxyCodeLine{1431         wl\_data\_source\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataSource);}
+\DoxyCodeLine{1432     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataDevice)}
+\DoxyCodeLine{1433         wl\_data\_device\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataDevice);}
+\DoxyCodeLine{1434     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataOffer)}
+\DoxyCodeLine{1435         wl\_data\_offer\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataOffer);}
+\DoxyCodeLine{1436     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataDeviceManager)}
+\DoxyCodeLine{1437         wl\_data\_device\_manager\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataDeviceManager);}
+\DoxyCodeLine{1438     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.pointer)}
+\DoxyCodeLine{1439         wl\_pointer\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.pointer);}
+\DoxyCodeLine{1440     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.keyboard)}
+\DoxyCodeLine{1441         wl\_keyboard\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.keyboard);}
+\DoxyCodeLine{1442     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.seat)}
+\DoxyCodeLine{1443         wl\_seat\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.seat);}
+\DoxyCodeLine{1444     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.relativePointerManager)}
+\DoxyCodeLine{1445         zwp\_relative\_pointer\_manager\_v1\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.relativePointerManager);}
+\DoxyCodeLine{1446     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.pointerConstraints)}
+\DoxyCodeLine{1447         zwp\_pointer\_constraints\_v1\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.pointerConstraints);}
+\DoxyCodeLine{1448     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.idleInhibitManager)}
+\DoxyCodeLine{1449         zwp\_idle\_inhibit\_manager\_v1\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.idleInhibitManager);}
+\DoxyCodeLine{1450     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.registry)}
+\DoxyCodeLine{1451         wl\_registry\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.registry);}
+\DoxyCodeLine{1452     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}})}
+\DoxyCodeLine{1453     \{}
+\DoxyCodeLine{1454         \mbox{\hyperlink{wl__platform_8h_a57bfe216b1e65a2208bc0f44ed3c4739}{wl\_display\_flush}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}});}
+\DoxyCodeLine{1455         \mbox{\hyperlink{wl__platform_8h_a80f20a11b3b544c9c07cf3cc5006ba04}{wl\_display\_disconnect}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}});}
+\DoxyCodeLine{1456     \}}
+\DoxyCodeLine{1457 }
+\DoxyCodeLine{1458     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.timerfd >= 0)}
+\DoxyCodeLine{1459         close(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.timerfd);}
+\DoxyCodeLine{1460     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorTimerfd >= 0)}
+\DoxyCodeLine{1461         close(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorTimerfd);}
+\DoxyCodeLine{1462 }
+\DoxyCodeLine{1463     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardString)}
+\DoxyCodeLine{1464         \mbox{\hyperlink{init_8c_abcf72962b101a8a5c539da1a278b0e9e}{\_glfw\_free}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardString);}
+\DoxyCodeLine{1465     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardSendString)}
+\DoxyCodeLine{1466         \mbox{\hyperlink{init_8c_abcf72962b101a8a5c539da1a278b0e9e}{\_glfw\_free}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardSendString);}
+\DoxyCodeLine{1467 \}}
+
+\end{DoxyCode}

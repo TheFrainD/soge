@@ -1,0 +1,494 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_deps_2glfw_2src_2input_8c">
+<title>deps/glfw/src/input.c File Reference</title>
+<indexterm><primary>deps/glfw/src/input.c</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+#include &quot;mappings.h&quot;
+#include &lt;assert.h&gt;
+#include &lt;float.h&gt;
+#include &lt;math.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_deps_2glfw_2src_2input_8c_1af05e8b8bf6c333e9b40f3480b9d88241">_GLFW_STICK</link>   3</para>
+</listitem>
+            <listitem><para>#define <link linkend="_deps_2glfw_2src_2input_8c_1a5bf4fa1f0b519aa53c409cfa43c09287">_GLFW_JOYSTICK_AXIS</link>   1</para>
+</listitem>
+            <listitem><para>#define <link linkend="_deps_2glfw_2src_2input_8c_1a582c697f7502aae03c949fde57daaf56">_GLFW_JOYSTICK_BUTTON</link>   2</para>
+</listitem>
+            <listitem><para>#define <link linkend="_deps_2glfw_2src_2input_8c_1aa05206ef4ae4fc35573852aa9d26c811">_GLFW_JOYSTICK_HATBIT</link>   3</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_deps_2glfw_2src_2input_8c_1aba4a5bf53c475cf2dc3e594c3c5034ab">_glfwInputKey</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int <link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>, int scancode, int action, int mods)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_deps_2glfw_2src_2input_8c_1aa778fa9144afadb49baa95f0178d3d3e">_glfwInputChar</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, <link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link> codepoint, int mods, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> plain)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_deps_2glfw_2src_2input_8c_1a65b98312da830a2c65b36543f119a7fa">_glfwInputScroll</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, double <link linkend="_glad_8h_1ac20a0ffebf4c476650fcfa0633066f0e">xoffset</link>, double <link linkend="_glad_8h_1a76dfb6803dcff61037ba688b7f4242b8">yoffset</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_deps_2glfw_2src_2input_8c_1ae259527976c9b13341aa3e4587d0353e">_glfwInputMouseClick</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int button, int action, int mods)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_deps_2glfw_2src_2input_8c_1a973210bc0a11cc09fb55574ec5491bed">_glfwInputCursorPos</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, double xpos, double ypos)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_deps_2glfw_2src_2input_8c_1a507361a8b8610b4daee7e83aa056f339">_glfwInputCursorEnter</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> entered)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_deps_2glfw_2src_2input_8c_1a3a90fb32fec8ddd068b64671d1e85596">_glfwInputDrop</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int <link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>, const char **<link linkend="_glext_8h_1adcb3345bcd367edfa374dd2e0452a033">paths</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_deps_2glfw_2src_2input_8c_1a3f053fce7ffb1aeb2ebdee3674a8fee2">_glfwInputJoystick</link> (<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link> *js, int <link linkend="_glext_8h_1a03b04a5a978bad576866339075de01f6">event</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_deps_2glfw_2src_2input_8c_1ab91e3f3a89daff3809c3817a57a4f523">_glfwInputJoystickAxis</link> (<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link> *js, int axis, float <link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_deps_2glfw_2src_2input_8c_1af1048006805591e17cc431c016f539f5">_glfwInputJoystickButton</link> (<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link> *js, int button, char <link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_deps_2glfw_2src_2input_8c_1aca3d4e257b8212cf2a713f9a1069ff08">_glfwInputJoystickHat</link> (<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link> *js, int hat, char <link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_deps_2glfw_2src_2input_8c_1a1dab257a37caa6b39cfe9924c2487db6">_glfwInitGamepadMappings</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link> * <link linkend="_deps_2glfw_2src_2input_8c_1aa53debe565c79b60729cf4acda5df3d1">_glfwAllocJoystick</link> (const char *<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>, const char *guid, int axisCount, int buttonCount, int hatCount)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_deps_2glfw_2src_2input_8c_1aef69e836bb7cfec79044fd23b367eb62">_glfwFreeJoystick</link> (<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link> *js)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_deps_2glfw_2src_2input_8c_1acf1fbc03e8d658a35f70544df858fe6c">_glfwCenterCursorInContentArea</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> int <link linkend="_group__input_1ga1248dd5b1e566b2817e71547564d6af9">glfwGetInputMode</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle, int <link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>)</para>
+
+<para>Returns the value of an input option for the specified window. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__input_1gae1eb729d2dd91dc33fd60e150a6e1684">glfwSetInputMode</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle, int <link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>, int <link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>)</para>
+
+<para>Sets an input option for the specified window. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> int <link linkend="_group__input_1ga9b83d8957a566b22b3b768c7d1d4be03">glfwRawMouseMotionSupported</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+
+<para>Returns whether raw mouse motion is supported. </para>
+</listitem>
+            <listitem><para>const <link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> char * <link linkend="_group__input_1ga244737e5242c866e0f0af5a9c95f3e58">glfwGetKeyName</link> (int <link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>, int scancode)</para>
+
+<para>Returns the layout-specific name of the specified printable key. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> int <link linkend="_group__input_1ga3ea3b9d74f8352506068620980e01fe5">glfwGetKeyScancode</link> (int <link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>)</para>
+
+<para>Returns the platform-specific scancode of the specified key. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> int <link linkend="_group__input_1ga7d8ad8ffaf272808f04e1d5d33ec8859">glfwGetKey</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle, int <link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>)</para>
+
+<para>Returns the last reported state of a keyboard key for the specified window. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> int <link linkend="_group__input_1ga6da5efb04f700c312a57a169fa9393a0">glfwGetMouseButton</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle, int button)</para>
+
+<para>Returns the last reported state of a mouse button for the specified window. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__input_1gad289438eb7cf53d11eca685373f44105">glfwGetCursorPos</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle, double *xpos, double *ypos)</para>
+
+<para>Retrieves the position of the cursor relative to the content area of the window. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__input_1gaaf152cc93418acb0ba342e3f4af922bc">glfwSetCursorPos</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle, double xpos, double ypos)</para>
+
+<para>Sets the position of the cursor, relative to the content area of the window. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_group__input_1ga89261ae18c75e863aaf2656ecdd238f4">GLFWcursor</link> * <link linkend="_group__input_1gac0f0f691f2d110f9acfb4bfe07f1216c">glfwCreateCursor</link> (const <link linkend="_struct_g_l_f_wimage">GLFWimage</link> *<link linkend="_structimage">image</link>, int xhot, int yhot)</para>
+
+<para>Creates a custom cursor. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_group__input_1ga89261ae18c75e863aaf2656ecdd238f4">GLFWcursor</link> * <link linkend="_group__input_1ga969dd87ad2ddbf3e1086cc40f235eed1">glfwCreateStandardCursor</link> (int shape)</para>
+
+<para>Creates a cursor with a standard shape. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__input_1ga27556b7122117bc1bbb4bb3cc003ea43">glfwDestroyCursor</link> (<link linkend="_group__input_1ga89261ae18c75e863aaf2656ecdd238f4">GLFWcursor</link> *handle)</para>
+
+<para>Destroys a cursor. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__input_1gafaf103cea2f43530cff7de4e01126a4f">glfwSetCursor</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *windowHandle, <link linkend="_group__input_1ga89261ae18c75e863aaf2656ecdd238f4">GLFWcursor</link> *cursorHandle)</para>
+
+<para>Sets the cursor for the window. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_group__input_1ga5bd751b27b90f865d2ea613533f0453c">GLFWkeyfun</link> <link linkend="_group__input_1gaa4cbcb81b939b8800e44cea971ddae47">glfwSetKeyCallback</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle, <link linkend="_group__input_1ga5bd751b27b90f865d2ea613533f0453c">GLFWkeyfun</link> cbfun)</para>
+
+<para>Sets the key callback. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_group__input_1ga1ab90a55cf3f58639b893c0f4118cb6e">GLFWcharfun</link> <link linkend="_group__input_1gad3d7e6e3134fa034cc1604162579585e">glfwSetCharCallback</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle, <link linkend="_group__input_1ga1ab90a55cf3f58639b893c0f4118cb6e">GLFWcharfun</link> cbfun)</para>
+
+<para>Sets the Unicode character callback. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_group__input_1gac3cf64f90b6219c05ac7b7822d5a4b8f">GLFWcharmodsfun</link> <link linkend="_group__input_1ga359a8529c2eb06e6e2173168f30ac99c">glfwSetCharModsCallback</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle, <link linkend="_group__input_1gac3cf64f90b6219c05ac7b7822d5a4b8f">GLFWcharmodsfun</link> cbfun)</para>
+
+<para>Sets the Unicode character with modifiers callback. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_group__input_1ga0184dcb59f6d85d735503dcaae809727">GLFWmousebuttonfun</link> <link linkend="_group__input_1gab8f17646f43cdca14e5095512618fdf6">glfwSetMouseButtonCallback</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle, <link linkend="_group__input_1ga0184dcb59f6d85d735503dcaae809727">GLFWmousebuttonfun</link> cbfun)</para>
+
+<para>Sets the mouse button callback. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_group__input_1gad6fae41b3ac2e4209aaa87b596c57f68">GLFWcursorposfun</link> <link linkend="_group__input_1ga74124d0eff27040fd10e4df9e17d129c">glfwSetCursorPosCallback</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle, <link linkend="_group__input_1gad6fae41b3ac2e4209aaa87b596c57f68">GLFWcursorposfun</link> cbfun)</para>
+
+<para>Sets the cursor position callback. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_group__input_1gaa93dc4818ac9ab32532909d53a337cbe">GLFWcursorenterfun</link> <link linkend="_group__input_1gacdb3490e374c8bc08549c6f173ffa7c2">glfwSetCursorEnterCallback</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle, <link linkend="_group__input_1gaa93dc4818ac9ab32532909d53a337cbe">GLFWcursorenterfun</link> cbfun)</para>
+
+<para>Sets the cursor enter/leave callback. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_group__input_1gaf656112c33de3efdb227fa58f0134cf5">GLFWscrollfun</link> <link linkend="_group__input_1gaa786b59f19ad8525d251cda8e0d7d29b">glfwSetScrollCallback</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle, <link linkend="_group__input_1gaf656112c33de3efdb227fa58f0134cf5">GLFWscrollfun</link> cbfun)</para>
+
+<para>Sets the scroll callback. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_group__input_1gaaba73c3274062c18723b7f05862d94b2">GLFWdropfun</link> <link linkend="_group__input_1ga8bab819b7b0ef9bc1a38e58c577c1d13">glfwSetDropCallback</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle, <link linkend="_group__input_1gaaba73c3274062c18723b7f05862d94b2">GLFWdropfun</link> cbfun)</para>
+
+<para>Sets the path drop callback. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> int <link linkend="_group__input_1gacb1b7dfd79df673d48814c06fc436eff">glfwJoystickPresent</link> (int jid)</para>
+
+<para>Returns whether the specified joystick is present. </para>
+</listitem>
+            <listitem><para>const <link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> float * <link linkend="_group__input_1gaf0537d8832818963f8d24ac1c98e42a3">glfwGetJoystickAxes</link> (int jid, int *<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>)</para>
+
+<para>Returns the values of all axes of the specified joystick. </para>
+</listitem>
+            <listitem><para>const <link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> unsigned char * <link linkend="_group__input_1gaee8f9532b2dff9278cee70d0e6cde82c">glfwGetJoystickButtons</link> (int jid, int *<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>)</para>
+
+<para>Returns the state of all buttons of the specified joystick. </para>
+</listitem>
+            <listitem><para>const <link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> unsigned char * <link linkend="_group__input_1gad415b53795a1aeced53b7b66c7943931">glfwGetJoystickHats</link> (int jid, int *<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>)</para>
+
+<para>Returns the state of all hats of the specified joystick. </para>
+</listitem>
+            <listitem><para>const <link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> char * <link linkend="_group__input_1ga9b5d2d156f0138e0e7ad065e477dcfe3">glfwGetJoystickName</link> (int jid)</para>
+
+<para>Returns the name of the specified joystick. </para>
+</listitem>
+            <listitem><para>const <link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> char * <link linkend="_group__input_1ga40f8522193d983af333bb6e21a3b120a">glfwGetJoystickGUID</link> (int jid)</para>
+
+<para>Returns the SDL compatible GUID of the specified joystick. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__input_1ga3a8999c2d2634c7bcf4a04f1ec64895c">glfwSetJoystickUserPointer</link> (int jid, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_glad_8h_1a8e06a460fd89ba3a95ce49119ef7aab2">pointer</link>)</para>
+
+<para>Sets the user pointer of the specified joystick. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * <link linkend="_group__input_1gaf4317a5b0a7849f9b2b7b2b69366a72b">glfwGetJoystickUserPointer</link> (int jid)</para>
+
+<para>Returns the user pointer of the specified joystick. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_group__input_1gaa21ad5986ae9a26077a40142efb56243">GLFWjoystickfun</link> <link linkend="_group__input_1gad90f60a4c0e04629928305b53e96154a">glfwSetJoystickCallback</link> (<link linkend="_group__input_1gaa21ad5986ae9a26077a40142efb56243">GLFWjoystickfun</link> cbfun)</para>
+
+<para>Sets the joystick configuration callback. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> int <link linkend="_group__input_1ga276a2aec236a671a99f6f0a9be7fa3fc">glfwUpdateGamepadMappings</link> (const char *<link linkend="_glad_8h_1ae84541b4f3d8e1ea24ec0f466a8c568b">string</link>)</para>
+
+<para>Adds the specified SDL_GameControllerDB gamepad mappings. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> int <link linkend="_group__input_1gac9720b6e5062a5fc5fc0bb4be6dc04a0">glfwJoystickIsGamepad</link> (int jid)</para>
+
+<para>Returns whether the specified joystick has a gamepad mapping. </para>
+</listitem>
+            <listitem><para>const <link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> char * <link linkend="_group__input_1ga36983e6ae6fa159a1426a0148a1ec00b">glfwGetGamepadName</link> (int jid)</para>
+
+<para>Returns the human-readable gamepad name for the specified joystick. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> int <link linkend="_group__input_1ga6e138d3b0761546f5a12546f367501d6">glfwGetGamepadState</link> (int jid, <link linkend="_struct_g_l_f_wgamepadstate">GLFWgamepadstate</link> *state)</para>
+
+<para>Retrieves the state of the specified joystick remapped as a gamepad. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__input_1ga7a580309bbc185a0459c3559021d2fd7">glfwSetClipboardString</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle, const char *<link linkend="_glad_8h_1ae84541b4f3d8e1ea24ec0f466a8c568b">string</link>)</para>
+
+<para>Sets the clipboard to the specified string. </para>
+</listitem>
+            <listitem><para>const <link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> char * <link linkend="_group__input_1gae22e5d8bc376aeb71ea063d1bc63fddc">glfwGetClipboardString</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle)</para>
+
+<para>Returns the contents of the clipboard as a string. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> double <link linkend="_group__input_1ga03d4a1039b8662c71eeb40beea8cb622">glfwGetTime</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+
+<para>Returns the GLFW time. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__input_1ga94360a3628a09f32708f83cc3fa48590">glfwSetTime</link> (double time)</para>
+
+<para>Sets the GLFW time. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_stdint_8h_1aec6fcb673ff035718c238c8c9d544c47">uint64_t</link> <link linkend="_group__input_1gaa00c3e32227eb70b3968fca0bfe4ae26">glfwGetTimerValue</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+
+<para>Returns the current value of the raw timer. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_stdint_8h_1aec6fcb673ff035718c238c8c9d544c47">uint64_t</link> <link linkend="_group__input_1gaa92d10b10013372778efbf6367714371">glfwGetTimerFrequency</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+
+<para>Returns the frequency, in Hz, of the raw timer. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_deps_2glfw_2src_2input_8c_1a5bf4fa1f0b519aa53c409cfa43c09287"/>    <section>
+    <title>_GLFW_JOYSTICK_AXIS</title>
+<indexterm><primary>_GLFW_JOYSTICK_AXIS</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_GLFW_JOYSTICK_AXIS</secondary></indexterm>
+<para><computeroutput>#define _GLFW_JOYSTICK_AXIS   1</computeroutput></para><para>
+Definition at line 43 of file input.c.</para>
+    </section><anchor xml:id="_deps_2glfw_2src_2input_8c_1a582c697f7502aae03c949fde57daaf56"/>    <section>
+    <title>_GLFW_JOYSTICK_BUTTON</title>
+<indexterm><primary>_GLFW_JOYSTICK_BUTTON</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_GLFW_JOYSTICK_BUTTON</secondary></indexterm>
+<para><computeroutput>#define _GLFW_JOYSTICK_BUTTON   2</computeroutput></para><para>
+Definition at line 44 of file input.c.</para>
+    </section><anchor xml:id="_deps_2glfw_2src_2input_8c_1aa05206ef4ae4fc35573852aa9d26c811"/>    <section>
+    <title>_GLFW_JOYSTICK_HATBIT</title>
+<indexterm><primary>_GLFW_JOYSTICK_HATBIT</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_GLFW_JOYSTICK_HATBIT</secondary></indexterm>
+<para><computeroutput>#define _GLFW_JOYSTICK_HATBIT   3</computeroutput></para><para>
+Definition at line 45 of file input.c.</para>
+    </section><anchor xml:id="_deps_2glfw_2src_2input_8c_1af05e8b8bf6c333e9b40f3480b9d88241"/>    <section>
+    <title>_GLFW_STICK</title>
+<indexterm><primary>_GLFW_STICK</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_GLFW_STICK</secondary></indexterm>
+<para><computeroutput>#define _GLFW_STICK   3</computeroutput></para><para>
+Definition at line 40 of file input.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_deps_2glfw_2src_2input_8c_1aa53debe565c79b60729cf4acda5df3d1"/>    <section>
+    <title>_glfwAllocJoystick()</title>
+<indexterm><primary>_glfwAllocJoystick</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_glfwAllocJoystick</secondary></indexterm>
+<para><computeroutput><link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link>* _glfwAllocJoystick (const char * name, const char * guid, int axisCount, int buttonCount, int hatCount)</computeroutput></para><para>
+Definition at line 434 of file input.c.</para>
+<programlisting>439 {
+440 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;jid;
+441 &#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link>*&#32;js;
+442 
+443 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(jid&#32;=&#32;0;&#32;&#32;jid&#32;&lt;=&#32;<link linkend="_group__joysticks_1ga9ca13ebf24c331dd98df17d84a4b72c9">GLFW_JOYSTICK_LAST</link>;&#32;&#32;jid++)
+444 &#32;&#32;&#32;&#32;{
+445 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7f6b01642d8bc4965fd7b084a01bc401">joysticks</link>[jid].<link linkend="_struct___g_l_f_wjoystick_1a88a2e71ed9c3be6eca850577a104d611">present</link>)
+446 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+447 &#32;&#32;&#32;&#32;}
+448 
+449 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(jid&#32;&gt;&#32;<link linkend="_group__joysticks_1ga9ca13ebf24c331dd98df17d84a4b72c9">GLFW_JOYSTICK_LAST</link>)
+450 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+451 
+452 &#32;&#32;&#32;&#32;js&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7f6b01642d8bc4965fd7b084a01bc401">joysticks</link>&#32;+&#32;jid;
+453 &#32;&#32;&#32;&#32;js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a88a2e71ed9c3be6eca850577a104d611">present</link>&#32;&#32;&#32;&#32;&#32;=&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+454 &#32;&#32;&#32;&#32;js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a9412079f36e6531022d5fcb9efa3a156">axes</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;<link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link>(axisCount,&#32;<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keywordtype">float</emphasis>));
+455 &#32;&#32;&#32;&#32;js-&gt;<link linkend="_struct___g_l_f_wjoystick_1acb06a7749913576f172ea34950b8ec1c">buttons</link>&#32;&#32;&#32;&#32;&#32;=&#32;<link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link>(buttonCount&#32;+&#32;(<emphasis role="keywordtype">size_t</emphasis>)&#32;hatCount&#32;*&#32;4,&#32;1);
+456 &#32;&#32;&#32;&#32;js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a84e345346f70340100edf3a715fd11f0">hats</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;<link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link>(hatCount,&#32;1);
+457 &#32;&#32;&#32;&#32;js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a764d4c38cb049362d335450442277773">axisCount</link>&#32;&#32;&#32;=&#32;axisCount;
+458 &#32;&#32;&#32;&#32;js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a556785f64f15a3153371a39d120fbc0b">buttonCount</link>&#32;=&#32;buttonCount;
+459 &#32;&#32;&#32;&#32;js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a812df79ec7f31658e884c4bb93ab73b5">hatCount</link>&#32;&#32;&#32;&#32;=&#32;hatCount;
+460 
+461 &#32;&#32;&#32;&#32;strncpy(js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a5c3a6e76b15f9865478c10da42eb8518">name</link>,&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a5c3a6e76b15f9865478c10da42eb8518">name</link>)&#32;-&#32;1);
+462 &#32;&#32;&#32;&#32;strncpy(js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a0d7c8dee95327210882e04073a2b05d4">guid</link>,&#32;guid,&#32;<emphasis role="keyword">sizeof</emphasis>(js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a0d7c8dee95327210882e04073a2b05d4">guid</link>)&#32;-&#32;1);
+463 &#32;&#32;&#32;&#32;js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a2f367b7ecb533af018bc37304701b502">mapping</link>&#32;=&#32;findValidMapping(js);
+464 
+465 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;js;
+466 }
+</programlisting>    </section><anchor xml:id="_deps_2glfw_2src_2input_8c_1acf1fbc03e8d658a35f70544df858fe6c"/>    <section>
+    <title>_glfwCenterCursorInContentArea()</title>
+<indexterm><primary>_glfwCenterCursorInContentArea</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_glfwCenterCursorInContentArea</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwCenterCursorInContentArea (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 480 of file input.c.</para>
+<programlisting>481 {
+482 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>;
+483 
+484 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>.<link linkend="_struct___g_l_f_wplatform_1abb483c8d581cba5199ac0f8bbd4776d5">getWindowSize</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;&amp;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;&amp;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+485 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>.<link linkend="_struct___g_l_f_wplatform_1a12b2a907300bcf7e4badcd84c36f41aa">setCursorPos</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>&#32;/&#32;2.0,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>&#32;/&#32;2.0);
+486 }
+</programlisting>    </section><anchor xml:id="_deps_2glfw_2src_2input_8c_1aef69e836bb7cfec79044fd23b367eb62"/>    <section>
+    <title>_glfwFreeJoystick()</title>
+<indexterm><primary>_glfwFreeJoystick</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_glfwFreeJoystick</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwFreeJoystick (<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link> * js)</computeroutput></para><para>
+Definition at line 470 of file input.c.</para>
+<programlisting>471 {
+472 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a9412079f36e6531022d5fcb9efa3a156">axes</link>);
+473 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(js-&gt;<link linkend="_struct___g_l_f_wjoystick_1acb06a7749913576f172ea34950b8ec1c">buttons</link>);
+474 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a84e345346f70340100edf3a715fd11f0">hats</link>);
+475 &#32;&#32;&#32;&#32;memset(js,&#32;0,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link>));
+476 }
+</programlisting>    </section><anchor xml:id="_deps_2glfw_2src_2input_8c_1a1dab257a37caa6b39cfe9924c2487db6"/>    <section>
+    <title>_glfwInitGamepadMappings()</title>
+<indexterm><primary>_glfwInitGamepadMappings</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_glfwInitGamepadMappings</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwInitGamepadMappings (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 419 of file input.c.</para>
+<programlisting>420 {
+421 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">size_t</emphasis>&#32;i;
+422 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">size_t</emphasis>&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;=&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_mappings_8h_1a96b853880d91f95d8f661ae07d75d049">_glfwDefaultMappings</link>)&#32;/&#32;<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keywordtype">char</emphasis>*);
+423 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a0f3d3622b971d031db365d71eeae0048">mappings</link>&#32;=&#32;<link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link>(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct___g_l_f_wmapping">_GLFWmapping</link>));
+424 
+425 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>;&#32;&#32;i++)
+426 &#32;&#32;&#32;&#32;{
+427 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(parseMapping(&amp;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a0f3d3622b971d031db365d71eeae0048">mappings</link>[<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a974eecd4fb17f568673a0b16474268aa">mappingCount</link>],&#32;<link linkend="_mappings_8h_1a96b853880d91f95d8f661ae07d75d049">_glfwDefaultMappings</link>[i]))
+428 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a974eecd4fb17f568673a0b16474268aa">mappingCount</link>++;
+429 &#32;&#32;&#32;&#32;}
+430 }
+</programlisting>    </section><anchor xml:id="_deps_2glfw_2src_2input_8c_1aa778fa9144afadb49baa95f0178d3d3e"/>    <section>
+    <title>_glfwInputChar()</title>
+<indexterm><primary>_glfwInputChar</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_glfwInputChar</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwInputChar (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, <link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link> codepoint, int mods, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> plain)</computeroutput></para><para>
+Definition at line 298 of file input.c.</para>
+<programlisting>299 {
+300 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(codepoint&#32;&lt;&#32;32&#32;||&#32;(codepoint&#32;&gt;&#32;126&#32;&amp;&amp;&#32;codepoint&#32;&lt;&#32;160))
+301 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+302 
+303 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;lockKeyMods)
+304 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;mods&#32;&amp;=&#32;~(<link linkend="_group__mods_1gaefeef8fcf825a6e43e241b337897200f">GLFW_MOD_CAPS_LOCK</link>&#32;|&#32;<link linkend="_group__mods_1ga64e020b8a42af8376e944baf61feecbe">GLFW_MOD_NUM_LOCK</link>);
+305 
+306 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;callbacks.charmods)
+307 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;callbacks.charmods((<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>*)&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;codepoint,&#32;mods);
+308 
+309 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(plain)
+310 &#32;&#32;&#32;&#32;{
+311 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;callbacks.character)
+312 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;callbacks.character((<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>*)&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;codepoint);
+313 &#32;&#32;&#32;&#32;}
+314 }
+</programlisting>    </section><anchor xml:id="_deps_2glfw_2src_2input_8c_1a507361a8b8610b4daee7e83aa056f339"/>    <section>
+    <title>_glfwInputCursorEnter()</title>
+<indexterm><primary>_glfwInputCursorEnter</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_glfwInputCursorEnter</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwInputCursorEnter (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> entered)</computeroutput></para><para>
+Definition at line 360 of file input.c.</para>
+<programlisting>361 {
+362 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;callbacks.cursorEnter)
+363 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;callbacks.cursorEnter((<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>*)&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;entered);
+364 }
+</programlisting>    </section><anchor xml:id="_deps_2glfw_2src_2input_8c_1a973210bc0a11cc09fb55574ec5491bed"/>    <section>
+    <title>_glfwInputCursorPos()</title>
+<indexterm><primary>_glfwInputCursorPos</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_glfwInputCursorPos</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwInputCursorPos (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, double xpos, double ypos)</computeroutput></para><para>
+Definition at line 346 of file input.c.</para>
+<programlisting>347 {
+348 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;virtualCursorPosX&#32;==&#32;xpos&#32;&amp;&amp;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;virtualCursorPosY&#32;==&#32;ypos)
+349 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+350 
+351 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;virtualCursorPosX&#32;=&#32;xpos;
+352 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;virtualCursorPosY&#32;=&#32;ypos;
+353 
+354 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;callbacks.cursorPos)
+355 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;callbacks.cursorPos((<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>*)&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;xpos,&#32;ypos);
+356 }
+</programlisting>    </section><anchor xml:id="_deps_2glfw_2src_2input_8c_1a3a90fb32fec8ddd068b64671d1e85596"/>    <section>
+    <title>_glfwInputDrop()</title>
+<indexterm><primary>_glfwInputDrop</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_glfwInputDrop</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwInputDrop (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int count, const char ** paths)</computeroutput></para><para>
+Definition at line 368 of file input.c.</para>
+<programlisting>369 {
+370 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;callbacks.drop)
+371 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;callbacks.drop((<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>*)&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>,&#32;<link linkend="_glext_8h_1adcb3345bcd367edfa374dd2e0452a033">paths</link>);
+372 }
+</programlisting>    </section><anchor xml:id="_deps_2glfw_2src_2input_8c_1a3f053fce7ffb1aeb2ebdee3674a8fee2"/>    <section>
+    <title>_glfwInputJoystick()</title>
+<indexterm><primary>_glfwInputJoystick</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_glfwInputJoystick</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwInputJoystick (<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link> * js, int event)</computeroutput></para><para>
+Definition at line 376 of file input.c.</para>
+<programlisting>377 {
+378 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;jid&#32;=&#32;(int)&#32;(js&#32;-&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7f6b01642d8bc4965fd7b084a01bc401">joysticks</link>);
+379 
+380 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a59fc977d623a780eb748aadcd1485d6c">callbacks</link>.<link linkend="_struct___g_l_f_wlibrary_1a60d552e59e41b4500e3d36acd35131da">joystick</link>)
+381 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a59fc977d623a780eb748aadcd1485d6c">callbacks</link>.<link linkend="_struct___g_l_f_wlibrary_1a60d552e59e41b4500e3d36acd35131da">joystick</link>(jid,&#32;<link linkend="_glext_8h_1a03b04a5a978bad576866339075de01f6">event</link>);
+382 }
+</programlisting>    </section><anchor xml:id="_deps_2glfw_2src_2input_8c_1ab91e3f3a89daff3809c3817a57a4f523"/>    <section>
+    <title>_glfwInputJoystickAxis()</title>
+<indexterm><primary>_glfwInputJoystickAxis</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_glfwInputJoystickAxis</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwInputJoystickAxis (<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link> * js, int axis, float value)</computeroutput></para><para>
+Definition at line 386 of file input.c.</para>
+<programlisting>387 {
+388 &#32;&#32;&#32;&#32;js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a9412079f36e6531022d5fcb9efa3a156">axes</link>[axis]&#32;=&#32;<link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>;
+389 }
+</programlisting>    </section><anchor xml:id="_deps_2glfw_2src_2input_8c_1af1048006805591e17cc431c016f539f5"/>    <section>
+    <title>_glfwInputJoystickButton()</title>
+<indexterm><primary>_glfwInputJoystickButton</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_glfwInputJoystickButton</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwInputJoystickButton (<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link> * js, int button, char value)</computeroutput></para><para>
+Definition at line 393 of file input.c.</para>
+<programlisting>394 {
+395 &#32;&#32;&#32;&#32;js-&gt;<link linkend="_struct___g_l_f_wjoystick_1acb06a7749913576f172ea34950b8ec1c">buttons</link>[button]&#32;=&#32;<link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>;
+396 }
+</programlisting>    </section><anchor xml:id="_deps_2glfw_2src_2input_8c_1aca3d4e257b8212cf2a713f9a1069ff08"/>    <section>
+    <title>_glfwInputJoystickHat()</title>
+<indexterm><primary>_glfwInputJoystickHat</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_glfwInputJoystickHat</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwInputJoystickHat (<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link> * js, int hat, char value)</computeroutput></para><para>
+Definition at line 400 of file input.c.</para>
+<programlisting>401 {
+402 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;base&#32;=&#32;js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a556785f64f15a3153371a39d120fbc0b">buttonCount</link>&#32;+&#32;hat&#32;*&#32;4;
+403 
+404 &#32;&#32;&#32;&#32;js-&gt;<link linkend="_struct___g_l_f_wjoystick_1acb06a7749913576f172ea34950b8ec1c">buttons</link>[base&#32;+&#32;0]&#32;=&#32;(<link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>&#32;&amp;&#32;0x01)&#32;?&#32;<link linkend="_group__input_1ga2485743d0b59df3791c45951c4195265">GLFW_PRESS</link>&#32;:&#32;<link linkend="_group__input_1gada11d965c4da13090ad336e030e4d11f">GLFW_RELEASE</link>;
+405 &#32;&#32;&#32;&#32;js-&gt;<link linkend="_struct___g_l_f_wjoystick_1acb06a7749913576f172ea34950b8ec1c">buttons</link>[base&#32;+&#32;1]&#32;=&#32;(<link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>&#32;&amp;&#32;0x02)&#32;?&#32;<link linkend="_group__input_1ga2485743d0b59df3791c45951c4195265">GLFW_PRESS</link>&#32;:&#32;<link linkend="_group__input_1gada11d965c4da13090ad336e030e4d11f">GLFW_RELEASE</link>;
+406 &#32;&#32;&#32;&#32;js-&gt;<link linkend="_struct___g_l_f_wjoystick_1acb06a7749913576f172ea34950b8ec1c">buttons</link>[base&#32;+&#32;2]&#32;=&#32;(<link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>&#32;&amp;&#32;0x04)&#32;?&#32;<link linkend="_group__input_1ga2485743d0b59df3791c45951c4195265">GLFW_PRESS</link>&#32;:&#32;<link linkend="_group__input_1gada11d965c4da13090ad336e030e4d11f">GLFW_RELEASE</link>;
+407 &#32;&#32;&#32;&#32;js-&gt;<link linkend="_struct___g_l_f_wjoystick_1acb06a7749913576f172ea34950b8ec1c">buttons</link>[base&#32;+&#32;3]&#32;=&#32;(<link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>&#32;&amp;&#32;0x08)&#32;?&#32;<link linkend="_group__input_1ga2485743d0b59df3791c45951c4195265">GLFW_PRESS</link>&#32;:&#32;<link linkend="_group__input_1gada11d965c4da13090ad336e030e4d11f">GLFW_RELEASE</link>;
+408 
+409 &#32;&#32;&#32;&#32;js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a84e345346f70340100edf3a715fd11f0">hats</link>[hat]&#32;=&#32;<link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>;
+410 }
+</programlisting>    </section><anchor xml:id="_deps_2glfw_2src_2input_8c_1aba4a5bf53c475cf2dc3e594c3c5034ab"/>    <section>
+    <title>_glfwInputKey()</title>
+<indexterm><primary>_glfwInputKey</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_glfwInputKey</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwInputKey (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int key, int scancode, int action, int mods)</computeroutput></para><para>
+Definition at line 267 of file input.c.</para>
+<programlisting>268 {
+269 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>&#32;&gt;=&#32;0&#32;&amp;&amp;&#32;<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>&#32;&lt;=&#32;<link linkend="_group__keys_1ga442cbaef7bfb9a4ba13594dd7fbf2789">GLFW_KEY_LAST</link>)
+270 &#32;&#32;&#32;&#32;{
+271 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link>&#32;repeated&#32;=&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+272 
+273 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(action&#32;==&#32;<link linkend="_group__input_1gada11d965c4da13090ad336e030e4d11f">GLFW_RELEASE</link>&#32;&amp;&amp;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;keys[<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>]&#32;==&#32;<link linkend="_group__input_1gada11d965c4da13090ad336e030e4d11f">GLFW_RELEASE</link>)
+274 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+275 
+276 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(action&#32;==&#32;<link linkend="_group__input_1ga2485743d0b59df3791c45951c4195265">GLFW_PRESS</link>&#32;&amp;&amp;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;keys[<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>]&#32;==&#32;<link linkend="_group__input_1ga2485743d0b59df3791c45951c4195265">GLFW_PRESS</link>)
+277 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;repeated&#32;=&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+278 
+279 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(action&#32;==&#32;<link linkend="_group__input_1gada11d965c4da13090ad336e030e4d11f">GLFW_RELEASE</link>&#32;&amp;&amp;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;stickyKeys)
+280 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;keys[<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>]&#32;=&#32;<link linkend="_deps_2glfw_2src_2input_8c_1af05e8b8bf6c333e9b40f3480b9d88241">_GLFW_STICK</link>;
+281 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+282 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;keys[<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>]&#32;=&#32;(char)&#32;action;
+283 
+284 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(repeated)
+285 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;action&#32;=&#32;<link linkend="_group__input_1gac96fd3b9fc66c6f0eebaf6532595338f">GLFW_REPEAT</link>;
+286 &#32;&#32;&#32;&#32;}
+287 
+288 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;lockKeyMods)
+289 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;mods&#32;&amp;=&#32;~(<link linkend="_group__mods_1gaefeef8fcf825a6e43e241b337897200f">GLFW_MOD_CAPS_LOCK</link>&#32;|&#32;<link linkend="_group__mods_1ga64e020b8a42af8376e944baf61feecbe">GLFW_MOD_NUM_LOCK</link>);
+290 
+291 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;callbacks.key)
+292 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;callbacks.key((<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>*)&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>,&#32;scancode,&#32;action,&#32;mods);
+293 }
+</programlisting>    </section><anchor xml:id="_deps_2glfw_2src_2input_8c_1ae259527976c9b13341aa3e4587d0353e"/>    <section>
+    <title>_glfwInputMouseClick()</title>
+<indexterm><primary>_glfwInputMouseClick</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_glfwInputMouseClick</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwInputMouseClick (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int button, int action, int mods)</computeroutput></para><para>
+Definition at line 326 of file input.c.</para>
+<programlisting>327 {
+328 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(button&#32;&lt;&#32;0&#32;||&#32;button&#32;&gt;&#32;<link linkend="_group__buttons_1gab1fd86a4518a9141ec7bcde2e15a2fdf">GLFW_MOUSE_BUTTON_LAST</link>)
+329 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+330 
+331 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;lockKeyMods)
+332 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;mods&#32;&amp;=&#32;~(<link linkend="_group__mods_1gaefeef8fcf825a6e43e241b337897200f">GLFW_MOD_CAPS_LOCK</link>&#32;|&#32;<link linkend="_group__mods_1ga64e020b8a42af8376e944baf61feecbe">GLFW_MOD_NUM_LOCK</link>);
+333 
+334 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(action&#32;==&#32;<link linkend="_group__input_1gada11d965c4da13090ad336e030e4d11f">GLFW_RELEASE</link>&#32;&amp;&amp;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;stickyMouseButtons)
+335 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;mouseButtons[button]&#32;=&#32;<link linkend="_deps_2glfw_2src_2input_8c_1af05e8b8bf6c333e9b40f3480b9d88241">_GLFW_STICK</link>;
+336 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+337 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;mouseButtons[button]&#32;=&#32;(char)&#32;action;
+338 
+339 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;callbacks.mouseButton)
+340 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;callbacks.mouseButton((<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>*)&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;button,&#32;action,&#32;mods);
+341 }
+</programlisting>    </section><anchor xml:id="_deps_2glfw_2src_2input_8c_1a65b98312da830a2c65b36543f119a7fa"/>    <section>
+    <title>_glfwInputScroll()</title>
+<indexterm><primary>_glfwInputScroll</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>_glfwInputScroll</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwInputScroll (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, double xoffset, double yoffset)</computeroutput></para><para>
+Definition at line 318 of file input.c.</para>
+<programlisting>319 {
+320 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;callbacks.scroll)
+321 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;callbacks.scroll((<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>*)&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_glad_8h_1ac20a0ffebf4c476650fcfa0633066f0e">xoffset</link>,&#32;<link linkend="_glad_8h_1a76dfb6803dcff61037ba688b7f4242b8">yoffset</link>);
+322 }
+</programlisting></section>
+</section>
+</section>

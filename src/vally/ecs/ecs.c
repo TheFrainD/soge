@@ -1,5 +1,17 @@
+/*********************************************************************
+ * ecs.c                                                             *
+ *                                                                   *
+ * Copyright (c) 2022 Dmytro Zykov                                   *
+ *                                                                   *
+ * This file is a part of the vally project, and may only be used,   *
+ * modified and distributed under the terms of the MIT License,      *
+ * LICENSE.md. By continuing to use, modify and distribute this file *
+ * you inidicate that you have read the license and accept it fully. *
+ *********************************************************************/
+
 #include <vally/ecs/ecs.h>
 
+#include <vally/core/logger.h>
 #include <vally/ecs/components/transform.h>
 #include <vally/math/math.h>
 
@@ -18,6 +30,8 @@ b8 ecs_init() {
 
   state.last = 0;
   initialized = TRUE;
+
+  LOG_TRACE("ECS initialized");
 
   return TRUE;
 }

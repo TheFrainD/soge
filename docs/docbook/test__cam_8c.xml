@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_test__cam_8c">
+<title>deps/cglm/test/src/test_cam.c File Reference</title>
+<indexterm><primary>deps/cglm/test/src/test_cam.c</primary></indexterm>
+<programlisting>#include &quot;test_common.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_test__cam_8c_1a9e7f268faf691dfd8dfefcb731cd6914">TEST_IMPL</link> (camera_lookat)</para>
+</listitem>
+            <listitem><para><link linkend="_test__cam_8c_1aad78246bfd4a5619746bac65eb77bc5a">TEST_IMPL</link> (camera_decomp)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_test__cam_8c_1aad78246bfd4a5619746bac65eb77bc5a"/>    <section>
+    <title>TEST_IMPL()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>TEST_IMPL</primary><secondary>test_cam.c</secondary></indexterm>
+<indexterm><primary>test_cam.c</primary><secondary>TEST_IMPL</secondary></indexterm>
+<para><computeroutput>TEST_IMPL (camera_decomp )</computeroutput></para><para>
+Definition at line 27 of file test_cam.c.</para>
+<programlisting>27 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+28 &#32;&#32;<link linkend="_types_8h_1ae30f88fc32dfb3008b133367bbf0c3a1">mat4</link>&#32;&#32;proj,&#32;proj2;
+29 &#32;&#32;vec4&#32;&#32;<link linkend="_glad_8h_1a9ded28672f8b805d6b467777d0ac7b6f">sizes</link>;
+30 &#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;aspect,&#32;fovy,&#32;nearZ,&#32;farZ;
+31 
+32 &#32;&#32;aspect&#32;&#32;=&#32;0.782f;
+33 &#32;&#32;fovy&#32;&#32;&#32;&#32;=&#32;<link linkend="_util_8h_1a96ef52a4c391eca254a1d722b9a005e1">glm_rad</link>(49.984<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+34 &#32;&#32;nearZ&#32;&#32;&#32;=&#32;0.1f;
+35 &#32;&#32;farZ&#32;&#32;&#32;&#32;=&#32;100.0f;
+36 
+37 &#32;&#32;<link linkend="_cam_8h_1a49a2796a04e4703e1e88c7b7aeb1ac12">glm_perspective</link>(fovy,&#32;aspect,&#32;nearZ,&#32;farZ,&#32;proj);
+38 &#32;&#32;<link linkend="_test_2include_2common_8h_1a821326052e3e2bf1fb2d678e9e9a6004">ASSERT</link>(fabsf(aspect&#32;&#32;-&#32;<link linkend="_persp_8h_1a15fd64ca7deaaa6d57945c1d0f628202">glm_persp_aspect</link>(proj))&#32;&lt;&#32;<link linkend="_include_2cglm_2common_8h_1a9d4d1682b34f0efd224db211b6aa9d8b">GLM_FLT_EPSILON</link>)
+39 &#32;&#32;<link linkend="_test_2include_2common_8h_1a821326052e3e2bf1fb2d678e9e9a6004">ASSERT</link>(fabsf(fovy&#32;&#32;&#32;&#32;-&#32;<link linkend="_persp_8h_1a9ea06ad927503ba882a7baea9c971ec2">glm_persp_fovy</link>(proj))&#32;&#32;&#32;&lt;&#32;<link linkend="_include_2cglm_2common_8h_1a9d4d1682b34f0efd224db211b6aa9d8b">GLM_FLT_EPSILON</link>)
+40 &#32;&#32;<link linkend="_test_2include_2common_8h_1a821326052e3e2bf1fb2d678e9e9a6004">ASSERT</link>(fabsf(49.984<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;-&#32;<link linkend="_util_8h_1af0eec145d7fbe37bc8b90473eab58c4a">glm_deg</link>(<link linkend="_persp_8h_1a9ea06ad927503ba882a7baea9c971ec2">glm_persp_fovy</link>(proj)))&#32;&lt;&#32;<link linkend="_include_2cglm_2common_8h_1a9d4d1682b34f0efd224db211b6aa9d8b">GLM_FLT_EPSILON</link>)
+41 
+42 &#32;&#32;<link linkend="_cam_8h_1ab0e729a6f2e4121b4fa45366c0ae2b33">glm_persp_sizes</link>(proj,&#32;fovy,&#32;<link linkend="_glad_8h_1a9ded28672f8b805d6b467777d0ac7b6f">sizes</link>);
+43 
+44 &#32;&#32;<link linkend="_cam_8h_1aad0b2a2adaad602ce08e759e6c390fb1">glm_frustum</link>(-<link linkend="_glad_8h_1a9ded28672f8b805d6b467777d0ac7b6f">sizes</link>[0]&#32;*&#32;0.5<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,
+45 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a9ded28672f8b805d6b467777d0ac7b6f">sizes</link>[0]&#32;*&#32;0.5<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,
+46 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;-<link linkend="_glad_8h_1a9ded28672f8b805d6b467777d0ac7b6f">sizes</link>[1]&#32;*&#32;0.5<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,
+47 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a9ded28672f8b805d6b467777d0ac7b6f">sizes</link>[1]&#32;*&#32;0.5<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,
+48 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;nearZ,
+49 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;farZ,
+50 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;proj2);
+51 
+52 &#32;&#32;<link linkend="_test_2include_2common_8h_1a30dae4277b7792b1c641ced79bdfca4e">ASSERTIFY</link>(<link linkend="_test__common_8c_1ab6c735c5e9684b49694b21d4de506820">test_assert_mat4_eq</link>(proj,&#32;proj2))
+53 
+54 &#32;&#32;<link linkend="_test_2include_2common_8h_1aee1dc5ecf95c68bc90ba502679668096">TEST_SUCCESS</link>
+55 }
+</programlisting>    </section><anchor xml:id="_test__cam_8c_1a9e7f268faf691dfd8dfefcb731cd6914"/>    <section>
+    <title>TEST_IMPL()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>TEST_IMPL</primary><secondary>test_cam.c</secondary></indexterm>
+<indexterm><primary>test_cam.c</primary><secondary>TEST_IMPL</secondary></indexterm>
+<para><computeroutput>TEST_IMPL (camera_lookat )</computeroutput></para><para>
+Definition at line 10 of file test_cam.c.</para>
+<programlisting>10 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+11 &#32;&#32;<link linkend="_types_8h_1ae30f88fc32dfb3008b133367bbf0c3a1">mat4</link>&#32;view1,&#32;view2;
+12 &#32;&#32;<link linkend="_types_8h_1aa12dddc6c5b49b59657f5b9262d3196c">vec3</link>&#32;center,
+13 &#32;&#32;&#32;&#32;&#32;&#32;&#32;eye&#32;=&#32;{0.024f,&#32;14.6f,&#32;67.04f},
+14 &#32;&#32;&#32;&#32;&#32;&#32;&#32;dir&#32;=&#32;{0.0f,&#32;0.0f,&#32;-1.0f},
+15 &#32;&#32;&#32;&#32;&#32;&#32;&#32;up&#32;&#32;=&#32;{0.0f,&#32;1.0f,&#32;0.0f};
+16 
+17 &#32;&#32;<link linkend="_vec3_8h_1adbb27548630056eb42f9c87d1fb31823">glm_vec3_add</link>(eye,&#32;dir,&#32;center);
+18 &#32;&#32;<link linkend="_cam_8h_1a4161261504385114289708b132fbe7af">glm_lookat</link>(eye,&#32;center,&#32;up,&#32;view1);
+19 
+20 &#32;&#32;<link linkend="_cam_8h_1a7dc68e7e9b25ad9195deba19251ea0c5">glm_look</link>(eye,&#32;dir,&#32;up,&#32;view2);
+21 
+22 &#32;&#32;<link linkend="_test_2include_2common_8h_1a30dae4277b7792b1c641ced79bdfca4e">ASSERTIFY</link>(<link linkend="_test__common_8c_1ab6c735c5e9684b49694b21d4de506820">test_assert_mat4_eq</link>(view1,&#32;view2))
+23 
+24 &#32;&#32;<link linkend="_test_2include_2common_8h_1aee1dc5ecf95c68bc90ba502679668096">TEST_SUCCESS</link>
+25 }
+</programlisting></section>
+</section>
+</section>

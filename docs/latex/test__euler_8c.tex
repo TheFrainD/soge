@@ -1,0 +1,61 @@
+\hypertarget{test__euler_8c}{}\doxysection{deps/cglm/test/src/test\+\_\+euler.c File Reference}
+\label{test__euler_8c}\index{deps/cglm/test/src/test\_euler.c@{deps/cglm/test/src/test\_euler.c}}
+{\ttfamily \#include \char`\"{}test\+\_\+common.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{test__euler_8c_aa2d5f6d2e04119c1188707633badbc41}{T\+E\+S\+T\+\_\+\+I\+M\+PL}} (euler)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{test__euler_8c_aa2d5f6d2e04119c1188707633badbc41}\label{test__euler_8c_aa2d5f6d2e04119c1188707633badbc41}} 
+\index{test\_euler.c@{test\_euler.c}!TEST\_IMPL@{TEST\_IMPL}}
+\index{TEST\_IMPL@{TEST\_IMPL}!test\_euler.c@{test\_euler.c}}
+\doxysubsubsection{\texorpdfstring{TEST\_IMPL()}{TEST\_IMPL()}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+I\+M\+PL (\begin{DoxyParamCaption}\item[{euler}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 10 of file test\+\_\+euler.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{10                  \{}
+\DoxyCodeLine{11   \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} rot1, rot2;}
+\DoxyCodeLine{12   \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} inAngles, outAngles;}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14   inAngles[0] = \mbox{\hyperlink{util_8h_a96ef52a4c391eca254a1d722b9a005e1}{glm\_rad}}(-\/45.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}});  \textcolor{comment}{/* X angle */}}
+\DoxyCodeLine{15   inAngles[1] = \mbox{\hyperlink{util_8h_a96ef52a4c391eca254a1d722b9a005e1}{glm\_rad}}(88.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}});   \textcolor{comment}{/* Y angle */}}
+\DoxyCodeLine{16   inAngles[2] = \mbox{\hyperlink{util_8h_a96ef52a4c391eca254a1d722b9a005e1}{glm\_rad}}(18.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}});   \textcolor{comment}{/* Z angle */}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18   \mbox{\hyperlink{euler_8h_aaca5bef6e23ed87f307bef6651eb02fb}{glm\_euler\_xyz}}(inAngles, rot1);}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20   \textcolor{comment}{/* extract angles */}}
+\DoxyCodeLine{21   \mbox{\hyperlink{call_2euler_8h_a47c6462d520220a0f729437d03c9fdbe}{glmc\_euler\_angles}}(rot1, outAngles);}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23   \textcolor{comment}{/* angles must be equal in that range */}}
+\DoxyCodeLine{24   \mbox{\hyperlink{test_2include_2common_8h_a30dae4277b7792b1c641ced79bdfca4e}{ASSERTIFY}}(\mbox{\hyperlink{test__common_8c_ac819ff0814a4cea86c7329940effeaee}{test\_assert\_vec3\_eq}}(inAngles, outAngles))}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26   \textcolor{comment}{/* matrices must be equal */}}
+\DoxyCodeLine{27   \mbox{\hyperlink{call_2euler_8h_ad52fd301bf4cbc761a2c41fe7c8eb204}{glmc\_euler\_xyz}}(outAngles, rot2);}
+\DoxyCodeLine{28   \mbox{\hyperlink{test_2include_2common_8h_a30dae4277b7792b1c641ced79bdfca4e}{ASSERTIFY}}(\mbox{\hyperlink{test__common_8c_ab6c735c5e9684b49694b21d4de506820}{test\_assert\_mat4\_eq}}(rot1, rot2))}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30   \textcolor{comment}{/* change range */}}
+\DoxyCodeLine{31   inAngles[0] = \mbox{\hyperlink{util_8h_a96ef52a4c391eca254a1d722b9a005e1}{glm\_rad}}(-\/145.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}});  \textcolor{comment}{/* X angle */}}
+\DoxyCodeLine{32   inAngles[1] = \mbox{\hyperlink{util_8h_a96ef52a4c391eca254a1d722b9a005e1}{glm\_rad}}(818.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}});   \textcolor{comment}{/* Y angle */}}
+\DoxyCodeLine{33   inAngles[2] = \mbox{\hyperlink{util_8h_a96ef52a4c391eca254a1d722b9a005e1}{glm\_rad}}(181.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}});   \textcolor{comment}{/* Z angle */}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35   \mbox{\hyperlink{euler_8h_aaca5bef6e23ed87f307bef6651eb02fb}{glm\_euler\_xyz}}(inAngles, rot1);}
+\DoxyCodeLine{36   \mbox{\hyperlink{call_2euler_8h_a47c6462d520220a0f729437d03c9fdbe}{glmc\_euler\_angles}}(rot1, outAngles);}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38   \textcolor{comment}{/* angles may not be equal but matrices MUST! */}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40   \textcolor{comment}{/* matrices must be equal */}}
+\DoxyCodeLine{41   \mbox{\hyperlink{call_2euler_8h_ad52fd301bf4cbc761a2c41fe7c8eb204}{glmc\_euler\_xyz}}(outAngles, rot2);}
+\DoxyCodeLine{42   \mbox{\hyperlink{test_2include_2common_8h_a30dae4277b7792b1c641ced79bdfca4e}{ASSERTIFY}}(\mbox{\hyperlink{test__common_8c_ab6c735c5e9684b49694b21d4de506820}{test\_assert\_mat4\_eq}}(rot1, rot2))}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44   \mbox{\hyperlink{test_2include_2common_8h_aee1dc5ecf95c68bc90ba502679668096}{TEST\_SUCCESS}}}
+\DoxyCodeLine{45 \}}
+
+\end{DoxyCode}

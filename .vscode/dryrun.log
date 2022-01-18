@@ -1,5 +1,29 @@
-make --dry-run --keep-going --print-directory
-make: Entering directory '/media/frain/Frain's USB/vally'
-cd sandbox && make
-make: Leaving directory '/media/frain/Frain's USB/vally'
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/frain/Documents/Projects/vally'
+mkdir -p bin
+cd deps/glfw && cmake -S . -B ./build  -D GLFW_BUILD_EXAMPLES=OFF -D GLFW_BUILD_TESTS=OFF -D GLFW_BUILD_DOCS=OFF && cd build && make
+cd deps/glad && clang -o src/glad.o -Iinclude -c src/glad.c -fPIC
+cd deps/log && clang -o src/log.o -Isrc -c src/log.c -fPIC -DLOG_USE_COLOR
+cd deps/cvec && clang -o src/cvec.o -Isrc -c src/cvec.c -fPIC
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/renderer/texture.o -c src/vally/renderer/texture.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/renderer/renderer.o -c src/vally/renderer/renderer.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/renderer/shader.o -c src/vally/renderer/shader.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/renderer/camera.o -c src/vally/renderer/camera.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/renderer/buffer.o -c src/vally/renderer/buffer.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/core/time.o -c src/vally/core/time.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/core/logger.o -c src/vally/core/logger.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/core/window.o -c src/vally/core/window.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/core/event.o -c src/vally/core/event.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/core/engine.o -c src/vally/core/engine.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/core/input.o -c src/vally/core/input.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/math/math.o -c src/vally/math/math.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/ecs/ecs.o -c src/vally/ecs/ecs.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/resources/text_loader.o -c src/vally/resources/text_loader.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/resources/image.o -c src/vally/resources/image.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/resources/resources.o -c src/vally/resources/resources.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/ecs/components/animator.o -c src/vally/ecs/components/animator.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/ecs/components/transform.o -c src/vally/ecs/components/transform.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang -g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL -o src/vally/ecs/components/spriterenderer.o -c src/vally/ecs/components/spriterenderer.c -Isrc -Iinclude -Ideps/glfw/include -Ideps/glad/include -Ideps/log/src -Ideps/cvec/src -Ideps/stb -Ideps/cglm/include
+clang src/vally/renderer/texture.o src/vally/renderer/renderer.o src/vally/renderer/shader.o src/vally/renderer/camera.o src/vally/renderer/buffer.o src/vally/core/time.o src/vally/core/logger.o src/vally/core/window.o src/vally/core/event.o src/vally/core/engine.o src/vally/core/input.o src/vally/math/math.o src/vally/ecs/ecs.o src/vally/resources/text_loader.o src/vally/resources/image.o src/vally/resources/resources.o src/vally/ecs/components/animator.o src/vally/ecs/components/transform.o src/vally/ecs/components/spriterenderer.o -o bin/libvally.so -shared deps/glfw/build/src/libglfw3.a deps/glad/src/glad.o deps/log/src/log.o deps/cvec/src/cvec.o -ldl -lpthread -lm
+make: Leaving directory '/home/frain/Documents/Projects/vally'
  

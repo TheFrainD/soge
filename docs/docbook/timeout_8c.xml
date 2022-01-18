@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_timeout_8c">
+<title>deps/glfw/tests/timeout.c File Reference</title>
+<indexterm><primary>deps/glfw/tests/timeout.c</primary></indexterm>
+<programlisting>#include &lt;glad/gl.h&gt;
+#include &lt;GLFW/glfw3.h&gt;
+#include &lt;time.h&gt;
+#include &lt;math.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_timeout_8c_1a09f9c3bf094ecaf707c673924ffd615a">GLAD_GL_IMPLEMENTATION</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_timeout_8c_1a088324ad8995e3eb76024e3e79083d48">GLFW_INCLUDE_NONE</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_timeout_8c_1a840291bc02cba5474a4cb46a9b9566fe">main</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_timeout_8c_1a09f9c3bf094ecaf707c673924ffd615a"/>    <section>
+    <title>GLAD_GL_IMPLEMENTATION</title>
+<indexterm><primary>GLAD_GL_IMPLEMENTATION</primary><secondary>timeout.c</secondary></indexterm>
+<indexterm><primary>timeout.c</primary><secondary>GLAD_GL_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define GLAD_GL_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 30 of file timeout.c.</para>
+    </section><anchor xml:id="_timeout_8c_1a088324ad8995e3eb76024e3e79083d48"/>    <section>
+    <title>GLFW_INCLUDE_NONE</title>
+<indexterm><primary>GLFW_INCLUDE_NONE</primary><secondary>timeout.c</secondary></indexterm>
+<indexterm><primary>timeout.c</primary><secondary>GLFW_INCLUDE_NONE</secondary></indexterm>
+<para><computeroutput>#define GLFW_INCLUDE_NONE</computeroutput></para><para>
+Definition at line 32 of file timeout.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_timeout_8c_1a840291bc02cba5474a4cb46a9b9566fe"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>timeout.c</secondary></indexterm>
+<indexterm><primary>timeout.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 56 of file timeout.c.</para>
+<programlisting>57 {
+58 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>*&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>;
+59 
+60 &#32;&#32;&#32;&#32;srand((<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>)&#32;time(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>));
+61 
+62 &#32;&#32;&#32;&#32;<link linkend="_group__init_1ga746e2757d069eaea423349aca6ae097a">glfwSetErrorCallback</link>(<link linkend="_inputlag_8c_1a4ee391c8bab624943c822faafb2c320e">error_callback</link>);
+63 
+64 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_group__init_1gab41771f0215a2e0afb4cf1cf98082d40">glfwInit</link>())
+65 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+66 
+67 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;<link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link>(640,&#32;480,&#32;<emphasis role="stringliteral">&quot;Event&#32;Wait&#32;Timeout&#32;Test&quot;</emphasis>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+68 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)
+69 &#32;&#32;&#32;&#32;{
+70 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+71 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+72 &#32;&#32;&#32;&#32;}
+73 
+74 &#32;&#32;&#32;&#32;<link linkend="_group__context_1gafd76c93e15ec8b0b90506a9936a46185">glfwMakeContextCurrent</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+75 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a7e9e0ebe65864f5f2bcd289c5736041b">gladLoadGL</link>(<link linkend="_group__context_1ga0e8af175218929615c16e74938c10f2a">glfwGetProcAddress</link>);
+76 &#32;&#32;&#32;&#32;<link linkend="_group__input_1gaa4cbcb81b939b8800e44cea971ddae47">glfwSetKeyCallback</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;key_callback);
+77 
+78 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(!<link linkend="_group__window_1gaa6162f67dfa38b8beda2fea623649332">glfwWindowShouldClose</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>))
+79 &#32;&#32;&#32;&#32;{
+80 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>;
+81 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>&#32;=&#32;nrand(),&#32;<link linkend="_glad_8h_1acaceb3a655ff28b75259860bcb868f9f">g</link>&#32;=&#32;nrand(),&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>&#32;=&#32;nrand();
+82 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;l&#32;=&#32;(float)&#32;sqrt(<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>&#32;*&#32;<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>&#32;+&#32;<link linkend="_glad_8h_1acaceb3a655ff28b75259860bcb868f9f">g</link>&#32;*&#32;<link linkend="_glad_8h_1acaceb3a655ff28b75259860bcb868f9f">g</link>&#32;+&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>&#32;*&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>);
+83 
+84 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1gaf7d17f3534b4b6dc9a6f905e3a240b7e">glfwGetFramebufferSize</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;&amp;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;&amp;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+85 
+86 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ab54b002beb984f066acd0dd7fff469dc">glViewport</link>(0,&#32;0,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+87 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a12060509af7dc9c8353810eb8b7f145c">glClearColor</link>(<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>&#32;/&#32;l,&#32;<link linkend="_glad_8h_1acaceb3a655ff28b75259860bcb868f9f">g</link>&#32;/&#32;l,&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>&#32;/&#32;l,&#32;1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+88 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afc250a2b6bf11f24bb73534a2f053c0d">glClear</link>(<link linkend="_glad_8h_1a947db9ff944c4b78e652144c3dd1060c">GL_COLOR_BUFFER_BIT</link>);
+89 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1gafb827800eedbfcbc97b1e5408df668d7">glfwSwapBuffers</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+90 
+91 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga05223a0a4c5e50f10f289e60398153aa">glfwWaitEventsTimeout</link>(1.0);
+92 &#32;&#32;&#32;&#32;}
+93 
+94 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga806747476b7247d292be3711c323ea10">glfwDestroyWindow</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+95 
+96 &#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+97 &#32;&#32;&#32;&#32;exit(EXIT_SUCCESS);
+98 }
+</programlisting></section>
+</section>
+</section>

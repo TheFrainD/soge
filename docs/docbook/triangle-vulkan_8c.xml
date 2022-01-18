@@ -1,0 +1,196 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_triangle-vulkan_8c">
+<title>deps/glfw/tests/triangle-vulkan.c File Reference</title>
+<indexterm><primary>deps/glfw/tests/triangle-vulkan.c</primary></indexterm>
+<programlisting>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdbool.h&gt;
+#include &lt;assert.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;glad/vulkan.h&gt;
+#include &lt;GLFW/glfw3.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structtexture__object">texture_object</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_swapchain_buffers">SwapchainBuffers</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structdemo">demo</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_triangle-vulkan_8c_1abbba9cf294570728cf5bd2f8538158bd">GLAD_VULKAN_IMPLEMENTATION</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_triangle-vulkan_8c_1a088324ad8995e3eb76024e3e79083d48">GLFW_INCLUDE_NONE</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_triangle-vulkan_8c_1a889c754b96e13c9a94c431b8c10b7153">DEMO_TEXTURE_COUNT</link>   1</para>
+</listitem>
+            <listitem><para>#define <link linkend="_triangle-vulkan_8c_1aca6d606eef84a7f729b71b8abad8f074">VERTEX_BUFFER_BIND_ID</link>   0</para>
+</listitem>
+            <listitem><para>#define <link linkend="_triangle-vulkan_8c_1ab5541e08a357bb88cd008693b6ffc6db">APP_SHORT_NAME</link>   &quot;tri&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_triangle-vulkan_8c_1a7ddc1be37ecfdff9eaaaa045820a96ad">APP_LONG_NAME</link>   &quot;The Vulkan Triangle Demo Program&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_triangle-vulkan_8c_1a25f003de16c08a4888b69f619d70f427">ARRAY_SIZE</link>(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)   (sizeof(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>) / sizeof(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>[0]))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_triangle-vulkan_8c_1ab33dabc77056cb02bf8609c97d49716b">U_ASSERT_ONLY</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_triangle-vulkan_8c_1a28fe14fddb8a99da1b8a644308d1a901">ERR_EXIT</link>(err_msg,  err_class)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_vulkan_8h_1a4394dd2421147ed91e838b086be25512">VKAPI_ATTR</link> <link linkend="_vulkan_8h_1ae5d9faf75f583010e32ee49087a15326">VkBool32</link> <link linkend="_vulkan_8h_1a3856c7761d8b7260870053d0f03a0a49">VKAPI_CALL</link> <link linkend="_triangle-vulkan_8c_1aceb348ca75acc3d014a6b94ac3452e57">BreakCallback</link> (<link linkend="_vulkan_8h_1abb605a7700670dd8420cc3841b939444">VkFlags</link> msgFlags, <link linkend="_vulkan_8h_1a70ad5d79db53aef728a95528945a4c0f">VkDebugReportObjectTypeEXT</link> objType, <link linkend="_stdint_8h_1aec6fcb673ff035718c238c8c9d544c47">uint64_t</link> srcObject, size_t <link linkend="_glad_8h_1a050778a7129cc14e57da7024beb87ce8">location</link>, <link linkend="_stdint_8h_1ab1967d8591af1a4e48c37fd2b0f184d0">int32_t</link> msgCode, const char *pLayerPrefix, const char *pMsg, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *pUserData)</para>
+</listitem>
+            <listitem><para><link linkend="_vulkan_8h_1a4394dd2421147ed91e838b086be25512">VKAPI_ATTR</link> <link linkend="_vulkan_8h_1ae5d9faf75f583010e32ee49087a15326">VkBool32</link> <link linkend="_vulkan_8h_1a3856c7761d8b7260870053d0f03a0a49">VKAPI_CALL</link> <link linkend="_triangle-vulkan_8c_1a4e3e0fcb987c805f9d82039a8af2485c">dbgFunc</link> (<link linkend="_vulkan_8h_1abb605a7700670dd8420cc3841b939444">VkFlags</link> msgFlags, <link linkend="_vulkan_8h_1a70ad5d79db53aef728a95528945a4c0f">VkDebugReportObjectTypeEXT</link> objType, <link linkend="_stdint_8h_1aec6fcb673ff035718c238c8c9d544c47">uint64_t</link> srcObject, size_t <link linkend="_glad_8h_1a050778a7129cc14e57da7024beb87ce8">location</link>, <link linkend="_stdint_8h_1ab1967d8591af1a4e48c37fd2b0f184d0">int32_t</link> msgCode, const char *pLayerPrefix, const char *pMsg, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *pUserData)</para>
+</listitem>
+            <listitem><para>int <link linkend="_triangle-vulkan_8c_1ad53223b8779f25caeddb70a3b9172967">main</link> (const int argc, const char *argv[])</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_triangle-vulkan_8c_1a7ddc1be37ecfdff9eaaaa045820a96ad"/>    <section>
+    <title>APP_LONG_NAME</title>
+<indexterm><primary>APP_LONG_NAME</primary><secondary>triangle-vulkan.c</secondary></indexterm>
+<indexterm><primary>triangle-vulkan.c</primary><secondary>APP_LONG_NAME</secondary></indexterm>
+<para><computeroutput>#define APP_LONG_NAME   &quot;The Vulkan Triangle Demo Program&quot;</computeroutput></para><para>
+Definition at line 52 of file triangle-vulkan.c.</para>
+    </section><anchor xml:id="_triangle-vulkan_8c_1ab5541e08a357bb88cd008693b6ffc6db"/>    <section>
+    <title>APP_SHORT_NAME</title>
+<indexterm><primary>APP_SHORT_NAME</primary><secondary>triangle-vulkan.c</secondary></indexterm>
+<indexterm><primary>triangle-vulkan.c</primary><secondary>APP_SHORT_NAME</secondary></indexterm>
+<para><computeroutput>#define APP_SHORT_NAME   &quot;tri&quot;</computeroutput></para><para>
+Definition at line 51 of file triangle-vulkan.c.</para>
+    </section><anchor xml:id="_triangle-vulkan_8c_1a25f003de16c08a4888b69f619d70f427"/>    <section>
+    <title>ARRAY_SIZE</title>
+<indexterm><primary>ARRAY_SIZE</primary><secondary>triangle-vulkan.c</secondary></indexterm>
+<indexterm><primary>triangle-vulkan.c</primary><secondary>ARRAY_SIZE</secondary></indexterm>
+<para><computeroutput>#define ARRAY_SIZE( <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)   (sizeof(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>) / sizeof(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>[0]))</computeroutput></para><para>
+Definition at line 54 of file triangle-vulkan.c.</para>
+    </section><anchor xml:id="_triangle-vulkan_8c_1a889c754b96e13c9a94c431b8c10b7153"/>    <section>
+    <title>DEMO_TEXTURE_COUNT</title>
+<indexterm><primary>DEMO_TEXTURE_COUNT</primary><secondary>triangle-vulkan.c</secondary></indexterm>
+<indexterm><primary>triangle-vulkan.c</primary><secondary>DEMO_TEXTURE_COUNT</secondary></indexterm>
+<para><computeroutput>#define DEMO_TEXTURE_COUNT   1</computeroutput></para><para>
+Definition at line 49 of file triangle-vulkan.c.</para>
+    </section><anchor xml:id="_triangle-vulkan_8c_1a28fe14fddb8a99da1b8a644308d1a901"/>    <section>
+    <title>ERR_EXIT</title>
+<indexterm><primary>ERR_EXIT</primary><secondary>triangle-vulkan.c</secondary></indexterm>
+<indexterm><primary>triangle-vulkan.c</primary><secondary>ERR_EXIT</secondary></indexterm>
+<para><computeroutput>#define ERR_EXIT( err_msg,  err_class)</computeroutput></para><emphasis role="strong">Value:</emphasis><programlisting>&#32;&#32;&#32;&#32;<emphasis role="keywordflow">do</emphasis>&#32;{&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;\
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(err_msg);&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;\
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fflush(stdout);&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;\
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(1);&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;\
+&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">while</emphasis>&#32;(0)
+</programlisting><para>
+Definition at line 62 of file triangle-vulkan.c.</para>
+    </section><anchor xml:id="_triangle-vulkan_8c_1abbba9cf294570728cf5bd2f8538158bd"/>    <section>
+    <title>GLAD_VULKAN_IMPLEMENTATION</title>
+<indexterm><primary>GLAD_VULKAN_IMPLEMENTATION</primary><secondary>triangle-vulkan.c</secondary></indexterm>
+<indexterm><primary>triangle-vulkan.c</primary><secondary>GLAD_VULKAN_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define GLAD_VULKAN_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 44 of file triangle-vulkan.c.</para>
+    </section><anchor xml:id="_triangle-vulkan_8c_1a088324ad8995e3eb76024e3e79083d48"/>    <section>
+    <title>GLFW_INCLUDE_NONE</title>
+<indexterm><primary>GLFW_INCLUDE_NONE</primary><secondary>triangle-vulkan.c</secondary></indexterm>
+<indexterm><primary>triangle-vulkan.c</primary><secondary>GLFW_INCLUDE_NONE</secondary></indexterm>
+<para><computeroutput>#define GLFW_INCLUDE_NONE</computeroutput></para><para>
+Definition at line 46 of file triangle-vulkan.c.</para>
+    </section><anchor xml:id="_triangle-vulkan_8c_1ab33dabc77056cb02bf8609c97d49716b"/>    <section>
+    <title>U_ASSERT_ONLY</title>
+<indexterm><primary>U_ASSERT_ONLY</primary><secondary>triangle-vulkan.c</secondary></indexterm>
+<indexterm><primary>triangle-vulkan.c</primary><secondary>U_ASSERT_ONLY</secondary></indexterm>
+<para><computeroutput>#define U_ASSERT_ONLY</computeroutput></para><para>
+Definition at line 59 of file triangle-vulkan.c.</para>
+    </section><anchor xml:id="_triangle-vulkan_8c_1aca6d606eef84a7f729b71b8abad8f074"/>    <section>
+    <title>VERTEX_BUFFER_BIND_ID</title>
+<indexterm><primary>VERTEX_BUFFER_BIND_ID</primary><secondary>triangle-vulkan.c</secondary></indexterm>
+<indexterm><primary>triangle-vulkan.c</primary><secondary>VERTEX_BUFFER_BIND_ID</secondary></indexterm>
+<para><computeroutput>#define VERTEX_BUFFER_BIND_ID   0</computeroutput></para><para>
+Definition at line 50 of file triangle-vulkan.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_triangle-vulkan_8c_1aceb348ca75acc3d014a6b94ac3452e57"/>    <section>
+    <title>BreakCallback()</title>
+<indexterm><primary>BreakCallback</primary><secondary>triangle-vulkan.c</secondary></indexterm>
+<indexterm><primary>triangle-vulkan.c</primary><secondary>BreakCallback</secondary></indexterm>
+<para><computeroutput><link linkend="_vulkan_8h_1a4394dd2421147ed91e838b086be25512">VKAPI_ATTR</link> <link linkend="_vulkan_8h_1ae5d9faf75f583010e32ee49087a15326">VkBool32</link> <link linkend="_vulkan_8h_1a3856c7761d8b7260870053d0f03a0a49">VKAPI_CALL</link> BreakCallback (<link linkend="_vulkan_8h_1abb605a7700670dd8420cc3841b939444">VkFlags</link> msgFlags, <link linkend="_vulkan_8h_1a70ad5d79db53aef728a95528945a4c0f">VkDebugReportObjectTypeEXT</link> objType, <link linkend="_stdint_8h_1aec6fcb673ff035718c238c8c9d544c47">uint64_t</link> srcObject, size_t location, <link linkend="_stdint_8h_1ab1967d8591af1a4e48c37fd2b0f184d0">int32_t</link> msgCode, const char * pLayerPrefix, const char * pMsg, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * pUserData)</computeroutput></para><para>
+Definition at line 133 of file triangle-vulkan.c.</para>
+<programlisting>136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+137 <emphasis role="preprocessor">#ifdef&#32;_WIN32</emphasis>
+138 &#32;&#32;&#32;&#32;DebugBreak();
+139 <emphasis role="preprocessor">#else</emphasis>
+140 &#32;&#32;&#32;&#32;<emphasis role="keyword">raise</emphasis>(SIGTRAP);
+141 <emphasis role="preprocessor">#endif</emphasis>
+142 
+143 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+144 }
+</programlisting>    </section><anchor xml:id="_triangle-vulkan_8c_1a4e3e0fcb987c805f9d82039a8af2485c"/>    <section>
+    <title>dbgFunc()</title>
+<indexterm><primary>dbgFunc</primary><secondary>triangle-vulkan.c</secondary></indexterm>
+<indexterm><primary>triangle-vulkan.c</primary><secondary>dbgFunc</secondary></indexterm>
+<para><computeroutput><link linkend="_vulkan_8h_1a4394dd2421147ed91e838b086be25512">VKAPI_ATTR</link> <link linkend="_vulkan_8h_1ae5d9faf75f583010e32ee49087a15326">VkBool32</link> <link linkend="_vulkan_8h_1a3856c7761d8b7260870053d0f03a0a49">VKAPI_CALL</link> dbgFunc (<link linkend="_vulkan_8h_1abb605a7700670dd8420cc3841b939444">VkFlags</link> msgFlags, <link linkend="_vulkan_8h_1a70ad5d79db53aef728a95528945a4c0f">VkDebugReportObjectTypeEXT</link> objType, <link linkend="_stdint_8h_1aec6fcb673ff035718c238c8c9d544c47">uint64_t</link> srcObject, size_t location, <link linkend="_stdint_8h_1ab1967d8591af1a4e48c37fd2b0f184d0">int32_t</link> msgCode, const char * pLayerPrefix, const char * pMsg, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * pUserData)</computeroutput></para><para>
+Definition at line 232 of file triangle-vulkan.c.</para>
+<programlisting>234 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+235 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;*<link linkend="_glad_8h_1ab5d4c2bfcb78f279c688575297d42f74">message</link>&#32;=&#32;(<emphasis role="keywordtype">char</emphasis>&#32;*)<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>(strlen(pMsg)&#32;+&#32;100);
+236 
+237 &#32;&#32;&#32;&#32;assert(<link linkend="_glad_8h_1ab5d4c2bfcb78f279c688575297d42f74">message</link>);
+238 
+239 &#32;&#32;&#32;&#32;validation_error&#32;=&#32;1;
+240 
+241 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(msgFlags&#32;&amp;&#32;<link linkend="_vulkan_8h_1a01d5bbe2de358752683692893d08ed3fae3425f31950d0c85fc326b4138adca8e">VK_DEBUG_REPORT_ERROR_BIT_EXT</link>)&#32;{
+242 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_rrsprintf_8h_1a9b1bcf2b847c7e2a9e4d06b7bb6fa018">sprintf</link>(<link linkend="_glad_8h_1ab5d4c2bfcb78f279c688575297d42f74">message</link>,&#32;<emphasis role="stringliteral">&quot;ERROR:&#32;[%s]&#32;Code&#32;%d&#32;:&#32;%s&quot;</emphasis>,&#32;pLayerPrefix,&#32;msgCode,
+243 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pMsg);
+244 &#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(msgFlags&#32;&amp;&#32;<link linkend="_vulkan_8h_1a01d5bbe2de358752683692893d08ed3fa1993254227b75a73ba19bdc6335562c0">VK_DEBUG_REPORT_WARNING_BIT_EXT</link>)&#32;{
+245 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_rrsprintf_8h_1a9b1bcf2b847c7e2a9e4d06b7bb6fa018">sprintf</link>(<link linkend="_glad_8h_1ab5d4c2bfcb78f279c688575297d42f74">message</link>,&#32;<emphasis role="stringliteral">&quot;WARNING:&#32;[%s]&#32;Code&#32;%d&#32;:&#32;%s&quot;</emphasis>,&#32;pLayerPrefix,&#32;msgCode,
+246 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pMsg);
+247 &#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+248 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+249 &#32;&#32;&#32;&#32;}
+250 
+251 &#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%s\n&quot;</emphasis>,&#32;<link linkend="_glad_8h_1ab5d4c2bfcb78f279c688575297d42f74">message</link>);
+252 &#32;&#32;&#32;&#32;fflush(stdout);
+253 &#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(<link linkend="_glad_8h_1ab5d4c2bfcb78f279c688575297d42f74">message</link>);
+254 
+255 &#32;&#32;&#32;&#32;<emphasis role="comment">/*</emphasis>
+256 <emphasis role="comment">&#32;&#32;&#32;&#32;*&#32;false&#32;indicates&#32;that&#32;layer&#32;should&#32;not&#32;bail-out&#32;of&#32;an</emphasis>
+257 <emphasis role="comment">&#32;&#32;&#32;&#32;*&#32;API&#32;call&#32;that&#32;had&#32;validation&#32;failures.&#32;This&#32;may&#32;mean&#32;that&#32;the</emphasis>
+258 <emphasis role="comment">&#32;&#32;&#32;&#32;*&#32;app&#32;dies&#32;inside&#32;the&#32;driver&#32;due&#32;to&#32;invalid&#32;parameter(s).</emphasis>
+259 <emphasis role="comment">&#32;&#32;&#32;&#32;*&#32;That&apos;s&#32;what&#32;would&#32;happen&#32;without&#32;validation&#32;layers,&#32;so&#32;we&apos;ll</emphasis>
+260 <emphasis role="comment">&#32;&#32;&#32;&#32;*&#32;keep&#32;that&#32;behavior&#32;here.</emphasis>
+261 <emphasis role="comment">&#32;&#32;&#32;&#32;*/</emphasis>
+262 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+263 }
+</programlisting>    </section><anchor xml:id="_triangle-vulkan_8c_1ad53223b8779f25caeddb70a3b9172967"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>triangle-vulkan.c</secondary></indexterm>
+<indexterm><primary>triangle-vulkan.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (const int argc, const char * argv[])</computeroutput></para><para>
+Definition at line 2115 of file triangle-vulkan.c.</para>
+<programlisting>2115 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+2116 &#32;&#32;&#32;&#32;<emphasis role="keyword">struct&#32;</emphasis><link linkend="_structdemo">demo</link>&#32;<link linkend="_structdemo">demo</link>;
+2117 
+2118 &#32;&#32;&#32;&#32;demo_init(&amp;<link linkend="_structdemo">demo</link>,&#32;argc,&#32;argv);
+2119 &#32;&#32;&#32;&#32;demo_create_window(&amp;<link linkend="_structdemo">demo</link>);
+2120 &#32;&#32;&#32;&#32;demo_init_vk_swapchain(&amp;<link linkend="_structdemo">demo</link>);
+2121 
+2122 &#32;&#32;&#32;&#32;demo_prepare(&amp;<link linkend="_structdemo">demo</link>);
+2123 &#32;&#32;&#32;&#32;demo_run(&amp;<link linkend="_structdemo">demo</link>);
+2124 
+2125 &#32;&#32;&#32;&#32;demo_cleanup(&amp;<link linkend="_structdemo">demo</link>);
+2126 
+2127 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;validation_error;
+2128 }
+</programlisting></section>
+</section>
+</section>

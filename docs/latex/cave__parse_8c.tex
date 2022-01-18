@@ -1,0 +1,537 @@
+\hypertarget{cave__parse_8c}{}\doxysection{deps/stb/tests/caveview/cave\+\_\+parse.c File Reference}
+\label{cave__parse_8c}\index{deps/stb/tests/caveview/cave\_parse.c@{deps/stb/tests/caveview/cave\_parse.c}}
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}cave\+\_\+parse.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stb\+\_\+image.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stb.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcompressed__chunk}{compressed\+\_\+chunk}}
+\item 
+struct \mbox{\hyperlink{structregion}{region}}
+\item 
+struct \mbox{\hyperlink{structnbt}{nbt}}
+\item 
+struct \mbox{\hyperlink{structdecoded__buffer}{decoded\+\_\+buffer}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{cave__parse_8c_a5d3aa76dea5c5fcbdee0e58ed42f2dfe}{F\+A\+S\+T\+\_\+\+C\+H\+U\+NK}}
+\item 
+\#define \mbox{\hyperlink{cave__parse_8c_a375d0e033b63bb9bfbe64fa52a274858}{N\+U\+M\+\_\+\+C\+H\+U\+N\+K\+S\+\_\+\+P\+E\+R\+\_\+\+R\+E\+G\+I\+ON}}~32
+\item 
+\#define \mbox{\hyperlink{cave__parse_8c_a519332fc6ce103ccbebe47090d957853}{N\+U\+M\+\_\+\+C\+H\+U\+N\+K\+S\+\_\+\+P\+E\+R\+\_\+\+R\+E\+G\+I\+O\+N\+\_\+\+L\+O\+G2}}~5
+\item 
+\#define \mbox{\hyperlink{cave__parse_8c_a1bf5bfdfc1e7360a7581955b80951f79}{N\+U\+M\+\_\+\+C\+O\+L\+U\+M\+N\+S\+\_\+\+P\+E\+R\+\_\+\+C\+H\+U\+NK}}~16
+\item 
+\#define \mbox{\hyperlink{cave__parse_8c_a6f3e1edc6fa7b10215637e33d48ab021}{N\+U\+M\+\_\+\+C\+O\+L\+U\+M\+N\+S\+\_\+\+P\+E\+R\+\_\+\+C\+H\+U\+N\+K\+\_\+\+L\+O\+G2}}~4
+\item 
+\#define \mbox{\hyperlink{cave__parse_8c_a9da226849ee4a1097347c32e127cd14d}{M\+A\+X\+\_\+\+M\+A\+P\+\_\+\+R\+E\+G\+I\+O\+NS}}~64
+\item 
+\#define \mbox{\hyperlink{cave__parse_8c_aee4002d6e7651d2b6210172e8debfd9b}{N\+U\+M\+\_\+\+C\+A\+C\+H\+E\+D\+\_\+X}}~64
+\item 
+\#define \mbox{\hyperlink{cave__parse_8c_a682c506659165976d5e5ebf4608741c8}{N\+U\+M\+\_\+\+C\+A\+C\+H\+E\+D\+\_\+Z}}~64
+\item 
+\#define \mbox{\hyperlink{cave__parse_8c_afd283cd22b0969b4c6c972002198b552}{M\+A\+X\+\_\+\+D\+E\+C\+O\+D\+E\+D\+\_\+\+C\+H\+U\+N\+K\+\_\+X}}~64
+\item 
+\#define \mbox{\hyperlink{cave__parse_8c_a8b6314e7837240b78c2820faa3a5b230}{M\+A\+X\+\_\+\+D\+E\+C\+O\+D\+E\+D\+\_\+\+C\+H\+U\+N\+K\+\_\+Z}}~64
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \mbox{\hyperlink{structfast__chunk}{fast\+\_\+chunk}} \mbox{\hyperlink{cave__parse_8c_a3ce8249ee3b6b306721124b6659f01f9}{parse\+\_\+chunk}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \newline
+\mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017a412ceba1e522006ed1abd510caf067c6}{T\+A\+G\+\_\+\+End}} =0, 
+\mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017abb52fd6bfeb1865968d56ccef0daead9}{T\+A\+G\+\_\+\+Byte}} =1, 
+\mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017a975e983e98b5bf2fffc5691958b0794f}{T\+A\+G\+\_\+\+Short}} =2, 
+\mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017ae0b367cd0dd9b00f86ba58d34bdf82cd}{T\+A\+G\+\_\+\+Int}} =3, 
+\newline
+\mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017a045cf869c73ca645cb2f90b51e74cda9}{T\+A\+G\+\_\+\+Long}} =4, 
+\mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017a8fc97992da325a844e4410482a301859}{T\+A\+G\+\_\+\+Float}} =5, 
+\mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017ae5fc01c466aa077f9004b088089e16f1}{T\+A\+G\+\_\+\+Double}} =6, 
+\mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017ac28ed5b6d83826ce9ae4bd6977549c1b}{T\+A\+G\+\_\+\+Byte\+\_\+\+Array}} =7, 
+\newline
+\mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017a918f873ae00e6b16d197f09abb3866a7}{T\+A\+G\+\_\+\+String}} =8, 
+\mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017a59fc760bbabd001bc74cd7b4500eaeb1}{T\+A\+G\+\_\+\+List}} =9, 
+\mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017add45c97006383b972c7f3f2d17549199}{T\+A\+G\+\_\+\+Compound}} =10, 
+\mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017a3fcd196a7af01c81e81774394f64dff3}{T\+A\+G\+\_\+\+Int\+\_\+\+Array}} =11
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{stb_8h_a1134b580f8da4de94ca6b1de4d37975e}{uint32}} \mbox{\hyperlink{cave__parse_8c_a03d6013648e51644ba189d14e195d09c}{read\+\_\+uint32\+\_\+be}} (F\+I\+LE $\ast$\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{cave__parse_8c_ac89cefdc6d1782d451168ff4160899bf}{free\+\_\+region}} (\mbox{\hyperlink{structregion}{region}} $\ast$\mbox{\hyperlink{glad_8h_a42ce7cdc612e53abee15043f80220d97}{r}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{cave__parse_8c_af4e8c4c0c38242366db62d9936274079}{lock\+\_\+chunk\+\_\+get\+\_\+mutex}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{cave__parse_8c_afaaad5f587e3275de99ae8ff61b2e18a}{unlock\+\_\+chunk\+\_\+get\+\_\+mutex}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{structfast__chunk}{fast\+\_\+chunk}} $\ast$ \mbox{\hyperlink{cave__parse_8c_ac3885b139871d53a3d39cca5380075c9}{get\+\_\+decoded\+\_\+fastchunk\+\_\+uncached}} (int chunk\+\_\+x, int chunk\+\_\+z)
+\item 
+\mbox{\hyperlink{structdecoded__buffer}{decoded\+\_\+buffer}} $\ast$ \mbox{\hyperlink{cave__parse_8c_a5ff78db273f16901a4c8a02189065159}{get\+\_\+decoded\+\_\+buffer}} (int chunk\+\_\+x, int chunk\+\_\+z)
+\item 
+\mbox{\hyperlink{structfast__chunk}{fast\+\_\+chunk}} $\ast$ \mbox{\hyperlink{cave__parse_8c_a2b070c4bd8a0077f08e0899298b8d032}{get\+\_\+decoded\+\_\+fastchunk}} (int chunk\+\_\+x, int chunk\+\_\+z)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{cave__parse_8c_a06d58838a105ee37d75f9d0b8ffbd3a4}{cached\+\_\+compressed}} =0
+\item 
+F\+I\+LE $\ast$ \mbox{\hyperlink{cave__parse_8c_a532749e3a03fec148c60403092f6c555}{last\+\_\+region}}
+\item 
+int \mbox{\hyperlink{cave__parse_8c_a8edc0733346513c007c8ef91c36f4f2d}{last\+\_\+region\+\_\+x}}
+\item 
+int \mbox{\hyperlink{cave__parse_8c_a875c19d8a1f89b10c7afeb72e2e34004}{last\+\_\+region\+\_\+z}}
+\item 
+int \mbox{\hyperlink{cave__parse_8c_af2606797deda70b5effbc50b2648d699}{opened}} =0
+\item 
+\mbox{\hyperlink{structregion}{region}} $\ast$ \mbox{\hyperlink{cave__parse_8c_a7c1f8c51ad9f7eea962905f2afa7aa79}{regions}} \mbox{[}\mbox{\hyperlink{cave__parse_8c_a9da226849ee4a1097347c32e127cd14d}{M\+A\+X\+\_\+\+M\+A\+P\+\_\+\+R\+E\+G\+I\+O\+NS}}\mbox{]}\mbox{[}\mbox{\hyperlink{cave__parse_8c_a9da226849ee4a1097347c32e127cd14d}{M\+A\+X\+\_\+\+M\+A\+P\+\_\+\+R\+E\+G\+I\+O\+NS}}\mbox{]}
+\item 
+\mbox{\hyperlink{structcompressed__chunk}{compressed\+\_\+chunk}} $\ast$ \mbox{\hyperlink{cave__parse_8c_a7f09eec9ac1c889cedb229f4881d3fff}{cached\+\_\+chunk}} \mbox{[}\mbox{\hyperlink{cave__parse_8c_a682c506659165976d5e5ebf4608741c8}{N\+U\+M\+\_\+\+C\+A\+C\+H\+E\+D\+\_\+Z}}\mbox{]}\mbox{[}\mbox{\hyperlink{cave__parse_8c_aee4002d6e7651d2b6210172e8debfd9b}{N\+U\+M\+\_\+\+C\+A\+C\+H\+E\+D\+\_\+X}}\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{cave__parse_8c_a5d3aa76dea5c5fcbdee0e58ed42f2dfe}\label{cave__parse_8c_a5d3aa76dea5c5fcbdee0e58ed42f2dfe}} 
+\index{cave\_parse.c@{cave\_parse.c}!FAST\_CHUNK@{FAST\_CHUNK}}
+\index{FAST\_CHUNK@{FAST\_CHUNK}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{FAST\_CHUNK}{FAST\_CHUNK}}
+{\footnotesize\ttfamily \#define F\+A\+S\+T\+\_\+\+C\+H\+U\+NK}
+
+
+
+Definition at line 6 of file cave\+\_\+parse.\+c.
+
+\mbox{\Hypertarget{cave__parse_8c_afd283cd22b0969b4c6c972002198b552}\label{cave__parse_8c_afd283cd22b0969b4c6c972002198b552}} 
+\index{cave\_parse.c@{cave\_parse.c}!MAX\_DECODED\_CHUNK\_X@{MAX\_DECODED\_CHUNK\_X}}
+\index{MAX\_DECODED\_CHUNK\_X@{MAX\_DECODED\_CHUNK\_X}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{MAX\_DECODED\_CHUNK\_X}{MAX\_DECODED\_CHUNK\_X}}
+{\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+D\+E\+C\+O\+D\+E\+D\+\_\+\+C\+H\+U\+N\+K\+\_\+X~64}
+
+
+
+Definition at line 510 of file cave\+\_\+parse.\+c.
+
+\mbox{\Hypertarget{cave__parse_8c_a8b6314e7837240b78c2820faa3a5b230}\label{cave__parse_8c_a8b6314e7837240b78c2820faa3a5b230}} 
+\index{cave\_parse.c@{cave\_parse.c}!MAX\_DECODED\_CHUNK\_Z@{MAX\_DECODED\_CHUNK\_Z}}
+\index{MAX\_DECODED\_CHUNK\_Z@{MAX\_DECODED\_CHUNK\_Z}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{MAX\_DECODED\_CHUNK\_Z}{MAX\_DECODED\_CHUNK\_Z}}
+{\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+D\+E\+C\+O\+D\+E\+D\+\_\+\+C\+H\+U\+N\+K\+\_\+Z~64}
+
+
+
+Definition at line 511 of file cave\+\_\+parse.\+c.
+
+\mbox{\Hypertarget{cave__parse_8c_a9da226849ee4a1097347c32e127cd14d}\label{cave__parse_8c_a9da226849ee4a1097347c32e127cd14d}} 
+\index{cave\_parse.c@{cave\_parse.c}!MAX\_MAP\_REGIONS@{MAX\_MAP\_REGIONS}}
+\index{MAX\_MAP\_REGIONS@{MAX\_MAP\_REGIONS}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{MAX\_MAP\_REGIONS}{MAX\_MAP\_REGIONS}}
+{\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+M\+A\+P\+\_\+\+R\+E\+G\+I\+O\+NS~64}
+
+
+
+Definition at line 89 of file cave\+\_\+parse.\+c.
+
+\mbox{\Hypertarget{cave__parse_8c_aee4002d6e7651d2b6210172e8debfd9b}\label{cave__parse_8c_aee4002d6e7651d2b6210172e8debfd9b}} 
+\index{cave\_parse.c@{cave\_parse.c}!NUM\_CACHED\_X@{NUM\_CACHED\_X}}
+\index{NUM\_CACHED\_X@{NUM\_CACHED\_X}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{NUM\_CACHED\_X}{NUM\_CACHED\_X}}
+{\footnotesize\ttfamily \#define N\+U\+M\+\_\+\+C\+A\+C\+H\+E\+D\+\_\+X~64}
+
+
+
+Definition at line 113 of file cave\+\_\+parse.\+c.
+
+\mbox{\Hypertarget{cave__parse_8c_a682c506659165976d5e5ebf4608741c8}\label{cave__parse_8c_a682c506659165976d5e5ebf4608741c8}} 
+\index{cave\_parse.c@{cave\_parse.c}!NUM\_CACHED\_Z@{NUM\_CACHED\_Z}}
+\index{NUM\_CACHED\_Z@{NUM\_CACHED\_Z}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{NUM\_CACHED\_Z}{NUM\_CACHED\_Z}}
+{\footnotesize\ttfamily \#define N\+U\+M\+\_\+\+C\+A\+C\+H\+E\+D\+\_\+Z~64}
+
+
+
+Definition at line 114 of file cave\+\_\+parse.\+c.
+
+\mbox{\Hypertarget{cave__parse_8c_a375d0e033b63bb9bfbe64fa52a274858}\label{cave__parse_8c_a375d0e033b63bb9bfbe64fa52a274858}} 
+\index{cave\_parse.c@{cave\_parse.c}!NUM\_CHUNKS\_PER\_REGION@{NUM\_CHUNKS\_PER\_REGION}}
+\index{NUM\_CHUNKS\_PER\_REGION@{NUM\_CHUNKS\_PER\_REGION}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{NUM\_CHUNKS\_PER\_REGION}{NUM\_CHUNKS\_PER\_REGION}}
+{\footnotesize\ttfamily \#define N\+U\+M\+\_\+\+C\+H\+U\+N\+K\+S\+\_\+\+P\+E\+R\+\_\+\+R\+E\+G\+I\+ON~32}
+
+
+
+Definition at line 13 of file cave\+\_\+parse.\+c.
+
+\mbox{\Hypertarget{cave__parse_8c_a519332fc6ce103ccbebe47090d957853}\label{cave__parse_8c_a519332fc6ce103ccbebe47090d957853}} 
+\index{cave\_parse.c@{cave\_parse.c}!NUM\_CHUNKS\_PER\_REGION\_LOG2@{NUM\_CHUNKS\_PER\_REGION\_LOG2}}
+\index{NUM\_CHUNKS\_PER\_REGION\_LOG2@{NUM\_CHUNKS\_PER\_REGION\_LOG2}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{NUM\_CHUNKS\_PER\_REGION\_LOG2}{NUM\_CHUNKS\_PER\_REGION\_LOG2}}
+{\footnotesize\ttfamily \#define N\+U\+M\+\_\+\+C\+H\+U\+N\+K\+S\+\_\+\+P\+E\+R\+\_\+\+R\+E\+G\+I\+O\+N\+\_\+\+L\+O\+G2~5}
+
+
+
+Definition at line 14 of file cave\+\_\+parse.\+c.
+
+\mbox{\Hypertarget{cave__parse_8c_a1bf5bfdfc1e7360a7581955b80951f79}\label{cave__parse_8c_a1bf5bfdfc1e7360a7581955b80951f79}} 
+\index{cave\_parse.c@{cave\_parse.c}!NUM\_COLUMNS\_PER\_CHUNK@{NUM\_COLUMNS\_PER\_CHUNK}}
+\index{NUM\_COLUMNS\_PER\_CHUNK@{NUM\_COLUMNS\_PER\_CHUNK}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{NUM\_COLUMNS\_PER\_CHUNK}{NUM\_COLUMNS\_PER\_CHUNK}}
+{\footnotesize\ttfamily \#define N\+U\+M\+\_\+\+C\+O\+L\+U\+M\+N\+S\+\_\+\+P\+E\+R\+\_\+\+C\+H\+U\+NK~16}
+
+
+
+Definition at line 16 of file cave\+\_\+parse.\+c.
+
+\mbox{\Hypertarget{cave__parse_8c_a6f3e1edc6fa7b10215637e33d48ab021}\label{cave__parse_8c_a6f3e1edc6fa7b10215637e33d48ab021}} 
+\index{cave\_parse.c@{cave\_parse.c}!NUM\_COLUMNS\_PER\_CHUNK\_LOG2@{NUM\_COLUMNS\_PER\_CHUNK\_LOG2}}
+\index{NUM\_COLUMNS\_PER\_CHUNK\_LOG2@{NUM\_COLUMNS\_PER\_CHUNK\_LOG2}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{NUM\_COLUMNS\_PER\_CHUNK\_LOG2}{NUM\_COLUMNS\_PER\_CHUNK\_LOG2}}
+{\footnotesize\ttfamily \#define N\+U\+M\+\_\+\+C\+O\+L\+U\+M\+N\+S\+\_\+\+P\+E\+R\+\_\+\+C\+H\+U\+N\+K\+\_\+\+L\+O\+G2~4}
+
+
+
+Definition at line 17 of file cave\+\_\+parse.\+c.
+
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{cave__parse_8c_a3ce8249ee3b6b306721124b6659f01f9}\label{cave__parse_8c_a3ce8249ee3b6b306721124b6659f01f9}} 
+\index{cave\_parse.c@{cave\_parse.c}!parse\_chunk@{parse\_chunk}}
+\index{parse\_chunk@{parse\_chunk}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{parse\_chunk}{parse\_chunk}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{structfast__chunk}{fast\+\_\+chunk}} \mbox{\hyperlink{cave__parse_8c_a3ce8249ee3b6b306721124b6659f01f9}{parse\+\_\+chunk}}}
+
+
+
+Definition at line 379 of file cave\+\_\+parse.\+c.
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{cave__parse_8c_a634f9f55e799f3052a34590f08100017}\label{cave__parse_8c_a634f9f55e799f3052a34590f08100017}} 
+\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TAG\_End@{TAG\_End}!cave\_parse.c@{cave\_parse.c}}\index{cave\_parse.c@{cave\_parse.c}!TAG\_End@{TAG\_End}}}\mbox{\Hypertarget{cave__parse_8c_a634f9f55e799f3052a34590f08100017a412ceba1e522006ed1abd510caf067c6}\label{cave__parse_8c_a634f9f55e799f3052a34590f08100017a412ceba1e522006ed1abd510caf067c6}} 
+T\+A\+G\+\_\+\+End&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TAG\_Byte@{TAG\_Byte}!cave\_parse.c@{cave\_parse.c}}\index{cave\_parse.c@{cave\_parse.c}!TAG\_Byte@{TAG\_Byte}}}\mbox{\Hypertarget{cave__parse_8c_a634f9f55e799f3052a34590f08100017abb52fd6bfeb1865968d56ccef0daead9}\label{cave__parse_8c_a634f9f55e799f3052a34590f08100017abb52fd6bfeb1865968d56ccef0daead9}} 
+T\+A\+G\+\_\+\+Byte&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TAG\_Short@{TAG\_Short}!cave\_parse.c@{cave\_parse.c}}\index{cave\_parse.c@{cave\_parse.c}!TAG\_Short@{TAG\_Short}}}\mbox{\Hypertarget{cave__parse_8c_a634f9f55e799f3052a34590f08100017a975e983e98b5bf2fffc5691958b0794f}\label{cave__parse_8c_a634f9f55e799f3052a34590f08100017a975e983e98b5bf2fffc5691958b0794f}} 
+T\+A\+G\+\_\+\+Short&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TAG\_Int@{TAG\_Int}!cave\_parse.c@{cave\_parse.c}}\index{cave\_parse.c@{cave\_parse.c}!TAG\_Int@{TAG\_Int}}}\mbox{\Hypertarget{cave__parse_8c_a634f9f55e799f3052a34590f08100017ae0b367cd0dd9b00f86ba58d34bdf82cd}\label{cave__parse_8c_a634f9f55e799f3052a34590f08100017ae0b367cd0dd9b00f86ba58d34bdf82cd}} 
+T\+A\+G\+\_\+\+Int&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TAG\_Long@{TAG\_Long}!cave\_parse.c@{cave\_parse.c}}\index{cave\_parse.c@{cave\_parse.c}!TAG\_Long@{TAG\_Long}}}\mbox{\Hypertarget{cave__parse_8c_a634f9f55e799f3052a34590f08100017a045cf869c73ca645cb2f90b51e74cda9}\label{cave__parse_8c_a634f9f55e799f3052a34590f08100017a045cf869c73ca645cb2f90b51e74cda9}} 
+T\+A\+G\+\_\+\+Long&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TAG\_Float@{TAG\_Float}!cave\_parse.c@{cave\_parse.c}}\index{cave\_parse.c@{cave\_parse.c}!TAG\_Float@{TAG\_Float}}}\mbox{\Hypertarget{cave__parse_8c_a634f9f55e799f3052a34590f08100017a8fc97992da325a844e4410482a301859}\label{cave__parse_8c_a634f9f55e799f3052a34590f08100017a8fc97992da325a844e4410482a301859}} 
+T\+A\+G\+\_\+\+Float&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TAG\_Double@{TAG\_Double}!cave\_parse.c@{cave\_parse.c}}\index{cave\_parse.c@{cave\_parse.c}!TAG\_Double@{TAG\_Double}}}\mbox{\Hypertarget{cave__parse_8c_a634f9f55e799f3052a34590f08100017ae5fc01c466aa077f9004b088089e16f1}\label{cave__parse_8c_a634f9f55e799f3052a34590f08100017ae5fc01c466aa077f9004b088089e16f1}} 
+T\+A\+G\+\_\+\+Double&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TAG\_Byte\_Array@{TAG\_Byte\_Array}!cave\_parse.c@{cave\_parse.c}}\index{cave\_parse.c@{cave\_parse.c}!TAG\_Byte\_Array@{TAG\_Byte\_Array}}}\mbox{\Hypertarget{cave__parse_8c_a634f9f55e799f3052a34590f08100017ac28ed5b6d83826ce9ae4bd6977549c1b}\label{cave__parse_8c_a634f9f55e799f3052a34590f08100017ac28ed5b6d83826ce9ae4bd6977549c1b}} 
+T\+A\+G\+\_\+\+Byte\+\_\+\+Array&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TAG\_String@{TAG\_String}!cave\_parse.c@{cave\_parse.c}}\index{cave\_parse.c@{cave\_parse.c}!TAG\_String@{TAG\_String}}}\mbox{\Hypertarget{cave__parse_8c_a634f9f55e799f3052a34590f08100017a918f873ae00e6b16d197f09abb3866a7}\label{cave__parse_8c_a634f9f55e799f3052a34590f08100017a918f873ae00e6b16d197f09abb3866a7}} 
+T\+A\+G\+\_\+\+String&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TAG\_List@{TAG\_List}!cave\_parse.c@{cave\_parse.c}}\index{cave\_parse.c@{cave\_parse.c}!TAG\_List@{TAG\_List}}}\mbox{\Hypertarget{cave__parse_8c_a634f9f55e799f3052a34590f08100017a59fc760bbabd001bc74cd7b4500eaeb1}\label{cave__parse_8c_a634f9f55e799f3052a34590f08100017a59fc760bbabd001bc74cd7b4500eaeb1}} 
+T\+A\+G\+\_\+\+List&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TAG\_Compound@{TAG\_Compound}!cave\_parse.c@{cave\_parse.c}}\index{cave\_parse.c@{cave\_parse.c}!TAG\_Compound@{TAG\_Compound}}}\mbox{\Hypertarget{cave__parse_8c_a634f9f55e799f3052a34590f08100017add45c97006383b972c7f3f2d17549199}\label{cave__parse_8c_a634f9f55e799f3052a34590f08100017add45c97006383b972c7f3f2d17549199}} 
+T\+A\+G\+\_\+\+Compound&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TAG\_Int\_Array@{TAG\_Int\_Array}!cave\_parse.c@{cave\_parse.c}}\index{cave\_parse.c@{cave\_parse.c}!TAG\_Int\_Array@{TAG\_Int\_Array}}}\mbox{\Hypertarget{cave__parse_8c_a634f9f55e799f3052a34590f08100017a3fcd196a7af01c81e81774394f64dff3}\label{cave__parse_8c_a634f9f55e799f3052a34590f08100017a3fcd196a7af01c81e81774394f64dff3}} 
+T\+A\+G\+\_\+\+Int\+\_\+\+Array&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 200 of file cave\+\_\+parse.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{200      \{ \mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017a412ceba1e522006ed1abd510caf067c6}{TAG\_End}}=0, \mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017abb52fd6bfeb1865968d56ccef0daead9}{TAG\_Byte}}=1, \mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017a975e983e98b5bf2fffc5691958b0794f}{TAG\_Short}}=2, \mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017ae0b367cd0dd9b00f86ba58d34bdf82cd}{TAG\_Int}}=3, \mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017a045cf869c73ca645cb2f90b51e74cda9}{TAG\_Long}}=4,}
+\DoxyCodeLine{201        \mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017a8fc97992da325a844e4410482a301859}{TAG\_Float}}=5, \mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017ae5fc01c466aa077f9004b088089e16f1}{TAG\_Double}}=6, \mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017ac28ed5b6d83826ce9ae4bd6977549c1b}{TAG\_Byte\_Array}}=7, \mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017a918f873ae00e6b16d197f09abb3866a7}{TAG\_String}}=8,}
+\DoxyCodeLine{202        \mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017a59fc760bbabd001bc74cd7b4500eaeb1}{TAG\_List}}=9, \mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017add45c97006383b972c7f3f2d17549199}{TAG\_Compound}}=10, \mbox{\hyperlink{cave__parse_8c_a634f9f55e799f3052a34590f08100017a3fcd196a7af01c81e81774394f64dff3}{TAG\_Int\_Array}}=11 \};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{cave__parse_8c_ac89cefdc6d1782d451168ff4160899bf}\label{cave__parse_8c_ac89cefdc6d1782d451168ff4160899bf}} 
+\index{cave\_parse.c@{cave\_parse.c}!free\_region@{free\_region}}
+\index{free\_region@{free\_region}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{free\_region()}{free\_region()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} free\+\_\+region (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structregion}{region}} $\ast$}]{r }\end{DoxyParamCaption})}
+
+
+
+Definition at line 84 of file cave\+\_\+parse.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{85 \{}
+\DoxyCodeLine{86    \mbox{\hyperlink{stb__leakcheck_8h_a9d4b5df3530d1bc733070a4669ba6ebc}{free}}(\mbox{\hyperlink{glad_8h_a42ce7cdc612e53abee15043f80220d97}{r}});}
+\DoxyCodeLine{87 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__parse_8c_a5ff78db273f16901a4c8a02189065159}\label{cave__parse_8c_a5ff78db273f16901a4c8a02189065159}} 
+\index{cave\_parse.c@{cave\_parse.c}!get\_decoded\_buffer@{get\_decoded\_buffer}}
+\index{get\_decoded\_buffer@{get\_decoded\_buffer}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{get\_decoded\_buffer()}{get\_decoded\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structdecoded__buffer}{decoded\+\_\+buffer}}$\ast$ get\+\_\+decoded\+\_\+buffer (\begin{DoxyParamCaption}\item[{int}]{chunk\+\_\+x,  }\item[{int}]{chunk\+\_\+z }\end{DoxyParamCaption})}
+
+
+
+Definition at line 566 of file cave\+\_\+parse.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{567 \{}
+\DoxyCodeLine{568    \mbox{\hyperlink{structdecoded__buffer}{decoded\_buffer}} *db = \&decoded\_buffers[chunk\_z\&(\mbox{\hyperlink{cave__parse_8c_a8b6314e7837240b78c2820faa3a5b230}{MAX\_DECODED\_CHUNK\_Z}}-\/1)][chunk\_x\&(\mbox{\hyperlink{cave__parse_8c_afd283cd22b0969b4c6c972002198b552}{MAX\_DECODED\_CHUNK\_X}}-\/1)];}
+\DoxyCodeLine{569    \textcolor{keywordflow}{if} (db-\/>\mbox{\hyperlink{structdecoded__buffer_a274e09899771bf21cc6d36627c445151}{valid}}) \{}
+\DoxyCodeLine{570       \textcolor{keywordflow}{if} (db-\/>\mbox{\hyperlink{structdecoded__buffer_abd4fcc5bf173158cc2a0a51b3dc379f8}{cx}} == chunk\_x \&\& db-\/>\mbox{\hyperlink{structdecoded__buffer_a403cca3edd511bba82a8621bca78a341}{cz}} == chunk\_z)}
+\DoxyCodeLine{571          \textcolor{keywordflow}{return} db;}
+\DoxyCodeLine{572       \textcolor{keywordflow}{if} (db-\/>\mbox{\hyperlink{structdecoded__buffer_a367c4250ddd897a55a53e12b7be5daba}{fc}}) \{}
+\DoxyCodeLine{573          \mbox{\hyperlink{stb__leakcheck_8h_a9d4b5df3530d1bc733070a4669ba6ebc}{free}}(db-\/>\mbox{\hyperlink{structdecoded__buffer_a367c4250ddd897a55a53e12b7be5daba}{fc}}-\/>\mbox{\hyperlink{structfast__chunk_aea03b39185c1d472a7f61f86529f0863}{pointer\_to\_free}});}
+\DoxyCodeLine{574          \mbox{\hyperlink{stb__leakcheck_8h_a9d4b5df3530d1bc733070a4669ba6ebc}{free}}(db-\/>\mbox{\hyperlink{structdecoded__buffer_a367c4250ddd897a55a53e12b7be5daba}{fc}});}
+\DoxyCodeLine{575       \}}
+\DoxyCodeLine{576    \}}
+\DoxyCodeLine{577 }
+\DoxyCodeLine{578    db-\/>\mbox{\hyperlink{structdecoded__buffer_abd4fcc5bf173158cc2a0a51b3dc379f8}{cx}} = chunk\_x;}
+\DoxyCodeLine{579    db-\/>\mbox{\hyperlink{structdecoded__buffer_a403cca3edd511bba82a8621bca78a341}{cz}} = chunk\_z;}
+\DoxyCodeLine{580    db-\/>\mbox{\hyperlink{structdecoded__buffer_a274e09899771bf21cc6d36627c445151}{valid}} = 1;}
+\DoxyCodeLine{581    db-\/>\mbox{\hyperlink{structdecoded__buffer_a367c4250ddd897a55a53e12b7be5daba}{fc}} = 0;}
+\DoxyCodeLine{582 }
+\DoxyCodeLine{583    \{}
+\DoxyCodeLine{584       db-\/>\mbox{\hyperlink{structdecoded__buffer_a367c4250ddd897a55a53e12b7be5daba}{fc}} = \mbox{\hyperlink{cave__parse_8c_ac3885b139871d53a3d39cca5380075c9}{get\_decoded\_fastchunk\_uncached}}(chunk\_x, chunk\_z);}
+\DoxyCodeLine{585       \textcolor{keywordflow}{return} db;}
+\DoxyCodeLine{586    \}}
+\DoxyCodeLine{587 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__parse_8c_a2b070c4bd8a0077f08e0899298b8d032}\label{cave__parse_8c_a2b070c4bd8a0077f08e0899298b8d032}} 
+\index{cave\_parse.c@{cave\_parse.c}!get\_decoded\_fastchunk@{get\_decoded\_fastchunk}}
+\index{get\_decoded\_fastchunk@{get\_decoded\_fastchunk}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{get\_decoded\_fastchunk()}{get\_decoded\_fastchunk()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structfast__chunk}{fast\+\_\+chunk}}$\ast$ get\+\_\+decoded\+\_\+fastchunk (\begin{DoxyParamCaption}\item[{int}]{chunk\+\_\+x,  }\item[{int}]{chunk\+\_\+z }\end{DoxyParamCaption})}
+
+
+
+Definition at line 589 of file cave\+\_\+parse.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{590 \{}
+\DoxyCodeLine{591    \mbox{\hyperlink{structdecoded__buffer}{decoded\_buffer}} *db = \mbox{\hyperlink{cave__parse_8c_a5ff78db273f16901a4c8a02189065159}{get\_decoded\_buffer}}(chunk\_x, chunk\_z);}
+\DoxyCodeLine{592    \textcolor{keywordflow}{return} db-\/>\mbox{\hyperlink{structdecoded__buffer_a367c4250ddd897a55a53e12b7be5daba}{fc}};}
+\DoxyCodeLine{593 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__parse_8c_ac3885b139871d53a3d39cca5380075c9}\label{cave__parse_8c_ac3885b139871d53a3d39cca5380075c9}} 
+\index{cave\_parse.c@{cave\_parse.c}!get\_decoded\_fastchunk\_uncached@{get\_decoded\_fastchunk\_uncached}}
+\index{get\_decoded\_fastchunk\_uncached@{get\_decoded\_fastchunk\_uncached}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{get\_decoded\_fastchunk\_uncached()}{get\_decoded\_fastchunk\_uncached()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structfast__chunk}{fast\+\_\+chunk}}$\ast$ get\+\_\+decoded\+\_\+fastchunk\+\_\+uncached (\begin{DoxyParamCaption}\item[{int}]{chunk\+\_\+x,  }\item[{int}]{chunk\+\_\+z }\end{DoxyParamCaption})}
+
+
+
+Definition at line 525 of file cave\+\_\+parse.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{526 \{}
+\DoxyCodeLine{527    \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *decoded;}
+\DoxyCodeLine{528    \mbox{\hyperlink{structcompressed__chunk}{compressed\_chunk}} *cc;}
+\DoxyCodeLine{529    \textcolor{keywordtype}{int} inlen;}
+\DoxyCodeLine{530    \textcolor{keywordtype}{int} \mbox{\hyperlink{glext_8h_a652168017ea9a8bbcead03d5c16269fb}{len}};}
+\DoxyCodeLine{531    \mbox{\hyperlink{structfast__chunk}{fast\_chunk}} *fc;}
+\DoxyCodeLine{532 }
+\DoxyCodeLine{533    \mbox{\hyperlink{cave__parse_8c_af4e8c4c0c38242366db62d9936274079}{lock\_chunk\_get\_mutex}}();}
+\DoxyCodeLine{534    cc = get\_compressed\_chunk(chunk\_x, chunk\_z);}
+\DoxyCodeLine{535    \textcolor{keywordflow}{if} (cc-\/>\mbox{\hyperlink{structcompressed__chunk_afd6e1777f2ee768315d22f6316a585df}{len}} != 0)}
+\DoxyCodeLine{536       ++cc-\/>\mbox{\hyperlink{structcompressed__chunk_afd796ba64d7fc4cb1f43a177b6424a45}{refcount}};}
+\DoxyCodeLine{537    \mbox{\hyperlink{cave__parse_8c_afaaad5f587e3275de99ae8ff61b2e18a}{unlock\_chunk\_get\_mutex}}();}
+\DoxyCodeLine{538 }
+\DoxyCodeLine{539    \textcolor{keywordflow}{if} (cc-\/>\mbox{\hyperlink{structcompressed__chunk_afd6e1777f2ee768315d22f6316a585df}{len}} == 0)}
+\DoxyCodeLine{540       \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{541 }
+\DoxyCodeLine{542    assert(cc != \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{543 }
+\DoxyCodeLine{544    assert(cc-\/>\mbox{\hyperlink{structcompressed__chunk_a537aaff67064a4c6a6e8ba17efda3233}{data}}[4] == 2);}
+\DoxyCodeLine{545 }
+\DoxyCodeLine{546    inlen = nbt\_parse\_uint32(cc-\/>\mbox{\hyperlink{structcompressed__chunk_a537aaff67064a4c6a6e8ba17efda3233}{data}});}
+\DoxyCodeLine{547    decoded = \mbox{\hyperlink{stb__image_8c_ad58a5fbe941f1cc170dba564f6d2bdc3}{stbi\_zlib\_decode\_malloc\_guesssize}}(cc-\/>\mbox{\hyperlink{structcompressed__chunk_a537aaff67064a4c6a6e8ba17efda3233}{data}}+5, inlen, inlen*3, \&\mbox{\hyperlink{glext_8h_a652168017ea9a8bbcead03d5c16269fb}{len}});}
+\DoxyCodeLine{548    assert(decoded != \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{549    assert(\mbox{\hyperlink{glext_8h_a652168017ea9a8bbcead03d5c16269fb}{len}} != 0);}
+\DoxyCodeLine{550 }
+\DoxyCodeLine{551    \mbox{\hyperlink{cave__parse_8c_af4e8c4c0c38242366db62d9936274079}{lock\_chunk\_get\_mutex}}();}
+\DoxyCodeLine{552    deref\_compressed\_chunk(cc);}
+\DoxyCodeLine{553    \mbox{\hyperlink{cave__parse_8c_afaaad5f587e3275de99ae8ff61b2e18a}{unlock\_chunk\_get\_mutex}}();}
+\DoxyCodeLine{554 }
+\DoxyCodeLine{555 \textcolor{preprocessor}{   \#ifdef FAST\_CHUNK}}
+\DoxyCodeLine{556    fc = minecraft\_chunk\_parse(decoded, \mbox{\hyperlink{glext_8h_a652168017ea9a8bbcead03d5c16269fb}{len}});}
+\DoxyCodeLine{557 \textcolor{preprocessor}{   \#else}}
+\DoxyCodeLine{558    fc = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{559 \textcolor{preprocessor}{   \#endif}}
+\DoxyCodeLine{560    \textcolor{keywordflow}{if} (fc == \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}})}
+\DoxyCodeLine{561       \mbox{\hyperlink{stb__leakcheck_8h_a9d4b5df3530d1bc733070a4669ba6ebc}{free}}(decoded);}
+\DoxyCodeLine{562    \textcolor{keywordflow}{return} fc;}
+\DoxyCodeLine{563 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__parse_8c_af4e8c4c0c38242366db62d9936274079}\label{cave__parse_8c_af4e8c4c0c38242366db62d9936274079}} 
+\index{cave\_parse.c@{cave\_parse.c}!lock\_chunk\_get\_mutex@{lock\_chunk\_get\_mutex}}
+\index{lock\_chunk\_get\_mutex@{lock\_chunk\_get\_mutex}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{lock\_chunk\_get\_mutex()}{lock\_chunk\_get\_mutex()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} lock\+\_\+chunk\+\_\+get\+\_\+mutex (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 525 of file cave\+\_\+mesher.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{526 \{}
+\DoxyCodeLine{527    SDL\_LockMutex(\mbox{\hyperlink{cave__mesher_8c_a9105640f64bd2fca823fa679f99fb62b}{chunk\_get\_mutex}});}
+\DoxyCodeLine{528 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__parse_8c_a03d6013648e51644ba189d14e195d09c}\label{cave__parse_8c_a03d6013648e51644ba189d14e195d09c}} 
+\index{cave\_parse.c@{cave\_parse.c}!read\_uint32\_be@{read\_uint32\_be}}
+\index{read\_uint32\_be@{read\_uint32\_be}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{read\_uint32\_be()}{read\_uint32\_be()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb_8h_a1134b580f8da4de94ca6b1de4d37975e}{uint32}} read\+\_\+uint32\+\_\+be (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{f }\end{DoxyParamCaption})}
+
+
+
+Definition at line 19 of file cave\+\_\+parse.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{20 \{}
+\DoxyCodeLine{21    \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \mbox{\hyperlink{glad_8h_a41a8247b39e9cdb744299c3331ca3453}{data}}[4];}
+\DoxyCodeLine{22    fread(\mbox{\hyperlink{glad_8h_a41a8247b39e9cdb744299c3331ca3453}{data}}, 1, 4, \mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}});}
+\DoxyCodeLine{23    \textcolor{keywordflow}{return} (\mbox{\hyperlink{glad_8h_a41a8247b39e9cdb744299c3331ca3453}{data}}[0]<<24) + (\mbox{\hyperlink{glad_8h_a41a8247b39e9cdb744299c3331ca3453}{data}}[1]<<16) + (\mbox{\hyperlink{glad_8h_a41a8247b39e9cdb744299c3331ca3453}{data}}[2]<<8) + \mbox{\hyperlink{glad_8h_a41a8247b39e9cdb744299c3331ca3453}{data}}[3];}
+\DoxyCodeLine{24 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{cave__parse_8c_afaaad5f587e3275de99ae8ff61b2e18a}\label{cave__parse_8c_afaaad5f587e3275de99ae8ff61b2e18a}} 
+\index{cave\_parse.c@{cave\_parse.c}!unlock\_chunk\_get\_mutex@{unlock\_chunk\_get\_mutex}}
+\index{unlock\_chunk\_get\_mutex@{unlock\_chunk\_get\_mutex}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{unlock\_chunk\_get\_mutex()}{unlock\_chunk\_get\_mutex()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} unlock\+\_\+chunk\+\_\+get\+\_\+mutex (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 529 of file cave\+\_\+mesher.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{530 \{}
+\DoxyCodeLine{531    SDL\_UnlockMutex(\mbox{\hyperlink{cave__mesher_8c_a9105640f64bd2fca823fa679f99fb62b}{chunk\_get\_mutex}});}
+\DoxyCodeLine{532 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{cave__parse_8c_a7f09eec9ac1c889cedb229f4881d3fff}\label{cave__parse_8c_a7f09eec9ac1c889cedb229f4881d3fff}} 
+\index{cave\_parse.c@{cave\_parse.c}!cached\_chunk@{cached\_chunk}}
+\index{cached\_chunk@{cached\_chunk}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{cached\_chunk}{cached\_chunk}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structcompressed__chunk}{compressed\+\_\+chunk}}$\ast$ cached\+\_\+chunk\mbox{[}\mbox{\hyperlink{cave__parse_8c_a682c506659165976d5e5ebf4608741c8}{N\+U\+M\+\_\+\+C\+A\+C\+H\+E\+D\+\_\+Z}}\mbox{]}\mbox{[}\mbox{\hyperlink{cave__parse_8c_aee4002d6e7651d2b6210172e8debfd9b}{N\+U\+M\+\_\+\+C\+A\+C\+H\+E\+D\+\_\+X}}\mbox{]}}
+
+
+
+Definition at line 119 of file cave\+\_\+parse.\+c.
+
+\mbox{\Hypertarget{cave__parse_8c_a06d58838a105ee37d75f9d0b8ffbd3a4}\label{cave__parse_8c_a06d58838a105ee37d75f9d0b8ffbd3a4}} 
+\index{cave\_parse.c@{cave\_parse.c}!cached\_compressed@{cached\_compressed}}
+\index{cached\_compressed@{cached\_compressed}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{cached\_compressed}{cached\_compressed}}
+{\footnotesize\ttfamily size\+\_\+t cached\+\_\+compressed =0}
+
+
+
+Definition at line 40 of file cave\+\_\+parse.\+c.
+
+\mbox{\Hypertarget{cave__parse_8c_a532749e3a03fec148c60403092f6c555}\label{cave__parse_8c_a532749e3a03fec148c60403092f6c555}} 
+\index{cave\_parse.c@{cave\_parse.c}!last\_region@{last\_region}}
+\index{last\_region@{last\_region}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{last\_region}{last\_region}}
+{\footnotesize\ttfamily F\+I\+LE$\ast$ last\+\_\+region}
+
+
+
+Definition at line 42 of file cave\+\_\+parse.\+c.
+
+\mbox{\Hypertarget{cave__parse_8c_a8edc0733346513c007c8ef91c36f4f2d}\label{cave__parse_8c_a8edc0733346513c007c8ef91c36f4f2d}} 
+\index{cave\_parse.c@{cave\_parse.c}!last\_region\_x@{last\_region\_x}}
+\index{last\_region\_x@{last\_region\_x}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{last\_region\_x}{last\_region\_x}}
+{\footnotesize\ttfamily int last\+\_\+region\+\_\+x}
+
+
+
+Definition at line 43 of file cave\+\_\+parse.\+c.
+
+\mbox{\Hypertarget{cave__parse_8c_a875c19d8a1f89b10c7afeb72e2e34004}\label{cave__parse_8c_a875c19d8a1f89b10c7afeb72e2e34004}} 
+\index{cave\_parse.c@{cave\_parse.c}!last\_region\_z@{last\_region\_z}}
+\index{last\_region\_z@{last\_region\_z}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{last\_region\_z}{last\_region\_z}}
+{\footnotesize\ttfamily int last\+\_\+region\+\_\+z}
+
+
+
+Definition at line 44 of file cave\+\_\+parse.\+c.
+
+\mbox{\Hypertarget{cave__parse_8c_af2606797deda70b5effbc50b2648d699}\label{cave__parse_8c_af2606797deda70b5effbc50b2648d699}} 
+\index{cave\_parse.c@{cave\_parse.c}!opened@{opened}}
+\index{opened@{opened}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{opened}{opened}}
+{\footnotesize\ttfamily int opened =0}
+
+
+
+Definition at line 45 of file cave\+\_\+parse.\+c.
+
+\mbox{\Hypertarget{cave__parse_8c_a7c1f8c51ad9f7eea962905f2afa7aa79}\label{cave__parse_8c_a7c1f8c51ad9f7eea962905f2afa7aa79}} 
+\index{cave\_parse.c@{cave\_parse.c}!regions@{regions}}
+\index{regions@{regions}!cave\_parse.c@{cave\_parse.c}}
+\doxysubsubsection{\texorpdfstring{regions}{regions}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structregion}{region}}$\ast$ regions\mbox{[}\mbox{\hyperlink{cave__parse_8c_a9da226849ee4a1097347c32e127cd14d}{M\+A\+X\+\_\+\+M\+A\+P\+\_\+\+R\+E\+G\+I\+O\+NS}}\mbox{]}\mbox{[}\mbox{\hyperlink{cave__parse_8c_a9da226849ee4a1097347c32e127cd14d}{M\+A\+X\+\_\+\+M\+A\+P\+\_\+\+R\+E\+G\+I\+O\+NS}}\mbox{]}}
+
+
+
+Definition at line 90 of file cave\+\_\+parse.\+c.
+

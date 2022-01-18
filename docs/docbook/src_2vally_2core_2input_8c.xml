@@ -1,0 +1,362 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_src_2vally_2core_2input_8c">
+<title>src/vally/core/input.c File Reference</title>
+<indexterm><primary>src/vally/core/input.c</primary></indexterm>
+<programlisting>#include &lt;vally/core/input.h&gt;
+#include &lt;string.h&gt;
+#include &lt;GLFW/glfw3.h&gt;
+#include &lt;vally/core/window.h&gt;
+#include &lt;vally/core/event.h&gt;
+#include &lt;vally/core/logger.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structkeyboard__state">keyboard_state</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structmouse__state">mouse_state</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structinput__state">input_state</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_src_2vally_2core_2input_8c_1a593bcbbd513523292f792c80ee8f9e43">input_init</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_src_2vally_2core_2input_8c_1a95fa09da1f1bf6a0fdd462b0d4ae2d8b">input_terminate</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_src_2vally_2core_2input_8c_1a9ce915e642243d80af0f5829a0bc28f0">input_key_pressed</link> (<link linkend="_include_2vally_2config_8h_1ace9d960e74685e2cd84b36132dbbf8aa">u16</link> <link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>)</para>
+
+<para>Checks if keyboard key is pressed. </para>
+</listitem>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_src_2vally_2core_2input_8c_1a5e745aef905fe5c1218b333e0fc50dd9">input_key_released</link> (<link linkend="_include_2vally_2config_8h_1ace9d960e74685e2cd84b36132dbbf8aa">u16</link> <link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>)</para>
+
+<para>Checks if keyboard key is released. </para>
+</listitem>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_src_2vally_2core_2input_8c_1ab7f53def87a73581c28ae7c5bb19f9cf">input_mouse_button_pressed</link> (<link linkend="_include_2vally_2config_8h_1ace9d960e74685e2cd84b36132dbbf8aa">u16</link> button)</para>
+
+<para>Checks if mouse button is pressed. </para>
+</listitem>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_src_2vally_2core_2input_8c_1a9b1f0bcdcf39e9a9f38d97192eb58f3a">input_mouse_button_released</link> (<link linkend="_include_2vally_2config_8h_1ace9d960e74685e2cd84b36132dbbf8aa">u16</link> button)</para>
+
+<para>Checks if mouse button is released. </para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_src_2vally_2core_2input_8c_1a54314e90b3adb3288a8625e72f442d16">input_mouse_position</link> (<link linkend="_include_2vally_2config_8h_1a94dab5770726ccbef8c7d026cfbdf8e5">f64</link> *<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, <link linkend="_include_2vally_2config_8h_1a94dab5770726ccbef8c7d026cfbdf8e5">f64</link> *<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)</para>
+
+<para>Returns current mouse position. </para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_src_2vally_2core_2input_8c_1a836ca347d344d06eada42c28cc4556a3">input_mouse_prev_position</link> (<link linkend="_include_2vally_2config_8h_1a94dab5770726ccbef8c7d026cfbdf8e5">f64</link> *<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, <link linkend="_include_2vally_2config_8h_1a94dab5770726ccbef8c7d026cfbdf8e5">f64</link> *<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)</para>
+
+<para>Returns current previous position. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_src_2vally_2core_2input_8c_1a593bcbbd513523292f792c80ee8f9e43"/>    <section>
+    <title>input_init()</title>
+<indexterm><primary>input_init</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>input_init</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> input_init ( )</computeroutput></para><para>
+Definition at line 65 of file input.c.</para>
+<programlisting>65 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+66 &#32;&#32;memset(state.<link linkend="_structinput__state_1acb662b3dbc0324f207e2ea56368065a4">keyboard</link>.<link linkend="_structkeyboard__state_1a8a462aa5d2f2e017f3ad6362ab2f95df">keys</link>,&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(state.<link linkend="_structinput__state_1acb662b3dbc0324f207e2ea56368065a4">keyboard</link>.<link linkend="_structkeyboard__state_1a8a462aa5d2f2e017f3ad6362ab2f95df">keys</link>));
+67 &#32;&#32;memset(state.<link linkend="_structinput__state_1aa8fff3ca3d9870f560be016f02888490">mouse</link>.<link linkend="_structmouse__state_1a71411d9a32ce5842e5b5d65b4ca54bd7">buttons</link>,&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(state.<link linkend="_structinput__state_1aa8fff3ca3d9870f560be016f02888490">mouse</link>.<link linkend="_structmouse__state_1a71411d9a32ce5842e5b5d65b4ca54bd7">buttons</link>));
+68 
+69 &#32;&#32;<link linkend="_src_2vally_2core_2window_8c_1a22abffc596cdf4662e42a888bf0f4ae7">window_set_key_callback</link>(key_callback);
+70 &#32;&#32;<link linkend="_src_2vally_2core_2window_8c_1a5a2328a25f9e25e6959db3d2000490cb">window_set_mouse_button_callback</link>(mouse_button_callback);
+71 &#32;&#32;<link linkend="_src_2vally_2core_2window_8c_1a98c8dab3eaabc474c6c190329340e92e">window_set_cursor_position_callback</link>(cursor_position_callback);
+72 
+73 &#32;&#32;initialized&#32;=&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+74 &#32;&#32;<link linkend="_logger_8h_1af933c6341b0deeb4ee1a540da61b9536">VALLY_TRACE</link>(<emphasis role="stringliteral">&quot;Input&#32;system&#32;initialized&quot;</emphasis>);
+75 
+76 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+77 }
+</programlisting>    </section><anchor xml:id="_src_2vally_2core_2input_8c_1a9ce915e642243d80af0f5829a0bc28f0"/>    <section>
+    <title>input_key_pressed()</title>
+<indexterm><primary>input_key_pressed</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>input_key_pressed</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> input_key_pressed (<link linkend="_include_2vally_2config_8h_1ace9d960e74685e2cd84b36132dbbf8aa">u16</link> key)</computeroutput></para><para>
+
+<para>Checks if keyboard key is pressed. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>key</entry>
+                                <entry>
+<para>Keyboard key code</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>TRUE - if pressed, FALSE - if released </para>
+</formalpara>
+</para>
+<para>
+Definition at line 83 of file input.c.</para>
+<programlisting>83 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+84 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized)&#32;{
+85 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+86 &#32;&#32;}
+87 
+88 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;state.<link linkend="_structinput__state_1acb662b3dbc0324f207e2ea56368065a4">keyboard</link>.<link linkend="_structkeyboard__state_1a8a462aa5d2f2e017f3ad6362ab2f95df">keys</link>[<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>];
+89 }
+</programlisting>    </section><anchor xml:id="_src_2vally_2core_2input_8c_1a5e745aef905fe5c1218b333e0fc50dd9"/>    <section>
+    <title>input_key_released()</title>
+<indexterm><primary>input_key_released</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>input_key_released</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> input_key_released (<link linkend="_include_2vally_2config_8h_1ace9d960e74685e2cd84b36132dbbf8aa">u16</link> key)</computeroutput></para><para>
+
+<para>Checks if keyboard key is released. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>key</entry>
+                                <entry>
+<para>Keyboard key code</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>TRUE - if released, FALSE - if pressed </para>
+</formalpara>
+</para>
+<para>
+Definition at line 91 of file input.c.</para>
+<programlisting>91 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+92 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized)&#32;{
+93 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+94 &#32;&#32;}
+95 &#32;&#32;
+96 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;!state.<link linkend="_structinput__state_1acb662b3dbc0324f207e2ea56368065a4">keyboard</link>.<link linkend="_structkeyboard__state_1a8a462aa5d2f2e017f3ad6362ab2f95df">keys</link>[<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>];
+97 }
+</programlisting>    </section><anchor xml:id="_src_2vally_2core_2input_8c_1ab7f53def87a73581c28ae7c5bb19f9cf"/>    <section>
+    <title>input_mouse_button_pressed()</title>
+<indexterm><primary>input_mouse_button_pressed</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>input_mouse_button_pressed</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> input_mouse_button_pressed (<link linkend="_include_2vally_2config_8h_1ace9d960e74685e2cd84b36132dbbf8aa">u16</link> button)</computeroutput></para><para>
+
+<para>Checks if mouse button is pressed. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>button</entry>
+                                <entry>
+<para>Mouse button code</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>TRUE - if pressed, FALSE - if released </para>
+</formalpara>
+</para>
+<para>
+Definition at line 99 of file input.c.</para>
+<programlisting>99 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+100 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized)&#32;{
+101 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+102 &#32;&#32;}
+103 &#32;&#32;
+104 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;state.<link linkend="_structinput__state_1aa8fff3ca3d9870f560be016f02888490">mouse</link>.<link linkend="_structmouse__state_1a71411d9a32ce5842e5b5d65b4ca54bd7">buttons</link>[button];
+105 }
+</programlisting>    </section><anchor xml:id="_src_2vally_2core_2input_8c_1a9b1f0bcdcf39e9a9f38d97192eb58f3a"/>    <section>
+    <title>input_mouse_button_released()</title>
+<indexterm><primary>input_mouse_button_released</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>input_mouse_button_released</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> input_mouse_button_released (<link linkend="_include_2vally_2config_8h_1ace9d960e74685e2cd84b36132dbbf8aa">u16</link> button)</computeroutput></para><para>
+
+<para>Checks if mouse button is released. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>button</entry>
+                                <entry>
+<para>Mouse button code</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>TRUE - if released, FALSE - if pressed </para>
+</formalpara>
+</para>
+<para>
+Definition at line 107 of file input.c.</para>
+<programlisting>107 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+108 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized)&#32;{
+109 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+110 &#32;&#32;}
+111 &#32;&#32;
+112 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;!state.<link linkend="_structinput__state_1aa8fff3ca3d9870f560be016f02888490">mouse</link>.<link linkend="_structmouse__state_1a71411d9a32ce5842e5b5d65b4ca54bd7">buttons</link>[button];
+113 }
+</programlisting>    </section><anchor xml:id="_src_2vally_2core_2input_8c_1a54314e90b3adb3288a8625e72f442d16"/>    <section>
+    <title>input_mouse_position()</title>
+<indexterm><primary>input_mouse_position</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>input_mouse_position</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> input_mouse_position (<link linkend="_include_2vally_2config_8h_1a94dab5770726ccbef8c7d026cfbdf8e5">f64</link> * x, <link linkend="_include_2vally_2config_8h_1a94dab5770726ccbef8c7d026cfbdf8e5">f64</link> * y)</computeroutput></para><para>
+
+<para>Returns current mouse position. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>x</entry>
+                                <entry>
+<para>pointer where mouse x coordinate will be written </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>y</entry>
+                                <entry>
+<para>pointer where mouse y coordinate will be written </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line 115 of file input.c.</para>
+<programlisting>115 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+116 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized)&#32;{
+117 &#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;=&#32;0;
+118 &#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;=&#32;0;
+119 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+120 &#32;&#32;}
+121 &#32;&#32;
+122 &#32;&#32;*<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;=&#32;state.<link linkend="_structinput__state_1aa8fff3ca3d9870f560be016f02888490">mouse</link>.<link linkend="_structmouse__state_1a39b5b62aa0aaad2546fa9c674027cca0">x</link>;
+123 &#32;&#32;*<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;=&#32;state.<link linkend="_structinput__state_1aa8fff3ca3d9870f560be016f02888490">mouse</link>.<link linkend="_structmouse__state_1adf039f7a6973dc6d155cf572409321bd">y</link>;
+124 }
+</programlisting>    </section><anchor xml:id="_src_2vally_2core_2input_8c_1a836ca347d344d06eada42c28cc4556a3"/>    <section>
+    <title>input_mouse_prev_position()</title>
+<indexterm><primary>input_mouse_prev_position</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>input_mouse_prev_position</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> input_mouse_prev_position (<link linkend="_include_2vally_2config_8h_1a94dab5770726ccbef8c7d026cfbdf8e5">f64</link> * x, <link linkend="_include_2vally_2config_8h_1a94dab5770726ccbef8c7d026cfbdf8e5">f64</link> * y)</computeroutput></para><para>
+
+<para>Returns current previous position. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>x</entry>
+                                <entry>
+<para>pointer where mouse x coordinate will be written </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>y</entry>
+                                <entry>
+<para>pointer where mouse y coordinate will be written </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line 125 of file input.c.</para>
+<programlisting>125 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+126 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized)&#32;{
+127 &#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;=&#32;0;
+128 &#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;=&#32;0;
+129 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+130 &#32;&#32;}
+131 
+132 &#32;&#32;*<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;=&#32;state.<link linkend="_structinput__state_1aa8fff3ca3d9870f560be016f02888490">mouse</link>.<link linkend="_structmouse__state_1aae47f9452e5e0c0e5a997ded0f8b2810">prev_x</link>;
+133 &#32;&#32;*<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;=&#32;state.<link linkend="_structinput__state_1aa8fff3ca3d9870f560be016f02888490">mouse</link>.<link linkend="_structmouse__state_1a5529ef4e68ce069fd99f8e3109d84467">prev_y</link>;
+134 }
+</programlisting>    </section><anchor xml:id="_src_2vally_2core_2input_8c_1a95fa09da1f1bf6a0fdd462b0d4ae2d8b"/>    <section>
+    <title>input_terminate()</title>
+<indexterm><primary>input_terminate</primary><secondary>input.c</secondary></indexterm>
+<indexterm><primary>input.c</primary><secondary>input_terminate</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> input_terminate ( )</computeroutput></para><para>
+Definition at line 78 of file input.c.</para>
+<programlisting>78 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+79 &#32;&#32;initialized&#32;=&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+80 &#32;&#32;<link linkend="_logger_8h_1af933c6341b0deeb4ee1a540da61b9536">VALLY_TRACE</link>(<emphasis role="stringliteral">&quot;Input&#32;system&#32;terminated&quot;</emphasis>);
+81 }
+</programlisting></section>
+</section>
+</section>

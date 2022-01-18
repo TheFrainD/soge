@@ -13,7 +13,7 @@ char *load_text_file(const char* path) {
   // Open the file
   file = fopen(path, "rb");
   if (!file) {
-    VALLY_ERROR("Could not load file at \"%s\"!", path);
+    LOG_ERROR("Could not load file at \"%s\"!", path);
     return "";
   }
 
@@ -25,7 +25,7 @@ char *load_text_file(const char* path) {
   // Allocate memory for the buffer
   buffer = calloc(1, length + 1);
   if (!buffer) {
-    VALLY_ERROR("Could not lallocate memory for buffer \"%s\"!", path);
+    LOG_ERROR("Could not lallocate memory for buffer \"%s\"!", path);
     fclose(file);
     return "";
   }

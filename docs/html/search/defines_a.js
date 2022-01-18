@@ -1,4 +1,12 @@
 var searchData=
 [
-  ['true_0',['TRUE',['../config_8h.html#aa8cecfc5c5c054d2875c03e77b7be15d',1,'config.h']]]
+  ['keydown_5fbit_42310',['KEYDOWN_BIT',['../test__cpp__compilation_8cpp.html#a5f424160d8a298497d42dd94d3ba9942',1,'KEYDOWN_BIT():&#160;test_cpp_compilation.cpp'],['../textedit__sample_8c.html#a5f424160d8a298497d42dd94d3ba9942',1,'KEYDOWN_BIT():&#160;textedit_sample.c']]],
+  ['khronos_5fapiattributes_42311',['KHRONOS_APIATTRIBUTES',['../khrplatform_8h.html#afd38e339bdb8f65b1ac0c8f214c427e5',1,'KHRONOS_APIATTRIBUTES():&#160;khrplatform.h'],['../gl_8h.html#afd38e339bdb8f65b1ac0c8f214c427e5',1,'KHRONOS_APIATTRIBUTES():&#160;gl.h'],['../gles2_8h.html#afd38e339bdb8f65b1ac0c8f214c427e5',1,'KHRONOS_APIATTRIBUTES():&#160;gles2.h']]],
+  ['khronos_5fapicall_42312',['KHRONOS_APICALL',['../khrplatform_8h.html#a5d0e04fe11e69b75470eb0a2a2546af3',1,'KHRONOS_APICALL():&#160;khrplatform.h'],['../gl_8h.html#a5d0e04fe11e69b75470eb0a2a2546af3',1,'KHRONOS_APICALL():&#160;gl.h'],['../gles2_8h.html#a5d0e04fe11e69b75470eb0a2a2546af3',1,'KHRONOS_APICALL():&#160;gles2.h']]],
+  ['khronos_5fapientry_42313',['KHRONOS_APIENTRY',['../khrplatform_8h.html#aff6bea8ea37be81840add529306b32a8',1,'khrplatform.h']]],
+  ['khronos_5fglad_5fapi_5fptr_42314',['KHRONOS_GLAD_API_PTR',['../gl_8h.html#add6cff7ef8c6eaaeccbf784c8b5e9af9',1,'KHRONOS_GLAD_API_PTR():&#160;gl.h'],['../gles2_8h.html#add6cff7ef8c6eaaeccbf784c8b5e9af9',1,'KHRONOS_GLAD_API_PTR():&#160;gles2.h']]],
+  ['khronos_5fmax_5fenum_42315',['KHRONOS_MAX_ENUM',['../khrplatform_8h.html#af23931754c6a5adf1892efe8933bf788',1,'KHRONOS_MAX_ENUM():&#160;khrplatform.h'],['../gl_8h.html#af23931754c6a5adf1892efe8933bf788',1,'KHRONOS_MAX_ENUM():&#160;gl.h'],['../gles2_8h.html#af23931754c6a5adf1892efe8933bf788',1,'KHRONOS_MAX_ENUM():&#160;gles2.h']]],
+  ['khronos_5fsupport_5ffloat_42316',['KHRONOS_SUPPORT_FLOAT',['../khrplatform_8h.html#a2005a9aed8272da688b4f4ea414531bc',1,'KHRONOS_SUPPORT_FLOAT():&#160;khrplatform.h'],['../gl_8h.html#a2005a9aed8272da688b4f4ea414531bc',1,'KHRONOS_SUPPORT_FLOAT():&#160;gl.h'],['../gles2_8h.html#a2005a9aed8272da688b4f4ea414531bc',1,'KHRONOS_SUPPORT_FLOAT():&#160;gles2.h']]],
+  ['khronos_5fsupport_5fint64_42317',['KHRONOS_SUPPORT_INT64',['../khrplatform_8h.html#a5000aa7e3c9ca9d348b1d17326a35635',1,'KHRONOS_SUPPORT_INT64():&#160;khrplatform.h'],['../gl_8h.html#a5000aa7e3c9ca9d348b1d17326a35635',1,'KHRONOS_SUPPORT_INT64():&#160;gl.h'],['../gles2_8h.html#a5000aa7e3c9ca9d348b1d17326a35635',1,'KHRONOS_SUPPORT_INT64():&#160;gles2.h']]],
+  ['ktispropertyunicodekeylayoutdata_42318',['kTISPropertyUnicodeKeyLayoutData',['../cocoa__platform_8h.html#a6d07c7e9885bfc4c44883a31359dba5c',1,'cocoa_platform.h']]]
 ];

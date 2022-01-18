@@ -1,0 +1,1512 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_stb__vorbis_8c">
+<title>deps/stb/stb_vorbis.c File Reference</title>
+<indexterm><primary>deps/stb/stb_vorbis.c</primary></indexterm>
+<programlisting>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;assert.h&gt;
+#include &lt;math.h&gt;
+#include &lt;limits.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structstb__vorbis__alloc">stb_vorbis_alloc</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structstb__vorbis__info">stb_vorbis_info</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structstb__vorbis__comment">stb_vorbis_comment</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_codebook">Codebook</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_floor0">Floor0</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_floor1">Floor1</link></para>
+</listitem>
+            <listitem><para>union <link linkend="_union_floor">Floor</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_residue">Residue</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_mapping_channel">MappingChannel</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_mapping">Mapping</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_mode">Mode</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_c_r_cscan">CRCscan</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_probed_page">ProbedPage</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structstb__vorbis">stb_vorbis</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structstbv____floor__ordering">stbv__floor_ordering</link></para>
+</listitem>
+            <listitem><para>union <link linkend="_unionfloat__conv">float_conv</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a00e12c885a678a051ff4c867cd966bac">STB_VORBIS_INCLUDE_STB_VORBIS_H</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1ac8616da99977cbd16f6b6cd0d4c947df">STB_VORBIS_MAX_CHANNELS</link>   16</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a89065f619109d612aadfeea480fcc38f">STB_VORBIS_PUSHDATA_CRC_COUNT</link>   4</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a42fed8d4cc187ad72ac8a8e09b98a169">STB_VORBIS_FAST_HUFFMAN_LENGTH</link>   10</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1aabcc470f653273b1bc381f69a3b37bfc">STB_VORBIS_FAST_HUFFMAN_SHORT</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a648fecb5222c45c687d8aa40e63a1242">STB_VORBIS_ENDIAN</link>   0</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1af93b819ac40799ac392e16f6a90729fd">__forceinline</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1aa59a70e2ff40af3af6c08aafdca8c713">CHECK</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)   ((<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>) 0)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a132e82a3e3172536840b66279fe79cdb">MAX_BLOCKSIZE_LOG</link>   13</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</link>   (1 &lt;&lt; <link linkend="_stb__vorbis_8c_1a132e82a3e3172536840b66279fe79cdb">MAX_BLOCKSIZE_LOG</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>   1</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>   0</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1aabdab1f7a146fb168860d610e01c102d">STBV_NOTUSED</link>(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>)   (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)sizeof(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a29853ba560b0648c7eaef420322b79db">FAST_HUFFMAN_TABLE_SIZE</link>   (1 &lt;&lt; <link linkend="_stb__vorbis_8c_1a42fed8d4cc187ad72ac8a8e09b98a169">STB_VORBIS_FAST_HUFFMAN_LENGTH</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a327d73597c7d58637bc626518c731e74">FAST_HUFFMAN_TABLE_MASK</link>   (<link linkend="_stb__vorbis_8c_1a29853ba560b0648c7eaef420322b79db">FAST_HUFFMAN_TABLE_SIZE</link> - 1)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a2a9cd26d6325f220d322d7e5347c802b">IS_PUSH_MODE</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)   ((<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)-&gt;push_mode)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a6aefe202c0399c3940251d8c9d2e8191">array_size_required</link>(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>,  <link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)   (<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>*(sizeof(<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *)+(<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a18bff79a06523cdbdcf30e3c7ee88d3e">temp_alloc</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,  <link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)   (<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;alloc.alloc_buffer ? setup_temp_malloc(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>) : alloca(<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a2ae34dbb4c575226ac7fe7e064bdba32">temp_free</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,  <link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>)   (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)0</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a0348ae28ddb0f5fe40e4f31be9392d8b">temp_alloc_save</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)   ((<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)-&gt;temp_offset)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a312e087f6b96d2784f4f691791de8024">temp_alloc_restore</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,  <link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>)   ((<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)-&gt;temp_offset = (<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a89dd36235e7b6a3ecc52fed6bb11b87b">temp_block_array</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,  <link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>,  <link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)   make_block_array(<link linkend="_stb__vorbis_8c_1a18bff79a06523cdbdcf30e3c7ee88d3e">temp_alloc</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,<link linkend="_stb__vorbis_8c_1a6aefe202c0399c3940251d8c9d2e8191">array_size_required</link>(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>,<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)), <link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>, <link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a39e1b7cfc3c0d80ea907e6486d288796">CRC32_POLY</link>   0x04c11db7</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1ae71449b1cc6e6250b91f539153a7a0d3">M_PI</link>   3.14159265358979323846264<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a4e39aa88524d5256414c688880a0a8bb">NO_CODE</link>   255</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1af60aefea255c38f9c7fc87c1f1f6abd9">STBV_CDECL</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1abffa4dff1f2cb303b2501ea2dea75e6f">USE_MEMORY</link>(<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>)   ((<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>)-&gt;<link linkend="_glad_8h_1a10d3bc96cdfc1d478f52c13d5ffd9316">stream</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a6a3999c21c1e5e522959ef3b98418cb8">PAGEFLAG_continued_packet</link>   1</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a7e2cff6293266e5366a11d082aaafd64">PAGEFLAG_first_page</link>   2</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a4136c4035568b91645d4a6896fbe9cec">PAGEFLAG_last_page</link>   4</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a734579b908509b57151ac02b946056d1">EOP</link>   (-1)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a4aaa7b300d74e1fe252792111eb7539a">INVALID_BITS</link>   (-1)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a0c23d1b38c11a185d8cf8a30010f5537">DECODE_RAW</link>(var,  <link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,  <link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1ac9e9bac3b3e48646f9a430d0c7411ae5">DECODE</link>(var,  <link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,  <link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1ae8daba892ecc7da0dace8b1a1f7d2a18">DECODE_VQ</link>(var,  <link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,  <link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)   <link linkend="_stb__vorbis_8c_1a0c23d1b38c11a185d8cf8a30010f5537">DECODE_RAW</link>(var,<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a5b6245aaf9581e321d78824f20c6a3e2">CODEBOOK_ELEMENT</link>(<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>,  off)   (<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>-&gt;multiplicands[off])</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a9e735a57f48058426af3c58dd3435965">CODEBOOK_ELEMENT_FAST</link>(<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>,  off)   (<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>-&gt;multiplicands[off])</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a9b19f433a0affa1ccf53e080bd9f908f">CODEBOOK_ELEMENT_BASE</link>(<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)   (0)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a01d2d5321eca3aed48a939b7b4f5164b">LINE_OP</link>(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,  <link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)   <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link> *= <link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a85274fc4609880d74f6b4f9e8c85a273">LIBVORBIS_MDCT</link>   0</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a143d61ff41bad3fa7c278a440d02e271">SAMPLE_unknown</link>   0xffffffff</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a67e49a8a3499ae7b17bcb5ccb499eb48">PLAYBACK_MONO</link>   1</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a1dd9dae616d5194730d0261cccfa26f7">PLAYBACK_LEFT</link>   2</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a5e0bc7897855e12b666ccf034fc0b6da">PLAYBACK_RIGHT</link>   4</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>   (<link linkend="_stb__vorbis_8c_1a1dd9dae616d5194730d0261cccfa26f7">PLAYBACK_LEFT</link>  | <link linkend="_stb__vorbis_8c_1a67e49a8a3499ae7b17bcb5ccb499eb48">PLAYBACK_MONO</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1ac4cf4b2ab929bd23951a8676eeac086b">C</link>   (<link linkend="_stb__vorbis_8c_1a1dd9dae616d5194730d0261cccfa26f7">PLAYBACK_LEFT</link>  | <link linkend="_stb__vorbis_8c_1a5e0bc7897855e12b666ccf034fc0b6da">PLAYBACK_RIGHT</link> | <link linkend="_stb__vorbis_8c_1a67e49a8a3499ae7b17bcb5ccb499eb48">PLAYBACK_MONO</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a5c71a5e59a53413cd6c270266d63b031">R</link>   (<link linkend="_stb__vorbis_8c_1a5e0bc7897855e12b666ccf034fc0b6da">PLAYBACK_RIGHT</link> | <link linkend="_stb__vorbis_8c_1a67e49a8a3499ae7b17bcb5ccb499eb48">PLAYBACK_MONO</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a200ac0447d052a2baaf3dfded88e3954">FASTDEF</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   <link linkend="_unionfloat__conv">float_conv</link> <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a9e544ec1d282f0d9630c09e0313abc76">MAGIC</link>(SHIFT)   (1.5<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link> * (1 &lt;&lt; (23-SHIFT)) + 0.5<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>/(1 &lt;&lt; SHIFT))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1aaee1afdab464950c6c0eb917fdbfcb70">ADDEND</link>(SHIFT)   (((150-SHIFT) &lt;&lt; 23) + (1 &lt;&lt; 22))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1ac741112328b2e6d25852d76efa030708">FAST_SCALED_FLOAT_TO_INT</link>(temp,  <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,  <link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>)   (<link linkend="_glext_8h_1a691492ec0bd6383f91200e49f6ae40ed">temp.f</link> = (<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) + <link linkend="_stb__vorbis_8c_1a9e544ec1d282f0d9630c09e0313abc76">MAGIC</link>(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>), temp.i - <link linkend="_stb__vorbis_8c_1aaee1afdab464950c6c0eb917fdbfcb70">ADDEND</link>(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1a9ae36ddc885a1a5859cb4b7b3ec364bb">check_endianness</link>()</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1af2514b871b2d97f06e30474f5dcb06d6">STB_BUFFER_SIZE</link>   32</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__vorbis_8c_1af2514b871b2d97f06e30474f5dcb06d6">STB_BUFFER_SIZE</link>   32</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Typedefs    </title>
+        <itemizedlist>
+            <listitem><para>typedef struct <link linkend="_structstb__vorbis">stb_vorbis</link> <link linkend="_stb__vorbis_8c_1ac67810bd2e7c1a2590015ef0ed708930">stb_vorbis</link></para>
+</listitem>
+            <listitem><para>typedef unsigned char <link linkend="_stb__vorbis_8c_1adde6aaee8457bee49c2a92621fe22b79">uint8</link></para>
+</listitem>
+            <listitem><para>typedef signed char <link linkend="_stb__vorbis_8c_1a1b956fe1df85f3c132b21edb4e116458">int8</link></para>
+</listitem>
+            <listitem><para>typedef unsigned short <link linkend="_stb__vorbis_8c_1a05f6b0ae8f6a6e135b0e290c25fe0e4e">uint16</link></para>
+</listitem>
+            <listitem><para>typedef signed short <link linkend="_stb__vorbis_8c_1a259fa4834387bd68627ddf37bb3ebdb9">int16</link></para>
+</listitem>
+            <listitem><para>typedef unsigned int <link linkend="_stb__vorbis_8c_1a1134b580f8da4de94ca6b1de4d37975e">uint32</link></para>
+</listitem>
+            <listitem><para>typedef signed int <link linkend="_stb__vorbis_8c_1a43d43196463bde49cb067f5c20ab8481">int32</link></para>
+</listitem>
+            <listitem><para>typedef float <link linkend="_stb__vorbis_8c_1a20d3044e421c0bea1119854fdb687f75">codetype</link></para>
+</listitem>
+            <listitem><para>typedef struct <link linkend="_structstb__vorbis">stb_vorbis</link> <link linkend="_stb__vorbis_8c_1ad2a08bf33a1eb072ed9e2aef4f36a827">vorb</link></para>
+</listitem>
+            <listitem><para>typedef <link linkend="_stb_8h_1a259fa4834387bd68627ddf37bb3ebdb9">int16</link> <link linkend="_stb__vorbis_8c_1ac09448f53783c6802f40f2f56976c4c9">YTYPE</link></para>
+</listitem>
+            <listitem><para>typedef char <link linkend="_stb__vorbis_8c_1a5bf83e3a39c0410652eab86fc787757c">stb_vorbis_float_size_test</link>[sizeof(float)==4 &amp;&amp;sizeof(int)==4]</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Enumerations    </title>
+        <itemizedlist>
+            <listitem><para>enum <link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644">STBVorbisError</link> { 
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a8fb17b5792b1463fe7e6152195d26f19">VORBIS__no_error</link>, 
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a03255ba6dfd62d6530c8f67e8bc04861">VORBIS_need_more_data</link> =1, 
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a7f6a5d2c76b796bb56bcf5f41e183dde">VORBIS_invalid_api_mixing</link>, 
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a9f9f1fc7205e4745ebe278ee6dcff5a9">VORBIS_outofmem</link>, 
+
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a6d4bef85b593d569b17ec5f5eef8eccc">VORBIS_feature_not_supported</link>, 
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a5d8a45ddaddf102b73c40a1857826159">VORBIS_too_many_channels</link>, 
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644aba12de4c5865bae04137ac7ddd5a9830">VORBIS_file_open_failure</link>, 
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a02fb188ec8eab3d98b0d804110a3afe1">VORBIS_seek_without_length</link>, 
+
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a27dd0deb7a2b9c1b4904e0a74ee2dbff">VORBIS_unexpected_eof</link> =10, 
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a4a1160dd71b457811cb9d8d6ee0c37a6">VORBIS_seek_invalid</link>, 
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a72bb5f27569f3e6b64ccd6ef10abe242">VORBIS_invalid_setup</link> =20, 
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644ab391db45d817609255602c76b2ccf0c1">VORBIS_invalid_stream</link>, 
+
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a399244ebaba15c4c7fedfd8e7231adb0">VORBIS_missing_capture_pattern</link> =30, 
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644ad88a7e313975aa9bf140e4a8db5f5e53">VORBIS_invalid_stream_structure_version</link>, 
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a3b2e936724f1ac37d491b06325163d8b">VORBIS_continued_packet_flag_invalid</link>, 
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a295f6c7912e05a89ceb1a217d6705369">VORBIS_incorrect_stream_serial_number</link>, 
+
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a09cab39192d56d72b8ad2fb334593775">VORBIS_invalid_first_page</link>, 
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a07706341bbd7190ea2909e79d1922798">VORBIS_bad_packet_type</link>, 
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a555029d9dbfc200a2e5bd155089eb30c">VORBIS_cant_find_last_page</link>, 
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a08640b74e73325d965e69da1a2752c7a">VORBIS_seek_failed</link>, 
+
+<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644ac417a1b1323f6b923d0fd09a349bf7d0">VORBIS_ogg_skeleton_not_supported</link>
+ }</para>
+</listitem>
+            <listitem><para>enum { <link linkend="_stb__vorbis_8c_1ad63240694c6dc2a28c24bfc2db90ad7aa80ba889feb2380990384b027bd2905b4">VORBIS_packet_id</link> = 1, 
+<link linkend="_stb__vorbis_8c_1ad63240694c6dc2a28c24bfc2db90ad7aa01e28b89a67bc5705d2c44c1221fce8d">VORBIS_packet_comment</link> = 3, 
+<link linkend="_stb__vorbis_8c_1ad63240694c6dc2a28c24bfc2db90ad7aa20b3079d6deb5a9d07566234f8f0eb1d">VORBIS_packet_setup</link> = 5
+ }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_structstb__vorbis__info">stb_vorbis_info</link> <link linkend="_stb__vorbis_8c_1a3a3b2986c40459438b26b2cf7747c171">stb_vorbis_get_info</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_structstb__vorbis__comment">stb_vorbis_comment</link> <link linkend="_stb__vorbis_8c_1a2f90821549b74200c54cdf22c011a0d1">stb_vorbis_get_comment</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__vorbis_8c_1abc16af7813a3c8320ff4dd5dd215cd0a">stb_vorbis_get_error</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__vorbis_8c_1ac4dca2244a6db648d2e6f3cbf6961e3e">stb_vorbis_close</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__vorbis_8c_1a9b01e61138433dce092f334f2a449b4f">stb_vorbis_get_sample_offset</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</para>
+</listitem>
+            <listitem><para>unsigned int <link linkend="_stb__vorbis_8c_1a91bf63ae7792007878687351cc9eb02b">stb_vorbis_get_file_offset</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_structstb__vorbis">stb_vorbis</link> * <link linkend="_stb__vorbis_8c_1a80219fb2ae6194e72dba7f3ed52c25cb">stb_vorbis_open_pushdata</link> (const unsigned char *datablock, int datablock_length_in_bytes, int *datablock_memory_consumed_in_bytes, int *<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>, const <link linkend="_structstb__vorbis__alloc">stb_vorbis_alloc</link> *alloc_buffer)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__vorbis_8c_1a7d1ea980f5872eaa4f92605238a2c7b3">stb_vorbis_decode_frame_pushdata</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>, const unsigned char *datablock, int datablock_length_in_bytes, int *channels, float ***<link linkend="_structoutput">output</link>, int *<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__vorbis_8c_1a30e9bdeec5be888c7b5090415e7dce42">stb_vorbis_flush_pushdata</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__vorbis_8c_1a690147b6b125eb33e5f77d8f8453e97f">stb_vorbis_decode_filename</link> (const char *filename, int *channels, int *sample_rate, short **<link linkend="_structoutput">output</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__vorbis_8c_1abd541d13b13dbe2c43cd36d0a406804a">stb_vorbis_decode_memory</link> (const unsigned char *mem, int <link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>, int *channels, int *sample_rate, short **<link linkend="_structoutput">output</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_structstb__vorbis">stb_vorbis</link> * <link linkend="_stb__vorbis_8c_1aa1e71be707b2259dd5a8c5fd9db50f05">stb_vorbis_open_memory</link> (const unsigned char *<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>, int <link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>, int *<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>, const <link linkend="_structstb__vorbis__alloc">stb_vorbis_alloc</link> *alloc_buffer)</para>
+</listitem>
+            <listitem><para><link linkend="_structstb__vorbis">stb_vorbis</link> * <link linkend="_stb__vorbis_8c_1ae32061695d3dca3f5aa042793ef30329">stb_vorbis_open_filename</link> (const char *filename, int *<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>, const <link linkend="_structstb__vorbis__alloc">stb_vorbis_alloc</link> *alloc_buffer)</para>
+</listitem>
+            <listitem><para><link linkend="_structstb__vorbis">stb_vorbis</link> * <link linkend="_stb__vorbis_8c_1a945f997624c658fdf581ff84c7a9e534">stb_vorbis_open_file</link> (FILE *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>, int close_handle_on_close, int *<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>, const <link linkend="_structstb__vorbis__alloc">stb_vorbis_alloc</link> *alloc_buffer)</para>
+</listitem>
+            <listitem><para><link linkend="_structstb__vorbis">stb_vorbis</link> * <link linkend="_stb__vorbis_8c_1a53534e3cb90f3074420997c21ac92827">stb_vorbis_open_file_section</link> (FILE *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>, int close_handle_on_close, int *<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>, const <link linkend="_structstb__vorbis__alloc">stb_vorbis_alloc</link> *alloc_buffer, unsigned int <link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__vorbis_8c_1a4c9ff20e01e6270e9cc3bf58f3248ef0">stb_vorbis_seek_frame</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>, unsigned int sample_number)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__vorbis_8c_1a2a1f6add009ac3e63ed57cabf9941566">stb_vorbis_seek</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>, unsigned int sample_number)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__vorbis_8c_1a4e7cb71cdf8073dc887c356e52c3aacd">stb_vorbis_seek_start</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</para>
+</listitem>
+            <listitem><para>unsigned int <link linkend="_stb__vorbis_8c_1adb847e190ac0976bb84d78e00b8048b0">stb_vorbis_stream_length_in_samples</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</para>
+</listitem>
+            <listitem><para>float <link linkend="_stb__vorbis_8c_1a083b951dcf8c73812332bf2034de412b">stb_vorbis_stream_length_in_seconds</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__vorbis_8c_1a3b2691d598485e0c5e1b4ac56173a0ce">stb_vorbis_get_frame_float</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>, int *channels, float ***<link linkend="_structoutput">output</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__vorbis_8c_1a585f1c5ea5ca33d961891b8f5a1574a4">stb_vorbis_get_frame_short_interleaved</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>, int num_c, short *<link linkend="_structbuffer">buffer</link>, int num_shorts)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__vorbis_8c_1a2887b05a26e310a9c5e370b2ab30fbae">stb_vorbis_get_frame_short</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>, int num_c, short **<link linkend="_structbuffer">buffer</link>, int num_samples)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__vorbis_8c_1a5117081109b12a483b44bb395be8ead7">stb_vorbis_get_samples_float_interleaved</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>, int channels, float *<link linkend="_structbuffer">buffer</link>, int num_floats)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__vorbis_8c_1a35ba8d6c02ebe1de4741d2603b554de6">stb_vorbis_get_samples_float</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>, int channels, float **<link linkend="_structbuffer">buffer</link>, int num_samples)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__vorbis_8c_1ade776d535501af37f599e05ff289f3fe">stb_vorbis_get_samples_short_interleaved</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>, int channels, short *<link linkend="_structbuffer">buffer</link>, int num_shorts)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__vorbis_8c_1a871c4b38fe90aa7f7dd26ecc1fc93a3b">stb_vorbis_get_samples_short</link> (<link linkend="_structstb__vorbis">stb_vorbis</link> *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>, int channels, short **<link linkend="_structbuffer">buffer</link>, int num_samples)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_stb__vorbis_8c_1af93b819ac40799ac392e16f6a90729fd"/>    <section>
+    <title>__forceinline</title>
+<indexterm><primary>__forceinline</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>__forceinline</secondary></indexterm>
+<para><computeroutput>#define __forceinline</computeroutput></para><para>
+Definition at line 620 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1aaee1afdab464950c6c0eb917fdbfcb70"/>    <section>
+    <title>ADDEND</title>
+<indexterm><primary>ADDEND</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>ADDEND</secondary></indexterm>
+<para><computeroutput>#define ADDEND( SHIFT)   (((150-SHIFT) &lt;&lt; 23) + (1 &lt;&lt; 22))</computeroutput></para><para>
+Definition at line 5156 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a6aefe202c0399c3940251d8c9d2e8191"/>    <section>
+    <title>array_size_required</title>
+<indexterm><primary>array_size_required</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>array_size_required</secondary></indexterm>
+<para><computeroutput>#define array_size_required( <link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>,  <link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)   (<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>*(sizeof(<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *)+(<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)))</computeroutput></para><para>
+Definition at line 928 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1ac4cf4b2ab929bd23951a8676eeac086b"/>    <section>
+    <title>C</title>
+<indexterm><primary>C</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>C</secondary></indexterm>
+<para><computeroutput>#define C   (<link linkend="_stb__vorbis_8c_1a1dd9dae616d5194730d0261cccfa26f7">PLAYBACK_LEFT</link>  | <link linkend="_stb__vorbis_8c_1a5e0bc7897855e12b666ccf034fc0b6da">PLAYBACK_RIGHT</link> | <link linkend="_stb__vorbis_8c_1a67e49a8a3499ae7b17bcb5ccb499eb48">PLAYBACK_MONO</link>)</computeroutput></para><para>
+Definition at line 5132 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1aa59a70e2ff40af3af6c08aafdca8c713"/>    <section>
+    <title>CHECK</title>
+<indexterm><primary>CHECK</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>CHECK</secondary></indexterm>
+<para><computeroutput>#define CHECK( <link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)   ((<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>) 0)</computeroutput></para><para>
+Definition at line 637 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a9ae36ddc885a1a5859cb4b7b3ec364bb"/>    <section>
+    <title>check_endianness</title>
+<indexterm><primary>check_endianness</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>check_endianness</secondary></indexterm>
+<para><computeroutput>#define check_endianness( )</computeroutput></para><para>
+Definition at line 5158 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a5b6245aaf9581e321d78824f20c6a3e2"/>    <section>
+    <title>CODEBOOK_ELEMENT</title>
+<indexterm><primary>CODEBOOK_ELEMENT</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>CODEBOOK_ELEMENT</secondary></indexterm>
+<para><computeroutput>#define CODEBOOK_ELEMENT( <link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>,  off)   (<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>-&gt;multiplicands[off])</computeroutput></para><para>
+Definition at line 1771 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a9b19f433a0affa1ccf53e080bd9f908f"/>    <section>
+    <title>CODEBOOK_ELEMENT_BASE</title>
+<indexterm><primary>CODEBOOK_ELEMENT_BASE</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>CODEBOOK_ELEMENT_BASE</secondary></indexterm>
+<para><computeroutput>#define CODEBOOK_ELEMENT_BASE( <link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)   (0)</computeroutput></para><para>
+Definition at line 1773 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a9e735a57f48058426af3c58dd3435965"/>    <section>
+    <title>CODEBOOK_ELEMENT_FAST</title>
+<indexterm><primary>CODEBOOK_ELEMENT_FAST</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>CODEBOOK_ELEMENT_FAST</secondary></indexterm>
+<para><computeroutput>#define CODEBOOK_ELEMENT_FAST( <link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>,  off)   (<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>-&gt;multiplicands[off])</computeroutput></para><para>
+Definition at line 1772 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a39e1b7cfc3c0d80ea907e6486d288796"/>    <section>
+    <title>CRC32_POLY</title>
+<indexterm><primary>CRC32_POLY</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>CRC32_POLY</secondary></indexterm>
+<para><computeroutput>#define CRC32_POLY   0x04c11db7</computeroutput></para><para>
+Definition at line 989 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1ac9e9bac3b3e48646f9a430d0c7411ae5"/>    <section>
+    <title>DECODE</title>
+<indexterm><primary>DECODE</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>DECODE</secondary></indexterm>
+<para><computeroutput>#define DECODE( var,  <link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,  <link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)</computeroutput></para><emphasis role="strong">Value:</emphasis><programlisting>&#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a0c23d1b38c11a185d8cf8a30010f5537">DECODE_RAW</link>(var,<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;\
+&#32;&#32;&#32;if&#32;(<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>-&gt;sparse)&#32;var&#32;=&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>-&gt;sorted_values[var];
+</programlisting><para>
+Definition at line 1754 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a0c23d1b38c11a185d8cf8a30010f5537"/>    <section>
+    <title>DECODE_RAW</title>
+<indexterm><primary>DECODE_RAW</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>DECODE_RAW</secondary></indexterm>
+<para><computeroutput>#define DECODE_RAW( var,  <link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,  <link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)</computeroutput></para><emphasis role="strong">Value:</emphasis><programlisting>&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;valid_bits&#32;&lt;&#32;<link linkend="_stb__vorbis_8c_1a42fed8d4cc187ad72ac8a8e09b98a169">STB_VORBIS_FAST_HUFFMAN_LENGTH</link>)&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;\
+&#32;&#32;&#32;&#32;&#32;&#32;prep_huffman(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;\
+&#32;&#32;&#32;var&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;acc&#32;&amp;&#32;<link linkend="_stb__vorbis_8c_1a327d73597c7d58637bc626518c731e74">FAST_HUFFMAN_TABLE_MASK</link>;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;\
+&#32;&#32;&#32;var&#32;=&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>-&gt;fast_huffman[var];&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;\
+&#32;&#32;&#32;if&#32;(var&#32;&gt;=&#32;0)&#32;{&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;\
+&#32;&#32;&#32;&#32;&#32;&#32;int&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;=&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>-&gt;codeword_lengths[var];&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;\
+&#32;&#32;&#32;&#32;&#32;&#32;f-&gt;acc&#32;&gt;&gt;=&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;\
+&#32;&#32;&#32;&#32;&#32;&#32;f-&gt;valid_bits&#32;-=&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;\
+&#32;&#32;&#32;&#32;&#32;&#32;if&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;valid_bits&#32;&lt;&#32;0)&#32;{&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;valid_bits&#32;=&#32;0;&#32;var&#32;=&#32;-1;&#32;}&#32;\
+&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;\
+&#32;&#32;&#32;&#32;&#32;&#32;var&#32;=&#32;codebook_decode_scalar_raw(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>);&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;\
+&#32;&#32;&#32;}
+</programlisting><para>
+Definition at line 1717 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1ae8daba892ecc7da0dace8b1a1f7d2a18"/>    <section>
+    <title>DECODE_VQ</title>
+<indexterm><primary>DECODE_VQ</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>DECODE_VQ</secondary></indexterm>
+<para><computeroutput>#define DECODE_VQ( var,  <link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,  <link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)   <link linkend="_stb__vorbis_8c_1a0c23d1b38c11a185d8cf8a30010f5537">DECODE_RAW</link>(var,<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)</computeroutput></para><para>
+Definition at line 1759 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a734579b908509b57151ac02b946056d1"/>    <section>
+    <title>EOP</title>
+<indexterm><primary>EOP</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>EOP</secondary></indexterm>
+<para><computeroutput>#define EOP   (-1)</computeroutput></para><para>
+Definition at line 1560 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1aa93f0eb578d23995850d61f7d61c55c1"/>    <section>
+    <title>FALSE</title>
+<indexterm><primary>FALSE</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>FALSE</secondary></indexterm>
+<para><computeroutput>#define FALSE   0</computeroutput></para><para>
+Definition at line 653 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a327d73597c7d58637bc626518c731e74"/>    <section>
+    <title>FAST_HUFFMAN_TABLE_MASK</title>
+<indexterm><primary>FAST_HUFFMAN_TABLE_MASK</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>FAST_HUFFMAN_TABLE_MASK</secondary></indexterm>
+<para><computeroutput>#define FAST_HUFFMAN_TABLE_MASK   (<link linkend="_stb__vorbis_8c_1a29853ba560b0648c7eaef420322b79db">FAST_HUFFMAN_TABLE_SIZE</link> - 1)</computeroutput></para><para>
+Definition at line 678 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a29853ba560b0648c7eaef420322b79db"/>    <section>
+    <title>FAST_HUFFMAN_TABLE_SIZE</title>
+<indexterm><primary>FAST_HUFFMAN_TABLE_SIZE</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>FAST_HUFFMAN_TABLE_SIZE</secondary></indexterm>
+<para><computeroutput>#define FAST_HUFFMAN_TABLE_SIZE   (1 &lt;&lt; <link linkend="_stb__vorbis_8c_1a42fed8d4cc187ad72ac8a8e09b98a169">STB_VORBIS_FAST_HUFFMAN_LENGTH</link>)</computeroutput></para><para>
+Definition at line 677 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1ac741112328b2e6d25852d76efa030708"/>    <section>
+    <title>FAST_SCALED_FLOAT_TO_INT</title>
+<indexterm><primary>FAST_SCALED_FLOAT_TO_INT</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>FAST_SCALED_FLOAT_TO_INT</secondary></indexterm>
+<para><computeroutput>#define FAST_SCALED_FLOAT_TO_INT( temp,  <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,  <link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>)   (<link linkend="_glext_8h_1a691492ec0bd6383f91200e49f6ae40ed">temp.f</link> = (<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) + <link linkend="_stb__vorbis_8c_1a9e544ec1d282f0d9630c09e0313abc76">MAGIC</link>(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>), temp.i - <link linkend="_stb__vorbis_8c_1aaee1afdab464950c6c0eb917fdbfcb70">ADDEND</link>(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>))</computeroutput></para><para>
+Definition at line 5157 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a200ac0447d052a2baaf3dfded88e3954"/>    <section>
+    <title>FASTDEF</title>
+<indexterm><primary>FASTDEF</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>FASTDEF</secondary></indexterm>
+<para><computeroutput>#define FASTDEF( <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   <link linkend="_unionfloat__conv">float_conv</link> <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link></computeroutput></para><para>
+Definition at line 5153 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a4aaa7b300d74e1fe252792111eb7539a"/>    <section>
+    <title>INVALID_BITS</title>
+<indexterm><primary>INVALID_BITS</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>INVALID_BITS</secondary></indexterm>
+<para><computeroutput>#define INVALID_BITS   (-1)</computeroutput></para><para>
+Definition at line 1561 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a2a9cd26d6325f220d322d7e5347c802b"/>    <section>
+    <title>IS_PUSH_MODE</title>
+<indexterm><primary>IS_PUSH_MODE</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>IS_PUSH_MODE</secondary></indexterm>
+<para><computeroutput>#define IS_PUSH_MODE( <link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)   ((<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)-&gt;push_mode)</computeroutput></para><para>
+Definition at line 908 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53"/>    <section>
+    <title>L</title>
+<indexterm><primary>L</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>L</secondary></indexterm>
+<para><computeroutput>#define L   (<link linkend="_stb__vorbis_8c_1a1dd9dae616d5194730d0261cccfa26f7">PLAYBACK_LEFT</link>  | <link linkend="_stb__vorbis_8c_1a67e49a8a3499ae7b17bcb5ccb499eb48">PLAYBACK_MONO</link>)</computeroutput></para><para>
+Definition at line 5131 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a85274fc4609880d74f6b4f9e8c85a273"/>    <section>
+    <title>LIBVORBIS_MDCT</title>
+<indexterm><primary>LIBVORBIS_MDCT</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>LIBVORBIS_MDCT</secondary></indexterm>
+<para><computeroutput>#define LIBVORBIS_MDCT   0</computeroutput></para><para>
+Definition at line 2365 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a01d2d5321eca3aed48a939b7b4f5164b"/>    <section>
+    <title>LINE_OP</title>
+<indexterm><primary>LINE_OP</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>LINE_OP</secondary></indexterm>
+<para><computeroutput>#define LINE_OP( <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,  <link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)   <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link> *= <link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link></computeroutput></para><para>
+Definition at line 2023 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1ae71449b1cc6e6250b91f539153a7a0d3"/>    <section>
+    <title>M_PI</title>
+<indexterm><primary>M_PI</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>M_PI</secondary></indexterm>
+<para><computeroutput>#define M_PI   3.14159265358979323846264<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 1046 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a9e544ec1d282f0d9630c09e0313abc76"/>    <section>
+    <title>MAGIC</title>
+<indexterm><primary>MAGIC</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>MAGIC</secondary></indexterm>
+<para><computeroutput>#define MAGIC( SHIFT)   (1.5<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link> * (1 &lt;&lt; (23-SHIFT)) + 0.5<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>/(1 &lt;&lt; SHIFT))</computeroutput></para><para>
+Definition at line 5155 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1af8a1d2ed31f7c9a00fec46a798edb61b"/>    <section>
+    <title>MAX_BLOCKSIZE</title>
+<indexterm><primary>MAX_BLOCKSIZE</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>MAX_BLOCKSIZE</secondary></indexterm>
+<para><computeroutput>#define MAX_BLOCKSIZE   (1 &lt;&lt; <link linkend="_stb__vorbis_8c_1a132e82a3e3172536840b66279fe79cdb">MAX_BLOCKSIZE_LOG</link>)</computeroutput></para><para>
+Definition at line 641 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a132e82a3e3172536840b66279fe79cdb"/>    <section>
+    <title>MAX_BLOCKSIZE_LOG</title>
+<indexterm><primary>MAX_BLOCKSIZE_LOG</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>MAX_BLOCKSIZE_LOG</secondary></indexterm>
+<para><computeroutput>#define MAX_BLOCKSIZE_LOG   13</computeroutput></para><para>
+Definition at line 640 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a4e39aa88524d5256414c688880a0a8bb"/>    <section>
+    <title>NO_CODE</title>
+<indexterm><primary>NO_CODE</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>NO_CODE</secondary></indexterm>
+<para><computeroutput>#define NO_CODE   255</computeroutput></para><para>
+Definition at line 1050 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a6a3999c21c1e5e522959ef3b98418cb8"/>    <section>
+    <title>PAGEFLAG_continued_packet</title>
+<indexterm><primary>PAGEFLAG_continued_packet</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>PAGEFLAG_continued_packet</secondary></indexterm>
+<para><computeroutput>#define PAGEFLAG_continued_packet   1</computeroutput></para><para>
+Definition at line 1440 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a7e2cff6293266e5366a11d082aaafd64"/>    <section>
+    <title>PAGEFLAG_first_page</title>
+<indexterm><primary>PAGEFLAG_first_page</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>PAGEFLAG_first_page</secondary></indexterm>
+<para><computeroutput>#define PAGEFLAG_first_page   2</computeroutput></para><para>
+Definition at line 1441 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a4136c4035568b91645d4a6896fbe9cec"/>    <section>
+    <title>PAGEFLAG_last_page</title>
+<indexterm><primary>PAGEFLAG_last_page</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>PAGEFLAG_last_page</secondary></indexterm>
+<para><computeroutput>#define PAGEFLAG_last_page   4</computeroutput></para><para>
+Definition at line 1442 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a1dd9dae616d5194730d0261cccfa26f7"/>    <section>
+    <title>PLAYBACK_LEFT</title>
+<indexterm><primary>PLAYBACK_LEFT</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>PLAYBACK_LEFT</secondary></indexterm>
+<para><computeroutput>#define PLAYBACK_LEFT   2</computeroutput></para><para>
+Definition at line 5128 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a67e49a8a3499ae7b17bcb5ccb499eb48"/>    <section>
+    <title>PLAYBACK_MONO</title>
+<indexterm><primary>PLAYBACK_MONO</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>PLAYBACK_MONO</secondary></indexterm>
+<para><computeroutput>#define PLAYBACK_MONO   1</computeroutput></para><para>
+Definition at line 5127 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a5e0bc7897855e12b666ccf034fc0b6da"/>    <section>
+    <title>PLAYBACK_RIGHT</title>
+<indexterm><primary>PLAYBACK_RIGHT</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>PLAYBACK_RIGHT</secondary></indexterm>
+<para><computeroutput>#define PLAYBACK_RIGHT   4</computeroutput></para><para>
+Definition at line 5129 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a5c71a5e59a53413cd6c270266d63b031"/>    <section>
+    <title>R</title>
+<indexterm><primary>R</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>R</secondary></indexterm>
+<para><computeroutput>#define R   (<link linkend="_stb__vorbis_8c_1a5e0bc7897855e12b666ccf034fc0b6da">PLAYBACK_RIGHT</link> | <link linkend="_stb__vorbis_8c_1a67e49a8a3499ae7b17bcb5ccb499eb48">PLAYBACK_MONO</link>)</computeroutput></para><para>
+Definition at line 5133 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a143d61ff41bad3fa7c278a440d02e271"/>    <section>
+    <title>SAMPLE_unknown</title>
+<indexterm><primary>SAMPLE_unknown</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>SAMPLE_unknown</secondary></indexterm>
+<para><computeroutput>#define SAMPLE_unknown   0xffffffff</computeroutput></para><para>
+Definition at line 4632 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1af2514b871b2d97f06e30474f5dcb06d6"/>    <section>
+    <title>STB_BUFFER_SIZE<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>STB_BUFFER_SIZE</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>STB_BUFFER_SIZE</secondary></indexterm>
+<para><computeroutput>#define STB_BUFFER_SIZE   32</computeroutput></para>    </section><anchor xml:id="_stb__vorbis_8c_1af2514b871b2d97f06e30474f5dcb06d6"/>    <section>
+    <title>STB_BUFFER_SIZE<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>STB_BUFFER_SIZE</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>STB_BUFFER_SIZE</secondary></indexterm>
+<para><computeroutput>#define STB_BUFFER_SIZE   32</computeroutput></para>    </section><anchor xml:id="_stb__vorbis_8c_1a648fecb5222c45c687d8aa40e63a1242"/>    <section>
+    <title>STB_VORBIS_ENDIAN</title>
+<indexterm><primary>STB_VORBIS_ENDIAN</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>STB_VORBIS_ENDIAN</secondary></indexterm>
+<para><computeroutput>#define STB_VORBIS_ENDIAN   0</computeroutput></para><para>
+Definition at line 568 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a42fed8d4cc187ad72ac8a8e09b98a169"/>    <section>
+    <title>STB_VORBIS_FAST_HUFFMAN_LENGTH</title>
+<indexterm><primary>STB_VORBIS_FAST_HUFFMAN_LENGTH</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>STB_VORBIS_FAST_HUFFMAN_LENGTH</secondary></indexterm>
+<para><computeroutput>#define STB_VORBIS_FAST_HUFFMAN_LENGTH   10</computeroutput></para><para>
+Definition at line 486 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1aabcc470f653273b1bc381f69a3b37bfc"/>    <section>
+    <title>STB_VORBIS_FAST_HUFFMAN_SHORT</title>
+<indexterm><primary>STB_VORBIS_FAST_HUFFMAN_SHORT</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>STB_VORBIS_FAST_HUFFMAN_SHORT</secondary></indexterm>
+<para><computeroutput>#define STB_VORBIS_FAST_HUFFMAN_SHORT</computeroutput></para><para>
+Definition at line 500 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a00e12c885a678a051ff4c867cd966bac"/>    <section>
+    <title>STB_VORBIS_INCLUDE_STB_VORBIS_H</title>
+<indexterm><primary>STB_VORBIS_INCLUDE_STB_VORBIS_H</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>STB_VORBIS_INCLUDE_STB_VORBIS_H</secondary></indexterm>
+<para><computeroutput>#define STB_VORBIS_INCLUDE_STB_VORBIS_H</computeroutput></para><para>
+Definition at line 75 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1ac8616da99977cbd16f6b6cd0d4c947df"/>    <section>
+    <title>STB_VORBIS_MAX_CHANNELS</title>
+<indexterm><primary>STB_VORBIS_MAX_CHANNELS</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>STB_VORBIS_MAX_CHANNELS</secondary></indexterm>
+<para><computeroutput>#define STB_VORBIS_MAX_CHANNELS   16</computeroutput></para><para>
+Definition at line 461 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a89065f619109d612aadfeea480fcc38f"/>    <section>
+    <title>STB_VORBIS_PUSHDATA_CRC_COUNT</title>
+<indexterm><primary>STB_VORBIS_PUSHDATA_CRC_COUNT</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>STB_VORBIS_PUSHDATA_CRC_COUNT</secondary></indexterm>
+<para><computeroutput>#define STB_VORBIS_PUSHDATA_CRC_COUNT   4</computeroutput></para><para>
+Definition at line 477 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1af60aefea255c38f9c7fc87c1f1f6abd9"/>    <section>
+    <title>STBV_CDECL</title>
+<indexterm><primary>STBV_CDECL</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>STBV_CDECL</secondary></indexterm>
+<para><computeroutput>#define STBV_CDECL</computeroutput></para><para>
+Definition at line 1159 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1aabdab1f7a146fb168860d610e01c102d"/>    <section>
+    <title>STBV_NOTUSED</title>
+<indexterm><primary>STBV_NOTUSED</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>STBV_NOTUSED</secondary></indexterm>
+<para><computeroutput>#define STBV_NOTUSED( <link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>)   (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)sizeof(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>)</computeroutput></para><para>
+Definition at line 661 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a18bff79a06523cdbdcf30e3c7ee88d3e"/>    <section>
+    <title>temp_alloc</title>
+<indexterm><primary>temp_alloc</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>temp_alloc</secondary></indexterm>
+<para><computeroutput>#define temp_alloc( <link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,  <link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)   (<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;alloc.alloc_buffer ? setup_temp_malloc(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>) : alloca(<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>))</computeroutput></para><para>
+Definition at line 930 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a312e087f6b96d2784f4f691791de8024"/>    <section>
+    <title>temp_alloc_restore</title>
+<indexterm><primary>temp_alloc_restore</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>temp_alloc_restore</secondary></indexterm>
+<para><computeroutput>#define temp_alloc_restore( <link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,  <link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>)   ((<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)-&gt;temp_offset = (<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>))</computeroutput></para><para>
+Definition at line 933 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a0348ae28ddb0f5fe40e4f31be9392d8b"/>    <section>
+    <title>temp_alloc_save</title>
+<indexterm><primary>temp_alloc_save</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>temp_alloc_save</secondary></indexterm>
+<para><computeroutput>#define temp_alloc_save( <link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)   ((<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)-&gt;temp_offset)</computeroutput></para><para>
+Definition at line 932 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a89dd36235e7b6a3ecc52fed6bb11b87b"/>    <section>
+    <title>temp_block_array</title>
+<indexterm><primary>temp_block_array</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>temp_block_array</secondary></indexterm>
+<para><computeroutput>#define temp_block_array( <link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,  <link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>,  <link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)   make_block_array(<link linkend="_stb__vorbis_8c_1a18bff79a06523cdbdcf30e3c7ee88d3e">temp_alloc</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,<link linkend="_stb__vorbis_8c_1a6aefe202c0399c3940251d8c9d2e8191">array_size_required</link>(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>,<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)), <link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>, <link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)</computeroutput></para><para>
+Definition at line 935 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a2ae34dbb4c575226ac7fe7e064bdba32"/>    <section>
+    <title>temp_free</title>
+<indexterm><primary>temp_free</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>temp_free</secondary></indexterm>
+<para><computeroutput>#define temp_free( <link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,  <link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>)   (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)0</computeroutput></para><para>
+Definition at line 931 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1aa8cecfc5c5c054d2875c03e77b7be15d"/>    <section>
+    <title>TRUE</title>
+<indexterm><primary>TRUE</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>TRUE</secondary></indexterm>
+<para><computeroutput>#define TRUE   1</computeroutput></para><para>
+Definition at line 652 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1abffa4dff1f2cb303b2501ea2dea75e6f"/>    <section>
+    <title>USE_MEMORY</title>
+<indexterm><primary>USE_MEMORY</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>USE_MEMORY</secondary></indexterm>
+<para><computeroutput>#define USE_MEMORY( <link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>)   ((<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>)-&gt;<link linkend="_glad_8h_1a10d3bc96cdfc1d478f52c13d5ffd9316">stream</link>)</computeroutput></para><para>
+Definition at line 1334 of file stb_vorbis.c.</para>
+</section>
+</section>
+<section>
+<title>Typedef Documentation</title>
+<anchor xml:id="_stb__vorbis_8c_1a20d3044e421c0bea1119854fdb687f75"/>    <section>
+    <title>codetype</title>
+<indexterm><primary>codetype</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>codetype</secondary></indexterm>
+<para><computeroutput>typedef float <link linkend="_stb__vorbis_8c_1a20d3044e421c0bea1119854fdb687f75">codetype</link></computeroutput></para><para>
+Definition at line 656 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a259fa4834387bd68627ddf37bb3ebdb9"/>    <section>
+    <title>int16</title>
+<indexterm><primary>int16</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>int16</secondary></indexterm>
+<para><computeroutput>typedef signed short <link linkend="_stb_8h_1a259fa4834387bd68627ddf37bb3ebdb9">int16</link></computeroutput></para><para>
+Definition at line 647 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a43d43196463bde49cb067f5c20ab8481"/>    <section>
+    <title>int32</title>
+<indexterm><primary>int32</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>int32</secondary></indexterm>
+<para><computeroutput>typedef signed int <link linkend="_stb_8h_1a43d43196463bde49cb067f5c20ab8481">int32</link></computeroutput></para><para>
+Definition at line 649 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a1b956fe1df85f3c132b21edb4e116458"/>    <section>
+    <title>int8</title>
+<indexterm><primary>int8</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>int8</secondary></indexterm>
+<para><computeroutput>typedef signed char <link linkend="_stb_8h_1a1b956fe1df85f3c132b21edb4e116458">int8</link></computeroutput></para><para>
+Definition at line 645 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1ac67810bd2e7c1a2590015ef0ed708930"/>    <section>
+    <title>stb_vorbis</title>
+<indexterm><primary>stb_vorbis</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis</secondary></indexterm>
+<para><computeroutput>typedef struct <link linkend="_structstb__vorbis">stb_vorbis</link> <link linkend="_structstb__vorbis">stb_vorbis</link></computeroutput></para><para>
+Definition at line 127 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a5bf83e3a39c0410652eab86fc787757c"/>    <section>
+    <title>stb_vorbis_float_size_test</title>
+<indexterm><primary>stb_vorbis_float_size_test</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_float_size_test</secondary></indexterm>
+<para><computeroutput>typedef char stb_vorbis_float_size_test[sizeof(float)==4 &amp;&amp;sizeof(int)==4]</computeroutput></para><para>
+Definition at line 5152 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a05f6b0ae8f6a6e135b0e290c25fe0e4e"/>    <section>
+    <title>uint16</title>
+<indexterm><primary>uint16</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>uint16</secondary></indexterm>
+<para><computeroutput>typedef unsigned short <link linkend="_stb_8h_1a05f6b0ae8f6a6e135b0e290c25fe0e4e">uint16</link></computeroutput></para><para>
+Definition at line 646 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1a1134b580f8da4de94ca6b1de4d37975e"/>    <section>
+    <title>uint32</title>
+<indexterm><primary>uint32</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>uint32</secondary></indexterm>
+<para><computeroutput>typedef unsigned int <link linkend="_stb_8h_1a1134b580f8da4de94ca6b1de4d37975e">uint32</link></computeroutput></para><para>
+Definition at line 648 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1adde6aaee8457bee49c2a92621fe22b79"/>    <section>
+    <title>uint8</title>
+<indexterm><primary>uint8</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>uint8</secondary></indexterm>
+<para><computeroutput>typedef unsigned char <link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link></computeroutput></para><para>
+Definition at line 644 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1ad2a08bf33a1eb072ed9e2aef4f36a827"/>    <section>
+    <title>vorb</title>
+<indexterm><primary>vorb</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>vorb</secondary></indexterm>
+<para><computeroutput>typedef struct <link linkend="_structstb__vorbis">stb_vorbis</link> <link linkend="_stb__vorbis_8c_1ad2a08bf33a1eb072ed9e2aef4f36a827">vorb</link></computeroutput></para><para>
+Definition at line 911 of file stb_vorbis.c.</para>
+    </section><anchor xml:id="_stb__vorbis_8c_1ac09448f53783c6802f40f2f56976c4c9"/>    <section>
+    <title>YTYPE</title>
+<indexterm><primary>YTYPE</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>YTYPE</secondary></indexterm>
+<para><computeroutput>typedef <link linkend="_stb_8h_1a259fa4834387bd68627ddf37bb3ebdb9">int16</link> <link linkend="_stb__vorbis_8c_1ac09448f53783c6802f40f2f56976c4c9">YTYPE</link></computeroutput></para><para>
+Definition at line 3068 of file stb_vorbis.c.</para>
+</section>
+</section>
+<section>
+<title>Enumeration Type Documentation</title>
+<anchor xml:id="_stb__vorbis_8c_1ad63240694c6dc2a28c24bfc2db90ad7a"/>    <section>
+    <title>anonymous enum</title>
+<para><computeroutput>anonymous enum</computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>VORBIS_packet_id</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_packet_id</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1ad63240694c6dc2a28c24bfc2db90ad7aa80ba889feb2380990384b027bd2905b4"/>VORBIS_packet_id</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_packet_comment</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_packet_comment</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1ad63240694c6dc2a28c24bfc2db90ad7aa01e28b89a67bc5705d2c44c1221fce8d"/>VORBIS_packet_comment</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_packet_setup</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_packet_setup</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1ad63240694c6dc2a28c24bfc2db90ad7aa20b3079d6deb5a9d07566234f8f0eb1d"/>VORBIS_packet_setup</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 1649 of file stb_vorbis.c.</para>
+<programlisting>1650 {
+1651 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1ad63240694c6dc2a28c24bfc2db90ad7aa80ba889feb2380990384b027bd2905b4">VORBIS_packet_id</link>&#32;=&#32;1,
+1652 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1ad63240694c6dc2a28c24bfc2db90ad7aa01e28b89a67bc5705d2c44c1221fce8d">VORBIS_packet_comment</link>&#32;=&#32;3,
+1653 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1ad63240694c6dc2a28c24bfc2db90ad7aa20b3079d6deb5a9d07566234f8f0eb1d">VORBIS_packet_setup</link>&#32;=&#32;5
+1654 };
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644"/>    <section>
+    <title>STBVorbisError</title>
+<indexterm><primary>STBVorbisError</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>STBVorbisError</secondary></indexterm>
+<para><computeroutput>enum <link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644">STBVorbisError</link></computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>VORBIS__no_error</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS__no_error</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a8fb17b5792b1463fe7e6152195d26f19"/>VORBIS__no_error</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_need_more_data</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_need_more_data</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a03255ba6dfd62d6530c8f67e8bc04861"/>VORBIS_need_more_data</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_invalid_api_mixing</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_invalid_api_mixing</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a7f6a5d2c76b796bb56bcf5f41e183dde"/>VORBIS_invalid_api_mixing</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_outofmem</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_outofmem</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a9f9f1fc7205e4745ebe278ee6dcff5a9"/>VORBIS_outofmem</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_feature_not_supported</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_feature_not_supported</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a6d4bef85b593d569b17ec5f5eef8eccc"/>VORBIS_feature_not_supported</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_too_many_channels</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_too_many_channels</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a5d8a45ddaddf102b73c40a1857826159"/>VORBIS_too_many_channels</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_file_open_failure</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_file_open_failure</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644aba12de4c5865bae04137ac7ddd5a9830"/>VORBIS_file_open_failure</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_seek_without_length</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_seek_without_length</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a02fb188ec8eab3d98b0d804110a3afe1"/>VORBIS_seek_without_length</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_unexpected_eof</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_unexpected_eof</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a27dd0deb7a2b9c1b4904e0a74ee2dbff"/>VORBIS_unexpected_eof</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_seek_invalid</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_seek_invalid</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a4a1160dd71b457811cb9d8d6ee0c37a6"/>VORBIS_seek_invalid</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_invalid_setup</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_invalid_setup</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a72bb5f27569f3e6b64ccd6ef10abe242"/>VORBIS_invalid_setup</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_invalid_stream</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_invalid_stream</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644ab391db45d817609255602c76b2ccf0c1"/>VORBIS_invalid_stream</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_missing_capture_pattern</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_missing_capture_pattern</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a399244ebaba15c4c7fedfd8e7231adb0"/>VORBIS_missing_capture_pattern</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_invalid_stream_structure_version</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_invalid_stream_structure_version</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644ad88a7e313975aa9bf140e4a8db5f5e53"/>VORBIS_invalid_stream_structure_version</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_continued_packet_flag_invalid</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_continued_packet_flag_invalid</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a3b2e936724f1ac37d491b06325163d8b"/>VORBIS_continued_packet_flag_invalid</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_incorrect_stream_serial_number</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_incorrect_stream_serial_number</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a295f6c7912e05a89ceb1a217d6705369"/>VORBIS_incorrect_stream_serial_number</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_invalid_first_page</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_invalid_first_page</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a09cab39192d56d72b8ad2fb334593775"/>VORBIS_invalid_first_page</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_bad_packet_type</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_bad_packet_type</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a07706341bbd7190ea2909e79d1922798"/>VORBIS_bad_packet_type</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_cant_find_last_page</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_cant_find_last_page</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a555029d9dbfc200a2e5bd155089eb30c"/>VORBIS_cant_find_last_page</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_seek_failed</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_seek_failed</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a08640b74e73325d965e69da1a2752c7a"/>VORBIS_seek_failed</entry><entry></entry></row><row><entry><indexterm><primary>VORBIS_ogg_skeleton_not_supported</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>VORBIS_ogg_skeleton_not_supported</secondary></indexterm>
+<anchor xml:id="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644ac417a1b1323f6b923d0fd09a349bf7d0"/>VORBIS_ogg_skeleton_not_supported</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 374 of file stb_vorbis.c.</para>
+<programlisting>375 {
+376 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a8fb17b5792b1463fe7e6152195d26f19">VORBIS__no_error</link>,
+377 
+378 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a03255ba6dfd62d6530c8f67e8bc04861">VORBIS_need_more_data</link>=1,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;not&#32;a&#32;real&#32;error</emphasis>
+379 
+380 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a7f6a5d2c76b796bb56bcf5f41e183dde">VORBIS_invalid_api_mixing</link>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;can&apos;t&#32;mix&#32;API&#32;modes</emphasis>
+381 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a9f9f1fc7205e4745ebe278ee6dcff5a9">VORBIS_outofmem</link>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;not&#32;enough&#32;memory</emphasis>
+382 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a6d4bef85b593d569b17ec5f5eef8eccc">VORBIS_feature_not_supported</link>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;uses&#32;floor&#32;0</emphasis>
+383 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a5d8a45ddaddf102b73c40a1857826159">VORBIS_too_many_channels</link>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;STB_VORBIS_MAX_CHANNELS&#32;is&#32;too&#32;small</emphasis>
+384 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644aba12de4c5865bae04137ac7ddd5a9830">VORBIS_file_open_failure</link>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;fopen()&#32;failed</emphasis>
+385 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a02fb188ec8eab3d98b0d804110a3afe1">VORBIS_seek_without_length</link>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;can&apos;t&#32;seek&#32;in&#32;unknown-length&#32;file</emphasis>
+386 
+387 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a27dd0deb7a2b9c1b4904e0a74ee2dbff">VORBIS_unexpected_eof</link>=10,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;file&#32;is&#32;truncated?</emphasis>
+388 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a4a1160dd71b457811cb9d8d6ee0c37a6">VORBIS_seek_invalid</link>,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;seek&#32;past&#32;EOF</emphasis>
+389 
+390 &#32;&#32;&#32;<emphasis role="comment">//&#32;decoding&#32;errors&#32;(corrupt/invalid&#32;stream)&#32;--&#32;you&#32;probably</emphasis>
+391 &#32;&#32;&#32;<emphasis role="comment">//&#32;don&apos;t&#32;care&#32;about&#32;the&#32;exact&#32;details&#32;of&#32;these</emphasis>
+392 
+393 &#32;&#32;&#32;<emphasis role="comment">//&#32;vorbis&#32;errors:</emphasis>
+394 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a72bb5f27569f3e6b64ccd6ef10abe242">VORBIS_invalid_setup</link>=20,
+395 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644ab391db45d817609255602c76b2ccf0c1">VORBIS_invalid_stream</link>,
+396 
+397 &#32;&#32;&#32;<emphasis role="comment">//&#32;ogg&#32;errors:</emphasis>
+398 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a399244ebaba15c4c7fedfd8e7231adb0">VORBIS_missing_capture_pattern</link>=30,
+399 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644ad88a7e313975aa9bf140e4a8db5f5e53">VORBIS_invalid_stream_structure_version</link>,
+400 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a3b2e936724f1ac37d491b06325163d8b">VORBIS_continued_packet_flag_invalid</link>,
+401 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a295f6c7912e05a89ceb1a217d6705369">VORBIS_incorrect_stream_serial_number</link>,
+402 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a09cab39192d56d72b8ad2fb334593775">VORBIS_invalid_first_page</link>,
+403 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a07706341bbd7190ea2909e79d1922798">VORBIS_bad_packet_type</link>,
+404 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a555029d9dbfc200a2e5bd155089eb30c">VORBIS_cant_find_last_page</link>,
+405 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a08640b74e73325d965e69da1a2752c7a">VORBIS_seek_failed</link>,
+406 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644ac417a1b1323f6b923d0fd09a349bf7d0">VORBIS_ogg_skeleton_not_supported</link>
+407 };
+</programlisting></section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_stb__vorbis_8c_1ac4dca2244a6db648d2e6f3cbf6961e3e"/>    <section>
+    <title>stb_vorbis_close()</title>
+<indexterm><primary>stb_vorbis_close</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_close</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stb_vorbis_close (<link linkend="_structstb__vorbis">stb_vorbis</link> * f)</computeroutput></para><para>
+Definition at line 4271 of file stb_vorbis.c.</para>
+<programlisting>4272 {
+4273 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;<emphasis role="keywordflow">return</emphasis>;
+4274 &#32;&#32;&#32;vorbis_deinit(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>);
+4275 &#32;&#32;&#32;setup_free(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>,<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>);
+4276 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a690147b6b125eb33e5f77d8f8453e97f"/>    <section>
+    <title>stb_vorbis_decode_filename()</title>
+<indexterm><primary>stb_vorbis_decode_filename</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_decode_filename</secondary></indexterm>
+<para><computeroutput>int stb_vorbis_decode_filename (const char * filename, int * channels, int * sample_rate, short ** output)</computeroutput></para><para>
+Definition at line 5346 of file stb_vorbis.c.</para>
+<programlisting>5347 {
+5348 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;data_len,&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>,&#32;total,&#32;<link linkend="_glext_8h_1a702e6dc059ad96a3ec3e24fd769fd6ac">limit</link>,&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>;
+5349 &#32;&#32;&#32;<emphasis role="keywordtype">short</emphasis>&#32;*<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>;
+5350 &#32;&#32;&#32;<link linkend="_structstb__vorbis">stb_vorbis</link>&#32;*<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>&#32;=&#32;<link linkend="_stb__vorbis_8c_1ae32061695d3dca3f5aa042793ef30329">stb_vorbis_open_filename</link>(filename,&#32;&amp;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+5351 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;<emphasis role="keywordflow">return</emphasis>&#32;-1;
+5352 &#32;&#32;&#32;<link linkend="_glext_8h_1a702e6dc059ad96a3ec3e24fd769fd6ac">limit</link>&#32;=&#32;<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>-&gt;channels&#32;*&#32;4096;
+5353 &#32;&#32;&#32;*channels&#32;=&#32;<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>-&gt;channels;
+5354 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(sample_rate)
+5355 &#32;&#32;&#32;&#32;&#32;&#32;*sample_rate&#32;=&#32;<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>-&gt;sample_rate;
+5356 &#32;&#32;&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>&#32;=&#32;data_len&#32;=&#32;0;
+5357 &#32;&#32;&#32;total&#32;=&#32;<link linkend="_glext_8h_1a702e6dc059ad96a3ec3e24fd769fd6ac">limit</link>;
+5358 &#32;&#32;&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>&#32;=&#32;(<emphasis role="keywordtype">short</emphasis>&#32;*)&#32;<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>(total&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(*<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>));
+5359 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;{
+5360 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1ac4dca2244a6db648d2e6f3cbf6961e3e">stb_vorbis_close</link>(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>);
+5361 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;-2;
+5362 &#32;&#32;&#32;}
+5363 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(;;)&#32;{
+5364 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;=&#32;<link linkend="_stb__vorbis_8c_1a585f1c5ea5ca33d961891b8f5a1574a4">stb_vorbis_get_frame_short_interleaved</link>(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>,&#32;<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>-&gt;channels,&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>+<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>,&#32;total-<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>);
+5365 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;==&#32;0)&#32;<emphasis role="keywordflow">break</emphasis>;
+5366 &#32;&#32;&#32;&#32;&#32;&#32;data_len&#32;+=&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>;
+5367 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>&#32;+=&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;*&#32;<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>-&gt;channels;
+5368 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>&#32;+&#32;<link linkend="_glext_8h_1a702e6dc059ad96a3ec3e24fd769fd6ac">limit</link>&#32;&gt;&#32;total)&#32;{
+5369 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">short</emphasis>&#32;*data2;
+5370 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;total&#32;*=&#32;2;
+5371 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;data2&#32;=&#32;(<emphasis role="keywordtype">short</emphasis>&#32;*)&#32;<link linkend="_stb__leakcheck_8h_1a3110046d1aa9a56183099e72074bd982">realloc</link>(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>,&#32;total&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(*<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>));
+5372 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(data2&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;{
+5373 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>);
+5374 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1ac4dca2244a6db648d2e6f3cbf6961e3e">stb_vorbis_close</link>(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>);
+5375 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;-2;
+5376 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+5377 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>&#32;=&#32;data2;
+5378 &#32;&#32;&#32;&#32;&#32;&#32;}
+5379 &#32;&#32;&#32;}
+5380 &#32;&#32;&#32;*<link linkend="_structoutput">output</link>&#32;=&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>;
+5381 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1ac4dca2244a6db648d2e6f3cbf6961e3e">stb_vorbis_close</link>(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>);
+5382 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;data_len;
+5383 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a7d1ea980f5872eaa4f92605238a2c7b3"/>    <section>
+    <title>stb_vorbis_decode_frame_pushdata()</title>
+<indexterm><primary>stb_vorbis_decode_frame_pushdata</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_decode_frame_pushdata</secondary></indexterm>
+<para><computeroutput>int stb_vorbis_decode_frame_pushdata (<link linkend="_structstb__vorbis">stb_vorbis</link> * f, const unsigned char * datablock, int datablock_length_in_bytes, int * channels, float *** output, int * samples)</computeroutput></para><para>
+Definition at line 4444 of file stb_vorbis.c.</para>
+<programlisting>4451 {
+4452 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+4453 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>,<link linkend="_glext_8h_1a5ffadbbacc6b89cf6218bc43b384d3fe">right</link>,<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>;
+4454 
+4455 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_stb__vorbis_8c_1a2a9cd26d6325f220d322d7e5347c802b">IS_PUSH_MODE</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>))&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a7f6a5d2c76b796bb56bcf5f41e183dde">VORBIS_invalid_api_mixing</link>);
+4456 
+4457 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;page_crc_tests&#32;&gt;=&#32;0)&#32;{
+4458 &#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>&#32;=&#32;0;
+4459 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;vorbis_search_for_page_pushdata(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;(<link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link>&#32;*)&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>,&#32;data_len);
+4460 &#32;&#32;&#32;}
+4461 
+4462 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;stream&#32;&#32;&#32;&#32;&#32;=&#32;(<link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link>&#32;*)&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>;
+4463 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;stream_end&#32;=&#32;(<link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link>&#32;*)&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>&#32;+&#32;data_len;
+4464 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;error&#32;&#32;&#32;&#32;&#32;&#32;=&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a8fb17b5792b1463fe7e6152195d26f19">VORBIS__no_error</link>;
+4465 
+4466 &#32;&#32;&#32;<emphasis role="comment">//&#32;check&#32;that&#32;we&#32;have&#32;the&#32;entire&#32;packet&#32;in&#32;memory</emphasis>
+4467 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!is_whole_packet_present(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>))&#32;{
+4468 &#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>&#32;=&#32;0;
+4469 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+4470 &#32;&#32;&#32;}
+4471 
+4472 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!vorbis_decode_packet(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;&amp;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>,&#32;&amp;<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>,&#32;&amp;<link linkend="_glext_8h_1a5ffadbbacc6b89cf6218bc43b384d3fe">right</link>))&#32;{
+4473 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;save&#32;the&#32;actual&#32;error&#32;we&#32;encountered</emphasis>
+4474 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">enum</emphasis>&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644">STBVorbisError</link>&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;error;
+4475 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;==&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a07706341bbd7190ea2909e79d1922798">VORBIS_bad_packet_type</link>)&#32;{
+4476 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;flush&#32;and&#32;resynch</emphasis>
+4477 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;error&#32;=&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a8fb17b5792b1463fe7e6152195d26f19">VORBIS__no_error</link>;
+4478 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(get8_packet(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)&#32;!=&#32;<link linkend="_stb__vorbis_8c_1a734579b908509b57151ac02b946056d1">EOP</link>)
+4479 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;eof)&#32;<emphasis role="keywordflow">break</emphasis>;
+4480 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>&#32;=&#32;0;
+4481 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>)&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;stream&#32;-&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>);
+4482 &#32;&#32;&#32;&#32;&#32;&#32;}
+4483 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;==&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a3b2e936724f1ac37d491b06325163d8b">VORBIS_continued_packet_flag_invalid</link>)&#32;{
+4484 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;previous_length&#32;==&#32;0)&#32;{
+4485 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;we&#32;may&#32;be&#32;resynching,&#32;in&#32;which&#32;case&#32;it&apos;s&#32;ok&#32;to&#32;hit&#32;one</emphasis>
+4486 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;of&#32;these;&#32;just&#32;discard&#32;the&#32;packet</emphasis>
+4487 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;error&#32;=&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a8fb17b5792b1463fe7e6152195d26f19">VORBIS__no_error</link>;
+4488 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(get8_packet(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)&#32;!=&#32;<link linkend="_stb__vorbis_8c_1a734579b908509b57151ac02b946056d1">EOP</link>)
+4489 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;eof)&#32;<emphasis role="keywordflow">break</emphasis>;
+4490 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>&#32;=&#32;0;
+4491 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>)&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;stream&#32;-&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>);
+4492 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+4493 &#32;&#32;&#32;&#32;&#32;&#32;}
+4494 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;if&#32;we&#32;get&#32;an&#32;error&#32;while&#32;parsing,&#32;what&#32;to&#32;do?</emphasis>
+4495 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;well,&#32;it&#32;DEFINITELY&#32;won&apos;t&#32;work&#32;to&#32;continue&#32;from&#32;where&#32;we&#32;are!</emphasis>
+4496 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a30e9bdeec5be888c7b5090415e7dce42">stb_vorbis_flush_pushdata</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+4497 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;restore&#32;the&#32;error&#32;that&#32;actually&#32;made&#32;us&#32;bail</emphasis>
+4498 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;error&#32;=&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>;
+4499 &#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>&#32;=&#32;0;
+4500 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;1;
+4501 &#32;&#32;&#32;}
+4502 
+4503 &#32;&#32;&#32;<emphasis role="comment">//&#32;success!</emphasis>
+4504 &#32;&#32;&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;=&#32;vorbis_finish_frame(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>,&#32;<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>,&#32;<link linkend="_glext_8h_1a5ffadbbacc6b89cf6218bc43b384d3fe">right</link>);
+4505 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channels;&#32;++i)
+4506 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;outputs[i]&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffers[i]&#32;+&#32;<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>;
+4507 
+4508 &#32;&#32;&#32;if&#32;(channels)&#32;*channels&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channels;
+4509 &#32;&#32;&#32;*<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>&#32;=&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+4510 &#32;&#32;&#32;*<link linkend="_structoutput">output</link>&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;outputs;
+4511 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>)&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;stream&#32;-&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>);
+4512 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1abd541d13b13dbe2c43cd36d0a406804a"/>    <section>
+    <title>stb_vorbis_decode_memory()</title>
+<indexterm><primary>stb_vorbis_decode_memory</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_decode_memory</secondary></indexterm>
+<para><computeroutput>int stb_vorbis_decode_memory (const unsigned char * mem, int len, int * channels, int * sample_rate, short ** output)</computeroutput></para><para>
+Definition at line 5386 of file stb_vorbis.c.</para>
+<programlisting>5387 {
+5388 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;data_len,&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>,&#32;total,&#32;<link linkend="_glext_8h_1a702e6dc059ad96a3ec3e24fd769fd6ac">limit</link>,&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>;
+5389 &#32;&#32;&#32;<emphasis role="keywordtype">short</emphasis>&#32;*<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>;
+5390 &#32;&#32;&#32;<link linkend="_structstb__vorbis">stb_vorbis</link>&#32;*<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>&#32;=&#32;<link linkend="_stb__vorbis_8c_1aa1e71be707b2259dd5a8c5fd9db50f05">stb_vorbis_open_memory</link>(mem,&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>,&#32;&amp;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+5391 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;<emphasis role="keywordflow">return</emphasis>&#32;-1;
+5392 &#32;&#32;&#32;<link linkend="_glext_8h_1a702e6dc059ad96a3ec3e24fd769fd6ac">limit</link>&#32;=&#32;<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>-&gt;channels&#32;*&#32;4096;
+5393 &#32;&#32;&#32;*channels&#32;=&#32;<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>-&gt;channels;
+5394 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(sample_rate)
+5395 &#32;&#32;&#32;&#32;&#32;&#32;*sample_rate&#32;=&#32;<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>-&gt;sample_rate;
+5396 &#32;&#32;&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>&#32;=&#32;data_len&#32;=&#32;0;
+5397 &#32;&#32;&#32;total&#32;=&#32;<link linkend="_glext_8h_1a702e6dc059ad96a3ec3e24fd769fd6ac">limit</link>;
+5398 &#32;&#32;&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>&#32;=&#32;(<emphasis role="keywordtype">short</emphasis>&#32;*)&#32;<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>(total&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(*<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>));
+5399 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;{
+5400 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1ac4dca2244a6db648d2e6f3cbf6961e3e">stb_vorbis_close</link>(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>);
+5401 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;-2;
+5402 &#32;&#32;&#32;}
+5403 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(;;)&#32;{
+5404 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;=&#32;<link linkend="_stb__vorbis_8c_1a585f1c5ea5ca33d961891b8f5a1574a4">stb_vorbis_get_frame_short_interleaved</link>(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>,&#32;<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>-&gt;channels,&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>+<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>,&#32;total-<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>);
+5405 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;==&#32;0)&#32;<emphasis role="keywordflow">break</emphasis>;
+5406 &#32;&#32;&#32;&#32;&#32;&#32;data_len&#32;+=&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>;
+5407 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>&#32;+=&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;*&#32;<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>-&gt;channels;
+5408 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>&#32;+&#32;<link linkend="_glext_8h_1a702e6dc059ad96a3ec3e24fd769fd6ac">limit</link>&#32;&gt;&#32;total)&#32;{
+5409 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">short</emphasis>&#32;*data2;
+5410 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;total&#32;*=&#32;2;
+5411 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;data2&#32;=&#32;(<emphasis role="keywordtype">short</emphasis>&#32;*)&#32;<link linkend="_stb__leakcheck_8h_1a3110046d1aa9a56183099e72074bd982">realloc</link>(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>,&#32;total&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(*<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>));
+5412 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(data2&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;{
+5413 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>);
+5414 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1ac4dca2244a6db648d2e6f3cbf6961e3e">stb_vorbis_close</link>(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>);
+5415 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;-2;
+5416 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+5417 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>&#32;=&#32;data2;
+5418 &#32;&#32;&#32;&#32;&#32;&#32;}
+5419 &#32;&#32;&#32;}
+5420 &#32;&#32;&#32;*<link linkend="_structoutput">output</link>&#32;=&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>;
+5421 &#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1ac4dca2244a6db648d2e6f3cbf6961e3e">stb_vorbis_close</link>(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>);
+5422 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;data_len;
+5423 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a30e9bdeec5be888c7b5090415e7dce42"/>    <section>
+    <title>stb_vorbis_flush_pushdata()</title>
+<indexterm><primary>stb_vorbis_flush_pushdata</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_flush_pushdata</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stb_vorbis_flush_pushdata (<link linkend="_structstb__vorbis">stb_vorbis</link> * f)</computeroutput></para><para>
+Definition at line 4341 of file stb_vorbis.c.</para>
+<programlisting>4342 {
+4343 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;previous_length&#32;=&#32;0;
+4344 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;page_crc_tests&#32;&#32;=&#32;0;
+4345 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;discard_samples_deferred&#32;=&#32;0;
+4346 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;current_loc_valid&#32;=&#32;<link linkend="_stb__vorbis_8c_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+4347 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;first_decode&#32;=&#32;<link linkend="_stb__vorbis_8c_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+4348 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;samples_output&#32;=&#32;0;
+4349 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_start&#32;=&#32;0;
+4350 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_end&#32;=&#32;0;
+4351 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a2f90821549b74200c54cdf22c011a0d1"/>    <section>
+    <title>stb_vorbis_get_comment()</title>
+<indexterm><primary>stb_vorbis_get_comment</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_get_comment</secondary></indexterm>
+<para><computeroutput><link linkend="_structstb__vorbis__comment">stb_vorbis_comment</link> stb_vorbis_get_comment (<link linkend="_structstb__vorbis">stb_vorbis</link> * f)</computeroutput></para><para>
+Definition at line 4317 of file stb_vorbis.c.</para>
+<programlisting>4318 {
+4319 &#32;&#32;&#32;<link linkend="_structstb__vorbis__comment">stb_vorbis_comment</link>&#32;d;
+4320 &#32;&#32;&#32;d.<link linkend="_structstb__vorbis__comment_1a2d39c24fbb2ff48034f2c7b0be2b3a0e">vendor</link>&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;vendor;
+4321 &#32;&#32;&#32;d.<link linkend="_structstb__vorbis__comment_1ab31b9294952f0f0e61469d07ab4057f0">comment_list_length</link>&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;comment_list_length;
+4322 &#32;&#32;&#32;d.<link linkend="_structstb__vorbis__comment_1ad1b41ced43bc70618a588a7a4bbca67e">comment_list</link>&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;comment_list;
+4323 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;d;
+4324 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1abc16af7813a3c8320ff4dd5dd215cd0a"/>    <section>
+    <title>stb_vorbis_get_error()</title>
+<indexterm><primary>stb_vorbis_get_error</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_get_error</secondary></indexterm>
+<para><computeroutput>int stb_vorbis_get_error (<link linkend="_structstb__vorbis">stb_vorbis</link> * f)</computeroutput></para><para>
+Definition at line 4326 of file stb_vorbis.c.</para>
+<programlisting>4327 {
+4328 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;error;
+4329 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;error&#32;=&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a8fb17b5792b1463fe7e6152195d26f19">VORBIS__no_error</link>;
+4330 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>;
+4331 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a91bf63ae7792007878687351cc9eb02b"/>    <section>
+    <title>stb_vorbis_get_file_offset()</title>
+<indexterm><primary>stb_vorbis_get_file_offset</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_get_file_offset</secondary></indexterm>
+<para><computeroutput>unsigned int stb_vorbis_get_file_offset (<link linkend="_structstb__vorbis">stb_vorbis</link> * f)</computeroutput></para><para>
+Definition at line 4545 of file stb_vorbis.c.</para>
+<programlisting>4546 {
+4547 <emphasis role="preprocessor">&#32;&#32;&#32;#ifndef&#32;STB_VORBIS_NO_PUSHDATA_API</emphasis>
+4548 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;push_mode)&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+4549 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+4550 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_stb__vorbis_8c_1abffa4dff1f2cb303b2501ea2dea75e6f">USE_MEMORY</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>))&#32;<emphasis role="keywordflow">return</emphasis>&#32;(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>)&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;stream&#32;-&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;stream_start);
+4551 <emphasis role="preprocessor">&#32;&#32;&#32;#ifndef&#32;STB_VORBIS_NO_STDIO</emphasis>
+4552 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>)&#32;(ftell(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;f)&#32;-&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;f_start);
+4553 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+4554 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a3b2691d598485e0c5e1b4ac56173a0ce"/>    <section>
+    <title>stb_vorbis_get_frame_float()</title>
+<indexterm><primary>stb_vorbis_get_frame_float</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_get_frame_float</secondary></indexterm>
+<para><computeroutput>int stb_vorbis_get_frame_float (<link linkend="_structstb__vorbis">stb_vorbis</link> * f, int * channels, float *** output)</computeroutput></para><para>
+Definition at line 5028 of file stb_vorbis.c.</para>
+<programlisting>5029 {
+5030 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>,&#32;<link linkend="_glext_8h_1a5ffadbbacc6b89cf6218bc43b384d3fe">right</link>,<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>,i;
+5031 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_stb__vorbis_8c_1a2a9cd26d6325f220d322d7e5347c802b">IS_PUSH_MODE</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>))&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a7f6a5d2c76b796bb56bcf5f41e183dde">VORBIS_invalid_api_mixing</link>);
+5032 
+5033 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!vorbis_decode_packet(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;&amp;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>,&#32;&amp;<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>,&#32;&amp;<link linkend="_glext_8h_1a5ffadbbacc6b89cf6218bc43b384d3fe">right</link>))&#32;{
+5034 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_start&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_end&#32;=&#32;0;
+5035 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+5036 &#32;&#32;&#32;}
+5037 
+5038 &#32;&#32;&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;=&#32;vorbis_finish_frame(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>,&#32;<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>,&#32;<link linkend="_glext_8h_1a5ffadbbacc6b89cf6218bc43b384d3fe">right</link>);
+5039 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channels;&#32;++i)
+5040 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;outputs[i]&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffers[i]&#32;+&#32;<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>;
+5041 
+5042 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_start&#32;=&#32;<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>;
+5043 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_end&#32;&#32;&#32;=&#32;<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>+<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+5044 
+5045 &#32;&#32;&#32;if&#32;(channels)&#32;*channels&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channels;
+5046 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_structoutput">output</link>)&#32;&#32;&#32;*<link linkend="_structoutput">output</link>&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;outputs;
+5047 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+5048 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a2887b05a26e310a9c5e370b2ab30fbae"/>    <section>
+    <title>stb_vorbis_get_frame_short()</title>
+<indexterm><primary>stb_vorbis_get_frame_short</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_get_frame_short</secondary></indexterm>
+<para><computeroutput>int stb_vorbis_get_frame_short (<link linkend="_structstb__vorbis">stb_vorbis</link> * f, int num_c, short ** buffer, int num_samples)</computeroutput></para><para>
+Definition at line 5260 of file stb_vorbis.c.</para>
+<programlisting>5261 {
+5262 &#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;**<link linkend="_structoutput">output</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+5263 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;=&#32;<link linkend="_stb__vorbis_8c_1a3b2691d598485e0c5e1b4ac56173a0ce">stb_vorbis_get_frame_float</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;&amp;<link linkend="_structoutput">output</link>);
+5264 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;&gt;&#32;num_samples)&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;=&#32;num_samples;
+5265 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)
+5266 &#32;&#32;&#32;&#32;&#32;&#32;convert_samples_short(num_c,&#32;<link linkend="_structbuffer">buffer</link>,&#32;0,&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channels,&#32;<link linkend="_structoutput">output</link>,&#32;0,&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>);
+5267 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+5268 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a585f1c5ea5ca33d961891b8f5a1574a4"/>    <section>
+    <title>stb_vorbis_get_frame_short_interleaved()</title>
+<indexterm><primary>stb_vorbis_get_frame_short_interleaved</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_get_frame_short_interleaved</secondary></indexterm>
+<para><computeroutput>int stb_vorbis_get_frame_short_interleaved (<link linkend="_structstb__vorbis">stb_vorbis</link> * f, int num_c, short * buffer, int num_shorts)</computeroutput></para><para>
+Definition at line 5296 of file stb_vorbis.c.</para>
+<programlisting>5297 {
+5298 &#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;**<link linkend="_structoutput">output</link>;
+5299 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+5300 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(num_c&#32;==&#32;1)&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_stb__vorbis_8c_1a2887b05a26e310a9c5e370b2ab30fbae">stb_vorbis_get_frame_short</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,num_c,&amp;<link linkend="_structbuffer">buffer</link>,&#32;num_shorts);
+5301 &#32;&#32;&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;=&#32;<link linkend="_stb__vorbis_8c_1a3b2691d598485e0c5e1b4ac56173a0ce">stb_vorbis_get_frame_float</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;&amp;<link linkend="_structoutput">output</link>);
+5302 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)&#32;{
+5303 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>*num_c&#32;&gt;&#32;num_shorts)&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;=&#32;num_shorts&#32;/&#32;num_c;
+5304 &#32;&#32;&#32;&#32;&#32;&#32;convert_channels_short_interleaved(num_c,&#32;<link linkend="_structbuffer">buffer</link>,&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channels,&#32;<link linkend="_structoutput">output</link>,&#32;0,&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>);
+5305 &#32;&#32;&#32;}
+5306 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+5307 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a3a3b2986c40459438b26b2cf7747c171"/>    <section>
+    <title>stb_vorbis_get_info()</title>
+<indexterm><primary>stb_vorbis_get_info</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_get_info</secondary></indexterm>
+<para><computeroutput><link linkend="_structstb__vorbis__info">stb_vorbis_info</link> stb_vorbis_get_info (<link linkend="_structstb__vorbis">stb_vorbis</link> * f)</computeroutput></para><para>
+Definition at line 4305 of file stb_vorbis.c.</para>
+<programlisting>4306 {
+4307 &#32;&#32;&#32;<link linkend="_structstb__vorbis__info">stb_vorbis_info</link>&#32;d;
+4308 &#32;&#32;&#32;d.<link linkend="_structstb__vorbis__info_1a074f6af8c99f6c583696d34bf4c7744a">channels</link>&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channels;
+4309 &#32;&#32;&#32;d.<link linkend="_structstb__vorbis__info_1a9ccd1991052734f88a4bd3743b749993">sample_rate</link>&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;sample_rate;
+4310 &#32;&#32;&#32;d.<link linkend="_structstb__vorbis__info_1a3dd3e567beb2bb9d7d62dcca83f301fb">setup_memory_required</link>&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;setup_memory_required;
+4311 &#32;&#32;&#32;d.<link linkend="_structstb__vorbis__info_1aec05c013773be9d8d52f9bb784bdc084">setup_temp_memory_required</link>&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;setup_temp_memory_required;
+4312 &#32;&#32;&#32;d.<link linkend="_structstb__vorbis__info_1a2fe235656197249fc3a6b5e27ff2da82">temp_memory_required</link>&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;temp_memory_required;
+4313 &#32;&#32;&#32;d.<link linkend="_structstb__vorbis__info_1ad07f41541db438dcdac6ca223c5876e9">max_frame_size</link>&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;blocksize_1&#32;&gt;&gt;&#32;1;
+4314 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;d;
+4315 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a9b01e61138433dce092f334f2a449b4f"/>    <section>
+    <title>stb_vorbis_get_sample_offset()</title>
+<indexterm><primary>stb_vorbis_get_sample_offset</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_get_sample_offset</secondary></indexterm>
+<para><computeroutput>int stb_vorbis_get_sample_offset (<link linkend="_structstb__vorbis">stb_vorbis</link> * f)</computeroutput></para><para>
+Definition at line 4297 of file stb_vorbis.c.</para>
+<programlisting>4298 {
+4299 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;current_loc_valid)
+4300 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;current_loc;
+4301 &#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+4302 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;-1;
+4303 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a35ba8d6c02ebe1de4741d2603b554de6"/>    <section>
+    <title>stb_vorbis_get_samples_float()</title>
+<indexterm><primary>stb_vorbis_get_samples_float</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_get_samples_float</secondary></indexterm>
+<para><computeroutput>int stb_vorbis_get_samples_float (<link linkend="_structstb__vorbis">stb_vorbis</link> * f, int channels, float ** buffer, int num_samples)</computeroutput></para><para>
+Definition at line 5453 of file stb_vorbis.c.</para>
+<programlisting>5454 {
+5455 &#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;**outputs;
+5456 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>=0;
+5457 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channels;
+5458 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>&#32;&gt;&#32;channels)&#32;<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>&#32;=&#32;channels;
+5459 &#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;&lt;&#32;num_samples)&#32;{
+5460 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+5461 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;k&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_end&#32;-&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_start;
+5462 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>+k&#32;&gt;=&#32;num_samples)&#32;k&#32;=&#32;num_samples&#32;-&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>;
+5463 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(k)&#32;{
+5464 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>;&#32;++i)
+5465 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memcpy(<link linkend="_structbuffer">buffer</link>[i]+<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffers[i]+<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_start,&#32;<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keywordtype">float</emphasis>)*k);
+5466 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(&#32;&#32;&#32;;&#32;i&#32;&lt;&#32;channels;&#32;++i)
+5467 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memset(<link linkend="_structbuffer">buffer</link>[i]+<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,&#32;0,&#32;<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keywordtype">float</emphasis>)&#32;*&#32;k);
+5468 &#32;&#32;&#32;&#32;&#32;&#32;}
+5469 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;+=&#32;k;
+5470 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_start&#32;+=&#32;k;
+5471 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;==&#32;num_samples)
+5472 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+5473 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_stb__vorbis_8c_1a3b2691d598485e0c5e1b4ac56173a0ce">stb_vorbis_get_frame_float</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;&amp;outputs))
+5474 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+5475 &#32;&#32;&#32;}
+5476 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>;
+5477 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a5117081109b12a483b44bb395be8ead7"/>    <section>
+    <title>stb_vorbis_get_samples_float_interleaved()</title>
+<indexterm><primary>stb_vorbis_get_samples_float_interleaved</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_get_samples_float_interleaved</secondary></indexterm>
+<para><computeroutput>int stb_vorbis_get_samples_float_interleaved (<link linkend="_structstb__vorbis">stb_vorbis</link> * f, int channels, float * buffer, int num_floats)</computeroutput></para><para>
+Definition at line 5426 of file stb_vorbis.c.</para>
+<programlisting>5427 {
+5428 &#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;**outputs;
+5429 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;=&#32;num_floats&#32;/&#32;channels;
+5430 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>=0;
+5431 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channels;
+5432 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>&#32;&gt;&#32;channels)&#32;<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>&#32;=&#32;channels;
+5433 &#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;&lt;&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)&#32;{
+5434 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i,j;
+5435 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;k&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_end&#32;-&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_start;
+5436 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>+k&#32;&gt;=&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)&#32;k&#32;=&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;-&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>;
+5437 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(j=0;&#32;j&#32;&lt;&#32;k;&#32;++j)&#32;{
+5438 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>;&#32;++i)
+5439 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_structbuffer">buffer</link>++&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffers[i][<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_start+j];
+5440 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;for&#32;(&#32;&#32;&#32;;&#32;i&#32;&lt;&#32;channels;&#32;++i)
+5441 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_structbuffer">buffer</link>++&#32;=&#32;0;
+5442 &#32;&#32;&#32;&#32;&#32;&#32;}
+5443 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;+=&#32;k;
+5444 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_start&#32;+=&#32;k;
+5445 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;==&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)
+5446 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+5447 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_stb__vorbis_8c_1a3b2691d598485e0c5e1b4ac56173a0ce">stb_vorbis_get_frame_float</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;&amp;outputs))
+5448 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+5449 &#32;&#32;&#32;}
+5450 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>;
+5451 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a871c4b38fe90aa7f7dd26ecc1fc93a3b"/>    <section>
+    <title>stb_vorbis_get_samples_short()</title>
+<indexterm><primary>stb_vorbis_get_samples_short</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_get_samples_short</secondary></indexterm>
+<para><computeroutput>int stb_vorbis_get_samples_short (<link linkend="_structstb__vorbis">stb_vorbis</link> * f, int channels, short ** buffer, int num_samples)</computeroutput></para><para>
+Definition at line 5328 of file stb_vorbis.c.</para>
+<programlisting>5329 {
+5330 &#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;**outputs;
+5331 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>=0;
+5332 &#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;&lt;&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)&#32;{
+5333 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;k&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_end&#32;-&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_start;
+5334 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>+k&#32;&gt;=&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)&#32;k&#32;=&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;-&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>;
+5335 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(k)
+5336 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;convert_samples_short(channels,&#32;<link linkend="_structbuffer">buffer</link>,&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channels,&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffers,&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_start,&#32;k);
+5337 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;+=&#32;k;
+5338 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_start&#32;+=&#32;k;
+5339 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;==&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)&#32;<emphasis role="keywordflow">break</emphasis>;
+5340 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_stb__vorbis_8c_1a3b2691d598485e0c5e1b4ac56173a0ce">stb_vorbis_get_frame_float</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;&amp;outputs))&#32;<emphasis role="keywordflow">break</emphasis>;
+5341 &#32;&#32;&#32;}
+5342 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>;
+5343 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1ade776d535501af37f599e05ff289f3fe"/>    <section>
+    <title>stb_vorbis_get_samples_short_interleaved()</title>
+<indexterm><primary>stb_vorbis_get_samples_short_interleaved</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_get_samples_short_interleaved</secondary></indexterm>
+<para><computeroutput>int stb_vorbis_get_samples_short_interleaved (<link linkend="_structstb__vorbis">stb_vorbis</link> * f, int channels, short * buffer, int num_shorts)</computeroutput></para><para>
+Definition at line 5309 of file stb_vorbis.c.</para>
+<programlisting>5310 {
+5311 &#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;**outputs;
+5312 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;=&#32;num_shorts&#32;/&#32;channels;
+5313 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>=0;
+5314 &#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;&lt;&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)&#32;{
+5315 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;k&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_end&#32;-&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_start;
+5316 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>+k&#32;&gt;=&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)&#32;k&#32;=&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;-&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>;
+5317 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(k)
+5318 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;convert_channels_short_interleaved(channels,&#32;<link linkend="_structbuffer">buffer</link>,&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channels,&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffers,&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_start,&#32;k);
+5319 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structbuffer">buffer</link>&#32;+=&#32;k*channels;
+5320 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;+=&#32;k;
+5321 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_start&#32;+=&#32;k;
+5322 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;==&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)&#32;<emphasis role="keywordflow">break</emphasis>;
+5323 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_stb__vorbis_8c_1a3b2691d598485e0c5e1b4ac56173a0ce">stb_vorbis_get_frame_float</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;&amp;outputs))&#32;<emphasis role="keywordflow">break</emphasis>;
+5324 &#32;&#32;&#32;}
+5325 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>;
+5326 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a945f997624c658fdf581ff84c7a9e534"/>    <section>
+    <title>stb_vorbis_open_file()</title>
+<indexterm><primary>stb_vorbis_open_file</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_open_file</secondary></indexterm>
+<para><computeroutput><link linkend="_structstb__vorbis">stb_vorbis</link> * stb_vorbis_open_file (FILE * f, int close_handle_on_close, int * error, const <link linkend="_structstb__vorbis__alloc">stb_vorbis_alloc</link> * alloc_buffer)</computeroutput></para><para>
+Definition at line 5073 of file stb_vorbis.c.</para>
+<programlisting>5074 {
+5075 &#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>,&#32;<link linkend="_glad_8h_1ac55adc720a3098c1b454d2a4647f4361">start</link>;
+5076 &#32;&#32;&#32;<link linkend="_glad_8h_1ac55adc720a3098c1b454d2a4647f4361">start</link>&#32;=&#32;(<emphasis role="keywordtype">unsigned</emphasis>&#32;int)&#32;ftell(file);
+5077 &#32;&#32;&#32;fseek(file,&#32;0,&#32;SEEK_END);
+5078 &#32;&#32;&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;=&#32;(<emphasis role="keywordtype">unsigned</emphasis>&#32;int)&#32;(ftell(file)&#32;-&#32;<link linkend="_glad_8h_1ac55adc720a3098c1b454d2a4647f4361">start</link>);
+5079 &#32;&#32;&#32;fseek(file,&#32;<link linkend="_glad_8h_1ac55adc720a3098c1b454d2a4647f4361">start</link>,&#32;SEEK_SET);
+5080 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_stb__vorbis_8c_1a53534e3cb90f3074420997c21ac92827">stb_vorbis_open_file_section</link>(file,&#32;close_on_free,&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>,&#32;alloc,&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>);
+5081 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a53534e3cb90f3074420997c21ac92827"/>    <section>
+    <title>stb_vorbis_open_file_section()</title>
+<indexterm><primary>stb_vorbis_open_file_section</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_open_file_section</secondary></indexterm>
+<para><computeroutput><link linkend="_structstb__vorbis">stb_vorbis</link> * stb_vorbis_open_file_section (FILE * f, int close_handle_on_close, int * error, const <link linkend="_structstb__vorbis__alloc">stb_vorbis_alloc</link> * alloc_buffer, unsigned int len)</computeroutput></para><para>
+Definition at line 5052 of file stb_vorbis.c.</para>
+<programlisting>5053 {
+5054 &#32;&#32;&#32;<link linkend="_structstb__vorbis">stb_vorbis</link>&#32;*<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>;
+5055 &#32;&#32;&#32;vorbis_init(&amp;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>,&#32;alloc);
+5056 &#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>.f&#32;=&#32;file;
+5057 &#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>.f_start&#32;=&#32;(<link linkend="_stb__vorbis_8c_1a1134b580f8da4de94ca6b1de4d37975e">uint32</link>)&#32;ftell(file);
+5058 &#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>.stream_len&#32;&#32;&#32;=&#32;<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>;
+5059 &#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>.close_on_free&#32;=&#32;close_on_free;
+5060 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(start_decoder(&amp;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>))&#32;{
+5061 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;=&#32;vorbis_alloc(&amp;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>);
+5062 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)&#32;{
+5063 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;=&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>;
+5064 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;vorbis_pump_first_frame(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+5065 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>;
+5066 &#32;&#32;&#32;&#32;&#32;&#32;}
+5067 &#32;&#32;&#32;}
+5068 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>)&#32;*<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;=&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>.error;
+5069 &#32;&#32;&#32;vorbis_deinit(&amp;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>);
+5070 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+5071 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1ae32061695d3dca3f5aa042793ef30329"/>    <section>
+    <title>stb_vorbis_open_filename()</title>
+<indexterm><primary>stb_vorbis_open_filename</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_open_filename</secondary></indexterm>
+<para><computeroutput><link linkend="_structstb__vorbis">stb_vorbis</link> * stb_vorbis_open_filename (const char * filename, int * error, const <link linkend="_structstb__vorbis__alloc">stb_vorbis_alloc</link> * alloc_buffer)</computeroutput></para><para>
+Definition at line 5083 of file stb_vorbis.c.</para>
+<programlisting>5084 {
+5085 &#32;&#32;&#32;FILE&#32;*<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>;
+5086 <emphasis role="preprocessor">#if&#32;defined(_WIN32)&#32;&amp;&amp;&#32;defined(__STDC_WANT_SECURE_LIB__)</emphasis>
+5087 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(0&#32;!=&#32;fopen_s(&amp;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;filename,&#32;<emphasis role="stringliteral">&quot;rb&quot;</emphasis>))
+5088 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+5089 <emphasis role="preprocessor">#else</emphasis>
+5090 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;=&#32;fopen(filename,&#32;<emphasis role="stringliteral">&quot;rb&quot;</emphasis>);
+5091 <emphasis role="preprocessor">#endif</emphasis>
+5092 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)
+5093 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_stb__vorbis_8c_1a945f997624c658fdf581ff84c7a9e534">stb_vorbis_open_file</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_stb__vorbis_8c_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>,&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>,&#32;alloc);
+5094 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>)&#32;*<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;=&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644aba12de4c5865bae04137ac7ddd5a9830">VORBIS_file_open_failure</link>;
+5095 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+5096 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1aa1e71be707b2259dd5a8c5fd9db50f05"/>    <section>
+    <title>stb_vorbis_open_memory()</title>
+<indexterm><primary>stb_vorbis_open_memory</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_open_memory</secondary></indexterm>
+<para><computeroutput><link linkend="_structstb__vorbis">stb_vorbis</link> * stb_vorbis_open_memory (const unsigned char * data, int len, int * error, const <link linkend="_structstb__vorbis__alloc">stb_vorbis_alloc</link> * alloc_buffer)</computeroutput></para><para>
+Definition at line 5099 of file stb_vorbis.c.</para>
+<programlisting>5100 {
+5101 &#32;&#32;&#32;<link linkend="_structstb__vorbis">stb_vorbis</link>&#32;*<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>;
+5102 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>)&#32;{
+5103 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>)&#32;*<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;=&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a27dd0deb7a2b9c1b4904e0a74ee2dbff">VORBIS_unexpected_eof</link>;
+5104 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+5105 &#32;&#32;&#32;}
+5106 &#32;&#32;&#32;vorbis_init(&amp;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>,&#32;alloc);
+5107 &#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>.stream&#32;=&#32;(<link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link>&#32;*)&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>;
+5108 &#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>.stream_end&#32;=&#32;(<link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link>&#32;*)&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>&#32;+&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+5109 &#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>.stream_start&#32;=&#32;(<link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link>&#32;*)&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>.stream;
+5110 &#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>.stream_len&#32;=&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+5111 &#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>.push_mode&#32;=&#32;<link linkend="_stb__vorbis_8c_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+5112 &#32;&#32;&#32;if&#32;(start_decoder(&amp;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>))&#32;{
+5113 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;=&#32;vorbis_alloc(&amp;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>);
+5114 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)&#32;{
+5115 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;=&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>;
+5116 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;vorbis_pump_first_frame(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+5117 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>)&#32;*<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;=&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a8fb17b5792b1463fe7e6152195d26f19">VORBIS__no_error</link>;
+5118 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>;
+5119 &#32;&#32;&#32;&#32;&#32;&#32;}
+5120 &#32;&#32;&#32;}
+5121 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>)&#32;*<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;=&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>.error;
+5122 &#32;&#32;&#32;vorbis_deinit(&amp;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>);
+5123 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+5124 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a80219fb2ae6194e72dba7f3ed52c25cb"/>    <section>
+    <title>stb_vorbis_open_pushdata()</title>
+<indexterm><primary>stb_vorbis_open_pushdata</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_open_pushdata</secondary></indexterm>
+<para><computeroutput><link linkend="_structstb__vorbis">stb_vorbis</link> * stb_vorbis_open_pushdata (const unsigned char * datablock, int datablock_length_in_bytes, int * datablock_memory_consumed_in_bytes, int * error, const <link linkend="_structstb__vorbis__alloc">stb_vorbis_alloc</link> * alloc_buffer)</computeroutput></para><para>
+Definition at line 4514 of file stb_vorbis.c.</para>
+<programlisting>4518 {
+4519 &#32;&#32;&#32;<link linkend="_structstb__vorbis">stb_vorbis</link>&#32;*<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>;
+4520 &#32;&#32;&#32;vorbis_init(&amp;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>,&#32;alloc);
+4521 &#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>.stream&#32;&#32;&#32;&#32;&#32;=&#32;(<link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link>&#32;*)&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>;
+4522 &#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>.stream_end&#32;=&#32;(<link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link>&#32;*)&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>&#32;+&#32;data_len;
+4523 &#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>.push_mode&#32;&#32;=&#32;<link linkend="_stb__vorbis_8c_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+4524 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!start_decoder(&amp;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>))&#32;{
+4525 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>.eof)
+4526 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;=&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a03255ba6dfd62d6530c8f67e8bc04861">VORBIS_need_more_data</link>;
+4527 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+4528 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;=&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>.error;
+4529 &#32;&#32;&#32;&#32;&#32;&#32;vorbis_deinit(&amp;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>);
+4530 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+4531 &#32;&#32;&#32;}
+4532 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;=&#32;vorbis_alloc(&amp;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>);
+4533 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)&#32;{
+4534 &#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;=&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>;
+4535 &#32;&#32;&#32;&#32;&#32;&#32;*data_used&#32;=&#32;(int)&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;stream&#32;-&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>);
+4536 &#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;=&#32;0;
+4537 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>;
+4538 &#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+4539 &#32;&#32;&#32;&#32;&#32;&#32;vorbis_deinit(&amp;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>);
+4540 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+4541 &#32;&#32;&#32;}
+4542 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a2a1f6add009ac3e63ed57cabf9941566"/>    <section>
+    <title>stb_vorbis_seek()</title>
+<indexterm><primary>stb_vorbis_seek</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_seek</secondary></indexterm>
+<para><computeroutput>int stb_vorbis_seek (<link linkend="_structstb__vorbis">stb_vorbis</link> * f, unsigned int sample_number)</computeroutput></para><para>
+Definition at line 4919 of file stb_vorbis.c.</para>
+<programlisting>4920 {
+4921 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_stb__vorbis_8c_1a4c9ff20e01e6270e9cc3bf58f3248ef0">stb_vorbis_seek_frame</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;sample_number))
+4922 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+4923 
+4924 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(sample_number&#32;!=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;current_loc)&#32;{
+4925 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>;
+4926 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a1134b580f8da4de94ca6b1de4d37975e">uint32</link>&#32;frame_start&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;current_loc;
+4927 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1a3b2691d598485e0c5e1b4ac56173a0ce">stb_vorbis_get_frame_float</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;&amp;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+4928 &#32;&#32;&#32;&#32;&#32;&#32;assert(sample_number&#32;&gt;&#32;frame_start);
+4929 &#32;&#32;&#32;&#32;&#32;&#32;assert(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_start&#32;+&#32;(<emphasis role="keywordtype">int</emphasis>)&#32;(sample_number-frame_start)&#32;&lt;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_end);
+4930 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;channel_buffer_start&#32;+=&#32;(sample_number&#32;-&#32;frame_start);
+4931 &#32;&#32;&#32;}
+4932 
+4933 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;1;
+4934 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a4c9ff20e01e6270e9cc3bf58f3248ef0"/>    <section>
+    <title>stb_vorbis_seek_frame()</title>
+<indexterm><primary>stb_vorbis_seek_frame</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_seek_frame</secondary></indexterm>
+<para><computeroutput>int stb_vorbis_seek_frame (<link linkend="_structstb__vorbis">stb_vorbis</link> * f, unsigned int sample_number)</computeroutput></para><para>
+Definition at line 4880 of file stb_vorbis.c.</para>
+<programlisting>4881 {
+4882 &#32;&#32;&#32;<link linkend="_stb_8h_1a1134b580f8da4de94ca6b1de4d37975e">uint32</link>&#32;max_frame_samples;
+4883 
+4884 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_stb__vorbis_8c_1a2a9cd26d6325f220d322d7e5347c802b">IS_PUSH_MODE</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>))&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a7f6a5d2c76b796bb56bcf5f41e183dde">VORBIS_invalid_api_mixing</link>);
+4885 
+4886 &#32;&#32;&#32;<emphasis role="comment">//&#32;fast&#32;page-level&#32;search</emphasis>
+4887 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!seek_to_sample_coarse(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;sample_number))
+4888 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+4889 
+4890 &#32;&#32;&#32;assert(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;current_loc_valid);
+4891 &#32;&#32;&#32;assert(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;current_loc&#32;&lt;=&#32;sample_number);
+4892 
+4893 &#32;&#32;&#32;<emphasis role="comment">//&#32;linear&#32;search&#32;for&#32;the&#32;relevant&#32;packet</emphasis>
+4894 &#32;&#32;&#32;max_frame_samples&#32;=&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;blocksize_1*3&#32;-&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;blocksize_0)&#32;&gt;&gt;&#32;2;
+4895 &#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;current_loc&#32;&lt;&#32;sample_number)&#32;{
+4896 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;left_start,&#32;left_end,&#32;right_start,&#32;right_end,&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>,&#32;frame_samples;
+4897 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!peek_decode_initial(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;&amp;left_start,&#32;&amp;left_end,&#32;&amp;right_start,&#32;&amp;right_end,&#32;&amp;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>))
+4898 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a08640b74e73325d965e69da1a2752c7a">VORBIS_seek_failed</link>);
+4899 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;calculate&#32;the&#32;number&#32;of&#32;samples&#32;returned&#32;by&#32;the&#32;next&#32;frame</emphasis>
+4900 &#32;&#32;&#32;&#32;&#32;&#32;frame_samples&#32;=&#32;right_start&#32;-&#32;left_start;
+4901 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;current_loc&#32;+&#32;frame_samples&#32;&gt;&#32;sample_number)&#32;{
+4902 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;1;&#32;<emphasis role="comment">//&#32;the&#32;next&#32;frame&#32;will&#32;contain&#32;the&#32;sample</emphasis>
+4903 &#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;current_loc&#32;+&#32;frame_samples&#32;+&#32;max_frame_samples&#32;&gt;&#32;sample_number)&#32;{
+4904 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;there&apos;s&#32;a&#32;chance&#32;the&#32;frame&#32;after&#32;this&#32;could&#32;contain&#32;the&#32;sample</emphasis>
+4905 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;vorbis_pump_first_frame(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+4906 &#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+4907 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;this&#32;frame&#32;is&#32;too&#32;early&#32;to&#32;be&#32;relevant</emphasis>
+4908 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;current_loc&#32;+=&#32;frame_samples;
+4909 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;previous_length&#32;=&#32;0;
+4910 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;maybe_start_packet(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+4911 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;flush_packet(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+4912 &#32;&#32;&#32;&#32;&#32;&#32;}
+4913 &#32;&#32;&#32;}
+4914 &#32;&#32;&#32;<emphasis role="comment">//&#32;the&#32;next&#32;frame&#32;should&#32;start&#32;with&#32;the&#32;sample</emphasis>
+4915 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;current_loc&#32;!=&#32;sample_number)&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a08640b74e73325d965e69da1a2752c7a">VORBIS_seek_failed</link>);
+4916 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;1;
+4917 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a4e7cb71cdf8073dc887c356e52c3aacd"/>    <section>
+    <title>stb_vorbis_seek_start()</title>
+<indexterm><primary>stb_vorbis_seek_start</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_seek_start</secondary></indexterm>
+<para><computeroutput>int stb_vorbis_seek_start (<link linkend="_structstb__vorbis">stb_vorbis</link> * f)</computeroutput></para><para>
+Definition at line 4936 of file stb_vorbis.c.</para>
+<programlisting>4937 {
+4938 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_stb__vorbis_8c_1a2a9cd26d6325f220d322d7e5347c802b">IS_PUSH_MODE</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>))&#32;{&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a7f6a5d2c76b796bb56bcf5f41e183dde">VORBIS_invalid_api_mixing</link>);&#32;}
+4939 &#32;&#32;&#32;set_file_offset(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;first_audio_page_offset);
+4940 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;previous_length&#32;=&#32;0;
+4941 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;first_decode&#32;=&#32;<link linkend="_stb__vorbis_8c_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+4942 &#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;next_seg&#32;=&#32;-1;
+4943 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;vorbis_pump_first_frame(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+4944 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1adb847e190ac0976bb84d78e00b8048b0"/>    <section>
+    <title>stb_vorbis_stream_length_in_samples()</title>
+<indexterm><primary>stb_vorbis_stream_length_in_samples</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_stream_length_in_samples</secondary></indexterm>
+<para><computeroutput>unsigned int stb_vorbis_stream_length_in_samples (<link linkend="_structstb__vorbis">stb_vorbis</link> * f)</computeroutput></para><para>
+Definition at line 4946 of file stb_vorbis.c.</para>
+<programlisting>4947 {
+4948 &#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;restore_offset,&#32;previous_safe;
+4949 &#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a432111147038972f06e049e18a837002">end</link>,&#32;last_page_loc;
+4950 
+4951 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_stb__vorbis_8c_1a2a9cd26d6325f220d322d7e5347c802b">IS_PUSH_MODE</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>))&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a7f6a5d2c76b796bb56bcf5f41e183dde">VORBIS_invalid_api_mixing</link>);
+4952 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;total_samples)&#32;{
+4953 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;last;
+4954 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a1134b580f8da4de94ca6b1de4d37975e">uint32</link>&#32;lo,hi;
+4955 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;header[6];
+4956 
+4957 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;first,&#32;store&#32;the&#32;current&#32;decode&#32;position&#32;so&#32;we&#32;can&#32;restore&#32;it</emphasis>
+4958 &#32;&#32;&#32;&#32;&#32;&#32;restore_offset&#32;=&#32;<link linkend="_stb__vorbis_8c_1a91bf63ae7792007878687351cc9eb02b">stb_vorbis_get_file_offset</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+4959 
+4960 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;now&#32;we&#32;want&#32;to&#32;seek&#32;back&#32;64K&#32;from&#32;the&#32;end&#32;(the&#32;last&#32;page&#32;must</emphasis>
+4961 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;be&#32;at&#32;most&#32;a&#32;little&#32;less&#32;than&#32;64K,&#32;but&#32;let&apos;s&#32;allow&#32;a&#32;little&#32;slop)</emphasis>
+4962 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;stream_len&#32;&gt;=&#32;65536&#32;&amp;&amp;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;stream_len-65536&#32;&gt;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;first_audio_page_offset)
+4963 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;previous_safe&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;stream_len&#32;-&#32;65536;
+4964 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+4965 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;previous_safe&#32;=&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;first_audio_page_offset;
+4966 
+4967 &#32;&#32;&#32;&#32;&#32;&#32;set_file_offset(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;previous_safe);
+4968 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;previous_safe&#32;is&#32;now&#32;our&#32;candidate&#32;&apos;earliest&#32;known&#32;place&#32;that&#32;seeking</emphasis>
+4969 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;to&#32;will&#32;lead&#32;to&#32;the&#32;final&#32;page&apos;</emphasis>
+4970 
+4971 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!vorbis_find_page(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;&amp;<link linkend="_glad_8h_1a432111147038972f06e049e18a837002">end</link>,&#32;&amp;last))&#32;{
+4972 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;if&#32;we&#32;can&apos;t&#32;find&#32;a&#32;page,&#32;we&apos;re&#32;hosed!</emphasis>
+4973 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;error&#32;=&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a555029d9dbfc200a2e5bd155089eb30c">VORBIS_cant_find_last_page</link>;
+4974 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;total_samples&#32;=&#32;0xffffffff;
+4975 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;done;
+4976 &#32;&#32;&#32;&#32;&#32;&#32;}
+4977 
+4978 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;check&#32;if&#32;there&#32;are&#32;more&#32;pages</emphasis>
+4979 &#32;&#32;&#32;&#32;&#32;&#32;last_page_loc&#32;=&#32;<link linkend="_stb__vorbis_8c_1a91bf63ae7792007878687351cc9eb02b">stb_vorbis_get_file_offset</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+4980 
+4981 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;stop&#32;when&#32;the&#32;last_page&#32;flag&#32;is&#32;set,&#32;not&#32;when&#32;we&#32;reach&#32;eof;</emphasis>
+4982 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;this&#32;allows&#32;us&#32;to&#32;stop&#32;short&#32;of&#32;a&#32;&apos;file_section&apos;&#32;end&#32;without</emphasis>
+4983 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;explicitly&#32;checking&#32;the&#32;length&#32;of&#32;the&#32;section</emphasis>
+4984 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(!last)&#32;{
+4985 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;set_file_offset(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_glad_8h_1a432111147038972f06e049e18a837002">end</link>);
+4986 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!vorbis_find_page(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;&amp;<link linkend="_glad_8h_1a432111147038972f06e049e18a837002">end</link>,&#32;&amp;last))&#32;{
+4987 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;the&#32;last&#32;page&#32;we&#32;found&#32;didn&apos;t&#32;have&#32;the&#32;&apos;last&#32;page&apos;&#32;flag</emphasis>
+4988 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;set.&#32;whoops!</emphasis>
+4989 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+4990 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+4991 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//previous_safe&#32;=&#32;last_page_loc+1;&#32;//&#32;NOTE:&#32;not&#32;used&#32;after&#32;this&#32;point,&#32;but&#32;note&#32;for&#32;debugging</emphasis>
+4992 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;last_page_loc&#32;=&#32;<link linkend="_stb__vorbis_8c_1a91bf63ae7792007878687351cc9eb02b">stb_vorbis_get_file_offset</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+4993 &#32;&#32;&#32;&#32;&#32;&#32;}
+4994 
+4995 &#32;&#32;&#32;&#32;&#32;&#32;set_file_offset(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;last_page_loc);
+4996 
+4997 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;parse&#32;the&#32;header</emphasis>
+4998 &#32;&#32;&#32;&#32;&#32;&#32;getn(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;*)header,&#32;6);
+4999 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;extract&#32;the&#32;absolute&#32;granule&#32;position</emphasis>
+5000 &#32;&#32;&#32;&#32;&#32;&#32;lo&#32;=&#32;get32(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+5001 &#32;&#32;&#32;&#32;&#32;&#32;hi&#32;=&#32;get32(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+5002 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(lo&#32;==&#32;0xffffffff&#32;&amp;&amp;&#32;hi&#32;==&#32;0xffffffff)&#32;{
+5003 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;error&#32;=&#32;<link linkend="_stb__vorbis_8c_1a2827ae29a055de005d8769ef0e0cd644a555029d9dbfc200a2e5bd155089eb30c">VORBIS_cant_find_last_page</link>;
+5004 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;total_samples&#32;=&#32;<link linkend="_stb__vorbis_8c_1a143d61ff41bad3fa7c278a440d02e271">SAMPLE_unknown</link>;
+5005 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;done;
+5006 &#32;&#32;&#32;&#32;&#32;&#32;}
+5007 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(hi)
+5008 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;lo&#32;=&#32;0xfffffffe;&#32;<emphasis role="comment">//&#32;saturate</emphasis>
+5009 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;total_samples&#32;=&#32;lo;
+5010 
+5011 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;p_last.page_start&#32;=&#32;last_page_loc;
+5012 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;p_last.page_end&#32;&#32;&#32;=&#32;<link linkend="_glad_8h_1a432111147038972f06e049e18a837002">end</link>;
+5013 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;p_last.last_decoded_sample&#32;=&#32;lo;
+5014 
+5015 &#32;&#32;&#32;&#32;&#32;done:
+5016 &#32;&#32;&#32;&#32;&#32;&#32;set_file_offset(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;restore_offset);
+5017 &#32;&#32;&#32;}
+5018 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;total_samples&#32;==&#32;<link linkend="_stb__vorbis_8c_1a143d61ff41bad3fa7c278a440d02e271">SAMPLE_unknown</link>&#32;?&#32;0&#32;:&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;total_samples;
+5019 }
+</programlisting>    </section><anchor xml:id="_stb__vorbis_8c_1a083b951dcf8c73812332bf2034de412b"/>    <section>
+    <title>stb_vorbis_stream_length_in_seconds()</title>
+<indexterm><primary>stb_vorbis_stream_length_in_seconds</primary><secondary>stb_vorbis.c</secondary></indexterm>
+<indexterm><primary>stb_vorbis.c</primary><secondary>stb_vorbis_stream_length_in_seconds</secondary></indexterm>
+<para><computeroutput>float stb_vorbis_stream_length_in_seconds (<link linkend="_structstb__vorbis">stb_vorbis</link> * f)</computeroutput></para><para>
+Definition at line 5021 of file stb_vorbis.c.</para>
+<programlisting>5022 {
+5023 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_stb__vorbis_8c_1adb847e190ac0976bb84d78e00b8048b0">stb_vorbis_stream_length_in_samples</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)&#32;/&#32;(float)&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>-&gt;sample_rate;
+5024 }
+</programlisting></section>
+</section>
+</section>

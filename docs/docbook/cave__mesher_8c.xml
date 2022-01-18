@@ -1,0 +1,992 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_cave__mesher_8c">
+<title>deps/stb/tests/caveview/cave_mesher.c File Reference</title>
+<indexterm><primary>deps/stb/tests/caveview/cave_mesher.c</primary></indexterm>
+<programlisting>#include &quot;stb_gl.h&quot;
+#include &quot;stb_image.h&quot;
+#include &quot;stb_glprog.h&quot;
+#include &quot;caveview.h&quot;
+#include &quot;cave_parse.h&quot;
+#include &quot;stb.h&quot;
+#include &quot;sdl.h&quot;
+#include &quot;sdl_thread.h&quot;
+#include &lt;math.h&gt;
+#include &quot;stb_voxel_render.h&quot;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structcached__converted__chunk">cached_converted_chunk</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_cave__mesher_8c_1aae20e9fa62595e4621ebf19a38824f9f">STB_GLEXT_DECLARE</link>   &quot;glext_list.h&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__mesher_8c_1a974b06da70220834204261702f3232bf">STBVOX_CONFIG_MODE</link>   1</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__mesher_8c_1a81687755688954f9ef5707413c6d643c">STBVOX_CONFIG_OPENGL_MODELVIEW</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__mesher_8c_1a734835ebe7e96d37cf10a8cfb867f28e">STBVOX_CONFIG_PREFER_TEXBUFFER</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__mesher_8c_1afbfd39d19102078d83c276346db11790">STBVOX_CONFIG_FOG_SMOOTHSTEP</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__mesher_8c_1a1216223b9bb3998115075e494d2f14e4">STBVOX_CONFIG_DISABLE_TEX2</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__mesher_8c_1a98386a77a0c5d01dacddbb177283a5cb">STBVOX_CONFIG_ROTATION_IN_LIGHTING</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__mesher_8c_1a2e3162139b42678f82424d8e2c2dc7ff">STB_VOXEL_RENDER_IMPLEMENTATION</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__mesher_8c_1a5d3aa76dea5c5fcbdee0e58ed42f2dfe">FAST_CHUNK</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__mesher_8c_1acf9495e0af27842ed032cb05edcb9126">IN_PLACE</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__mesher_8c_1af205db34cd0a183e5e3481c4f8baa716">SKIP_TERRAIN</link>   0</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__mesher_8c_1af27f13c9b204e636f39b2ffa47096911">SUPERCHUNK_X</link>   4</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__mesher_8c_1af2b8c9fb9e00cadb61f99d69b0dc71f4">SUPERCHUNK_Y</link>   4</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__mesher_8c_1a3d38bc2fa620f958e39c87755218f173">CHUNK_CACHE</link>   64</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Enumerations    </title>
+        <itemizedlist>
+            <listitem><para>enum { 
+<link linkend="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84a8e25f3fef8ddfd9ae47971d91958d83b">C_empty</link>, 
+<link linkend="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84afff8826292ebae88305f433d13066894">C_solid</link>, 
+<link linkend="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84a61eaada366b3b15525272abc143dbfd5">C_trans</link>, 
+<link linkend="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84af21da253d94bc582688921653c467895">C_cross</link>, 
+
+<link linkend="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84a0fcd3f1395447fcee9413f39c0687c76">C_water</link>, 
+<link linkend="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84a209b2a787a7b9ac2a8aa7cbf64df1b49">C_slab</link>, 
+<link linkend="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84a184aff99562d1f8a4c2bb2886e6a88e6">C_stair</link>, 
+<link linkend="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84ad11d3d00256ac1a21a18239adfdc2de6">C_force</link>
+ }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__mesher_8c_1aefd62d461236c6e9ced738eac9d8042c">ods</link> (char *fmt,...)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__mesher_8c_1a147e37fcae806febbdaac22c776d5685">convert_fastchunk_inplace</link> (<link linkend="_structfast__chunk">fast_chunk</link> *fc)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__mesher_8c_1a7bea63cfeb0603fcda8860fe0355fb57">make_converted_fastchunk</link> (<link linkend="_structfast__chunk">fast_chunk</link> *fc, int <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, int <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>, int <link linkend="_structsegment">segment</link>, <link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link> *sv_blocktype, <link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link> *sv_lighting)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__mesher_8c_1af74c70130c88949f4d2bac551594d41f">reset_cache_size</link> (int <link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__mesher_8c_1a65286ae93fc1fc5e6e88af8d2f02a731">deref_fastchunk</link> (<link linkend="_structfast__chunk">fast_chunk</link> *fc)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__mesher_8c_1af4e8c4c0c38242366db62d9936274079">lock_chunk_get_mutex</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__mesher_8c_1afaaad5f587e3275de99ae8ff61b2e18a">unlock_chunk_get_mutex</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_structfast__chunk">fast_chunk</link> * <link linkend="_cave__mesher_8c_1a7c54b9b85359841f7dbe539558bc5aa5">get_converted_fastchunk</link> (int chunk_x, int chunk_y)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__mesher_8c_1a72869edd94d6159ab80497d6fcf71071">make_map_segment_for_superchunk_preconvert</link> (int chunk_x, int chunk_y, int <link linkend="_structsegment">segment</link>, <link linkend="_structfast__chunk">fast_chunk</link> *fc_table[4][4], <link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link> sv_blocktype[34][34][18], <link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link> sv_lighting[34][34][18])</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__mesher_8c_1ab4e47a2bc64f10cabe87c675e9b2bcc5">build_chunk</link> (int chunk_x, int chunk_y, <link linkend="_structfast__chunk">fast_chunk</link> *fc_table[4][4], <link linkend="_structraw__mesh">raw_mesh</link> *rm)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__mesher_8c_1a626c17451761446962cffc9add2ed539">build_stair_rotations</link> (int blocktype, unsigned char *map)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__mesher_8c_1addb3a71c75c33215207185a88be4bb62">build_wool_variations</link> (int bt, unsigned char *map)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__mesher_8c_1adcf4dda69d85bc49b9f4babc57587095">build_wood_variations</link> (int bt, unsigned char *map)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__mesher_8c_1a16709242463cda7c163b826a5da978c5">remap_in_place</link> (int bt, int rm)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__mesher_8c_1a24f0dbbfdca90a74902964396c137bac">mesh_init</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>unsigned char <link linkend="_cave__mesher_8c_1adbdd9089890d950d54cd125d4464eab7">geom_map</link> []</para>
+</listitem>
+            <listitem><para>unsigned char <link linkend="_cave__mesher_8c_1a17dd80d3766327026eae4547eae231fd">minecraft_info</link> [256][7]</para>
+</listitem>
+            <listitem><para>unsigned char <link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link> [256][6]</para>
+</listitem>
+            <listitem><para>unsigned char <link linkend="_cave__mesher_8c_1af38282980cc171915d4acfe5f3e03c90">effective_blocktype</link> [256]</para>
+</listitem>
+            <listitem><para>unsigned char <link linkend="_cave__mesher_8c_1a33fdd49440ce0309319d973be49dfd0a">minecraft_color_for_blocktype</link> [256][6]</para>
+</listitem>
+            <listitem><para>unsigned char <link linkend="_cave__mesher_8c_1ae01a977fd1f7c889f186baee1076b732">minecraft_geom_for_blocktype</link> [256]</para>
+</listitem>
+            <listitem><para><link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link> <link linkend="_cave__mesher_8c_1a165e793676d312d0c37aa23551127f48">build_buffer</link> [<link linkend="_caveview_8h_1afa950acf77b651e25839f9fffcc15e3a">BUILD_BUFFER_SIZE</link>]</para>
+</listitem>
+            <listitem><para><link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link> <link linkend="_cave__mesher_8c_1aa27715cf788c95d0334051f4bfe7ade9">face_buffer</link> [<link linkend="_caveview_8h_1a4d65dca8ffc1cd92783b26732044ba59">FACE_BUFFER_SIZE</link>]</para>
+</listitem>
+            <listitem><para>unsigned char <link linkend="_cave__mesher_8c_1a2015282d41ced055a462520de780e814">remap_data</link> [16][16]</para>
+</listitem>
+            <listitem><para>unsigned char <link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link> [256]</para>
+</listitem>
+            <listitem><para>unsigned char <link linkend="_cave__mesher_8c_1a1b58e7e250316c8d1a2fe21fafaa5fcd">rotate_data</link> [4] = { 1,3,2,0 }</para>
+</listitem>
+            <listitem><para><link linkend="_structcached__converted__chunk">cached_converted_chunk</link> <link linkend="_cave__mesher_8c_1ab799c6e56a65a1a9a2c089c9d4b81de9">chunk_cache</link> [<link linkend="_cave__mesher_8c_1a3d38bc2fa620f958e39c87755218f173">CHUNK_CACHE</link>][<link linkend="_cave__mesher_8c_1a3d38bc2fa620f958e39c87755218f173">CHUNK_CACHE</link>]</para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__mesher_8c_1adc2cfac3a357c5424aafa9d351a2e6ea">cache_size</link> = <link linkend="_cave__mesher_8c_1a3d38bc2fa620f958e39c87755218f173">CHUNK_CACHE</link></para>
+</listitem>
+            <listitem><para>SDL_mutex * <link linkend="_cave__mesher_8c_1a784ba0617dbc4eec455188b9671295aa">chunk_cache_mutex</link></para>
+</listitem>
+            <listitem><para>SDL_mutex * <link linkend="_cave__mesher_8c_1a9105640f64bd2fca823fa679f99fb62b">chunk_get_mutex</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__mesher_8c_1a209a4cb1b4169823bf527e2e1410d8a1">next_blocktype</link> = 255</para>
+</listitem>
+            <listitem><para>unsigned char <link linkend="_cave__mesher_8c_1affec1534a3e53c768c48caac2475d930">mc_rot</link> [4] = { 1,3,2,0 }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_cave__mesher_8c_1a3d38bc2fa620f958e39c87755218f173"/>    <section>
+    <title>CHUNK_CACHE</title>
+<indexterm><primary>CHUNK_CACHE</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>CHUNK_CACHE</secondary></indexterm>
+<para><computeroutput>#define CHUNK_CACHE   64</computeroutput></para><para>
+Definition at line 479 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1a5d3aa76dea5c5fcbdee0e58ed42f2dfe"/>    <section>
+    <title>FAST_CHUNK</title>
+<indexterm><primary>FAST_CHUNK</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>FAST_CHUNK</secondary></indexterm>
+<para><computeroutput>#define FAST_CHUNK</computeroutput></para><para>
+Definition at line 37 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1acf9495e0af27842ed032cb05edcb9126"/>    <section>
+    <title>IN_PLACE</title>
+<indexterm><primary>IN_PLACE</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>IN_PLACE</secondary></indexterm>
+<para><computeroutput>#define IN_PLACE</computeroutput></para><para>
+Definition at line 38 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1af205db34cd0a183e5e3481c4f8baa716"/>    <section>
+    <title>SKIP_TERRAIN</title>
+<indexterm><primary>SKIP_TERRAIN</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>SKIP_TERRAIN</secondary></indexterm>
+<para><computeroutput>#define SKIP_TERRAIN   0</computeroutput></para><para>
+Definition at line 40 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1aae20e9fa62595e4621ebf19a38824f9f"/>    <section>
+    <title>STB_GLEXT_DECLARE</title>
+<indexterm><primary>STB_GLEXT_DECLARE</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>STB_GLEXT_DECLARE</secondary></indexterm>
+<para><computeroutput>#define STB_GLEXT_DECLARE   &quot;glext_list.h&quot;</computeroutput></para><para>
+Definition at line 4 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1a2e3162139b42678f82424d8e2c2dc7ff"/>    <section>
+    <title>STB_VOXEL_RENDER_IMPLEMENTATION</title>
+<indexterm><primary>STB_VOXEL_RENDER_IMPLEMENTATION</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>STB_VOXEL_RENDER_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define STB_VOXEL_RENDER_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 31 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1a1216223b9bb3998115075e494d2f14e4"/>    <section>
+    <title>STBVOX_CONFIG_DISABLE_TEX2</title>
+<indexterm><primary>STBVOX_CONFIG_DISABLE_TEX2</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>STBVOX_CONFIG_DISABLE_TEX2</secondary></indexterm>
+<para><computeroutput>#define STBVOX_CONFIG_DISABLE_TEX2</computeroutput></para><para>
+Definition at line 27 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1afbfd39d19102078d83c276346db11790"/>    <section>
+    <title>STBVOX_CONFIG_FOG_SMOOTHSTEP</title>
+<indexterm><primary>STBVOX_CONFIG_FOG_SMOOTHSTEP</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>STBVOX_CONFIG_FOG_SMOOTHSTEP</secondary></indexterm>
+<para><computeroutput>#define STBVOX_CONFIG_FOG_SMOOTHSTEP</computeroutput></para><para>
+Definition at line 23 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1a974b06da70220834204261702f3232bf"/>    <section>
+    <title>STBVOX_CONFIG_MODE</title>
+<indexterm><primary>STBVOX_CONFIG_MODE</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>STBVOX_CONFIG_MODE</secondary></indexterm>
+<para><computeroutput>#define STBVOX_CONFIG_MODE   1</computeroutput></para><para>
+Definition at line 19 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1a81687755688954f9ef5707413c6d643c"/>    <section>
+    <title>STBVOX_CONFIG_OPENGL_MODELVIEW</title>
+<indexterm><primary>STBVOX_CONFIG_OPENGL_MODELVIEW</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>STBVOX_CONFIG_OPENGL_MODELVIEW</secondary></indexterm>
+<para><computeroutput>#define STBVOX_CONFIG_OPENGL_MODELVIEW</computeroutput></para><para>
+Definition at line 20 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1a734835ebe7e96d37cf10a8cfb867f28e"/>    <section>
+    <title>STBVOX_CONFIG_PREFER_TEXBUFFER</title>
+<indexterm><primary>STBVOX_CONFIG_PREFER_TEXBUFFER</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>STBVOX_CONFIG_PREFER_TEXBUFFER</secondary></indexterm>
+<para><computeroutput>#define STBVOX_CONFIG_PREFER_TEXBUFFER</computeroutput></para><para>
+Definition at line 21 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1a98386a77a0c5d01dacddbb177283a5cb"/>    <section>
+    <title>STBVOX_CONFIG_ROTATION_IN_LIGHTING</title>
+<indexterm><primary>STBVOX_CONFIG_ROTATION_IN_LIGHTING</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>STBVOX_CONFIG_ROTATION_IN_LIGHTING</secondary></indexterm>
+<para><computeroutput>#define STBVOX_CONFIG_ROTATION_IN_LIGHTING</computeroutput></para><para>
+Definition at line 29 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1af27f13c9b204e636f39b2ffa47096911"/>    <section>
+    <title>SUPERCHUNK_X</title>
+<indexterm><primary>SUPERCHUNK_X</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>SUPERCHUNK_X</secondary></indexterm>
+<para><computeroutput>#define SUPERCHUNK_X   4</computeroutput></para><para>
+Definition at line 325 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1af2b8c9fb9e00cadb61f99d69b0dc71f4"/>    <section>
+    <title>SUPERCHUNK_Y</title>
+<indexterm><primary>SUPERCHUNK_Y</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>SUPERCHUNK_Y</secondary></indexterm>
+<para><computeroutput>#define SUPERCHUNK_Y   4</computeroutput></para><para>
+Definition at line 326 of file cave_mesher.c.</para>
+</section>
+</section>
+<section>
+<title>Enumeration Type Documentation</title>
+<anchor xml:id="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84"/>    <section>
+    <title>anonymous enum</title>
+<para><computeroutput>anonymous enum</computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>C_empty</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>C_empty</secondary></indexterm>
+<anchor xml:id="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84a8e25f3fef8ddfd9ae47971d91958d83b"/>C_empty</entry><entry></entry></row><row><entry><indexterm><primary>C_solid</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>C_solid</secondary></indexterm>
+<anchor xml:id="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84afff8826292ebae88305f433d13066894"/>C_solid</entry><entry></entry></row><row><entry><indexterm><primary>C_trans</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>C_trans</secondary></indexterm>
+<anchor xml:id="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84a61eaada366b3b15525272abc143dbfd5"/>C_trans</entry><entry></entry></row><row><entry><indexterm><primary>C_cross</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>C_cross</secondary></indexterm>
+<anchor xml:id="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84af21da253d94bc582688921653c467895"/>C_cross</entry><entry></entry></row><row><entry><indexterm><primary>C_water</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>C_water</secondary></indexterm>
+<anchor xml:id="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84a0fcd3f1395447fcee9413f39c0687c76"/>C_water</entry><entry></entry></row><row><entry><indexterm><primary>C_slab</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>C_slab</secondary></indexterm>
+<anchor xml:id="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84a209b2a787a7b9ac2a8aa7cbf64df1b49"/>C_slab</entry><entry></entry></row><row><entry><indexterm><primary>C_stair</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>C_stair</secondary></indexterm>
+<anchor xml:id="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84a184aff99562d1f8a4c2bb2886e6a88e6"/>C_stair</entry><entry></entry></row><row><entry><indexterm><primary>C_force</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>C_force</secondary></indexterm>
+<anchor xml:id="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84ad11d3d00256ac1a21a18239adfdc2de6"/>C_force</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 45 of file cave_mesher.c.</para>
+<programlisting>46 {
+47 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84a8e25f3fef8ddfd9ae47971d91958d83b">C_empty</link>,
+48 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84afff8826292ebae88305f433d13066894">C_solid</link>,
+49 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84a61eaada366b3b15525272abc143dbfd5">C_trans</link>,
+50 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84af21da253d94bc582688921653c467895">C_cross</link>,
+51 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84a0fcd3f1395447fcee9413f39c0687c76">C_water</link>,
+52 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84a209b2a787a7b9ac2a8aa7cbf64df1b49">C_slab</link>,
+53 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84a184aff99562d1f8a4c2bb2886e6a88e6">C_stair</link>,
+54 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84ad11d3d00256ac1a21a18239adfdc2de6">C_force</link>,
+55 };
+</programlisting></section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_cave__mesher_8c_1ab4e47a2bc64f10cabe87c675e9b2bcc5"/>    <section>
+    <title>build_chunk()</title>
+<indexterm><primary>build_chunk</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>build_chunk</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> build_chunk (int chunk_x, int chunk_y, <link linkend="_structfast__chunk">fast_chunk</link> * fc_table[4][4], <link linkend="_structraw__mesh">raw_mesh</link> * rm)</computeroutput></para><para>
+Definition at line 602 of file cave_mesher.c.</para>
+<programlisting>603 {
+604 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>,<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>;
+605 &#32;&#32;&#32;<link linkend="_structstbvox__input__description">stbvox_input_description</link>&#32;*map;
+606 
+607 <emphasis role="preprocessor">&#32;&#32;&#32;#ifdef&#32;VHEIGHT_TEST</emphasis>
+608 &#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;vheight[34][34][18];
+609 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+610 
+611 <emphasis role="preprocessor">&#32;&#32;&#32;#ifndef&#32;STBVOX_CONFIG_DISABLE_TEX2</emphasis>
+612 &#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;tex2_choice[34][34][18];
+613 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+614 
+615 &#32;&#32;&#32;assert((chunk_x&#32;&amp;&#32;1)&#32;==&#32;0);
+616 &#32;&#32;&#32;assert((chunk_y&#32;&amp;&#32;1)&#32;==&#32;0);
+617 
+618 &#32;&#32;&#32;rm-&gt;<link linkend="_structraw__mesh_1a2d8a1b1dea7e8a743e0f5aafb434befb">cx</link>&#32;=&#32;chunk_x;
+619 &#32;&#32;&#32;rm-&gt;<link linkend="_structraw__mesh_1a9098748aa135ddeeb362867175cc6751">cy</link>&#32;=&#32;chunk_y;
+620 
+621 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a089559775ad9ffc7671d147ef40f6509">stbvox_set_input_stride</link>(&amp;rm-&gt;<link linkend="_structraw__mesh_1a39eed89ae7fec0a09b73e75946c57640">mm</link>,&#32;34*18,&#32;18);
+622 
+623 &#32;&#32;&#32;assert(rm-&gt;<link linkend="_structraw__mesh_1a39eed89ae7fec0a09b73e75946c57640">mm</link>.<link linkend="_structstbvox__mesh__maker_1ae83f21625eef0fb8db4d55900b1e8d74">input</link>.<link linkend="_structstbvox__input__description_1a18e00a30f954f1ab1a1a5ad69e35b8ee">geometry</link>&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+624 
+625 &#32;&#32;&#32;map&#32;=&#32;<link linkend="_stb__voxel__render_8h_1adadf81990fab203a9b48c738922899e1">stbvox_get_input_description</link>(&amp;rm-&gt;<link linkend="_structraw__mesh_1a39eed89ae7fec0a09b73e75946c57640">mm</link>);
+626 &#32;&#32;&#32;map-&gt;<link linkend="_structstbvox__input__description_1a85cf8f5f29e98cd445900b131a9a8a8d">block_tex1_face</link>&#32;=&#32;<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>;
+627 &#32;&#32;&#32;map-&gt;<link linkend="_structstbvox__input__description_1a4cba1da418a53a010b75d6cee593aece">block_color_face</link>&#32;=&#32;<link linkend="_cave__mesher_8c_1a33fdd49440ce0309319d973be49dfd0a">minecraft_color_for_blocktype</link>;
+628 &#32;&#32;&#32;map-&gt;<link linkend="_structstbvox__input__description_1acdcebc8d321327f365bbd3a3468f7f2d">block_geometry</link>&#32;=&#32;<link linkend="_cave__mesher_8c_1ae01a977fd1f7c889f186baee1076b732">minecraft_geom_for_blocktype</link>;
+629 
+630 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a34226517e08ca1da34b39d34a5c31031">stbvox_reset_buffers</link>(&amp;rm-&gt;<link linkend="_structraw__mesh_1a39eed89ae7fec0a09b73e75946c57640">mm</link>);
+631 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a3b24ab8855010267a0e93541d1673fb9">stbvox_set_buffer</link>(&amp;rm-&gt;<link linkend="_structraw__mesh_1a39eed89ae7fec0a09b73e75946c57640">mm</link>,&#32;0,&#32;0,&#32;rm-&gt;<link linkend="_structraw__mesh_1aeea914666948a38adf71765721139455">build_buffer</link>,&#32;<link linkend="_caveview_8h_1afa950acf77b651e25839f9fffcc15e3a">BUILD_BUFFER_SIZE</link>);
+632 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a3b24ab8855010267a0e93541d1673fb9">stbvox_set_buffer</link>(&amp;rm-&gt;<link linkend="_structraw__mesh_1a39eed89ae7fec0a09b73e75946c57640">mm</link>,&#32;0,&#32;1,&#32;rm-&gt;<link linkend="_structraw__mesh_1a5e8e2e14af2f1cfa02d66f7a2fcb0a81">face_buffer</link>&#32;,&#32;<link linkend="_caveview_8h_1a4d65dca8ffc1cd92783b26732044ba59">FACE_BUFFER_SIZE</link>);
+633 
+634 &#32;&#32;&#32;map-&gt;<link linkend="_structstbvox__input__description_1a68f6d2ab5ba77e7e80021d60a2af7019">blocktype</link>&#32;=&#32;&amp;rm-&gt;<link linkend="_structraw__mesh_1aed4362c13d96da67cf5237df5bed86cc">sv_blocktype</link>[1][1][1];&#32;<emphasis role="comment">//&#32;this&#32;is&#32;(0,0,0),&#32;but&#32;we&#32;need&#32;to&#32;be&#32;able&#32;to&#32;query&#32;off&#32;the&#32;edges</emphasis>
+635 &#32;&#32;&#32;map-&gt;<link linkend="_structstbvox__input__description_1a6b64e4cf0061bfe6dbae7981a002ab77">lighting</link>&#32;=&#32;&amp;rm-&gt;<link linkend="_structraw__mesh_1afb37f5f58e50feb7d873c2ee28dcf00c">sv_lighting</link>[1][1][1];
+636 
+637 &#32;&#32;&#32;<emphasis role="comment">//&#32;fill&#32;in&#32;the&#32;top&#32;two&#32;rows&#32;of&#32;the&#32;buffer</emphasis>
+638 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>=0;&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>&#32;&lt;&#32;34;&#32;++<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)&#32;{
+639 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>=0;&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>&#32;&lt;&#32;34;&#32;++<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)&#32;{
+640 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rm-&gt;<link linkend="_structraw__mesh_1aed4362c13d96da67cf5237df5bed86cc">sv_blocktype</link>[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][16]&#32;=&#32;0;
+641 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rm-&gt;<link linkend="_structraw__mesh_1afb37f5f58e50feb7d873c2ee28dcf00c">sv_lighting</link>&#32;[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][16]&#32;=&#32;255;
+642 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rm-&gt;<link linkend="_structraw__mesh_1aed4362c13d96da67cf5237df5bed86cc">sv_blocktype</link>[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][17]&#32;=&#32;0;
+643 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rm-&gt;<link linkend="_structraw__mesh_1afb37f5f58e50feb7d873c2ee28dcf00c">sv_lighting</link>&#32;[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][17]&#32;=&#32;255;
+644 &#32;&#32;&#32;&#32;&#32;&#32;}
+645 &#32;&#32;&#32;}
+646 
+647 <emphasis role="preprocessor">&#32;&#32;&#32;#ifndef&#32;STBVOX_CONFIG_DISABLE_TEX2</emphasis>
+648 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>=0;&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>&#32;&lt;&#32;34;&#32;++<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)&#32;{
+649 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>=0;&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>&#32;&lt;&#32;34;&#32;++<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)&#32;{
+650 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;px&#32;=&#32;chunk_x*16&#32;+&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>&#32;-&#32;1;
+651 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;py&#32;=&#32;chunk_y*16&#32;+&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>&#32;-&#32;1;
+652 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;dist&#32;=&#32;(float)&#32;sqrt(px*px&#32;+&#32;py*py);
+653 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;<link linkend="_glext_8h_1a4ed25fb4dc5bf1a768a78d2e2f0ca003">s1</link>&#32;=&#32;(float)&#32;sin(dist&#32;/&#32;16),&#32;s2,&#32;s3;
+654 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;dist&#32;=&#32;(float)&#32;sqrt((px-80)*(px-80)&#32;+&#32;(py-50)*(py-50));
+655 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;s2&#32;=&#32;(float)&#32;sin(dist&#32;/&#32;11);
+656 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>=0;&#32;<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>&#32;&lt;&#32;18;&#32;++<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>)&#32;{
+657 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;s3&#32;=&#32;(float)&#32;sin(<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>&#32;*&#32;3.141592&#32;/&#32;8);
+658 
+659 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;s3&#32;=&#32;<link linkend="_glext_8h_1a4ed25fb4dc5bf1a768a78d2e2f0ca003">s1</link>*s2*s3;
+660 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tex2_choice[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>]&#32;=&#32;63&#32;&amp;&#32;(int)&#32;<link linkend="_stb_8h_1ab2a4b1beb0e146a2cd0fed985d185909">stb_linear_remap</link>(s3,-1,1,&#32;-20,83);
+661 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+662 &#32;&#32;&#32;&#32;&#32;&#32;}
+663 &#32;&#32;&#32;}
+664 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+665 
+666 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>=256-16;&#32;<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>&#32;&gt;=&#32;<link linkend="_cave__mesher_8c_1af205db34cd0a183e5e3481c4f8baa716">SKIP_TERRAIN</link>;&#32;<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>&#32;-=&#32;16)
+667 &#32;&#32;&#32;{
+668 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;z0&#32;=&#32;<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>;
+669 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;z1&#32;=&#32;<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>+16;
+670 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(z1&#32;==&#32;256)&#32;z1&#32;=&#32;255;
+671 
+672 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a72869edd94d6159ab80497d6fcf71071">make_map_segment_for_superchunk_preconvert</link>(chunk_x,&#32;chunk_y,&#32;<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>&#32;&gt;&gt;&#32;4,&#32;fc_table,&#32;rm-&gt;<link linkend="_structraw__mesh_1aed4362c13d96da67cf5237df5bed86cc">sv_blocktype</link>,&#32;rm-&gt;<link linkend="_structraw__mesh_1afb37f5f58e50feb7d873c2ee28dcf00c">sv_lighting</link>);
+673 
+674 &#32;&#32;&#32;&#32;&#32;&#32;map-&gt;<link linkend="_structstbvox__input__description_1a68f6d2ab5ba77e7e80021d60a2af7019">blocktype</link>&#32;=&#32;&amp;rm-&gt;<link linkend="_structraw__mesh_1aed4362c13d96da67cf5237df5bed86cc">sv_blocktype</link>[1][1][1-<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>];&#32;<emphasis role="comment">//&#32;specify&#32;location&#32;of&#32;0,0,0&#32;so&#32;that&#32;accessing&#32;z0..z1&#32;gets&#32;right&#32;data</emphasis>
+675 &#32;&#32;&#32;&#32;&#32;&#32;map-&gt;<link linkend="_structstbvox__input__description_1a6b64e4cf0061bfe6dbae7981a002ab77">lighting</link>&#32;=&#32;&amp;rm-&gt;<link linkend="_structraw__mesh_1afb37f5f58e50feb7d873c2ee28dcf00c">sv_lighting</link>[1][1][1-<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>];
+676 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;&#32;&#32;#ifndef&#32;STBVOX_CONFIG_DISABLE_TEX2</emphasis>
+677 &#32;&#32;&#32;&#32;&#32;&#32;map-&gt;<link linkend="_structstbvox__input__description_1a21f1647c23699b973eecb6b2ea50e721">tex2</link>&#32;=&#32;&amp;tex2_choice[1][1][1-<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>];
+678 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;&#32;&#32;#endif</emphasis>
+679 
+680 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;&#32;&#32;#ifdef&#32;VHEIGHT_TEST</emphasis>
+681 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;hacky&#32;test&#32;of&#32;vheight</emphasis>
+682 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>=0;&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>&#32;&lt;&#32;34;&#32;++<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)&#32;{
+683 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>=0;&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>&#32;&lt;&#32;34;&#32;++<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)&#32;{
+684 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>;
+685 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>=0;&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>&#32;&lt;&#32;17;&#32;++<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)&#32;{
+686 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(rm-&gt;<link linkend="_structraw__mesh_1aed4362c13d96da67cf5237df5bed86cc">sv_blocktype</link>[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>]&#32;!=&#32;0&#32;&amp;&amp;&#32;rm-&gt;<link linkend="_structraw__mesh_1aed4362c13d96da67cf5237df5bed86cc">sv_blocktype</link>[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>+1]&#32;==&#32;0)&#32;{
+687 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;topmost&#32;block</emphasis>
+688 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;vheight[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>]&#32;=&#32;rand()&#32;&amp;&#32;255;
+689 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rm-&gt;<link linkend="_structraw__mesh_1aed4362c13d96da67cf5237df5bed86cc">sv_blocktype</link>[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>]&#32;=&#32;168;
+690 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>&#32;&gt;&#32;0&#32;&amp;&amp;&#32;rm-&gt;<link linkend="_structraw__mesh_1aed4362c13d96da67cf5237df5bed86cc">sv_blocktype</link>[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>]&#32;!=&#32;0&#32;&amp;&amp;&#32;rm-&gt;<link linkend="_structraw__mesh_1aed4362c13d96da67cf5237df5bed86cc">sv_blocktype</link>[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>-1]&#32;==&#32;0)&#32;{
+691 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;bottommost&#32;block</emphasis>
+692 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;vheight[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>]&#32;=&#32;((rand()&#32;%&#32;3)&#32;&lt;&lt;&#32;6)&#32;+&#32;((rand()&#32;%&#32;3)&#32;&lt;&lt;&#32;4)&#32;+&#32;((rand()&#32;%&#32;3)&#32;&lt;&lt;&#32;2)&#32;+&#32;(rand()&#32;%&#32;3);
+693 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rm-&gt;<link linkend="_structraw__mesh_1aed4362c13d96da67cf5237df5bed86cc">sv_blocktype</link>[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>]&#32;=&#32;169;
+694 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+695 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+696 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;vheight[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>]&#32;=&#32;<link linkend="_stb__voxel__render_8h_1a7481d3530d34c5048938868910e259e3">STBVOX_MAKE_VHEIGHT</link>(2,2,2,2);&#32;<emphasis role="comment">//&#32;flat&#32;top</emphasis>
+697 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+698 &#32;&#32;&#32;&#32;&#32;&#32;}
+699 &#32;&#32;&#32;&#32;&#32;&#32;map-&gt;<link linkend="_structstbvox__input__description_1a02de8f98d512dc9cef6094ad7571be05">vheight</link>&#32;=&#32;&amp;vheight[1][1][1-<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>];
+700 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;&#32;&#32;#endif</emphasis>
+701 
+702 &#32;&#32;&#32;&#32;&#32;&#32;{
+703 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a63fbb8703cf2c2718e6a0b4a90db00e6">stbvox_set_input_range</link>(&amp;rm-&gt;<link linkend="_structraw__mesh_1a39eed89ae7fec0a09b73e75946c57640">mm</link>,&#32;0,0,z0,&#32;32,32,z1);
+704 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1aae8b2a3e95db09861fef397aeb7cf10d">stbvox_set_default_mesh</link>(&amp;rm-&gt;<link linkend="_structraw__mesh_1a39eed89ae7fec0a09b73e75946c57640">mm</link>,&#32;0);
+705 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1ab792b164e02789bce6e2ba96a4b8f935">stbvox_make_mesh</link>(&amp;rm-&gt;<link linkend="_structraw__mesh_1a39eed89ae7fec0a09b73e75946c57640">mm</link>);
+706 &#32;&#32;&#32;&#32;&#32;&#32;}
+707 
+708 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;copy&#32;the&#32;bottom&#32;two&#32;rows&#32;of&#32;data&#32;up&#32;to&#32;the&#32;top</emphasis>
+709 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>=0;&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>&#32;&lt;&#32;34;&#32;++<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)&#32;{
+710 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>=0;&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>&#32;&lt;&#32;34;&#32;++<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)&#32;{
+711 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rm-&gt;<link linkend="_structraw__mesh_1aed4362c13d96da67cf5237df5bed86cc">sv_blocktype</link>[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][16]&#32;=&#32;rm-&gt;<link linkend="_structraw__mesh_1aed4362c13d96da67cf5237df5bed86cc">sv_blocktype</link>[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][0];
+712 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rm-&gt;<link linkend="_structraw__mesh_1aed4362c13d96da67cf5237df5bed86cc">sv_blocktype</link>[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][17]&#32;=&#32;rm-&gt;<link linkend="_structraw__mesh_1aed4362c13d96da67cf5237df5bed86cc">sv_blocktype</link>[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][1];
+713 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rm-&gt;<link linkend="_structraw__mesh_1afb37f5f58e50feb7d873c2ee28dcf00c">sv_lighting</link>&#32;[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][16]&#32;=&#32;rm-&gt;<link linkend="_structraw__mesh_1afb37f5f58e50feb7d873c2ee28dcf00c">sv_lighting</link>&#32;[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][0];
+714 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rm-&gt;<link linkend="_structraw__mesh_1afb37f5f58e50feb7d873c2ee28dcf00c">sv_lighting</link>&#32;[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][17]&#32;=&#32;rm-&gt;<link linkend="_structraw__mesh_1afb37f5f58e50feb7d873c2ee28dcf00c">sv_lighting</link>&#32;[<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>][<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>][1];
+715 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+716 &#32;&#32;&#32;&#32;&#32;&#32;}
+717 &#32;&#32;&#32;}
+718 
+719 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a4592b690afe4825bfabdfd9ae29fb35e">stbvox_set_mesh_coordinates</link>(&amp;rm-&gt;<link linkend="_structraw__mesh_1a39eed89ae7fec0a09b73e75946c57640">mm</link>,&#32;chunk_x*16,&#32;chunk_y*16,&#32;0);
+720 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a0a8668048f7cca70ef7043261761da90">stbvox_get_transform</link>(&amp;rm-&gt;<link linkend="_structraw__mesh_1a39eed89ae7fec0a09b73e75946c57640">mm</link>,&#32;rm-&gt;<link linkend="_structraw__mesh_1a85966417fa9b2b01fa2deb493d59996a">transform</link>);
+721 
+722 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a63fbb8703cf2c2718e6a0b4a90db00e6">stbvox_set_input_range</link>(&amp;rm-&gt;<link linkend="_structraw__mesh_1a39eed89ae7fec0a09b73e75946c57640">mm</link>,&#32;0,0,0,&#32;32,32,255);
+723 &#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1a0ad8a7764f93c0592671bcf0e246dc6e">stbvox_get_bounds</link>(&amp;rm-&gt;<link linkend="_structraw__mesh_1a39eed89ae7fec0a09b73e75946c57640">mm</link>,&#32;rm-&gt;<link linkend="_structraw__mesh_1ad56f04c63fd9fc1263329916029d6222">bounds</link>);
+724 
+725 &#32;&#32;&#32;rm-&gt;<link linkend="_structraw__mesh_1aaa6e0d90284bfa6172577269e7d1d84a">num_quads</link>&#32;=&#32;<link linkend="_stb__voxel__render_8h_1ace18e150b58146e2ec7ecba5ca0517b6">stbvox_get_quad_count</link>(&amp;rm-&gt;<link linkend="_structraw__mesh_1a39eed89ae7fec0a09b73e75946c57640">mm</link>,&#32;0);
+726 }
+</programlisting>    </section><anchor xml:id="_cave__mesher_8c_1a626c17451761446962cffc9add2ed539"/>    <section>
+    <title>build_stair_rotations()</title>
+<indexterm><primary>build_stair_rotations</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>build_stair_rotations</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> build_stair_rotations (int blocktype, unsigned char * map)</computeroutput></para><para>
+Definition at line 735 of file cave_mesher.c.</para>
+<programlisting>736 {
+737 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+738 
+739 &#32;&#32;&#32;<emphasis role="comment">//&#32;use&#32;the&#32;existing&#32;block&#32;type&#32;for&#32;floor&#32;stairs;&#32;allocate&#32;a&#32;new&#32;type&#32;for&#32;ceil&#32;stairs</emphasis>
+740 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;6;&#32;++i)&#32;{
+741 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a33fdd49440ce0309319d973be49dfd0a">minecraft_color_for_blocktype</link>[<link linkend="_cave__mesher_8c_1a209a4cb1b4169823bf527e2e1410d8a1">next_blocktype</link>][i]&#32;=&#32;<link linkend="_cave__mesher_8c_1a33fdd49440ce0309319d973be49dfd0a">minecraft_color_for_blocktype</link>[blocktype][i];
+742 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>&#32;[<link linkend="_cave__mesher_8c_1a209a4cb1b4169823bf527e2e1410d8a1">next_blocktype</link>][i]&#32;=&#32;<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>&#32;[blocktype][i];
+743 &#32;&#32;&#32;}
+744 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1ae01a977fd1f7c889f186baee1076b732">minecraft_geom_for_blocktype</link>[<link linkend="_cave__mesher_8c_1a209a4cb1b4169823bf527e2e1410d8a1">next_blocktype</link>]&#32;=&#32;(<emphasis role="keywordtype">unsigned</emphasis>&#32;char)&#32;<link linkend="_stb__voxel__render_8h_1a15590f88a985eb242c6dffb8c462983a">STBVOX_MAKE_GEOMETRY</link>(<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3caa5dcab0b072fb42d24d09d3ace41724d">STBVOX_GEOM_ceil_slope_north_is_bottom</link>,&#32;0,&#32;0);
+745 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1ae01a977fd1f7c889f186baee1076b732">minecraft_geom_for_blocktype</link>[&#32;&#32;&#32;&#32;&#32;blocktype]&#32;=&#32;(<emphasis role="keywordtype">unsigned</emphasis>&#32;char)&#32;<link linkend="_stb__voxel__render_8h_1a15590f88a985eb242c6dffb8c462983a">STBVOX_MAKE_GEOMETRY</link>(<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca063a4146fc89954375c7fc7fa39e8747">STBVOX_GEOM_floor_slope_north_is_top</link>,&#32;0,&#32;0);
+746 
+747 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;4;&#32;++i)&#32;{
+748 &#32;&#32;&#32;&#32;&#32;&#32;map[0+i+8]&#32;=&#32;map[0+i]&#32;=&#32;&#32;&#32;&#32;&#32;&#32;blocktype;
+749 &#32;&#32;&#32;&#32;&#32;&#32;map[4+i+8]&#32;=&#32;map[4+i]&#32;=&#32;<link linkend="_cave__mesher_8c_1a209a4cb1b4169823bf527e2e1410d8a1">next_blocktype</link>;
+750 &#32;&#32;&#32;}
+751 &#32;&#32;&#32;--<link linkend="_cave__mesher_8c_1a209a4cb1b4169823bf527e2e1410d8a1">next_blocktype</link>;
+752 }
+</programlisting>    </section><anchor xml:id="_cave__mesher_8c_1adcf4dda69d85bc49b9f4babc57587095"/>    <section>
+    <title>build_wood_variations()</title>
+<indexterm><primary>build_wood_variations</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>build_wood_variations</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> build_wood_variations (int bt, unsigned char * map)</computeroutput></para><para>
+Definition at line 772 of file cave_mesher.c.</para>
+<programlisting>773 {
+774 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i,k;
+775 &#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_truetype__test__win32_8c_1a02b59d9340abbb5f3058556198d6c0fa">tex</link>[4]&#32;=&#32;{&#32;5,&#32;198,&#32;214,&#32;199&#32;};
+776 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;4;&#32;++i)&#32;{
+777 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(i&#32;==&#32;0)
+778 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;map[i]&#32;=&#32;bt;
+779 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+780 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;map[i]&#32;=&#32;<link linkend="_cave__mesher_8c_1a209a4cb1b4169823bf527e2e1410d8a1">next_blocktype</link>;
+781 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(k=0;&#32;k&#32;&lt;&#32;6;&#32;++k)&#32;{
+782 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[<link linkend="_cave__mesher_8c_1a209a4cb1b4169823bf527e2e1410d8a1">next_blocktype</link>][k]&#32;=&#32;<link linkend="_truetype__test__win32_8c_1a02b59d9340abbb5f3058556198d6c0fa">tex</link>[i];
+783 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+784 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1ae01a977fd1f7c889f186baee1076b732">minecraft_geom_for_blocktype</link>[<link linkend="_cave__mesher_8c_1a209a4cb1b4169823bf527e2e1410d8a1">next_blocktype</link>]&#32;=&#32;<link linkend="_cave__mesher_8c_1ae01a977fd1f7c889f186baee1076b732">minecraft_geom_for_blocktype</link>[bt];
+785 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;--<link linkend="_cave__mesher_8c_1a209a4cb1b4169823bf527e2e1410d8a1">next_blocktype</link>;
+786 &#32;&#32;&#32;&#32;&#32;&#32;}
+787 &#32;&#32;&#32;}
+788 &#32;&#32;&#32;map[i]&#32;=&#32;map[i-1];
+789 &#32;&#32;&#32;++i;
+790 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(;&#32;i&#32;&lt;&#32;16;&#32;++i)
+791 &#32;&#32;&#32;&#32;&#32;&#32;map[i]&#32;=&#32;bt;
+792 }
+</programlisting>    </section><anchor xml:id="_cave__mesher_8c_1addb3a71c75c33215207185a88be4bb62"/>    <section>
+    <title>build_wool_variations()</title>
+<indexterm><primary>build_wool_variations</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>build_wool_variations</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> build_wool_variations (int bt, unsigned char * map)</computeroutput></para><para>
+Definition at line 754 of file cave_mesher.c.</para>
+<programlisting>755 {
+756 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i,k;
+757 &#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_truetype__test__win32_8c_1a02b59d9340abbb5f3058556198d6c0fa">tex</link>[16]&#32;=&#32;{&#32;64,&#32;210,&#32;194,&#32;178,&#32;&#32;162,&#32;146,&#32;130,&#32;114,&#32;&#32;225,&#32;209,&#32;193,&#32;177,&#32;&#32;161,&#32;145,&#32;129,&#32;113&#32;};
+758 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;16;&#32;++i)&#32;{
+759 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(i&#32;==&#32;0)
+760 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;map[i]&#32;=&#32;bt;
+761 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+762 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;map[i]&#32;=&#32;<link linkend="_cave__mesher_8c_1a209a4cb1b4169823bf527e2e1410d8a1">next_blocktype</link>;
+763 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(k=0;&#32;k&#32;&lt;&#32;6;&#32;++k)&#32;{
+764 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[<link linkend="_cave__mesher_8c_1a209a4cb1b4169823bf527e2e1410d8a1">next_blocktype</link>][k]&#32;=&#32;<link linkend="_truetype__test__win32_8c_1a02b59d9340abbb5f3058556198d6c0fa">tex</link>[i];
+765 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+766 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1ae01a977fd1f7c889f186baee1076b732">minecraft_geom_for_blocktype</link>[<link linkend="_cave__mesher_8c_1a209a4cb1b4169823bf527e2e1410d8a1">next_blocktype</link>]&#32;=&#32;<link linkend="_cave__mesher_8c_1ae01a977fd1f7c889f186baee1076b732">minecraft_geom_for_blocktype</link>[bt];
+767 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;--<link linkend="_cave__mesher_8c_1a209a4cb1b4169823bf527e2e1410d8a1">next_blocktype</link>;
+768 &#32;&#32;&#32;&#32;&#32;&#32;}
+769 &#32;&#32;&#32;}
+770 }
+</programlisting>    </section><anchor xml:id="_cave__mesher_8c_1a147e37fcae806febbdaac22c776d5685"/>    <section>
+    <title>convert_fastchunk_inplace()</title>
+<indexterm><primary>convert_fastchunk_inplace</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>convert_fastchunk_inplace</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> convert_fastchunk_inplace (<link linkend="_structfast__chunk">fast_chunk</link> * fc)</computeroutput></para><para>
+Definition at line 332 of file cave_mesher.c.</para>
+<programlisting>333 {
+334 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+335 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;num_blocks=0,&#32;<link linkend="_cave__render_8c_1a863c86bdfd96bf9c461846689c2614aa">step</link>=0;
+336 &#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;rot[4096];
+337 <emphasis role="preprocessor">&#32;&#32;&#32;#ifndef&#32;IN_PLACE</emphasis>
+338 &#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;*storage;
+339 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+340 
+341 &#32;&#32;&#32;memset(rot,&#32;0,&#32;4096);
+342 
+343 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;16;&#32;++i)
+344 &#32;&#32;&#32;&#32;&#32;&#32;num_blocks&#32;+=&#32;fc-&gt;<link linkend="_structfast__chunk_1aa3910677b48fdbfa3e5222b458aba2c8">blockdata</link>[i]&#32;!=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+345 
+346 &#32;&#32;&#32;#ifndef&#32;<link linkend="_cave__mesher_8c_1acf9495e0af27842ed032cb05edcb9126">IN_PLACE</link>
+347 &#32;&#32;&#32;storage&#32;=&#32;<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>(16*16*16*2&#32;*&#32;num_blocks);
+348 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+349 
+350 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;16;&#32;++i)&#32;{
+351 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fc-&gt;<link linkend="_structfast__chunk_1aa3910677b48fdbfa3e5222b458aba2c8">blockdata</link>[i])&#32;{
+352 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;o=0;
+353 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;*bd,*dd,*lt,*sky;
+354 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;*out,&#32;*outb;
+355 
+356 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;this&#32;ordering&#32;allows&#32;us&#32;to&#32;determine&#32;which&#32;data&#32;we&#32;can&#32;safely&#32;overwrite&#32;for&#32;in-place&#32;processing</emphasis>
+357 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;bd&#32;=&#32;fc-&gt;<link linkend="_structfast__chunk_1aa3910677b48fdbfa3e5222b458aba2c8">blockdata</link>[i];
+358 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;dd&#32;=&#32;fc-&gt;<link linkend="_structfast__chunk_1a537008bbe2af7d45e3c62bbf911ace41">data</link>[i];
+359 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;lt&#32;=&#32;fc-&gt;<link linkend="_structfast__chunk_1a3bfc4a7b95a52dfc31599b6e7cff3707">light</link>[i];
+360 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;sky&#32;=&#32;fc-&gt;<link linkend="_structfast__chunk_1a612a4dca5a8ade5e6d1738fc39d5e42a">skylight</link>[i];
+361 
+362 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;#ifdef&#32;IN_PLACE</emphasis>
+363 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;out&#32;=&#32;bd;
+364 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;#else</emphasis>
+365 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;out&#32;=&#32;storage&#32;+&#32;16*16*16*2*<link linkend="_cave__render_8c_1a863c86bdfd96bf9c461846689c2614aa">step</link>;
+366 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;#endif</emphasis>
+367 
+368 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;bd&#32;is&#32;written&#32;in&#32;place,&#32;but&#32;also&#32;reads&#32;from&#32;dd</emphasis>
+369 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(o=0;&#32;o&#32;&lt;&#32;16*16*16/2;&#32;o&#32;+=&#32;1)&#32;{
+370 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>,<link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>;
+371 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;d&#32;=&#32;dd[o];
+372 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>&#32;=&#32;bd[o*2+0];
+373 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>&#32;=&#32;bd[o*2+1];
+374 
+375 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link>[<link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>])
+376 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+377 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//unsigned&#32;char&#32;d&#32;=&#32;bd[o]&#32;&amp;&#32;15;</emphasis>
+378 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>&#32;=&#32;<link linkend="_cave__mesher_8c_1a2015282d41ced055a462520de780e814">remap_data</link>[<link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link>[<link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>]][d&amp;15];
+379 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rot[o*2+0]&#32;=&#32;<link linkend="_cave__mesher_8c_1a1b58e7e250316c8d1a2fe21fafaa5fcd">rotate_data</link>[d&amp;3];
+380 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>
+381 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>&#32;=&#32;<link linkend="_cave__mesher_8c_1af38282980cc171915d4acfe5f3e03c90">effective_blocktype</link>[<link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>];
+382 
+383 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link>[<link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>])
+384 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+385 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//unsigned&#32;char&#32;d&#32;=&#32;bd[o]&#32;&gt;&gt;&#32;4;</emphasis>
+386 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>&#32;=&#32;<link linkend="_cave__mesher_8c_1a2015282d41ced055a462520de780e814">remap_data</link>[<link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link>[<link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>]][d&gt;&gt;4];
+387 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rot[o*2+1]&#32;=&#32;<link linkend="_cave__mesher_8c_1a1b58e7e250316c8d1a2fe21fafaa5fcd">rotate_data</link>[(d&gt;&gt;4)&amp;3];
+388 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>
+389 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>&#32;=&#32;<link linkend="_cave__mesher_8c_1af38282980cc171915d4acfe5f3e03c90">effective_blocktype</link>[<link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>];
+390 
+391 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;out[o*2+0]&#32;=&#32;<link linkend="_glad_8h_1a435c176a02c061b43e19bdf7c86cceae">v1</link>;
+392 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;out[o*2+1]&#32;=&#32;<link linkend="_glad_8h_1a0928f6d0f0f794ba000a21dfae422136">v2</link>;
+393 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+394 
+395 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;this&#32;reads&#32;from&#32;lt&#32;&amp;&#32;sky</emphasis>
+396 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;#ifndef&#32;IN_PLACE</emphasis>
+397 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;outb&#32;=&#32;out&#32;+&#32;16*16*16;
+398 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;++<link linkend="_cave__render_8c_1a863c86bdfd96bf9c461846689c2614aa">step</link>;
+399 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;#endif</emphasis>
+400 
+401 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;MC&#32;used&#32;to&#32;write&#32;in&#32;this&#32;order&#32;and&#32;it&#32;makes&#32;it&#32;possible&#32;to&#32;compute&#32;in-place</emphasis>
+402 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(dd&#32;&lt;&#32;sky&#32;&amp;&amp;&#32;sky&#32;&lt;&#32;lt)&#32;{
+403 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;@TODO&#32;go&#32;this&#32;path&#32;always&#32;if&#32;!IN_PLACE</emphasis>
+404 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;#ifdef&#32;IN_PLACE</emphasis>
+405 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;outb&#32;=&#32;dd;
+406 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;#endif</emphasis>
+407 
+408 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(o=0;&#32;o&#32;&lt;&#32;16*16*16/2;&#32;++o)&#32;{
+409 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;bright;
+410 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;bright&#32;=&#32;(lt[o]&amp;15)*12&#32;+&#32;15&#32;+&#32;(sky[o]&amp;15)*16;
+411 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(bright&#32;&gt;&#32;255)&#32;bright&#32;=&#32;255;
+412 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(bright&#32;&lt;&#32;&#32;32)&#32;bright&#32;=&#32;&#32;32;
+413 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;outb[o*2+0]&#32;=&#32;<link linkend="_stb__voxel__render_8h_1a010e6516eb03985257ba2a14eeea396c">STBVOX_MAKE_LIGHTING_EXT</link>((<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>)&#32;bright,&#32;(rot[o*2+0]&amp;3));
+414 
+415 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;bright&#32;=&#32;(lt[o]&gt;&gt;4)*12&#32;+&#32;15&#32;+&#32;(sky[o]&gt;&gt;4)*16;
+416 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(bright&#32;&gt;&#32;255)&#32;bright&#32;=&#32;255;
+417 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(bright&#32;&lt;&#32;&#32;32)&#32;bright&#32;=&#32;&#32;32;
+418 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;outb[o*2+1]&#32;=&#32;<link linkend="_stb__voxel__render_8h_1a010e6516eb03985257ba2a14eeea396c">STBVOX_MAKE_LIGHTING_EXT</link>((<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>)&#32;bright,&#32;(rot[o*2+1]&amp;3));
+419 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+420 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+421 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;@TODO:&#32;if&#32;blocktype&#32;is&#32;in&#32;between&#32;others,&#32;this&#32;breaks;&#32;need&#32;to&#32;find&#32;which&#32;side&#32;has&#32;two&#32;pointers,&#32;and&#32;use&#32;that</emphasis>
+422 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;overwrite&#32;rot[]&#32;array,&#32;then&#32;copy&#32;out</emphasis>
+423 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;#ifdef&#32;IN_PLACE</emphasis>
+424 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;outb&#32;=&#32;(dd&#32;&lt;&#32;sky)&#32;?&#32;dd&#32;:&#32;sky;
+425 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(lt&#32;&lt;&#32;outb)&#32;lt&#32;=&#32;outb;
+426 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;#endif</emphasis>
+427 
+428 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(o=0;&#32;o&#32;&lt;&#32;16*16*16/2;&#32;++o)&#32;{
+429 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;bright;
+430 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;bright&#32;=&#32;(lt[o]&amp;15)*12&#32;+&#32;15&#32;+&#32;(sky[o]&amp;15)*16;
+431 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(bright&#32;&gt;&#32;255)&#32;bright&#32;=&#32;255;
+432 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(bright&#32;&lt;&#32;&#32;32)&#32;bright&#32;=&#32;&#32;32;
+433 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rot[o*2+0]&#32;=&#32;<link linkend="_stb__voxel__render_8h_1a010e6516eb03985257ba2a14eeea396c">STBVOX_MAKE_LIGHTING_EXT</link>((<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>)&#32;bright,&#32;(rot[o*2+0]&amp;3));
+434 
+435 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;bright&#32;=&#32;(lt[o]&gt;&gt;4)*12&#32;+&#32;15&#32;+&#32;(sky[o]&gt;&gt;4)*16;
+436 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(bright&#32;&gt;&#32;255)&#32;bright&#32;=&#32;255;
+437 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(bright&#32;&lt;&#32;&#32;32)&#32;bright&#32;=&#32;&#32;32;
+438 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rot[o*2+1]&#32;=&#32;<link linkend="_stb__voxel__render_8h_1a010e6516eb03985257ba2a14eeea396c">STBVOX_MAKE_LIGHTING_EXT</link>((<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>)&#32;bright,&#32;(rot[o*2+1]&amp;3));
+439 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+440 
+441 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memcpy(outb,&#32;rot,&#32;4096);
+442 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fc-&gt;<link linkend="_structfast__chunk_1a537008bbe2af7d45e3c62bbf911ace41">data</link>[i]&#32;=&#32;outb;
+443 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+444 
+445 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;#ifndef&#32;IN_PLACE</emphasis>
+446 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fc-&gt;<link linkend="_structfast__chunk_1aa3910677b48fdbfa3e5222b458aba2c8">blockdata</link>[i]&#32;=&#32;out;
+447 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fc-&gt;<link linkend="_structfast__chunk_1a537008bbe2af7d45e3c62bbf911ace41">data</link>[i]&#32;=&#32;outb;
+448 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;#endif</emphasis>
+449 &#32;&#32;&#32;&#32;&#32;&#32;}
+450 &#32;&#32;&#32;}
+451 
+452 <emphasis role="preprocessor">&#32;&#32;&#32;#ifndef&#32;IN_PLACE</emphasis>
+453 &#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(fc-&gt;<link linkend="_structfast__chunk_1aea03b39185c1d472a7f61f86529f0863">pointer_to_free</link>);
+454 &#32;&#32;&#32;fc-&gt;<link linkend="_structfast__chunk_1aea03b39185c1d472a7f61f86529f0863">pointer_to_free</link>&#32;=&#32;storage;
+455 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+456 }
+</programlisting>    </section><anchor xml:id="_cave__mesher_8c_1a65286ae93fc1fc5e6e88af8d2f02a731"/>    <section>
+    <title>deref_fastchunk()</title>
+<indexterm><primary>deref_fastchunk</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>deref_fastchunk</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> deref_fastchunk (<link linkend="_structfast__chunk">fast_chunk</link> * fc)</computeroutput></para><para>
+Definition at line 510 of file cave_mesher.c.</para>
+<programlisting>511 {
+512 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fc)&#32;{
+513 &#32;&#32;&#32;&#32;&#32;&#32;assert(fc-&gt;<link linkend="_structfast__chunk_1a0bcf2001e68fdcf8e5eaf83a7ea83440">refcount</link>&#32;&gt;&#32;0);
+514 &#32;&#32;&#32;&#32;&#32;&#32;--fc-&gt;<link linkend="_structfast__chunk_1a0bcf2001e68fdcf8e5eaf83a7ea83440">refcount</link>;
+515 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fc-&gt;<link linkend="_structfast__chunk_1a0bcf2001e68fdcf8e5eaf83a7ea83440">refcount</link>&#32;==&#32;0)&#32;{
+516 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(fc-&gt;<link linkend="_structfast__chunk_1aea03b39185c1d472a7f61f86529f0863">pointer_to_free</link>);
+517 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(fc);
+518 &#32;&#32;&#32;&#32;&#32;&#32;}
+519 &#32;&#32;&#32;}
+520 }
+</programlisting>    </section><anchor xml:id="_cave__mesher_8c_1a7c54b9b85359841f7dbe539558bc5aa5"/>    <section>
+    <title>get_converted_fastchunk()</title>
+<indexterm><primary>get_converted_fastchunk</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>get_converted_fastchunk</secondary></indexterm>
+<para><computeroutput><link linkend="_structfast__chunk">fast_chunk</link>* get_converted_fastchunk (int chunk_x, int chunk_y)</computeroutput></para><para>
+Definition at line 534 of file cave_mesher.c.</para>
+<programlisting>535 {
+536 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;slot_x&#32;=&#32;(chunk_x&#32;&amp;&#32;(<link linkend="_cave__mesher_8c_1adc2cfac3a357c5424aafa9d351a2e6ea">cache_size</link>-1));
+537 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;slot_y&#32;=&#32;(chunk_y&#32;&amp;&#32;(<link linkend="_cave__mesher_8c_1adc2cfac3a357c5424aafa9d351a2e6ea">cache_size</link>-1));
+538 &#32;&#32;&#32;<link linkend="_structfast__chunk">fast_chunk</link>&#32;*fc;
+539 &#32;&#32;&#32;<link linkend="_structcached__converted__chunk">cached_converted_chunk</link>&#32;*ccc;
+540 &#32;&#32;&#32;SDL_LockMutex(<link linkend="_cave__mesher_8c_1a784ba0617dbc4eec455188b9671295aa">chunk_cache_mutex</link>);
+541 &#32;&#32;&#32;ccc&#32;=&#32;&amp;<link linkend="_cave__mesher_8c_1ab799c6e56a65a1a9a2c089c9d4b81de9">chunk_cache</link>[slot_y][slot_x];
+542 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ccc-&gt;<link linkend="_structcached__converted__chunk_1a890fc62a8689a97e24ffd59097770836">valid</link>)&#32;{
+543 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ccc-&gt;<link linkend="_structcached__converted__chunk_1a720a08b6d6b18cf740d807dd119c52c0">chunk_x</link>&#32;==&#32;chunk_x&#32;&amp;&amp;&#32;ccc-&gt;<link linkend="_structcached__converted__chunk_1a5a71274f9dc7a89cd3e962a719e0ac7f">chunk_y</link>&#32;==&#32;chunk_y)&#32;{
+544 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structfast__chunk">fast_chunk</link>&#32;*fc&#32;=&#32;ccc-&gt;<link linkend="_structcached__converted__chunk_1ad891f426a0caf16bf5a9a54439beeade">fc</link>;
+545 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fc)
+546 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;++fc-&gt;<link linkend="_structfast__chunk_1a0bcf2001e68fdcf8e5eaf83a7ea83440">refcount</link>;
+547 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SDL_UnlockMutex(<link linkend="_cave__mesher_8c_1a784ba0617dbc4eec455188b9671295aa">chunk_cache_mutex</link>);
+548 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;fc;
+549 &#32;&#32;&#32;&#32;&#32;&#32;}
+550 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ccc-&gt;<link linkend="_structcached__converted__chunk_1ad891f426a0caf16bf5a9a54439beeade">fc</link>)&#32;{
+551 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a65286ae93fc1fc5e6e88af8d2f02a731">deref_fastchunk</link>(ccc-&gt;<link linkend="_structcached__converted__chunk_1ad891f426a0caf16bf5a9a54439beeade">fc</link>);
+552 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ccc-&gt;<link linkend="_structcached__converted__chunk_1ad891f426a0caf16bf5a9a54439beeade">fc</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+553 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ccc-&gt;<link linkend="_structcached__converted__chunk_1a890fc62a8689a97e24ffd59097770836">valid</link>&#32;=&#32;0;
+554 &#32;&#32;&#32;&#32;&#32;&#32;}
+555 &#32;&#32;&#32;}
+556 &#32;&#32;&#32;SDL_UnlockMutex(<link linkend="_cave__mesher_8c_1a784ba0617dbc4eec455188b9671295aa">chunk_cache_mutex</link>);
+557 
+558 &#32;&#32;&#32;fc&#32;=&#32;<link linkend="_cave__parse_8c_1ac3885b139871d53a3d39cca5380075c9">get_decoded_fastchunk_uncached</link>(chunk_x,&#32;-chunk_y);
+559 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fc)
+560 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a147e37fcae806febbdaac22c776d5685">convert_fastchunk_inplace</link>(fc);
+561 
+562 &#32;&#32;&#32;SDL_LockMutex(<link linkend="_cave__mesher_8c_1a784ba0617dbc4eec455188b9671295aa">chunk_cache_mutex</link>);
+563 &#32;&#32;&#32;<emphasis role="comment">//&#32;another&#32;thread&#32;might&#32;have&#32;updated&#32;it,&#32;so&#32;before&#32;we&#32;overwrite&#32;it...</emphasis>
+564 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ccc-&gt;<link linkend="_structcached__converted__chunk_1ad891f426a0caf16bf5a9a54439beeade">fc</link>)&#32;{
+565 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a65286ae93fc1fc5e6e88af8d2f02a731">deref_fastchunk</link>(ccc-&gt;<link linkend="_structcached__converted__chunk_1ad891f426a0caf16bf5a9a54439beeade">fc</link>);
+566 &#32;&#32;&#32;&#32;&#32;&#32;ccc-&gt;<link linkend="_structcached__converted__chunk_1ad891f426a0caf16bf5a9a54439beeade">fc</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+567 &#32;&#32;&#32;}
+568 
+569 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fc)
+570 &#32;&#32;&#32;&#32;&#32;&#32;fc-&gt;<link linkend="_structfast__chunk_1a0bcf2001e68fdcf8e5eaf83a7ea83440">refcount</link>&#32;=&#32;1;&#32;<emphasis role="comment">//&#32;1&#32;in&#32;the&#32;cache</emphasis>
+571 
+572 &#32;&#32;&#32;ccc-&gt;<link linkend="_structcached__converted__chunk_1a720a08b6d6b18cf740d807dd119c52c0">chunk_x</link>&#32;=&#32;chunk_x;
+573 &#32;&#32;&#32;ccc-&gt;<link linkend="_structcached__converted__chunk_1a5a71274f9dc7a89cd3e962a719e0ac7f">chunk_y</link>&#32;=&#32;chunk_y;
+574 &#32;&#32;&#32;ccc-&gt;<link linkend="_structcached__converted__chunk_1a890fc62a8689a97e24ffd59097770836">valid</link>&#32;=&#32;1;
+575 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fc)
+576 &#32;&#32;&#32;&#32;&#32;&#32;++fc-&gt;<link linkend="_structfast__chunk_1a0bcf2001e68fdcf8e5eaf83a7ea83440">refcount</link>;
+577 &#32;&#32;&#32;ccc-&gt;<link linkend="_structcached__converted__chunk_1ad891f426a0caf16bf5a9a54439beeade">fc</link>&#32;=&#32;fc;
+578 &#32;&#32;&#32;SDL_UnlockMutex(<link linkend="_cave__mesher_8c_1a784ba0617dbc4eec455188b9671295aa">chunk_cache_mutex</link>);
+579 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;fc;
+580 }
+</programlisting>    </section><anchor xml:id="_cave__mesher_8c_1af4e8c4c0c38242366db62d9936274079"/>    <section>
+    <title>lock_chunk_get_mutex()</title>
+<indexterm><primary>lock_chunk_get_mutex</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>lock_chunk_get_mutex</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> lock_chunk_get_mutex (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 525 of file cave_mesher.c.</para>
+<programlisting>526 {
+527 &#32;&#32;&#32;SDL_LockMutex(<link linkend="_cave__mesher_8c_1a9105640f64bd2fca823fa679f99fb62b">chunk_get_mutex</link>);
+528 }
+</programlisting>    </section><anchor xml:id="_cave__mesher_8c_1a7bea63cfeb0603fcda8860fe0355fb57"/>    <section>
+    <title>make_converted_fastchunk()</title>
+<indexterm><primary>make_converted_fastchunk</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>make_converted_fastchunk</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> make_converted_fastchunk (<link linkend="_structfast__chunk">fast_chunk</link> * fc, int x, int y, int segment, <link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link> * sv_blocktype, <link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link> * sv_lighting)</computeroutput></para><para>
+Definition at line 458 of file cave_mesher.c.</para>
+<programlisting>459 {
+460 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>;
+461 &#32;&#32;&#32;assert(fc&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>&#32;||&#32;(fc-&gt;<link linkend="_structfast__chunk_1a0bcf2001e68fdcf8e5eaf83a7ea83440">refcount</link>&#32;&gt;&#32;0&#32;&amp;&amp;&#32;fc-&gt;<link linkend="_structfast__chunk_1a0bcf2001e68fdcf8e5eaf83a7ea83440">refcount</link>&#32;&lt;&#32;64));
+462 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fc&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>&#32;||&#32;fc-&gt;<link linkend="_structfast__chunk_1aa3910677b48fdbfa3e5222b458aba2c8">blockdata</link>[<link linkend="_structsegment">segment</link>]&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;{
+463 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>=0;&#32;<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>&#32;&lt;&#32;16;&#32;++<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>)&#32;{
+464 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;sv_blocktype[<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>]&#32;=&#32;<link linkend="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84a8e25f3fef8ddfd9ae47971d91958d83b">C_empty</link>;
+465 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;sv_lighting[<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>]&#32;=&#32;255;
+466 &#32;&#32;&#32;&#32;&#32;&#32;}
+467 &#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+468 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;*block&#32;=&#32;fc-&gt;<link linkend="_structfast__chunk_1aa3910677b48fdbfa3e5222b458aba2c8">blockdata</link>[<link linkend="_structsegment">segment</link>];
+469 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;*<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>&#32;&#32;=&#32;fc-&gt;<link linkend="_structfast__chunk_1a537008bbe2af7d45e3c62bbf911ace41">data</link>[<link linkend="_structsegment">segment</link>];
+470 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;=&#32;15-<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>;
+471 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>=0;&#32;<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>&#32;&lt;&#32;16;&#32;++<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>)&#32;{
+472 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;sv_blocktype[<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>]&#32;=&#32;block[<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>*256&#32;+&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>*16&#32;+&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>];
+473 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;sv_lighting&#32;[<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>]&#32;=&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>&#32;[<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>*256&#32;+&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>*16&#32;+&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>];
+474 &#32;&#32;&#32;&#32;&#32;&#32;}
+475 &#32;&#32;&#32;}
+476 }
+</programlisting>    </section><anchor xml:id="_cave__mesher_8c_1a72869edd94d6159ab80497d6fcf71071"/>    <section>
+    <title>make_map_segment_for_superchunk_preconvert()</title>
+<indexterm><primary>make_map_segment_for_superchunk_preconvert</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>make_map_segment_for_superchunk_preconvert</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> make_map_segment_for_superchunk_preconvert (int chunk_x, int chunk_y, int segment, <link linkend="_structfast__chunk">fast_chunk</link> * fc_table[4][4], <link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link> sv_blocktype[34][34][18], <link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link> sv_lighting[34][34][18])</computeroutput></para><para>
+Definition at line 582 of file cave_mesher.c.</para>
+<programlisting>583 {
+584 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>;
+585 &#32;&#32;&#32;assert((chunk_x&#32;&amp;&#32;1)&#32;==&#32;0);
+586 &#32;&#32;&#32;assert((chunk_y&#32;&amp;&#32;1)&#32;==&#32;0);
+587 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>=-1;&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>&#32;&lt;&#32;3;&#32;++<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)&#32;{
+588 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>=-1;&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>&#32;&lt;&#32;3;&#32;++<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)&#32;{
+589 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;xo&#32;=&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>*16+1;
+590 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;yo&#32;=&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>*16+1;
+591 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>;
+592 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structfast__chunk">fast_chunk</link>&#32;*fc&#32;=&#32;fc_table[<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>+1][<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>+1];
+593 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>=0;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;&lt;&#32;16;&#32;++<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)
+594 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>=0;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;&lt;&#32;16;&#32;++<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)
+595 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xo+<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;&gt;=&#32;0&#32;&amp;&amp;&#32;xo+<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x &lt; 34 &amp;&amp; yo+y &gt;</link>=&#32;0&#32;&amp;&amp;&#32;yo+<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;&lt;&#32;34)
+596 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a7bea63cfeb0603fcda8860fe0355fb57">make_converted_fastchunk</link>(fc,<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,&#32;<link linkend="_structsegment">segment</link>,&#32;sv_blocktype[xo+<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][yo+<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>],&#32;sv_lighting[xo+<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][yo+<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]);
+597 &#32;&#32;&#32;&#32;&#32;&#32;}
+598 &#32;&#32;&#32;}
+599 }
+</programlisting>    </section><anchor xml:id="_cave__mesher_8c_1a24f0dbbfdca90a74902964396c137bac"/>    <section>
+    <title>mesh_init()</title>
+<indexterm><primary>mesh_init</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>mesh_init</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> mesh_init (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 803 of file cave_mesher.c.</para>
+<programlisting>804 {
+805 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+806 
+807 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a784ba0617dbc4eec455188b9671295aa">chunk_cache_mutex</link>&#32;=&#32;SDL_CreateMutex();
+808 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a9105640f64bd2fca823fa679f99fb62b">chunk_get_mutex</link>&#32;&#32;&#32;=&#32;SDL_CreateMutex();
+809 
+810 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;256;&#32;++i)&#32;{
+811 &#32;&#32;&#32;&#32;&#32;&#32;memcpy(<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[i],&#32;<link linkend="_cave__mesher_8c_1a17dd80d3766327026eae4547eae231fd">minecraft_info</link>[i]+1,&#32;6);
+812 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1af38282980cc171915d4acfe5f3e03c90">effective_blocktype</link>[i]&#32;=&#32;(<link linkend="_cave__mesher_8c_1a17dd80d3766327026eae4547eae231fd">minecraft_info</link>[i][0]&#32;==&#32;<link linkend="_cave__mesher_8c_1aa57e16cd48de3b9a989056ff8df26f84a8e25f3fef8ddfd9ae47971d91958d83b">C_empty</link>&#32;?&#32;0&#32;:&#32;i);
+813 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1ae01a977fd1f7c889f186baee1076b732">minecraft_geom_for_blocktype</link>[i]&#32;=&#32;<link linkend="_cave__mesher_8c_1adbdd9089890d950d54cd125d4464eab7">geom_map</link>[<link linkend="_cave__mesher_8c_1a17dd80d3766327026eae4547eae231fd">minecraft_info</link>[i][0]];
+814 &#32;&#32;&#32;}
+815 &#32;&#32;&#32;<emphasis role="comment">//effective_blocktype[50]&#32;=&#32;0;&#32;//&#32;delete&#32;torches</emphasis>
+816 
+817 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;6*256;&#32;++i)&#32;{
+818 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[0][i]&#32;==&#32;40)
+819 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a33fdd49440ce0309319d973be49dfd0a">minecraft_color_for_blocktype</link>[0][i]&#32;=&#32;38&#32;|&#32;64;&#32;<emphasis role="comment">//&#32;apply&#32;to&#32;tex1</emphasis>
+820 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[0][i]&#32;==&#32;39)
+821 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a33fdd49440ce0309319d973be49dfd0a">minecraft_color_for_blocktype</link>[0][i]&#32;=&#32;39&#32;|&#32;64;&#32;<emphasis role="comment">//&#32;apply&#32;to&#32;tex1</emphasis>
+822 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[0][i]&#32;==&#32;105)
+823 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a33fdd49440ce0309319d973be49dfd0a">minecraft_color_for_blocktype</link>[0][i]&#32;=&#32;63;&#32;<emphasis role="comment">//&#32;emissive</emphasis>
+824 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[0][i]&#32;==&#32;212)
+825 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a33fdd49440ce0309319d973be49dfd0a">minecraft_color_for_blocktype</link>[0][i]&#32;=&#32;63;&#32;<emphasis role="comment">//&#32;emissive</emphasis>
+826 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[0][i]&#32;==&#32;80)
+827 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a33fdd49440ce0309319d973be49dfd0a">minecraft_color_for_blocktype</link>[0][i]&#32;=&#32;63;&#32;<emphasis role="comment">//&#32;emissive</emphasis>
+828 &#32;&#32;&#32;}
+829 
+830 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;6;&#32;++i)&#32;{
+831 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a33fdd49440ce0309319d973be49dfd0a">minecraft_color_for_blocktype</link>[172][i]&#32;=&#32;47&#32;|&#32;64;&#32;<emphasis role="comment">//&#32;apply&#32;to&#32;tex1</emphasis>
+832 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a33fdd49440ce0309319d973be49dfd0a">minecraft_color_for_blocktype</link>[178][i]&#32;=&#32;47&#32;|&#32;64;&#32;<emphasis role="comment">//&#32;apply&#32;to&#32;tex1</emphasis>
+833 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a33fdd49440ce0309319d973be49dfd0a">minecraft_color_for_blocktype</link>[18][i]&#32;=&#32;39&#32;|&#32;64;&#32;<emphasis role="comment">//&#32;green</emphasis>
+834 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a33fdd49440ce0309319d973be49dfd0a">minecraft_color_for_blocktype</link>[161][i]&#32;=&#32;37&#32;|&#32;64;&#32;<emphasis role="comment">//&#32;green</emphasis>
+835 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a33fdd49440ce0309319d973be49dfd0a">minecraft_color_for_blocktype</link>[10][i]&#32;=&#32;63;&#32;<emphasis role="comment">//&#32;emissive&#32;lava</emphasis>
+836 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a33fdd49440ce0309319d973be49dfd0a">minecraft_color_for_blocktype</link>[11][i]&#32;=&#32;63;&#32;<emphasis role="comment">//&#32;emissive</emphasis>
+837 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//minecraft_color_for_blocktype[56][i]&#32;=&#32;63;&#32;//&#32;emissive&#32;diamond</emphasis>
+838 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a33fdd49440ce0309319d973be49dfd0a">minecraft_color_for_blocktype</link>[48][i]&#32;=&#32;63;&#32;<emphasis role="comment">//&#32;emissive&#32;dungeon</emphasis>
+839 &#32;&#32;&#32;}
+840 
+841 <emphasis role="preprocessor">&#32;&#32;&#32;#ifdef&#32;VHEIGHT_TEST</emphasis>
+842 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1af38282980cc171915d4acfe5f3e03c90">effective_blocktype</link>[168]&#32;=&#32;168;
+843 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[168][0]&#32;=&#32;1;
+844 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[168][1]&#32;=&#32;1;
+845 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[168][2]&#32;=&#32;1;
+846 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[168][3]&#32;=&#32;1;
+847 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[168][4]&#32;=&#32;1;
+848 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[168][5]&#32;=&#32;1;
+849 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1ae01a977fd1f7c889f186baee1076b732">minecraft_geom_for_blocktype</link>[168]&#32;=&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca7511f84da0693e6147590c76a74480d6">STBVOX_GEOM_floor_vheight_12</link>;
+850 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1af38282980cc171915d4acfe5f3e03c90">effective_blocktype</link>[169]&#32;=&#32;169;
+851 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[169][0]&#32;=&#32;1;
+852 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[169][1]&#32;=&#32;1;
+853 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[169][2]&#32;=&#32;1;
+854 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[169][3]&#32;=&#32;1;
+855 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[169][4]&#32;=&#32;1;
+856 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a">minecraft_tex1_for_blocktype</link>[169][5]&#32;=&#32;1;
+857 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1ae01a977fd1f7c889f186baee1076b732">minecraft_geom_for_blocktype</link>[169]&#32;=&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca62855fb026ed6bb2b93a02f94b9eaacb">STBVOX_GEOM_ceil_vheight_03</link>;
+858 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+859 
+860 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link>[53]&#32;=&#32;1;
+861 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link>[67]&#32;=&#32;2;
+862 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link>[108]&#32;=&#32;3;
+863 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link>[109]&#32;=&#32;4;
+864 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link>[114]&#32;=&#32;5;
+865 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link>[136]&#32;=&#32;6;
+866 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link>[156]&#32;=&#32;7;
+867 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;256;&#32;++i)
+868 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link>[i])
+869 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a626c17451761446962cffc9add2ed539">build_stair_rotations</link>(i,&#32;<link linkend="_cave__mesher_8c_1a2015282d41ced055a462520de780e814">remap_data</link>[<link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link>[i]]);
+870 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link>[35]&#32;&#32;=&#32;8;
+871 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1addb3a71c75c33215207185a88be4bb62">build_wool_variations</link>(35,&#32;<link linkend="_cave__mesher_8c_1a2015282d41ced055a462520de780e814">remap_data</link>[<link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link>[35]]);
+872 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link>[5]&#32;=&#32;11;
+873 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1adcf4dda69d85bc49b9f4babc57587095">build_wood_variations</link>(5,&#32;<link linkend="_cave__mesher_8c_1a2015282d41ced055a462520de780e814">remap_data</link>[<link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link>[5]]);
+874 
+875 &#32;&#32;&#32;<emphasis role="comment">//&#32;set&#32;the&#32;remap&#32;flags&#32;for&#32;these&#32;so&#32;they&#32;write&#32;the&#32;rotation&#32;values</emphasis>
+876 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a16709242463cda7c163b826a5da978c5">remap_in_place</link>(54,&#32;9);
+877 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a16709242463cda7c163b826a5da978c5">remap_in_place</link>(146,&#32;10);
+878 }
+</programlisting>    </section><anchor xml:id="_cave__mesher_8c_1aefd62d461236c6e9ced738eac9d8042c"/>    <section>
+    <title>ods()</title>
+<indexterm><primary>ods</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>ods</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> ods (char * fmt,  ...)</computeroutput></para><para>
+Definition at line 311 of file cave_main.c.</para>
+<programlisting>312 {
+313 &#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_structbuffer">buffer</link>[1000];
+314 &#32;&#32;&#32;va_list&#32;va;
+315 &#32;&#32;&#32;va_start(va,&#32;fmt);
+316 &#32;&#32;&#32;<link linkend="_rrsprintf_8h_1a3e41f3ed65b0d392da13d3341751b5a5">vsprintf</link>(<link linkend="_structbuffer">buffer</link>,&#32;fmt,&#32;va);
+317 &#32;&#32;&#32;va_end(va);
+318 &#32;&#32;&#32;SDL_Log(<emphasis role="stringliteral">&quot;%s&quot;</emphasis>,&#32;<link linkend="_structbuffer">buffer</link>);
+319 }
+</programlisting>    </section><anchor xml:id="_cave__mesher_8c_1a16709242463cda7c163b826a5da978c5"/>    <section>
+    <title>remap_in_place()</title>
+<indexterm><primary>remap_in_place</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>remap_in_place</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> remap_in_place (int bt, int rm)</computeroutput></para><para>
+Definition at line 794 of file cave_mesher.c.</para>
+<programlisting>795 {
+796 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+797 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e">remap</link>[bt]&#32;=&#32;rm;
+798 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;16;&#32;++i)
+799 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a2015282d41ced055a462520de780e814">remap_data</link>[rm][i]&#32;=&#32;bt;
+800 }
+</programlisting>    </section><anchor xml:id="_cave__mesher_8c_1af74c70130c88949f4d2bac551594d41f"/>    <section>
+    <title>reset_cache_size()</title>
+<indexterm><primary>reset_cache_size</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>reset_cache_size</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> reset_cache_size (int size)</computeroutput></para><para>
+Definition at line 490 of file cave_mesher.c.</para>
+<programlisting>491 {
+492 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i,j;
+493 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(j=<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>;&#32;j&#32;&lt;&#32;<link linkend="_cave__mesher_8c_1adc2cfac3a357c5424aafa9d351a2e6ea">cache_size</link>;&#32;++j)&#32;{
+494 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>;&#32;i&#32;&lt;&#32;<link linkend="_cave__mesher_8c_1adc2cfac3a357c5424aafa9d351a2e6ea">cache_size</link>;&#32;++i)&#32;{
+495 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structcached__converted__chunk">cached_converted_chunk</link>&#32;*ccc&#32;=&#32;&amp;<link linkend="_cave__mesher_8c_1ab799c6e56a65a1a9a2c089c9d4b81de9">chunk_cache</link>[j][i];
+496 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ccc-&gt;<link linkend="_structcached__converted__chunk_1a890fc62a8689a97e24ffd59097770836">valid</link>)&#32;{
+497 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ccc-&gt;<link linkend="_structcached__converted__chunk_1ad891f426a0caf16bf5a9a54439beeade">fc</link>)&#32;{
+498 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(ccc-&gt;<link linkend="_structcached__converted__chunk_1ad891f426a0caf16bf5a9a54439beeade">fc</link>-&gt;<link linkend="_structfast__chunk_1aea03b39185c1d472a7f61f86529f0863">pointer_to_free</link>);
+499 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(ccc-&gt;<link linkend="_structcached__converted__chunk_1ad891f426a0caf16bf5a9a54439beeade">fc</link>);
+500 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ccc-&gt;<link linkend="_structcached__converted__chunk_1ad891f426a0caf16bf5a9a54439beeade">fc</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+501 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+502 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ccc-&gt;<link linkend="_structcached__converted__chunk_1a890fc62a8689a97e24ffd59097770836">valid</link>&#32;=&#32;0;
+503 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+504 &#32;&#32;&#32;&#32;&#32;&#32;}
+505 &#32;&#32;&#32;}
+506 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1adc2cfac3a357c5424aafa9d351a2e6ea">cache_size</link>&#32;=&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>;
+507 }
+</programlisting>    </section><anchor xml:id="_cave__mesher_8c_1afaaad5f587e3275de99ae8ff61b2e18a"/>    <section>
+    <title>unlock_chunk_get_mutex()</title>
+<indexterm><primary>unlock_chunk_get_mutex</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>unlock_chunk_get_mutex</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> unlock_chunk_get_mutex (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 529 of file cave_mesher.c.</para>
+<programlisting>530 {
+531 &#32;&#32;&#32;SDL_UnlockMutex(<link linkend="_cave__mesher_8c_1a9105640f64bd2fca823fa679f99fb62b">chunk_get_mutex</link>);
+532 }
+</programlisting></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_cave__mesher_8c_1a165e793676d312d0c37aa23551127f48"/>    <section>
+    <title>build_buffer</title>
+<indexterm><primary>build_buffer</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>build_buffer</secondary></indexterm>
+<para><computeroutput><link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link> build_buffer[<link linkend="_caveview_8h_1afa950acf77b651e25839f9fffcc15e3a">BUILD_BUFFER_SIZE</link>]</computeroutput></para><para>
+Definition at line 312 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1adc2cfac3a357c5424aafa9d351a2e6ea"/>    <section>
+    <title>cache_size</title>
+<indexterm><primary>cache_size</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>cache_size</secondary></indexterm>
+<para><computeroutput>int cache_size = <link linkend="_cave__mesher_8c_1a3d38bc2fa620f958e39c87755218f173">CHUNK_CACHE</link></computeroutput></para><para>
+Definition at line 488 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1ab799c6e56a65a1a9a2c089c9d4b81de9"/>    <section>
+    <title>chunk_cache</title>
+<indexterm><primary>chunk_cache</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>chunk_cache</secondary></indexterm>
+<para><computeroutput><link linkend="_structcached__converted__chunk">cached_converted_chunk</link> chunk_cache[<link linkend="_cave__mesher_8c_1a3d38bc2fa620f958e39c87755218f173">CHUNK_CACHE</link>][<link linkend="_cave__mesher_8c_1a3d38bc2fa620f958e39c87755218f173">CHUNK_CACHE</link>]</computeroutput></para><para>
+Definition at line 487 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1a784ba0617dbc4eec455188b9671295aa"/>    <section>
+    <title>chunk_cache_mutex</title>
+<indexterm><primary>chunk_cache_mutex</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>chunk_cache_mutex</secondary></indexterm>
+<para><computeroutput>SDL_mutex* chunk_cache_mutex</computeroutput></para><para>
+Definition at line 522 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1a9105640f64bd2fca823fa679f99fb62b"/>    <section>
+    <title>chunk_get_mutex</title>
+<indexterm><primary>chunk_get_mutex</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>chunk_get_mutex</secondary></indexterm>
+<para><computeroutput>SDL_mutex* chunk_get_mutex</computeroutput></para><para>
+Definition at line 523 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1af38282980cc171915d4acfe5f3e03c90"/>    <section>
+    <title>effective_blocktype</title>
+<indexterm><primary>effective_blocktype</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>effective_blocktype</secondary></indexterm>
+<para><computeroutput>unsigned char effective_blocktype[256]</computeroutput></para><para>
+Definition at line 308 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1aa27715cf788c95d0334051f4bfe7ade9"/>    <section>
+    <title>face_buffer</title>
+<indexterm><primary>face_buffer</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>face_buffer</secondary></indexterm>
+<para><computeroutput><link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link> face_buffer[<link linkend="_caveview_8h_1a4d65dca8ffc1cd92783b26732044ba59">FACE_BUFFER_SIZE</link>]</computeroutput></para><para>
+Definition at line 313 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1adbdd9089890d950d54cd125d4464eab7"/>    <section>
+    <title>geom_map</title>
+<indexterm><primary>geom_map</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>geom_map</secondary></indexterm>
+<para><computeroutput>unsigned char geom_map[]</computeroutput></para><emphasis role="strong">Initial value:</emphasis><programlisting>=
+{
+&#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3cacf4698c9739b8b6c1af7f8a124169cc9">STBVOX_GEOM_empty</link>,
+&#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca685a066c41ada07dc62ffaa16d23ccf5">STBVOX_GEOM_solid</link>,
+&#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca5921e838cb3457e8097fd111be407eec">STBVOX_GEOM_transp</link>,
+&#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca9cd52f024f074ece1f5cecbcc517c54f">STBVOX_GEOM_crossed_pair</link>,
+&#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca685a066c41ada07dc62ffaa16d23ccf5">STBVOX_GEOM_solid</link>,
+&#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca4d3a600f27892ef5bb64aa2e884b6570">STBVOX_GEOM_slab_lower</link>,
+&#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca063a4146fc89954375c7fc7fa39e8747">STBVOX_GEOM_floor_slope_north_is_top</link>,
+&#32;&#32;&#32;<link linkend="_stb__voxel__render_8h_1abe974f22edeef8189603ba75fd90ff3ca334b45fb41d2329d21d3bd81b8c2568d">STBVOX_GEOM_force</link>,
+}
+</programlisting><para>
+Definition at line 57 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1affec1534a3e53c768c48caac2475d930"/>    <section>
+    <title>mc_rot</title>
+<indexterm><primary>mc_rot</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>mc_rot</secondary></indexterm>
+<para><computeroutput>unsigned char mc_rot[4] = { 1,3,2,0 }</computeroutput></para><para>
+Definition at line 730 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1a33fdd49440ce0309319d973be49dfd0a"/>    <section>
+    <title>minecraft_color_for_blocktype</title>
+<indexterm><primary>minecraft_color_for_blocktype</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>minecraft_color_for_blocktype</secondary></indexterm>
+<para><computeroutput>unsigned char minecraft_color_for_blocktype[256][6]</computeroutput></para><para>
+Definition at line 309 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1ae01a977fd1f7c889f186baee1076b732"/>    <section>
+    <title>minecraft_geom_for_blocktype</title>
+<indexterm><primary>minecraft_geom_for_blocktype</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>minecraft_geom_for_blocktype</secondary></indexterm>
+<para><computeroutput>unsigned char minecraft_geom_for_blocktype[256]</computeroutput></para><para>
+Definition at line 310 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1a17dd80d3766327026eae4547eae231fd"/>    <section>
+    <title>minecraft_info</title>
+<indexterm><primary>minecraft_info</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>minecraft_info</secondary></indexterm>
+<para><computeroutput>unsigned char minecraft_info[256][7]</computeroutput></para><para>
+Definition at line 69 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1add8be801e9bdf08c2966ff797143933a"/>    <section>
+    <title>minecraft_tex1_for_blocktype</title>
+<indexterm><primary>minecraft_tex1_for_blocktype</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>minecraft_tex1_for_blocktype</secondary></indexterm>
+<para><computeroutput>unsigned char minecraft_tex1_for_blocktype[256][6]</computeroutput></para><para>
+Definition at line 307 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1a209a4cb1b4169823bf527e2e1410d8a1"/>    <section>
+    <title>next_blocktype</title>
+<indexterm><primary>next_blocktype</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>next_blocktype</secondary></indexterm>
+<para><computeroutput>int next_blocktype = 255</computeroutput></para><para>
+Definition at line 728 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1a10cae8a4d85b638a4d2f2ce75883552e"/>    <section>
+    <title>remap</title>
+<indexterm><primary>remap</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>remap</secondary></indexterm>
+<para><computeroutput>unsigned char remap[256]</computeroutput></para><para>
+Definition at line 329 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1a2015282d41ced055a462520de780e814"/>    <section>
+    <title>remap_data</title>
+<indexterm><primary>remap_data</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>remap_data</secondary></indexterm>
+<para><computeroutput>unsigned char remap_data[16][16]</computeroutput></para><para>
+Definition at line 328 of file cave_mesher.c.</para>
+    </section><anchor xml:id="_cave__mesher_8c_1a1b58e7e250316c8d1a2fe21fafaa5fcd"/>    <section>
+    <title>rotate_data</title>
+<indexterm><primary>rotate_data</primary><secondary>cave_mesher.c</secondary></indexterm>
+<indexterm><primary>cave_mesher.c</primary><secondary>rotate_data</secondary></indexterm>
+<para><computeroutput>unsigned char rotate_data[4] = { 1,3,2,0 }</computeroutput></para><para>
+Definition at line 330 of file cave_mesher.c.</para>
+</section>
+</section>
+</section>

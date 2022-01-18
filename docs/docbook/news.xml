@@ -1,0 +1,234 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_news">
+<section xml:id="_news_1news_34">
+<title>Release notes for version 3.4</title>
+<section xml:id="_news_1features_34">
+<title>New features in version 3.4</title>
+<section xml:id="_news_1runtime_platform_34">
+<title>Runtime platform selection</title>
+
+<para>GLFW now supports being compiled for multiple backends and selecting between them at runtime with the <link linkend="_intro_guide_1GLFW_PLATFORM">GLFW_PLATFORM</link> init hint. After initialization the selected platform can be queried with <link linkend="_group__init_1gac2d1735162a981fcaa8fb386740aa5ce">glfwGetPlatform</link>. You can check if support for a given platform is compiled in with <link linkend="_group__init_1ga7b57ba0946498e8621f4d969bbcecfba">glfwPlatformSupported</link>.</para>
+</section>
+<section xml:id="_news_1standard_cursors_34">
+<title>More standard cursors</title>
+
+<para>GLFW now provides the standard cursor shapes <link linkend="_group__shapes_1gadf2c0a495ec9cef4e1a364cc99aa78da">GLFW_RESIZE_NWSE_CURSOR</link> and <link linkend="_group__shapes_1gab06bba3b407f92807ba9b48de667a323">GLFW_RESIZE_NESW_CURSOR</link> for diagonal resizing, <link linkend="_group__shapes_1ga3a5f4811155f95ccafbbb4c9a899fc1d">GLFW_RESIZE_ALL_CURSOR</link> for omni-directional resizing and <link linkend="_group__shapes_1ga297c503095b034bc8891393b637844b1">GLFW_NOT_ALLOWED_CURSOR</link> for showing an action is not allowed.</para>
+
+<para>Unlike the original set, these shapes may not be available everywhere and creation will then fail with the new <link linkend="_group__errors_1ga09d6943923a70ddef3a085f5baee786c">GLFW_CURSOR_UNAVAILABLE</link> error.</para>
+
+<para>The cursors for horizontal and vertical resizing are now referred to as <link linkend="_group__shapes_1ga2010a43dc1050a7c9154148a63cf01ad">GLFW_RESIZE_EW_CURSOR</link> and <link linkend="_group__shapes_1gaa59214e8cdc8c8adf08fdf125ed68388">GLFW_RESIZE_NS_CURSOR</link>, and the pointing hand cursor is now referred to as <link linkend="_group__shapes_1gaad01a50929fb515bf27e4462c51f6ed0">GLFW_POINTING_HAND_CURSOR</link>. The older names are still available.</para>
+
+<para>For more information see <link linkend="_input_guide_1cursor_standard">Standard cursor creation</link>.</para>
+</section>
+<section xml:id="_news_1mouse_passthrough_34">
+<title>Mouse event passthrough</title>
+
+<para>GLFW now provides the <link linkend="_window_guide_1GLFW_MOUSE_PASSTHROUGH_hint">GLFW_MOUSE_PASSTHROUGH</link> window hint for making a window transparent to mouse input, lettings events pass to whatever window is behind it. This can also be changed after window creation with the matching <link linkend="_window_guide_1GLFW_MOUSE_PASSTHROUGH_attrib">window attribute</link>.</para>
+</section>
+<section xml:id="_news_1features_34_angle_backend">
+<title>Support for ANGLE rendering backend selection</title>
+
+<para>GLFW now provides the <link linkend="_intro_guide_1GLFW_ANGLE_PLATFORM_TYPE_hint">GLFW_ANGLE_PLATFORM_TYPE</link> init hint for requesting a specific rendering backend when using <link xlink:href="https://chromium.googlesource.com/angle/angle/">ANGLE</link> to create OpenGL ES contexts.</para>
+</section>
+<section xml:id="_news_1features_34_init_allocator">
+<title>Support for custom memory allocator</title>
+
+<para>GLFW now supports plugging a custom memory allocator at initialization with <link linkend="_group__init_1ga0f4c8556a21d9e774a0ba0332da1748e">glfwInitAllocator</link>. The allocator is a struct of type <link linkend="_struct_g_l_f_wallocator">GLFWallocator</link> with function pointers corresponding to the standard library functions <computeroutput>malloc</computeroutput>, <computeroutput>realloc</computeroutput> and <computeroutput>free</computeroutput>.</para>
+
+<para>For more information see <link linkend="_intro_guide_1init_allocator">Custom heap memory allocator</link>.</para>
+</section>
+<section xml:id="_news_1features_34_win32_keymenu">
+<title>Support for keyboard access to Windows window menu</title>
+
+<para>GLFW now provides the <link linkend="_window_guide_1GLFW_WIN32_KEYBOARD_MENU_hint">GLFW_WIN32_KEYBOARD_MENU</link> window hint for enabling keyboard access to the window menu via the Alt+Space and Alt-and-then-Space shortcuts. This may be useful for more GUI-oriented applications.</para>
+</section>
+</section>
+<section xml:id="_news_1caveats">
+<title>Caveats for version 3.4</title>
+<section xml:id="_news_1native_34">
+<title>Multiple sets of native access functions</title>
+
+<para>Because GLFW now supports runtime selection of platform (window system), a library binary may export native access functions for multiple platforms. Starting with version 3.4 you must not assume that GLFW is running on a platform just because it exports native access functions for it. After initialization you can query the selected platform with <link linkend="_group__init_1gac2d1735162a981fcaa8fb386740aa5ce">glfwGetPlatform</link>.</para>
+</section>
+<section xml:id="_news_1version_string_34">
+<title>Version string format has been changed</title>
+
+<para>Because GLFW now supports runtime selection of platform (window system), the version string returned by <link linkend="_group__init_1ga7de7ba982c0cf66b35afdaa8bea071ae">glfwGetVersionString</link> has been expanded. It now contains the names of all APIs for all the platforms that the library binary supports.</para>
+</section>
+<section xml:id="_news_1joysticks_34">
+<title>Joystick support is initialized on demand</title>
+
+<para>The joystick part of GLFW is now initialized when first used, primarily to work around faulty Windows drivers that cause DirectInput to take up to several seconds to enumerate devices.</para>
+
+<para>This change will usually not be observable. However, if your application waits for events without having first called any joystick function or created any visible windows, the wait may never unblock as GLFW may not yet have subscribed to joystick related OS events.</para>
+
+<para>To work around this, call any joystick function before waiting for events, for example by setting a <link linkend="_input_guide_1joystick_event">joystick callback</link>.</para>
+</section>
+<section xml:id="_news_1standalone_34">
+<title>Tests and examples are disabled when built as a sub-project</title>
+
+<para>GLFW now does not build the tests and examples when it is added as a subdirectory of another CMake project. To enable these, set the <link linkend="_compile_guide_1GLFW_BUILD_TESTS">GLFW_BUILD_TESTS</link> and <link linkend="_compile_guide_1GLFW_BUILD_EXAMPLES">GLFW_BUILD_EXAMPLES</link> cache variables before adding the GLFW subdirectory.</para>
+
+<para><literallayout><computeroutput>set(GLFW_BUILD_EXAMPLES&#32;ON&#32;CACHE&#32;BOOL&#32;&quot;&quot;&#32;FORCE)
+set(GLFW_BUILD_TESTS&#32;ON&#32;CACHE&#32;BOOL&#32;&quot;&quot;&#32;FORCE)
+add_subdirectory(path/to/glfw)
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_news_1initmenu_34">
+<title>macOS main menu now created at initialization</title>
+
+<para>GLFW now creates the main menu and completes the initialization of NSApplication during initialization. Programs that do not want a main menu can disable it with the <link linkend="_intro_guide_1GLFW_COCOA_MENUBAR_hint">GLFW_COCOA_MENUBAR</link> init hint.</para>
+</section>
+<section xml:id="_news_1corevideo_34">
+<title>CoreVideo dependency has been removed</title>
+
+<para>GLFW no longer depends on the CoreVideo framework on macOS and it no longer needs to be specified during compilation or linking.</para>
+</section>
+<section xml:id="_news_1caveat_fbtransparency_34">
+<title>Framebuffer transparency requires DWM transparency</title>
+
+<para>GLFW no longer supports framebuffer transparency enabled via <link linkend="_group__window_1ga60a0578c3b9449027d683a9c6abb9f14">GLFW_TRANSPARENT_FRAMEBUFFER</link> on Windows 7 if DWM transparency is off (the Transparency setting under Personalization &gt; Window Color).</para>
+</section>
+</section>
+<section xml:id="_news_1deprecations_34">
+<title>Deprecations in version 3.4</title>
+</section>
+<section xml:id="_news_1removals_34">
+<title>Removals in 3.4</title>
+<section xml:id="_news_1vulkan_static_34">
+<title>GLFW_VULKAN_STATIC CMake option has been removed</title>
+
+<para>This option was used to compile GLFW directly linked with the Vulkan loader, instead of using dynamic loading to get hold of <computeroutput>vkGetInstanceProcAddr</computeroutput> at initialization. This is now done by calling the <link linkend="_init_8c_1a1712210f34c339a05adda69e3587ec00">glfwInitVulkanLoader</link> function before initialization.</para>
+
+<para>If you need backward compatibility, this macro can still be defined for GLFW 3.4 and will have no effect. The call to <link linkend="_init_8c_1a1712210f34c339a05adda69e3587ec00">glfwInitVulkanLoader</link> can be conditionally enabled in your code by checking the <link linkend="_group__init_1ga6337d9ea43b22fc529b2bba066b4a576">GLFW_VERSION_MAJOR</link> and <link linkend="_group__init_1gaf80d40f0aea7088ff337606e9c48f7a3">GLFW_VERSION_MINOR</link> macros.</para>
+</section>
+<section xml:id="_news_1osmesa_option_34">
+<title>GLFW_USE_OSMESA CMake option has been removed</title>
+
+<para>This option was used to compile GLFW for the Null platform. The Null platform is now always supported. To produce a library binary that only supports this platform, the way this CMake option used to do, you will instead need to disable the default platform for the target OS. This means setting the <link linkend="_compile_guide_1GLFW_BUILD_WIN32">GLFW_BUILD_WIN32</link>, <link linkend="_compile_guide_1GLFW_BUILD_COCOA">GLFW_BUILD_COCOA</link> or <link linkend="_compile_guide_1GLFW_BUILD_X11">GLFW_BUILD_X11</link> CMake option to false.</para>
+
+<para>You can set all of them to false and the ones that don&apos;t apply for the target OS will be ignored.</para>
+</section>
+<section xml:id="_news_1wl_shell_34">
+<title>Support for the wl_shell protocol has been removed</title>
+
+<para>Support for the wl_shell protocol has been removed and GLFW now only supports the XDG-Shell protocol. If your Wayland compositor does not support XDG-Shell then GLFW will fail to initialize.</para>
+</section>
+</section>
+<section xml:id="_news_1symbols_34">
+<title>New symbols in version 3.4</title>
+<section xml:id="_news_1functions_34">
+<title>New functions in version 3.4</title>
+
+<para><itemizedlist>
+<listitem>
+<para><link linkend="_group__init_1ga0f4c8556a21d9e774a0ba0332da1748e">glfwInitAllocator</link></para>
+</listitem><listitem>
+<para><link linkend="_group__init_1gac2d1735162a981fcaa8fb386740aa5ce">glfwGetPlatform</link></para>
+</listitem><listitem>
+<para><link linkend="_group__init_1ga7b57ba0946498e8621f4d969bbcecfba">glfwPlatformSupported</link></para>
+</listitem><listitem>
+<para><link linkend="_init_8c_1a1712210f34c339a05adda69e3587ec00">glfwInitVulkanLoader</link></para>
+</listitem></itemizedlist>
+</para>
+</section>
+<section xml:id="_news_1types_34">
+<title>New types in version 3.4</title>
+
+<para><itemizedlist>
+<listitem>
+<para><link linkend="_struct_g_l_f_wallocator">GLFWallocator</link></para>
+</listitem><listitem>
+<para><link linkend="_group__init_1gad3ff6f19415d52fbdcf3f0b57d8802aa">GLFWallocatefun</link></para>
+</listitem><listitem>
+<para><link linkend="_group__init_1gad17723fa35a481b6c8d438a000a8201f">GLFWreallocatefun</link></para>
+</listitem><listitem>
+<para><link linkend="_group__init_1ga7181615eda94c4b07bd72bdcee39fa28">GLFWdeallocatefun</link></para>
+</listitem></itemizedlist>
+</para>
+</section>
+<section xml:id="_news_1constants_34">
+<title>New constants in version 3.4</title>
+
+<para><itemizedlist>
+<listitem>
+<para><link linkend="_intro_guide_1GLFW_PLATFORM">GLFW_PLATFORM</link></para>
+</listitem><listitem>
+<para><link linkend="_group__init_1ga18b2d37374d0dea28cd69194fa85b859">GLFW_ANY_PLATFORM</link></para>
+</listitem><listitem>
+<para><link linkend="_group__init_1ga8d3d17df2ab57492cef665da52c603a1">GLFW_PLATFORM_WIN32</link></para>
+</listitem><listitem>
+<para><link linkend="_group__init_1ga83b18714254f75bc2f0cdbafa0f10b6b">GLFW_PLATFORM_COCOA</link></para>
+</listitem><listitem>
+<para><link linkend="_group__init_1gac4b08906a3cbf26c518a4a543eedd740">GLFW_PLATFORM_WAYLAND</link></para>
+</listitem><listitem>
+<para><link linkend="_group__init_1gaf5333f3933e9c248a00cfda6523f386b">GLFW_PLATFORM_X11</link></para>
+</listitem><listitem>
+<para><link linkend="_group__init_1gac06fad5a4866ae7a1d7b2675fac72d7f">GLFW_PLATFORM_NULL</link></para>
+</listitem><listitem>
+<para><link linkend="_group__errors_1ga3608c6c29ab7a72f3bf019f4c3a2563d">GLFW_PLATFORM_UNAVAILABLE</link></para>
+</listitem><listitem>
+<para><link linkend="_group__shapes_1gaad01a50929fb515bf27e4462c51f6ed0">GLFW_POINTING_HAND_CURSOR</link></para>
+</listitem><listitem>
+<para><link linkend="_group__shapes_1ga2010a43dc1050a7c9154148a63cf01ad">GLFW_RESIZE_EW_CURSOR</link></para>
+</listitem><listitem>
+<para><link linkend="_group__shapes_1gaa59214e8cdc8c8adf08fdf125ed68388">GLFW_RESIZE_NS_CURSOR</link></para>
+</listitem><listitem>
+<para><link linkend="_group__shapes_1gadf2c0a495ec9cef4e1a364cc99aa78da">GLFW_RESIZE_NWSE_CURSOR</link></para>
+</listitem><listitem>
+<para><link linkend="_group__shapes_1gab06bba3b407f92807ba9b48de667a323">GLFW_RESIZE_NESW_CURSOR</link></para>
+</listitem><listitem>
+<para><link linkend="_group__shapes_1ga3a5f4811155f95ccafbbb4c9a899fc1d">GLFW_RESIZE_ALL_CURSOR</link></para>
+</listitem><listitem>
+<para><link linkend="_group__window_1ga88981797d29800808ec242274ab5c03a">GLFW_MOUSE_PASSTHROUGH</link></para>
+</listitem><listitem>
+<para><link linkend="_group__shapes_1ga297c503095b034bc8891393b637844b1">GLFW_NOT_ALLOWED_CURSOR</link></para>
+</listitem><listitem>
+<para><link linkend="_group__errors_1ga09d6943923a70ddef3a085f5baee786c">GLFW_CURSOR_UNAVAILABLE</link></para>
+</listitem><listitem>
+<para><link linkend="_group__window_1gaf65ea8dafdc0edb07b821b9a336d5043">GLFW_WIN32_KEYBOARD_MENU</link></para>
+</listitem><listitem>
+<para><link linkend="_group__window_1ga8d55e3afec73c7de0509c3b7ad1d9e3f">GLFW_CONTEXT_DEBUG</link></para>
+</listitem><listitem>
+<para><link linkend="_group__errors_1ga526fba20a01504a8086c763b6ca53ce5">GLFW_FEATURE_UNAVAILABLE</link></para>
+</listitem><listitem>
+<para><link linkend="_group__errors_1ga5dda77e023e83151e8bd55a6758f946a">GLFW_FEATURE_UNIMPLEMENTED</link></para>
+</listitem><listitem>
+<para><link linkend="_group__init_1gaec269b24cf549ab46292c0125d8bbdce">GLFW_ANGLE_PLATFORM_TYPE</link></para>
+</listitem><listitem>
+<para><link linkend="_glfw3_8h_1ae78e673449c2a2b8c560ca1b1e283228">GLFW_ANGLE_PLATFORM_TYPE_NONE</link></para>
+</listitem><listitem>
+<para><link linkend="_glfw3_8h_1ad8d9e97ed7790811470366b338833623">GLFW_ANGLE_PLATFORM_TYPE_OPENGL</link></para>
+</listitem><listitem>
+<para><link linkend="_glfw3_8h_1a0003c089da020cbf957218e70245bb65">GLFW_ANGLE_PLATFORM_TYPE_OPENGLES</link></para>
+</listitem><listitem>
+<para><link linkend="_glfw3_8h_1a6e8fdc83113d247ad792bb5c4e82c894">GLFW_ANGLE_PLATFORM_TYPE_D3D9</link></para>
+</listitem><listitem>
+<para><link linkend="_glfw3_8h_1ad6eae659811a52a5cdc43c362aedfa33">GLFW_ANGLE_PLATFORM_TYPE_D3D11</link></para>
+</listitem><listitem>
+<para><link linkend="_glfw3_8h_1a579ac83506c7546709dad91960cc7ca1">GLFW_ANGLE_PLATFORM_TYPE_VULKAN</link></para>
+</listitem><listitem>
+<para><link linkend="_glfw3_8h_1ab56d91b26cf223dc67590a93a2f8507d">GLFW_ANGLE_PLATFORM_TYPE_METAL</link></para>
+</listitem><listitem>
+<para><link linkend="_group__init_1gaa341e303ebeb8e4199b8ab8be84351f6">GLFW_X11_XCB_VULKAN_SURFACE</link></para>
+</listitem></itemizedlist>
+</para>
+</section>
+</section>
+</section>
+<section xml:id="_news_1news_archive">
+<title>Release notes for earlier versions</title>
+
+<para><itemizedlist>
+<listitem>
+<para><link xlink:href="https://www.glfw.org/docs/3.3/news.html">Release notes for 3.3</link></para>
+</listitem><listitem>
+<para><link xlink:href="https://www.glfw.org/docs/3.2/news.html">Release notes for 3.2</link></para>
+</listitem><listitem>
+<para><link xlink:href="https://www.glfw.org/docs/3.1/news.html">Release notes for 3.1</link></para>
+</listitem><listitem>
+<para><link xlink:href="https://www.glfw.org/docs/3.0/news.html">Release notes for 3.0</link> </para>
+</listitem></itemizedlist>
+</para>
+</section>
+</section>

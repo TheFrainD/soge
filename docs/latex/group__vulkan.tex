@@ -1,0 +1,158 @@
+\hypertarget{group__vulkan}{}\doxysection{Vulkan support reference}
+\label{group__vulkan}\index{Vulkan support reference@{Vulkan support reference}}
+
+
+Functions and types related to Vulkan.  
+
+
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}($\ast$ \mbox{\hyperlink{group__vulkan_ga70c01918dc9d233a4fbe0681a43018af}{G\+L\+F\+Wvkproc}}) (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\begin{DoxyCompactList}\small\item\em Vulkan A\+PI function pointer type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} int \mbox{\hyperlink{group__vulkan_ga72e7c3757d9ff2333181a5569bb7c403}{glfw\+Vulkan\+Supported}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\begin{DoxyCompactList}\small\item\em Returns whether the Vulkan loader and an I\+CD have been found. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} char $\ast$$\ast$ \mbox{\hyperlink{group__vulkan_gac47c204c9c417fced07e25de8fce526a}{glfw\+Get\+Required\+Instance\+Extensions}} (\mbox{\hyperlink{stdint_8h_a435d1572bf3f880d55459d9805097f62}{uint32\+\_\+t}} $\ast$\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}})
+\begin{DoxyCompactList}\small\item\em Returns the Vulkan instance extensions required by G\+L\+FW. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Functions and types related to Vulkan. 
+
+This is the reference documentation for Vulkan related functions and types. For more task-\/oriented information, see the \mbox{\hyperlink{vulkan_guide}{Vulkan guide}}. 
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{group__vulkan_ga70c01918dc9d233a4fbe0681a43018af}\label{group__vulkan_ga70c01918dc9d233a4fbe0681a43018af}} 
+\index{Vulkan support reference@{Vulkan support reference}!GLFWvkproc@{GLFWvkproc}}
+\index{GLFWvkproc@{GLFWvkproc}!Vulkan support reference@{Vulkan support reference}}
+\doxysubsubsection{\texorpdfstring{GLFWvkproc}{GLFWvkproc}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}($\ast$ G\+L\+F\+Wvkproc) (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})}
+
+
+
+Vulkan A\+PI function pointer type. 
+
+Generic function pointer used for returning Vulkan A\+PI function pointers without forcing a cast from a regular pointer.
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{vulkan_guide_vulkan_proc}{Querying Vulkan function pointers}} 
+
+\mbox{\hyperlink{vulkan_8c_ab1fbd7c0ba5c40c91c6b85b897364039}{glfw\+Get\+Instance\+Proc\+Address}}
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+Added in version 3.\+2. 
+\end{DoxySince}
+
+
+Definition at line 1339 of file glfw3.\+h.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{group__vulkan_gac47c204c9c417fced07e25de8fce526a}\label{group__vulkan_gac47c204c9c417fced07e25de8fce526a}} 
+\index{Vulkan support reference@{Vulkan support reference}!glfwGetRequiredInstanceExtensions@{glfwGetRequiredInstanceExtensions}}
+\index{glfwGetRequiredInstanceExtensions@{glfwGetRequiredInstanceExtensions}!Vulkan support reference@{Vulkan support reference}}
+\doxysubsubsection{\texorpdfstring{glfwGetRequiredInstanceExtensions()}{glfwGetRequiredInstanceExtensions()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} char$\ast$$\ast$ glfw\+Get\+Required\+Instance\+Extensions (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{stdint_8h_a435d1572bf3f880d55459d9805097f62}{uint32\+\_\+t}} $\ast$}]{count }\end{DoxyParamCaption})}
+
+
+
+Returns the Vulkan instance extensions required by G\+L\+FW. 
+
+This function returns an array of names of Vulkan instance extensions required by G\+L\+FW for creating Vulkan surfaces for G\+L\+FW windows. If successful, the list will always contain {\ttfamily V\+K\+\_\+\+K\+H\+R\+\_\+surface}, so if you don\textquotesingle{}t require any additional extensions you can pass this list directly to the {\ttfamily \mbox{\hyperlink{struct_vk_instance_create_info}{Vk\+Instance\+Create\+Info}}} struct.
+
+If Vulkan is not available on the machine, this function returns {\ttfamily N\+U\+LL} and generates a \mbox{\hyperlink{group__errors_ga56882b290db23261cc6c053c40c2d08e}{G\+L\+F\+W\+\_\+\+A\+P\+I\+\_\+\+U\+N\+A\+V\+A\+I\+L\+A\+B\+LE}} error. Call \mbox{\hyperlink{group__vulkan_ga72e7c3757d9ff2333181a5569bb7c403}{glfw\+Vulkan\+Supported}} to check whether Vulkan is at least minimally available.
+
+If Vulkan is available but no set of extensions allowing window surface creation was found, this function returns {\ttfamily N\+U\+LL}. You may still use Vulkan for off-\/screen rendering and compute work.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em count} & Where to store the number of extensions in the returned array. This is set to zero if an error occurred. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An array of A\+S\+C\+II encoded extension names, or {\ttfamily N\+U\+LL} if an \mbox{\hyperlink{intro_guide_error_handling}{error}} occurred.
+\end{DoxyReturn}
+@errors Possible errors include \mbox{\hyperlink{group__errors_ga2374ee02c177f12e1fa76ff3ed15e14a}{G\+L\+F\+W\+\_\+\+N\+O\+T\+\_\+\+I\+N\+I\+T\+I\+A\+L\+I\+Z\+ED}} and \mbox{\hyperlink{group__errors_ga56882b290db23261cc6c053c40c2d08e}{G\+L\+F\+W\+\_\+\+A\+P\+I\+\_\+\+U\+N\+A\+V\+A\+I\+L\+A\+B\+LE}}.
+
+\begin{DoxyRemark}{Remarks}
+Additional extensions may be required by future versions of G\+L\+FW. You should check if any extensions you wish to enable are already in the returned array, as it is an error to specify an extension more than once in the {\ttfamily \mbox{\hyperlink{struct_vk_instance_create_info}{Vk\+Instance\+Create\+Info}}} struct.
+\end{DoxyRemark}
+@pointer\+\_\+lifetime The returned array is allocated and freed by G\+L\+FW. You should not free it yourself. It is guaranteed to be valid only until the library is terminated.
+
+@thread\+\_\+safety This function may be called from any thread.
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{vulkan_guide_vulkan_ext}{Querying required Vulkan extensions}} 
+
+\mbox{\hyperlink{vulkan_8c_a5a47c783767442b8b8e9ab3cf2e4959b}{glfw\+Create\+Window\+Surface}}
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+Added in version 3.\+2. 
+\end{DoxySince}
+
+
+Definition at line 230 of file vulkan.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{231 \{}
+\DoxyCodeLine{232     assert(\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}} != \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234     *\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}} = 0;}
+\DoxyCodeLine{235 }
+\DoxyCodeLine{236     \mbox{\hyperlink{internal_8h_a69563c87fe776d416636a4d1b0e9e599}{\_GLFW\_REQUIRE\_INIT\_OR\_RETURN}}(\mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{237 }
+\DoxyCodeLine{238     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{vulkan_8c_a3e82e6d9f82e3052943978e803bccef5}{\_glfwInitVulkan}}(\mbox{\hyperlink{vulkan_8c_ab21616814a41512460caa5b301776c77}{\_GLFW\_REQUIRE\_LOADER}}))}
+\DoxyCodeLine{239         \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{240 }
+\DoxyCodeLine{241     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a9beb6fda2a7600be02831853de896395}{vk}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a88851909f399ada9dc2777469bdb3397}{extensions}}[0])}
+\DoxyCodeLine{242         \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{243 }
+\DoxyCodeLine{244     *\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}} = 2;}
+\DoxyCodeLine{245     \textcolor{keywordflow}{return} (\textcolor{keyword}{const} \textcolor{keywordtype}{char}**) \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a9beb6fda2a7600be02831853de896395}{vk}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a88851909f399ada9dc2777469bdb3397}{extensions}};}
+\DoxyCodeLine{246 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{group__vulkan_ga72e7c3757d9ff2333181a5569bb7c403}\label{group__vulkan_ga72e7c3757d9ff2333181a5569bb7c403}} 
+\index{Vulkan support reference@{Vulkan support reference}!glfwVulkanSupported@{glfwVulkanSupported}}
+\index{glfwVulkanSupported@{glfwVulkanSupported}!Vulkan support reference@{Vulkan support reference}}
+\doxysubsubsection{\texorpdfstring{glfwVulkanSupported()}{glfwVulkanSupported()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} int glfw\+Vulkan\+Supported (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns whether the Vulkan loader and an I\+CD have been found. 
+
+This function returns whether the Vulkan loader and any minimally functional I\+CD have been found.
+
+The availability of a Vulkan loader and even an I\+CD does not by itself guarantee that surface creation or even instance creation is possible. Call \mbox{\hyperlink{group__vulkan_gac47c204c9c417fced07e25de8fce526a}{glfw\+Get\+Required\+Instance\+Extensions}} to check whether the extensions necessary for Vulkan surface creation are available and \mbox{\hyperlink{vulkan_8c_a6a7033429666ac6b31d4250aeb5b37d1}{glfw\+Get\+Physical\+Device\+Presentation\+Support}} to check whether a queue family of a physical device supports image presentation.
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily G\+L\+F\+W\+\_\+\+T\+R\+UE} if Vulkan is minimally available, or {\ttfamily G\+L\+F\+W\+\_\+\+F\+A\+L\+SE} otherwise.
+\end{DoxyReturn}
+@errors Possible errors include \mbox{\hyperlink{group__errors_ga2374ee02c177f12e1fa76ff3ed15e14a}{G\+L\+F\+W\+\_\+\+N\+O\+T\+\_\+\+I\+N\+I\+T\+I\+A\+L\+I\+Z\+ED}}.
+
+@thread\+\_\+safety This function may be called from any thread.
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{vulkan_guide_vulkan_support}{Querying for Vulkan support}}
+\end{DoxySeeAlso}
+\begin{DoxySince}{Since}
+Added in version 3.\+2. 
+\end{DoxySince}
+
+
+Definition at line 224 of file vulkan.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{225 \{}
+\DoxyCodeLine{226     \mbox{\hyperlink{internal_8h_a69563c87fe776d416636a4d1b0e9e599}{\_GLFW\_REQUIRE\_INIT\_OR\_RETURN}}(\mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}});}
+\DoxyCodeLine{227     \textcolor{keywordflow}{return} \mbox{\hyperlink{vulkan_8c_a3e82e6d9f82e3052943978e803bccef5}{\_glfwInitVulkan}}(\mbox{\hyperlink{vulkan_8c_a1957ac3a217eea28a55ae80431d5a41f}{\_GLFW\_FIND\_LOADER}});}
+\DoxyCodeLine{228 \}}
+
+\end{DoxyCode}

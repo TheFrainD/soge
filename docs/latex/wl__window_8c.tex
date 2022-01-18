@@ -1,0 +1,1699 @@
+\hypertarget{wl__window_8c}{}\doxysection{deps/glfw/src/wl\+\_\+window.c File Reference}
+\label{wl__window_8c}\index{deps/glfw/src/wl\_window.c@{deps/glfw/src/wl\_window.c}}
+{\ttfamily \#include \char`\"{}internal.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \#include $<$sys/mman.\+h$>$}\newline
+{\ttfamily \#include $<$sys/timerfd.\+h$>$}\newline
+{\ttfamily \#include $<$poll.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}wayland-\/client-\/protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/xdg-\/shell-\/client-\/protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/xdg-\/decoration-\/client-\/protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/viewporter-\/client-\/protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/relative-\/pointer-\/unstable-\/v1-\/client-\/protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/pointer-\/constraints-\/unstable-\/v1-\/client-\/protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}wayland-\/idle-\/inhibit-\/unstable-\/v1-\/client-\/protocol.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{wl__window_8c_a369266c24eacffb87046522897a570d5}{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{wl__window_8c_a8fbd5336c54afc9760a89acca1b5bd20}{\+\_\+glfw\+Create\+Window\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, const \mbox{\hyperlink{struct___g_l_f_wwndconfig}{\+\_\+\+G\+L\+F\+Wwndconfig}} $\ast$wndconfig, const \mbox{\hyperlink{struct___g_l_f_wctxconfig}{\+\_\+\+G\+L\+F\+Wctxconfig}} $\ast$ctxconfig, const \mbox{\hyperlink{struct___g_l_f_wfbconfig}{\+\_\+\+G\+L\+F\+Wfbconfig}} $\ast$fbconfig)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a4f9e23a94f70832b66ea4ff6f7e6c98d}{\+\_\+glfw\+Destroy\+Window\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a2a03cb3eb1fa3720991ad2503dd65e2a}{\+\_\+glfw\+Set\+Window\+Title\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, const char $\ast$title)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_af3bdf666499b335663748945d01b1aab}{\+\_\+glfw\+Set\+Window\+Icon\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, int \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}}, const \mbox{\hyperlink{struct_g_l_f_wimage}{G\+L\+F\+Wimage}} $\ast$images)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a325fef5dd107caef5a4620ec0e5ee9bd}{\+\_\+glfw\+Get\+Window\+Pos\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, int $\ast$xpos, int $\ast$ypos)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a5adb7549f1afecf80241a68fe7d2f2e0}{\+\_\+glfw\+Set\+Window\+Pos\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, int xpos, int ypos)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a7139656b9b92a558042462c05e71f17e}{\+\_\+glfw\+Get\+Window\+Size\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, int $\ast$\mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}}, int $\ast$\mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a782e4e77e16e03c5340748e43e808828}{\+\_\+glfw\+Set\+Window\+Size\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, int \mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}}, int \mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_acd2b24bb6d3dc8bf27de6306a5d5397d}{\+\_\+glfw\+Set\+Window\+Size\+Limits\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, int minwidth, int minheight, int maxwidth, int maxheight)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a67850a44f6265bfa151ef3e3637bca55}{\+\_\+glfw\+Set\+Window\+Aspect\+Ratio\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, int numer, int denom)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_afa69ff28fa47d232843f620120391e97}{\+\_\+glfw\+Get\+Framebuffer\+Size\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, int $\ast$\mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}}, int $\ast$\mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a1c0713597287aec915fa764efdebf1f9}{\+\_\+glfw\+Get\+Window\+Frame\+Size\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, int $\ast$\mbox{\hyperlink{glad_8h_a85b8f6c07fbc1fb5d77c2ae090f21995}{left}}, int $\ast$\mbox{\hyperlink{glext_8h_a5ab323daeacf8dfdb8f91132fecdca23}{top}}, int $\ast$\mbox{\hyperlink{glext_8h_a5ffadbbacc6b89cf6218bc43b384d3fe}{right}}, int $\ast$\mbox{\hyperlink{glad_8h_a95fc257e5ddf46f7db9d5e898cdf1991}{bottom}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_ab3e8d510f751fca3c9b60aa03d321cba}{\+\_\+glfw\+Get\+Window\+Content\+Scale\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, float $\ast$xscale, float $\ast$yscale)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a2786524a443b7f4a2ff53055366e1169}{\+\_\+glfw\+Iconify\+Window\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a25c9fe00185d9a1b8badf038b7634b88}{\+\_\+glfw\+Restore\+Window\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a8dcc43854cfabe4d324154d2eeebd44e}{\+\_\+glfw\+Maximize\+Window\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a7a956e757e29f06d5efcae33b58025cb}{\+\_\+glfw\+Show\+Window\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_ad519388eb25d04c1a4db2df34169efb4}{\+\_\+glfw\+Hide\+Window\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a8a1b249be1215f514f923f91656030c3}{\+\_\+glfw\+Request\+Window\+Attention\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a29aeccafd183ea2e1f5bab9a44ad6122}{\+\_\+glfw\+Focus\+Window\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a76e4715c3d943636ba1b71afea0c97c2}{\+\_\+glfw\+Set\+Window\+Monitor\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$monitor, int xpos, int ypos, int \mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}}, int \mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}}, int refresh\+Rate)
+\item 
+int \mbox{\hyperlink{wl__window_8c_ab0d72e6bf663506ff3f138bc670b2f6c}{\+\_\+glfw\+Window\+Focused\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}})
+\item 
+int \mbox{\hyperlink{wl__window_8c_a44752c656c8cee3498776b851285dca6}{\+\_\+glfw\+Window\+Iconified\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}})
+\item 
+int \mbox{\hyperlink{wl__window_8c_abb9d2bf1aac035ff3ae3abcc9e0a7f09}{\+\_\+glfw\+Window\+Visible\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}})
+\item 
+int \mbox{\hyperlink{wl__window_8c_a7676d7f4167b65f29aedf393e14174ed}{\+\_\+glfw\+Window\+Maximized\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}})
+\item 
+int \mbox{\hyperlink{wl__window_8c_af427fb6a233af50a51858a9908d196fb}{\+\_\+glfw\+Window\+Hovered\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}})
+\item 
+int \mbox{\hyperlink{wl__window_8c_a2a78a10b4fa6a214a2bebf4f1ec9b868}{\+\_\+glfw\+Framebuffer\+Transparent\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_aa7d932102710313b7cc131d45413cd06}{\+\_\+glfw\+Set\+Window\+Resizable\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \mbox{\hyperlink{glad_8h_a0455a397ab5468d21c3021f2efa6dd3c}{enabled}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_afcacd9ea3cb285c1266871d13a723e4c}{\+\_\+glfw\+Set\+Window\+Decorated\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \mbox{\hyperlink{glad_8h_a0455a397ab5468d21c3021f2efa6dd3c}{enabled}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_aebcd0db81b67e416f775e4b0d8facdc1}{\+\_\+glfw\+Set\+Window\+Floating\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \mbox{\hyperlink{glad_8h_a0455a397ab5468d21c3021f2efa6dd3c}{enabled}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_acad95c7e85177725f95463ffe86015d4}{\+\_\+glfw\+Set\+Window\+Mouse\+Passthrough\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \mbox{\hyperlink{glad_8h_a0455a397ab5468d21c3021f2efa6dd3c}{enabled}})
+\item 
+float \mbox{\hyperlink{wl__window_8c_a741ad4527adc24d5f6732ac27fa32678}{\+\_\+glfw\+Get\+Window\+Opacity\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a43f0c40c30c7bc0216b51cfae59c3629}{\+\_\+glfw\+Set\+Window\+Opacity\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, float opacity)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_aeb3438865c89b17a2142cfc4509dbd28}{\+\_\+glfw\+Set\+Raw\+Mouse\+Motion\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \mbox{\hyperlink{glad_8h_a0455a397ab5468d21c3021f2efa6dd3c}{enabled}})
+\item 
+\mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \mbox{\hyperlink{wl__window_8c_aa0c6e411bf8eef4b73bc98e0974f2a78}{\+\_\+glfw\+Raw\+Mouse\+Motion\+Supported\+Wayland}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a7a315f4b4c3263efc0960094698de618}{\+\_\+glfw\+Poll\+Events\+Wayland}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a7cc624f3d8429b0d35ad163092b4821a}{\+\_\+glfw\+Wait\+Events\+Wayland}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a43d44933860ce6e5802733777edae04b}{\+\_\+glfw\+Wait\+Events\+Timeout\+Wayland}} (double \mbox{\hyperlink{glad_8h_ad29bb0d8468b264a4e3d9204366cfaab}{timeout}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a34984c3cc558a291b1721288c8b5ebe6}{\+\_\+glfw\+Post\+Empty\+Event\+Wayland}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a68e7966431b3829e09186d88c057e683}{\+\_\+glfw\+Get\+Cursor\+Pos\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, double $\ast$xpos, double $\ast$ypos)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a62964c8a134ffddbab5b24db5b5ba1e9}{\+\_\+glfw\+Set\+Cursor\+Pos\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, double \mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}}, double \mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_ae993bd14d7db090c84fb9799fc556bbd}{\+\_\+glfw\+Set\+Cursor\+Mode\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, int \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}})
+\item 
+const char $\ast$ \mbox{\hyperlink{wl__window_8c_a066d33db2119fb1bba6a5127abd3530c}{\+\_\+glfw\+Get\+Scancode\+Name\+Wayland}} (int scancode)
+\item 
+int \mbox{\hyperlink{wl__window_8c_a3e2e4e589e75df85898b33ff459f60ee}{\+\_\+glfw\+Get\+Key\+Scancode\+Wayland}} (int \mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}})
+\item 
+int \mbox{\hyperlink{wl__window_8c_abdb1b358173a9cd27ed43e2492c40c20}{\+\_\+glfw\+Create\+Cursor\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wcursor}{\+\_\+\+G\+L\+F\+Wcursor}} $\ast$cursor, const \mbox{\hyperlink{struct_g_l_f_wimage}{G\+L\+F\+Wimage}} $\ast$\mbox{\hyperlink{structimage}{image}}, int xhot, int yhot)
+\item 
+int \mbox{\hyperlink{wl__window_8c_aadea2d69e02bfba04cf90e07501aa467}{\+\_\+glfw\+Create\+Standard\+Cursor\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wcursor}{\+\_\+\+G\+L\+F\+Wcursor}} $\ast$cursor, int shape)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_ac215aeab29ad474956c27f4f6ddfc65a}{\+\_\+glfw\+Destroy\+Cursor\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wcursor}{\+\_\+\+G\+L\+F\+Wcursor}} $\ast$cursor)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_aabccf38d8d6f6e29e4a63345a850bfa9}{\+\_\+glfw\+Set\+Cursor\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{struct___g_l_f_wcursor}{\+\_\+\+G\+L\+F\+Wcursor}} $\ast$cursor)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a74f40e21bcc7f5a646ecc5f80f25a6c3}{\+\_\+glfw\+Set\+Clipboard\+String\+Wayland}} (const char $\ast$\mbox{\hyperlink{glad_8h_ae84541b4f3d8e1ea24ec0f466a8c568b}{string}})
+\item 
+const char $\ast$ \mbox{\hyperlink{wl__window_8c_a491fcd8a56c175d24dc286660fe7475b}{\+\_\+glfw\+Get\+Clipboard\+String\+Wayland}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{internal_8h_a3a1da159bbe7bd56490f67d96dce3bf9}{E\+G\+Lenum}} \mbox{\hyperlink{wl__window_8c_ad3a432eeab11d12463568f267ba0dc59}{\+\_\+glfw\+Get\+E\+G\+L\+Platform\+Wayland}} (\mbox{\hyperlink{internal_8h_a97030274d045a36c550fc0d66d26f175}{E\+G\+Lint}} $\ast$$\ast$\mbox{\hyperlink{glext_8h_af53ceb1060941f33639f84f48d5b9273}{attribs}})
+\item 
+\mbox{\hyperlink{internal_8h_a551f78efa88a306d86efa8af0ec94349}{E\+G\+L\+Native\+Display\+Type}} \mbox{\hyperlink{wl__window_8c_a504e09d478703e56da9a9b8204bdddd5}{\+\_\+glfw\+Get\+E\+G\+L\+Native\+Display\+Wayland}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{internal_8h_a858431dc7d9081b52dc734956fd1f563}{E\+G\+L\+Native\+Window\+Type}} \mbox{\hyperlink{wl__window_8c_a1aa2aacf3bb7726a0cb96c138cda4f43}{\+\_\+glfw\+Get\+E\+G\+L\+Native\+Window\+Wayland}} (\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{wl__window_8c_a82b45703386cfc7543957d2160b482a5}{\+\_\+glfw\+Get\+Required\+Instance\+Extensions\+Wayland}} (char $\ast$$\ast$extensions)
+\item 
+int \mbox{\hyperlink{wl__window_8c_a5b300bf0217ad4d0c73c7c44eb53062d}{\+\_\+glfw\+Get\+Physical\+Device\+Presentation\+Support\+Wayland}} (\mbox{\hyperlink{internal_8h_a25ae5082a7c01af345570ed09d724881}{Vk\+Instance}} instance, \mbox{\hyperlink{internal_8h_aa9acbee1e762fde021511a1b47678a38}{Vk\+Physical\+Device}} device, \mbox{\hyperlink{stdint_8h_a435d1572bf3f880d55459d9805097f62}{uint32\+\_\+t}} queuefamily)
+\item 
+\mbox{\hyperlink{vulkan_8h_abe3614d1bd40772bc2398a4a86ea4a45}{Vk\+Result}} \mbox{\hyperlink{wl__window_8c_a88b24d7cb3bc64abfc826fd23cf17ad4}{\+\_\+glfw\+Create\+Window\+Surface\+Wayland}} (\mbox{\hyperlink{internal_8h_a25ae5082a7c01af345570ed09d724881}{Vk\+Instance}} instance, \mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, const \mbox{\hyperlink{struct_vk_allocation_callbacks}{Vk\+Allocation\+Callbacks}} $\ast$allocator, \mbox{\hyperlink{internal_8h_a09787d7da5f3146095ed80ceccc2d794}{Vk\+Surface\+K\+HR}} $\ast$surface)
+\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} struct wl\+\_\+display $\ast$ \mbox{\hyperlink{wl__window_8c_adc34e43e770676d600b962856da8dd83}{glfw\+Get\+Wayland\+Display}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} struct wl\+\_\+surface $\ast$ \mbox{\hyperlink{wl__window_8c_a170f451581f6a1051512e2897d336675}{glfw\+Get\+Wayland\+Window}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$handle)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{wl__window_8c_a369266c24eacffb87046522897a570d5}\label{wl__window_8c_a369266c24eacffb87046522897a570d5}} 
+\index{wl\_window.c@{wl\_window.c}!\_GNU\_SOURCE@{\_GNU\_SOURCE}}
+\index{\_GNU\_SOURCE@{\_GNU\_SOURCE}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_GNU\_SOURCE}{\_GNU\_SOURCE}}
+{\footnotesize\ttfamily \#define \+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}
+
+
+
+Definition at line 29 of file wl\+\_\+window.\+c.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{wl__window_8c_abdb1b358173a9cd27ed43e2492c40c20}\label{wl__window_8c_abdb1b358173a9cd27ed43e2492c40c20}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwCreateCursorWayland@{\_glfwCreateCursorWayland}}
+\index{\_glfwCreateCursorWayland@{\_glfwCreateCursorWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwCreateCursorWayland()}{\_glfwCreateCursorWayland()}}
+{\footnotesize\ttfamily int \+\_\+glfw\+Create\+Cursor\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wcursor}{\+\_\+\+G\+L\+F\+Wcursor}} $\ast$}]{cursor,  }\item[{const \mbox{\hyperlink{struct_g_l_f_wimage}{G\+L\+F\+Wimage}} $\ast$}]{image,  }\item[{int}]{xhot,  }\item[{int}]{yhot }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1256 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1259 \{}
+\DoxyCodeLine{1260     cursor-\/>wl.buffer = createShmBuffer(\mbox{\hyperlink{structimage}{image}});}
+\DoxyCodeLine{1261     \textcolor{keywordflow}{if} (!cursor-\/>wl.buffer)}
+\DoxyCodeLine{1262         \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{1263 }
+\DoxyCodeLine{1264     cursor-\/>wl.width = \mbox{\hyperlink{structimage}{image}}-\/>\mbox{\hyperlink{structimage_a42ecfe2675278f6b7e70033e3ff89e4a}{width}};}
+\DoxyCodeLine{1265     cursor-\/>wl.height = \mbox{\hyperlink{structimage}{image}}-\/>\mbox{\hyperlink{structimage_aa478e4be0fe527274f9233cc11ec71e9}{height}};}
+\DoxyCodeLine{1266     cursor-\/>wl.xhot = xhot;}
+\DoxyCodeLine{1267     cursor-\/>wl.yhot = yhot;}
+\DoxyCodeLine{1268     \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{1269 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_aadea2d69e02bfba04cf90e07501aa467}\label{wl__window_8c_aadea2d69e02bfba04cf90e07501aa467}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwCreateStandardCursorWayland@{\_glfwCreateStandardCursorWayland}}
+\index{\_glfwCreateStandardCursorWayland@{\_glfwCreateStandardCursorWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwCreateStandardCursorWayland()}{\_glfwCreateStandardCursorWayland()}}
+{\footnotesize\ttfamily int \+\_\+glfw\+Create\+Standard\+Cursor\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wcursor}{\+\_\+\+G\+L\+F\+Wcursor}} $\ast$}]{cursor,  }\item[{int}]{shape }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1271 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1272 \{}
+\DoxyCodeLine{1273     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}} = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1274 }
+\DoxyCodeLine{1275     \textcolor{comment}{// Try the XDG names first}}
+\DoxyCodeLine{1276     \textcolor{keywordflow}{switch} (shape)}
+\DoxyCodeLine{1277     \{}
+\DoxyCodeLine{1278         \textcolor{keywordflow}{case} \mbox{\hyperlink{group__shapes_ga8ab0e717245b85506cb0eaefdea39d0a}{GLFW\_ARROW\_CURSOR}}:}
+\DoxyCodeLine{1279             \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}} = \textcolor{stringliteral}{"default"};}
+\DoxyCodeLine{1280             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1281         \textcolor{keywordflow}{case} \mbox{\hyperlink{group__shapes_ga36185f4375eaada1b04e431244774c86}{GLFW\_IBEAM\_CURSOR}}:}
+\DoxyCodeLine{1282             \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}} = \textcolor{stringliteral}{"text"};}
+\DoxyCodeLine{1283             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1284         \textcolor{keywordflow}{case} \mbox{\hyperlink{group__shapes_ga8af88c0ea05ab9e8f9ac1530e8873c22}{GLFW\_CROSSHAIR\_CURSOR}}:}
+\DoxyCodeLine{1285             \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}} = \textcolor{stringliteral}{"crosshair"};}
+\DoxyCodeLine{1286             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1287         \textcolor{keywordflow}{case} \mbox{\hyperlink{group__shapes_gaad01a50929fb515bf27e4462c51f6ed0}{GLFW\_POINTING\_HAND\_CURSOR}}:}
+\DoxyCodeLine{1288             \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}} = \textcolor{stringliteral}{"pointer"};}
+\DoxyCodeLine{1289             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1290         \textcolor{keywordflow}{case} \mbox{\hyperlink{group__shapes_ga2010a43dc1050a7c9154148a63cf01ad}{GLFW\_RESIZE\_EW\_CURSOR}}:}
+\DoxyCodeLine{1291             \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}} = \textcolor{stringliteral}{"ew-\/resize"};}
+\DoxyCodeLine{1292             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1293         \textcolor{keywordflow}{case} \mbox{\hyperlink{group__shapes_gaa59214e8cdc8c8adf08fdf125ed68388}{GLFW\_RESIZE\_NS\_CURSOR}}:}
+\DoxyCodeLine{1294             \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}} = \textcolor{stringliteral}{"ns-\/resize"};}
+\DoxyCodeLine{1295             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1296         \textcolor{keywordflow}{case} \mbox{\hyperlink{group__shapes_gadf2c0a495ec9cef4e1a364cc99aa78da}{GLFW\_RESIZE\_NWSE\_CURSOR}}:}
+\DoxyCodeLine{1297             \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}} = \textcolor{stringliteral}{"nwse-\/resize"};}
+\DoxyCodeLine{1298             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1299         \textcolor{keywordflow}{case} \mbox{\hyperlink{group__shapes_gab06bba3b407f92807ba9b48de667a323}{GLFW\_RESIZE\_NESW\_CURSOR}}:}
+\DoxyCodeLine{1300             \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}} = \textcolor{stringliteral}{"nesw-\/resize"};}
+\DoxyCodeLine{1301             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1302         \textcolor{keywordflow}{case} \mbox{\hyperlink{group__shapes_ga3a5f4811155f95ccafbbb4c9a899fc1d}{GLFW\_RESIZE\_ALL\_CURSOR}}:}
+\DoxyCodeLine{1303             \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}} = \textcolor{stringliteral}{"all-\/scroll"};}
+\DoxyCodeLine{1304             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1305         \textcolor{keywordflow}{case} \mbox{\hyperlink{group__shapes_ga297c503095b034bc8891393b637844b1}{GLFW\_NOT\_ALLOWED\_CURSOR}}:}
+\DoxyCodeLine{1306             \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}} = \textcolor{stringliteral}{"not-\/allowed"};}
+\DoxyCodeLine{1307             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1308     \}}
+\DoxyCodeLine{1309 }
+\DoxyCodeLine{1310     cursor-\/>wl.cursor = \mbox{\hyperlink{wl__platform_8h_a987f4277f2574417ab58ebdb8f5de58f}{wl\_cursor\_theme\_get\_cursor}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorTheme, \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}});}
+\DoxyCodeLine{1311 }
+\DoxyCodeLine{1312     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorThemeHiDPI)}
+\DoxyCodeLine{1313     \{}
+\DoxyCodeLine{1314         cursor-\/>wl.cursorHiDPI =}
+\DoxyCodeLine{1315             \mbox{\hyperlink{wl__platform_8h_a987f4277f2574417ab58ebdb8f5de58f}{wl\_cursor\_theme\_get\_cursor}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorThemeHiDPI, \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}});}
+\DoxyCodeLine{1316     \}}
+\DoxyCodeLine{1317 }
+\DoxyCodeLine{1318     \textcolor{keywordflow}{if} (!cursor-\/>wl.cursor)}
+\DoxyCodeLine{1319     \{}
+\DoxyCodeLine{1320         \textcolor{comment}{// Fall back to the core X11 names}}
+\DoxyCodeLine{1321         \textcolor{keywordflow}{switch} (shape)}
+\DoxyCodeLine{1322         \{}
+\DoxyCodeLine{1323             \textcolor{keywordflow}{case} \mbox{\hyperlink{group__shapes_ga8ab0e717245b85506cb0eaefdea39d0a}{GLFW\_ARROW\_CURSOR}}:}
+\DoxyCodeLine{1324                 \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}} = \textcolor{stringliteral}{"left\_ptr"};}
+\DoxyCodeLine{1325                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1326             \textcolor{keywordflow}{case} \mbox{\hyperlink{group__shapes_ga36185f4375eaada1b04e431244774c86}{GLFW\_IBEAM\_CURSOR}}:}
+\DoxyCodeLine{1327                 \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}} = \textcolor{stringliteral}{"xterm"};}
+\DoxyCodeLine{1328                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1329             \textcolor{keywordflow}{case} \mbox{\hyperlink{group__shapes_ga8af88c0ea05ab9e8f9ac1530e8873c22}{GLFW\_CROSSHAIR\_CURSOR}}:}
+\DoxyCodeLine{1330                 \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}} = \textcolor{stringliteral}{"crosshair"};}
+\DoxyCodeLine{1331                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1332             \textcolor{keywordflow}{case} \mbox{\hyperlink{group__shapes_gaad01a50929fb515bf27e4462c51f6ed0}{GLFW\_POINTING\_HAND\_CURSOR}}:}
+\DoxyCodeLine{1333                 \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}} = \textcolor{stringliteral}{"hand2"};}
+\DoxyCodeLine{1334                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1335             \textcolor{keywordflow}{case} \mbox{\hyperlink{group__shapes_ga2010a43dc1050a7c9154148a63cf01ad}{GLFW\_RESIZE\_EW\_CURSOR}}:}
+\DoxyCodeLine{1336                 \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}} = \textcolor{stringliteral}{"sb\_h\_double\_arrow"};}
+\DoxyCodeLine{1337                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1338             \textcolor{keywordflow}{case} \mbox{\hyperlink{group__shapes_gaa59214e8cdc8c8adf08fdf125ed68388}{GLFW\_RESIZE\_NS\_CURSOR}}:}
+\DoxyCodeLine{1339                 \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}} = \textcolor{stringliteral}{"sb\_v\_double\_arrow"};}
+\DoxyCodeLine{1340                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1341             \textcolor{keywordflow}{case} \mbox{\hyperlink{group__shapes_ga3a5f4811155f95ccafbbb4c9a899fc1d}{GLFW\_RESIZE\_ALL\_CURSOR}}:}
+\DoxyCodeLine{1342                 \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}} = \textcolor{stringliteral}{"fleur"};}
+\DoxyCodeLine{1343                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1344             \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{1345                 \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_ga09d6943923a70ddef3a085f5baee786c}{GLFW\_CURSOR\_UNAVAILABLE}},}
+\DoxyCodeLine{1346                                 \textcolor{stringliteral}{"Wayland: Standard cursor shape unavailable"});}
+\DoxyCodeLine{1347                 \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{1348         \}}
+\DoxyCodeLine{1349 }
+\DoxyCodeLine{1350         cursor-\/>wl.cursor = \mbox{\hyperlink{wl__platform_8h_a987f4277f2574417ab58ebdb8f5de58f}{wl\_cursor\_theme\_get\_cursor}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorTheme, \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}});}
+\DoxyCodeLine{1351         \textcolor{keywordflow}{if} (!cursor-\/>wl.cursor)}
+\DoxyCodeLine{1352         \{}
+\DoxyCodeLine{1353             \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1354                             \textcolor{stringliteral}{"Wayland: Failed to create standard cursor \(\backslash\)"\%s\(\backslash\)""},}
+\DoxyCodeLine{1355                             \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}});}
+\DoxyCodeLine{1356             \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{1357         \}}
+\DoxyCodeLine{1358 }
+\DoxyCodeLine{1359         \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorThemeHiDPI)}
+\DoxyCodeLine{1360         \{}
+\DoxyCodeLine{1361             \textcolor{keywordflow}{if} (!cursor-\/>wl.cursorHiDPI)}
+\DoxyCodeLine{1362             \{}
+\DoxyCodeLine{1363                 cursor-\/>wl.cursorHiDPI =}
+\DoxyCodeLine{1364                     \mbox{\hyperlink{wl__platform_8h_a987f4277f2574417ab58ebdb8f5de58f}{wl\_cursor\_theme\_get\_cursor}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorThemeHiDPI, \mbox{\hyperlink{glad_8h_ad977737dfc9a274a62741b9500c49a32}{name}});}
+\DoxyCodeLine{1365             \}}
+\DoxyCodeLine{1366         \}}
+\DoxyCodeLine{1367     \}}
+\DoxyCodeLine{1368 }
+\DoxyCodeLine{1369     \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{1370 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a88b24d7cb3bc64abfc826fd23cf17ad4}\label{wl__window_8c_a88b24d7cb3bc64abfc826fd23cf17ad4}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwCreateWindowSurfaceWayland@{\_glfwCreateWindowSurfaceWayland}}
+\index{\_glfwCreateWindowSurfaceWayland@{\_glfwCreateWindowSurfaceWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwCreateWindowSurfaceWayland()}{\_glfwCreateWindowSurfaceWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{vulkan_8h_abe3614d1bd40772bc2398a4a86ea4a45}{Vk\+Result}} \+\_\+glfw\+Create\+Window\+Surface\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{internal_8h_a25ae5082a7c01af345570ed09d724881}{Vk\+Instance}}}]{instance,  }\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{const \mbox{\hyperlink{struct_vk_allocation_callbacks}{Vk\+Allocation\+Callbacks}} $\ast$}]{allocator,  }\item[{\mbox{\hyperlink{internal_8h_a09787d7da5f3146095ed80ceccc2d794}{Vk\+Surface\+K\+HR}} $\ast$}]{surface }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1801 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1805 \{}
+\DoxyCodeLine{1806     \mbox{\hyperlink{vulkan_8h_abe3614d1bd40772bc2398a4a86ea4a45}{VkResult}} err;}
+\DoxyCodeLine{1807     \mbox{\hyperlink{struct_vk_wayland_surface_create_info_k_h_r}{VkWaylandSurfaceCreateInfoKHR}} sci;}
+\DoxyCodeLine{1808     \mbox{\hyperlink{wl__platform_8h_a76222e93358f10e2b01bd5115dc01038}{PFN\_vkCreateWaylandSurfaceKHR}} vkCreateWaylandSurfaceKHR;}
+\DoxyCodeLine{1809 }
+\DoxyCodeLine{1810     vkCreateWaylandSurfaceKHR = (\mbox{\hyperlink{wl__platform_8h_a76222e93358f10e2b01bd5115dc01038}{PFN\_vkCreateWaylandSurfaceKHR}})}
+\DoxyCodeLine{1811         \mbox{\hyperlink{vulkan_8h_ae698fe946e5b75ed4a173e95133cf4f3}{vkGetInstanceProcAddr}}(instance, \textcolor{stringliteral}{"vkCreateWaylandSurfaceKHR"});}
+\DoxyCodeLine{1812     \textcolor{keywordflow}{if} (!vkCreateWaylandSurfaceKHR)}
+\DoxyCodeLine{1813     \{}
+\DoxyCodeLine{1814         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_ga56882b290db23261cc6c053c40c2d08e}{GLFW\_API\_UNAVAILABLE}},}
+\DoxyCodeLine{1815                         \textcolor{stringliteral}{"Wayland: Vulkan instance missing VK\_KHR\_wayland\_surface extension"});}
+\DoxyCodeLine{1816         \textcolor{keywordflow}{return} \mbox{\hyperlink{vulkan_8h_abe3614d1bd40772bc2398a4a86ea4a45a20b80caadaa3175652a04f2658f84b3e}{VK\_ERROR\_EXTENSION\_NOT\_PRESENT}};}
+\DoxyCodeLine{1817     \}}
+\DoxyCodeLine{1818 }
+\DoxyCodeLine{1819     memset(\&sci, 0, \textcolor{keyword}{sizeof}(sci));}
+\DoxyCodeLine{1820     sci.\mbox{\hyperlink{struct_vk_wayland_surface_create_info_k_h_r_adcee5594c6de411fcf6c612c40ddf995}{sType}} = \mbox{\hyperlink{internal_8h_aff9f2b99398eb80a2b5a146bc5534ce8a70b959bba54ca9729663349ce3442903}{VK\_STRUCTURE\_TYPE\_WAYLAND\_SURFACE\_CREATE\_INFO\_KHR}};}
+\DoxyCodeLine{1821     sci.\mbox{\hyperlink{struct_vk_wayland_surface_create_info_k_h_r_a4f49bbd03fe6e25deca11749756af037}{display}} = \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}};}
+\DoxyCodeLine{1822     sci.\mbox{\hyperlink{struct_vk_wayland_surface_create_info_k_h_r_ac980b3618f9e9b7c741d0b85f351ff02}{surface}} = \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.surface;}
+\DoxyCodeLine{1823 }
+\DoxyCodeLine{1824     err = vkCreateWaylandSurfaceKHR(instance, \&sci, allocator, surface);}
+\DoxyCodeLine{1825     \textcolor{keywordflow}{if} (err)}
+\DoxyCodeLine{1826     \{}
+\DoxyCodeLine{1827         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1828                         \textcolor{stringliteral}{"Wayland: Failed to create Vulkan surface: \%s"},}
+\DoxyCodeLine{1829                         \mbox{\hyperlink{internal_8h_a512b47c0edcaaf41a4f70bfc8d4d78a7}{\_glfwGetVulkanResultString}}(err));}
+\DoxyCodeLine{1830     \}}
+\DoxyCodeLine{1831 }
+\DoxyCodeLine{1832     \textcolor{keywordflow}{return} err;}
+\DoxyCodeLine{1833 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a8fbd5336c54afc9760a89acca1b5bd20}\label{wl__window_8c_a8fbd5336c54afc9760a89acca1b5bd20}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwCreateWindowWayland@{\_glfwCreateWindowWayland}}
+\index{\_glfwCreateWindowWayland@{\_glfwCreateWindowWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwCreateWindowWayland()}{\_glfwCreateWindowWayland()}}
+{\footnotesize\ttfamily int \+\_\+glfw\+Create\+Window\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{const \mbox{\hyperlink{struct___g_l_f_wwndconfig}{\+\_\+\+G\+L\+F\+Wwndconfig}} $\ast$}]{wndconfig,  }\item[{const \mbox{\hyperlink{struct___g_l_f_wctxconfig}{\+\_\+\+G\+L\+F\+Wctxconfig}} $\ast$}]{ctxconfig,  }\item[{const \mbox{\hyperlink{struct___g_l_f_wfbconfig}{\+\_\+\+G\+L\+F\+Wfbconfig}} $\ast$}]{fbconfig }\end{DoxyParamCaption})}
+
+
+
+Definition at line 792 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{796 \{}
+\DoxyCodeLine{797     \textcolor{keywordflow}{if} (!createSurface(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, wndconfig, fbconfig))}
+\DoxyCodeLine{798         \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{799 }
+\DoxyCodeLine{800     \textcolor{keywordflow}{if} (ctxconfig-\/>\mbox{\hyperlink{struct___g_l_f_wctxconfig_a9d54584dc156b04e39d7567a70e13ef8}{client}} != \mbox{\hyperlink{glfw3_8h_a8f6dcdc968d214ff14779564f1389264}{GLFW\_NO\_API}})}
+\DoxyCodeLine{801     \{}
+\DoxyCodeLine{802         \textcolor{keywordflow}{if} (ctxconfig-\/>\mbox{\hyperlink{struct___g_l_f_wctxconfig_a725120317549aa1eef2b88af5ac4c409}{source}} == \mbox{\hyperlink{glfw3_8h_a03cf65c9ab01fc8b872ba58842c531c9}{GLFW\_EGL\_CONTEXT\_API}} ||}
+\DoxyCodeLine{803             ctxconfig-\/>\mbox{\hyperlink{struct___g_l_f_wctxconfig_a725120317549aa1eef2b88af5ac4c409}{source}} == \mbox{\hyperlink{glfw3_8h_a0494c9bfd3f584ab41e6dbeeaa0e6a19}{GLFW\_NATIVE\_CONTEXT\_API}})}
+\DoxyCodeLine{804         \{}
+\DoxyCodeLine{805             \textcolor{keywordflow}{if} (!\mbox{\hyperlink{egl__context_8c_ad83def5c7af30c3bfcc9371712ba96ac}{\_glfwInitEGL}}())}
+\DoxyCodeLine{806                 \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{807             \textcolor{keywordflow}{if} (!\mbox{\hyperlink{egl__context_8c_adfb1d7aa925810c45a2ef4efc268c2fe}{\_glfwCreateContextEGL}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, ctxconfig, fbconfig))}
+\DoxyCodeLine{808                 \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{809         \}}
+\DoxyCodeLine{810         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ctxconfig-\/>\mbox{\hyperlink{struct___g_l_f_wctxconfig_a725120317549aa1eef2b88af5ac4c409}{source}} == \mbox{\hyperlink{glfw3_8h_afd34a473af9fa81f317910ea371b19e3}{GLFW\_OSMESA\_CONTEXT\_API}})}
+\DoxyCodeLine{811         \{}
+\DoxyCodeLine{812             \textcolor{keywordflow}{if} (!\mbox{\hyperlink{internal_8h_a9dd1594b1f8991f90844fbeb4a664163}{\_glfwInitOSMesa}}())}
+\DoxyCodeLine{813                 \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{814             \textcolor{keywordflow}{if} (!\mbox{\hyperlink{internal_8h_a59950232b3b545e1fa750f6bd7d46201}{\_glfwCreateContextOSMesa}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, ctxconfig, fbconfig))}
+\DoxyCodeLine{815                 \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{816         \}}
+\DoxyCodeLine{817     \}}
+\DoxyCodeLine{818 }
+\DoxyCodeLine{819     \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{820 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_ac215aeab29ad474956c27f4f6ddfc65a}\label{wl__window_8c_ac215aeab29ad474956c27f4f6ddfc65a}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwDestroyCursorWayland@{\_glfwDestroyCursorWayland}}
+\index{\_glfwDestroyCursorWayland@{\_glfwDestroyCursorWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwDestroyCursorWayland()}{\_glfwDestroyCursorWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Destroy\+Cursor\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wcursor}{\+\_\+\+G\+L\+F\+Wcursor}} $\ast$}]{cursor }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1372 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1373 \{}
+\DoxyCodeLine{1374     \textcolor{comment}{// If it's a standard cursor we don't need to do anything here}}
+\DoxyCodeLine{1375     \textcolor{keywordflow}{if} (cursor-\/>wl.cursor)}
+\DoxyCodeLine{1376         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{1377 }
+\DoxyCodeLine{1378     \textcolor{keywordflow}{if} (cursor-\/>wl.buffer)}
+\DoxyCodeLine{1379         wl\_buffer\_destroy(cursor-\/>wl.buffer);}
+\DoxyCodeLine{1380 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a4f9e23a94f70832b66ea4ff6f7e6c98d}\label{wl__window_8c_a4f9e23a94f70832b66ea4ff6f7e6c98d}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwDestroyWindowWayland@{\_glfwDestroyWindowWayland}}
+\index{\_glfwDestroyWindowWayland@{\_glfwDestroyWindowWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwDestroyWindowWayland()}{\_glfwDestroyWindowWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Destroy\+Window\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Definition at line 822 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{823 \{}
+\DoxyCodeLine{824     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}} == \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.pointerFocus)}
+\DoxyCodeLine{825     \{}
+\DoxyCodeLine{826         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.pointerFocus = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{827         \mbox{\hyperlink{deps_2glfw_2src_2input_8c_a507361a8b8610b4daee7e83aa056f339}{\_glfwInputCursorEnter}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}});}
+\DoxyCodeLine{828     \}}
+\DoxyCodeLine{829     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}} == \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.keyboardFocus)}
+\DoxyCodeLine{830     \{}
+\DoxyCodeLine{831         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.keyboardFocus = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{832         \mbox{\hyperlink{internal_8h_afb9ff9f75dd4d2dade4600dc38e8715e}{\_glfwInputWindowFocus}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}});}
+\DoxyCodeLine{833     \}}
+\DoxyCodeLine{834 }
+\DoxyCodeLine{835     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.idleInhibitor)}
+\DoxyCodeLine{836         zwp\_idle\_inhibitor\_v1\_destroy(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.idleInhibitor);}
+\DoxyCodeLine{837 }
+\DoxyCodeLine{838     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>context.destroy)}
+\DoxyCodeLine{839         \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>context.destroy(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}});}
+\DoxyCodeLine{840 }
+\DoxyCodeLine{841     destroyDecorations(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}});}
+\DoxyCodeLine{842     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.decoration)}
+\DoxyCodeLine{843         zxdg\_toplevel\_decoration\_v1\_destroy(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.decoration);}
+\DoxyCodeLine{844 }
+\DoxyCodeLine{845     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.decorations.buffer)}
+\DoxyCodeLine{846         wl\_buffer\_destroy(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.decorations.buffer);}
+\DoxyCodeLine{847 }
+\DoxyCodeLine{848     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.native)}
+\DoxyCodeLine{849         \mbox{\hyperlink{wl__platform_8h_adf173779ebc5cf85253a4d34918fd2cb}{wl\_egl\_window\_destroy}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.native);}
+\DoxyCodeLine{850 }
+\DoxyCodeLine{851     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.toplevel)}
+\DoxyCodeLine{852         xdg\_toplevel\_destroy(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.toplevel);}
+\DoxyCodeLine{853 }
+\DoxyCodeLine{854     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.surface)}
+\DoxyCodeLine{855         xdg\_surface\_destroy(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.surface);}
+\DoxyCodeLine{856 }
+\DoxyCodeLine{857     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.surface)}
+\DoxyCodeLine{858         wl\_surface\_destroy(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.surface);}
+\DoxyCodeLine{859 }
+\DoxyCodeLine{860     \mbox{\hyperlink{init_8c_abcf72962b101a8a5c539da1a278b0e9e}{\_glfw\_free}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.title);}
+\DoxyCodeLine{861     \mbox{\hyperlink{init_8c_abcf72962b101a8a5c539da1a278b0e9e}{\_glfw\_free}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.monitors);}
+\DoxyCodeLine{862 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a29aeccafd183ea2e1f5bab9a44ad6122}\label{wl__window_8c_a29aeccafd183ea2e1f5bab9a44ad6122}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwFocusWindowWayland@{\_glfwFocusWindowWayland}}
+\index{\_glfwFocusWindowWayland@{\_glfwFocusWindowWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwFocusWindowWayland()}{\_glfwFocusWindowWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Focus\+Window\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1032 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1033 \{}
+\DoxyCodeLine{1034     \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_ga526fba20a01504a8086c763b6ca53ce5}{GLFW\_FEATURE\_UNAVAILABLE}},}
+\DoxyCodeLine{1035                     \textcolor{stringliteral}{"Wayland: The platform does not support setting the input focus"});}
+\DoxyCodeLine{1036 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a2a78a10b4fa6a214a2bebf4f1ec9b868}\label{wl__window_8c_a2a78a10b4fa6a214a2bebf4f1ec9b868}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwFramebufferTransparentWayland@{\_glfwFramebufferTransparentWayland}}
+\index{\_glfwFramebufferTransparentWayland@{\_glfwFramebufferTransparentWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwFramebufferTransparentWayland()}{\_glfwFramebufferTransparentWayland()}}
+{\footnotesize\ttfamily int \+\_\+glfw\+Framebuffer\+Transparent\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1086 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1087 \{}
+\DoxyCodeLine{1088     \textcolor{keywordflow}{return} \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.transparent;}
+\DoxyCodeLine{1089 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a491fcd8a56c175d24dc286660fe7475b}\label{wl__window_8c_a491fcd8a56c175d24dc286660fe7475b}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwGetClipboardStringWayland@{\_glfwGetClipboardStringWayland}}
+\index{\_glfwGetClipboardStringWayland@{\_glfwGetClipboardStringWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetClipboardStringWayland()}{\_glfwGetClipboardStringWayland()}}
+{\footnotesize\ttfamily const char$\ast$ \+\_\+glfw\+Get\+Clipboard\+String\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1687 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1688 \{}
+\DoxyCodeLine{1689     \textcolor{keywordtype}{int} fds[2];}
+\DoxyCodeLine{1690     \textcolor{keywordtype}{int} ret;}
+\DoxyCodeLine{1691     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{glext_8h_a652168017ea9a8bbcead03d5c16269fb}{len}} = 0;}
+\DoxyCodeLine{1692 }
+\DoxyCodeLine{1693     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataOffer)}
+\DoxyCodeLine{1694     \{}
+\DoxyCodeLine{1695         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_ga196e125ef261d94184e2b55c05762f14}{GLFW\_FORMAT\_UNAVAILABLE}},}
+\DoxyCodeLine{1696                         \textcolor{stringliteral}{"No clipboard data has been sent yet"});}
+\DoxyCodeLine{1697         \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1698     \}}
+\DoxyCodeLine{1699 }
+\DoxyCodeLine{1700     ret = pipe2(fds, O\_CLOEXEC);}
+\DoxyCodeLine{1701     \textcolor{keywordflow}{if} (ret < 0)}
+\DoxyCodeLine{1702     \{}
+\DoxyCodeLine{1703         \textcolor{comment}{// TODO: also report errno maybe?}}
+\DoxyCodeLine{1704         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1705                         \textcolor{stringliteral}{"Wayland: Impossible to create clipboard pipe fds"});}
+\DoxyCodeLine{1706         \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1707     \}}
+\DoxyCodeLine{1708 }
+\DoxyCodeLine{1709     wl\_data\_offer\_receive(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataOffer, \textcolor{stringliteral}{"text/plain;charset=utf-\/8"}, fds[1]);}
+\DoxyCodeLine{1710     close(fds[1]);}
+\DoxyCodeLine{1711 }
+\DoxyCodeLine{1712     \textcolor{comment}{// XXX: this is a huge hack, this function shouldn’t be synchronous!}}
+\DoxyCodeLine{1713     handleEvents(-\/1);}
+\DoxyCodeLine{1714 }
+\DoxyCodeLine{1715     \textcolor{keywordflow}{while} (1)}
+\DoxyCodeLine{1716     \{}
+\DoxyCodeLine{1717         \textcolor{comment}{// Grow the clipboard if we need to paste something bigger, there is no}}
+\DoxyCodeLine{1718         \textcolor{comment}{// shrink operation yet.}}
+\DoxyCodeLine{1719         \textcolor{keywordflow}{if} (\mbox{\hyperlink{glext_8h_a652168017ea9a8bbcead03d5c16269fb}{len}} + 4096 > \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardSize)}
+\DoxyCodeLine{1720         \{}
+\DoxyCodeLine{1721             \textcolor{keywordflow}{if} (!growClipboardString())}
+\DoxyCodeLine{1722             \{}
+\DoxyCodeLine{1723                 close(fds[0]);}
+\DoxyCodeLine{1724                 \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1725             \}}
+\DoxyCodeLine{1726         \}}
+\DoxyCodeLine{1727 }
+\DoxyCodeLine{1728         \textcolor{comment}{// Then read from the fd to the clipboard, handling all known errors.}}
+\DoxyCodeLine{1729         ret = read(fds[0], \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardString + \mbox{\hyperlink{glext_8h_a652168017ea9a8bbcead03d5c16269fb}{len}}, 4096);}
+\DoxyCodeLine{1730         \textcolor{keywordflow}{if} (ret == 0)}
+\DoxyCodeLine{1731             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1732         \textcolor{keywordflow}{if} (ret == -\/1 \&\& errno == EINTR)}
+\DoxyCodeLine{1733             \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{1734         \textcolor{keywordflow}{if} (ret == -\/1)}
+\DoxyCodeLine{1735         \{}
+\DoxyCodeLine{1736             \textcolor{comment}{// TODO: also report errno maybe.}}
+\DoxyCodeLine{1737             \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1738                             \textcolor{stringliteral}{"Wayland: Impossible to read from clipboard fd"});}
+\DoxyCodeLine{1739             close(fds[0]);}
+\DoxyCodeLine{1740             \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1741         \}}
+\DoxyCodeLine{1742         \mbox{\hyperlink{glext_8h_a652168017ea9a8bbcead03d5c16269fb}{len}} += ret;}
+\DoxyCodeLine{1743     \}}
+\DoxyCodeLine{1744     close(fds[0]);}
+\DoxyCodeLine{1745     \textcolor{keywordflow}{if} (\mbox{\hyperlink{glext_8h_a652168017ea9a8bbcead03d5c16269fb}{len}} + 1 > \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardSize)}
+\DoxyCodeLine{1746     \{}
+\DoxyCodeLine{1747         \textcolor{keywordflow}{if} (!growClipboardString())}
+\DoxyCodeLine{1748             \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1749     \}}
+\DoxyCodeLine{1750     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardString[\mbox{\hyperlink{glext_8h_a652168017ea9a8bbcead03d5c16269fb}{len}}] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{1751     \textcolor{keywordflow}{return} \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardString;}
+\DoxyCodeLine{1752 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a68e7966431b3829e09186d88c057e683}\label{wl__window_8c_a68e7966431b3829e09186d88c057e683}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwGetCursorPosWayland@{\_glfwGetCursorPosWayland}}
+\index{\_glfwGetCursorPosWayland@{\_glfwGetCursorPosWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetCursorPosWayland()}{\_glfwGetCursorPosWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Get\+Cursor\+Pos\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{double $\ast$}]{xpos,  }\item[{double $\ast$}]{ypos }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1170 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1171 \{}
+\DoxyCodeLine{1172     \textcolor{keywordflow}{if} (xpos)}
+\DoxyCodeLine{1173         *xpos = \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.cursorPosX;}
+\DoxyCodeLine{1174     \textcolor{keywordflow}{if} (ypos)}
+\DoxyCodeLine{1175         *ypos = \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.cursorPosY;}
+\DoxyCodeLine{1176 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a504e09d478703e56da9a9b8204bdddd5}\label{wl__window_8c_a504e09d478703e56da9a9b8204bdddd5}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwGetEGLNativeDisplayWayland@{\_glfwGetEGLNativeDisplayWayland}}
+\index{\_glfwGetEGLNativeDisplayWayland@{\_glfwGetEGLNativeDisplayWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetEGLNativeDisplayWayland()}{\_glfwGetEGLNativeDisplayWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{internal_8h_a551f78efa88a306d86efa8af0ec94349}{E\+G\+L\+Native\+Display\+Type}} \+\_\+glfw\+Get\+E\+G\+L\+Native\+Display\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1762 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1763 \{}
+\DoxyCodeLine{1764     \textcolor{keywordflow}{return} \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}};}
+\DoxyCodeLine{1765 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a1aa2aacf3bb7726a0cb96c138cda4f43}\label{wl__window_8c_a1aa2aacf3bb7726a0cb96c138cda4f43}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwGetEGLNativeWindowWayland@{\_glfwGetEGLNativeWindowWayland}}
+\index{\_glfwGetEGLNativeWindowWayland@{\_glfwGetEGLNativeWindowWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetEGLNativeWindowWayland()}{\_glfwGetEGLNativeWindowWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{internal_8h_a858431dc7d9081b52dc734956fd1f563}{E\+G\+L\+Native\+Window\+Type}} \+\_\+glfw\+Get\+E\+G\+L\+Native\+Window\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1767 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1768 \{}
+\DoxyCodeLine{1769     \textcolor{keywordflow}{return} \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.native;}
+\DoxyCodeLine{1770 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_ad3a432eeab11d12463568f267ba0dc59}\label{wl__window_8c_ad3a432eeab11d12463568f267ba0dc59}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwGetEGLPlatformWayland@{\_glfwGetEGLPlatformWayland}}
+\index{\_glfwGetEGLPlatformWayland@{\_glfwGetEGLPlatformWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetEGLPlatformWayland()}{\_glfwGetEGLPlatformWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{internal_8h_a3a1da159bbe7bd56490f67d96dce3bf9}{E\+G\+Lenum}} \+\_\+glfw\+Get\+E\+G\+L\+Platform\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{internal_8h_a97030274d045a36c550fc0d66d26f175}{E\+G\+Lint}} $\ast$$\ast$}]{attribs }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1754 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1755 \{}
+\DoxyCodeLine{1756     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7a5951c916147abd6d4d7330f687807d}{egl}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a709af831ee7cf025c3bc5bfa6d2527f2}{EXT\_platform\_base}} \&\& \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7a5951c916147abd6d4d7330f687807d}{egl}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_abbaa54e1a19006b93b64d5cae90f59ad}{EXT\_platform\_wayland}})}
+\DoxyCodeLine{1757         \textcolor{keywordflow}{return} \mbox{\hyperlink{internal_8h_a95b995b45deab5d2cef7abd873be0233}{EGL\_PLATFORM\_WAYLAND\_EXT}};}
+\DoxyCodeLine{1758     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{1759         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{1760 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_afa69ff28fa47d232843f620120391e97}\label{wl__window_8c_afa69ff28fa47d232843f620120391e97}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwGetFramebufferSizeWayland@{\_glfwGetFramebufferSizeWayland}}
+\index{\_glfwGetFramebufferSizeWayland@{\_glfwGetFramebufferSizeWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetFramebufferSizeWayland()}{\_glfwGetFramebufferSizeWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Get\+Framebuffer\+Size\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{int $\ast$}]{width,  }\item[{int $\ast$}]{height }\end{DoxyParamCaption})}
+
+
+
+Definition at line 936 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{937 \{}
+\DoxyCodeLine{938     \mbox{\hyperlink{wl__window_8c_a7139656b9b92a558042462c05e71f17e}{\_glfwGetWindowSizeWayland}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}}, \mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}});}
+\DoxyCodeLine{939     \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}})}
+\DoxyCodeLine{940         *\mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}} *= \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.scale;}
+\DoxyCodeLine{941     \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}})}
+\DoxyCodeLine{942         *\mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}} *= \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.scale;}
+\DoxyCodeLine{943 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a3e2e4e589e75df85898b33ff459f60ee}\label{wl__window_8c_a3e2e4e589e75df85898b33ff459f60ee}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwGetKeyScancodeWayland@{\_glfwGetKeyScancodeWayland}}
+\index{\_glfwGetKeyScancodeWayland@{\_glfwGetKeyScancodeWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetKeyScancodeWayland()}{\_glfwGetKeyScancodeWayland()}}
+{\footnotesize\ttfamily int \+\_\+glfw\+Get\+Key\+Scancode\+Wayland (\begin{DoxyParamCaption}\item[{int}]{key }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1251 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1252 \{}
+\DoxyCodeLine{1253     \textcolor{keywordflow}{return} \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.scancodes[\mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}}];}
+\DoxyCodeLine{1254 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a5b300bf0217ad4d0c73c7c44eb53062d}\label{wl__window_8c_a5b300bf0217ad4d0c73c7c44eb53062d}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwGetPhysicalDevicePresentationSupportWayland@{\_glfwGetPhysicalDevicePresentationSupportWayland}}
+\index{\_glfwGetPhysicalDevicePresentationSupportWayland@{\_glfwGetPhysicalDevicePresentationSupportWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetPhysicalDevicePresentationSupportWayland()}{\_glfwGetPhysicalDevicePresentationSupportWayland()}}
+{\footnotesize\ttfamily int \+\_\+glfw\+Get\+Physical\+Device\+Presentation\+Support\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{internal_8h_a25ae5082a7c01af345570ed09d724881}{Vk\+Instance}}}]{instance,  }\item[{\mbox{\hyperlink{internal_8h_aa9acbee1e762fde021511a1b47678a38}{Vk\+Physical\+Device}}}]{device,  }\item[{\mbox{\hyperlink{stdint_8h_a435d1572bf3f880d55459d9805097f62}{uint32\+\_\+t}}}]{queuefamily }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1781 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1784 \{}
+\DoxyCodeLine{1785     \mbox{\hyperlink{wl__platform_8h_ab2aa7548ffded3123627790f8bce8c95}{PFN\_vkGetPhysicalDeviceWaylandPresentationSupportKHR}}}
+\DoxyCodeLine{1786         vkGetPhysicalDeviceWaylandPresentationSupportKHR =}
+\DoxyCodeLine{1787         (\mbox{\hyperlink{wl__platform_8h_ab2aa7548ffded3123627790f8bce8c95}{PFN\_vkGetPhysicalDeviceWaylandPresentationSupportKHR}})}
+\DoxyCodeLine{1788         \mbox{\hyperlink{vulkan_8h_ae698fe946e5b75ed4a173e95133cf4f3}{vkGetInstanceProcAddr}}(instance, \textcolor{stringliteral}{"vkGetPhysicalDeviceWaylandPresentationSupportKHR"});}
+\DoxyCodeLine{1789     \textcolor{keywordflow}{if} (!vkGetPhysicalDeviceWaylandPresentationSupportKHR)}
+\DoxyCodeLine{1790     \{}
+\DoxyCodeLine{1791         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_ga56882b290db23261cc6c053c40c2d08e}{GLFW\_API\_UNAVAILABLE}},}
+\DoxyCodeLine{1792                         \textcolor{stringliteral}{"Wayland: Vulkan instance missing VK\_KHR\_wayland\_surface extension"});}
+\DoxyCodeLine{1793         \textcolor{keywordflow}{return} \mbox{\hyperlink{vulkan_8h_ad1021f65d668acdf1644d94e0828bff0}{VK\_NULL\_HANDLE}};}
+\DoxyCodeLine{1794     \}}
+\DoxyCodeLine{1795 }
+\DoxyCodeLine{1796     \textcolor{keywordflow}{return} vkGetPhysicalDeviceWaylandPresentationSupportKHR(device,}
+\DoxyCodeLine{1797                                                             queuefamily,}
+\DoxyCodeLine{1798                                                             \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}});}
+\DoxyCodeLine{1799 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a82b45703386cfc7543957d2160b482a5}\label{wl__window_8c_a82b45703386cfc7543957d2160b482a5}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwGetRequiredInstanceExtensionsWayland@{\_glfwGetRequiredInstanceExtensionsWayland}}
+\index{\_glfwGetRequiredInstanceExtensionsWayland@{\_glfwGetRequiredInstanceExtensionsWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetRequiredInstanceExtensionsWayland()}{\_glfwGetRequiredInstanceExtensionsWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Get\+Required\+Instance\+Extensions\+Wayland (\begin{DoxyParamCaption}\item[{char $\ast$$\ast$}]{extensions }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1772 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1773 \{}
+\DoxyCodeLine{1774     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a9beb6fda2a7600be02831853de896395}{vk}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a5169664f24499b5b82dec093165ca166}{KHR\_surface}} || !\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a9beb6fda2a7600be02831853de896395}{vk}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a669e44878dc6d35acc1dd9ba7d51548c}{KHR\_wayland\_surface}})}
+\DoxyCodeLine{1775         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{1776 }
+\DoxyCodeLine{1777     \mbox{\hyperlink{namespaceconf_ae475e080536acb271a0a0efe56c3ba42}{extensions}}[0] = \textcolor{stringliteral}{"VK\_KHR\_surface"};}
+\DoxyCodeLine{1778     \mbox{\hyperlink{namespaceconf_ae475e080536acb271a0a0efe56c3ba42}{extensions}}[1] = \textcolor{stringliteral}{"VK\_KHR\_wayland\_surface"};}
+\DoxyCodeLine{1779 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a066d33db2119fb1bba6a5127abd3530c}\label{wl__window_8c_a066d33db2119fb1bba6a5127abd3530c}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwGetScancodeNameWayland@{\_glfwGetScancodeNameWayland}}
+\index{\_glfwGetScancodeNameWayland@{\_glfwGetScancodeNameWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetScancodeNameWayland()}{\_glfwGetScancodeNameWayland()}}
+{\footnotesize\ttfamily const char$\ast$ \+\_\+glfw\+Get\+Scancode\+Name\+Wayland (\begin{DoxyParamCaption}\item[{int}]{scancode }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1196 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1197 \{}
+\DoxyCodeLine{1198     \textcolor{keywordflow}{if} (scancode < 0 || scancode > 255 ||}
+\DoxyCodeLine{1199         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.keycodes[scancode] == \mbox{\hyperlink{group__keys_ga99aacc875b6b27a072552631e13775c7}{GLFW\_KEY\_UNKNOWN}})}
+\DoxyCodeLine{1200     \{}
+\DoxyCodeLine{1201         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gaaf2ef9aa8202c2b82ac2d921e554c687}{GLFW\_INVALID\_VALUE}},}
+\DoxyCodeLine{1202                         \textcolor{stringliteral}{"Wayland: Invalid scancode \%i"},}
+\DoxyCodeLine{1203                         scancode);}
+\DoxyCodeLine{1204         \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1205     \}}
+\DoxyCodeLine{1206 }
+\DoxyCodeLine{1207     \textcolor{keyword}{const} \textcolor{keywordtype}{int} \mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}} = \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.keycodes[scancode];}
+\DoxyCodeLine{1208     \textcolor{keyword}{const} xkb\_keycode\_t keycode = scancode + 8;}
+\DoxyCodeLine{1209     \textcolor{keyword}{const} xkb\_layout\_index\_t layout =}
+\DoxyCodeLine{1210         \mbox{\hyperlink{wl__platform_8h_ab1d4db8d90560c06b7ac881b6591eaa0}{xkb\_state\_key\_get\_layout}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.state, keycode);}
+\DoxyCodeLine{1211     \textcolor{keywordflow}{if} (layout == XKB\_LAYOUT\_INVALID)}
+\DoxyCodeLine{1212     \{}
+\DoxyCodeLine{1213         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1214                         \textcolor{stringliteral}{"Wayland: Failed to retrieve layout for key name"});}
+\DoxyCodeLine{1215         \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1216     \}}
+\DoxyCodeLine{1217 }
+\DoxyCodeLine{1218     \textcolor{keyword}{const} xkb\_keysym\_t* keysyms = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1219     \mbox{\hyperlink{wl__platform_8h_a426e6afbf7ce124d9a902f1ae4a119e4}{xkb\_keymap\_key\_get\_syms\_by\_level}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.xkb.keymap,}
+\DoxyCodeLine{1220                                      keycode,}
+\DoxyCodeLine{1221                                      layout,}
+\DoxyCodeLine{1222                                      0,}
+\DoxyCodeLine{1223                                      \&keysyms);}
+\DoxyCodeLine{1224     \textcolor{keywordflow}{if} (keysyms == \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}})}
+\DoxyCodeLine{1225     \{}
+\DoxyCodeLine{1226         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1227                         \textcolor{stringliteral}{"Wayland: Failed to retrieve keysym for key name"});}
+\DoxyCodeLine{1228         \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1229     \}}
+\DoxyCodeLine{1230 }
+\DoxyCodeLine{1231     \textcolor{keyword}{const} \mbox{\hyperlink{stdint_8h_a435d1572bf3f880d55459d9805097f62}{uint32\_t}} codepoint = \mbox{\hyperlink{xkb__unicode_8c_acc4747eb62386c01c9dd0cd6997c8983}{\_glfwKeySym2Unicode}}(keysyms[0]);}
+\DoxyCodeLine{1232     \textcolor{keywordflow}{if} (codepoint == \mbox{\hyperlink{xkb__unicode_8h_a45fc2e5a3ba025f1ac362831cfe04416}{GLFW\_INVALID\_CODEPOINT}})}
+\DoxyCodeLine{1233     \{}
+\DoxyCodeLine{1234         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1235                         \textcolor{stringliteral}{"Wayland: Failed to retrieve codepoint for key name"});}
+\DoxyCodeLine{1236         \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1237     \}}
+\DoxyCodeLine{1238 }
+\DoxyCodeLine{1239     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}} = \mbox{\hyperlink{init_8c_a920bdd09bf605b918b93fbec1993c55b}{\_glfwEncodeUTF8}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.keynames[\mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}}],  codepoint);}
+\DoxyCodeLine{1240     \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}} == 0)}
+\DoxyCodeLine{1241     \{}
+\DoxyCodeLine{1242         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1243                         \textcolor{stringliteral}{"Wayland: Failed to encode codepoint for key name"});}
+\DoxyCodeLine{1244         \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1245     \}}
+\DoxyCodeLine{1246 }
+\DoxyCodeLine{1247     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.keynames[\mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}}][\mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}}] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{1248     \textcolor{keywordflow}{return} \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.keynames[\mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}}];}
+\DoxyCodeLine{1249 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_ab3e8d510f751fca3c9b60aa03d321cba}\label{wl__window_8c_ab3e8d510f751fca3c9b60aa03d321cba}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwGetWindowContentScaleWayland@{\_glfwGetWindowContentScaleWayland}}
+\index{\_glfwGetWindowContentScaleWayland@{\_glfwGetWindowContentScaleWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetWindowContentScaleWayland()}{\_glfwGetWindowContentScaleWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Get\+Window\+Content\+Scale\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{float $\ast$}]{xscale,  }\item[{float $\ast$}]{yscale }\end{DoxyParamCaption})}
+
+
+
+Definition at line 962 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{964 \{}
+\DoxyCodeLine{965     \textcolor{keywordflow}{if} (xscale)}
+\DoxyCodeLine{966         *xscale = (float) \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.scale;}
+\DoxyCodeLine{967     if (yscale)}
+\DoxyCodeLine{968         *yscale = (float) \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.scale;}
+\DoxyCodeLine{969 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a1c0713597287aec915fa764efdebf1f9}\label{wl__window_8c_a1c0713597287aec915fa764efdebf1f9}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwGetWindowFrameSizeWayland@{\_glfwGetWindowFrameSizeWayland}}
+\index{\_glfwGetWindowFrameSizeWayland@{\_glfwGetWindowFrameSizeWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetWindowFrameSizeWayland()}{\_glfwGetWindowFrameSizeWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Get\+Window\+Frame\+Size\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{int $\ast$}]{left,  }\item[{int $\ast$}]{top,  }\item[{int $\ast$}]{right,  }\item[{int $\ast$}]{bottom }\end{DoxyParamCaption})}
+
+
+
+Definition at line 945 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{948 \{}
+\DoxyCodeLine{949     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>decorated \&\& !\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>monitor \&\& !\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.decorations.serverSide)}
+\DoxyCodeLine{950     \{}
+\DoxyCodeLine{951         \textcolor{keywordflow}{if} (\mbox{\hyperlink{glext_8h_a5ab323daeacf8dfdb8f91132fecdca23}{top}})}
+\DoxyCodeLine{952             *\mbox{\hyperlink{glext_8h_a5ab323daeacf8dfdb8f91132fecdca23}{top}} = \mbox{\hyperlink{wl__platform_8h_abbd514b1fca6f13fe14c45f91478e033}{\_GLFW\_DECORATION\_TOP}};}
+\DoxyCodeLine{953         \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a85b8f6c07fbc1fb5d77c2ae090f21995}{left}})}
+\DoxyCodeLine{954             *\mbox{\hyperlink{glad_8h_a85b8f6c07fbc1fb5d77c2ae090f21995}{left}} = \mbox{\hyperlink{wl__platform_8h_ab0aa0ee53d9e7cb2f315acc731a9a977}{\_GLFW\_DECORATION\_WIDTH}};}
+\DoxyCodeLine{955         \textcolor{keywordflow}{if} (\mbox{\hyperlink{glext_8h_a5ffadbbacc6b89cf6218bc43b384d3fe}{right}})}
+\DoxyCodeLine{956             *\mbox{\hyperlink{glext_8h_a5ffadbbacc6b89cf6218bc43b384d3fe}{right}} = \mbox{\hyperlink{wl__platform_8h_ab0aa0ee53d9e7cb2f315acc731a9a977}{\_GLFW\_DECORATION\_WIDTH}};}
+\DoxyCodeLine{957         \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a95fc257e5ddf46f7db9d5e898cdf1991}{bottom}})}
+\DoxyCodeLine{958             *\mbox{\hyperlink{glad_8h_a95fc257e5ddf46f7db9d5e898cdf1991}{bottom}} = \mbox{\hyperlink{wl__platform_8h_ab0aa0ee53d9e7cb2f315acc731a9a977}{\_GLFW\_DECORATION\_WIDTH}};}
+\DoxyCodeLine{959     \}}
+\DoxyCodeLine{960 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a741ad4527adc24d5f6732ac27fa32678}\label{wl__window_8c_a741ad4527adc24d5f6732ac27fa32678}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwGetWindowOpacityWayland@{\_glfwGetWindowOpacityWayland}}
+\index{\_glfwGetWindowOpacityWayland@{\_glfwGetWindowOpacityWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetWindowOpacityWayland()}{\_glfwGetWindowOpacityWayland()}}
+{\footnotesize\ttfamily float \+\_\+glfw\+Get\+Window\+Opacity\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1129 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1130 \{}
+\DoxyCodeLine{1131     \textcolor{keywordflow}{return} 1.f;}
+\DoxyCodeLine{1132 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a325fef5dd107caef5a4620ec0e5ee9bd}\label{wl__window_8c_a325fef5dd107caef5a4620ec0e5ee9bd}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwGetWindowPosWayland@{\_glfwGetWindowPosWayland}}
+\index{\_glfwGetWindowPosWayland@{\_glfwGetWindowPosWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetWindowPosWayland()}{\_glfwGetWindowPosWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Get\+Window\+Pos\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{int $\ast$}]{xpos,  }\item[{int $\ast$}]{ypos }\end{DoxyParamCaption})}
+
+
+
+Definition at line 880 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{881 \{}
+\DoxyCodeLine{882     \textcolor{comment}{// A Wayland client is not aware of its position, so just warn and leave it}}
+\DoxyCodeLine{883     \textcolor{comment}{// as (0, 0)}}
+\DoxyCodeLine{884 }
+\DoxyCodeLine{885     \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_ga526fba20a01504a8086c763b6ca53ce5}{GLFW\_FEATURE\_UNAVAILABLE}},}
+\DoxyCodeLine{886                     \textcolor{stringliteral}{"Wayland: The platform does not provide the window position"});}
+\DoxyCodeLine{887 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a7139656b9b92a558042462c05e71f17e}\label{wl__window_8c_a7139656b9b92a558042462c05e71f17e}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwGetWindowSizeWayland@{\_glfwGetWindowSizeWayland}}
+\index{\_glfwGetWindowSizeWayland@{\_glfwGetWindowSizeWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetWindowSizeWayland()}{\_glfwGetWindowSizeWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Get\+Window\+Size\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{int $\ast$}]{width,  }\item[{int $\ast$}]{height }\end{DoxyParamCaption})}
+
+
+
+Definition at line 897 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{898 \{}
+\DoxyCodeLine{899     \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}})}
+\DoxyCodeLine{900         *\mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}} = \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.width;}
+\DoxyCodeLine{901     \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}})}
+\DoxyCodeLine{902         *\mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}} = \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.height;}
+\DoxyCodeLine{903 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_ad519388eb25d04c1a4db2df34169efb4}\label{wl__window_8c_ad519388eb25d04c1a4db2df34169efb4}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwHideWindowWayland@{\_glfwHideWindowWayland}}
+\index{\_glfwHideWindowWayland@{\_glfwHideWindowWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwHideWindowWayland()}{\_glfwHideWindowWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Hide\+Window\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1015 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1016 \{}
+\DoxyCodeLine{1017     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.visible)}
+\DoxyCodeLine{1018     \{}
+\DoxyCodeLine{1019         \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.visible = \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{1020         wl\_surface\_attach(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.surface, \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}, 0, 0);}
+\DoxyCodeLine{1021         wl\_surface\_commit(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.surface);}
+\DoxyCodeLine{1022     \}}
+\DoxyCodeLine{1023 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a2786524a443b7f4a2ff53055366e1169}\label{wl__window_8c_a2786524a443b7f4a2ff53055366e1169}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwIconifyWindowWayland@{\_glfwIconifyWindowWayland}}
+\index{\_glfwIconifyWindowWayland@{\_glfwIconifyWindowWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwIconifyWindowWayland()}{\_glfwIconifyWindowWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Iconify\+Window\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Definition at line 971 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{972 \{}
+\DoxyCodeLine{973     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.toplevel)}
+\DoxyCodeLine{974         xdg\_toplevel\_set\_minimized(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.toplevel);}
+\DoxyCodeLine{975 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a8dcc43854cfabe4d324154d2eeebd44e}\label{wl__window_8c_a8dcc43854cfabe4d324154d2eeebd44e}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwMaximizeWindowWayland@{\_glfwMaximizeWindowWayland}}
+\index{\_glfwMaximizeWindowWayland@{\_glfwMaximizeWindowWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwMaximizeWindowWayland()}{\_glfwMaximizeWindowWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Maximize\+Window\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Definition at line 992 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{993 \{}
+\DoxyCodeLine{994     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.toplevel)}
+\DoxyCodeLine{995     \{}
+\DoxyCodeLine{996         xdg\_toplevel\_set\_maximized(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.toplevel);}
+\DoxyCodeLine{997     \}}
+\DoxyCodeLine{998     \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.maximized = \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{999 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a7a315f4b4c3263efc0960094698de618}\label{wl__window_8c_a7a315f4b4c3263efc0960094698de618}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwPollEventsWayland@{\_glfwPollEventsWayland}}
+\index{\_glfwPollEventsWayland@{\_glfwPollEventsWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwPollEventsWayland()}{\_glfwPollEventsWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Poll\+Events\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1150 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1151 \{}
+\DoxyCodeLine{1152     handleEvents(0);}
+\DoxyCodeLine{1153 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a34984c3cc558a291b1721288c8b5ebe6}\label{wl__window_8c_a34984c3cc558a291b1721288c8b5ebe6}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwPostEmptyEventWayland@{\_glfwPostEmptyEventWayland}}
+\index{\_glfwPostEmptyEventWayland@{\_glfwPostEmptyEventWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwPostEmptyEventWayland()}{\_glfwPostEmptyEventWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Post\+Empty\+Event\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1165 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1166 \{}
+\DoxyCodeLine{1167     wl\_display\_sync(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}});}
+\DoxyCodeLine{1168 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_aa0c6e411bf8eef4b73bc98e0974f2a78}\label{wl__window_8c_aa0c6e411bf8eef4b73bc98e0974f2a78}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwRawMouseMotionSupportedWayland@{\_glfwRawMouseMotionSupportedWayland}}
+\index{\_glfwRawMouseMotionSupportedWayland@{\_glfwRawMouseMotionSupportedWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwRawMouseMotionSupportedWayland()}{\_glfwRawMouseMotionSupportedWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \+\_\+glfw\+Raw\+Mouse\+Motion\+Supported\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1145 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1146 \{}
+\DoxyCodeLine{1147     \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{1148 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a8a1b249be1215f514f923f91656030c3}\label{wl__window_8c_a8a1b249be1215f514f923f91656030c3}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwRequestWindowAttentionWayland@{\_glfwRequestWindowAttentionWayland}}
+\index{\_glfwRequestWindowAttentionWayland@{\_glfwRequestWindowAttentionWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwRequestWindowAttentionWayland()}{\_glfwRequestWindowAttentionWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Request\+Window\+Attention\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1025 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1026 \{}
+\DoxyCodeLine{1027     \textcolor{comment}{// TODO}}
+\DoxyCodeLine{1028     \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_ga5dda77e023e83151e8bd55a6758f946a}{GLFW\_FEATURE\_UNIMPLEMENTED}},}
+\DoxyCodeLine{1029                     \textcolor{stringliteral}{"Wayland: Window attention request not implemented yet"});}
+\DoxyCodeLine{1030 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a25c9fe00185d9a1b8badf038b7634b88}\label{wl__window_8c_a25c9fe00185d9a1b8badf038b7634b88}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwRestoreWindowWayland@{\_glfwRestoreWindowWayland}}
+\index{\_glfwRestoreWindowWayland@{\_glfwRestoreWindowWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwRestoreWindowWayland()}{\_glfwRestoreWindowWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Restore\+Window\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Definition at line 977 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{978 \{}
+\DoxyCodeLine{979     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.toplevel)}
+\DoxyCodeLine{980     \{}
+\DoxyCodeLine{981         \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>monitor)}
+\DoxyCodeLine{982             xdg\_toplevel\_unset\_fullscreen(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.toplevel);}
+\DoxyCodeLine{983         \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.maximized)}
+\DoxyCodeLine{984             xdg\_toplevel\_unset\_maximized(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.toplevel);}
+\DoxyCodeLine{985         \textcolor{comment}{// There is no way to unset minimized, or even to know if we are}}
+\DoxyCodeLine{986         \textcolor{comment}{// minimized, so there is nothing to do in this case.}}
+\DoxyCodeLine{987     \}}
+\DoxyCodeLine{988     \mbox{\hyperlink{internal_8h_a5cfc56e9a5e1e8dd88862c9c7b8a6f7f}{\_glfwInputWindowMonitor}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{989     \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.maximized = \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{990 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a74f40e21bcc7f5a646ecc5f80f25a6c3}\label{wl__window_8c_a74f40e21bcc7f5a646ecc5f80f25a6c3}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwSetClipboardStringWayland@{\_glfwSetClipboardStringWayland}}
+\index{\_glfwSetClipboardStringWayland@{\_glfwSetClipboardStringWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetClipboardStringWayland()}{\_glfwSetClipboardStringWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Clipboard\+String\+Wayland (\begin{DoxyParamCaption}\item[{const char $\ast$}]{string }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1631 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1632 \{}
+\DoxyCodeLine{1633     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataSource)}
+\DoxyCodeLine{1634     \{}
+\DoxyCodeLine{1635         wl\_data\_source\_destroy(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataSource);}
+\DoxyCodeLine{1636         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataSource = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1637     \}}
+\DoxyCodeLine{1638 }
+\DoxyCodeLine{1639     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardSendString)}
+\DoxyCodeLine{1640     \{}
+\DoxyCodeLine{1641         \mbox{\hyperlink{init_8c_abcf72962b101a8a5c539da1a278b0e9e}{\_glfw\_free}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardSendString);}
+\DoxyCodeLine{1642         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardSendString = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1643     \}}
+\DoxyCodeLine{1644 }
+\DoxyCodeLine{1645     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardSendString = \mbox{\hyperlink{init_8c_a7f0a5b0d879baead229ef5e7381648e8}{\_glfw\_strdup}}(\textcolor{keywordtype}{string});}
+\DoxyCodeLine{1646     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardSendString)}
+\DoxyCodeLine{1647     \{}
+\DoxyCodeLine{1648         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1649                         \textcolor{stringliteral}{"Wayland: Impossible to allocate clipboard string"});}
+\DoxyCodeLine{1650         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{1651     \}}
+\DoxyCodeLine{1652     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardSendSize = strlen(\textcolor{keywordtype}{string});}
+\DoxyCodeLine{1653     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataSource =}
+\DoxyCodeLine{1654         wl\_data\_device\_manager\_create\_data\_source(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataDeviceManager);}
+\DoxyCodeLine{1655     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataSource)}
+\DoxyCodeLine{1656     \{}
+\DoxyCodeLine{1657         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1658                         \textcolor{stringliteral}{"Wayland: Impossible to create clipboard source"});}
+\DoxyCodeLine{1659         \mbox{\hyperlink{init_8c_abcf72962b101a8a5c539da1a278b0e9e}{\_glfw\_free}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.clipboardSendString);}
+\DoxyCodeLine{1660         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{1661     \}}
+\DoxyCodeLine{1662     wl\_data\_source\_add\_listener(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataSource,}
+\DoxyCodeLine{1663                                 \&dataSourceListener,}
+\DoxyCodeLine{1664                                 \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{1665     wl\_data\_source\_offer(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataSource, \textcolor{stringliteral}{"text/plain;charset=utf-\/8"});}
+\DoxyCodeLine{1666     wl\_data\_device\_set\_selection(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataDevice,}
+\DoxyCodeLine{1667                                  \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.dataSource,}
+\DoxyCodeLine{1668                                  \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.serial);}
+\DoxyCodeLine{1669 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_ae993bd14d7db090c84fb9799fc556bbd}\label{wl__window_8c_ae993bd14d7db090c84fb9799fc556bbd}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwSetCursorModeWayland@{\_glfwSetCursorModeWayland}}
+\index{\_glfwSetCursorModeWayland@{\_glfwSetCursorModeWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetCursorModeWayland()}{\_glfwSetCursorModeWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Cursor\+Mode\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{int}]{mode }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1191 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1192 \{}
+\DoxyCodeLine{1193     \mbox{\hyperlink{wl__window_8c_aabccf38d8d6f6e29e4a63345a850bfa9}{\_glfwSetCursorWayland}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.currentCursor);}
+\DoxyCodeLine{1194 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a62964c8a134ffddbab5b24db5b5ba1e9}\label{wl__window_8c_a62964c8a134ffddbab5b24db5b5ba1e9}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwSetCursorPosWayland@{\_glfwSetCursorPosWayland}}
+\index{\_glfwSetCursorPosWayland@{\_glfwSetCursorPosWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetCursorPosWayland()}{\_glfwSetCursorPosWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Cursor\+Pos\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{double}]{x,  }\item[{double}]{y }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1180 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1181 \{}
+\DoxyCodeLine{1182     \textcolor{keywordflow}{if} (isPointerLocked(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}))}
+\DoxyCodeLine{1183     \{}
+\DoxyCodeLine{1184         zwp\_locked\_pointer\_v1\_set\_cursor\_position\_hint(}
+\DoxyCodeLine{1185             \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.pointerLock.lockedPointer,}
+\DoxyCodeLine{1186             wl\_fixed\_from\_double(\mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}}), wl\_fixed\_from\_double(\mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}}));}
+\DoxyCodeLine{1187         wl\_surface\_commit(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.surface);}
+\DoxyCodeLine{1188     \}}
+\DoxyCodeLine{1189 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_aabccf38d8d6f6e29e4a63345a850bfa9}\label{wl__window_8c_aabccf38d8d6f6e29e4a63345a850bfa9}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwSetCursorWayland@{\_glfwSetCursorWayland}}
+\index{\_glfwSetCursorWayland@{\_glfwSetCursorWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetCursorWayland()}{\_glfwSetCursorWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Cursor\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{\mbox{\hyperlink{struct___g_l_f_wcursor}{\+\_\+\+G\+L\+F\+Wcursor}} $\ast$}]{cursor }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1490 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1491 \{}
+\DoxyCodeLine{1492     \textcolor{keyword}{struct }\mbox{\hyperlink{structwl__cursor}{wl\_cursor}}* defaultCursor;}
+\DoxyCodeLine{1493     \textcolor{keyword}{struct }\mbox{\hyperlink{structwl__cursor}{wl\_cursor}}* defaultCursorHiDPI = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1494 }
+\DoxyCodeLine{1495     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.pointer)}
+\DoxyCodeLine{1496         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{1497 }
+\DoxyCodeLine{1498     \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.currentCursor = cursor;}
+\DoxyCodeLine{1499 }
+\DoxyCodeLine{1500     \textcolor{comment}{// If we're not in the correct window just save the cursor}}
+\DoxyCodeLine{1501     \textcolor{comment}{// the next time the pointer enters the window the cursor will change}}
+\DoxyCodeLine{1502     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}} != \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.pointerFocus || \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.decorations.focus != \mbox{\hyperlink{wl__platform_8h_ad60a0a27370d399e4f9fd58d1eeef1acab46a673d9ca7e2f82c3cdd4cc7118e6b}{mainWindow}})}
+\DoxyCodeLine{1503         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{1504 }
+\DoxyCodeLine{1505     \textcolor{comment}{// Unlock possible pointer lock if no longer disabled.}}
+\DoxyCodeLine{1506     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>cursorMode != \mbox{\hyperlink{glfw3_8h_a2315b99a329ce53e6a13a9d46fd5ca88}{GLFW\_CURSOR\_DISABLED}} \&\& isPointerLocked(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}))}
+\DoxyCodeLine{1507         unlockPointer(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}});}
+\DoxyCodeLine{1508 }
+\DoxyCodeLine{1509     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>cursorMode == \mbox{\hyperlink{glfw3_8h_ae04dd25c8577e19fa8c97368561f6c68}{GLFW\_CURSOR\_NORMAL}})}
+\DoxyCodeLine{1510     \{}
+\DoxyCodeLine{1511         \textcolor{keywordflow}{if} (cursor)}
+\DoxyCodeLine{1512             setCursorImage(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \&cursor-\/>wl);}
+\DoxyCodeLine{1513         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{1514         \{}
+\DoxyCodeLine{1515             defaultCursor = \mbox{\hyperlink{wl__platform_8h_a987f4277f2574417ab58ebdb8f5de58f}{wl\_cursor\_theme\_get\_cursor}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorTheme,}
+\DoxyCodeLine{1516                                                        \textcolor{stringliteral}{"left\_ptr"});}
+\DoxyCodeLine{1517             \textcolor{keywordflow}{if} (!defaultCursor)}
+\DoxyCodeLine{1518             \{}
+\DoxyCodeLine{1519                 \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{1520                                 \textcolor{stringliteral}{"Wayland: Standard cursor not found"});}
+\DoxyCodeLine{1521                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{1522             \}}
+\DoxyCodeLine{1523             \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorThemeHiDPI)}
+\DoxyCodeLine{1524                 defaultCursorHiDPI =}
+\DoxyCodeLine{1525                     \mbox{\hyperlink{wl__platform_8h_a987f4277f2574417ab58ebdb8f5de58f}{wl\_cursor\_theme\_get\_cursor}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.cursorThemeHiDPI,}
+\DoxyCodeLine{1526                                                \textcolor{stringliteral}{"left\_ptr"});}
+\DoxyCodeLine{1527             \mbox{\hyperlink{struct___g_l_f_wcursor_wayland}{\_GLFWcursorWayland}} cursorWayland = \{}
+\DoxyCodeLine{1528                 defaultCursor,}
+\DoxyCodeLine{1529                 defaultCursorHiDPI,}
+\DoxyCodeLine{1530                 \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}},}
+\DoxyCodeLine{1531                 0, 0,}
+\DoxyCodeLine{1532                 0, 0,}
+\DoxyCodeLine{1533                 0}
+\DoxyCodeLine{1534             \};}
+\DoxyCodeLine{1535             setCursorImage(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \&cursorWayland);}
+\DoxyCodeLine{1536         \}}
+\DoxyCodeLine{1537     \}}
+\DoxyCodeLine{1538     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>cursorMode == \mbox{\hyperlink{glfw3_8h_a2315b99a329ce53e6a13a9d46fd5ca88}{GLFW\_CURSOR\_DISABLED}})}
+\DoxyCodeLine{1539     \{}
+\DoxyCodeLine{1540         \textcolor{keywordflow}{if} (!isPointerLocked(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}))}
+\DoxyCodeLine{1541             lockPointer(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}});}
+\DoxyCodeLine{1542     \}}
+\DoxyCodeLine{1543     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>cursorMode == \mbox{\hyperlink{glfw3_8h_ac4d5cb9d78de8573349c58763d53bf11}{GLFW\_CURSOR\_HIDDEN}})}
+\DoxyCodeLine{1544     \{}
+\DoxyCodeLine{1545         wl\_pointer\_set\_cursor(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.pointer, \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.pointerEnterSerial, \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}, 0, 0);}
+\DoxyCodeLine{1546     \}}
+\DoxyCodeLine{1547 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_aeb3438865c89b17a2142cfc4509dbd28}\label{wl__window_8c_aeb3438865c89b17a2142cfc4509dbd28}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwSetRawMouseMotionWayland@{\_glfwSetRawMouseMotionWayland}}
+\index{\_glfwSetRawMouseMotionWayland@{\_glfwSetRawMouseMotionWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetRawMouseMotionWayland()}{\_glfwSetRawMouseMotionWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Raw\+Mouse\+Motion\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{\mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}}}]{enabled }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1140 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1141 \{}
+\DoxyCodeLine{1142     \textcolor{comment}{// This is handled in relativePointerHandleRelativeMotion}}
+\DoxyCodeLine{1143 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a67850a44f6265bfa151ef3e3637bca55}\label{wl__window_8c_a67850a44f6265bfa151ef3e3637bca55}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwSetWindowAspectRatioWayland@{\_glfwSetWindowAspectRatioWayland}}
+\index{\_glfwSetWindowAspectRatioWayland@{\_glfwSetWindowAspectRatioWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetWindowAspectRatioWayland()}{\_glfwSetWindowAspectRatioWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Window\+Aspect\+Ratio\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{int}]{numer,  }\item[{int}]{denom }\end{DoxyParamCaption})}
+
+
+
+Definition at line 928 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{929 \{}
+\DoxyCodeLine{930     \textcolor{comment}{// TODO: find out how to trigger a resize.}}
+\DoxyCodeLine{931     \textcolor{comment}{// The actual limits are checked in the xdg\_toplevel::configure handler.}}
+\DoxyCodeLine{932     \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_ga5dda77e023e83151e8bd55a6758f946a}{GLFW\_FEATURE\_UNIMPLEMENTED}},}
+\DoxyCodeLine{933                     \textcolor{stringliteral}{"Wayland: Window aspect ratio not yet implemented"});}
+\DoxyCodeLine{934 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_afcacd9ea3cb285c1266871d13a723e4c}\label{wl__window_8c_afcacd9ea3cb285c1266871d13a723e4c}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwSetWindowDecoratedWayland@{\_glfwSetWindowDecoratedWayland}}
+\index{\_glfwSetWindowDecoratedWayland@{\_glfwSetWindowDecoratedWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetWindowDecoratedWayland()}{\_glfwSetWindowDecoratedWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Window\+Decorated\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{\mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}}}]{enabled }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1098 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1099 \{}
+\DoxyCodeLine{1100     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>monitor)}
+\DoxyCodeLine{1101     \{}
+\DoxyCodeLine{1102         \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a0455a397ab5468d21c3021f2efa6dd3c}{enabled}})}
+\DoxyCodeLine{1103             createDecorations(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}});}
+\DoxyCodeLine{1104         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{1105             destroyDecorations(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}});}
+\DoxyCodeLine{1106     \}}
+\DoxyCodeLine{1107 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_aebcd0db81b67e416f775e4b0d8facdc1}\label{wl__window_8c_aebcd0db81b67e416f775e4b0d8facdc1}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwSetWindowFloatingWayland@{\_glfwSetWindowFloatingWayland}}
+\index{\_glfwSetWindowFloatingWayland@{\_glfwSetWindowFloatingWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetWindowFloatingWayland()}{\_glfwSetWindowFloatingWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Window\+Floating\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{\mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}}}]{enabled }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1109 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1110 \{}
+\DoxyCodeLine{1111     \textcolor{comment}{// TODO}}
+\DoxyCodeLine{1112     \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_ga5dda77e023e83151e8bd55a6758f946a}{GLFW\_FEATURE\_UNIMPLEMENTED}},}
+\DoxyCodeLine{1113                     \textcolor{stringliteral}{"Wayland: Window attribute setting not implemented yet"});}
+\DoxyCodeLine{1114 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_af3bdf666499b335663748945d01b1aab}\label{wl__window_8c_af3bdf666499b335663748945d01b1aab}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwSetWindowIconWayland@{\_glfwSetWindowIconWayland}}
+\index{\_glfwSetWindowIconWayland@{\_glfwSetWindowIconWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetWindowIconWayland()}{\_glfwSetWindowIconWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Window\+Icon\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{int}]{count,  }\item[{const \mbox{\hyperlink{struct_g_l_f_wimage}{G\+L\+F\+Wimage}} $\ast$}]{images }\end{DoxyParamCaption})}
+
+
+
+Definition at line 873 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{875 \{}
+\DoxyCodeLine{876     \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_ga526fba20a01504a8086c763b6ca53ce5}{GLFW\_FEATURE\_UNAVAILABLE}},}
+\DoxyCodeLine{877                     \textcolor{stringliteral}{"Wayland: The platform does not support setting the window icon"});}
+\DoxyCodeLine{878 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a76e4715c3d943636ba1b71afea0c97c2}\label{wl__window_8c_a76e4715c3d943636ba1b71afea0c97c2}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwSetWindowMonitorWayland@{\_glfwSetWindowMonitorWayland}}
+\index{\_glfwSetWindowMonitorWayland@{\_glfwSetWindowMonitorWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetWindowMonitorWayland()}{\_glfwSetWindowMonitorWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Window\+Monitor\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{\mbox{\hyperlink{struct___g_l_f_wmonitor}{\+\_\+\+G\+L\+F\+Wmonitor}} $\ast$}]{monitor,  }\item[{int}]{xpos,  }\item[{int}]{ypos,  }\item[{int}]{width,  }\item[{int}]{height,  }\item[{int}]{refresh\+Rate }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1038 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1043 \{}
+\DoxyCodeLine{1044     \textcolor{keywordflow}{if} (monitor)}
+\DoxyCodeLine{1045     \{}
+\DoxyCodeLine{1046         setFullscreen(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, monitor, refreshRate);}
+\DoxyCodeLine{1047     \}}
+\DoxyCodeLine{1048     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{1049     \{}
+\DoxyCodeLine{1050         \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.toplevel)}
+\DoxyCodeLine{1051             xdg\_toplevel\_unset\_fullscreen(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.toplevel);}
+\DoxyCodeLine{1052         setIdleInhibitor(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}});}
+\DoxyCodeLine{1053         \textcolor{keywordflow}{if} (!\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.decorationManager)}
+\DoxyCodeLine{1054             createDecorations(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}});}
+\DoxyCodeLine{1055     \}}
+\DoxyCodeLine{1056     \mbox{\hyperlink{internal_8h_a5cfc56e9a5e1e8dd88862c9c7b8a6f7f}{\_glfwInputWindowMonitor}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, monitor);}
+\DoxyCodeLine{1057 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_acad95c7e85177725f95463ffe86015d4}\label{wl__window_8c_acad95c7e85177725f95463ffe86015d4}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwSetWindowMousePassthroughWayland@{\_glfwSetWindowMousePassthroughWayland}}
+\index{\_glfwSetWindowMousePassthroughWayland@{\_glfwSetWindowMousePassthroughWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetWindowMousePassthroughWayland()}{\_glfwSetWindowMousePassthroughWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Window\+Mouse\+Passthrough\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{\mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}}}]{enabled }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1116 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1117 \{}
+\DoxyCodeLine{1118     \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a0455a397ab5468d21c3021f2efa6dd3c}{enabled}})}
+\DoxyCodeLine{1119     \{}
+\DoxyCodeLine{1120         \textcolor{keyword}{struct }wl\_region* \mbox{\hyperlink{structregion}{region}} = wl\_compositor\_create\_region(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.compositor);}
+\DoxyCodeLine{1121         wl\_surface\_set\_input\_region(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.surface, \mbox{\hyperlink{structregion}{region}});}
+\DoxyCodeLine{1122         wl\_region\_destroy(\mbox{\hyperlink{structregion}{region}});}
+\DoxyCodeLine{1123     \}}
+\DoxyCodeLine{1124     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{1125         wl\_surface\_set\_input\_region(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.surface, 0);}
+\DoxyCodeLine{1126     wl\_surface\_commit(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.surface);}
+\DoxyCodeLine{1127 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a43f0c40c30c7bc0216b51cfae59c3629}\label{wl__window_8c_a43f0c40c30c7bc0216b51cfae59c3629}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwSetWindowOpacityWayland@{\_glfwSetWindowOpacityWayland}}
+\index{\_glfwSetWindowOpacityWayland@{\_glfwSetWindowOpacityWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetWindowOpacityWayland()}{\_glfwSetWindowOpacityWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Window\+Opacity\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{float}]{opacity }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1134 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1135 \{}
+\DoxyCodeLine{1136     \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_ga526fba20a01504a8086c763b6ca53ce5}{GLFW\_FEATURE\_UNAVAILABLE}},}
+\DoxyCodeLine{1137                     \textcolor{stringliteral}{"Wayland: The platform does not support setting the window opacity"});}
+\DoxyCodeLine{1138 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a5adb7549f1afecf80241a68fe7d2f2e0}\label{wl__window_8c_a5adb7549f1afecf80241a68fe7d2f2e0}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwSetWindowPosWayland@{\_glfwSetWindowPosWayland}}
+\index{\_glfwSetWindowPosWayland@{\_glfwSetWindowPosWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetWindowPosWayland()}{\_glfwSetWindowPosWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Window\+Pos\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{int}]{xpos,  }\item[{int}]{ypos }\end{DoxyParamCaption})}
+
+
+
+Definition at line 889 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{890 \{}
+\DoxyCodeLine{891     \textcolor{comment}{// A Wayland client can not set its position, so just warn}}
+\DoxyCodeLine{892 }
+\DoxyCodeLine{893     \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_ga526fba20a01504a8086c763b6ca53ce5}{GLFW\_FEATURE\_UNAVAILABLE}},}
+\DoxyCodeLine{894                     \textcolor{stringliteral}{"Wayland: The platform does not support setting the window position"});}
+\DoxyCodeLine{895 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_aa7d932102710313b7cc131d45413cd06}\label{wl__window_8c_aa7d932102710313b7cc131d45413cd06}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwSetWindowResizableWayland@{\_glfwSetWindowResizableWayland}}
+\index{\_glfwSetWindowResizableWayland@{\_glfwSetWindowResizableWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetWindowResizableWayland()}{\_glfwSetWindowResizableWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Window\+Resizable\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{\mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}}}]{enabled }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1091 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1092 \{}
+\DoxyCodeLine{1093     \textcolor{comment}{// TODO}}
+\DoxyCodeLine{1094     \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_ga5dda77e023e83151e8bd55a6758f946a}{GLFW\_FEATURE\_UNIMPLEMENTED}},}
+\DoxyCodeLine{1095                     \textcolor{stringliteral}{"Wayland: Window attribute setting not implemented yet"});}
+\DoxyCodeLine{1096 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_acd2b24bb6d3dc8bf27de6306a5d5397d}\label{wl__window_8c_acd2b24bb6d3dc8bf27de6306a5d5397d}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwSetWindowSizeLimitsWayland@{\_glfwSetWindowSizeLimitsWayland}}
+\index{\_glfwSetWindowSizeLimitsWayland@{\_glfwSetWindowSizeLimitsWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetWindowSizeLimitsWayland()}{\_glfwSetWindowSizeLimitsWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Window\+Size\+Limits\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{int}]{minwidth,  }\item[{int}]{minheight,  }\item[{int}]{maxwidth,  }\item[{int}]{maxheight }\end{DoxyParamCaption})}
+
+
+
+Definition at line 912 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{915 \{}
+\DoxyCodeLine{916     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.toplevel)}
+\DoxyCodeLine{917     \{}
+\DoxyCodeLine{918         \textcolor{keywordflow}{if} (minwidth == \mbox{\hyperlink{glfw3_8h_a7a2edf2c18446833d27d07f1b7f3d571}{GLFW\_DONT\_CARE}} || minheight == \mbox{\hyperlink{glfw3_8h_a7a2edf2c18446833d27d07f1b7f3d571}{GLFW\_DONT\_CARE}})}
+\DoxyCodeLine{919             minwidth = minheight = 0;}
+\DoxyCodeLine{920         \textcolor{keywordflow}{if} (maxwidth == \mbox{\hyperlink{glfw3_8h_a7a2edf2c18446833d27d07f1b7f3d571}{GLFW\_DONT\_CARE}} || maxheight == \mbox{\hyperlink{glfw3_8h_a7a2edf2c18446833d27d07f1b7f3d571}{GLFW\_DONT\_CARE}})}
+\DoxyCodeLine{921             maxwidth = maxheight = 0;}
+\DoxyCodeLine{922         xdg\_toplevel\_set\_min\_size(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.toplevel, minwidth, minheight);}
+\DoxyCodeLine{923         xdg\_toplevel\_set\_max\_size(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.toplevel, maxwidth, maxheight);}
+\DoxyCodeLine{924         wl\_surface\_commit(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.surface);}
+\DoxyCodeLine{925     \}}
+\DoxyCodeLine{926 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a782e4e77e16e03c5340748e43e808828}\label{wl__window_8c_a782e4e77e16e03c5340748e43e808828}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwSetWindowSizeWayland@{\_glfwSetWindowSizeWayland}}
+\index{\_glfwSetWindowSizeWayland@{\_glfwSetWindowSizeWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetWindowSizeWayland()}{\_glfwSetWindowSizeWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Window\+Size\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{int}]{width,  }\item[{int}]{height }\end{DoxyParamCaption})}
+
+
+
+Definition at line 905 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{906 \{}
+\DoxyCodeLine{907     \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.width = \mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}};}
+\DoxyCodeLine{908     \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.height = \mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}};}
+\DoxyCodeLine{909     resizeWindow(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}});}
+\DoxyCodeLine{910 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a2a03cb3eb1fa3720991ad2503dd65e2a}\label{wl__window_8c_a2a03cb3eb1fa3720991ad2503dd65e2a}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwSetWindowTitleWayland@{\_glfwSetWindowTitleWayland}}
+\index{\_glfwSetWindowTitleWayland@{\_glfwSetWindowTitleWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwSetWindowTitleWayland()}{\_glfwSetWindowTitleWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Set\+Window\+Title\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{const char $\ast$}]{title }\end{DoxyParamCaption})}
+
+
+
+Definition at line 864 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{865 \{}
+\DoxyCodeLine{866     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.title)}
+\DoxyCodeLine{867         \mbox{\hyperlink{init_8c_abcf72962b101a8a5c539da1a278b0e9e}{\_glfw\_free}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.title);}
+\DoxyCodeLine{868     \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.title = \mbox{\hyperlink{init_8c_a7f0a5b0d879baead229ef5e7381648e8}{\_glfw\_strdup}}(title);}
+\DoxyCodeLine{869     \textcolor{keywordflow}{if} (\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.toplevel)}
+\DoxyCodeLine{870         xdg\_toplevel\_set\_title(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.toplevel, title);}
+\DoxyCodeLine{871 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a7a956e757e29f06d5efcae33b58025cb}\label{wl__window_8c_a7a956e757e29f06d5efcae33b58025cb}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwShowWindowWayland@{\_glfwShowWindowWayland}}
+\index{\_glfwShowWindowWayland@{\_glfwShowWindowWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwShowWindowWayland()}{\_glfwShowWindowWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Show\+Window\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1001 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1002 \{}
+\DoxyCodeLine{1003     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.visible)}
+\DoxyCodeLine{1004     \{}
+\DoxyCodeLine{1005         \textcolor{comment}{// NOTE: The XDG surface and role are created here so command-\/line applications}}
+\DoxyCodeLine{1006         \textcolor{comment}{//       with off-\/screen windows do not appear in for example the Unity dock}}
+\DoxyCodeLine{1007         \textcolor{keywordflow}{if} (!\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.xdg.toplevel)}
+\DoxyCodeLine{1008             createXdgSurface(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}});}
+\DoxyCodeLine{1009 }
+\DoxyCodeLine{1010         \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.visible = \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{1011         \mbox{\hyperlink{internal_8h_ad9d5a996eef8fe1afcacc325f4510d1b}{\_glfwInputWindowDamage}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}});}
+\DoxyCodeLine{1012     \}}
+\DoxyCodeLine{1013 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a43d44933860ce6e5802733777edae04b}\label{wl__window_8c_a43d44933860ce6e5802733777edae04b}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwWaitEventsTimeoutWayland@{\_glfwWaitEventsTimeoutWayland}}
+\index{\_glfwWaitEventsTimeoutWayland@{\_glfwWaitEventsTimeoutWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwWaitEventsTimeoutWayland()}{\_glfwWaitEventsTimeoutWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Wait\+Events\+Timeout\+Wayland (\begin{DoxyParamCaption}\item[{double}]{timeout }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1160 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1161 \{}
+\DoxyCodeLine{1162     handleEvents((\textcolor{keywordtype}{int}) (\mbox{\hyperlink{glad_8h_ad29bb0d8468b264a4e3d9204366cfaab}{timeout}} * 1e3));}
+\DoxyCodeLine{1163 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a7cc624f3d8429b0d35ad163092b4821a}\label{wl__window_8c_a7cc624f3d8429b0d35ad163092b4821a}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwWaitEventsWayland@{\_glfwWaitEventsWayland}}
+\index{\_glfwWaitEventsWayland@{\_glfwWaitEventsWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwWaitEventsWayland()}{\_glfwWaitEventsWayland()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Wait\+Events\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1155 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1156 \{}
+\DoxyCodeLine{1157     handleEvents(-\/1);}
+\DoxyCodeLine{1158 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_ab0d72e6bf663506ff3f138bc670b2f6c}\label{wl__window_8c_ab0d72e6bf663506ff3f138bc670b2f6c}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwWindowFocusedWayland@{\_glfwWindowFocusedWayland}}
+\index{\_glfwWindowFocusedWayland@{\_glfwWindowFocusedWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwWindowFocusedWayland()}{\_glfwWindowFocusedWayland()}}
+{\footnotesize\ttfamily int \+\_\+glfw\+Window\+Focused\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1059 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1060 \{}
+\DoxyCodeLine{1061     \textcolor{keywordflow}{return} \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.keyboardFocus == \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}};}
+\DoxyCodeLine{1062 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_af427fb6a233af50a51858a9908d196fb}\label{wl__window_8c_af427fb6a233af50a51858a9908d196fb}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwWindowHoveredWayland@{\_glfwWindowHoveredWayland}}
+\index{\_glfwWindowHoveredWayland@{\_glfwWindowHoveredWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwWindowHoveredWayland()}{\_glfwWindowHoveredWayland()}}
+{\footnotesize\ttfamily int \+\_\+glfw\+Window\+Hovered\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1081 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1082 \{}
+\DoxyCodeLine{1083     \textcolor{keywordflow}{return} \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.hovered;}
+\DoxyCodeLine{1084 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a44752c656c8cee3498776b851285dca6}\label{wl__window_8c_a44752c656c8cee3498776b851285dca6}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwWindowIconifiedWayland@{\_glfwWindowIconifiedWayland}}
+\index{\_glfwWindowIconifiedWayland@{\_glfwWindowIconifiedWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwWindowIconifiedWayland()}{\_glfwWindowIconifiedWayland()}}
+{\footnotesize\ttfamily int \+\_\+glfw\+Window\+Iconified\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1064 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1065 \{}
+\DoxyCodeLine{1066     \textcolor{comment}{// xdg-\/shell doesn’t give any way to request whether a surface is}}
+\DoxyCodeLine{1067     \textcolor{comment}{// iconified.}}
+\DoxyCodeLine{1068     \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{1069 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a7676d7f4167b65f29aedf393e14174ed}\label{wl__window_8c_a7676d7f4167b65f29aedf393e14174ed}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwWindowMaximizedWayland@{\_glfwWindowMaximizedWayland}}
+\index{\_glfwWindowMaximizedWayland@{\_glfwWindowMaximizedWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwWindowMaximizedWayland()}{\_glfwWindowMaximizedWayland()}}
+{\footnotesize\ttfamily int \+\_\+glfw\+Window\+Maximized\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1076 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1077 \{}
+\DoxyCodeLine{1078     \textcolor{keywordflow}{return} \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.maximized;}
+\DoxyCodeLine{1079 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_abb9d2bf1aac035ff3ae3abcc9e0a7f09}\label{wl__window_8c_abb9d2bf1aac035ff3ae3abcc9e0a7f09}} 
+\index{wl\_window.c@{wl\_window.c}!\_glfwWindowVisibleWayland@{\_glfwWindowVisibleWayland}}
+\index{\_glfwWindowVisibleWayland@{\_glfwWindowVisibleWayland}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwWindowVisibleWayland()}{\_glfwWindowVisibleWayland()}}
+{\footnotesize\ttfamily int \+\_\+glfw\+Window\+Visible\+Wayland (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wwindow}{\+\_\+\+G\+L\+F\+Wwindow}} $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1071 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1072 \{}
+\DoxyCodeLine{1073     \textcolor{keywordflow}{return} \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.visible;}
+\DoxyCodeLine{1074 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_adc34e43e770676d600b962856da8dd83}\label{wl__window_8c_adc34e43e770676d600b962856da8dd83}} 
+\index{wl\_window.c@{wl\_window.c}!glfwGetWaylandDisplay@{glfwGetWaylandDisplay}}
+\index{glfwGetWaylandDisplay@{glfwGetWaylandDisplay}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{glfwGetWaylandDisplay()}{glfwGetWaylandDisplay()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} struct wl\+\_\+display$\ast$ glfw\+Get\+Wayland\+Display (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1840 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1841 \{}
+\DoxyCodeLine{1842     \mbox{\hyperlink{internal_8h_a69563c87fe776d416636a4d1b0e9e599}{\_GLFW\_REQUIRE\_INIT\_OR\_RETURN}}(\mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{1843 }
+\DoxyCodeLine{1844     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a93b1c9522ac532d94b32072cf4bf1421}{platform}}.\mbox{\hyperlink{struct___g_l_f_wplatform_adadc0cac5c197cc28788bc4993a9f6da}{platformID}} != \mbox{\hyperlink{group__init_gac4b08906a3cbf26c518a4a543eedd740}{GLFW\_PLATFORM\_WAYLAND}})}
+\DoxyCodeLine{1845     \{}
+\DoxyCodeLine{1846         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_ga3608c6c29ab7a72f3bf019f4c3a2563d}{GLFW\_PLATFORM\_UNAVAILABLE}},}
+\DoxyCodeLine{1847                         \textcolor{stringliteral}{"Wayland: Platform not initialized"});}
+\DoxyCodeLine{1848         \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1849     \}}
+\DoxyCodeLine{1850 }
+\DoxyCodeLine{1851     \textcolor{keywordflow}{return} \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.wl.\mbox{\hyperlink{struct___g_l_f_wlibrary_a635044e02e1f98df1de3775ecac52569}{display}};}
+\DoxyCodeLine{1852 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{wl__window_8c_a170f451581f6a1051512e2897d336675}\label{wl__window_8c_a170f451581f6a1051512e2897d336675}} 
+\index{wl\_window.c@{wl\_window.c}!glfwGetWaylandWindow@{glfwGetWaylandWindow}}
+\index{glfwGetWaylandWindow@{glfwGetWaylandWindow}!wl\_window.c@{wl\_window.c}}
+\doxysubsubsection{\texorpdfstring{glfwGetWaylandWindow()}{glfwGetWaylandWindow()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glfw3_8h_a56da5036b2cc259351ae22fd6439bb47}{G\+L\+F\+W\+A\+PI}} struct wl\+\_\+surface$\ast$ glfw\+Get\+Wayland\+Window (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$}]{handle }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1854 of file wl\+\_\+window.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1855 \{}
+\DoxyCodeLine{1856     \mbox{\hyperlink{struct___g_l_f_wwindow}{\_GLFWwindow}}* \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}} = (\mbox{\hyperlink{struct___g_l_f_wwindow}{\_GLFWwindow}}*) handle;}
+\DoxyCodeLine{1857     \mbox{\hyperlink{internal_8h_a69563c87fe776d416636a4d1b0e9e599}{\_GLFW\_REQUIRE\_INIT\_OR\_RETURN}}(\mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}});}
+\DoxyCodeLine{1858 }
+\DoxyCodeLine{1859     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a93b1c9522ac532d94b32072cf4bf1421}{platform}}.\mbox{\hyperlink{struct___g_l_f_wplatform_adadc0cac5c197cc28788bc4993a9f6da}{platformID}} != \mbox{\hyperlink{group__init_gac4b08906a3cbf26c518a4a543eedd740}{GLFW\_PLATFORM\_WAYLAND}})}
+\DoxyCodeLine{1860     \{}
+\DoxyCodeLine{1861         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_ga3608c6c29ab7a72f3bf019f4c3a2563d}{GLFW\_PLATFORM\_UNAVAILABLE}},}
+\DoxyCodeLine{1862                         \textcolor{stringliteral}{"Wayland: Platform not initialized"});}
+\DoxyCodeLine{1863         \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{1864     \}}
+\DoxyCodeLine{1865 }
+\DoxyCodeLine{1866     \textcolor{keywordflow}{return} \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}-\/>wl.surface;}
+\DoxyCodeLine{1867 \}}
+
+\end{DoxyCode}

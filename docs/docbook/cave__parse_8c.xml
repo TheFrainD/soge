@@ -1,0 +1,404 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_cave__parse_8c">
+<title>deps/stb/tests/caveview/cave_parse.c File Reference</title>
+<indexterm><primary>deps/stb/tests/caveview/cave_parse.c</primary></indexterm>
+<programlisting>#include &lt;assert.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;limits.h&gt;
+#include &lt;stdlib.h&gt;
+#include &quot;cave_parse.h&quot;
+#include &quot;stb_image.h&quot;
+#include &quot;stb.h&quot;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structcompressed__chunk">compressed_chunk</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structregion">region</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structnbt">nbt</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structdecoded__buffer">decoded_buffer</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_cave__parse_8c_1a5d3aa76dea5c5fcbdee0e58ed42f2dfe">FAST_CHUNK</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__parse_8c_1a375d0e033b63bb9bfbe64fa52a274858">NUM_CHUNKS_PER_REGION</link>   32</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__parse_8c_1a519332fc6ce103ccbebe47090d957853">NUM_CHUNKS_PER_REGION_LOG2</link>   5</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__parse_8c_1a1bf5bfdfc1e7360a7581955b80951f79">NUM_COLUMNS_PER_CHUNK</link>   16</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__parse_8c_1a6f3e1edc6fa7b10215637e33d48ab021">NUM_COLUMNS_PER_CHUNK_LOG2</link>   4</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__parse_8c_1a9da226849ee4a1097347c32e127cd14d">MAX_MAP_REGIONS</link>   64</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__parse_8c_1aee4002d6e7651d2b6210172e8debfd9b">NUM_CACHED_X</link>   64</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__parse_8c_1a682c506659165976d5e5ebf4608741c8">NUM_CACHED_Z</link>   64</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__parse_8c_1afd283cd22b0969b4c6c972002198b552">MAX_DECODED_CHUNK_X</link>   64</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__parse_8c_1a8b6314e7837240b78c2820faa3a5b230">MAX_DECODED_CHUNK_Z</link>   64</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Typedefs    </title>
+        <itemizedlist>
+            <listitem><para>typedef <link linkend="_structfast__chunk">fast_chunk</link> <link linkend="_cave__parse_8c_1a3ce8249ee3b6b306721124b6659f01f9">parse_chunk</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Enumerations    </title>
+        <itemizedlist>
+            <listitem><para>enum { 
+<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a412ceba1e522006ed1abd510caf067c6">TAG_End</link> =0, 
+<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017abb52fd6bfeb1865968d56ccef0daead9">TAG_Byte</link> =1, 
+<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a975e983e98b5bf2fffc5691958b0794f">TAG_Short</link> =2, 
+<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017ae0b367cd0dd9b00f86ba58d34bdf82cd">TAG_Int</link> =3, 
+
+<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a045cf869c73ca645cb2f90b51e74cda9">TAG_Long</link> =4, 
+<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a8fc97992da325a844e4410482a301859">TAG_Float</link> =5, 
+<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017ae5fc01c466aa077f9004b088089e16f1">TAG_Double</link> =6, 
+<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017ac28ed5b6d83826ce9ae4bd6977549c1b">TAG_Byte_Array</link> =7, 
+
+<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a918f873ae00e6b16d197f09abb3866a7">TAG_String</link> =8, 
+<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a59fc760bbabd001bc74cd7b4500eaeb1">TAG_List</link> =9, 
+<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017add45c97006383b972c7f3f2d17549199">TAG_Compound</link> =10, 
+<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a3fcd196a7af01c81e81774394f64dff3">TAG_Int_Array</link> =11
+ }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_stb_8h_1a1134b580f8da4de94ca6b1de4d37975e">uint32</link> <link linkend="_cave__parse_8c_1a03d6013648e51644ba189d14e195d09c">read_uint32_be</link> (FILE *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__parse_8c_1ac89cefdc6d1782d451168ff4160899bf">free_region</link> (<link linkend="_structregion">region</link> *<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__parse_8c_1af4e8c4c0c38242366db62d9936274079">lock_chunk_get_mutex</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__parse_8c_1afaaad5f587e3275de99ae8ff61b2e18a">unlock_chunk_get_mutex</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_structfast__chunk">fast_chunk</link> * <link linkend="_cave__parse_8c_1ac3885b139871d53a3d39cca5380075c9">get_decoded_fastchunk_uncached</link> (int chunk_x, int chunk_z)</para>
+</listitem>
+            <listitem><para><link linkend="_structdecoded__buffer">decoded_buffer</link> * <link linkend="_cave__parse_8c_1a5ff78db273f16901a4c8a02189065159">get_decoded_buffer</link> (int chunk_x, int chunk_z)</para>
+</listitem>
+            <listitem><para><link linkend="_structfast__chunk">fast_chunk</link> * <link linkend="_cave__parse_8c_1a2b070c4bd8a0077f08e0899298b8d032">get_decoded_fastchunk</link> (int chunk_x, int chunk_z)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>size_t <link linkend="_cave__parse_8c_1a06d58838a105ee37d75f9d0b8ffbd3a4">cached_compressed</link> =0</para>
+</listitem>
+            <listitem><para>FILE * <link linkend="_cave__parse_8c_1a532749e3a03fec148c60403092f6c555">last_region</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__parse_8c_1a8edc0733346513c007c8ef91c36f4f2d">last_region_x</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__parse_8c_1a875c19d8a1f89b10c7afeb72e2e34004">last_region_z</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__parse_8c_1af2606797deda70b5effbc50b2648d699">opened</link> =0</para>
+</listitem>
+            <listitem><para><link linkend="_structregion">region</link> * <link linkend="_cave__parse_8c_1a7c1f8c51ad9f7eea962905f2afa7aa79">regions</link> [<link linkend="_cave__parse_8c_1a9da226849ee4a1097347c32e127cd14d">MAX_MAP_REGIONS</link>][<link linkend="_cave__parse_8c_1a9da226849ee4a1097347c32e127cd14d">MAX_MAP_REGIONS</link>]</para>
+</listitem>
+            <listitem><para><link linkend="_structcompressed__chunk">compressed_chunk</link> * <link linkend="_cave__parse_8c_1a7f09eec9ac1c889cedb229f4881d3fff">cached_chunk</link> [<link linkend="_cave__parse_8c_1a682c506659165976d5e5ebf4608741c8">NUM_CACHED_Z</link>][<link linkend="_cave__parse_8c_1aee4002d6e7651d2b6210172e8debfd9b">NUM_CACHED_X</link>]</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_cave__parse_8c_1a5d3aa76dea5c5fcbdee0e58ed42f2dfe"/>    <section>
+    <title>FAST_CHUNK</title>
+<indexterm><primary>FAST_CHUNK</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>FAST_CHUNK</secondary></indexterm>
+<para><computeroutput>#define FAST_CHUNK</computeroutput></para><para>
+Definition at line 6 of file cave_parse.c.</para>
+    </section><anchor xml:id="_cave__parse_8c_1afd283cd22b0969b4c6c972002198b552"/>    <section>
+    <title>MAX_DECODED_CHUNK_X</title>
+<indexterm><primary>MAX_DECODED_CHUNK_X</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>MAX_DECODED_CHUNK_X</secondary></indexterm>
+<para><computeroutput>#define MAX_DECODED_CHUNK_X   64</computeroutput></para><para>
+Definition at line 510 of file cave_parse.c.</para>
+    </section><anchor xml:id="_cave__parse_8c_1a8b6314e7837240b78c2820faa3a5b230"/>    <section>
+    <title>MAX_DECODED_CHUNK_Z</title>
+<indexterm><primary>MAX_DECODED_CHUNK_Z</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>MAX_DECODED_CHUNK_Z</secondary></indexterm>
+<para><computeroutput>#define MAX_DECODED_CHUNK_Z   64</computeroutput></para><para>
+Definition at line 511 of file cave_parse.c.</para>
+    </section><anchor xml:id="_cave__parse_8c_1a9da226849ee4a1097347c32e127cd14d"/>    <section>
+    <title>MAX_MAP_REGIONS</title>
+<indexterm><primary>MAX_MAP_REGIONS</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>MAX_MAP_REGIONS</secondary></indexterm>
+<para><computeroutput>#define MAX_MAP_REGIONS   64</computeroutput></para><para>
+Definition at line 89 of file cave_parse.c.</para>
+    </section><anchor xml:id="_cave__parse_8c_1aee4002d6e7651d2b6210172e8debfd9b"/>    <section>
+    <title>NUM_CACHED_X</title>
+<indexterm><primary>NUM_CACHED_X</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>NUM_CACHED_X</secondary></indexterm>
+<para><computeroutput>#define NUM_CACHED_X   64</computeroutput></para><para>
+Definition at line 113 of file cave_parse.c.</para>
+    </section><anchor xml:id="_cave__parse_8c_1a682c506659165976d5e5ebf4608741c8"/>    <section>
+    <title>NUM_CACHED_Z</title>
+<indexterm><primary>NUM_CACHED_Z</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>NUM_CACHED_Z</secondary></indexterm>
+<para><computeroutput>#define NUM_CACHED_Z   64</computeroutput></para><para>
+Definition at line 114 of file cave_parse.c.</para>
+    </section><anchor xml:id="_cave__parse_8c_1a375d0e033b63bb9bfbe64fa52a274858"/>    <section>
+    <title>NUM_CHUNKS_PER_REGION</title>
+<indexterm><primary>NUM_CHUNKS_PER_REGION</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>NUM_CHUNKS_PER_REGION</secondary></indexterm>
+<para><computeroutput>#define NUM_CHUNKS_PER_REGION   32</computeroutput></para><para>
+Definition at line 13 of file cave_parse.c.</para>
+    </section><anchor xml:id="_cave__parse_8c_1a519332fc6ce103ccbebe47090d957853"/>    <section>
+    <title>NUM_CHUNKS_PER_REGION_LOG2</title>
+<indexterm><primary>NUM_CHUNKS_PER_REGION_LOG2</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>NUM_CHUNKS_PER_REGION_LOG2</secondary></indexterm>
+<para><computeroutput>#define NUM_CHUNKS_PER_REGION_LOG2   5</computeroutput></para><para>
+Definition at line 14 of file cave_parse.c.</para>
+    </section><anchor xml:id="_cave__parse_8c_1a1bf5bfdfc1e7360a7581955b80951f79"/>    <section>
+    <title>NUM_COLUMNS_PER_CHUNK</title>
+<indexterm><primary>NUM_COLUMNS_PER_CHUNK</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>NUM_COLUMNS_PER_CHUNK</secondary></indexterm>
+<para><computeroutput>#define NUM_COLUMNS_PER_CHUNK   16</computeroutput></para><para>
+Definition at line 16 of file cave_parse.c.</para>
+    </section><anchor xml:id="_cave__parse_8c_1a6f3e1edc6fa7b10215637e33d48ab021"/>    <section>
+    <title>NUM_COLUMNS_PER_CHUNK_LOG2</title>
+<indexterm><primary>NUM_COLUMNS_PER_CHUNK_LOG2</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>NUM_COLUMNS_PER_CHUNK_LOG2</secondary></indexterm>
+<para><computeroutput>#define NUM_COLUMNS_PER_CHUNK_LOG2   4</computeroutput></para><para>
+Definition at line 17 of file cave_parse.c.</para>
+</section>
+</section>
+<section>
+<title>Typedef Documentation</title>
+<anchor xml:id="_cave__parse_8c_1a3ce8249ee3b6b306721124b6659f01f9"/>    <section>
+    <title>parse_chunk</title>
+<indexterm><primary>parse_chunk</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>parse_chunk</secondary></indexterm>
+<para><computeroutput>typedef <link linkend="_structfast__chunk">fast_chunk</link> <link linkend="_cave__parse_8c_1a3ce8249ee3b6b306721124b6659f01f9">parse_chunk</link></computeroutput></para><para>
+Definition at line 379 of file cave_parse.c.</para>
+</section>
+</section>
+<section>
+<title>Enumeration Type Documentation</title>
+<anchor xml:id="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017"/>    <section>
+    <title>anonymous enum</title>
+<para><computeroutput>anonymous enum</computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>TAG_End</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>TAG_End</secondary></indexterm>
+<anchor xml:id="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a412ceba1e522006ed1abd510caf067c6"/>TAG_End</entry><entry></entry></row><row><entry><indexterm><primary>TAG_Byte</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>TAG_Byte</secondary></indexterm>
+<anchor xml:id="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017abb52fd6bfeb1865968d56ccef0daead9"/>TAG_Byte</entry><entry></entry></row><row><entry><indexterm><primary>TAG_Short</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>TAG_Short</secondary></indexterm>
+<anchor xml:id="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a975e983e98b5bf2fffc5691958b0794f"/>TAG_Short</entry><entry></entry></row><row><entry><indexterm><primary>TAG_Int</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>TAG_Int</secondary></indexterm>
+<anchor xml:id="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017ae0b367cd0dd9b00f86ba58d34bdf82cd"/>TAG_Int</entry><entry></entry></row><row><entry><indexterm><primary>TAG_Long</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>TAG_Long</secondary></indexterm>
+<anchor xml:id="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a045cf869c73ca645cb2f90b51e74cda9"/>TAG_Long</entry><entry></entry></row><row><entry><indexterm><primary>TAG_Float</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>TAG_Float</secondary></indexterm>
+<anchor xml:id="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a8fc97992da325a844e4410482a301859"/>TAG_Float</entry><entry></entry></row><row><entry><indexterm><primary>TAG_Double</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>TAG_Double</secondary></indexterm>
+<anchor xml:id="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017ae5fc01c466aa077f9004b088089e16f1"/>TAG_Double</entry><entry></entry></row><row><entry><indexterm><primary>TAG_Byte_Array</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>TAG_Byte_Array</secondary></indexterm>
+<anchor xml:id="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017ac28ed5b6d83826ce9ae4bd6977549c1b"/>TAG_Byte_Array</entry><entry></entry></row><row><entry><indexterm><primary>TAG_String</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>TAG_String</secondary></indexterm>
+<anchor xml:id="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a918f873ae00e6b16d197f09abb3866a7"/>TAG_String</entry><entry></entry></row><row><entry><indexterm><primary>TAG_List</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>TAG_List</secondary></indexterm>
+<anchor xml:id="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a59fc760bbabd001bc74cd7b4500eaeb1"/>TAG_List</entry><entry></entry></row><row><entry><indexterm><primary>TAG_Compound</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>TAG_Compound</secondary></indexterm>
+<anchor xml:id="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017add45c97006383b972c7f3f2d17549199"/>TAG_Compound</entry><entry></entry></row><row><entry><indexterm><primary>TAG_Int_Array</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>TAG_Int_Array</secondary></indexterm>
+<anchor xml:id="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a3fcd196a7af01c81e81774394f64dff3"/>TAG_Int_Array</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 200 of file cave_parse.c.</para>
+<programlisting>200 &#32;&#32;&#32;&#32;&#32;{&#32;<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a412ceba1e522006ed1abd510caf067c6">TAG_End</link>=0,&#32;<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017abb52fd6bfeb1865968d56ccef0daead9">TAG_Byte</link>=1,&#32;<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a975e983e98b5bf2fffc5691958b0794f">TAG_Short</link>=2,&#32;<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017ae0b367cd0dd9b00f86ba58d34bdf82cd">TAG_Int</link>=3,&#32;<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a045cf869c73ca645cb2f90b51e74cda9">TAG_Long</link>=4,
+201 &#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a8fc97992da325a844e4410482a301859">TAG_Float</link>=5,&#32;<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017ae5fc01c466aa077f9004b088089e16f1">TAG_Double</link>=6,&#32;<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017ac28ed5b6d83826ce9ae4bd6977549c1b">TAG_Byte_Array</link>=7,&#32;<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a918f873ae00e6b16d197f09abb3866a7">TAG_String</link>=8,
+202 &#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a59fc760bbabd001bc74cd7b4500eaeb1">TAG_List</link>=9,&#32;<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017add45c97006383b972c7f3f2d17549199">TAG_Compound</link>=10,&#32;<link linkend="_cave__parse_8c_1a634f9f55e799f3052a34590f08100017a3fcd196a7af01c81e81774394f64dff3">TAG_Int_Array</link>=11&#32;};
+</programlisting></section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_cave__parse_8c_1ac89cefdc6d1782d451168ff4160899bf"/>    <section>
+    <title>free_region()</title>
+<indexterm><primary>free_region</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>free_region</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> free_region (<link linkend="_structregion">region</link> * r)</computeroutput></para><para>
+Definition at line 84 of file cave_parse.c.</para>
+<programlisting>85 {
+86 &#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>);
+87 }
+</programlisting>    </section><anchor xml:id="_cave__parse_8c_1a5ff78db273f16901a4c8a02189065159"/>    <section>
+    <title>get_decoded_buffer()</title>
+<indexterm><primary>get_decoded_buffer</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>get_decoded_buffer</secondary></indexterm>
+<para><computeroutput><link linkend="_structdecoded__buffer">decoded_buffer</link>* get_decoded_buffer (int chunk_x, int chunk_z)</computeroutput></para><para>
+Definition at line 566 of file cave_parse.c.</para>
+<programlisting>567 {
+568 &#32;&#32;&#32;<link linkend="_structdecoded__buffer">decoded_buffer</link>&#32;*db&#32;=&#32;&amp;decoded_buffers[chunk_z&amp;(<link linkend="_cave__parse_8c_1a8b6314e7837240b78c2820faa3a5b230">MAX_DECODED_CHUNK_Z</link>-1)][chunk_x&amp;(<link linkend="_cave__parse_8c_1afd283cd22b0969b4c6c972002198b552">MAX_DECODED_CHUNK_X</link>-1)];
+569 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(db-&gt;<link linkend="_structdecoded__buffer_1a274e09899771bf21cc6d36627c445151">valid</link>)&#32;{
+570 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(db-&gt;<link linkend="_structdecoded__buffer_1abd4fcc5bf173158cc2a0a51b3dc379f8">cx</link>&#32;==&#32;chunk_x&#32;&amp;&amp;&#32;db-&gt;<link linkend="_structdecoded__buffer_1a403cca3edd511bba82a8621bca78a341">cz</link>&#32;==&#32;chunk_z)
+571 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;db;
+572 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(db-&gt;<link linkend="_structdecoded__buffer_1a367c4250ddd897a55a53e12b7be5daba">fc</link>)&#32;{
+573 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(db-&gt;<link linkend="_structdecoded__buffer_1a367c4250ddd897a55a53e12b7be5daba">fc</link>-&gt;<link linkend="_structfast__chunk_1aea03b39185c1d472a7f61f86529f0863">pointer_to_free</link>);
+574 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(db-&gt;<link linkend="_structdecoded__buffer_1a367c4250ddd897a55a53e12b7be5daba">fc</link>);
+575 &#32;&#32;&#32;&#32;&#32;&#32;}
+576 &#32;&#32;&#32;}
+577 
+578 &#32;&#32;&#32;db-&gt;<link linkend="_structdecoded__buffer_1abd4fcc5bf173158cc2a0a51b3dc379f8">cx</link>&#32;=&#32;chunk_x;
+579 &#32;&#32;&#32;db-&gt;<link linkend="_structdecoded__buffer_1a403cca3edd511bba82a8621bca78a341">cz</link>&#32;=&#32;chunk_z;
+580 &#32;&#32;&#32;db-&gt;<link linkend="_structdecoded__buffer_1a274e09899771bf21cc6d36627c445151">valid</link>&#32;=&#32;1;
+581 &#32;&#32;&#32;db-&gt;<link linkend="_structdecoded__buffer_1a367c4250ddd897a55a53e12b7be5daba">fc</link>&#32;=&#32;0;
+582 
+583 &#32;&#32;&#32;{
+584 &#32;&#32;&#32;&#32;&#32;&#32;db-&gt;<link linkend="_structdecoded__buffer_1a367c4250ddd897a55a53e12b7be5daba">fc</link>&#32;=&#32;<link linkend="_cave__parse_8c_1ac3885b139871d53a3d39cca5380075c9">get_decoded_fastchunk_uncached</link>(chunk_x,&#32;chunk_z);
+585 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;db;
+586 &#32;&#32;&#32;}
+587 }
+</programlisting>    </section><anchor xml:id="_cave__parse_8c_1a2b070c4bd8a0077f08e0899298b8d032"/>    <section>
+    <title>get_decoded_fastchunk()</title>
+<indexterm><primary>get_decoded_fastchunk</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>get_decoded_fastchunk</secondary></indexterm>
+<para><computeroutput><link linkend="_structfast__chunk">fast_chunk</link>* get_decoded_fastchunk (int chunk_x, int chunk_z)</computeroutput></para><para>
+Definition at line 589 of file cave_parse.c.</para>
+<programlisting>590 {
+591 &#32;&#32;&#32;<link linkend="_structdecoded__buffer">decoded_buffer</link>&#32;*db&#32;=&#32;<link linkend="_cave__parse_8c_1a5ff78db273f16901a4c8a02189065159">get_decoded_buffer</link>(chunk_x,&#32;chunk_z);
+592 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;db-&gt;<link linkend="_structdecoded__buffer_1a367c4250ddd897a55a53e12b7be5daba">fc</link>;
+593 }
+</programlisting>    </section><anchor xml:id="_cave__parse_8c_1ac3885b139871d53a3d39cca5380075c9"/>    <section>
+    <title>get_decoded_fastchunk_uncached()</title>
+<indexterm><primary>get_decoded_fastchunk_uncached</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>get_decoded_fastchunk_uncached</secondary></indexterm>
+<para><computeroutput><link linkend="_structfast__chunk">fast_chunk</link>* get_decoded_fastchunk_uncached (int chunk_x, int chunk_z)</computeroutput></para><para>
+Definition at line 525 of file cave_parse.c.</para>
+<programlisting>526 {
+527 &#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;*decoded;
+528 &#32;&#32;&#32;<link linkend="_structcompressed__chunk">compressed_chunk</link>&#32;*cc;
+529 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;inlen;
+530 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+531 &#32;&#32;&#32;<link linkend="_structfast__chunk">fast_chunk</link>&#32;*fc;
+532 
+533 &#32;&#32;&#32;<link linkend="_cave__parse_8c_1af4e8c4c0c38242366db62d9936274079">lock_chunk_get_mutex</link>();
+534 &#32;&#32;&#32;cc&#32;=&#32;get_compressed_chunk(chunk_x,&#32;chunk_z);
+535 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cc-&gt;<link linkend="_structcompressed__chunk_1afd6e1777f2ee768315d22f6316a585df">len</link>&#32;!=&#32;0)
+536 &#32;&#32;&#32;&#32;&#32;&#32;++cc-&gt;<link linkend="_structcompressed__chunk_1afd796ba64d7fc4cb1f43a177b6424a45">refcount</link>;
+537 &#32;&#32;&#32;<link linkend="_cave__parse_8c_1afaaad5f587e3275de99ae8ff61b2e18a">unlock_chunk_get_mutex</link>();
+538 
+539 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cc-&gt;<link linkend="_structcompressed__chunk_1afd6e1777f2ee768315d22f6316a585df">len</link>&#32;==&#32;0)
+540 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+541 
+542 &#32;&#32;&#32;assert(cc&#32;!=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+543 
+544 &#32;&#32;&#32;assert(cc-&gt;<link linkend="_structcompressed__chunk_1a537aaff67064a4c6a6e8ba17efda3233">data</link>[4]&#32;==&#32;2);
+545 
+546 &#32;&#32;&#32;inlen&#32;=&#32;nbt_parse_uint32(cc-&gt;<link linkend="_structcompressed__chunk_1a537aaff67064a4c6a6e8ba17efda3233">data</link>);
+547 &#32;&#32;&#32;decoded&#32;=&#32;<link linkend="_stb__image_8c_1ad58a5fbe941f1cc170dba564f6d2bdc3">stbi_zlib_decode_malloc_guesssize</link>(cc-&gt;<link linkend="_structcompressed__chunk_1a537aaff67064a4c6a6e8ba17efda3233">data</link>+5,&#32;inlen,&#32;inlen*3,&#32;&amp;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>);
+548 &#32;&#32;&#32;assert(decoded&#32;!=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+549 &#32;&#32;&#32;assert(<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;!=&#32;0);
+550 
+551 &#32;&#32;&#32;<link linkend="_cave__parse_8c_1af4e8c4c0c38242366db62d9936274079">lock_chunk_get_mutex</link>();
+552 &#32;&#32;&#32;deref_compressed_chunk(cc);
+553 &#32;&#32;&#32;<link linkend="_cave__parse_8c_1afaaad5f587e3275de99ae8ff61b2e18a">unlock_chunk_get_mutex</link>();
+554 
+555 <emphasis role="preprocessor">&#32;&#32;&#32;#ifdef&#32;FAST_CHUNK</emphasis>
+556 &#32;&#32;&#32;fc&#32;=&#32;minecraft_chunk_parse(decoded,&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>);
+557 <emphasis role="preprocessor">&#32;&#32;&#32;#else</emphasis>
+558 &#32;&#32;&#32;fc&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+559 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+560 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fc&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+561 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(decoded);
+562 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;fc;
+563 }
+</programlisting>    </section><anchor xml:id="_cave__parse_8c_1af4e8c4c0c38242366db62d9936274079"/>    <section>
+    <title>lock_chunk_get_mutex()</title>
+<indexterm><primary>lock_chunk_get_mutex</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>lock_chunk_get_mutex</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> lock_chunk_get_mutex (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 525 of file cave_mesher.c.</para>
+<programlisting>526 {
+527 &#32;&#32;&#32;SDL_LockMutex(<link linkend="_cave__mesher_8c_1a9105640f64bd2fca823fa679f99fb62b">chunk_get_mutex</link>);
+528 }
+</programlisting>    </section><anchor xml:id="_cave__parse_8c_1a03d6013648e51644ba189d14e195d09c"/>    <section>
+    <title>read_uint32_be()</title>
+<indexterm><primary>read_uint32_be</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>read_uint32_be</secondary></indexterm>
+<para><computeroutput><link linkend="_stb_8h_1a1134b580f8da4de94ca6b1de4d37975e">uint32</link> read_uint32_be (FILE * f)</computeroutput></para><para>
+Definition at line 19 of file cave_parse.c.</para>
+<programlisting>20 {
+21 &#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[4];
+22 &#32;&#32;&#32;fread(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>,&#32;1,&#32;4,&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+23 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[0]&lt;&lt;24)&#32;+&#32;(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[1]&lt;&lt;16)&#32;+&#32;(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[2]&lt;&lt;8)&#32;+&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[3];
+24 }
+</programlisting>    </section><anchor xml:id="_cave__parse_8c_1afaaad5f587e3275de99ae8ff61b2e18a"/>    <section>
+    <title>unlock_chunk_get_mutex()</title>
+<indexterm><primary>unlock_chunk_get_mutex</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>unlock_chunk_get_mutex</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> unlock_chunk_get_mutex (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 529 of file cave_mesher.c.</para>
+<programlisting>530 {
+531 &#32;&#32;&#32;SDL_UnlockMutex(<link linkend="_cave__mesher_8c_1a9105640f64bd2fca823fa679f99fb62b">chunk_get_mutex</link>);
+532 }
+</programlisting></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_cave__parse_8c_1a7f09eec9ac1c889cedb229f4881d3fff"/>    <section>
+    <title>cached_chunk</title>
+<indexterm><primary>cached_chunk</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>cached_chunk</secondary></indexterm>
+<para><computeroutput><link linkend="_structcompressed__chunk">compressed_chunk</link>* cached_chunk[<link linkend="_cave__parse_8c_1a682c506659165976d5e5ebf4608741c8">NUM_CACHED_Z</link>][<link linkend="_cave__parse_8c_1aee4002d6e7651d2b6210172e8debfd9b">NUM_CACHED_X</link>]</computeroutput></para><para>
+Definition at line 119 of file cave_parse.c.</para>
+    </section><anchor xml:id="_cave__parse_8c_1a06d58838a105ee37d75f9d0b8ffbd3a4"/>    <section>
+    <title>cached_compressed</title>
+<indexterm><primary>cached_compressed</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>cached_compressed</secondary></indexterm>
+<para><computeroutput>size_t cached_compressed =0</computeroutput></para><para>
+Definition at line 40 of file cave_parse.c.</para>
+    </section><anchor xml:id="_cave__parse_8c_1a532749e3a03fec148c60403092f6c555"/>    <section>
+    <title>last_region</title>
+<indexterm><primary>last_region</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>last_region</secondary></indexterm>
+<para><computeroutput>FILE* last_region</computeroutput></para><para>
+Definition at line 42 of file cave_parse.c.</para>
+    </section><anchor xml:id="_cave__parse_8c_1a8edc0733346513c007c8ef91c36f4f2d"/>    <section>
+    <title>last_region_x</title>
+<indexterm><primary>last_region_x</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>last_region_x</secondary></indexterm>
+<para><computeroutput>int last_region_x</computeroutput></para><para>
+Definition at line 43 of file cave_parse.c.</para>
+    </section><anchor xml:id="_cave__parse_8c_1a875c19d8a1f89b10c7afeb72e2e34004"/>    <section>
+    <title>last_region_z</title>
+<indexterm><primary>last_region_z</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>last_region_z</secondary></indexterm>
+<para><computeroutput>int last_region_z</computeroutput></para><para>
+Definition at line 44 of file cave_parse.c.</para>
+    </section><anchor xml:id="_cave__parse_8c_1af2606797deda70b5effbc50b2648d699"/>    <section>
+    <title>opened</title>
+<indexterm><primary>opened</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>opened</secondary></indexterm>
+<para><computeroutput>int opened =0</computeroutput></para><para>
+Definition at line 45 of file cave_parse.c.</para>
+    </section><anchor xml:id="_cave__parse_8c_1a7c1f8c51ad9f7eea962905f2afa7aa79"/>    <section>
+    <title>regions</title>
+<indexterm><primary>regions</primary><secondary>cave_parse.c</secondary></indexterm>
+<indexterm><primary>cave_parse.c</primary><secondary>regions</secondary></indexterm>
+<para><computeroutput><link linkend="_structregion">region</link>* regions[<link linkend="_cave__parse_8c_1a9da226849ee4a1097347c32e127cd14d">MAX_MAP_REGIONS</link>][<link linkend="_cave__parse_8c_1a9da226849ee4a1097347c32e127cd14d">MAX_MAP_REGIONS</link>]</computeroutput></para><para>
+Definition at line 90 of file cave_parse.c.</para>
+</section>
+</section>
+</section>

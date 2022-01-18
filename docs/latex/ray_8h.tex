@@ -1,0 +1,81 @@
+\hypertarget{ray_8h}{}\doxysection{deps/cglm/include/cglm/ray.h File Reference}
+\label{ray_8h}\index{deps/cglm/include/cglm/ray.h@{deps/cglm/include/cglm/ray.h}}
+{\ttfamily \#include \char`\"{}vec3.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} bool \mbox{\hyperlink{ray_8h_a0cb49a2e8f9a073f1ad754c16373bd0d}{glm\+\_\+ray\+\_\+triangle}} (\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} origin, \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} direction, \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} \mbox{\hyperlink{glad_8h_a7062a23d1d434121d4a88f530703d06a}{v0}}, \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} \mbox{\hyperlink{glad_8h_a435c176a02c061b43e19bdf7c86cceae}{v1}}, \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} \mbox{\hyperlink{glad_8h_a0928f6d0f0f794ba000a21dfae422136}{v2}}, float $\ast$d)
+\begin{DoxyCompactList}\small\item\em Möller–\+Trumbore ray-\/triangle intersection algorithm. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{ray_8h_a0cb49a2e8f9a073f1ad754c16373bd0d}\label{ray_8h_a0cb49a2e8f9a073f1ad754c16373bd0d}} 
+\index{ray.h@{ray.h}!glm\_ray\_triangle@{glm\_ray\_triangle}}
+\index{glm\_ray\_triangle@{glm\_ray\_triangle}!ray.h@{ray.h}}
+\doxysubsubsection{\texorpdfstring{glm\_ray\_triangle()}{glm\_ray\_triangle()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} bool glm\+\_\+ray\+\_\+triangle (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}}}]{origin,  }\item[{\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}}}]{direction,  }\item[{\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}}}]{v0,  }\item[{\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}}}]{v1,  }\item[{\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}}}]{v2,  }\item[{float $\ast$}]{d }\end{DoxyParamCaption})}
+
+
+
+Möller–\+Trumbore ray-\/triangle intersection algorithm. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em origin} & origin of ray \\
+\hline
+\mbox{\texttt{ in}}  & {\em direction} & direction of ray \\
+\hline
+\mbox{\texttt{ in}}  & {\em v0} & first vertex of triangle \\
+\hline
+\mbox{\texttt{ in}}  & {\em v1} & second vertex of triangle \\
+\hline
+\mbox{\texttt{ in}}  & {\em v2} & third vertex of triangle \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em d} & distance to intersection \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+whether there is intersection 
+\end{DoxyReturn}
+
+
+Definition at line 37 of file ray.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{42                            \{}
+\DoxyCodeLine{43   \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}}        edge1, edge2, \mbox{\hyperlink{glext_8h_aa5367c14d90f462230c2611b81b41d23}{p}}, \mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}}, \mbox{\hyperlink{glext_8h_a8fc1e7b9baaae687804c7eed46ca09c6}{q}};}
+\DoxyCodeLine{44   \textcolor{keywordtype}{float}       det, inv\_det, u, \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}, dist;}
+\DoxyCodeLine{45   \textcolor{keyword}{const} \textcolor{keywordtype}{float} epsilon = 0.000001f;}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47   \mbox{\hyperlink{vec3_8h_a395572ff56accb065cdb343bf46577ec}{glm\_vec3\_sub}}(\mbox{\hyperlink{glad_8h_a435c176a02c061b43e19bdf7c86cceae}{v1}}, \mbox{\hyperlink{glad_8h_a7062a23d1d434121d4a88f530703d06a}{v0}}, edge1);}
+\DoxyCodeLine{48   \mbox{\hyperlink{vec3_8h_a395572ff56accb065cdb343bf46577ec}{glm\_vec3\_sub}}(\mbox{\hyperlink{glad_8h_a0928f6d0f0f794ba000a21dfae422136}{v2}}, \mbox{\hyperlink{glad_8h_a7062a23d1d434121d4a88f530703d06a}{v0}}, edge2);}
+\DoxyCodeLine{49   \mbox{\hyperlink{vec3_8h_a9b37e0be5c51a04a7572c9626a5a8b8e}{glm\_vec3\_cross}}(direction, edge2, \mbox{\hyperlink{glext_8h_aa5367c14d90f462230c2611b81b41d23}{p}});}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51   det = \mbox{\hyperlink{vec3_8h_a8ec5a23c5a16ea70f11a4b24ef15e4db}{glm\_vec3\_dot}}(edge1, \mbox{\hyperlink{glext_8h_aa5367c14d90f462230c2611b81b41d23}{p}});}
+\DoxyCodeLine{52   \textcolor{keywordflow}{if} (det > -\/epsilon \&\& det < epsilon)}
+\DoxyCodeLine{53     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55   inv\_det = 1.0f / det;}
+\DoxyCodeLine{56   }
+\DoxyCodeLine{57   \mbox{\hyperlink{vec3_8h_a395572ff56accb065cdb343bf46577ec}{glm\_vec3\_sub}}(origin, \mbox{\hyperlink{glad_8h_a7062a23d1d434121d4a88f530703d06a}{v0}}, \mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}});}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59   u = inv\_det * \mbox{\hyperlink{vec3_8h_a8ec5a23c5a16ea70f11a4b24ef15e4db}{glm\_vec3\_dot}}(\mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}}, \mbox{\hyperlink{glext_8h_aa5367c14d90f462230c2611b81b41d23}{p}});}
+\DoxyCodeLine{60   \textcolor{keywordflow}{if} (u < 0.0f || u > 1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}})}
+\DoxyCodeLine{61     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63   \mbox{\hyperlink{vec3_8h_a9b37e0be5c51a04a7572c9626a5a8b8e}{glm\_vec3\_cross}}(\mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}}, edge1, \mbox{\hyperlink{glext_8h_a8fc1e7b9baaae687804c7eed46ca09c6}{q}});}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65   \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}} = inv\_det * \mbox{\hyperlink{vec3_8h_a8ec5a23c5a16ea70f11a4b24ef15e4db}{glm\_vec3\_dot}}(direction, \mbox{\hyperlink{glext_8h_a8fc1e7b9baaae687804c7eed46ca09c6}{q}});}
+\DoxyCodeLine{66   \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v < 0.0f || u + v >}} 1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}})}
+\DoxyCodeLine{67     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69   dist = inv\_det * \mbox{\hyperlink{vec3_8h_a8ec5a23c5a16ea70f11a4b24ef15e4db}{glm\_vec3\_dot}}(edge2, \mbox{\hyperlink{glext_8h_a8fc1e7b9baaae687804c7eed46ca09c6}{q}});}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71   \textcolor{keywordflow}{if} (d)}
+\DoxyCodeLine{72     *d = dist;}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74   \textcolor{keywordflow}{return} dist > epsilon;}
+\DoxyCodeLine{75 \}}
+
+\end{DoxyCode}

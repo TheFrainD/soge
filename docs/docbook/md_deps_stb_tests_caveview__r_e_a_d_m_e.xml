@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_md_deps_stb_tests_caveview__r_e_a_d_m_e">
+<section xml:id="_md_deps_stb_tests_caveview__r_e_a_d_m_e_1autotoc_md106">
+<title>How to run it?</title>
+
+<para>There&apos;s no GUI. Find a directory with Minecraft Anvil files (.mca). Copy a Minecraft &quot;terrain.png&quot; into that directory (do a google image search). Run from that directory.</para>
+</section>
+<section xml:id="_md_deps_stb_tests_caveview__r_e_a_d_m_e_1autotoc_md107">
+<title>How accurate is this as a Minecraft viewer?</title>
+
+<para>Not very. Many Minecraft blocks are not handled correctly:</para>
+
+<para><itemizedlist>
+<listitem>
+<para>No redstone, rails, or other &quot;flat&quot; blocks</para>
+</listitem><listitem>
+<para>No signs, doors, fences, carpets, or other complicated geometry</para>
+</listitem><listitem>
+<para>Stairs are turned into ramps</para>
+</listitem><listitem>
+<para>Upper slabs turn into lower slabs</para>
+</listitem><listitem>
+<para>Wood types only for blocks, not stairs, slabs, etc</para>
+</listitem><listitem>
+<para>Colored glass becomes regular glass</para>
+</listitem><listitem>
+<para>Glass panes become glass blocks</para>
+</listitem><listitem>
+<para>Water is opaque</para>
+</listitem><listitem>
+<para>Water level is incorrect</para>
+</listitem><listitem>
+<para>No biome coloration</para>
+</listitem><listitem>
+<para>Cactus is not shrunk, shows holes</para>
+</listitem><listitem>
+<para>Chests are not shrunk</para>
+</listitem><listitem>
+<para>Double-chests draw as two chests</para>
+</listitem><listitem>
+<para>Pumpkins etc. are not rotated properly</para>
+</listitem><listitem>
+<para>Torches are drawn hackily, do not attach to walls</para>
+</listitem><listitem>
+<para>Incorrect textures for blocks that postdate terrain.png</para>
+</listitem><listitem>
+<para>Transparent textures have black fringes due to non-premultiplied-alpha</para>
+</listitem><listitem>
+<para>Skylight and block light are combined in a single value</para>
+</listitem><listitem>
+<para>Only blocks at y=1..255 are shown (not y=0)</para>
+</listitem><listitem>
+<para>If a 32x32x256 &quot;quad-chunk&quot; needs more than 800K quads, isn&apos;t handled (very unlikely)</para>
+</listitem></itemizedlist>
+</para>
+
+<para>Some of these are due to engine limitations, and some of these are because I didn&apos;t make the effort since my goal was to make a demo for stb_voxel_render.h, not to make a proper Minecraft viewer.</para>
+</section>
+<section xml:id="_md_deps_stb_tests_caveview__r_e_a_d_m_e_1autotoc_md108">
+<title>Could this be turned into a proper Minecraft viewer?</title>
+
+<para>Yes and no. Yes, you could do it, but no, it wouldn&apos;t really resemble this code that much anymore.</para>
+
+<para>You could certainly use this engine to render the parts of Minecraft it works for, but many of the things it doesn&apos;t handle it can&apos;t handle at all (stairs, water, fences, carpets, etc) because it uses low-precision coordinates to store voxel data.</para>
+
+<para>You would have to render all of the stuff it doesn&apos;t handle through another rendering path. In a game (not a viewer) you would need such a path for movable entities like doors and carts anyway, so possibly handling other things that way wouldn&apos;t be so bad.</para>
+
+<para>Rails, ladders, and redstone lines could be implemented by using tex2 to overlay those effects, but you can&apos;t rotate tex1 and tex2 independently, so there may be cases where the underlying texture needs a different rotation from the overlaid texture, which would require separate rendering. Handling redstone&apos;s brightness being different from underlying block&apos;s brightness would require separate rendering.</para>
+
+<para>You can use the face-color effect to do biome coloration, but the change won&apos;t be smooth the way it is in Minecraft.</para>
+</section>
+<section xml:id="_md_deps_stb_tests_caveview__r_e_a_d_m_e_1autotoc_md109">
+<title>Why isn&apos;t building the mesh data faster?</title>
+
+<para>Partly because converting from minecraft data is expensive.</para>
+
+<para>Here is the approximate breakdown of an older version of this executable and lib that did the building single-threaded.</para>
+
+<para><itemizedlist>
+<listitem>
+<para>25% loading &amp; parsing minecraft files (4/5ths of this is my crappy zlib)</para>
+</listitem><listitem>
+<para>18% converting from minecraft blockids &amp; lighting to stb blockids &amp; lighting</para>
+</listitem><listitem>
+<para>10% reordering from data[z][y][x] (minecraft-style) to data[y][x][z] (stb-style)</para>
+</listitem><listitem>
+<para>40% building mesh data</para>
+</listitem><listitem>
+<para>7% uploading mesh data to OpenGL</para>
+</listitem></itemizedlist>
+</para>
+
+<para>I did do significant optimizations after the above, so the final breakdown is different, but it should give you some sense of the costs. </para>
+</section>
+</section>

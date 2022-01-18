@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_msaa_8c">
+<title>deps/glfw/tests/msaa.c File Reference</title>
+<indexterm><primary>deps/glfw/tests/msaa.c</primary></indexterm>
+<programlisting>#include &lt;glad/gl.h&gt;
+#include &lt;GLFW/glfw3.h&gt;
+#include &quot;linmath.h&quot;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &quot;getopt.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_msaa_8c_1a09f9c3bf094ecaf707c673924ffd615a">GLAD_GL_IMPLEMENTATION</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_msaa_8c_1a088324ad8995e3eb76024e3e79083d48">GLFW_INCLUDE_NONE</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_msaa_8c_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_msaa_8c_1a09f9c3bf094ecaf707c673924ffd615a"/>    <section>
+    <title>GLAD_GL_IMPLEMENTATION</title>
+<indexterm><primary>GLAD_GL_IMPLEMENTATION</primary><secondary>msaa.c</secondary></indexterm>
+<indexterm><primary>msaa.c</primary><secondary>GLAD_GL_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define GLAD_GL_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 32 of file msaa.c.</para>
+    </section><anchor xml:id="_msaa_8c_1a088324ad8995e3eb76024e3e79083d48"/>    <section>
+    <title>GLFW_INCLUDE_NONE</title>
+<indexterm><primary>GLFW_INCLUDE_NONE</primary><secondary>msaa.c</secondary></indexterm>
+<indexterm><primary>msaa.c</primary><secondary>GLFW_INCLUDE_NONE</secondary></indexterm>
+<para><computeroutput>#define GLFW_INCLUDE_NONE</computeroutput></para><para>
+Definition at line 34 of file msaa.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_msaa_8c_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>msaa.c</secondary></indexterm>
+<indexterm><primary>msaa.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 99 of file msaa.c.</para>
+<programlisting>100 {
+101 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;ch,&#32;<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>&#32;=&#32;4;
+102 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>*&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>;
+103 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a68c4714e43d8e827d80759f9cb864f3c">GLuint</link>&#32;vertex_buffer,&#32;vertex_shader,&#32;fragment_shader,&#32;<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>;
+104 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1acebcc1c5663f14ebde1d16831e5fed94">GLint</link>&#32;mvp_location,&#32;vpos_location;
+105 
+106 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;((ch&#32;=&#32;<link linkend="_getopt_8c_1a5ffa4c677fc71cecd94f140ef9db624c">getopt</link>(argc,&#32;argv,&#32;<emphasis role="stringliteral">&quot;hs:&quot;</emphasis>))&#32;!=&#32;-1)
+107 &#32;&#32;&#32;&#32;{
+108 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(ch)
+109 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+110 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;h&apos;</emphasis>:
+111 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afb85c5d9b1bce96aa3b530d581194d1a">usage</link>();
+112 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_SUCCESS);
+113 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;s&apos;</emphasis>:
+114 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>&#32;=&#32;atoi(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>);
+115 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+116 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">default</emphasis>:
+117 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afb85c5d9b1bce96aa3b530d581194d1a">usage</link>();
+118 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+119 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+120 &#32;&#32;&#32;&#32;}
+121 
+122 &#32;&#32;&#32;&#32;<link linkend="_group__init_1ga746e2757d069eaea423349aca6ae097a">glfwSetErrorCallback</link>(<link linkend="_inputlag_8c_1a4ee391c8bab624943c822faafb2c320e">error_callback</link>);
+123 
+124 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_group__init_1gab41771f0215a2e0afb4cf1cf98082d40">glfwInit</link>())
+125 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+126 
+127 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>)
+128 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Requesting&#32;MSAA&#32;with&#32;%i&#32;samples\n&quot;</emphasis>,&#32;<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>);
+129 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+130 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Requesting&#32;that&#32;MSAA&#32;not&#32;be&#32;available\n&quot;</emphasis>);
+131 
+132 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga2cdf86fdcb7722fb8829c4e201607535">GLFW_SAMPLES</link>,&#32;<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>);
+133 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gafe5e4922de1f9932d7e9849bb053b0c0">GLFW_CONTEXT_VERSION_MAJOR</link>,&#32;2);
+134 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga31aca791e4b538c4e4a771eb95cc2d07">GLFW_CONTEXT_VERSION_MINOR</link>,&#32;0);
+135 
+136 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;<link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link>(800,&#32;400,&#32;<emphasis role="stringliteral">&quot;Aliasing&#32;Detector&quot;</emphasis>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+137 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)
+138 &#32;&#32;&#32;&#32;{
+139 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+140 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+141 &#32;&#32;&#32;&#32;}
+142 
+143 &#32;&#32;&#32;&#32;<link linkend="_group__input_1gaa4cbcb81b939b8800e44cea971ddae47">glfwSetKeyCallback</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;key_callback);
+144 
+145 &#32;&#32;&#32;&#32;<link linkend="_group__context_1gafd76c93e15ec8b0b90506a9936a46185">glfwMakeContextCurrent</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+146 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a7e9e0ebe65864f5f2bcd289c5736041b">gladLoadGL</link>(<link linkend="_group__context_1ga0e8af175218929615c16e74938c10f2a">glfwGetProcAddress</link>);
+147 &#32;&#32;&#32;&#32;<link linkend="_group__context_1ga12a595c06947cec4967c6e1f14210a8a">glfwSwapInterval</link>(1);
+148 
+149 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_glad_8h_1a1527624bc8306b779ce730bcc4f757a4">GL_SAMPLES</link>,&#32;&amp;<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>);
+150 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>)
+151 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Context&#32;reports&#32;MSAA&#32;is&#32;available&#32;with&#32;%i&#32;samples\n&quot;</emphasis>,&#32;<link linkend="_glad_8h_1a1d93829fc44881966fb3b59a0241947f">samples</link>);
+152 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+153 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Context&#32;reports&#32;MSAA&#32;is&#32;unavailable\n&quot;</emphasis>);
+154 
+155 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1b33d322b89d94ad4938461db0a0424a">glGenBuffers</link>(1,&#32;&amp;vertex_buffer);
+156 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a3b3a3f8200f094b781e9f61e2f19fc50">glBindBuffer</link>(<link linkend="_glad_8h_1a7180045dcb52b22af2cd0366026bc3ed">GL_ARRAY_BUFFER</link>,&#32;vertex_buffer);
+157 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a9419a03f5c46e2758f884e9c56d92b6a">glBufferData</link>(<link linkend="_glad_8h_1a7180045dcb52b22af2cd0366026bc3ed">GL_ARRAY_BUFFER</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(vertices),&#32;vertices,&#32;<link linkend="_glad_8h_1ab7dffdc215fbbe75b6ccacfecfc14648">GL_STATIC_DRAW</link>);
+158 
+159 &#32;&#32;&#32;&#32;vertex_shader&#32;=&#32;<link linkend="_glad_8h_1a4d3447ff3caf454bc686968fbe5f04bf">glCreateShader</link>(<link linkend="_glad_8h_1aceb29bc16e885f956eb9e351a7dd6276">GL_VERTEX_SHADER</link>);
+160 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a369ec108462c247e3028edc9070117a0">glShaderSource</link>(vertex_shader,&#32;1,&#32;&amp;vertex_shader_text,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+161 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1acf7a528ef1ef237d2a7676dcb0f22473">glCompileShader</link>(vertex_shader);
+162 
+163 &#32;&#32;&#32;&#32;fragment_shader&#32;=&#32;<link linkend="_glad_8h_1a4d3447ff3caf454bc686968fbe5f04bf">glCreateShader</link>(<link linkend="_glad_8h_1a1a0294662b50921555cae95fb20740d4">GL_FRAGMENT_SHADER</link>);
+164 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a369ec108462c247e3028edc9070117a0">glShaderSource</link>(fragment_shader,&#32;1,&#32;&amp;fragment_shader_text,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+165 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1acf7a528ef1ef237d2a7676dcb0f22473">glCompileShader</link>(fragment_shader);
+166 
+167 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>&#32;=&#32;<link linkend="_glad_8h_1acf9d728f2b2be42fbc2fe6dada8bcd2b">glCreateProgram</link>();
+168 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a0cb06d612b3358bfaadbbefd7c51f1cc">glAttachShader</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>,&#32;vertex_shader);
+169 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a0cb06d612b3358bfaadbbefd7c51f1cc">glAttachShader</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>,&#32;fragment_shader);
+170 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad241352c6eee6e79f09942ef0771db47">glLinkProgram</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>);
+171 
+172 &#32;&#32;&#32;&#32;mvp_location&#32;=&#32;<link linkend="_glad_8h_1a10106e4be90a66213839645cf12770f9">glGetUniformLocation</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>,&#32;<emphasis role="stringliteral">&quot;MVP&quot;</emphasis>);
+173 &#32;&#32;&#32;&#32;vpos_location&#32;=&#32;<link linkend="_glad_8h_1a20f33502cbda8885498352fcdbf71fe8">glGetAttribLocation</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>,&#32;<emphasis role="stringliteral">&quot;vPos&quot;</emphasis>);
+174 
+175 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a6e8ee482001ee8fb9b3d4851116779b4">glEnableVertexAttribArray</link>(vpos_location);
+176 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a8afadc1fe36886688a02097cc63a17cb">glVertexAttribPointer</link>(vpos_location,&#32;2,&#32;<link linkend="_glad_8h_1a6d19915d4237cb559505bd3e5dcfcf3c">GL_FLOAT</link>,&#32;<link linkend="_glad_8h_1abca6d43f43fae31f49dcb883b2f301f6">GL_FALSE</link>,
+177 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">sizeof</emphasis>(vertices[0]),&#32;(<emphasis role="keywordtype">void</emphasis>*)&#32;0);
+178 
+179 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(!<link linkend="_group__window_1gaa6162f67dfa38b8beda2fea623649332">glfwWindowShouldClose</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>))
+180 &#32;&#32;&#32;&#32;{
+181 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;ratio;
+182 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>;
+183 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linmath_8h_1aea448460b62175f89ed5760877496434">mat4x4</link>&#32;<link linkend="_glext_8h_1af593500c283bf1a787a6f947f503a5c2">m</link>,&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>,&#32;mvp;
+184 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">double</emphasis>&#32;<link linkend="_glext_8h_1a9e06c1f76a20fed54ca742cd25cb02c4">angle</link>&#32;=&#32;<link linkend="_group__input_1ga03d4a1039b8662c71eeb40beea8cb622">glfwGetTime</link>()&#32;*&#32;<link linkend="_stb_8h_1ae71449b1cc6e6250b91f539153a7a0d3">M_PI</link>&#32;/&#32;180.0;
+185 
+186 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1gaf7d17f3534b4b6dc9a6f905e3a240b7e">glfwGetFramebufferSize</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;&amp;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;&amp;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+187 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ratio&#32;=&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>&#32;/&#32;(float)&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>;
+188 
+189 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ab54b002beb984f066acd0dd7fff469dc">glViewport</link>(0,&#32;0,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+190 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afc250a2b6bf11f24bb73534a2f053c0d">glClear</link>(<link linkend="_glad_8h_1a947db9ff944c4b78e652144c3dd1060c">GL_COLOR_BUFFER_BIT</link>);
+191 
+192 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad8e40c882d63c4671dea2ca2dfcf3046">glUseProgram</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>);
+193 
+194 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linmath_8h_1a9d5fe21cb49e77776d3100a0d2e0ce31">mat4x4_ortho</link>(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>,&#32;-ratio,&#32;ratio,&#32;-1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+195 
+196 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linmath_8h_1ab15e9b6c0e6e2a093794634985f11d23">mat4x4_translate</link>(<link linkend="_glext_8h_1af593500c283bf1a787a6f947f503a5c2">m</link>,&#32;-1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+197 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linmath_8h_1aac10514a034a5e6dc90ae5911141fb78">mat4x4_rotate_Z</link>(<link linkend="_glext_8h_1af593500c283bf1a787a6f947f503a5c2">m</link>,&#32;<link linkend="_glext_8h_1af593500c283bf1a787a6f947f503a5c2">m</link>,&#32;(<emphasis role="keywordtype">float</emphasis>)&#32;<link linkend="_glext_8h_1a9e06c1f76a20fed54ca742cd25cb02c4">angle</link>);
+198 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linmath_8h_1a62186c7d2461116c23967d35cf437e00">mat4x4_mul</link>(mvp,&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>,&#32;<link linkend="_glext_8h_1af593500c283bf1a787a6f947f503a5c2">m</link>);
+199 
+200 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1cd4c6b9e1fb6b4eb927ab0997de48ef">glUniformMatrix4fv</link>(mvp_location,&#32;1,&#32;<link linkend="_glad_8h_1abca6d43f43fae31f49dcb883b2f301f6">GL_FALSE</link>,&#32;(<emphasis role="keyword">const</emphasis>&#32;<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>*)&#32;mvp);
+201 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1adbbb0a7d41b44182b74a9d4f62ca8a63">glDisable</link>(<link linkend="_glad_8h_1aa2b6486ff7ecee8bf04e3371f197527a">GL_MULTISAMPLE</link>);
+202 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a89377449aceadc060b577926b5413bd2">glDrawArrays</link>(<link linkend="_glad_8h_1a425f188c2bed5dc37bb2b5434388caa9">GL_TRIANGLE_FAN</link>,&#32;0,&#32;4);
+203 
+204 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linmath_8h_1ab15e9b6c0e6e2a093794634985f11d23">mat4x4_translate</link>(<link linkend="_glext_8h_1af593500c283bf1a787a6f947f503a5c2">m</link>,&#32;1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+205 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linmath_8h_1aac10514a034a5e6dc90ae5911141fb78">mat4x4_rotate_Z</link>(<link linkend="_glext_8h_1af593500c283bf1a787a6f947f503a5c2">m</link>,&#32;<link linkend="_glext_8h_1af593500c283bf1a787a6f947f503a5c2">m</link>,&#32;(<emphasis role="keywordtype">float</emphasis>)&#32;<link linkend="_glext_8h_1a9e06c1f76a20fed54ca742cd25cb02c4">angle</link>);
+206 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linmath_8h_1a62186c7d2461116c23967d35cf437e00">mat4x4_mul</link>(mvp,&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>,&#32;<link linkend="_glext_8h_1af593500c283bf1a787a6f947f503a5c2">m</link>);
+207 
+208 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1cd4c6b9e1fb6b4eb927ab0997de48ef">glUniformMatrix4fv</link>(mvp_location,&#32;1,&#32;<link linkend="_glad_8h_1abca6d43f43fae31f49dcb883b2f301f6">GL_FALSE</link>,&#32;(<emphasis role="keyword">const</emphasis>&#32;<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>*)&#32;mvp);
+209 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a3f7fa0df22505dd09a24a4e1e74eca09">glEnable</link>(<link linkend="_glad_8h_1aa2b6486ff7ecee8bf04e3371f197527a">GL_MULTISAMPLE</link>);
+210 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a89377449aceadc060b577926b5413bd2">glDrawArrays</link>(<link linkend="_glad_8h_1a425f188c2bed5dc37bb2b5434388caa9">GL_TRIANGLE_FAN</link>,&#32;0,&#32;4);
+211 
+212 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1gafb827800eedbfcbc97b1e5408df668d7">glfwSwapBuffers</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+213 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga872d16e4c77f58c0436f356255920cfc">glfwPollEvents</link>();
+214 &#32;&#32;&#32;&#32;}
+215 
+216 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga806747476b7247d292be3711c323ea10">glfwDestroyWindow</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+217 
+218 &#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+219 &#32;&#32;&#32;&#32;exit(EXIT_SUCCESS);
+220 }
+</programlisting></section>
+</section>
+</section>

@@ -1,4 +1,19 @@
+/*********************************************************************
+ * camera.c                                                          *
+ *                                                                   *
+ * Copyright (c) 2022 Dmytro Zykov                                   *
+ *                                                                   *
+ * This file is a part of the vally project, and may only be used,   *
+ * modified and distributed under the terms of the MIT License,      *
+ * LICENSE.md. By continuing to use, modify and distribute this file *
+ * you inidicate that you have read the license and accept it fully. *
+ *********************************************************************/
+
 #include <vally/renderer/camera.h>
+#include <vally/renderer/projection.h>
+
+#include <cglm/cglm.h>
+#include <cglm/struct.h>
 
 #include <vally/core/event.h>
 
@@ -35,10 +50,10 @@ mat4s camera_update_view() {
     return GLMS_MAT4_ZERO;
   }
 
-  vec3s front = {0.0f, 0.0f, -1.0f};
-  vec3s up = {0.0f, 1.0f, 0.0f};
-  state.view = glms_lookat((vec3s){state.position.x, state.position.y, 20.0f},
-    glms_vec3_add(front, (vec3s){state.position.x, state.position.y, 0.0f}), up);
+  vec3s front = ((vec3s){0.0f, 0.0f, -1.0f});
+  vec3s up = ((vec3s){0.0f, 1.0f, 0.0f});
+  state.view = glms_lookat(((vec3s){state.position.x, state.position.y, 20.0f}),
+    glms_vec3_add(front, ((vec3s){state.position.x, state.position.y, 0.0f})), up);
   return state.view;
 }
 
@@ -56,12 +71,12 @@ mat4s camera_get_view() {
   return state.view;
 }
 
-void camera_translate(vec2s translation) {
+void camera_translate(vector2f translation) {
   if (!initialized) {
     return;
   }
 
-  state.position = glms_vec2_add(state.position, translation);
+  state.position = glms_vec2_add(state.position, (vec2s){translation.x, translation.y});
   event_context context;
   context.data.f32[0] = state.position.x;
   context.data.f32[1] = state.position.y;

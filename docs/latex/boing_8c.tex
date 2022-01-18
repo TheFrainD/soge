@@ -1,0 +1,1242 @@
+\hypertarget{boing_8c}{}\doxysection{deps/glfw/examples/boing.c File Reference}
+\label{boing_8c}\index{deps/glfw/examples/boing.c@{deps/glfw/examples/boing.c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$glad/gl.\+h$>$}\newline
+{\ttfamily \#include $<$G\+L\+F\+W/glfw3.\+h$>$}\newline
+{\ttfamily \#include $<$linmath.\+h$>$}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structvertex__t}{vertex\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{boing_8c_a09f9c3bf094ecaf707c673924ffd615a}{G\+L\+A\+D\+\_\+\+G\+L\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+A\+T\+I\+ON}}
+\item 
+\#define \mbox{\hyperlink{boing_8c_a088324ad8995e3eb76024e3e79083d48}{G\+L\+F\+W\+\_\+\+I\+N\+C\+L\+U\+D\+E\+\_\+\+N\+O\+NE}}
+\item 
+\#define \mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{R\+A\+D\+I\+US}}~70.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}
+\item 
+\#define \mbox{\hyperlink{boing_8c_a89edea273a0da4bec03abfdd5d46a1df}{S\+T\+E\+P\+\_\+\+L\+O\+N\+G\+I\+T\+U\+DE}}~22.\+5\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}                   /$\ast$ 22.\+5 makes 8 bands like original Boing $\ast$/
+\item 
+\#define \mbox{\hyperlink{boing_8c_ac875967450c7a0306cf05f8e3e455e6c}{S\+T\+E\+P\+\_\+\+L\+A\+T\+I\+T\+U\+DE}}~22.\+5\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}
+\item 
+\#define \mbox{\hyperlink{boing_8c_abc4d2bb2a15f35c55d9b456b452eaa7c}{D\+I\+S\+T\+\_\+\+B\+A\+LL}}~(\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{R\+A\+D\+I\+US}} $\ast$ 2.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} + \mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{R\+A\+D\+I\+US}} $\ast$ 0.\+1\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}})
+\item 
+\#define \mbox{\hyperlink{boing_8c_a7a2f17659bb77c24edb2bea7a08a19a3}{V\+I\+E\+W\+\_\+\+S\+C\+E\+N\+E\+\_\+\+D\+I\+ST}}~(\mbox{\hyperlink{boing_8c_abc4d2bb2a15f35c55d9b456b452eaa7c}{D\+I\+S\+T\+\_\+\+B\+A\+LL}} $\ast$ 3.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} + 200.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}})/$\ast$ \mbox{\hyperlink{glext_8h_a744fbed01658cb96bb8ba7e85a86d1dc}{distance}} from viewer to middle of boing area $\ast$/
+\item 
+\#define \mbox{\hyperlink{boing_8c_a08246606c233e7785a497c09672f366f}{G\+R\+I\+D\+\_\+\+S\+I\+ZE}}~(\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{R\+A\+D\+I\+US}} $\ast$ 4.\+5\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}})          /$\ast$ \mbox{\hyperlink{glad_8h_a921fa83f7755f0139c84ba1831417a2e}{length}} (\mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}}) of grid $\ast$/
+\item 
+\#define \mbox{\hyperlink{boing_8c_a9088188b19f0545a1d84e381da09fef0}{B\+O\+U\+N\+C\+E\+\_\+\+H\+E\+I\+G\+HT}}~(\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{R\+A\+D\+I\+US}} $\ast$ 2.\+1\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}})
+\item 
+\#define \mbox{\hyperlink{boing_8c_adefcd41ddcb236a9bcf6189b5009e59e}{B\+O\+U\+N\+C\+E\+\_\+\+W\+I\+D\+TH}}~(\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{R\+A\+D\+I\+US}} $\ast$ 2.\+1\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}})
+\item 
+\#define \mbox{\hyperlink{boing_8c_adfabb671d0b80adb599e07a018f049d4}{S\+H\+A\+D\+O\+W\+\_\+\+O\+F\+F\+S\+E\+T\+\_\+X}}~-\/20.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}
+\item 
+\#define \mbox{\hyperlink{boing_8c_aee80e1c2e5aa7831fbe28b95948f5dc0}{S\+H\+A\+D\+O\+W\+\_\+\+O\+F\+F\+S\+E\+T\+\_\+Y}}~10.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}
+\item 
+\#define \mbox{\hyperlink{boing_8c_a79814e92ed56516db4e8564c2928f86e}{S\+H\+A\+D\+O\+W\+\_\+\+O\+F\+F\+S\+E\+T\+\_\+Z}}~0.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}
+\item 
+\#define \mbox{\hyperlink{boing_8c_a2ec75166930a7702729980492d09d431}{W\+A\+L\+L\+\_\+\+L\+\_\+\+O\+F\+F\+S\+ET}}~0.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}
+\item 
+\#define \mbox{\hyperlink{boing_8c_ae377291d60b194d9d3195822af2cfeff}{W\+A\+L\+L\+\_\+\+R\+\_\+\+O\+F\+F\+S\+ET}}~5.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}
+\item 
+\#define \mbox{\hyperlink{boing_8c_aaa69f89df4c8e47abeb574bfdd11d9f4}{A\+N\+I\+M\+A\+T\+I\+O\+N\+\_\+\+S\+P\+E\+ED}}~50.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}
+\item 
+\#define \mbox{\hyperlink{boing_8c_a82c13b07387b0fa3ab346ad38894e2a7}{M\+A\+X\+\_\+\+D\+E\+L\+T\+A\+\_\+T}}~0.\+02\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}
+\item 
+\#define \mbox{\hyperlink{boing_8c_a690f251553b39fd4f31894826141b61a}{R\+A\+N\+D\+\_\+\+M\+AX}}~4095
+\item 
+\#define \mbox{\hyperlink{boing_8c_a35261c4af778a5d29263db16687a816b}{B\+O\+I\+N\+G\+\_\+\+D\+E\+B\+UG}}~0
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{boing_8c_aaff0749849eeb426c1fff01f93f8aa38}{D\+R\+A\+W\+\_\+\+B\+A\+L\+L\+\_\+\+E\+N\+UM}} \{ \mbox{\hyperlink{boing_8c_aaff0749849eeb426c1fff01f93f8aa38a6dd224315fa345b43c69670bdd98bde6}{D\+R\+A\+W\+\_\+\+B\+A\+LL}}, 
+\mbox{\hyperlink{boing_8c_aaff0749849eeb426c1fff01f93f8aa38a3248eb4cd526dece69034b8913503983}{D\+R\+A\+W\+\_\+\+B\+A\+L\+L\+\_\+\+S\+H\+A\+D\+OW}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{boing_8c_a2858154e2009b0e6e616f313177762bc}{init}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{boing_8c_a4ea013001a5fb47853d0fab8f8de35cd}{display}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{boing_8c_a5272e39ef9d8944cb3f99d656f9f555a}{reshape}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, int \mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}}, int \mbox{\hyperlink{glad_8h_afa0fb1b5e976920c0abeff2dca3ed774}{h}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{boing_8c_a286930f4e8ede059b83ff6eafa2ff718}{key\+\_\+callback}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, int \mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}}, int scancode, int action, int mods)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{boing_8c_a5515d805e76ce6728de3c0dc5e187c86}{mouse\+\_\+button\+\_\+callback}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, int button, int action, int mods)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{boing_8c_ab5fb5502317b46f9cecd6379f2ecd210}{cursor\+\_\+position\+\_\+callback}} (\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, double \mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}}, double \mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{boing_8c_aaf4ab2b37a65ad090f79313713f18731}{Draw\+Boing\+Ball}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{boing_8c_a5a5cbb3e7786a248a2dcf02777a98df5}{Bounce\+Ball}} (double \mbox{\hyperlink{wave_8c_a03e28be41881b703c836edbfe9b51b17}{dt}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{boing_8c_ad80d1d92135216bb8c1242fcce45545c}{Draw\+Boing\+Ball\+Band}} (\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} long\+\_\+lo, \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} long\+\_\+hi)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{boing_8c_a8e38342e6a8bfcbc67503d2c6383d8e8}{Draw\+Grid}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} \mbox{\hyperlink{boing_8c_a080dc55aae439523561bda8b86575b7f}{Truncate\+Deg}} (\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} deg)
+\item 
+double \mbox{\hyperlink{boing_8c_a8012f8bd66798ffbdd27462c9f593a54}{deg2rad}} (double deg)
+\item 
+double \mbox{\hyperlink{boing_8c_a5b090656aa7eb0a7d1bd2d0f0e7712e2}{sin\+\_\+deg}} (double deg)
+\item 
+double \mbox{\hyperlink{boing_8c_ae4cbb93841df91680846fe983a6f1835}{cos\+\_\+deg}} (double deg)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{boing_8c_ab3fa148322b2d4aaa2ffe1e0008d5e55}{Cross\+Product}} (\mbox{\hyperlink{structvertex__t}{vertex\+\_\+t}} \mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}, \mbox{\hyperlink{structvertex__t}{vertex\+\_\+t}} \mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}, \mbox{\hyperlink{structvertex__t}{vertex\+\_\+t}} \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}, \mbox{\hyperlink{structvertex__t}{vertex\+\_\+t}} $\ast$\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}})
+\item 
+int \mbox{\hyperlink{boing_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{boing_8c_a6511876508d2f65ea8ace8f25d0e4c78}{windowed\+\_\+xpos}}
+\item 
+int \mbox{\hyperlink{boing_8c_adfcf830546ec1f6a64866d3b652a22fd}{windowed\+\_\+ypos}}
+\item 
+int \mbox{\hyperlink{boing_8c_a5371aa3f8486fe48d4878950ee8bd9a3}{windowed\+\_\+width}}
+\item 
+int \mbox{\hyperlink{boing_8c_aa3257f2fd88b76fd6585ba6e679253e0}{windowed\+\_\+height}}
+\item 
+int \mbox{\hyperlink{boing_8c_a2474a5474cbff19523a51eb1de01cda4}{width}}
+\item 
+int \mbox{\hyperlink{boing_8c_ad12fc34ce789bce6c8a05d8a17138534}{height}}
+\item 
+\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} \mbox{\hyperlink{boing_8c_ae721211dff5c00a883879373efad1187}{deg\+\_\+rot\+\_\+y}} = 0.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}
+\item 
+\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} \mbox{\hyperlink{boing_8c_abd3eb9bcb0582eaed1be1c789fa9664a}{deg\+\_\+rot\+\_\+y\+\_\+inc}} = 2.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}
+\item 
+int \mbox{\hyperlink{boing_8c_a5457032292643cc186a49f3163020555}{override\+\_\+pos}} = \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{G\+L\+F\+W\+\_\+\+F\+A\+L\+SE}}
+\item 
+\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} \mbox{\hyperlink{boing_8c_ad4356335fdb6fdaa6d4b759ac447a41d}{cursor\+\_\+x}} = 0.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}
+\item 
+\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} \mbox{\hyperlink{boing_8c_a4f59f7e6e37a64caf5bb5b228bce9afd}{cursor\+\_\+y}} = 0.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}
+\item 
+\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} \mbox{\hyperlink{boing_8c_a66dbc10af7d1d045794549a09999d468}{ball\+\_\+x}} = -\/\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{R\+A\+D\+I\+US}}
+\item 
+\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} \mbox{\hyperlink{boing_8c_a13df79b6b7f26cc1fc5279a1f12a9d98}{ball\+\_\+y}} = -\/\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{R\+A\+D\+I\+US}}
+\item 
+\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} \mbox{\hyperlink{boing_8c_a00cc50b4eae810b91ef59463d55cb097}{ball\+\_\+x\+\_\+inc}} = 1.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}
+\item 
+\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} \mbox{\hyperlink{boing_8c_adf5ece0dd3b5effeac97071b87e106bd}{ball\+\_\+y\+\_\+inc}} = 2.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}
+\item 
+\mbox{\hyperlink{boing_8c_aaff0749849eeb426c1fff01f93f8aa38}{D\+R\+A\+W\+\_\+\+B\+A\+L\+L\+\_\+\+E\+N\+UM}} \mbox{\hyperlink{boing_8c_ac1b93fa15ef429f4d5e3a0a9990304cf}{draw\+Ball\+How}}
+\item 
+double \mbox{\hyperlink{boing_8c_a87accd1af8e0aff4b818d891374f7cec}{t}}
+\item 
+double \mbox{\hyperlink{boing_8c_a720c9aaf75c956f8d87132112332da97}{t\+\_\+old}} = 0.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}
+\item 
+double \mbox{\hyperlink{boing_8c_a03e28be41881b703c836edbfe9b51b17}{dt}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{boing_8c_aaa69f89df4c8e47abeb574bfdd11d9f4}\label{boing_8c_aaa69f89df4c8e47abeb574bfdd11d9f4}} 
+\index{boing.c@{boing.c}!ANIMATION\_SPEED@{ANIMATION\_SPEED}}
+\index{ANIMATION\_SPEED@{ANIMATION\_SPEED}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{ANIMATION\_SPEED}{ANIMATION\_SPEED}}
+{\footnotesize\ttfamily \#define A\+N\+I\+M\+A\+T\+I\+O\+N\+\_\+\+S\+P\+E\+ED~50.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}}
+
+
+
+Definition at line 82 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a35261c4af778a5d29263db16687a816b}\label{boing_8c_a35261c4af778a5d29263db16687a816b}} 
+\index{boing.c@{boing.c}!BOING\_DEBUG@{BOING\_DEBUG}}
+\index{BOING\_DEBUG@{BOING\_DEBUG}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{BOING\_DEBUG}{BOING\_DEBUG}}
+{\footnotesize\ttfamily \#define B\+O\+I\+N\+G\+\_\+\+D\+E\+B\+UG~0}
+
+
+
+Definition at line 176 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a9088188b19f0545a1d84e381da09fef0}\label{boing_8c_a9088188b19f0545a1d84e381da09fef0}} 
+\index{boing.c@{boing.c}!BOUNCE\_HEIGHT@{BOUNCE\_HEIGHT}}
+\index{BOUNCE\_HEIGHT@{BOUNCE\_HEIGHT}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{BOUNCE\_HEIGHT}{BOUNCE\_HEIGHT}}
+{\footnotesize\ttfamily \#define B\+O\+U\+N\+C\+E\+\_\+\+H\+E\+I\+G\+HT~(\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{R\+A\+D\+I\+US}} $\ast$ 2.\+1\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}})}
+
+
+
+Definition at line 71 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_adefcd41ddcb236a9bcf6189b5009e59e}\label{boing_8c_adefcd41ddcb236a9bcf6189b5009e59e}} 
+\index{boing.c@{boing.c}!BOUNCE\_WIDTH@{BOUNCE\_WIDTH}}
+\index{BOUNCE\_WIDTH@{BOUNCE\_WIDTH}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{BOUNCE\_WIDTH}{BOUNCE\_WIDTH}}
+{\footnotesize\ttfamily \#define B\+O\+U\+N\+C\+E\+\_\+\+W\+I\+D\+TH~(\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{R\+A\+D\+I\+US}} $\ast$ 2.\+1\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}})}
+
+
+
+Definition at line 72 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_abc4d2bb2a15f35c55d9b456b452eaa7c}\label{boing_8c_abc4d2bb2a15f35c55d9b456b452eaa7c}} 
+\index{boing.c@{boing.c}!DIST\_BALL@{DIST\_BALL}}
+\index{DIST\_BALL@{DIST\_BALL}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{DIST\_BALL}{DIST\_BALL}}
+{\footnotesize\ttfamily \#define D\+I\+S\+T\+\_\+\+B\+A\+LL~(\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{R\+A\+D\+I\+US}} $\ast$ 2.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} + \mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{R\+A\+D\+I\+US}} $\ast$ 0.\+1\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}})}
+
+
+
+Definition at line 67 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a09f9c3bf094ecaf707c673924ffd615a}\label{boing_8c_a09f9c3bf094ecaf707c673924ffd615a}} 
+\index{boing.c@{boing.c}!GLAD\_GL\_IMPLEMENTATION@{GLAD\_GL\_IMPLEMENTATION}}
+\index{GLAD\_GL\_IMPLEMENTATION@{GLAD\_GL\_IMPLEMENTATION}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{GLAD\_GL\_IMPLEMENTATION}{GLAD\_GL\_IMPLEMENTATION}}
+{\footnotesize\ttfamily \#define G\+L\+A\+D\+\_\+\+G\+L\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+A\+T\+I\+ON}
+
+
+
+Definition at line 39 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a088324ad8995e3eb76024e3e79083d48}\label{boing_8c_a088324ad8995e3eb76024e3e79083d48}} 
+\index{boing.c@{boing.c}!GLFW\_INCLUDE\_NONE@{GLFW\_INCLUDE\_NONE}}
+\index{GLFW\_INCLUDE\_NONE@{GLFW\_INCLUDE\_NONE}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{GLFW\_INCLUDE\_NONE}{GLFW\_INCLUDE\_NONE}}
+{\footnotesize\ttfamily \#define G\+L\+F\+W\+\_\+\+I\+N\+C\+L\+U\+D\+E\+\_\+\+N\+O\+NE}
+
+
+
+Definition at line 41 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a08246606c233e7785a497c09672f366f}\label{boing_8c_a08246606c233e7785a497c09672f366f}} 
+\index{boing.c@{boing.c}!GRID\_SIZE@{GRID\_SIZE}}
+\index{GRID\_SIZE@{GRID\_SIZE}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{GRID\_SIZE}{GRID\_SIZE}}
+{\footnotesize\ttfamily \#define G\+R\+I\+D\+\_\+\+S\+I\+ZE~(\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{R\+A\+D\+I\+US}} $\ast$ 4.\+5\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}})          /$\ast$ \mbox{\hyperlink{glad_8h_a921fa83f7755f0139c84ba1831417a2e}{length}} (\mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}}) of grid $\ast$/}
+
+
+
+Definition at line 70 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a82c13b07387b0fa3ab346ad38894e2a7}\label{boing_8c_a82c13b07387b0fa3ab346ad38894e2a7}} 
+\index{boing.c@{boing.c}!MAX\_DELTA\_T@{MAX\_DELTA\_T}}
+\index{MAX\_DELTA\_T@{MAX\_DELTA\_T}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{MAX\_DELTA\_T}{MAX\_DELTA\_T}}
+{\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+D\+E\+L\+T\+A\+\_\+T~0.\+02\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}}
+
+
+
+Definition at line 85 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}\label{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}} 
+\index{boing.c@{boing.c}!RADIUS@{RADIUS}}
+\index{RADIUS@{RADIUS}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{RADIUS}{RADIUS}}
+{\footnotesize\ttfamily \#define R\+A\+D\+I\+US~70.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}}
+
+
+
+Definition at line 63 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a690f251553b39fd4f31894826141b61a}\label{boing_8c_a690f251553b39fd4f31894826141b61a}} 
+\index{boing.c@{boing.c}!RAND\_MAX@{RAND\_MAX}}
+\index{RAND\_MAX@{RAND\_MAX}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{RAND\_MAX}{RAND\_MAX}}
+{\footnotesize\ttfamily \#define R\+A\+N\+D\+\_\+\+M\+AX~4095}
+
+
+
+Definition at line 112 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_adfabb671d0b80adb599e07a018f049d4}\label{boing_8c_adfabb671d0b80adb599e07a018f049d4}} 
+\index{boing.c@{boing.c}!SHADOW\_OFFSET\_X@{SHADOW\_OFFSET\_X}}
+\index{SHADOW\_OFFSET\_X@{SHADOW\_OFFSET\_X}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{SHADOW\_OFFSET\_X}{SHADOW\_OFFSET\_X}}
+{\footnotesize\ttfamily \#define S\+H\+A\+D\+O\+W\+\_\+\+O\+F\+F\+S\+E\+T\+\_\+X~-\/20.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}}
+
+
+
+Definition at line 74 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_aee80e1c2e5aa7831fbe28b95948f5dc0}\label{boing_8c_aee80e1c2e5aa7831fbe28b95948f5dc0}} 
+\index{boing.c@{boing.c}!SHADOW\_OFFSET\_Y@{SHADOW\_OFFSET\_Y}}
+\index{SHADOW\_OFFSET\_Y@{SHADOW\_OFFSET\_Y}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{SHADOW\_OFFSET\_Y}{SHADOW\_OFFSET\_Y}}
+{\footnotesize\ttfamily \#define S\+H\+A\+D\+O\+W\+\_\+\+O\+F\+F\+S\+E\+T\+\_\+Y~10.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}}
+
+
+
+Definition at line 75 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a79814e92ed56516db4e8564c2928f86e}\label{boing_8c_a79814e92ed56516db4e8564c2928f86e}} 
+\index{boing.c@{boing.c}!SHADOW\_OFFSET\_Z@{SHADOW\_OFFSET\_Z}}
+\index{SHADOW\_OFFSET\_Z@{SHADOW\_OFFSET\_Z}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{SHADOW\_OFFSET\_Z}{SHADOW\_OFFSET\_Z}}
+{\footnotesize\ttfamily \#define S\+H\+A\+D\+O\+W\+\_\+\+O\+F\+F\+S\+E\+T\+\_\+Z~0.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}}
+
+
+
+Definition at line 76 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_ac875967450c7a0306cf05f8e3e455e6c}\label{boing_8c_ac875967450c7a0306cf05f8e3e455e6c}} 
+\index{boing.c@{boing.c}!STEP\_LATITUDE@{STEP\_LATITUDE}}
+\index{STEP\_LATITUDE@{STEP\_LATITUDE}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{STEP\_LATITUDE}{STEP\_LATITUDE}}
+{\footnotesize\ttfamily \#define S\+T\+E\+P\+\_\+\+L\+A\+T\+I\+T\+U\+DE~22.\+5\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}}
+
+
+
+Definition at line 65 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a89edea273a0da4bec03abfdd5d46a1df}\label{boing_8c_a89edea273a0da4bec03abfdd5d46a1df}} 
+\index{boing.c@{boing.c}!STEP\_LONGITUDE@{STEP\_LONGITUDE}}
+\index{STEP\_LONGITUDE@{STEP\_LONGITUDE}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{STEP\_LONGITUDE}{STEP\_LONGITUDE}}
+{\footnotesize\ttfamily \#define S\+T\+E\+P\+\_\+\+L\+O\+N\+G\+I\+T\+U\+DE~22.\+5\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}                   /$\ast$ 22.\+5 makes 8 bands like original Boing $\ast$/}
+
+
+
+Definition at line 64 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a7a2f17659bb77c24edb2bea7a08a19a3}\label{boing_8c_a7a2f17659bb77c24edb2bea7a08a19a3}} 
+\index{boing.c@{boing.c}!VIEW\_SCENE\_DIST@{VIEW\_SCENE\_DIST}}
+\index{VIEW\_SCENE\_DIST@{VIEW\_SCENE\_DIST}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{VIEW\_SCENE\_DIST}{VIEW\_SCENE\_DIST}}
+{\footnotesize\ttfamily \#define V\+I\+E\+W\+\_\+\+S\+C\+E\+N\+E\+\_\+\+D\+I\+ST~(\mbox{\hyperlink{boing_8c_abc4d2bb2a15f35c55d9b456b452eaa7c}{D\+I\+S\+T\+\_\+\+B\+A\+LL}} $\ast$ 3.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} + 200.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}})/$\ast$ \mbox{\hyperlink{glext_8h_a744fbed01658cb96bb8ba7e85a86d1dc}{distance}} from viewer to middle of boing area $\ast$/}
+
+
+
+Definition at line 69 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a2ec75166930a7702729980492d09d431}\label{boing_8c_a2ec75166930a7702729980492d09d431}} 
+\index{boing.c@{boing.c}!WALL\_L\_OFFSET@{WALL\_L\_OFFSET}}
+\index{WALL\_L\_OFFSET@{WALL\_L\_OFFSET}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{WALL\_L\_OFFSET}{WALL\_L\_OFFSET}}
+{\footnotesize\ttfamily \#define W\+A\+L\+L\+\_\+\+L\+\_\+\+O\+F\+F\+S\+ET~0.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}}
+
+
+
+Definition at line 78 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_ae377291d60b194d9d3195822af2cfeff}\label{boing_8c_ae377291d60b194d9d3195822af2cfeff}} 
+\index{boing.c@{boing.c}!WALL\_R\_OFFSET@{WALL\_R\_OFFSET}}
+\index{WALL\_R\_OFFSET@{WALL\_R\_OFFSET}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{WALL\_R\_OFFSET}{WALL\_R\_OFFSET}}
+{\footnotesize\ttfamily \#define W\+A\+L\+L\+\_\+\+R\+\_\+\+O\+F\+F\+S\+ET~5.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}}
+
+
+
+Definition at line 79 of file boing.\+c.
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{boing_8c_aaff0749849eeb426c1fff01f93f8aa38}\label{boing_8c_aaff0749849eeb426c1fff01f93f8aa38}} 
+\index{boing.c@{boing.c}!DRAW\_BALL\_ENUM@{DRAW\_BALL\_ENUM}}
+\index{DRAW\_BALL\_ENUM@{DRAW\_BALL\_ENUM}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{DRAW\_BALL\_ENUM}{DRAW\_BALL\_ENUM}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{boing_8c_aaff0749849eeb426c1fff01f93f8aa38}{D\+R\+A\+W\+\_\+\+B\+A\+L\+L\+\_\+\+E\+N\+UM}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DRAW\_BALL@{DRAW\_BALL}!boing.c@{boing.c}}\index{boing.c@{boing.c}!DRAW\_BALL@{DRAW\_BALL}}}\mbox{\Hypertarget{boing_8c_aaff0749849eeb426c1fff01f93f8aa38a6dd224315fa345b43c69670bdd98bde6}\label{boing_8c_aaff0749849eeb426c1fff01f93f8aa38a6dd224315fa345b43c69670bdd98bde6}} 
+D\+R\+A\+W\+\_\+\+B\+A\+LL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DRAW\_BALL\_SHADOW@{DRAW\_BALL\_SHADOW}!boing.c@{boing.c}}\index{boing.c@{boing.c}!DRAW\_BALL\_SHADOW@{DRAW\_BALL\_SHADOW}}}\mbox{\Hypertarget{boing_8c_aaff0749849eeb426c1fff01f93f8aa38a3248eb4cd526dece69034b8913503983}\label{boing_8c_aaff0749849eeb426c1fff01f93f8aa38a3248eb4cd526dece69034b8913503983}} 
+D\+R\+A\+W\+\_\+\+B\+A\+L\+L\+\_\+\+S\+H\+A\+D\+OW&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 88 of file boing.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{88 \{ \mbox{\hyperlink{boing_8c_aaff0749849eeb426c1fff01f93f8aa38a6dd224315fa345b43c69670bdd98bde6}{DRAW\_BALL}}, \mbox{\hyperlink{boing_8c_aaff0749849eeb426c1fff01f93f8aa38a3248eb4cd526dece69034b8913503983}{DRAW\_BALL\_SHADOW}} \} \mbox{\hyperlink{boing_8c_aaff0749849eeb426c1fff01f93f8aa38}{DRAW\_BALL\_ENUM}};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{boing_8c_a5a5cbb3e7786a248a2dcf02777a98df5}\label{boing_8c_a5a5cbb3e7786a248a2dcf02777a98df5}} 
+\index{boing.c@{boing.c}!BounceBall@{BounceBall}}
+\index{BounceBall@{BounceBall}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{BounceBall()}{BounceBall()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} Bounce\+Ball (\begin{DoxyParamCaption}\item[{double}]{dt }\end{DoxyParamCaption})}
+
+
+
+Definition at line 386 of file boing.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{387 \{}
+\DoxyCodeLine{388    \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}} sign;}
+\DoxyCodeLine{389    \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}} deg;}
+\DoxyCodeLine{390 }
+\DoxyCodeLine{391    \textcolor{keywordflow}{if} ( \mbox{\hyperlink{boing_8c_a5457032292643cc186a49f3163020555}{override\_pos}} )}
+\DoxyCodeLine{392      \textcolor{keywordflow}{return};}
+\DoxyCodeLine{393 }
+\DoxyCodeLine{394    \textcolor{comment}{/* Bounce on walls */}}
+\DoxyCodeLine{395    \textcolor{keywordflow}{if} ( \mbox{\hyperlink{boing_8c_a66dbc10af7d1d045794549a09999d468}{ball\_x}} >  (\mbox{\hyperlink{boing_8c_adefcd41ddcb236a9bcf6189b5009e59e}{BOUNCE\_WIDTH}}/2 + \mbox{\hyperlink{boing_8c_ae377291d60b194d9d3195822af2cfeff}{WALL\_R\_OFFSET}} ) )}
+\DoxyCodeLine{396    \{}
+\DoxyCodeLine{397       \mbox{\hyperlink{boing_8c_a00cc50b4eae810b91ef59463d55cb097}{ball\_x\_inc}} = -\/0.5f -\/ 0.75f * (\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}})rand() / (\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}})\mbox{\hyperlink{boing_8c_a690f251553b39fd4f31894826141b61a}{RAND\_MAX}};}
+\DoxyCodeLine{398       \mbox{\hyperlink{boing_8c_abd3eb9bcb0582eaed1be1c789fa9664a}{deg\_rot\_y\_inc}} = -\/\mbox{\hyperlink{boing_8c_abd3eb9bcb0582eaed1be1c789fa9664a}{deg\_rot\_y\_inc}};}
+\DoxyCodeLine{399    \}}
+\DoxyCodeLine{400    \textcolor{keywordflow}{if} ( \mbox{\hyperlink{boing_8c_a66dbc10af7d1d045794549a09999d468}{ball\_x}} < -\/(\mbox{\hyperlink{boing_8c_a9088188b19f0545a1d84e381da09fef0}{BOUNCE\_HEIGHT}}/2 + \mbox{\hyperlink{boing_8c_a2ec75166930a7702729980492d09d431}{WALL\_L\_OFFSET}}) )}
+\DoxyCodeLine{401    \{}
+\DoxyCodeLine{402       \mbox{\hyperlink{boing_8c_a00cc50b4eae810b91ef59463d55cb097}{ball\_x\_inc}} =  0.5f + 0.75f * (\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}})rand() / (\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}})\mbox{\hyperlink{boing_8c_a690f251553b39fd4f31894826141b61a}{RAND\_MAX}};}
+\DoxyCodeLine{403       \mbox{\hyperlink{boing_8c_abd3eb9bcb0582eaed1be1c789fa9664a}{deg\_rot\_y\_inc}} = -\/\mbox{\hyperlink{boing_8c_abd3eb9bcb0582eaed1be1c789fa9664a}{deg\_rot\_y\_inc}};}
+\DoxyCodeLine{404    \}}
+\DoxyCodeLine{405 }
+\DoxyCodeLine{406    \textcolor{comment}{/* Bounce on floor / roof */}}
+\DoxyCodeLine{407    \textcolor{keywordflow}{if} ( \mbox{\hyperlink{boing_8c_a13df79b6b7f26cc1fc5279a1f12a9d98}{ball\_y}} >  \mbox{\hyperlink{boing_8c_a9088188b19f0545a1d84e381da09fef0}{BOUNCE\_HEIGHT}}/2      )}
+\DoxyCodeLine{408    \{}
+\DoxyCodeLine{409       \mbox{\hyperlink{boing_8c_adf5ece0dd3b5effeac97071b87e106bd}{ball\_y\_inc}} = -\/0.75f -\/ 1.f * (\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}})rand() / (\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}})\mbox{\hyperlink{boing_8c_a690f251553b39fd4f31894826141b61a}{RAND\_MAX}};}
+\DoxyCodeLine{410    \}}
+\DoxyCodeLine{411    \textcolor{keywordflow}{if} ( \mbox{\hyperlink{boing_8c_a13df79b6b7f26cc1fc5279a1f12a9d98}{ball\_y}} < -\/\mbox{\hyperlink{boing_8c_a9088188b19f0545a1d84e381da09fef0}{BOUNCE\_HEIGHT}}/2*0.85 )}
+\DoxyCodeLine{412    \{}
+\DoxyCodeLine{413       \mbox{\hyperlink{boing_8c_adf5ece0dd3b5effeac97071b87e106bd}{ball\_y\_inc}} =  0.75f + 1.f * (\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}})rand() / (\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}})\mbox{\hyperlink{boing_8c_a690f251553b39fd4f31894826141b61a}{RAND\_MAX}};}
+\DoxyCodeLine{414    \}}
+\DoxyCodeLine{415 }
+\DoxyCodeLine{416    \textcolor{comment}{/* Update ball position */}}
+\DoxyCodeLine{417    \mbox{\hyperlink{boing_8c_a66dbc10af7d1d045794549a09999d468}{ball\_x}} += \mbox{\hyperlink{boing_8c_a00cc50b4eae810b91ef59463d55cb097}{ball\_x\_inc}} * ((float)delta\_t*\mbox{\hyperlink{boing_8c_aaa69f89df4c8e47abeb574bfdd11d9f4}{ANIMATION\_SPEED}});}
+\DoxyCodeLine{418    \mbox{\hyperlink{boing_8c_a13df79b6b7f26cc1fc5279a1f12a9d98}{ball\_y}} += \mbox{\hyperlink{boing_8c_adf5ece0dd3b5effeac97071b87e106bd}{ball\_y\_inc}} * ((float)delta\_t*\mbox{\hyperlink{boing_8c_aaa69f89df4c8e47abeb574bfdd11d9f4}{ANIMATION\_SPEED}});}
+\DoxyCodeLine{419 }
+\DoxyCodeLine{420   \textcolor{comment}{/*}}
+\DoxyCodeLine{421 \textcolor{comment}{   * Simulate the effects of gravity on Y movement.}}
+\DoxyCodeLine{422 \textcolor{comment}{   */}}
+\DoxyCodeLine{423    \textcolor{keywordflow}{if} ( \mbox{\hyperlink{boing_8c_adf5ece0dd3b5effeac97071b87e106bd}{ball\_y\_inc}} < 0 ) sign = -\/1.0; \textcolor{keywordflow}{else} sign = 1.0;}
+\DoxyCodeLine{424 }
+\DoxyCodeLine{425    deg = (\mbox{\hyperlink{boing_8c_a13df79b6b7f26cc1fc5279a1f12a9d98}{ball\_y}} + \mbox{\hyperlink{boing_8c_a9088188b19f0545a1d84e381da09fef0}{BOUNCE\_HEIGHT}}/2) * 90 / \mbox{\hyperlink{boing_8c_a9088188b19f0545a1d84e381da09fef0}{BOUNCE\_HEIGHT}};}
+\DoxyCodeLine{426    \textcolor{keywordflow}{if} ( deg > 80 ) deg = 80;}
+\DoxyCodeLine{427    \textcolor{keywordflow}{if} ( deg < 10 ) deg = 10;}
+\DoxyCodeLine{428 }
+\DoxyCodeLine{429    \mbox{\hyperlink{boing_8c_adf5ece0dd3b5effeac97071b87e106bd}{ball\_y\_inc}} = sign * 4.f * (float) \mbox{\hyperlink{boing_8c_a5b090656aa7eb0a7d1bd2d0f0e7712e2}{sin\_deg}}( deg );}
+\DoxyCodeLine{430 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{boing_8c_ae4cbb93841df91680846fe983a6f1835}\label{boing_8c_ae4cbb93841df91680846fe983a6f1835}} 
+\index{boing.c@{boing.c}!cos\_deg@{cos\_deg}}
+\index{cos\_deg@{cos\_deg}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{cos\_deg()}{cos\_deg()}}
+{\footnotesize\ttfamily double cos\+\_\+deg (\begin{DoxyParamCaption}\item[{double}]{deg }\end{DoxyParamCaption})}
+
+
+
+Definition at line 147 of file boing.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{148 \{}
+\DoxyCodeLine{149    \textcolor{keywordflow}{return} cos( \mbox{\hyperlink{boing_8c_a8012f8bd66798ffbdd27462c9f593a54}{deg2rad}}( deg ) );}
+\DoxyCodeLine{150 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{boing_8c_ab3fa148322b2d4aaa2ffe1e0008d5e55}\label{boing_8c_ab3fa148322b2d4aaa2ffe1e0008d5e55}} 
+\index{boing.c@{boing.c}!CrossProduct@{CrossProduct}}
+\index{CrossProduct@{CrossProduct}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{CrossProduct()}{CrossProduct()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} Cross\+Product (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structvertex__t}{vertex\+\_\+t}}}]{a,  }\item[{\mbox{\hyperlink{structvertex__t}{vertex\+\_\+t}}}]{b,  }\item[{\mbox{\hyperlink{structvertex__t}{vertex\+\_\+t}}}]{c,  }\item[{\mbox{\hyperlink{structvertex__t}{vertex\+\_\+t}} $\ast$}]{n }\end{DoxyParamCaption})}
+
+
+
+Definition at line 157 of file boing.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{158 \{}
+\DoxyCodeLine{159    \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}} \mbox{\hyperlink{glext_8h_ab296853c9d55bfdc62cda6c50d1b4781}{u1}}, \mbox{\hyperlink{glext_8h_a1c6bf6fa786a04b729b30e56d68474ef}{u2}}, u3;}
+\DoxyCodeLine{160    \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}} \mbox{\hyperlink{glad_8h_a435c176a02c061b43e19bdf7c86cceae}{v1}}, \mbox{\hyperlink{glad_8h_a0928f6d0f0f794ba000a21dfae422136}{v2}}, \mbox{\hyperlink{glad_8h_acc806b31cbf466ceba6555983d8b814d}{v3}};}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162    \mbox{\hyperlink{glext_8h_ab296853c9d55bfdc62cda6c50d1b4781}{u1}} = \mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}.x -\/ \mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}.x;}
+\DoxyCodeLine{163    \mbox{\hyperlink{glext_8h_a1c6bf6fa786a04b729b30e56d68474ef}{u2}} = \mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}.y -\/ \mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}.y;}
+\DoxyCodeLine{164    u3 = \mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}}.y -\/ \mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}.z;}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166    \mbox{\hyperlink{glad_8h_a435c176a02c061b43e19bdf7c86cceae}{v1}} = \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}.x -\/ \mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}.x;}
+\DoxyCodeLine{167    \mbox{\hyperlink{glad_8h_a0928f6d0f0f794ba000a21dfae422136}{v2}} = \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}.y -\/ \mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}.y;}
+\DoxyCodeLine{168    \mbox{\hyperlink{glad_8h_acc806b31cbf466ceba6555983d8b814d}{v3}} = \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}.z -\/ \mbox{\hyperlink{glad_8h_a3309789fc188587d666cda5ece79cf82}{a}}.z;}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170    \mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}}-\/>x = \mbox{\hyperlink{glext_8h_a1c6bf6fa786a04b729b30e56d68474ef}{u2}} * \mbox{\hyperlink{glad_8h_acc806b31cbf466ceba6555983d8b814d}{v3}} -\/ \mbox{\hyperlink{glad_8h_a0928f6d0f0f794ba000a21dfae422136}{v2}} * u3;}
+\DoxyCodeLine{171    \mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}}-\/>y = u3 * \mbox{\hyperlink{glad_8h_a435c176a02c061b43e19bdf7c86cceae}{v1}} -\/ \mbox{\hyperlink{glad_8h_acc806b31cbf466ceba6555983d8b814d}{v3}} * \mbox{\hyperlink{glext_8h_ab296853c9d55bfdc62cda6c50d1b4781}{u1}};}
+\DoxyCodeLine{172    \mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}}-\/>z = \mbox{\hyperlink{glext_8h_ab296853c9d55bfdc62cda6c50d1b4781}{u1}} * \mbox{\hyperlink{glad_8h_a0928f6d0f0f794ba000a21dfae422136}{v2}} -\/ \mbox{\hyperlink{glad_8h_a435c176a02c061b43e19bdf7c86cceae}{v1}} * \mbox{\hyperlink{glext_8h_a1c6bf6fa786a04b729b30e56d68474ef}{u2}};}
+\DoxyCodeLine{173 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{boing_8c_ab5fb5502317b46f9cecd6379f2ecd210}\label{boing_8c_ab5fb5502317b46f9cecd6379f2ecd210}} 
+\index{boing.c@{boing.c}!cursor\_position\_callback@{cursor\_position\_callback}}
+\index{cursor\_position\_callback@{cursor\_position\_callback}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{cursor\_position\_callback()}{cursor\_position\_callback()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} cursor\+\_\+position\+\_\+callback (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{double}]{x,  }\item[{double}]{y }\end{DoxyParamCaption})}
+
+
+
+Definition at line 292 of file boing.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{293 \{}
+\DoxyCodeLine{294    \mbox{\hyperlink{boing_8c_ad4356335fdb6fdaa6d4b759ac447a41d}{cursor\_x}} = (float) \mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}};}
+\DoxyCodeLine{295    \mbox{\hyperlink{boing_8c_a4f59f7e6e37a64caf5bb5b228bce9afd}{cursor\_y}} = (float) \mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}};}
+\DoxyCodeLine{296 }
+\DoxyCodeLine{297    \textcolor{keywordflow}{if} ( \mbox{\hyperlink{boing_8c_a5457032292643cc186a49f3163020555}{override\_pos}} )}
+\DoxyCodeLine{298       set\_ball\_pos(\mbox{\hyperlink{boing_8c_ad4356335fdb6fdaa6d4b759ac447a41d}{cursor\_x}}, \mbox{\hyperlink{boing_8c_a4f59f7e6e37a64caf5bb5b228bce9afd}{cursor\_y}});}
+\DoxyCodeLine{299 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{boing_8c_a8012f8bd66798ffbdd27462c9f593a54}\label{boing_8c_a8012f8bd66798ffbdd27462c9f593a54}} 
+\index{boing.c@{boing.c}!deg2rad@{deg2rad}}
+\index{deg2rad@{deg2rad}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{deg2rad()}{deg2rad()}}
+{\footnotesize\ttfamily double deg2rad (\begin{DoxyParamCaption}\item[{double}]{deg }\end{DoxyParamCaption})}
+
+
+
+Definition at line 131 of file boing.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{132 \{}
+\DoxyCodeLine{133    \textcolor{keywordflow}{return} deg / 360 * (2 * \mbox{\hyperlink{stb_8h_ae71449b1cc6e6250b91f539153a7a0d3}{M\_PI}});}
+\DoxyCodeLine{134 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{boing_8c_a4ea013001a5fb47853d0fab8f8de35cd}\label{boing_8c_a4ea013001a5fb47853d0fab8f8de35cd}} 
+\index{boing.c@{boing.c}!display@{display}}
+\index{display@{display}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{display()}{display()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} display (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 196 of file boing.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{197 \{}
+\DoxyCodeLine{198    \mbox{\hyperlink{glad_8h_afc250a2b6bf11f24bb73534a2f053c0d}{glClear}}( \mbox{\hyperlink{glad_8h_a947db9ff944c4b78e652144c3dd1060c}{GL\_COLOR\_BUFFER\_BIT}} | \mbox{\hyperlink{glad_8h_aef2a9e9a4b130bc4de57514327847b4f}{GL\_DEPTH\_BUFFER\_BIT}} );}
+\DoxyCodeLine{199    \mbox{\hyperlink{gl_8h_ac15f1d0dd5665e7e1bc76f82799368dd}{glPushMatrix}}();}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201    \mbox{\hyperlink{boing_8c_ac1b93fa15ef429f4d5e3a0a9990304cf}{drawBallHow}} = \mbox{\hyperlink{boing_8c_aaff0749849eeb426c1fff01f93f8aa38a3248eb4cd526dece69034b8913503983}{DRAW\_BALL\_SHADOW}};}
+\DoxyCodeLine{202    \mbox{\hyperlink{boing_8c_aaf4ab2b37a65ad090f79313713f18731}{DrawBoingBall}}();}
+\DoxyCodeLine{203 }
+\DoxyCodeLine{204    \mbox{\hyperlink{boing_8c_a8e38342e6a8bfcbc67503d2c6383d8e8}{DrawGrid}}();}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206    \mbox{\hyperlink{boing_8c_ac1b93fa15ef429f4d5e3a0a9990304cf}{drawBallHow}} = \mbox{\hyperlink{boing_8c_aaff0749849eeb426c1fff01f93f8aa38a6dd224315fa345b43c69670bdd98bde6}{DRAW\_BALL}};}
+\DoxyCodeLine{207    \mbox{\hyperlink{boing_8c_aaf4ab2b37a65ad090f79313713f18731}{DrawBoingBall}}();}
+\DoxyCodeLine{208 }
+\DoxyCodeLine{209    \mbox{\hyperlink{gl_8h_a4efb9a338a8a3db2b20d8ad57283d060}{glPopMatrix}}();}
+\DoxyCodeLine{210    \mbox{\hyperlink{glad_8h_acf861c0c475b4cc6d7a46e0d61c8b173}{glFlush}}();}
+\DoxyCodeLine{211 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{boing_8c_aaf4ab2b37a65ad090f79313713f18731}\label{boing_8c_aaf4ab2b37a65ad090f79313713f18731}} 
+\index{boing.c@{boing.c}!DrawBoingBall@{DrawBoingBall}}
+\index{DrawBoingBall@{DrawBoingBall}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{DrawBoingBall()}{DrawBoingBall()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} Draw\+Boing\+Ball (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 309 of file boing.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{310 \{}
+\DoxyCodeLine{311    \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}} lon\_deg;     \textcolor{comment}{/* degree of longitude */}}
+\DoxyCodeLine{312    \textcolor{keywordtype}{double} dt\_total, dt2;}
+\DoxyCodeLine{313 }
+\DoxyCodeLine{314    \mbox{\hyperlink{gl_8h_ac15f1d0dd5665e7e1bc76f82799368dd}{glPushMatrix}}();}
+\DoxyCodeLine{315    \mbox{\hyperlink{gl_8h_a984de7349d373e1088d1c31135c3a9fb}{glMatrixMode}}( \mbox{\hyperlink{gl_8h_a8c0f92b5d50914825a1424b1cd4480cd}{GL\_MODELVIEW}} );}
+\DoxyCodeLine{316 }
+\DoxyCodeLine{317   \textcolor{comment}{/*}}
+\DoxyCodeLine{318 \textcolor{comment}{   * Another relative Z translation to separate objects.}}
+\DoxyCodeLine{319 \textcolor{comment}{   */}}
+\DoxyCodeLine{320    \mbox{\hyperlink{gl_8h_a4b8d59e72147f88dd928f570d9a1713a}{glTranslatef}}( 0.0, 0.0, \mbox{\hyperlink{boing_8c_abc4d2bb2a15f35c55d9b456b452eaa7c}{DIST\_BALL}} );}
+\DoxyCodeLine{321 }
+\DoxyCodeLine{322    \textcolor{comment}{/* Update ball position and rotation (iterate if necessary) */}}
+\DoxyCodeLine{323    dt\_total = \mbox{\hyperlink{boing_8c_a03e28be41881b703c836edbfe9b51b17}{dt}};}
+\DoxyCodeLine{324    \textcolor{keywordflow}{while}( dt\_total > 0.0 )}
+\DoxyCodeLine{325    \{}
+\DoxyCodeLine{326        dt2 = dt\_total > \mbox{\hyperlink{boing_8c_a82c13b07387b0fa3ab346ad38894e2a7}{MAX\_DELTA\_T}} ? \mbox{\hyperlink{boing_8c_a82c13b07387b0fa3ab346ad38894e2a7}{MAX\_DELTA\_T}} : dt\_total;}
+\DoxyCodeLine{327        dt\_total -\/= dt2;}
+\DoxyCodeLine{328        \mbox{\hyperlink{boing_8c_a5a5cbb3e7786a248a2dcf02777a98df5}{BounceBall}}( dt2 );}
+\DoxyCodeLine{329        \mbox{\hyperlink{boing_8c_ae721211dff5c00a883879373efad1187}{deg\_rot\_y}} = \mbox{\hyperlink{boing_8c_a080dc55aae439523561bda8b86575b7f}{TruncateDeg}}( \mbox{\hyperlink{boing_8c_ae721211dff5c00a883879373efad1187}{deg\_rot\_y}} + \mbox{\hyperlink{boing_8c_abd3eb9bcb0582eaed1be1c789fa9664a}{deg\_rot\_y\_inc}}*((\textcolor{keywordtype}{float})dt2*\mbox{\hyperlink{boing_8c_aaa69f89df4c8e47abeb574bfdd11d9f4}{ANIMATION\_SPEED}}) );}
+\DoxyCodeLine{330    \}}
+\DoxyCodeLine{331 }
+\DoxyCodeLine{332    \textcolor{comment}{/* Set ball position */}}
+\DoxyCodeLine{333    \mbox{\hyperlink{gl_8h_a4b8d59e72147f88dd928f570d9a1713a}{glTranslatef}}( \mbox{\hyperlink{boing_8c_a66dbc10af7d1d045794549a09999d468}{ball\_x}}, \mbox{\hyperlink{boing_8c_a13df79b6b7f26cc1fc5279a1f12a9d98}{ball\_y}}, 0.0 );}
+\DoxyCodeLine{334 }
+\DoxyCodeLine{335   \textcolor{comment}{/*}}
+\DoxyCodeLine{336 \textcolor{comment}{   * Offset the shadow.}}
+\DoxyCodeLine{337 \textcolor{comment}{   */}}
+\DoxyCodeLine{338    \textcolor{keywordflow}{if} ( \mbox{\hyperlink{boing_8c_ac1b93fa15ef429f4d5e3a0a9990304cf}{drawBallHow}} == \mbox{\hyperlink{boing_8c_aaff0749849eeb426c1fff01f93f8aa38a3248eb4cd526dece69034b8913503983}{DRAW\_BALL\_SHADOW}} )}
+\DoxyCodeLine{339    \{}
+\DoxyCodeLine{340       \mbox{\hyperlink{gl_8h_a4b8d59e72147f88dd928f570d9a1713a}{glTranslatef}}( \mbox{\hyperlink{boing_8c_adfabb671d0b80adb599e07a018f049d4}{SHADOW\_OFFSET\_X}},}
+\DoxyCodeLine{341                     \mbox{\hyperlink{boing_8c_aee80e1c2e5aa7831fbe28b95948f5dc0}{SHADOW\_OFFSET\_Y}},}
+\DoxyCodeLine{342                     \mbox{\hyperlink{boing_8c_a79814e92ed56516db4e8564c2928f86e}{SHADOW\_OFFSET\_Z}} );}
+\DoxyCodeLine{343    \}}
+\DoxyCodeLine{344 }
+\DoxyCodeLine{345   \textcolor{comment}{/*}}
+\DoxyCodeLine{346 \textcolor{comment}{   * Tilt the ball.}}
+\DoxyCodeLine{347 \textcolor{comment}{   */}}
+\DoxyCodeLine{348    \mbox{\hyperlink{gl_8h_a9a0010822b3a45b62142878ad90926e6}{glRotatef}}( -\/20.0, 0.0, 0.0, 1.0 );}
+\DoxyCodeLine{349 }
+\DoxyCodeLine{350   \textcolor{comment}{/*}}
+\DoxyCodeLine{351 \textcolor{comment}{   * Continually rotate ball around Y axis.}}
+\DoxyCodeLine{352 \textcolor{comment}{   */}}
+\DoxyCodeLine{353    \mbox{\hyperlink{gl_8h_a9a0010822b3a45b62142878ad90926e6}{glRotatef}}( \mbox{\hyperlink{boing_8c_ae721211dff5c00a883879373efad1187}{deg\_rot\_y}}, 0.0, 1.0, 0.0 );}
+\DoxyCodeLine{354 }
+\DoxyCodeLine{355   \textcolor{comment}{/*}}
+\DoxyCodeLine{356 \textcolor{comment}{   * Set OpenGL state for Boing ball.}}
+\DoxyCodeLine{357 \textcolor{comment}{   */}}
+\DoxyCodeLine{358    \mbox{\hyperlink{glad_8h_a20d4a8491c6ca041d21096f7567fed20}{glCullFace}}( \mbox{\hyperlink{glad_8h_ad66599a87de5c80f8c174da72080a811}{GL\_FRONT}} );}
+\DoxyCodeLine{359    \mbox{\hyperlink{glad_8h_a3f7fa0df22505dd09a24a4e1e74eca09}{glEnable}}( \mbox{\hyperlink{glad_8h_a8c4f153ed20a741aaae952650fec46f0}{GL\_CULL\_FACE}} );}
+\DoxyCodeLine{360    \mbox{\hyperlink{glad_8h_a3f7fa0df22505dd09a24a4e1e74eca09}{glEnable}}( \mbox{\hyperlink{gl_8h_a53fa16a7187cf3db1768876de5feb16f}{GL\_NORMALIZE}} );}
+\DoxyCodeLine{361 }
+\DoxyCodeLine{362   \textcolor{comment}{/*}}
+\DoxyCodeLine{363 \textcolor{comment}{   * Build a faceted latitude slice of the Boing ball,}}
+\DoxyCodeLine{364 \textcolor{comment}{   * stepping same-\/sized vertical bands of the sphere.}}
+\DoxyCodeLine{365 \textcolor{comment}{   */}}
+\DoxyCodeLine{366    \textcolor{keywordflow}{for} ( lon\_deg = 0;}
+\DoxyCodeLine{367          lon\_deg < 180;}
+\DoxyCodeLine{368          lon\_deg += \mbox{\hyperlink{boing_8c_a89edea273a0da4bec03abfdd5d46a1df}{STEP\_LONGITUDE}} )}
+\DoxyCodeLine{369    \{}
+\DoxyCodeLine{370      \textcolor{comment}{/*}}
+\DoxyCodeLine{371 \textcolor{comment}{      * Draw a latitude circle at this longitude.}}
+\DoxyCodeLine{372 \textcolor{comment}{      */}}
+\DoxyCodeLine{373       \mbox{\hyperlink{boing_8c_ad80d1d92135216bb8c1242fcce45545c}{DrawBoingBallBand}}( lon\_deg,}
+\DoxyCodeLine{374                          lon\_deg + \mbox{\hyperlink{boing_8c_a89edea273a0da4bec03abfdd5d46a1df}{STEP\_LONGITUDE}} );}
+\DoxyCodeLine{375    \}}
+\DoxyCodeLine{376 }
+\DoxyCodeLine{377    \mbox{\hyperlink{gl_8h_a4efb9a338a8a3db2b20d8ad57283d060}{glPopMatrix}}();}
+\DoxyCodeLine{378 }
+\DoxyCodeLine{379    \textcolor{keywordflow}{return};}
+\DoxyCodeLine{380 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{boing_8c_ad80d1d92135216bb8c1242fcce45545c}\label{boing_8c_ad80d1d92135216bb8c1242fcce45545c}} 
+\index{boing.c@{boing.c}!DrawBoingBallBand@{DrawBoingBallBand}}
+\index{DrawBoingBallBand@{DrawBoingBallBand}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{DrawBoingBallBand()}{DrawBoingBallBand()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} Draw\+Boing\+Ball\+Band (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}}}]{long\+\_\+lo,  }\item[{\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}}}]{long\+\_\+hi }\end{DoxyParamCaption})}
+
+
+
+Definition at line 439 of file boing.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{441 \{}
+\DoxyCodeLine{442    \mbox{\hyperlink{structvertex__t}{vertex\_t}} vert\_ne;            \textcolor{comment}{/* "ne" means south-\/east, so on */}}
+\DoxyCodeLine{443    \mbox{\hyperlink{structvertex__t}{vertex\_t}} vert\_nw;}
+\DoxyCodeLine{444    \mbox{\hyperlink{structvertex__t}{vertex\_t}} vert\_sw;}
+\DoxyCodeLine{445    \mbox{\hyperlink{structvertex__t}{vertex\_t}} vert\_se;}
+\DoxyCodeLine{446    \mbox{\hyperlink{structvertex__t}{vertex\_t}} vert\_norm;}
+\DoxyCodeLine{447    \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}}  lat\_deg;}
+\DoxyCodeLine{448    \textcolor{keyword}{static} \textcolor{keywordtype}{int} colorToggle = 0;}
+\DoxyCodeLine{449 }
+\DoxyCodeLine{450   \textcolor{comment}{/*}}
+\DoxyCodeLine{451 \textcolor{comment}{   * Iterate through the points of a latitude circle.}}
+\DoxyCodeLine{452 \textcolor{comment}{   * A latitude circle is a 2D set of X,Z points.}}
+\DoxyCodeLine{453 \textcolor{comment}{   */}}
+\DoxyCodeLine{454    \textcolor{keywordflow}{for} ( lat\_deg = 0;}
+\DoxyCodeLine{455          lat\_deg <= (360 -\/ \mbox{\hyperlink{boing_8c_ac875967450c7a0306cf05f8e3e455e6c}{STEP\_LATITUDE}});}
+\DoxyCodeLine{456          lat\_deg += \mbox{\hyperlink{boing_8c_ac875967450c7a0306cf05f8e3e455e6c}{STEP\_LATITUDE}} )}
+\DoxyCodeLine{457    \{}
+\DoxyCodeLine{458      \textcolor{comment}{/*}}
+\DoxyCodeLine{459 \textcolor{comment}{      * Color this polygon with red or white.}}
+\DoxyCodeLine{460 \textcolor{comment}{      */}}
+\DoxyCodeLine{461       \textcolor{keywordflow}{if} ( colorToggle )}
+\DoxyCodeLine{462          \mbox{\hyperlink{gl_8h_a156bc5fbf2770392dd3106c0af412235}{glColor3f}}( 0.8\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, 0.1\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, 0.1\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} );}
+\DoxyCodeLine{463       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{464          \mbox{\hyperlink{gl_8h_a156bc5fbf2770392dd3106c0af412235}{glColor3f}}( 0.95\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, 0.95\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, 0.95\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} );}
+\DoxyCodeLine{465 \textcolor{preprocessor}{\#if 0}}
+\DoxyCodeLine{466       \textcolor{keywordflow}{if} ( lat\_deg >= 180 )}
+\DoxyCodeLine{467          \textcolor{keywordflow}{if} ( colorToggle )}
+\DoxyCodeLine{468             \mbox{\hyperlink{gl_8h_a156bc5fbf2770392dd3106c0af412235}{glColor3f}}( 0.1\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, 0.8\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, 0.1\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} );}
+\DoxyCodeLine{469          \textcolor{keywordflow}{else}}
+\DoxyCodeLine{470             \mbox{\hyperlink{gl_8h_a156bc5fbf2770392dd3106c0af412235}{glColor3f}}( 0.5\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, 0.5\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, 0.95\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} );}
+\DoxyCodeLine{471 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{472       colorToggle = ! colorToggle;}
+\DoxyCodeLine{473 }
+\DoxyCodeLine{474      \textcolor{comment}{/*}}
+\DoxyCodeLine{475 \textcolor{comment}{      * Change color if drawing shadow.}}
+\DoxyCodeLine{476 \textcolor{comment}{      */}}
+\DoxyCodeLine{477       \textcolor{keywordflow}{if} ( \mbox{\hyperlink{boing_8c_ac1b93fa15ef429f4d5e3a0a9990304cf}{drawBallHow}} == \mbox{\hyperlink{boing_8c_aaff0749849eeb426c1fff01f93f8aa38a3248eb4cd526dece69034b8913503983}{DRAW\_BALL\_SHADOW}} )}
+\DoxyCodeLine{478          \mbox{\hyperlink{gl_8h_a156bc5fbf2770392dd3106c0af412235}{glColor3f}}( 0.35\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, 0.35\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, 0.35\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} );}
+\DoxyCodeLine{479 }
+\DoxyCodeLine{480      \textcolor{comment}{/*}}
+\DoxyCodeLine{481 \textcolor{comment}{      * Assign each Y.}}
+\DoxyCodeLine{482 \textcolor{comment}{      */}}
+\DoxyCodeLine{483       vert\_ne.\mbox{\hyperlink{structvertex__t_a47978d5bf5e90197879ec37acc63c2a1}{y}} = vert\_nw.\mbox{\hyperlink{structvertex__t_a47978d5bf5e90197879ec37acc63c2a1}{y}} = (float) \mbox{\hyperlink{boing_8c_ae4cbb93841df91680846fe983a6f1835}{cos\_deg}}(long\_hi) * \mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{RADIUS}};}
+\DoxyCodeLine{484       vert\_sw.\mbox{\hyperlink{structvertex__t_a47978d5bf5e90197879ec37acc63c2a1}{y}} = vert\_se.\mbox{\hyperlink{structvertex__t_a47978d5bf5e90197879ec37acc63c2a1}{y}} = (float) \mbox{\hyperlink{boing_8c_ae4cbb93841df91680846fe983a6f1835}{cos\_deg}}(long\_lo) * \mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{RADIUS}};}
+\DoxyCodeLine{485 }
+\DoxyCodeLine{486      \textcolor{comment}{/*}}
+\DoxyCodeLine{487 \textcolor{comment}{      * Assign each X,Z with sin,cos values scaled by latitude radius indexed by longitude.}}
+\DoxyCodeLine{488 \textcolor{comment}{      * Eg, long=0 and long=180 are at the poles, so zero scale is sin(longitude),}}
+\DoxyCodeLine{489 \textcolor{comment}{      * while long=90 (sin(90)=1) is at equator.}}
+\DoxyCodeLine{490 \textcolor{comment}{      */}}
+\DoxyCodeLine{491       vert\_ne.\mbox{\hyperlink{structvertex__t_a88969dedc4ad7cbb5042a779cab1faa1}{x}} = (float) \mbox{\hyperlink{boing_8c_ae4cbb93841df91680846fe983a6f1835}{cos\_deg}}( lat\_deg                 ) * (\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{RADIUS}} * (float) \mbox{\hyperlink{boing_8c_a5b090656aa7eb0a7d1bd2d0f0e7712e2}{sin\_deg}}( long\_lo + \mbox{\hyperlink{boing_8c_a89edea273a0da4bec03abfdd5d46a1df}{STEP\_LONGITUDE}} ));}
+\DoxyCodeLine{492       vert\_se.\mbox{\hyperlink{structvertex__t_a88969dedc4ad7cbb5042a779cab1faa1}{x}} = (float) \mbox{\hyperlink{boing_8c_ae4cbb93841df91680846fe983a6f1835}{cos\_deg}}( lat\_deg                 ) * (\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{RADIUS}} * (float) \mbox{\hyperlink{boing_8c_a5b090656aa7eb0a7d1bd2d0f0e7712e2}{sin\_deg}}( long\_lo                  ));}
+\DoxyCodeLine{493       vert\_nw.\mbox{\hyperlink{structvertex__t_a88969dedc4ad7cbb5042a779cab1faa1}{x}} = (float) \mbox{\hyperlink{boing_8c_ae4cbb93841df91680846fe983a6f1835}{cos\_deg}}( lat\_deg + \mbox{\hyperlink{boing_8c_ac875967450c7a0306cf05f8e3e455e6c}{STEP\_LATITUDE}} ) * (\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{RADIUS}} * (float) \mbox{\hyperlink{boing_8c_a5b090656aa7eb0a7d1bd2d0f0e7712e2}{sin\_deg}}( long\_lo + \mbox{\hyperlink{boing_8c_a89edea273a0da4bec03abfdd5d46a1df}{STEP\_LONGITUDE}} ));}
+\DoxyCodeLine{494       vert\_sw.\mbox{\hyperlink{structvertex__t_a88969dedc4ad7cbb5042a779cab1faa1}{x}} = (float) \mbox{\hyperlink{boing_8c_ae4cbb93841df91680846fe983a6f1835}{cos\_deg}}( lat\_deg + \mbox{\hyperlink{boing_8c_ac875967450c7a0306cf05f8e3e455e6c}{STEP\_LATITUDE}} ) * (\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{RADIUS}} * (float) \mbox{\hyperlink{boing_8c_a5b090656aa7eb0a7d1bd2d0f0e7712e2}{sin\_deg}}( long\_lo                  ));}
+\DoxyCodeLine{495 }
+\DoxyCodeLine{496       vert\_ne.\mbox{\hyperlink{structvertex__t_ab55b78f5b20d1006b615622d5ca3e320}{z}} = (float) \mbox{\hyperlink{boing_8c_a5b090656aa7eb0a7d1bd2d0f0e7712e2}{sin\_deg}}( lat\_deg                 ) * (\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{RADIUS}} * (float) \mbox{\hyperlink{boing_8c_a5b090656aa7eb0a7d1bd2d0f0e7712e2}{sin\_deg}}( long\_lo + \mbox{\hyperlink{boing_8c_a89edea273a0da4bec03abfdd5d46a1df}{STEP\_LONGITUDE}} ));}
+\DoxyCodeLine{497       vert\_se.\mbox{\hyperlink{structvertex__t_ab55b78f5b20d1006b615622d5ca3e320}{z}} = (float) \mbox{\hyperlink{boing_8c_a5b090656aa7eb0a7d1bd2d0f0e7712e2}{sin\_deg}}( lat\_deg                 ) * (\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{RADIUS}} * (float) \mbox{\hyperlink{boing_8c_a5b090656aa7eb0a7d1bd2d0f0e7712e2}{sin\_deg}}( long\_lo                  ));}
+\DoxyCodeLine{498       vert\_nw.\mbox{\hyperlink{structvertex__t_ab55b78f5b20d1006b615622d5ca3e320}{z}} = (float) \mbox{\hyperlink{boing_8c_a5b090656aa7eb0a7d1bd2d0f0e7712e2}{sin\_deg}}( lat\_deg + \mbox{\hyperlink{boing_8c_ac875967450c7a0306cf05f8e3e455e6c}{STEP\_LATITUDE}} ) * (\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{RADIUS}} * (float) \mbox{\hyperlink{boing_8c_a5b090656aa7eb0a7d1bd2d0f0e7712e2}{sin\_deg}}( long\_lo + \mbox{\hyperlink{boing_8c_a89edea273a0da4bec03abfdd5d46a1df}{STEP\_LONGITUDE}} ));}
+\DoxyCodeLine{499       vert\_sw.\mbox{\hyperlink{structvertex__t_ab55b78f5b20d1006b615622d5ca3e320}{z}} = (float) \mbox{\hyperlink{boing_8c_a5b090656aa7eb0a7d1bd2d0f0e7712e2}{sin\_deg}}( lat\_deg + \mbox{\hyperlink{boing_8c_ac875967450c7a0306cf05f8e3e455e6c}{STEP\_LATITUDE}} ) * (\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{RADIUS}} * (float) \mbox{\hyperlink{boing_8c_a5b090656aa7eb0a7d1bd2d0f0e7712e2}{sin\_deg}}( long\_lo                  ));}
+\DoxyCodeLine{500 }
+\DoxyCodeLine{501      \textcolor{comment}{/*}}
+\DoxyCodeLine{502 \textcolor{comment}{      * Draw the facet.}}
+\DoxyCodeLine{503 \textcolor{comment}{      */}}
+\DoxyCodeLine{504       \mbox{\hyperlink{gl_8h_a18a9548126ac9e9eb00f9cd26cb0ab85}{glBegin}}( \mbox{\hyperlink{gl_8h_abed3bfcbd65f2285c12e96b566668b6f}{GL\_POLYGON}} );}
+\DoxyCodeLine{505 }
+\DoxyCodeLine{506       \mbox{\hyperlink{boing_8c_ab3fa148322b2d4aaa2ffe1e0008d5e55}{CrossProduct}}( vert\_ne, vert\_nw, vert\_sw, \&vert\_norm );}
+\DoxyCodeLine{507       \mbox{\hyperlink{gl_8h_ac7e2ce42bb5c009a331017a93b24927c}{glNormal3f}}( vert\_norm.\mbox{\hyperlink{structvertex__t_a88969dedc4ad7cbb5042a779cab1faa1}{x}}, vert\_norm.\mbox{\hyperlink{structvertex__t_a47978d5bf5e90197879ec37acc63c2a1}{y}}, vert\_norm.\mbox{\hyperlink{structvertex__t_ab55b78f5b20d1006b615622d5ca3e320}{z}} );}
+\DoxyCodeLine{508 }
+\DoxyCodeLine{509       \mbox{\hyperlink{gl_8h_a8b32ed40d834188f6abea5eb5ac7fc07}{glVertex3f}}( vert\_ne.\mbox{\hyperlink{structvertex__t_a88969dedc4ad7cbb5042a779cab1faa1}{x}}, vert\_ne.\mbox{\hyperlink{structvertex__t_a47978d5bf5e90197879ec37acc63c2a1}{y}}, vert\_ne.\mbox{\hyperlink{structvertex__t_ab55b78f5b20d1006b615622d5ca3e320}{z}} );}
+\DoxyCodeLine{510       \mbox{\hyperlink{gl_8h_a8b32ed40d834188f6abea5eb5ac7fc07}{glVertex3f}}( vert\_nw.\mbox{\hyperlink{structvertex__t_a88969dedc4ad7cbb5042a779cab1faa1}{x}}, vert\_nw.\mbox{\hyperlink{structvertex__t_a47978d5bf5e90197879ec37acc63c2a1}{y}}, vert\_nw.\mbox{\hyperlink{structvertex__t_ab55b78f5b20d1006b615622d5ca3e320}{z}} );}
+\DoxyCodeLine{511       \mbox{\hyperlink{gl_8h_a8b32ed40d834188f6abea5eb5ac7fc07}{glVertex3f}}( vert\_sw.\mbox{\hyperlink{structvertex__t_a88969dedc4ad7cbb5042a779cab1faa1}{x}}, vert\_sw.\mbox{\hyperlink{structvertex__t_a47978d5bf5e90197879ec37acc63c2a1}{y}}, vert\_sw.\mbox{\hyperlink{structvertex__t_ab55b78f5b20d1006b615622d5ca3e320}{z}} );}
+\DoxyCodeLine{512       \mbox{\hyperlink{gl_8h_a8b32ed40d834188f6abea5eb5ac7fc07}{glVertex3f}}( vert\_se.\mbox{\hyperlink{structvertex__t_a88969dedc4ad7cbb5042a779cab1faa1}{x}}, vert\_se.\mbox{\hyperlink{structvertex__t_a47978d5bf5e90197879ec37acc63c2a1}{y}}, vert\_se.\mbox{\hyperlink{structvertex__t_ab55b78f5b20d1006b615622d5ca3e320}{z}} );}
+\DoxyCodeLine{513 }
+\DoxyCodeLine{514       \mbox{\hyperlink{gl_8h_acedf7461ab825274c1c407dcc0ddd56b}{glEnd}}();}
+\DoxyCodeLine{515 }
+\DoxyCodeLine{516 \textcolor{preprocessor}{\#if BOING\_DEBUG}}
+\DoxyCodeLine{517       printf( \textcolor{stringliteral}{"-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ \(\backslash\)n"} );}
+\DoxyCodeLine{518       printf( \textcolor{stringliteral}{"lat = \%f  long\_lo = \%f  long\_hi = \%f \(\backslash\)n"}, lat\_deg, long\_lo, long\_hi );}
+\DoxyCodeLine{519       printf( \textcolor{stringliteral}{"vert\_ne  x = \%.8f  y = \%.8f  z = \%.8f \(\backslash\)n"}, vert\_ne.\mbox{\hyperlink{structvertex__t_a88969dedc4ad7cbb5042a779cab1faa1}{x}}, vert\_ne.\mbox{\hyperlink{structvertex__t_a47978d5bf5e90197879ec37acc63c2a1}{y}}, vert\_ne.\mbox{\hyperlink{structvertex__t_ab55b78f5b20d1006b615622d5ca3e320}{z}} );}
+\DoxyCodeLine{520       printf( \textcolor{stringliteral}{"vert\_nw  x = \%.8f  y = \%.8f  z = \%.8f \(\backslash\)n"}, vert\_nw.\mbox{\hyperlink{structvertex__t_a88969dedc4ad7cbb5042a779cab1faa1}{x}}, vert\_nw.\mbox{\hyperlink{structvertex__t_a47978d5bf5e90197879ec37acc63c2a1}{y}}, vert\_nw.\mbox{\hyperlink{structvertex__t_ab55b78f5b20d1006b615622d5ca3e320}{z}} );}
+\DoxyCodeLine{521       printf( \textcolor{stringliteral}{"vert\_se  x = \%.8f  y = \%.8f  z = \%.8f \(\backslash\)n"}, vert\_se.\mbox{\hyperlink{structvertex__t_a88969dedc4ad7cbb5042a779cab1faa1}{x}}, vert\_se.\mbox{\hyperlink{structvertex__t_a47978d5bf5e90197879ec37acc63c2a1}{y}}, vert\_se.\mbox{\hyperlink{structvertex__t_ab55b78f5b20d1006b615622d5ca3e320}{z}} );}
+\DoxyCodeLine{522       printf( \textcolor{stringliteral}{"vert\_sw  x = \%.8f  y = \%.8f  z = \%.8f \(\backslash\)n"}, vert\_sw.\mbox{\hyperlink{structvertex__t_a88969dedc4ad7cbb5042a779cab1faa1}{x}}, vert\_sw.\mbox{\hyperlink{structvertex__t_a47978d5bf5e90197879ec37acc63c2a1}{y}}, vert\_sw.\mbox{\hyperlink{structvertex__t_ab55b78f5b20d1006b615622d5ca3e320}{z}} );}
+\DoxyCodeLine{523 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{524 }
+\DoxyCodeLine{525    \}}
+\DoxyCodeLine{526 }
+\DoxyCodeLine{527   \textcolor{comment}{/*}}
+\DoxyCodeLine{528 \textcolor{comment}{   * Toggle color so that next band will opposite red/white colors than this one.}}
+\DoxyCodeLine{529 \textcolor{comment}{   */}}
+\DoxyCodeLine{530    colorToggle = ! colorToggle;}
+\DoxyCodeLine{531 }
+\DoxyCodeLine{532   \textcolor{comment}{/*}}
+\DoxyCodeLine{533 \textcolor{comment}{   * This circular band is done.}}
+\DoxyCodeLine{534 \textcolor{comment}{   */}}
+\DoxyCodeLine{535    \textcolor{keywordflow}{return};}
+\DoxyCodeLine{536 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{boing_8c_a8e38342e6a8bfcbc67503d2c6383d8e8}\label{boing_8c_a8e38342e6a8bfcbc67503d2c6383d8e8}} 
+\index{boing.c@{boing.c}!DrawGrid@{DrawGrid}}
+\index{DrawGrid@{DrawGrid}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{DrawGrid()}{DrawGrid()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} Draw\+Grid (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 543 of file boing.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{544 \{}
+\DoxyCodeLine{545    \textcolor{keywordtype}{int}              \mbox{\hyperlink{glad_8h_a90d3e7e4182a9630993f640fa0443b0b}{row}}, col;}
+\DoxyCodeLine{546    \textcolor{keyword}{const} \textcolor{keywordtype}{int}        rowTotal    = 12;                   \textcolor{comment}{/* must be divisible by 2 */}}
+\DoxyCodeLine{547    \textcolor{keyword}{const} \textcolor{keywordtype}{int}        colTotal    = rowTotal;             \textcolor{comment}{/* must be same as rowTotal */}}
+\DoxyCodeLine{548    \textcolor{keyword}{const} \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}}    widthLine   = 2.0;                  \textcolor{comment}{/* should be divisible by 2 */}}
+\DoxyCodeLine{549    \textcolor{keyword}{const} \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}}    sizeCell    = \mbox{\hyperlink{boing_8c_a08246606c233e7785a497c09672f366f}{GRID\_SIZE}} / rowTotal;}
+\DoxyCodeLine{550    \textcolor{keyword}{const} \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}}    z\_offset    = -\/40.0;}
+\DoxyCodeLine{551    \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}}          xl, xr;}
+\DoxyCodeLine{552    \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}}          yt, yb;}
+\DoxyCodeLine{553 }
+\DoxyCodeLine{554    \mbox{\hyperlink{gl_8h_ac15f1d0dd5665e7e1bc76f82799368dd}{glPushMatrix}}();}
+\DoxyCodeLine{555    \mbox{\hyperlink{glad_8h_adbbb0a7d41b44182b74a9d4f62ca8a63}{glDisable}}( \mbox{\hyperlink{glad_8h_a8c4f153ed20a741aaae952650fec46f0}{GL\_CULL\_FACE}} );}
+\DoxyCodeLine{556 }
+\DoxyCodeLine{557   \textcolor{comment}{/*}}
+\DoxyCodeLine{558 \textcolor{comment}{   * Another relative Z translation to separate objects.}}
+\DoxyCodeLine{559 \textcolor{comment}{   */}}
+\DoxyCodeLine{560    \mbox{\hyperlink{gl_8h_a4b8d59e72147f88dd928f570d9a1713a}{glTranslatef}}( 0.0, 0.0, \mbox{\hyperlink{boing_8c_abc4d2bb2a15f35c55d9b456b452eaa7c}{DIST\_BALL}} );}
+\DoxyCodeLine{561 }
+\DoxyCodeLine{562   \textcolor{comment}{/*}}
+\DoxyCodeLine{563 \textcolor{comment}{   * Draw vertical lines (as skinny 3D rectangles).}}
+\DoxyCodeLine{564 \textcolor{comment}{   */}}
+\DoxyCodeLine{565    \textcolor{keywordflow}{for} ( col = 0; col <= colTotal; col++ )}
+\DoxyCodeLine{566    \{}
+\DoxyCodeLine{567      \textcolor{comment}{/*}}
+\DoxyCodeLine{568 \textcolor{comment}{      * Compute co-\/ords of line.}}
+\DoxyCodeLine{569 \textcolor{comment}{      */}}
+\DoxyCodeLine{570       xl = -\/\mbox{\hyperlink{boing_8c_a08246606c233e7785a497c09672f366f}{GRID\_SIZE}} / 2 + col * sizeCell;}
+\DoxyCodeLine{571       xr = xl + widthLine;}
+\DoxyCodeLine{572 }
+\DoxyCodeLine{573       yt =  \mbox{\hyperlink{boing_8c_a08246606c233e7785a497c09672f366f}{GRID\_SIZE}} / 2;}
+\DoxyCodeLine{574       yb = -\/\mbox{\hyperlink{boing_8c_a08246606c233e7785a497c09672f366f}{GRID\_SIZE}} / 2 -\/ widthLine;}
+\DoxyCodeLine{575 }
+\DoxyCodeLine{576       \mbox{\hyperlink{gl_8h_a18a9548126ac9e9eb00f9cd26cb0ab85}{glBegin}}( \mbox{\hyperlink{gl_8h_abed3bfcbd65f2285c12e96b566668b6f}{GL\_POLYGON}} );}
+\DoxyCodeLine{577 }
+\DoxyCodeLine{578       \mbox{\hyperlink{gl_8h_a156bc5fbf2770392dd3106c0af412235}{glColor3f}}( 0.6\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, 0.1\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, 0.6\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} );               \textcolor{comment}{/* purple */}}
+\DoxyCodeLine{579 }
+\DoxyCodeLine{580       \mbox{\hyperlink{gl_8h_a8b32ed40d834188f6abea5eb5ac7fc07}{glVertex3f}}( xr, yt, z\_offset );       \textcolor{comment}{/* NE */}}
+\DoxyCodeLine{581       \mbox{\hyperlink{gl_8h_a8b32ed40d834188f6abea5eb5ac7fc07}{glVertex3f}}( xl, yt, z\_offset );       \textcolor{comment}{/* NW */}}
+\DoxyCodeLine{582       \mbox{\hyperlink{gl_8h_a8b32ed40d834188f6abea5eb5ac7fc07}{glVertex3f}}( xl, yb, z\_offset );       \textcolor{comment}{/* SW */}}
+\DoxyCodeLine{583       \mbox{\hyperlink{gl_8h_a8b32ed40d834188f6abea5eb5ac7fc07}{glVertex3f}}( xr, yb, z\_offset );       \textcolor{comment}{/* SE */}}
+\DoxyCodeLine{584 }
+\DoxyCodeLine{585       \mbox{\hyperlink{gl_8h_acedf7461ab825274c1c407dcc0ddd56b}{glEnd}}();}
+\DoxyCodeLine{586    \}}
+\DoxyCodeLine{587 }
+\DoxyCodeLine{588   \textcolor{comment}{/*}}
+\DoxyCodeLine{589 \textcolor{comment}{   * Draw horizontal lines (as skinny 3D rectangles).}}
+\DoxyCodeLine{590 \textcolor{comment}{   */}}
+\DoxyCodeLine{591    \textcolor{keywordflow}{for} ( \mbox{\hyperlink{glad_8h_a90d3e7e4182a9630993f640fa0443b0b}{row}} = 0; \mbox{\hyperlink{glad_8h_a90d3e7e4182a9630993f640fa0443b0b}{row}} <= rowTotal; \mbox{\hyperlink{glad_8h_a90d3e7e4182a9630993f640fa0443b0b}{row}}++ )}
+\DoxyCodeLine{592    \{}
+\DoxyCodeLine{593      \textcolor{comment}{/*}}
+\DoxyCodeLine{594 \textcolor{comment}{      * Compute co-\/ords of line.}}
+\DoxyCodeLine{595 \textcolor{comment}{      */}}
+\DoxyCodeLine{596       yt = \mbox{\hyperlink{boing_8c_a08246606c233e7785a497c09672f366f}{GRID\_SIZE}} / 2 -\/ \mbox{\hyperlink{glad_8h_a90d3e7e4182a9630993f640fa0443b0b}{row}} * sizeCell;}
+\DoxyCodeLine{597       yb = yt -\/ widthLine;}
+\DoxyCodeLine{598 }
+\DoxyCodeLine{599       xl = -\/\mbox{\hyperlink{boing_8c_a08246606c233e7785a497c09672f366f}{GRID\_SIZE}} / 2;}
+\DoxyCodeLine{600       xr =  \mbox{\hyperlink{boing_8c_a08246606c233e7785a497c09672f366f}{GRID\_SIZE}} / 2 + widthLine;}
+\DoxyCodeLine{601 }
+\DoxyCodeLine{602       \mbox{\hyperlink{gl_8h_a18a9548126ac9e9eb00f9cd26cb0ab85}{glBegin}}( \mbox{\hyperlink{gl_8h_abed3bfcbd65f2285c12e96b566668b6f}{GL\_POLYGON}} );}
+\DoxyCodeLine{603 }
+\DoxyCodeLine{604       \mbox{\hyperlink{gl_8h_a156bc5fbf2770392dd3106c0af412235}{glColor3f}}( 0.6\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, 0.1\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, 0.6\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} );               \textcolor{comment}{/* purple */}}
+\DoxyCodeLine{605 }
+\DoxyCodeLine{606       \mbox{\hyperlink{gl_8h_a8b32ed40d834188f6abea5eb5ac7fc07}{glVertex3f}}( xr, yt, z\_offset );       \textcolor{comment}{/* NE */}}
+\DoxyCodeLine{607       \mbox{\hyperlink{gl_8h_a8b32ed40d834188f6abea5eb5ac7fc07}{glVertex3f}}( xl, yt, z\_offset );       \textcolor{comment}{/* NW */}}
+\DoxyCodeLine{608       \mbox{\hyperlink{gl_8h_a8b32ed40d834188f6abea5eb5ac7fc07}{glVertex3f}}( xl, yb, z\_offset );       \textcolor{comment}{/* SW */}}
+\DoxyCodeLine{609       \mbox{\hyperlink{gl_8h_a8b32ed40d834188f6abea5eb5ac7fc07}{glVertex3f}}( xr, yb, z\_offset );       \textcolor{comment}{/* SE */}}
+\DoxyCodeLine{610 }
+\DoxyCodeLine{611       \mbox{\hyperlink{gl_8h_acedf7461ab825274c1c407dcc0ddd56b}{glEnd}}();}
+\DoxyCodeLine{612    \}}
+\DoxyCodeLine{613 }
+\DoxyCodeLine{614    \mbox{\hyperlink{gl_8h_a4efb9a338a8a3db2b20d8ad57283d060}{glPopMatrix}}();}
+\DoxyCodeLine{615 }
+\DoxyCodeLine{616    \textcolor{keywordflow}{return};}
+\DoxyCodeLine{617 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{boing_8c_a2858154e2009b0e6e616f313177762bc}\label{boing_8c_a2858154e2009b0e6e616f313177762bc}} 
+\index{boing.c@{boing.c}!init@{init}}
+\index{init@{init}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 182 of file boing.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{183 \{}
+\DoxyCodeLine{184    \textcolor{comment}{/*}}
+\DoxyCodeLine{185 \textcolor{comment}{    * Clear background.}}
+\DoxyCodeLine{186 \textcolor{comment}{    */}}
+\DoxyCodeLine{187    \mbox{\hyperlink{glad_8h_a12060509af7dc9c8353810eb8b7f145c}{glClearColor}}( 0.55\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, 0.55\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, 0.55\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, 0.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} );}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189    \mbox{\hyperlink{gl_8h_ac4ef7ec10ac8d1b6c29ed3809f033c57}{glShadeModel}}( \mbox{\hyperlink{gl_8h_ad9368079438eebeb5622ea8f7d39cc05}{GL\_FLAT}} );}
+\DoxyCodeLine{190 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{boing_8c_a286930f4e8ede059b83ff6eafa2ff718}\label{boing_8c_a286930f4e8ede059b83ff6eafa2ff718}} 
+\index{boing.c@{boing.c}!key\_callback@{key\_callback}}
+\index{key\_callback@{key\_callback}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{key\_callback()}{key\_callback()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} key\+\_\+callback (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{int}]{key,  }\item[{int}]{scancode,  }\item[{int}]{action,  }\item[{int}]{mods }\end{DoxyParamCaption})}
+
+
+
+Definition at line 240 of file boing.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{241 \{}
+\DoxyCodeLine{242     \textcolor{keywordflow}{if} (action != \mbox{\hyperlink{group__input_ga2485743d0b59df3791c45951c4195265}{GLFW\_PRESS}})}
+\DoxyCodeLine{243         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{245     \textcolor{keywordflow}{if} (\mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}} == \mbox{\hyperlink{group__keys_gaac6596c350b635c245113b81c2123b93}{GLFW\_KEY\_ESCAPE}} \&\& mods == 0)}
+\DoxyCodeLine{246         \mbox{\hyperlink{group__window_ga1cadeda7a1e2f224e06a8415d30741aa}{glfwSetWindowShouldClose}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}});}
+\DoxyCodeLine{247     \textcolor{keywordflow}{if} ((\mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}} == \mbox{\hyperlink{group__keys_ga9555a92ecbecdbc1f3435219c571d667}{GLFW\_KEY\_ENTER}} \&\& mods == \mbox{\hyperlink{group__mods_gad2acd5633463c29e07008687ea73c0f4}{GLFW\_MOD\_ALT}}) ||}
+\DoxyCodeLine{248         (\mbox{\hyperlink{gears_8c_accd6b5b92b78666e36543412d4ac14cd}{key}} == \mbox{\hyperlink{group__keys_ga0bc04b11627e7d69339151e7306b2832}{GLFW\_KEY\_F11}} \&\& mods == \mbox{\hyperlink{group__mods_gad2acd5633463c29e07008687ea73c0f4}{GLFW\_MOD\_ALT}}))}
+\DoxyCodeLine{249     \{}
+\DoxyCodeLine{250         \textcolor{keywordflow}{if} (\mbox{\hyperlink{group__window_gaf1525cb3bccd5789c702cc9676ef3403}{glfwGetWindowMonitor}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}))}
+\DoxyCodeLine{251         \{}
+\DoxyCodeLine{252             \mbox{\hyperlink{group__window_ga12fabf78575e59c00f822f323ae0b6ae}{glfwSetWindowMonitor}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}},}
+\DoxyCodeLine{253                                  \mbox{\hyperlink{boing_8c_a6511876508d2f65ea8ace8f25d0e4c78}{windowed\_xpos}}, \mbox{\hyperlink{boing_8c_adfcf830546ec1f6a64866d3b652a22fd}{windowed\_ypos}},}
+\DoxyCodeLine{254                                  \mbox{\hyperlink{boing_8c_a5371aa3f8486fe48d4878950ee8bd9a3}{windowed\_width}}, \mbox{\hyperlink{boing_8c_aa3257f2fd88b76fd6585ba6e679253e0}{windowed\_height}}, 0);}
+\DoxyCodeLine{255         \}}
+\DoxyCodeLine{256         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{257         \{}
+\DoxyCodeLine{258             \mbox{\hyperlink{group__monitor_ga8d9efd1cde9426692c73fe40437d0ae3}{GLFWmonitor}}* monitor = \mbox{\hyperlink{group__monitor_ga59ea49f377fe701dd76764183e64d9f4}{glfwGetPrimaryMonitor}}();}
+\DoxyCodeLine{259             \textcolor{keywordflow}{if} (monitor)}
+\DoxyCodeLine{260             \{}
+\DoxyCodeLine{261                 \textcolor{keyword}{const} \mbox{\hyperlink{struct_g_l_f_wvidmode}{GLFWvidmode}}* \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}} = \mbox{\hyperlink{group__monitor_ga27319d7f045c4cbbeae5651696cacd5f}{glfwGetVideoMode}}(monitor);}
+\DoxyCodeLine{262                 \mbox{\hyperlink{group__window_ga0076a8591ef7494d359730cf2250b45b}{glfwGetWindowPos}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \&\mbox{\hyperlink{boing_8c_a6511876508d2f65ea8ace8f25d0e4c78}{windowed\_xpos}}, \&\mbox{\hyperlink{boing_8c_adfcf830546ec1f6a64866d3b652a22fd}{windowed\_ypos}});}
+\DoxyCodeLine{263                 \mbox{\hyperlink{group__window_ga7feb769ebb3f3d21579b5a3fb07be76e}{glfwGetWindowSize}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \&\mbox{\hyperlink{boing_8c_a5371aa3f8486fe48d4878950ee8bd9a3}{windowed\_width}}, \&\mbox{\hyperlink{boing_8c_aa3257f2fd88b76fd6585ba6e679253e0}{windowed\_height}});}
+\DoxyCodeLine{264                 \mbox{\hyperlink{group__window_ga12fabf78575e59c00f822f323ae0b6ae}{glfwSetWindowMonitor}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, monitor, 0, 0, \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}-\/>width, \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}-\/>height, \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}-\/>refreshRate);}
+\DoxyCodeLine{265             \}}
+\DoxyCodeLine{266         \}}
+\DoxyCodeLine{267     \}}
+\DoxyCodeLine{268 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{boing_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{boing_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{boing.c@{boing.c}!main@{main}}
+\index{main@{main}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 624 of file boing.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{625 \{}
+\DoxyCodeLine{626    \mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{GLFWwindow}}* \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}};}
+\DoxyCodeLine{627 }
+\DoxyCodeLine{628    \textcolor{comment}{/* Init GLFW */}}
+\DoxyCodeLine{629    \textcolor{keywordflow}{if}( !\mbox{\hyperlink{group__init_gab41771f0215a2e0afb4cf1cf98082d40}{glfwInit}}() )}
+\DoxyCodeLine{630       exit( EXIT\_FAILURE );}
+\DoxyCodeLine{631 }
+\DoxyCodeLine{632    \mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}} = \mbox{\hyperlink{group__window_ga680a02abe0e4494b6759d5703240713e}{glfwCreateWindow}}( 400, 400, \textcolor{stringliteral}{"Boing (classic Amiga demo)"}, \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}, \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}} );}
+\DoxyCodeLine{633    \textcolor{keywordflow}{if} (!\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}})}
+\DoxyCodeLine{634    \{}
+\DoxyCodeLine{635        \mbox{\hyperlink{group__init_gafd90e6fd4819ea9e22e5e739519a6504}{glfwTerminate}}();}
+\DoxyCodeLine{636        exit( EXIT\_FAILURE );}
+\DoxyCodeLine{637    \}}
+\DoxyCodeLine{638 }
+\DoxyCodeLine{639    \mbox{\hyperlink{group__window_gad2ae94a2c5ee1c46a36e13a8f4ac68ac}{glfwSetWindowAspectRatio}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, 1, 1);}
+\DoxyCodeLine{640 }
+\DoxyCodeLine{641    \mbox{\hyperlink{group__window_ga41d69f9f263d7b33ea03cf58772b4ea0}{glfwSetFramebufferSizeCallback}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{boing_8c_a5272e39ef9d8944cb3f99d656f9f555a}{reshape}});}
+\DoxyCodeLine{642    \mbox{\hyperlink{group__input_gaa4cbcb81b939b8800e44cea971ddae47}{glfwSetKeyCallback}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{boing_8c_a286930f4e8ede059b83ff6eafa2ff718}{key\_callback}});}
+\DoxyCodeLine{643    \mbox{\hyperlink{group__input_gab8f17646f43cdca14e5095512618fdf6}{glfwSetMouseButtonCallback}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{boing_8c_a5515d805e76ce6728de3c0dc5e187c86}{mouse\_button\_callback}});}
+\DoxyCodeLine{644    \mbox{\hyperlink{group__input_ga74124d0eff27040fd10e4df9e17d129c}{glfwSetCursorPosCallback}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{boing_8c_ab5fb5502317b46f9cecd6379f2ecd210}{cursor\_position\_callback}});}
+\DoxyCodeLine{645 }
+\DoxyCodeLine{646    \mbox{\hyperlink{group__context_gafd76c93e15ec8b0b90506a9936a46185}{glfwMakeContextCurrent}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}});}
+\DoxyCodeLine{647    \mbox{\hyperlink{glad_8h_a7e9e0ebe65864f5f2bcd289c5736041b}{gladLoadGL}}(\mbox{\hyperlink{group__context_ga0e8af175218929615c16e74938c10f2a}{glfwGetProcAddress}});}
+\DoxyCodeLine{648    \mbox{\hyperlink{group__context_ga12a595c06947cec4967c6e1f14210a8a}{glfwSwapInterval}}( 1 );}
+\DoxyCodeLine{649 }
+\DoxyCodeLine{650    \mbox{\hyperlink{group__window_gaf7d17f3534b4b6dc9a6f905e3a240b7e}{glfwGetFramebufferSize}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \&\mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}}, \&\mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}});}
+\DoxyCodeLine{651    \mbox{\hyperlink{boing_8c_a5272e39ef9d8944cb3f99d656f9f555a}{reshape}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}, \mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}}, \mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}});}
+\DoxyCodeLine{652 }
+\DoxyCodeLine{653    \mbox{\hyperlink{group__input_ga94360a3628a09f32708f83cc3fa48590}{glfwSetTime}}( 0.0 );}
+\DoxyCodeLine{654 }
+\DoxyCodeLine{655    \mbox{\hyperlink{boing_8c_a2858154e2009b0e6e616f313177762bc}{init}}();}
+\DoxyCodeLine{656 }
+\DoxyCodeLine{657    \textcolor{comment}{/* Main loop */}}
+\DoxyCodeLine{658    \textcolor{keywordflow}{for} (;;)}
+\DoxyCodeLine{659    \{}
+\DoxyCodeLine{660        \textcolor{comment}{/* Timing */}}
+\DoxyCodeLine{661        \mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}} = \mbox{\hyperlink{group__input_ga03d4a1039b8662c71eeb40beea8cb622}{glfwGetTime}}();}
+\DoxyCodeLine{662        \mbox{\hyperlink{boing_8c_a03e28be41881b703c836edbfe9b51b17}{dt}} = \mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}} -\/ \mbox{\hyperlink{boing_8c_a720c9aaf75c956f8d87132112332da97}{t\_old}};}
+\DoxyCodeLine{663        \mbox{\hyperlink{boing_8c_a720c9aaf75c956f8d87132112332da97}{t\_old}} = \mbox{\hyperlink{boing_8c_a87accd1af8e0aff4b818d891374f7cec}{t}};}
+\DoxyCodeLine{664 }
+\DoxyCodeLine{665        \textcolor{comment}{/* Draw one frame */}}
+\DoxyCodeLine{666        \mbox{\hyperlink{boing_8c_a4ea013001a5fb47853d0fab8f8de35cd}{display}}();}
+\DoxyCodeLine{667 }
+\DoxyCodeLine{668        \textcolor{comment}{/* Swap buffers */}}
+\DoxyCodeLine{669        \mbox{\hyperlink{group__window_gafb827800eedbfcbc97b1e5408df668d7}{glfwSwapBuffers}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}});}
+\DoxyCodeLine{670        \mbox{\hyperlink{group__window_ga872d16e4c77f58c0436f356255920cfc}{glfwPollEvents}}();}
+\DoxyCodeLine{671 }
+\DoxyCodeLine{672        \textcolor{comment}{/* Check if we are still running */}}
+\DoxyCodeLine{673        \textcolor{keywordflow}{if} (\mbox{\hyperlink{group__window_gaa6162f67dfa38b8beda2fea623649332}{glfwWindowShouldClose}}(\mbox{\hyperlink{truetype__test__win32_8c_a773143cded4dde4b20b2c5dc501a5b51}{window}}))}
+\DoxyCodeLine{674            \textcolor{keywordflow}{break};}
+\DoxyCodeLine{675    \}}
+\DoxyCodeLine{676 }
+\DoxyCodeLine{677    \mbox{\hyperlink{group__init_gafd90e6fd4819ea9e22e5e739519a6504}{glfwTerminate}}();}
+\DoxyCodeLine{678    exit( EXIT\_SUCCESS );}
+\DoxyCodeLine{679 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{boing_8c_a5515d805e76ce6728de3c0dc5e187c86}\label{boing_8c_a5515d805e76ce6728de3c0dc5e187c86}} 
+\index{boing.c@{boing.c}!mouse\_button\_callback@{mouse\_button\_callback}}
+\index{mouse\_button\_callback@{mouse\_button\_callback}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{mouse\_button\_callback()}{mouse\_button\_callback()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} mouse\+\_\+button\+\_\+callback (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{int}]{button,  }\item[{int}]{action,  }\item[{int}]{mods }\end{DoxyParamCaption})}
+
+
+
+Definition at line 276 of file boing.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{277 \{}
+\DoxyCodeLine{278    \textcolor{keywordflow}{if} (button != \mbox{\hyperlink{group__buttons_gaf37100431dcd5082d48f95ee8bc8cd56}{GLFW\_MOUSE\_BUTTON\_LEFT}})}
+\DoxyCodeLine{279       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{280 }
+\DoxyCodeLine{281    \textcolor{keywordflow}{if} (action == \mbox{\hyperlink{group__input_ga2485743d0b59df3791c45951c4195265}{GLFW\_PRESS}})}
+\DoxyCodeLine{282    \{}
+\DoxyCodeLine{283       \mbox{\hyperlink{boing_8c_a5457032292643cc186a49f3163020555}{override\_pos}} = \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{284       set\_ball\_pos(\mbox{\hyperlink{boing_8c_ad4356335fdb6fdaa6d4b759ac447a41d}{cursor\_x}}, \mbox{\hyperlink{boing_8c_a4f59f7e6e37a64caf5bb5b228bce9afd}{cursor\_y}});}
+\DoxyCodeLine{285    \}}
+\DoxyCodeLine{286    \textcolor{keywordflow}{else}}
+\DoxyCodeLine{287    \{}
+\DoxyCodeLine{288       \mbox{\hyperlink{boing_8c_a5457032292643cc186a49f3163020555}{override\_pos}} = \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{289    \}}
+\DoxyCodeLine{290 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{boing_8c_a5272e39ef9d8944cb3f99d656f9f555a}\label{boing_8c_a5272e39ef9d8944cb3f99d656f9f555a}} 
+\index{boing.c@{boing.c}!reshape@{reshape}}
+\index{reshape@{reshape}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{reshape()}{reshape()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} reshape (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__window_ga3c96d80d363e67d13a41b5d1821f3242}{G\+L\+F\+Wwindow}} $\ast$}]{window,  }\item[{int}]{w,  }\item[{int}]{h }\end{DoxyParamCaption})}
+
+
+
+Definition at line 217 of file boing.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{218 \{}
+\DoxyCodeLine{219    \mbox{\hyperlink{linmath_8h_aea448460b62175f89ed5760877496434}{mat4x4}} projection, view;}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221    \mbox{\hyperlink{glad_8h_ab54b002beb984f066acd0dd7fff469dc}{glViewport}}( 0, 0, (\mbox{\hyperlink{glad_8h_a9289d5b99dc1f27f01480360f2e18ae0}{GLsizei}})\mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}}, (\mbox{\hyperlink{glad_8h_a9289d5b99dc1f27f01480360f2e18ae0}{GLsizei}})\mbox{\hyperlink{glad_8h_afa0fb1b5e976920c0abeff2dca3ed774}{h}} );}
+\DoxyCodeLine{222 }
+\DoxyCodeLine{223    \mbox{\hyperlink{gl_8h_a984de7349d373e1088d1c31135c3a9fb}{glMatrixMode}}( \mbox{\hyperlink{gl_8h_a85e93b355494186ced027f1a1142fefb}{GL\_PROJECTION}} );}
+\DoxyCodeLine{224    \mbox{\hyperlink{linmath_8h_a94145cd87abb64ac311b7937f5b822b6}{mat4x4\_perspective}}( projection,}
+\DoxyCodeLine{225                        2.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} * (\textcolor{keywordtype}{float}) atan2( \mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{RADIUS}}, 200.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} ),}
+\DoxyCodeLine{226                        (\textcolor{keywordtype}{float})\mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}} / (\textcolor{keywordtype}{float})\mbox{\hyperlink{glad_8h_afa0fb1b5e976920c0abeff2dca3ed774}{h}},}
+\DoxyCodeLine{227                        1.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, \mbox{\hyperlink{boing_8c_a7a2f17659bb77c24edb2bea7a08a19a3}{VIEW\_SCENE\_DIST}} );}
+\DoxyCodeLine{228    \mbox{\hyperlink{gl_8h_a7ca5354d681c38db253679a45b419039}{glLoadMatrixf}}((\textcolor{keyword}{const} \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}}*) projection);}
+\DoxyCodeLine{229 }
+\DoxyCodeLine{230    \mbox{\hyperlink{gl_8h_a984de7349d373e1088d1c31135c3a9fb}{glMatrixMode}}( \mbox{\hyperlink{gl_8h_a8c0f92b5d50914825a1424b1cd4480cd}{GL\_MODELVIEW}} );}
+\DoxyCodeLine{231    \{}
+\DoxyCodeLine{232       \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} eye = \{ 0.f, 0.f, \mbox{\hyperlink{boing_8c_a7a2f17659bb77c24edb2bea7a08a19a3}{VIEW\_SCENE\_DIST}} \};}
+\DoxyCodeLine{233       \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} center = \{ 0.f, 0.f, 0.f \};}
+\DoxyCodeLine{234       \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} up = \{ 0.f, -\/1.f, 0.f \};}
+\DoxyCodeLine{235       \mbox{\hyperlink{linmath_8h_a730f784f4cba86a5bacb673ed937acc7}{mat4x4\_look\_at}}( view, eye, center, up );}
+\DoxyCodeLine{236    \}}
+\DoxyCodeLine{237    \mbox{\hyperlink{gl_8h_a7ca5354d681c38db253679a45b419039}{glLoadMatrixf}}((\textcolor{keyword}{const} \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{GLfloat}}*) view);}
+\DoxyCodeLine{238 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{boing_8c_a5b090656aa7eb0a7d1bd2d0f0e7712e2}\label{boing_8c_a5b090656aa7eb0a7d1bd2d0f0e7712e2}} 
+\index{boing.c@{boing.c}!sin\_deg@{sin\_deg}}
+\index{sin\_deg@{sin\_deg}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{sin\_deg()}{sin\_deg()}}
+{\footnotesize\ttfamily double sin\+\_\+deg (\begin{DoxyParamCaption}\item[{double}]{deg }\end{DoxyParamCaption})}
+
+
+
+Definition at line 139 of file boing.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{140 \{}
+\DoxyCodeLine{141    \textcolor{keywordflow}{return} sin( \mbox{\hyperlink{boing_8c_a8012f8bd66798ffbdd27462c9f593a54}{deg2rad}}( deg ) );}
+\DoxyCodeLine{142 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{boing_8c_a080dc55aae439523561bda8b86575b7f}\label{boing_8c_a080dc55aae439523561bda8b86575b7f}} 
+\index{boing.c@{boing.c}!TruncateDeg@{TruncateDeg}}
+\index{TruncateDeg@{TruncateDeg}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{TruncateDeg()}{TruncateDeg()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} Truncate\+Deg (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}}}]{deg }\end{DoxyParamCaption})}
+
+
+
+Definition at line 119 of file boing.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{120 \{}
+\DoxyCodeLine{121    \textcolor{keywordflow}{if} ( deg >= 360.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} )}
+\DoxyCodeLine{122       \textcolor{keywordflow}{return} (deg -\/ 360.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}});}
+\DoxyCodeLine{123    \textcolor{keywordflow}{else}}
+\DoxyCodeLine{124       \textcolor{keywordflow}{return} deg;}
+\DoxyCodeLine{125 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{boing_8c_a66dbc10af7d1d045794549a09999d468}\label{boing_8c_a66dbc10af7d1d045794549a09999d468}} 
+\index{boing.c@{boing.c}!ball\_x@{ball\_x}}
+\index{ball\_x@{ball\_x}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{ball\_x}{ball\_x}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} ball\+\_\+x = -\/\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{R\+A\+D\+I\+US}}}
+
+
+
+Definition at line 101 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a00cc50b4eae810b91ef59463d55cb097}\label{boing_8c_a00cc50b4eae810b91ef59463d55cb097}} 
+\index{boing.c@{boing.c}!ball\_x\_inc@{ball\_x\_inc}}
+\index{ball\_x\_inc@{ball\_x\_inc}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{ball\_x\_inc}{ball\_x\_inc}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} ball\+\_\+x\+\_\+inc = 1.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}}
+
+
+
+Definition at line 103 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a13df79b6b7f26cc1fc5279a1f12a9d98}\label{boing_8c_a13df79b6b7f26cc1fc5279a1f12a9d98}} 
+\index{boing.c@{boing.c}!ball\_y@{ball\_y}}
+\index{ball\_y@{ball\_y}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{ball\_y}{ball\_y}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} ball\+\_\+y = -\/\mbox{\hyperlink{boing_8c_aa4f8ea40228c3c3a9a7143b1d1ad8956}{R\+A\+D\+I\+US}}}
+
+
+
+Definition at line 102 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_adf5ece0dd3b5effeac97071b87e106bd}\label{boing_8c_adf5ece0dd3b5effeac97071b87e106bd}} 
+\index{boing.c@{boing.c}!ball\_y\_inc@{ball\_y\_inc}}
+\index{ball\_y\_inc@{ball\_y\_inc}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{ball\_y\_inc}{ball\_y\_inc}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} ball\+\_\+y\+\_\+inc = 2.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}}
+
+
+
+Definition at line 104 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_ad4356335fdb6fdaa6d4b759ac447a41d}\label{boing_8c_ad4356335fdb6fdaa6d4b759ac447a41d}} 
+\index{boing.c@{boing.c}!cursor\_x@{cursor\_x}}
+\index{cursor\_x@{cursor\_x}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{cursor\_x}{cursor\_x}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} cursor\+\_\+x = 0.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}}
+
+
+
+Definition at line 99 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a4f59f7e6e37a64caf5bb5b228bce9afd}\label{boing_8c_a4f59f7e6e37a64caf5bb5b228bce9afd}} 
+\index{boing.c@{boing.c}!cursor\_y@{cursor\_y}}
+\index{cursor\_y@{cursor\_y}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{cursor\_y}{cursor\_y}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} cursor\+\_\+y = 0.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}}
+
+
+
+Definition at line 100 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_ae721211dff5c00a883879373efad1187}\label{boing_8c_ae721211dff5c00a883879373efad1187}} 
+\index{boing.c@{boing.c}!deg\_rot\_y@{deg\_rot\_y}}
+\index{deg\_rot\_y@{deg\_rot\_y}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{deg\_rot\_y}{deg\_rot\_y}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} deg\+\_\+rot\+\_\+y = 0.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}}
+
+
+
+Definition at line 96 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_abd3eb9bcb0582eaed1be1c789fa9664a}\label{boing_8c_abd3eb9bcb0582eaed1be1c789fa9664a}} 
+\index{boing.c@{boing.c}!deg\_rot\_y\_inc@{deg\_rot\_y\_inc}}
+\index{deg\_rot\_y\_inc@{deg\_rot\_y\_inc}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{deg\_rot\_y\_inc}{deg\_rot\_y\_inc}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glad_8h_a836cf6377099e88abf24c255b5b0ac52}{G\+Lfloat}} deg\+\_\+rot\+\_\+y\+\_\+inc = 2.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}}
+
+
+
+Definition at line 97 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_ac1b93fa15ef429f4d5e3a0a9990304cf}\label{boing_8c_ac1b93fa15ef429f4d5e3a0a9990304cf}} 
+\index{boing.c@{boing.c}!drawBallHow@{drawBallHow}}
+\index{drawBallHow@{drawBallHow}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{drawBallHow}{drawBallHow}}
+{\footnotesize\ttfamily \mbox{\hyperlink{boing_8c_aaff0749849eeb426c1fff01f93f8aa38}{D\+R\+A\+W\+\_\+\+B\+A\+L\+L\+\_\+\+E\+N\+UM}} draw\+Ball\+How}
+
+
+
+Definition at line 105 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a03e28be41881b703c836edbfe9b51b17}\label{boing_8c_a03e28be41881b703c836edbfe9b51b17}} 
+\index{boing.c@{boing.c}!dt@{dt}}
+\index{dt@{dt}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{dt}{dt}}
+{\footnotesize\ttfamily double dt}
+
+
+
+Definition at line 108 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_ad12fc34ce789bce6c8a05d8a17138534}\label{boing_8c_ad12fc34ce789bce6c8a05d8a17138534}} 
+\index{boing.c@{boing.c}!height@{height}}
+\index{height@{height}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{height}{height}}
+{\footnotesize\ttfamily int \mbox{\hyperlink{glad_8h_a2e94a4956fa3fc42600a71518b6e6284}{height}}}
+
+
+
+Definition at line 95 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a5457032292643cc186a49f3163020555}\label{boing_8c_a5457032292643cc186a49f3163020555}} 
+\index{boing.c@{boing.c}!override\_pos@{override\_pos}}
+\index{override\_pos@{override\_pos}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{override\_pos}{override\_pos}}
+{\footnotesize\ttfamily int override\+\_\+pos = \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{G\+L\+F\+W\+\_\+\+F\+A\+L\+SE}}}
+
+
+
+Definition at line 98 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a87accd1af8e0aff4b818d891374f7cec}\label{boing_8c_a87accd1af8e0aff4b818d891374f7cec}} 
+\index{boing.c@{boing.c}!t@{t}}
+\index{t@{t}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{t}{t}}
+{\footnotesize\ttfamily double \mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}}}
+
+
+
+Definition at line 106 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a720c9aaf75c956f8d87132112332da97}\label{boing_8c_a720c9aaf75c956f8d87132112332da97}} 
+\index{boing.c@{boing.c}!t\_old@{t\_old}}
+\index{t\_old@{t\_old}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{t\_old}{t\_old}}
+{\footnotesize\ttfamily double t\+\_\+old = 0.\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}}
+
+
+
+Definition at line 107 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a2474a5474cbff19523a51eb1de01cda4}\label{boing_8c_a2474a5474cbff19523a51eb1de01cda4}} 
+\index{boing.c@{boing.c}!width@{width}}
+\index{width@{width}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{width}{width}}
+{\footnotesize\ttfamily int \mbox{\hyperlink{glad_8h_a77a72419a6bb6d8b56f8d9db93a120d0}{width}}}
+
+
+
+Definition at line 95 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_aa3257f2fd88b76fd6585ba6e679253e0}\label{boing_8c_aa3257f2fd88b76fd6585ba6e679253e0}} 
+\index{boing.c@{boing.c}!windowed\_height@{windowed\_height}}
+\index{windowed\_height@{windowed\_height}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{windowed\_height}{windowed\_height}}
+{\footnotesize\ttfamily int windowed\+\_\+height}
+
+
+
+Definition at line 94 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a5371aa3f8486fe48d4878950ee8bd9a3}\label{boing_8c_a5371aa3f8486fe48d4878950ee8bd9a3}} 
+\index{boing.c@{boing.c}!windowed\_width@{windowed\_width}}
+\index{windowed\_width@{windowed\_width}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{windowed\_width}{windowed\_width}}
+{\footnotesize\ttfamily int windowed\+\_\+width}
+
+
+
+Definition at line 94 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_a6511876508d2f65ea8ace8f25d0e4c78}\label{boing_8c_a6511876508d2f65ea8ace8f25d0e4c78}} 
+\index{boing.c@{boing.c}!windowed\_xpos@{windowed\_xpos}}
+\index{windowed\_xpos@{windowed\_xpos}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{windowed\_xpos}{windowed\_xpos}}
+{\footnotesize\ttfamily int windowed\+\_\+xpos}
+
+
+
+Definition at line 94 of file boing.\+c.
+
+\mbox{\Hypertarget{boing_8c_adfcf830546ec1f6a64866d3b652a22fd}\label{boing_8c_adfcf830546ec1f6a64866d3b652a22fd}} 
+\index{boing.c@{boing.c}!windowed\_ypos@{windowed\_ypos}}
+\index{windowed\_ypos@{windowed\_ypos}!boing.c@{boing.c}}
+\doxysubsubsection{\texorpdfstring{windowed\_ypos}{windowed\_ypos}}
+{\footnotesize\ttfamily int windowed\+\_\+ypos}
+
+
+
+Definition at line 94 of file boing.\+c.
+

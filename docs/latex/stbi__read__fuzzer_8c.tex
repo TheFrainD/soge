@@ -1,0 +1,57 @@
+\hypertarget{stbi__read__fuzzer_8c}{}\doxysection{deps/stb/tests/stbi\+\_\+read\+\_\+fuzzer.c File Reference}
+\label{stbi__read__fuzzer_8c}\index{deps/stb/tests/stbi\_read\_fuzzer.c@{deps/stb/tests/stbi\_read\_fuzzer.c}}
+{\ttfamily \#include \char`\"{}../stb\+\_\+image.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{stbi__read__fuzzer_8c_a18372412ad2fc3ce1e3240b3cf0efe78}{S\+T\+B\+\_\+\+I\+M\+A\+G\+E\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+A\+T\+I\+ON}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{stbi__read__fuzzer_8c_a91ce7c16e9840492202299da2b451e60}{L\+L\+V\+M\+Fuzzer\+Test\+One\+Input}} (const \mbox{\hyperlink{stdint_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} $\ast$\mbox{\hyperlink{glad_8h_a41a8247b39e9cdb744299c3331ca3453}{data}}, size\+\_\+t \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{stbi__read__fuzzer_8c_a18372412ad2fc3ce1e3240b3cf0efe78}\label{stbi__read__fuzzer_8c_a18372412ad2fc3ce1e3240b3cf0efe78}} 
+\index{stbi\_read\_fuzzer.c@{stbi\_read\_fuzzer.c}!STB\_IMAGE\_IMPLEMENTATION@{STB\_IMAGE\_IMPLEMENTATION}}
+\index{STB\_IMAGE\_IMPLEMENTATION@{STB\_IMAGE\_IMPLEMENTATION}!stbi\_read\_fuzzer.c@{stbi\_read\_fuzzer.c}}
+\doxysubsubsection{\texorpdfstring{STB\_IMAGE\_IMPLEMENTATION}{STB\_IMAGE\_IMPLEMENTATION}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+I\+M\+A\+G\+E\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+A\+T\+I\+ON}
+
+
+
+Definition at line 5 of file stbi\+\_\+read\+\_\+fuzzer.\+c.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{stbi__read__fuzzer_8c_a91ce7c16e9840492202299da2b451e60}\label{stbi__read__fuzzer_8c_a91ce7c16e9840492202299da2b451e60}} 
+\index{stbi\_read\_fuzzer.c@{stbi\_read\_fuzzer.c}!LLVMFuzzerTestOneInput@{LLVMFuzzerTestOneInput}}
+\index{LLVMFuzzerTestOneInput@{LLVMFuzzerTestOneInput}!stbi\_read\_fuzzer.c@{stbi\_read\_fuzzer.c}}
+\doxysubsubsection{\texorpdfstring{LLVMFuzzerTestOneInput()}{LLVMFuzzerTestOneInput()}}
+{\footnotesize\ttfamily int L\+L\+V\+M\+Fuzzer\+Test\+One\+Input (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{stdint_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} $\ast$}]{data,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+
+
+Definition at line 10 of file stbi\+\_\+read\+\_\+fuzzer.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{11 \{}
+\DoxyCodeLine{12     \textcolor{keywordtype}{int} \mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}}, \mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}}, channels;}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14     \textcolor{keywordflow}{if}(!\mbox{\hyperlink{stb__image_8c_a8a876cda0f7ca91dcb0acb0206799ad7}{stbi\_info\_from\_memory}}(\mbox{\hyperlink{glad_8h_a41a8247b39e9cdb744299c3331ca3453}{data}}, \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}}, \&\mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}}, \&\mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}}, \&channels)) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16     \textcolor{comment}{/* exit if the image is larger than \string~80MB */}}
+\DoxyCodeLine{17     \textcolor{keywordflow}{if}(\mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}} \&\& \mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}} > (80000000 / 4) / \mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}}) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *\mbox{\hyperlink{glad_8h_a3455aaa12cecc35ac4a42a9bf1273da8}{img}} = \mbox{\hyperlink{stb__image_8c_a2ed09e0346d59f575ebb17e1ed91cd6b}{stbi\_load\_from\_memory}}(\mbox{\hyperlink{glad_8h_a41a8247b39e9cdb744299c3331ca3453}{data}}, \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}}, \&\mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}}, \&\mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}}, \&channels, 4);}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \mbox{\hyperlink{stb__leakcheck_8h_a9d4b5df3530d1bc733070a4669ba6ebc}{free}}(\mbox{\hyperlink{glad_8h_a3455aaa12cecc35ac4a42a9bf1273da8}{img}});}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{24 \}}
+
+\end{DoxyCode}

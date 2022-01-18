@@ -1,0 +1,293 @@
+\hypertarget{linux__joystick_8c}{}\doxysection{deps/glfw/src/linux\+\_\+joystick.c File Reference}
+\label{linux__joystick_8c}\index{deps/glfw/src/linux\_joystick.c@{deps/glfw/src/linux\_joystick.c}}
+{\ttfamily \#include \char`\"{}internal.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$sys/stat.\+h$>$}\newline
+{\ttfamily \#include $<$sys/inotify.\+h$>$}\newline
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$dirent.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{linux__joystick_8c_a722eb8b390bbac757caaa2d1f43c62d4}{S\+Y\+N\+\_\+\+D\+R\+O\+P\+P\+ED}}~3
+\item 
+\#define \mbox{\hyperlink{linux__joystick_8c_a1ca0e95c17343cd70446cb3cee101d6a}{is\+Bit\+Set}}(bit,  arr)~(arr\mbox{[}(bit) / 8\mbox{]} \& (1 $<$$<$ ((bit) \% 8)))
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{linux__joystick_8c_ad94630838d7c9d77b8c13518a47fcbef}{\+\_\+glfw\+Detect\+Joystick\+Connection\+Linux}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \mbox{\hyperlink{linux__joystick_8c_a17dc11e9772c08f5afdbe17d6830a8f5}{\+\_\+glfw\+Init\+Joysticks\+Linux}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{linux__joystick_8c_a64271879f7bf9f6a9e9631310a7e75f1}{\+\_\+glfw\+Terminate\+Joysticks\+Linux}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+int \mbox{\hyperlink{linux__joystick_8c_a399ffcc99f12447944f2e7c2df237940}{\+\_\+glfw\+Poll\+Joystick\+Linux}} (\mbox{\hyperlink{struct___g_l_f_wjoystick}{\+\_\+\+G\+L\+F\+Wjoystick}} $\ast$js, int \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}})
+\item 
+const char $\ast$ \mbox{\hyperlink{linux__joystick_8c_a3a9d5c327233cb7a3ead13f06928180d}{\+\_\+glfw\+Get\+Mapping\+Name\+Linux}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{linux__joystick_8c_a4cf7ebdca81871f2a190618877764aa3}{\+\_\+glfw\+Update\+Gamepad\+G\+U\+I\+D\+Linux}} (char $\ast$guid)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{linux__joystick_8c_a1ca0e95c17343cd70446cb3cee101d6a}\label{linux__joystick_8c_a1ca0e95c17343cd70446cb3cee101d6a}} 
+\index{linux\_joystick.c@{linux\_joystick.c}!isBitSet@{isBitSet}}
+\index{isBitSet@{isBitSet}!linux\_joystick.c@{linux\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{isBitSet}{isBitSet}}
+{\footnotesize\ttfamily \#define is\+Bit\+Set(\begin{DoxyParamCaption}\item[{}]{bit,  }\item[{}]{arr }\end{DoxyParamCaption})~(arr\mbox{[}(bit) / 8\mbox{]} \& (1 $<$$<$ ((bit) \% 8)))}
+
+
+
+Definition at line 123 of file linux\+\_\+joystick.\+c.
+
+\mbox{\Hypertarget{linux__joystick_8c_a722eb8b390bbac757caaa2d1f43c62d4}\label{linux__joystick_8c_a722eb8b390bbac757caaa2d1f43c62d4}} 
+\index{linux\_joystick.c@{linux\_joystick.c}!SYN\_DROPPED@{SYN\_DROPPED}}
+\index{SYN\_DROPPED@{SYN\_DROPPED}!linux\_joystick.c@{linux\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{SYN\_DROPPED}{SYN\_DROPPED}}
+{\footnotesize\ttfamily \#define S\+Y\+N\+\_\+\+D\+R\+O\+P\+P\+ED~3}
+
+
+
+Definition at line 45 of file linux\+\_\+joystick.\+c.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{linux__joystick_8c_ad94630838d7c9d77b8c13518a47fcbef}\label{linux__joystick_8c_ad94630838d7c9d77b8c13518a47fcbef}} 
+\index{linux\_joystick.c@{linux\_joystick.c}!\_glfwDetectJoystickConnectionLinux@{\_glfwDetectJoystickConnectionLinux}}
+\index{\_glfwDetectJoystickConnectionLinux@{\_glfwDetectJoystickConnectionLinux}!linux\_joystick.c@{linux\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwDetectJoystickConnectionLinux()}{\_glfwDetectJoystickConnectionLinux()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Detect\+Joystick\+Connection\+Linux (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 267 of file linux\+\_\+joystick.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{268 \{}
+\DoxyCodeLine{269     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.linjs.inotify <= 0)}
+\DoxyCodeLine{270         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{271 }
+\DoxyCodeLine{272     ssize\_t \mbox{\hyperlink{glad_8h_ac915cd848f42b26af51745f204a3b9af}{offset}} = 0;}
+\DoxyCodeLine{273     \textcolor{keywordtype}{char} \mbox{\hyperlink{structbuffer}{buffer}}[16384];}
+\DoxyCodeLine{274     \textcolor{keyword}{const} ssize\_t \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}} = read(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.linjs.inotify, \mbox{\hyperlink{structbuffer}{buffer}}, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structbuffer}{buffer}}));}
+\DoxyCodeLine{275 }
+\DoxyCodeLine{276     \textcolor{keywordflow}{while} (\mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}} > \mbox{\hyperlink{glad_8h_ac915cd848f42b26af51745f204a3b9af}{offset}})}
+\DoxyCodeLine{277     \{}
+\DoxyCodeLine{278         regmatch\_t match;}
+\DoxyCodeLine{279         \textcolor{keyword}{const} \textcolor{keyword}{struct }inotify\_event* \mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}} = (\textcolor{keyword}{struct }inotify\_event*) (\mbox{\hyperlink{structbuffer}{buffer}} + \mbox{\hyperlink{glad_8h_ac915cd848f42b26af51745f204a3b9af}{offset}});}
+\DoxyCodeLine{280 }
+\DoxyCodeLine{281         \mbox{\hyperlink{glad_8h_ac915cd848f42b26af51745f204a3b9af}{offset}} += \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct }inotify\_event) + \mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}-\/>\mbox{\hyperlink{glext_8h_a652168017ea9a8bbcead03d5c16269fb}{len}};}
+\DoxyCodeLine{282 }
+\DoxyCodeLine{283         \textcolor{keywordflow}{if} (regexec(\&\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.linjs.regex, \mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}-\/>name, 1, \&match, 0) != 0)}
+\DoxyCodeLine{284             \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{285 }
+\DoxyCodeLine{286         \textcolor{keywordtype}{char} \mbox{\hyperlink{glext_8h_ab25d8cd967ccbd19b630d7100ff8f67e}{path}}[PATH\_MAX];}
+\DoxyCodeLine{287         \mbox{\hyperlink{rrsprintf_8h_afebf4922e1c440094d77aeec3657eb12}{snprintf}}(\mbox{\hyperlink{glext_8h_ab25d8cd967ccbd19b630d7100ff8f67e}{path}}, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{glext_8h_ab25d8cd967ccbd19b630d7100ff8f67e}{path}}), \textcolor{stringliteral}{"/dev/input/\%s"}, \mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}-\/>name);}
+\DoxyCodeLine{288 }
+\DoxyCodeLine{289         \textcolor{keywordflow}{if} (\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}-\/>mask \& (IN\_CREATE | IN\_ATTRIB))}
+\DoxyCodeLine{290             openJoystickDevice(\mbox{\hyperlink{glext_8h_ab25d8cd967ccbd19b630d7100ff8f67e}{path}});}
+\DoxyCodeLine{291         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}-\/>mask \& IN\_DELETE)}
+\DoxyCodeLine{292         \{}
+\DoxyCodeLine{293             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} jid = 0;  jid <= \mbox{\hyperlink{group__joysticks_ga9ca13ebf24c331dd98df17d84a4b72c9}{GLFW\_JOYSTICK\_LAST}};  jid++)}
+\DoxyCodeLine{294             \{}
+\DoxyCodeLine{295                 \textcolor{keywordflow}{if} (strcmp(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7f6b01642d8bc4965fd7b084a01bc401}{joysticks}}[jid].linjs.path, \mbox{\hyperlink{glext_8h_ab25d8cd967ccbd19b630d7100ff8f67e}{path}}) == 0)}
+\DoxyCodeLine{296                 \{}
+\DoxyCodeLine{297                     closeJoystick(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7f6b01642d8bc4965fd7b084a01bc401}{joysticks}} + jid);}
+\DoxyCodeLine{298                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{299                 \}}
+\DoxyCodeLine{300             \}}
+\DoxyCodeLine{301         \}}
+\DoxyCodeLine{302     \}}
+\DoxyCodeLine{303 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{linux__joystick_8c_a3a9d5c327233cb7a3ead13f06928180d}\label{linux__joystick_8c_a3a9d5c327233cb7a3ead13f06928180d}} 
+\index{linux\_joystick.c@{linux\_joystick.c}!\_glfwGetMappingNameLinux@{\_glfwGetMappingNameLinux}}
+\index{\_glfwGetMappingNameLinux@{\_glfwGetMappingNameLinux}!linux\_joystick.c@{linux\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetMappingNameLinux()}{\_glfwGetMappingNameLinux()}}
+{\footnotesize\ttfamily const char$\ast$ \+\_\+glfw\+Get\+Mapping\+Name\+Linux (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 423 of file linux\+\_\+joystick.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{424 \{}
+\DoxyCodeLine{425     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Linux"};}
+\DoxyCodeLine{426 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{linux__joystick_8c_a17dc11e9772c08f5afdbe17d6830a8f5}\label{linux__joystick_8c_a17dc11e9772c08f5afdbe17d6830a8f5}} 
+\index{linux\_joystick.c@{linux\_joystick.c}!\_glfwInitJoysticksLinux@{\_glfwInitJoysticksLinux}}
+\index{\_glfwInitJoysticksLinux@{\_glfwInitJoysticksLinux}!linux\_joystick.c@{linux\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwInitJoysticksLinux()}{\_glfwInitJoysticksLinux()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \+\_\+glfw\+Init\+Joysticks\+Linux (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 310 of file linux\+\_\+joystick.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{311 \{}
+\DoxyCodeLine{312     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* dirname = \textcolor{stringliteral}{"/dev/input"};}
+\DoxyCodeLine{313 }
+\DoxyCodeLine{314     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.linjs.inotify = inotify\_init1(IN\_NONBLOCK | IN\_CLOEXEC);}
+\DoxyCodeLine{315     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.linjs.inotify > 0)}
+\DoxyCodeLine{316     \{}
+\DoxyCodeLine{317         \textcolor{comment}{// HACK: Register for IN\_ATTRIB to get notified when udev is done}}
+\DoxyCodeLine{318         \textcolor{comment}{//       This works well in practice but the true way is libudev}}
+\DoxyCodeLine{319 }
+\DoxyCodeLine{320         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.linjs.watch = inotify\_add\_watch(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.linjs.inotify,}
+\DoxyCodeLine{321                                               dirname,}
+\DoxyCodeLine{322                                               IN\_CREATE | IN\_ATTRIB | IN\_DELETE);}
+\DoxyCodeLine{323     \}}
+\DoxyCodeLine{324 }
+\DoxyCodeLine{325     \textcolor{comment}{// Continue without device connection notifications if inotify fails}}
+\DoxyCodeLine{326 }
+\DoxyCodeLine{327     \textcolor{keywordflow}{if} (regcomp(\&\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.linjs.regex, \textcolor{stringliteral}{"\string^event[0-\/9]\(\backslash\)\(\backslash\)+\$"}, 0) != 0)}
+\DoxyCodeLine{328     \{}
+\DoxyCodeLine{329         \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}}, \textcolor{stringliteral}{"Linux: Failed to compile regex"});}
+\DoxyCodeLine{330         \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{331     \}}
+\DoxyCodeLine{332 }
+\DoxyCodeLine{333     \textcolor{keywordtype}{int} \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}} = 0;}
+\DoxyCodeLine{334 }
+\DoxyCodeLine{335     DIR* dir = opendir(dirname);}
+\DoxyCodeLine{336     \textcolor{keywordflow}{if} (dir)}
+\DoxyCodeLine{337     \{}
+\DoxyCodeLine{338         \textcolor{keyword}{struct }dirent* entry;}
+\DoxyCodeLine{339 }
+\DoxyCodeLine{340         \textcolor{keywordflow}{while} ((entry = readdir(dir)))}
+\DoxyCodeLine{341         \{}
+\DoxyCodeLine{342             regmatch\_t match;}
+\DoxyCodeLine{343 }
+\DoxyCodeLine{344             \textcolor{keywordflow}{if} (regexec(\&\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.linjs.regex, entry-\/>d\_name, 1, \&match, 0) != 0)}
+\DoxyCodeLine{345                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{346 }
+\DoxyCodeLine{347             \textcolor{keywordtype}{char} \mbox{\hyperlink{glext_8h_ab25d8cd967ccbd19b630d7100ff8f67e}{path}}[PATH\_MAX];}
+\DoxyCodeLine{348 }
+\DoxyCodeLine{349             \mbox{\hyperlink{rrsprintf_8h_afebf4922e1c440094d77aeec3657eb12}{snprintf}}(\mbox{\hyperlink{glext_8h_ab25d8cd967ccbd19b630d7100ff8f67e}{path}}, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{glext_8h_ab25d8cd967ccbd19b630d7100ff8f67e}{path}}), \textcolor{stringliteral}{"\%s/\%s"}, dirname, entry-\/>d\_name);}
+\DoxyCodeLine{350 }
+\DoxyCodeLine{351             \textcolor{keywordflow}{if} (openJoystickDevice(\mbox{\hyperlink{glext_8h_ab25d8cd967ccbd19b630d7100ff8f67e}{path}}))}
+\DoxyCodeLine{352                 \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}}++;}
+\DoxyCodeLine{353         \}}
+\DoxyCodeLine{354 }
+\DoxyCodeLine{355         closedir(dir);}
+\DoxyCodeLine{356     \}}
+\DoxyCodeLine{357 }
+\DoxyCodeLine{358     \textcolor{comment}{// Continue with no joysticks if enumeration fails}}
+\DoxyCodeLine{359 }
+\DoxyCodeLine{360     qsort(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7f6b01642d8bc4965fd7b084a01bc401}{joysticks}}, \mbox{\hyperlink{glad_8h_a5b40aca7a9682963dd00a8f5aef0a901}{count}}, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct___g_l_f_wjoystick}{\_GLFWjoystick}}), compareJoysticks);}
+\DoxyCodeLine{361     \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{362 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{linux__joystick_8c_a399ffcc99f12447944f2e7c2df237940}\label{linux__joystick_8c_a399ffcc99f12447944f2e7c2df237940}} 
+\index{linux\_joystick.c@{linux\_joystick.c}!\_glfwPollJoystickLinux@{\_glfwPollJoystickLinux}}
+\index{\_glfwPollJoystickLinux@{\_glfwPollJoystickLinux}!linux\_joystick.c@{linux\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwPollJoystickLinux()}{\_glfwPollJoystickLinux()}}
+{\footnotesize\ttfamily int \+\_\+glfw\+Poll\+Joystick\+Linux (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wjoystick}{\+\_\+\+G\+L\+F\+Wjoystick}} $\ast$}]{js,  }\item[{int}]{mode }\end{DoxyParamCaption})}
+
+
+
+Definition at line 383 of file linux\+\_\+joystick.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{384 \{}
+\DoxyCodeLine{385     \textcolor{comment}{// Read all queued events (non-\/blocking)}}
+\DoxyCodeLine{386     \textcolor{keywordflow}{for} (;;)}
+\DoxyCodeLine{387     \{}
+\DoxyCodeLine{388         \textcolor{keyword}{struct }input\_event \mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}};}
+\DoxyCodeLine{389 }
+\DoxyCodeLine{390         errno = 0;}
+\DoxyCodeLine{391         \textcolor{keywordflow}{if} (read(js-\/>linjs.fd, \&\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}})) < 0)}
+\DoxyCodeLine{392         \{}
+\DoxyCodeLine{393             \textcolor{comment}{// Reset the joystick slot if the device was disconnected}}
+\DoxyCodeLine{394             \textcolor{keywordflow}{if} (errno == ENODEV)}
+\DoxyCodeLine{395                 closeJoystick(js);}
+\DoxyCodeLine{396 }
+\DoxyCodeLine{397             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{398         \}}
+\DoxyCodeLine{399 }
+\DoxyCodeLine{400         \textcolor{keywordflow}{if} (\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}.type == EV\_SYN)}
+\DoxyCodeLine{401         \{}
+\DoxyCodeLine{402             \textcolor{keywordflow}{if} (\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}.code == \mbox{\hyperlink{linux__joystick_8c_a722eb8b390bbac757caaa2d1f43c62d4}{SYN\_DROPPED}})}
+\DoxyCodeLine{403                 \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.linjs.dropped = \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{404             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}.code == SYN\_REPORT)}
+\DoxyCodeLine{405             \{}
+\DoxyCodeLine{406                 \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.linjs.dropped = \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{407                 pollAbsState(js);}
+\DoxyCodeLine{408             \}}
+\DoxyCodeLine{409         \}}
+\DoxyCodeLine{410 }
+\DoxyCodeLine{411         \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.linjs.dropped)}
+\DoxyCodeLine{412             \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{413 }
+\DoxyCodeLine{414         \textcolor{keywordflow}{if} (\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}.type == EV\_KEY)}
+\DoxyCodeLine{415             handleKeyEvent(js, \mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}.code, \mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}.value);}
+\DoxyCodeLine{416         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}.type == EV\_ABS)}
+\DoxyCodeLine{417             handleAbsEvent(js, \mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}.code, \mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}.value);}
+\DoxyCodeLine{418     \}}
+\DoxyCodeLine{419 }
+\DoxyCodeLine{420     \textcolor{keywordflow}{return} js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a88a2e71ed9c3be6eca850577a104d611}{present}};}
+\DoxyCodeLine{421 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{linux__joystick_8c_a64271879f7bf9f6a9e9631310a7e75f1}\label{linux__joystick_8c_a64271879f7bf9f6a9e9631310a7e75f1}} 
+\index{linux\_joystick.c@{linux\_joystick.c}!\_glfwTerminateJoysticksLinux@{\_glfwTerminateJoysticksLinux}}
+\index{\_glfwTerminateJoysticksLinux@{\_glfwTerminateJoysticksLinux}!linux\_joystick.c@{linux\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwTerminateJoysticksLinux()}{\_glfwTerminateJoysticksLinux()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Terminate\+Joysticks\+Linux (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 364 of file linux\+\_\+joystick.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{365 \{}
+\DoxyCodeLine{366     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} jid = 0;  jid <= \mbox{\hyperlink{group__joysticks_ga9ca13ebf24c331dd98df17d84a4b72c9}{GLFW\_JOYSTICK\_LAST}};  jid++)}
+\DoxyCodeLine{367     \{}
+\DoxyCodeLine{368         \mbox{\hyperlink{struct___g_l_f_wjoystick}{\_GLFWjoystick}}* js = \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7f6b01642d8bc4965fd7b084a01bc401}{joysticks}} + jid;}
+\DoxyCodeLine{369         \textcolor{keywordflow}{if} (js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a88a2e71ed9c3be6eca850577a104d611}{present}})}
+\DoxyCodeLine{370             closeJoystick(js);}
+\DoxyCodeLine{371     \}}
+\DoxyCodeLine{372 }
+\DoxyCodeLine{373     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.linjs.inotify > 0)}
+\DoxyCodeLine{374     \{}
+\DoxyCodeLine{375         \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.linjs.watch > 0)}
+\DoxyCodeLine{376             inotify\_rm\_watch(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.linjs.inotify, \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.linjs.watch);}
+\DoxyCodeLine{377 }
+\DoxyCodeLine{378         close(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.linjs.inotify);}
+\DoxyCodeLine{379         regfree(\&\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.linjs.regex);}
+\DoxyCodeLine{380     \}}
+\DoxyCodeLine{381 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{linux__joystick_8c_a4cf7ebdca81871f2a190618877764aa3}\label{linux__joystick_8c_a4cf7ebdca81871f2a190618877764aa3}} 
+\index{linux\_joystick.c@{linux\_joystick.c}!\_glfwUpdateGamepadGUIDLinux@{\_glfwUpdateGamepadGUIDLinux}}
+\index{\_glfwUpdateGamepadGUIDLinux@{\_glfwUpdateGamepadGUIDLinux}!linux\_joystick.c@{linux\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwUpdateGamepadGUIDLinux()}{\_glfwUpdateGamepadGUIDLinux()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Update\+Gamepad\+G\+U\+I\+D\+Linux (\begin{DoxyParamCaption}\item[{char $\ast$}]{guid }\end{DoxyParamCaption})}
+
+
+
+Definition at line 428 of file linux\+\_\+joystick.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{429 \{}
+\DoxyCodeLine{430 \}}
+
+\end{DoxyCode}

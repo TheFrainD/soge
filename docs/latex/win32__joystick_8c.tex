@@ -1,0 +1,546 @@
+\hypertarget{win32__joystick_8c}{}\doxysection{deps/glfw/src/win32\+\_\+joystick.c File Reference}
+\label{win32__joystick_8c}\index{deps/glfw/src/win32\_joystick.c@{deps/glfw/src/win32\_joystick.c}}
+{\ttfamily \#include \char`\"{}internal.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct___g_l_f_wobjenum_win32}{\+\_\+\+G\+L\+F\+Wobjenum\+Win32}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{win32__joystick_8c_a106797aadafb40536144108a327d7899}{\+\_\+\+G\+L\+F\+W\+\_\+\+T\+Y\+P\+E\+\_\+\+A\+X\+IS}}~0
+\item 
+\#define \mbox{\hyperlink{win32__joystick_8c_a3e46214f179e9569bbaaf7001c4a84cb}{\+\_\+\+G\+L\+F\+W\+\_\+\+T\+Y\+P\+E\+\_\+\+S\+L\+I\+D\+ER}}~1
+\item 
+\#define \mbox{\hyperlink{win32__joystick_8c_a51c03f1b45c64281f526e735075248e1}{\+\_\+\+G\+L\+F\+W\+\_\+\+T\+Y\+P\+E\+\_\+\+B\+U\+T\+T\+ON}}~2
+\item 
+\#define \mbox{\hyperlink{win32__joystick_8c_a3af724408ec3bc4c86ecac8241cfa94d}{\+\_\+\+G\+L\+F\+W\+\_\+\+T\+Y\+P\+E\+\_\+\+P\+OV}}~3
+\item 
+\#define \mbox{\hyperlink{win32__joystick_8c_a4d04555ffcfbf4bec0bcda3d131213b1}{I\+I\+D\+\_\+\+I\+Direct\+Input8W}}~\+\_\+glfw\+\_\+\+I\+I\+D\+\_\+\+I\+Direct\+Input8W
+\item 
+\#define \mbox{\hyperlink{win32__joystick_8c_ad7e545cd90e961c82a9505d427b4dc7d}{G\+U\+I\+D\+\_\+\+X\+Axis}}~\+\_\+glfw\+\_\+\+G\+U\+I\+D\+\_\+\+X\+Axis
+\item 
+\#define \mbox{\hyperlink{win32__joystick_8c_afabae522e34742b0de98c5251e522a04}{G\+U\+I\+D\+\_\+\+Y\+Axis}}~\+\_\+glfw\+\_\+\+G\+U\+I\+D\+\_\+\+Y\+Axis
+\item 
+\#define \mbox{\hyperlink{win32__joystick_8c_a11d0c3ef37335f3320e93ee1ca6c1d61}{G\+U\+I\+D\+\_\+\+Z\+Axis}}~\+\_\+glfw\+\_\+\+G\+U\+I\+D\+\_\+\+Z\+Axis
+\item 
+\#define \mbox{\hyperlink{win32__joystick_8c_a1ec981550612e155078ee65c6331c037}{G\+U\+I\+D\+\_\+\+Rx\+Axis}}~\+\_\+glfw\+\_\+\+G\+U\+I\+D\+\_\+\+Rx\+Axis
+\item 
+\#define \mbox{\hyperlink{win32__joystick_8c_a891842ba5fedbd93ae1917f1fab9cf00}{G\+U\+I\+D\+\_\+\+Ry\+Axis}}~\+\_\+glfw\+\_\+\+G\+U\+I\+D\+\_\+\+Ry\+Axis
+\item 
+\#define \mbox{\hyperlink{win32__joystick_8c_ac9ea6aa114ab9e0c561ae38da64268f1}{G\+U\+I\+D\+\_\+\+Rz\+Axis}}~\+\_\+glfw\+\_\+\+G\+U\+I\+D\+\_\+\+Rz\+Axis
+\item 
+\#define \mbox{\hyperlink{win32__joystick_8c_af300e58c35a975a286a25ef97451a4a7}{G\+U\+I\+D\+\_\+\+Slider}}~\+\_\+glfw\+\_\+\+G\+U\+I\+D\+\_\+\+Slider
+\item 
+\#define \mbox{\hyperlink{win32__joystick_8c_ad705b5a7bc731dfc97fb0c68e19ec376}{G\+U\+I\+D\+\_\+\+P\+OV}}~\+\_\+glfw\+\_\+\+G\+U\+I\+D\+\_\+\+P\+OV
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{struct___g_l_f_wobjenum_win32}{\+\_\+\+G\+L\+F\+Wobjenum\+Win32}} \mbox{\hyperlink{win32__joystick_8c_aef5f9a164492cc20fd00028a77f572b2}{\+\_\+\+G\+L\+F\+Wobjenum\+Win32}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{win32__joystick_8c_a58cafa45ca625cc01aee93124c190b13}{\+\_\+glfw\+Detect\+Joystick\+Connection\+Win32}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{win32__joystick_8c_a0075ab897c58609717fddb588970c268}{\+\_\+glfw\+Detect\+Joystick\+Disconnection\+Win32}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \mbox{\hyperlink{win32__joystick_8c_a3e920595135793177be13d7ad39d20b7}{\+\_\+glfw\+Init\+Joysticks\+Win32}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{win32__joystick_8c_a219b355c48800354e45f6091d7b2e564}{\+\_\+glfw\+Terminate\+Joysticks\+Win32}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+int \mbox{\hyperlink{win32__joystick_8c_a031cd959c74b03ac0523bbe77f3b117e}{\+\_\+glfw\+Poll\+Joystick\+Win32}} (\mbox{\hyperlink{struct___g_l_f_wjoystick}{\+\_\+\+G\+L\+F\+Wjoystick}} $\ast$js, int \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}})
+\item 
+const char $\ast$ \mbox{\hyperlink{win32__joystick_8c_ab4f284ba366d4134e9fb38c4f76c10a3}{\+\_\+glfw\+Get\+Mapping\+Name\+Win32}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{win32__joystick_8c_a148681c996ee9d03ca7be51de6360ee4}{\+\_\+glfw\+Update\+Gamepad\+G\+U\+I\+D\+Win32}} (char $\ast$guid)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{win32__joystick_8c_a106797aadafb40536144108a327d7899}\label{win32__joystick_8c_a106797aadafb40536144108a327d7899}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!\_GLFW\_TYPE\_AXIS@{\_GLFW\_TYPE\_AXIS}}
+\index{\_GLFW\_TYPE\_AXIS@{\_GLFW\_TYPE\_AXIS}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{\_GLFW\_TYPE\_AXIS}{\_GLFW\_TYPE\_AXIS}}
+{\footnotesize\ttfamily \#define \+\_\+\+G\+L\+F\+W\+\_\+\+T\+Y\+P\+E\+\_\+\+A\+X\+IS~0}
+
+
+
+Definition at line 35 of file win32\+\_\+joystick.\+c.
+
+\mbox{\Hypertarget{win32__joystick_8c_a51c03f1b45c64281f526e735075248e1}\label{win32__joystick_8c_a51c03f1b45c64281f526e735075248e1}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!\_GLFW\_TYPE\_BUTTON@{\_GLFW\_TYPE\_BUTTON}}
+\index{\_GLFW\_TYPE\_BUTTON@{\_GLFW\_TYPE\_BUTTON}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{\_GLFW\_TYPE\_BUTTON}{\_GLFW\_TYPE\_BUTTON}}
+{\footnotesize\ttfamily \#define \+\_\+\+G\+L\+F\+W\+\_\+\+T\+Y\+P\+E\+\_\+\+B\+U\+T\+T\+ON~2}
+
+
+
+Definition at line 37 of file win32\+\_\+joystick.\+c.
+
+\mbox{\Hypertarget{win32__joystick_8c_a3af724408ec3bc4c86ecac8241cfa94d}\label{win32__joystick_8c_a3af724408ec3bc4c86ecac8241cfa94d}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!\_GLFW\_TYPE\_POV@{\_GLFW\_TYPE\_POV}}
+\index{\_GLFW\_TYPE\_POV@{\_GLFW\_TYPE\_POV}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{\_GLFW\_TYPE\_POV}{\_GLFW\_TYPE\_POV}}
+{\footnotesize\ttfamily \#define \+\_\+\+G\+L\+F\+W\+\_\+\+T\+Y\+P\+E\+\_\+\+P\+OV~3}
+
+
+
+Definition at line 38 of file win32\+\_\+joystick.\+c.
+
+\mbox{\Hypertarget{win32__joystick_8c_a3e46214f179e9569bbaaf7001c4a84cb}\label{win32__joystick_8c_a3e46214f179e9569bbaaf7001c4a84cb}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!\_GLFW\_TYPE\_SLIDER@{\_GLFW\_TYPE\_SLIDER}}
+\index{\_GLFW\_TYPE\_SLIDER@{\_GLFW\_TYPE\_SLIDER}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{\_GLFW\_TYPE\_SLIDER}{\_GLFW\_TYPE\_SLIDER}}
+{\footnotesize\ttfamily \#define \+\_\+\+G\+L\+F\+W\+\_\+\+T\+Y\+P\+E\+\_\+\+S\+L\+I\+D\+ER~1}
+
+
+
+Definition at line 36 of file win32\+\_\+joystick.\+c.
+
+\mbox{\Hypertarget{win32__joystick_8c_ad705b5a7bc731dfc97fb0c68e19ec376}\label{win32__joystick_8c_ad705b5a7bc731dfc97fb0c68e19ec376}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!GUID\_POV@{GUID\_POV}}
+\index{GUID\_POV@{GUID\_POV}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{GUID\_POV}{GUID\_POV}}
+{\footnotesize\ttfamily \#define G\+U\+I\+D\+\_\+\+P\+OV~\+\_\+glfw\+\_\+\+G\+U\+I\+D\+\_\+\+P\+OV}
+
+
+
+Definition at line 82 of file win32\+\_\+joystick.\+c.
+
+\mbox{\Hypertarget{win32__joystick_8c_a1ec981550612e155078ee65c6331c037}\label{win32__joystick_8c_a1ec981550612e155078ee65c6331c037}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!GUID\_RxAxis@{GUID\_RxAxis}}
+\index{GUID\_RxAxis@{GUID\_RxAxis}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{GUID\_RxAxis}{GUID\_RxAxis}}
+{\footnotesize\ttfamily \#define G\+U\+I\+D\+\_\+\+Rx\+Axis~\+\_\+glfw\+\_\+\+G\+U\+I\+D\+\_\+\+Rx\+Axis}
+
+
+
+Definition at line 78 of file win32\+\_\+joystick.\+c.
+
+\mbox{\Hypertarget{win32__joystick_8c_a891842ba5fedbd93ae1917f1fab9cf00}\label{win32__joystick_8c_a891842ba5fedbd93ae1917f1fab9cf00}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!GUID\_RyAxis@{GUID\_RyAxis}}
+\index{GUID\_RyAxis@{GUID\_RyAxis}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{GUID\_RyAxis}{GUID\_RyAxis}}
+{\footnotesize\ttfamily \#define G\+U\+I\+D\+\_\+\+Ry\+Axis~\+\_\+glfw\+\_\+\+G\+U\+I\+D\+\_\+\+Ry\+Axis}
+
+
+
+Definition at line 79 of file win32\+\_\+joystick.\+c.
+
+\mbox{\Hypertarget{win32__joystick_8c_ac9ea6aa114ab9e0c561ae38da64268f1}\label{win32__joystick_8c_ac9ea6aa114ab9e0c561ae38da64268f1}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!GUID\_RzAxis@{GUID\_RzAxis}}
+\index{GUID\_RzAxis@{GUID\_RzAxis}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{GUID\_RzAxis}{GUID\_RzAxis}}
+{\footnotesize\ttfamily \#define G\+U\+I\+D\+\_\+\+Rz\+Axis~\+\_\+glfw\+\_\+\+G\+U\+I\+D\+\_\+\+Rz\+Axis}
+
+
+
+Definition at line 80 of file win32\+\_\+joystick.\+c.
+
+\mbox{\Hypertarget{win32__joystick_8c_af300e58c35a975a286a25ef97451a4a7}\label{win32__joystick_8c_af300e58c35a975a286a25ef97451a4a7}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!GUID\_Slider@{GUID\_Slider}}
+\index{GUID\_Slider@{GUID\_Slider}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{GUID\_Slider}{GUID\_Slider}}
+{\footnotesize\ttfamily \#define G\+U\+I\+D\+\_\+\+Slider~\+\_\+glfw\+\_\+\+G\+U\+I\+D\+\_\+\+Slider}
+
+
+
+Definition at line 81 of file win32\+\_\+joystick.\+c.
+
+\mbox{\Hypertarget{win32__joystick_8c_ad7e545cd90e961c82a9505d427b4dc7d}\label{win32__joystick_8c_ad7e545cd90e961c82a9505d427b4dc7d}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!GUID\_XAxis@{GUID\_XAxis}}
+\index{GUID\_XAxis@{GUID\_XAxis}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{GUID\_XAxis}{GUID\_XAxis}}
+{\footnotesize\ttfamily \#define G\+U\+I\+D\+\_\+\+X\+Axis~\+\_\+glfw\+\_\+\+G\+U\+I\+D\+\_\+\+X\+Axis}
+
+
+
+Definition at line 75 of file win32\+\_\+joystick.\+c.
+
+\mbox{\Hypertarget{win32__joystick_8c_afabae522e34742b0de98c5251e522a04}\label{win32__joystick_8c_afabae522e34742b0de98c5251e522a04}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!GUID\_YAxis@{GUID\_YAxis}}
+\index{GUID\_YAxis@{GUID\_YAxis}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{GUID\_YAxis}{GUID\_YAxis}}
+{\footnotesize\ttfamily \#define G\+U\+I\+D\+\_\+\+Y\+Axis~\+\_\+glfw\+\_\+\+G\+U\+I\+D\+\_\+\+Y\+Axis}
+
+
+
+Definition at line 76 of file win32\+\_\+joystick.\+c.
+
+\mbox{\Hypertarget{win32__joystick_8c_a11d0c3ef37335f3320e93ee1ca6c1d61}\label{win32__joystick_8c_a11d0c3ef37335f3320e93ee1ca6c1d61}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!GUID\_ZAxis@{GUID\_ZAxis}}
+\index{GUID\_ZAxis@{GUID\_ZAxis}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{GUID\_ZAxis}{GUID\_ZAxis}}
+{\footnotesize\ttfamily \#define G\+U\+I\+D\+\_\+\+Z\+Axis~\+\_\+glfw\+\_\+\+G\+U\+I\+D\+\_\+\+Z\+Axis}
+
+
+
+Definition at line 77 of file win32\+\_\+joystick.\+c.
+
+\mbox{\Hypertarget{win32__joystick_8c_a4d04555ffcfbf4bec0bcda3d131213b1}\label{win32__joystick_8c_a4d04555ffcfbf4bec0bcda3d131213b1}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!IID\_IDirectInput8W@{IID\_IDirectInput8W}}
+\index{IID\_IDirectInput8W@{IID\_IDirectInput8W}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{IID\_IDirectInput8W}{IID\_IDirectInput8W}}
+{\footnotesize\ttfamily \#define I\+I\+D\+\_\+\+I\+Direct\+Input8W~\+\_\+glfw\+\_\+\+I\+I\+D\+\_\+\+I\+Direct\+Input8W}
+
+
+
+Definition at line 74 of file win32\+\_\+joystick.\+c.
+
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{win32__joystick_8c_aef5f9a164492cc20fd00028a77f572b2}\label{win32__joystick_8c_aef5f9a164492cc20fd00028a77f572b2}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!\_GLFWobjenumWin32@{\_GLFWobjenumWin32}}
+\index{\_GLFWobjenumWin32@{\_GLFWobjenumWin32}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{\_GLFWobjenumWin32}{\_GLFWobjenumWin32}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{struct___g_l_f_wobjenum_win32}{\+\_\+\+G\+L\+F\+Wobjenum\+Win32}} \mbox{\hyperlink{struct___g_l_f_wobjenum_win32}{\+\_\+\+G\+L\+F\+Wobjenum\+Win32}}}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{win32__joystick_8c_a58cafa45ca625cc01aee93124c190b13}\label{win32__joystick_8c_a58cafa45ca625cc01aee93124c190b13}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!\_glfwDetectJoystickConnectionWin32@{\_glfwDetectJoystickConnectionWin32}}
+\index{\_glfwDetectJoystickConnectionWin32@{\_glfwDetectJoystickConnectionWin32}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwDetectJoystickConnectionWin32()}{\_glfwDetectJoystickConnectionWin32()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Detect\+Joystick\+Connection\+Win32 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 496 of file win32\+\_\+joystick.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{497 \{}
+\DoxyCodeLine{498     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.win32.xinput.instance)}
+\DoxyCodeLine{499     \{}
+\DoxyCodeLine{500         DWORD \mbox{\hyperlink{glad_8h_a57f14e05b1900f16a2da82ade47d0c6d}{index}};}
+\DoxyCodeLine{501 }
+\DoxyCodeLine{502         \textcolor{keywordflow}{for} (\mbox{\hyperlink{glad_8h_a57f14e05b1900f16a2da82ade47d0c6d}{index}} = 0;  \mbox{\hyperlink{glad_8h_a57f14e05b1900f16a2da82ade47d0c6d}{index}} < \mbox{\hyperlink{xinput_8h_a1ed62c09d395884159e802440e233a94}{XUSER\_MAX\_COUNT}};  \mbox{\hyperlink{glad_8h_a57f14e05b1900f16a2da82ade47d0c6d}{index}}++)}
+\DoxyCodeLine{503         \{}
+\DoxyCodeLine{504             \textcolor{keywordtype}{int} jid;}
+\DoxyCodeLine{505             \textcolor{keywordtype}{char} guid[33];}
+\DoxyCodeLine{506             \mbox{\hyperlink{struct___x_i_n_p_u_t___c_a_p_a_b_i_l_i_t_i_e_s}{XINPUT\_CAPABILITIES}} xic;}
+\DoxyCodeLine{507             \mbox{\hyperlink{struct___g_l_f_wjoystick}{\_GLFWjoystick}}* js;}
+\DoxyCodeLine{508 }
+\DoxyCodeLine{509             \textcolor{keywordflow}{for} (jid = 0;  jid <= \mbox{\hyperlink{group__joysticks_ga9ca13ebf24c331dd98df17d84a4b72c9}{GLFW\_JOYSTICK\_LAST}};  jid++)}
+\DoxyCodeLine{510             \{}
+\DoxyCodeLine{511                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7f6b01642d8bc4965fd7b084a01bc401}{joysticks}}[jid].\mbox{\hyperlink{struct___g_l_f_wjoystick_a88a2e71ed9c3be6eca850577a104d611}{present}} \&\&}
+\DoxyCodeLine{512                     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7f6b01642d8bc4965fd7b084a01bc401}{joysticks}}[jid].win32.device == \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}} \&\&}
+\DoxyCodeLine{513                     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7f6b01642d8bc4965fd7b084a01bc401}{joysticks}}[jid].win32.index == \mbox{\hyperlink{glad_8h_a57f14e05b1900f16a2da82ade47d0c6d}{index}})}
+\DoxyCodeLine{514                 \{}
+\DoxyCodeLine{515                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{516                 \}}
+\DoxyCodeLine{517             \}}
+\DoxyCodeLine{518 }
+\DoxyCodeLine{519             \textcolor{keywordflow}{if} (jid <= \mbox{\hyperlink{group__joysticks_ga9ca13ebf24c331dd98df17d84a4b72c9}{GLFW\_JOYSTICK\_LAST}})}
+\DoxyCodeLine{520                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{521 }
+\DoxyCodeLine{522             \textcolor{keywordflow}{if} (\mbox{\hyperlink{xinput_8h_a36e7b355f8bb63d1486ee229af5a9b30}{XInputGetCapabilities}}(\mbox{\hyperlink{glad_8h_a57f14e05b1900f16a2da82ade47d0c6d}{index}}, 0, \&xic) != ERROR\_SUCCESS)}
+\DoxyCodeLine{523                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{524 }
+\DoxyCodeLine{525             \textcolor{comment}{// Generate a joystick GUID that matches the SDL 2.0.5+ one}}
+\DoxyCodeLine{526             \mbox{\hyperlink{rrsprintf_8h_a9b1bcf2b847c7e2a9e4d06b7bb6fa018}{sprintf}}(guid, \textcolor{stringliteral}{"78696e707574\%02x000000000000000000"},}
+\DoxyCodeLine{527                     xic.\mbox{\hyperlink{struct___x_i_n_p_u_t___c_a_p_a_b_i_l_i_t_i_e_s_ab686f41df1cb509eebda27f84c76faa1}{SubType}} \& 0xff);}
+\DoxyCodeLine{528 }
+\DoxyCodeLine{529             js = \mbox{\hyperlink{deps_2glfw_2src_2input_8c_aa53debe565c79b60729cf4acda5df3d1}{\_glfwAllocJoystick}}(getDeviceDescription(\&xic), guid, 6, 10, 1);}
+\DoxyCodeLine{530             \textcolor{keywordflow}{if} (!js)}
+\DoxyCodeLine{531                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{532 }
+\DoxyCodeLine{533             js-\/>win32.index = \mbox{\hyperlink{glad_8h_a57f14e05b1900f16a2da82ade47d0c6d}{index}};}
+\DoxyCodeLine{534 }
+\DoxyCodeLine{535             \mbox{\hyperlink{deps_2glfw_2src_2input_8c_a3f053fce7ffb1aeb2ebdee3674a8fee2}{\_glfwInputJoystick}}(js, \mbox{\hyperlink{glfw3_8h_abe11513fd1ffbee5bb9b173f06028b9e}{GLFW\_CONNECTED}});}
+\DoxyCodeLine{536         \}}
+\DoxyCodeLine{537     \}}
+\DoxyCodeLine{538 }
+\DoxyCodeLine{539     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.win32.dinput8.api)}
+\DoxyCodeLine{540     \{}
+\DoxyCodeLine{541         \textcolor{keywordflow}{if} (FAILED(\mbox{\hyperlink{dinput_8h_a54da8c6eff290db2220aa0f8ebd16368}{IDirectInput8\_EnumDevices}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.win32.dinput8.api,}
+\DoxyCodeLine{542                                              \mbox{\hyperlink{dinput_8h_aef48b3fdbcd4a26f7757728ea58191e1}{DI8DEVCLASS\_GAMECTRL}},}
+\DoxyCodeLine{543                                              deviceCallback,}
+\DoxyCodeLine{544                                              \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}},}
+\DoxyCodeLine{545                                              \mbox{\hyperlink{dinput_8h_a40ca027f3872ec929f1a343dfeb70034}{DIEDFL\_ALLDEVICES}})))}
+\DoxyCodeLine{546         \{}
+\DoxyCodeLine{547             \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{548                             \textcolor{stringliteral}{"Failed to enumerate DirectInput8 devices"});}
+\DoxyCodeLine{549             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{550         \}}
+\DoxyCodeLine{551     \}}
+\DoxyCodeLine{552 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__joystick_8c_a0075ab897c58609717fddb588970c268}\label{win32__joystick_8c_a0075ab897c58609717fddb588970c268}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!\_glfwDetectJoystickDisconnectionWin32@{\_glfwDetectJoystickDisconnectionWin32}}
+\index{\_glfwDetectJoystickDisconnectionWin32@{\_glfwDetectJoystickDisconnectionWin32}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwDetectJoystickDisconnectionWin32()}{\_glfwDetectJoystickDisconnectionWin32()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Detect\+Joystick\+Disconnection\+Win32 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 556 of file win32\+\_\+joystick.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{557 \{}
+\DoxyCodeLine{558     \textcolor{keywordtype}{int} jid;}
+\DoxyCodeLine{559 }
+\DoxyCodeLine{560     \textcolor{keywordflow}{for} (jid = 0;  jid <= \mbox{\hyperlink{group__joysticks_ga9ca13ebf24c331dd98df17d84a4b72c9}{GLFW\_JOYSTICK\_LAST}};  jid++)}
+\DoxyCodeLine{561     \{}
+\DoxyCodeLine{562         \mbox{\hyperlink{struct___g_l_f_wjoystick}{\_GLFWjoystick}}* js = \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7f6b01642d8bc4965fd7b084a01bc401}{joysticks}} + jid;}
+\DoxyCodeLine{563         \textcolor{keywordflow}{if} (js-\/>\mbox{\hyperlink{struct___g_l_f_wjoystick_a88a2e71ed9c3be6eca850577a104d611}{present}})}
+\DoxyCodeLine{564             \mbox{\hyperlink{win32__joystick_8c_a031cd959c74b03ac0523bbe77f3b117e}{\_glfwPollJoystickWin32}}(js, \mbox{\hyperlink{internal_8h_afacd50de7ce642cb201352bba9c73307}{\_GLFW\_POLL\_PRESENCE}});}
+\DoxyCodeLine{565     \}}
+\DoxyCodeLine{566 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__joystick_8c_ab4f284ba366d4134e9fb38c4f76c10a3}\label{win32__joystick_8c_ab4f284ba366d4134e9fb38c4f76c10a3}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!\_glfwGetMappingNameWin32@{\_glfwGetMappingNameWin32}}
+\index{\_glfwGetMappingNameWin32@{\_glfwGetMappingNameWin32}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwGetMappingNameWin32()}{\_glfwGetMappingNameWin32()}}
+{\footnotesize\ttfamily const char$\ast$ \+\_\+glfw\+Get\+Mapping\+Name\+Win32 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 743 of file win32\+\_\+joystick.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{744 \{}
+\DoxyCodeLine{745     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Windows"};}
+\DoxyCodeLine{746 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__joystick_8c_a3e920595135793177be13d7ad39d20b7}\label{win32__joystick_8c_a3e920595135793177be13d7ad39d20b7}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!\_glfwInitJoysticksWin32@{\_glfwInitJoysticksWin32}}
+\index{\_glfwInitJoysticksWin32@{\_glfwInitJoysticksWin32}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwInitJoysticksWin32()}{\_glfwInitJoysticksWin32()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{internal_8h_ac5743c31bece872e24528b5a45e354c5}{G\+L\+F\+Wbool}} \+\_\+glfw\+Init\+Joysticks\+Win32 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 573 of file win32\+\_\+joystick.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{574 \{}
+\DoxyCodeLine{575     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.win32.dinput8.instance)}
+\DoxyCodeLine{576     \{}
+\DoxyCodeLine{577         \textcolor{keywordflow}{if} (FAILED(\mbox{\hyperlink{dinput_8h_afa169e6e963eb705bb8458933a6dac16}{DirectInput8Create}}(GetModuleHandle(\mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}}),}
+\DoxyCodeLine{578                                       \mbox{\hyperlink{dinput_8h_a1d7ab29fdefabdb4e7e7cd27ac4c9934}{DIRECTINPUT\_VERSION}},}
+\DoxyCodeLine{579                                       \&\mbox{\hyperlink{win32__joystick_8c_a4d04555ffcfbf4bec0bcda3d131213b1}{IID\_IDirectInput8W}},}
+\DoxyCodeLine{580                                       (\textcolor{keywordtype}{void}**) \&\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.win32.dinput8.api,}
+\DoxyCodeLine{581                                       \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}})))}
+\DoxyCodeLine{582         \{}
+\DoxyCodeLine{583             \mbox{\hyperlink{init_8c_a3287b282ec57a4a89127ae51f49f10f5}{\_glfwInputError}}(\mbox{\hyperlink{group__errors_gad44162d78100ea5e87cdd38426b8c7a1}{GLFW\_PLATFORM\_ERROR}},}
+\DoxyCodeLine{584                             \textcolor{stringliteral}{"Win32: Failed to create interface"});}
+\DoxyCodeLine{585             \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{586         \}}
+\DoxyCodeLine{587     \}}
+\DoxyCodeLine{588 }
+\DoxyCodeLine{589     \mbox{\hyperlink{win32__joystick_8c_a58cafa45ca625cc01aee93124c190b13}{\_glfwDetectJoystickConnectionWin32}}();}
+\DoxyCodeLine{590     \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{591 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__joystick_8c_a031cd959c74b03ac0523bbe77f3b117e}\label{win32__joystick_8c_a031cd959c74b03ac0523bbe77f3b117e}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!\_glfwPollJoystickWin32@{\_glfwPollJoystickWin32}}
+\index{\_glfwPollJoystickWin32@{\_glfwPollJoystickWin32}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwPollJoystickWin32()}{\_glfwPollJoystickWin32()}}
+{\footnotesize\ttfamily int \+\_\+glfw\+Poll\+Joystick\+Win32 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct___g_l_f_wjoystick}{\+\_\+\+G\+L\+F\+Wjoystick}} $\ast$}]{js,  }\item[{int}]{mode }\end{DoxyParamCaption})}
+
+
+
+Definition at line 604 of file win32\+\_\+joystick.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{605 \{}
+\DoxyCodeLine{606     \textcolor{keywordflow}{if} (js-\/>win32.device)}
+\DoxyCodeLine{607     \{}
+\DoxyCodeLine{608         \textcolor{keywordtype}{int} i, ai = 0, bi = 0, pi = 0;}
+\DoxyCodeLine{609         HRESULT \mbox{\hyperlink{glext_8h_a321ff419cd5252e54cf95e64dc6687ee}{result}};}
+\DoxyCodeLine{610         \mbox{\hyperlink{struct_d_i_j_o_y_s_t_a_t_e}{DIJOYSTATE}} state;}
+\DoxyCodeLine{611 }
+\DoxyCodeLine{612         \mbox{\hyperlink{dinput_8h_ab18a02de299693772608441ee9100ac6}{IDirectInputDevice8\_Poll}}(js-\/>win32.device);}
+\DoxyCodeLine{613         \mbox{\hyperlink{structresult}{result}} = \mbox{\hyperlink{dinput_8h_a4bb2b89fae4c53e596e2c29ddafc53ba}{IDirectInputDevice8\_GetDeviceState}}(js-\/>win32.device,}
+\DoxyCodeLine{614                                                     \textcolor{keyword}{sizeof}(state),}
+\DoxyCodeLine{615                                                     \&state);}
+\DoxyCodeLine{616         \textcolor{keywordflow}{if} (\mbox{\hyperlink{structresult}{result}} == \mbox{\hyperlink{dinput_8h_a744a5f6d4ca7882c0835e87a4cea2578}{DIERR\_NOTACQUIRED}} || \mbox{\hyperlink{structresult}{result}} == \mbox{\hyperlink{dinput_8h_aadd51bdf0e53047ab5d39f334ee3699f}{DIERR\_INPUTLOST}})}
+\DoxyCodeLine{617         \{}
+\DoxyCodeLine{618             \mbox{\hyperlink{dinput_8h_ad58e96d0c42e9d49d22669d6b1b48dae}{IDirectInputDevice8\_Acquire}}(js-\/>win32.device);}
+\DoxyCodeLine{619             \mbox{\hyperlink{dinput_8h_ab18a02de299693772608441ee9100ac6}{IDirectInputDevice8\_Poll}}(js-\/>win32.device);}
+\DoxyCodeLine{620             \mbox{\hyperlink{structresult}{result}} = \mbox{\hyperlink{dinput_8h_a4bb2b89fae4c53e596e2c29ddafc53ba}{IDirectInputDevice8\_GetDeviceState}}(js-\/>win32.device,}
+\DoxyCodeLine{621                                                         \textcolor{keyword}{sizeof}(state),}
+\DoxyCodeLine{622                                                         \&state);}
+\DoxyCodeLine{623         \}}
+\DoxyCodeLine{624 }
+\DoxyCodeLine{625         \textcolor{keywordflow}{if} (FAILED(\mbox{\hyperlink{structresult}{result}}))}
+\DoxyCodeLine{626         \{}
+\DoxyCodeLine{627             closeJoystick(js);}
+\DoxyCodeLine{628             \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{629         \}}
+\DoxyCodeLine{630 }
+\DoxyCodeLine{631         \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}} == \mbox{\hyperlink{internal_8h_afacd50de7ce642cb201352bba9c73307}{\_GLFW\_POLL\_PRESENCE}})}
+\DoxyCodeLine{632             \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{633 }
+\DoxyCodeLine{634         \textcolor{keywordflow}{for} (i = 0;  i < js-\/>win32.objectCount;  i++)}
+\DoxyCodeLine{635         \{}
+\DoxyCodeLine{636             \textcolor{keyword}{const} \textcolor{keywordtype}{void}* \mbox{\hyperlink{glad_8h_a41a8247b39e9cdb744299c3331ca3453}{data}} = (\textcolor{keywordtype}{char}*) \&state + js-\/>win32.objects[i].offset;}
+\DoxyCodeLine{637 }
+\DoxyCodeLine{638             switch (js-\/>win32.objects[i].type)}
+\DoxyCodeLine{639             \{}
+\DoxyCodeLine{640                 \textcolor{keywordflow}{case} \mbox{\hyperlink{win32__joystick_8c_a106797aadafb40536144108a327d7899}{\_GLFW\_TYPE\_AXIS}}:}
+\DoxyCodeLine{641                 \textcolor{keywordflow}{case} \mbox{\hyperlink{win32__joystick_8c_a3e46214f179e9569bbaaf7001c4a84cb}{\_GLFW\_TYPE\_SLIDER}}:}
+\DoxyCodeLine{642                 \{}
+\DoxyCodeLine{643                     \textcolor{keyword}{const} \textcolor{keywordtype}{float} \mbox{\hyperlink{glad_8h_a79169be77d7e02a24f68a5bfe627dc29}{value}} = (*((LONG*) \mbox{\hyperlink{glad_8h_a41a8247b39e9cdb744299c3331ca3453}{data}}) + 0.5f) / 32767.5\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}};}
+\DoxyCodeLine{644                     \mbox{\hyperlink{deps_2glfw_2src_2input_8c_ab91e3f3a89daff3809c3817a57a4f523}{\_glfwInputJoystickAxis}}(js, ai, \mbox{\hyperlink{glad_8h_a79169be77d7e02a24f68a5bfe627dc29}{value}});}
+\DoxyCodeLine{645                     ai++;}
+\DoxyCodeLine{646                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{647                 \}}
+\DoxyCodeLine{648 }
+\DoxyCodeLine{649                 \textcolor{keywordflow}{case} \mbox{\hyperlink{win32__joystick_8c_a51c03f1b45c64281f526e735075248e1}{\_GLFW\_TYPE\_BUTTON}}:}
+\DoxyCodeLine{650                 \{}
+\DoxyCodeLine{651                     \textcolor{keyword}{const} \textcolor{keywordtype}{char} \mbox{\hyperlink{glad_8h_a79169be77d7e02a24f68a5bfe627dc29}{value}} = (*((BYTE*) \mbox{\hyperlink{glad_8h_a41a8247b39e9cdb744299c3331ca3453}{data}}) \& 0x80) != 0;}
+\DoxyCodeLine{652                     \mbox{\hyperlink{deps_2glfw_2src_2input_8c_af1048006805591e17cc431c016f539f5}{\_glfwInputJoystickButton}}(js, bi, \mbox{\hyperlink{glad_8h_a79169be77d7e02a24f68a5bfe627dc29}{value}});}
+\DoxyCodeLine{653                     bi++;}
+\DoxyCodeLine{654                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{655                 \}}
+\DoxyCodeLine{656 }
+\DoxyCodeLine{657                 \textcolor{keywordflow}{case} \mbox{\hyperlink{win32__joystick_8c_a3af724408ec3bc4c86ecac8241cfa94d}{\_GLFW\_TYPE\_POV}}:}
+\DoxyCodeLine{658                 \{}
+\DoxyCodeLine{659                     \textcolor{keyword}{const} \textcolor{keywordtype}{int} states[9] =}
+\DoxyCodeLine{660                     \{}
+\DoxyCodeLine{661                         \mbox{\hyperlink{group__hat__state_ga8c9720c76cd1b912738159ed74c85b36}{GLFW\_HAT\_UP}},}
+\DoxyCodeLine{662                         \mbox{\hyperlink{group__hat__state_ga94aea0ae241a8b902883536c592ee693}{GLFW\_HAT\_RIGHT\_UP}},}
+\DoxyCodeLine{663                         \mbox{\hyperlink{group__hat__state_ga252586e3bbde75f4b0e07ad3124867f5}{GLFW\_HAT\_RIGHT}},}
+\DoxyCodeLine{664                         \mbox{\hyperlink{group__hat__state_gad7f0e4f52fd68d734863aaeadab3a3f5}{GLFW\_HAT\_RIGHT\_DOWN}},}
+\DoxyCodeLine{665                         \mbox{\hyperlink{group__hat__state_gad60d1fd0dc85c18f2642cbae96d3deff}{GLFW\_HAT\_DOWN}},}
+\DoxyCodeLine{666                         \mbox{\hyperlink{group__hat__state_ga76c02baf1ea345fcbe3e8ff176a73e19}{GLFW\_HAT\_LEFT\_DOWN}},}
+\DoxyCodeLine{667                         \mbox{\hyperlink{group__hat__state_gac775f4b3154fdf5db93eb432ba546dff}{GLFW\_HAT\_LEFT}},}
+\DoxyCodeLine{668                         \mbox{\hyperlink{group__hat__state_ga638f0e20dc5de90de21a33564e8ce129}{GLFW\_HAT\_LEFT\_UP}},}
+\DoxyCodeLine{669                         \mbox{\hyperlink{group__hat__state_gae2c0bcb7aec609e4736437554f6638fd}{GLFW\_HAT\_CENTERED}}}
+\DoxyCodeLine{670                     \};}
+\DoxyCodeLine{671 }
+\DoxyCodeLine{672                     \textcolor{comment}{// Screams of horror are appropriate at this point}}
+\DoxyCodeLine{673                     \textcolor{keywordtype}{int} stateIndex = LOWORD(*(DWORD*) \mbox{\hyperlink{glad_8h_a41a8247b39e9cdb744299c3331ca3453}{data}}) / (45 * \mbox{\hyperlink{dinput_8h_a63861314608667d0b1c02d6b5b672971}{DI\_DEGREES}});}
+\DoxyCodeLine{674                     \textcolor{keywordflow}{if} (stateIndex < 0 || stateIndex > 8)}
+\DoxyCodeLine{675                         stateIndex = 8;}
+\DoxyCodeLine{676 }
+\DoxyCodeLine{677                     \mbox{\hyperlink{deps_2glfw_2src_2input_8c_aca3d4e257b8212cf2a713f9a1069ff08}{\_glfwInputJoystickHat}}(js, pi, states[stateIndex]);}
+\DoxyCodeLine{678                     pi++;}
+\DoxyCodeLine{679                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{680                 \}}
+\DoxyCodeLine{681             \}}
+\DoxyCodeLine{682         \}}
+\DoxyCodeLine{683     \}}
+\DoxyCodeLine{684     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{685     \{}
+\DoxyCodeLine{686         \textcolor{keywordtype}{int} i, dpad = 0;}
+\DoxyCodeLine{687         DWORD \mbox{\hyperlink{glext_8h_a321ff419cd5252e54cf95e64dc6687ee}{result}};}
+\DoxyCodeLine{688         \mbox{\hyperlink{struct___x_i_n_p_u_t___s_t_a_t_e}{XINPUT\_STATE}} xis;}
+\DoxyCodeLine{689         \textcolor{keyword}{const} WORD buttons[10] =}
+\DoxyCodeLine{690         \{}
+\DoxyCodeLine{691             \mbox{\hyperlink{xinput_8h_abc16418681df26e5550d4b1cd0ee189f}{XINPUT\_GAMEPAD\_A}},}
+\DoxyCodeLine{692             \mbox{\hyperlink{xinput_8h_a2c8ca2ad832e581f82e020da9dc3df76}{XINPUT\_GAMEPAD\_B}},}
+\DoxyCodeLine{693             \mbox{\hyperlink{xinput_8h_a601cb8ab3003686dc9d62166323e1eae}{XINPUT\_GAMEPAD\_X}},}
+\DoxyCodeLine{694             \mbox{\hyperlink{xinput_8h_a1033c4b2e32e532f77c60ecaf42f94c6}{XINPUT\_GAMEPAD\_Y}},}
+\DoxyCodeLine{695             \mbox{\hyperlink{xinput_8h_ac4e92e3baf1077141925bd994a8df5e2}{XINPUT\_GAMEPAD\_LEFT\_SHOULDER}},}
+\DoxyCodeLine{696             \mbox{\hyperlink{xinput_8h_aa8669aec44f097aa63bbee10cd95dcaa}{XINPUT\_GAMEPAD\_RIGHT\_SHOULDER}},}
+\DoxyCodeLine{697             \mbox{\hyperlink{xinput_8h_a60a5564a9661ec8002f57aee5a036920}{XINPUT\_GAMEPAD\_BACK}},}
+\DoxyCodeLine{698             \mbox{\hyperlink{xinput_8h_a30f3024691937a5d40381da611eb53a5}{XINPUT\_GAMEPAD\_START}},}
+\DoxyCodeLine{699             \mbox{\hyperlink{xinput_8h_afa3822de8ee77924f74978908b026940}{XINPUT\_GAMEPAD\_LEFT\_THUMB}},}
+\DoxyCodeLine{700             \mbox{\hyperlink{xinput_8h_af8df547f70dd2e60a9cf9693ff34d381}{XINPUT\_GAMEPAD\_RIGHT\_THUMB}}}
+\DoxyCodeLine{701         \};}
+\DoxyCodeLine{702 }
+\DoxyCodeLine{703         \mbox{\hyperlink{structresult}{result}} = \mbox{\hyperlink{xinput_8h_aa72a1b166b2d99969df0a07446ffc875}{XInputGetState}}(js-\/>win32.index, \&xis);}
+\DoxyCodeLine{704         \textcolor{keywordflow}{if} (\mbox{\hyperlink{structresult}{result}} != ERROR\_SUCCESS)}
+\DoxyCodeLine{705         \{}
+\DoxyCodeLine{706             \textcolor{keywordflow}{if} (\mbox{\hyperlink{structresult}{result}} == ERROR\_DEVICE\_NOT\_CONNECTED)}
+\DoxyCodeLine{707                 closeJoystick(js);}
+\DoxyCodeLine{708 }
+\DoxyCodeLine{709             \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_gac877fe3b627d21ef3a0a23e0a73ba8c5}{GLFW\_FALSE}};}
+\DoxyCodeLine{710         \}}
+\DoxyCodeLine{711 }
+\DoxyCodeLine{712         \textcolor{keywordflow}{if} (\mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}} == \mbox{\hyperlink{internal_8h_afacd50de7ce642cb201352bba9c73307}{\_GLFW\_POLL\_PRESENCE}})}
+\DoxyCodeLine{713             \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{714 }
+\DoxyCodeLine{715         \mbox{\hyperlink{deps_2glfw_2src_2input_8c_ab91e3f3a89daff3809c3817a57a4f523}{\_glfwInputJoystickAxis}}(js, 0, (xis.\mbox{\hyperlink{struct___x_i_n_p_u_t___s_t_a_t_e_a5eee32c04cc4419aa6ae2d24a53b56fa}{Gamepad}}.\mbox{\hyperlink{struct___x_i_n_p_u_t___g_a_m_e_p_a_d_acab2d1e1bda5277f4cbd9abdf6b82066}{sThumbLX}} + 0.5f) / 32767.5f);}
+\DoxyCodeLine{716         \mbox{\hyperlink{deps_2glfw_2src_2input_8c_ab91e3f3a89daff3809c3817a57a4f523}{\_glfwInputJoystickAxis}}(js, 1, -\/(xis.\mbox{\hyperlink{struct___x_i_n_p_u_t___s_t_a_t_e_a5eee32c04cc4419aa6ae2d24a53b56fa}{Gamepad}}.\mbox{\hyperlink{struct___x_i_n_p_u_t___g_a_m_e_p_a_d_ad0c91ee8c26e828438bacb475f9c5ec3}{sThumbLY}} + 0.5f) / 32767.5f);}
+\DoxyCodeLine{717         \mbox{\hyperlink{deps_2glfw_2src_2input_8c_ab91e3f3a89daff3809c3817a57a4f523}{\_glfwInputJoystickAxis}}(js, 2, (xis.\mbox{\hyperlink{struct___x_i_n_p_u_t___s_t_a_t_e_a5eee32c04cc4419aa6ae2d24a53b56fa}{Gamepad}}.\mbox{\hyperlink{struct___x_i_n_p_u_t___g_a_m_e_p_a_d_ae6c4c141613af0574fc86a40fdf14405}{sThumbRX}} + 0.5f) / 32767.5f);}
+\DoxyCodeLine{718         \mbox{\hyperlink{deps_2glfw_2src_2input_8c_ab91e3f3a89daff3809c3817a57a4f523}{\_glfwInputJoystickAxis}}(js, 3, -\/(xis.\mbox{\hyperlink{struct___x_i_n_p_u_t___s_t_a_t_e_a5eee32c04cc4419aa6ae2d24a53b56fa}{Gamepad}}.\mbox{\hyperlink{struct___x_i_n_p_u_t___g_a_m_e_p_a_d_a89660a58eda7e822d44abbe1af7aea3b}{sThumbRY}} + 0.5f) / 32767.5f);}
+\DoxyCodeLine{719         \mbox{\hyperlink{deps_2glfw_2src_2input_8c_ab91e3f3a89daff3809c3817a57a4f523}{\_glfwInputJoystickAxis}}(js, 4, xis.\mbox{\hyperlink{struct___x_i_n_p_u_t___s_t_a_t_e_a5eee32c04cc4419aa6ae2d24a53b56fa}{Gamepad}}.\mbox{\hyperlink{struct___x_i_n_p_u_t___g_a_m_e_p_a_d_a50480b9dd5f9d0f5db9d47358c66b0da}{bLeftTrigger}} / 127.5f -\/ 1.f);}
+\DoxyCodeLine{720         \mbox{\hyperlink{deps_2glfw_2src_2input_8c_ab91e3f3a89daff3809c3817a57a4f523}{\_glfwInputJoystickAxis}}(js, 5, xis.\mbox{\hyperlink{struct___x_i_n_p_u_t___s_t_a_t_e_a5eee32c04cc4419aa6ae2d24a53b56fa}{Gamepad}}.\mbox{\hyperlink{struct___x_i_n_p_u_t___g_a_m_e_p_a_d_a065347fca7403ff5c399b21af5a0e1f3}{bRightTrigger}} / 127.5f -\/ 1.f);}
+\DoxyCodeLine{721 }
+\DoxyCodeLine{722         \textcolor{keywordflow}{for} (i = 0;  i < 10;  i++)}
+\DoxyCodeLine{723         \{}
+\DoxyCodeLine{724             \textcolor{keyword}{const} \textcolor{keywordtype}{char} \mbox{\hyperlink{glad_8h_a79169be77d7e02a24f68a5bfe627dc29}{value}} = (xis.\mbox{\hyperlink{struct___x_i_n_p_u_t___s_t_a_t_e_a5eee32c04cc4419aa6ae2d24a53b56fa}{Gamepad}}.\mbox{\hyperlink{struct___x_i_n_p_u_t___g_a_m_e_p_a_d_aa67905941abea0fac79e57b4fb8b5124}{wButtons}} \& buttons[i]) ? 1 : 0;}
+\DoxyCodeLine{725             \mbox{\hyperlink{deps_2glfw_2src_2input_8c_af1048006805591e17cc431c016f539f5}{\_glfwInputJoystickButton}}(js, i, \mbox{\hyperlink{glad_8h_a79169be77d7e02a24f68a5bfe627dc29}{value}});}
+\DoxyCodeLine{726         \}}
+\DoxyCodeLine{727 }
+\DoxyCodeLine{728         \textcolor{keywordflow}{if} (xis.\mbox{\hyperlink{struct___x_i_n_p_u_t___s_t_a_t_e_a5eee32c04cc4419aa6ae2d24a53b56fa}{Gamepad}}.\mbox{\hyperlink{struct___x_i_n_p_u_t___g_a_m_e_p_a_d_aa67905941abea0fac79e57b4fb8b5124}{wButtons}} \& \mbox{\hyperlink{xinput_8h_a20b7a903ac4a045ddbf97f54c9b7fe43}{XINPUT\_GAMEPAD\_DPAD\_UP}})}
+\DoxyCodeLine{729             dpad |= \mbox{\hyperlink{group__hat__state_ga8c9720c76cd1b912738159ed74c85b36}{GLFW\_HAT\_UP}};}
+\DoxyCodeLine{730         \textcolor{keywordflow}{if} (xis.\mbox{\hyperlink{struct___x_i_n_p_u_t___s_t_a_t_e_a5eee32c04cc4419aa6ae2d24a53b56fa}{Gamepad}}.\mbox{\hyperlink{struct___x_i_n_p_u_t___g_a_m_e_p_a_d_aa67905941abea0fac79e57b4fb8b5124}{wButtons}} \& \mbox{\hyperlink{xinput_8h_a9f552fa69b963475330a38af68266989}{XINPUT\_GAMEPAD\_DPAD\_RIGHT}})}
+\DoxyCodeLine{731             dpad |= \mbox{\hyperlink{group__hat__state_ga252586e3bbde75f4b0e07ad3124867f5}{GLFW\_HAT\_RIGHT}};}
+\DoxyCodeLine{732         \textcolor{keywordflow}{if} (xis.\mbox{\hyperlink{struct___x_i_n_p_u_t___s_t_a_t_e_a5eee32c04cc4419aa6ae2d24a53b56fa}{Gamepad}}.\mbox{\hyperlink{struct___x_i_n_p_u_t___g_a_m_e_p_a_d_aa67905941abea0fac79e57b4fb8b5124}{wButtons}} \& \mbox{\hyperlink{xinput_8h_aa39a471445e0695725826ec3460dd15f}{XINPUT\_GAMEPAD\_DPAD\_DOWN}})}
+\DoxyCodeLine{733             dpad |= \mbox{\hyperlink{group__hat__state_gad60d1fd0dc85c18f2642cbae96d3deff}{GLFW\_HAT\_DOWN}};}
+\DoxyCodeLine{734         \textcolor{keywordflow}{if} (xis.\mbox{\hyperlink{struct___x_i_n_p_u_t___s_t_a_t_e_a5eee32c04cc4419aa6ae2d24a53b56fa}{Gamepad}}.\mbox{\hyperlink{struct___x_i_n_p_u_t___g_a_m_e_p_a_d_aa67905941abea0fac79e57b4fb8b5124}{wButtons}} \& \mbox{\hyperlink{xinput_8h_a7bfc5bbdebf1a9ee61d9c127522bc333}{XINPUT\_GAMEPAD\_DPAD\_LEFT}})}
+\DoxyCodeLine{735             dpad |= \mbox{\hyperlink{group__hat__state_gac775f4b3154fdf5db93eb432ba546dff}{GLFW\_HAT\_LEFT}};}
+\DoxyCodeLine{736 }
+\DoxyCodeLine{737         \mbox{\hyperlink{deps_2glfw_2src_2input_8c_aca3d4e257b8212cf2a713f9a1069ff08}{\_glfwInputJoystickHat}}(js, 0, dpad);}
+\DoxyCodeLine{738     \}}
+\DoxyCodeLine{739 }
+\DoxyCodeLine{740     \textcolor{keywordflow}{return} \mbox{\hyperlink{group__init_ga2744fbb29b5631bb28802dbe0cf36eba}{GLFW\_TRUE}};}
+\DoxyCodeLine{741 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__joystick_8c_a219b355c48800354e45f6091d7b2e564}\label{win32__joystick_8c_a219b355c48800354e45f6091d7b2e564}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!\_glfwTerminateJoysticksWin32@{\_glfwTerminateJoysticksWin32}}
+\index{\_glfwTerminateJoysticksWin32@{\_glfwTerminateJoysticksWin32}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwTerminateJoysticksWin32()}{\_glfwTerminateJoysticksWin32()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Terminate\+Joysticks\+Win32 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 593 of file win32\+\_\+joystick.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{594 \{}
+\DoxyCodeLine{595     \textcolor{keywordtype}{int} jid;}
+\DoxyCodeLine{596 }
+\DoxyCodeLine{597     \textcolor{keywordflow}{for} (jid = \mbox{\hyperlink{group__joysticks_ga34a0443d059e9f22272cd4669073f73d}{GLFW\_JOYSTICK\_1}};  jid <= \mbox{\hyperlink{group__joysticks_ga9ca13ebf24c331dd98df17d84a4b72c9}{GLFW\_JOYSTICK\_LAST}};  jid++)}
+\DoxyCodeLine{598         closeJoystick(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_a7f6b01642d8bc4965fd7b084a01bc401}{joysticks}} + jid);}
+\DoxyCodeLine{599 }
+\DoxyCodeLine{600     \textcolor{keywordflow}{if} (\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.win32.dinput8.api)}
+\DoxyCodeLine{601         \mbox{\hyperlink{dinput_8h_a8cd6a8dd530a10d7c136e11243c91f69}{IDirectInput8\_Release}}(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.win32.dinput8.api);}
+\DoxyCodeLine{602 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{win32__joystick_8c_a148681c996ee9d03ca7be51de6360ee4}\label{win32__joystick_8c_a148681c996ee9d03ca7be51de6360ee4}} 
+\index{win32\_joystick.c@{win32\_joystick.c}!\_glfwUpdateGamepadGUIDWin32@{\_glfwUpdateGamepadGUIDWin32}}
+\index{\_glfwUpdateGamepadGUIDWin32@{\_glfwUpdateGamepadGUIDWin32}!win32\_joystick.c@{win32\_joystick.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwUpdateGamepadGUIDWin32()}{\_glfwUpdateGamepadGUIDWin32()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Update\+Gamepad\+G\+U\+I\+D\+Win32 (\begin{DoxyParamCaption}\item[{char $\ast$}]{guid }\end{DoxyParamCaption})}
+
+
+
+Definition at line 748 of file win32\+\_\+joystick.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{749 \{}
+\DoxyCodeLine{750     \textcolor{keywordflow}{if} (strcmp(guid + 20, \textcolor{stringliteral}{"504944564944"}) == 0)}
+\DoxyCodeLine{751     \{}
+\DoxyCodeLine{752         \textcolor{keywordtype}{char} original[33];}
+\DoxyCodeLine{753         strncpy(original, guid, \textcolor{keyword}{sizeof}(original) -\/ 1);}
+\DoxyCodeLine{754         \mbox{\hyperlink{rrsprintf_8h_a9b1bcf2b847c7e2a9e4d06b7bb6fa018}{sprintf}}(guid, \textcolor{stringliteral}{"03000000\%.4s0000\%.4s000000000000"},}
+\DoxyCodeLine{755                 original, original + 4);}
+\DoxyCodeLine{756     \}}
+\DoxyCodeLine{757 \}}
+
+\end{DoxyCode}

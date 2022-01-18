@@ -1,0 +1,868 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_unicode_8c">
+<title>deps/stb/tools/unicode.c File Reference</title>
+<indexterm><primary>deps/stb/tools/unicode.c</primary></indexterm>
+<programlisting>#include &quot;../stb.h&quot;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structtable">table</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structoutput">output</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structinfo">info</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structresult">result</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structmode__info">mode_info</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structchar__range">char_range</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_unicode_8c_1a5640e9acc84db268e2628d4c5dad308c">STB_DEFINE</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_unicode_8c_1ad390531d42856413e2fc5f2ff16d7ae8">UVAL_DONT_CARE_DEFAULT</link>   0xffffffff</para>
+</listitem>
+            <listitem><para>#define <link linkend="_unicode_8c_1a85071534397d42eba9a1397eeee3b3a6">MODECOUNT</link>   (sizeof(<link linkend="_unicode_8c_1a94c4c0cf850e916912929ee98dbff3fc">modes</link>)/sizeof(<link linkend="_unicode_8c_1a94c4c0cf850e916912929ee98dbff3fc">modes</link>[0]))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_unicode_8c_1a261dc022705e4267b0263986e206a69f">CLUSTERSIZECOUNT</link>   6</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Typedefs    </title>
+        <itemizedlist>
+            <listitem><para>typedef <link linkend="_stb_8h_1a1134b580f8da4de94ca6b1de4d37975e">uint32</link> <link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>size_t <link linkend="_unicode_8c_1a97cd04ff61c7f95e0a076660ffb0c4aa">size_for_max_number</link> (<link linkend="_stb_8h_1a1134b580f8da4de94ca6b1de4d37975e">uint32</link> number)</para>
+</listitem>
+            <listitem><para>size_t <link linkend="_unicode_8c_1a82ea88b6ef299cf480072d4ff97d3bf2">size_for_max_number_aligned</link> (<link linkend="_stb_8h_1a1134b580f8da4de94ca6b1de4d37975e">uint32</link> number)</para>
+</listitem>
+            <listitem><para><link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> <link linkend="_unicode_8c_1a40bb68ee7d3caa50dc91b1545e75f34b">get_data</link> (<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> *<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>, int <link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>, <link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> *<link linkend="_glad_8h_1a432111147038972f06e049e18a837002">end</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_unicode_8c_1afe9206acb0d3f2faedd2eecce65e2afb">safe_len</link> (<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> *<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>, int <link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>, <link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> *<link linkend="_glad_8h_1a432111147038972f06e049e18a837002">end</link>)</para>
+</listitem>
+            <listitem><para>size_t <link linkend="_unicode_8c_1a7fa0560c70ff036d46a5e2baeff58758">find_packed</link> (<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> **<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>, <link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> *<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>, int <link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>, int aligned, int fastpath, <link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> *<link linkend="_glad_8h_1a432111147038972f06e049e18a837002">end</link>, int <link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>, int replace)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_unicode_8c_1ae2e29c49c62fc0719e2ababbe88e84dd">output_table</link> (char *name1, char *name2, <link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> *<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>, int <link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>, int sign, char **<link linkend="_glext_8h_1a339b9616ddcfbc036f0258f8dcdd8902">names</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_unicode_8c_1aabf88f32a9217c0ddefc00c9e27be74f">output_table_with_trims</link> (char *name1, char *name2, <link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> *<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>, int <link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_structtable">table</link> <link linkend="_unicode_8c_1aa7fa7bf68dcdca7c9cafd0e09b874408">pack_for_mode</link> (<link linkend="_structtable">table</link> *<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>, int <link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>, char *table_name)</para>
+</listitem>
+            <listitem><para><link linkend="_structresult">result</link> <link linkend="_unicode_8c_1ad104b0caa281468cf5d6bf62d6f7bd44">pack_table</link> (<link linkend="_structtable">table</link> *<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>, size_t <link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>, int min_storage)</para>
+</listitem>
+            <listitem><para>int <link linkend="_unicode_8c_1a491dd2b21685d52ee87b7baf8a1b987a">pack_table_by_modes</link> (<link linkend="_structtable">table</link> *<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>, int *<link linkend="_unicode_8c_1a94c4c0cf850e916912929ee98dbff3fc">modes</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_unicode_8c_1ac679b1be3888c7ed3dcfacb94b3bb795">strip_table</link> (<link linkend="_structtable">table</link> *<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>, int exceptions)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_unicode_8c_1ad027b9c313063ff81ff6221543298e42">optimize_table</link> (<link linkend="_structtable">table</link> *<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>, char *table_name)</para>
+</listitem>
+            <listitem><para><link linkend="_structchar__range">char_range</link> <link linkend="_unicode_8c_1a6d3e7b7a56b0a9b16bf16481a76fcc6f">get_range</link> (char *str)</para>
+</listitem>
+            <listitem><para>char * <link linkend="_unicode_8c_1ada30b540d1fe28b4b2be8ab70eb4c295">skip_semi</link> (char *<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>, int <link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_unicode_8c_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_structmode__info">mode_info</link> <link linkend="_unicode_8c_1a94c4c0cf850e916912929ee98dbff3fc">modes</link> []</para>
+</listitem>
+            <listitem><para><link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> <link linkend="_unicode_8c_1af40b88a0ae02ccc6c27ea0f3dc7b64ba">tempdata</link> [256]</para>
+</listitem>
+            <listitem><para>int <link linkend="_unicode_8c_1a120b75c12097e7fdda71535d04ae7880">dirty</link> =0</para>
+</listitem>
+            <listitem><para>int <link linkend="_unicode_8c_1aa01147b1f07072d246c76dc85d69df7c">weight</link> =1</para>
+</listitem>
+            <listitem><para><link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> <link linkend="_unicode_8c_1ad402abe37ad858306ccfe75bcd985080">unicode_table</link> [0x110000]</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_unicode_8c_1a261dc022705e4267b0263986e206a69f"/>    <section>
+    <title>CLUSTERSIZECOUNT</title>
+<indexterm><primary>CLUSTERSIZECOUNT</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>CLUSTERSIZECOUNT</secondary></indexterm>
+<para><computeroutput>#define CLUSTERSIZECOUNT   6</computeroutput></para><para>
+Definition at line 116 of file unicode.c.</para>
+    </section><anchor xml:id="_unicode_8c_1a85071534397d42eba9a1397eeee3b3a6"/>    <section>
+    <title>MODECOUNT</title>
+<indexterm><primary>MODECOUNT</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>MODECOUNT</secondary></indexterm>
+<para><computeroutput>#define MODECOUNT   (sizeof(<link linkend="_unicode_8c_1a94c4c0cf850e916912929ee98dbff3fc">modes</link>)/sizeof(<link linkend="_unicode_8c_1a94c4c0cf850e916912929ee98dbff3fc">modes</link>[0]))</computeroutput></para><para>
+Definition at line 115 of file unicode.c.</para>
+    </section><anchor xml:id="_unicode_8c_1a5640e9acc84db268e2628d4c5dad308c"/>    <section>
+    <title>STB_DEFINE</title>
+<indexterm><primary>STB_DEFINE</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>STB_DEFINE</secondary></indexterm>
+<para><computeroutput>#define STB_DEFINE</computeroutput></para><para>
+Definition at line 1 of file unicode.c.</para>
+    </section><anchor xml:id="_unicode_8c_1ad390531d42856413e2fc5f2ff16d7ae8"/>    <section>
+    <title>UVAL_DONT_CARE_DEFAULT</title>
+<indexterm><primary>UVAL_DONT_CARE_DEFAULT</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>UVAL_DONT_CARE_DEFAULT</secondary></indexterm>
+<para><computeroutput>#define UVAL_DONT_CARE_DEFAULT   0xffffffff</computeroutput></para><para>
+Definition at line 48 of file unicode.c.</para>
+</section>
+</section>
+<section>
+<title>Typedef Documentation</title>
+<anchor xml:id="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f"/>    <section>
+    <title>uval</title>
+<indexterm><primary>uval</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>uval</secondary></indexterm>
+<para><computeroutput>typedef <link linkend="_stb_8h_1a1134b580f8da4de94ca6b1de4d37975e">uint32</link> <link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link></computeroutput></para><para>
+Definition at line 47 of file unicode.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_unicode_8c_1a7fa0560c70ff036d46a5e2baeff58758"/>    <section>
+    <title>find_packed()</title>
+<indexterm><primary>find_packed</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>find_packed</secondary></indexterm>
+<para><computeroutput>size_t find_packed (<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> ** packed, <link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> * data, int len, int aligned, int fastpath, <link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> * end, int offset, int replace)</computeroutput></para><para>
+Definition at line 151 of file unicode.c.</para>
+<programlisting>152 {
+153 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;packlen&#32;=&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(*<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>);
+154 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i,<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>;
+155 
+156 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>+<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;&gt;&#32;<link linkend="_glad_8h_1a432111147038972f06e049e18a837002">end</link>&#32;||&#32;replace)&#32;{
+157 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;safelen&#32;=&#32;<link linkend="_unicode_8c_1afe9206acb0d3f2faedd2eecce65e2afb">safe_len</link>(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>,&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>,&#32;<link linkend="_glad_8h_1a432111147038972f06e049e18a837002">end</link>);
+158 &#32;&#32;&#32;&#32;&#32;&#32;memset(<link linkend="_unicode_8c_1af40b88a0ae02ccc6c27ea0f3dc7b64ba">tempdata</link>,&#32;0,&#32;<link linkend="_unicode_8c_1a120b75c12097e7fdda71535d04ae7880">dirty</link>*<emphasis role="keyword">sizeof</emphasis>(<link linkend="_unicode_8c_1af40b88a0ae02ccc6c27ea0f3dc7b64ba">tempdata</link>[0]));
+159 &#32;&#32;&#32;&#32;&#32;&#32;memcpy(<link linkend="_unicode_8c_1af40b88a0ae02ccc6c27ea0f3dc7b64ba">tempdata</link>,&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>,&#32;safelen&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[0]));
+160 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>&#32;=&#32;<link linkend="_unicode_8c_1af40b88a0ae02ccc6c27ea0f3dc7b64ba">tempdata</link>;
+161 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1a120b75c12097e7fdda71535d04ae7880">dirty</link>&#32;=&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+162 &#32;&#32;&#32;}
+163 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(replace)&#32;{
+164 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+165 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;safelen&#32;=&#32;<link linkend="_unicode_8c_1afe9206acb0d3f2faedd2eecce65e2afb">safe_len</link>(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>,&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>,&#32;<link linkend="_glad_8h_1a432111147038972f06e049e18a837002">end</link>);
+166 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;safelen;&#32;++i)
+167 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[i]&#32;==&#32;0)
+168 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[i]&#32;=&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>+i;
+169 &#32;&#32;&#32;}
+170 
+171 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;&lt;=&#32;0)
+172 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+173 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!fastpath)&#32;{
+174 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(aligned)&#32;{
+175 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;packlen;&#32;i&#32;+=&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)
+176 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((*<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>)[i]&#32;==&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[0]&#32;&amp;&amp;&#32;0==memcmp(&amp;(*<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>)[i],&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>,&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>)))
+177 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;i&#32;/&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+178 &#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+179 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;packlen-<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>+1;&#32;i&#32;+=&#32;&#32;1&#32;)
+180 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((*<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>)[i]&#32;==&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[0]&#32;&amp;&amp;&#32;0==memcmp(&amp;(*<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>)[i],&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>,&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>)))
+181 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;i;
+182 &#32;&#32;&#32;&#32;&#32;&#32;}
+183 &#32;&#32;&#32;}
+184 &#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;=&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(*<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>);
+185 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;&#32;++i)
+186 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a30a089ec00300b0c18918dd60bbd6854">stb_arr_push</link>(*<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>,&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[i]);
+187 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>;
+188 }
+</programlisting>    </section><anchor xml:id="_unicode_8c_1a40bb68ee7d3caa50dc91b1545e75f34b"/>    <section>
+    <title>get_data()</title>
+<indexterm><primary>get_data</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>get_data</secondary></indexterm>
+<para><computeroutput><link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> get_data (<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> * data, int offset, <link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> * end)</computeroutput></para><para>
+Definition at line 133 of file unicode.c.</para>
+<programlisting>134 {
+135 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>&#32;+&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>&#32;&gt;=&#32;<link linkend="_glad_8h_1a432111147038972f06e049e18a837002">end</link>)
+136 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+137 &#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+138 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>];
+139 }
+</programlisting>    </section><anchor xml:id="_unicode_8c_1a6d3e7b7a56b0a9b16bf16481a76fcc6f"/>    <section>
+    <title>get_range()</title>
+<indexterm><primary>get_range</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>get_range</secondary></indexterm>
+<para><computeroutput><link linkend="_structchar__range">char_range</link> get_range (char * str)</computeroutput></para><para>
+Definition at line 682 of file unicode.c.</para>
+<programlisting>683 {
+684 &#32;&#32;&#32;<link linkend="_structchar__range">char_range</link>&#32;cr;
+685 &#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;*<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>;
+686 &#32;&#32;&#32;cr.<link linkend="_structchar__range_1a3d29ca6a24a2fe0a4562e1b7ea03af9a">lo</link>&#32;=&#32;strtol(str,&#32;&amp;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>,&#32;16);
+687 &#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;=&#32;<link linkend="_stb_8h_1a9618884725ad3cc5b3e2e8683bdada34">stb_skipwhite</link>(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>);
+688 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(*<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;==&#32;<emphasis role="charliteral">&apos;.&apos;</emphasis>)
+689 &#32;&#32;&#32;&#32;&#32;&#32;cr.<link linkend="_structchar__range_1a7806c8fd5b3986919ea1696fe11528fb">hi</link>&#32;=&#32;strtol(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>+2,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;16);
+690 &#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+691 &#32;&#32;&#32;&#32;&#32;&#32;cr.<link linkend="_structchar__range_1a7806c8fd5b3986919ea1696fe11528fb">hi</link>&#32;=&#32;cr.<link linkend="_structchar__range_1a3d29ca6a24a2fe0a4562e1b7ea03af9a">lo</link>;
+692 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;cr;
+693 }
+</programlisting>    </section><anchor xml:id="_unicode_8c_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 706 of file unicode.c.</para>
+<programlisting>707 {
+708 &#32;&#32;&#32;<link linkend="_structtable">table</link>&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>;
+709 &#32;&#32;&#32;<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>&#32;maxv=0;
+710 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i,<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>=0;
+711 &#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;**<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;=&#32;<link linkend="_stb_8h_1a3d3b7a43779945f90b5c35c0b1d47a37">stb_stringfile</link>(<emphasis role="stringliteral">&quot;../../data/UnicodeData.txt&quot;</emphasis>,&#32;&amp;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>);
+712 &#32;&#32;&#32;assert(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>);
+713 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>;&#32;++i)&#32;{
+714 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>[i][0]&#32;==&#32;<emphasis role="charliteral">&apos;#&apos;</emphasis>&#32;||&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>[i][0]&#32;==&#32;<emphasis role="charliteral">&apos;\n&apos;</emphasis>&#32;||&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>[i][0]&#32;==&#32;0)
+715 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;;
+716 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+717 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structchar__range">char_range</link>&#32;cr&#32;=&#32;<link linkend="_unicode_8c_1a6d3e7b7a56b0a9b16bf16481a76fcc6f">get_range</link>(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>[i]);
+718 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;*<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>&#32;=&#32;<link linkend="_unicode_8c_1ada30b540d1fe28b4b2be8ab70eb4c295">skip_semi</link>(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>[i],&#32;13);
+719 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>&#32;j,&#32;<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>;
+720 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(*<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>&#32;==&#32;<emphasis role="charliteral">&apos;;&apos;</emphasis>&#32;||&#32;*<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>&#32;==&#32;<emphasis role="charliteral">&apos;\n&apos;</emphasis>&#32;||&#32;*<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>&#32;==&#32;0)
+721 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>&#32;=&#32;0;
+722 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+723 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>&#32;=&#32;strtol(<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;16);
+724 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>&#32;&lt;&#32;65536)&#32;{
+725 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;maxv&#32;=&#32;<link linkend="_stb_8h_1a254a62dfa60c086a020a0fe83d4400e5">stb_max</link>(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>,&#32;maxv);
+726 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(j=cr.<link linkend="_structchar__range_1a3d29ca6a24a2fe0a4562e1b7ea03af9a">lo</link>;&#32;j&#32;&lt;=&#32;cr.<link linkend="_structchar__range_1a7806c8fd5b3986919ea1696fe11528fb">hi</link>;&#32;++j)&#32;{
+727 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1ad402abe37ad858306ccfe75bcd985080">unicode_table</link>[j]&#32;=&#32;<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>;
+728 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//printf(&quot;%06x&#32;=&gt;&#32;%06x\n&quot;,&#32;j,&#32;v);</emphasis>
+729 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+730 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+731 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+732 &#32;&#32;&#32;&#32;&#32;&#32;}
+733 &#32;&#32;&#32;}
+734 
+735 &#32;&#32;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>.depth&#32;=&#32;0;
+736 &#32;&#32;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>.dont_care&#32;=&#32;<link linkend="_unicode_8c_1ad390531d42856413e2fc5f2ff16d7ae8">UVAL_DONT_CARE_DEFAULT</link>;
+737 &#32;&#32;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>.fallback&#32;=&#32;0;
+738 &#32;&#32;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>.fastpath&#32;=&#32;256;
+739 &#32;&#32;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>.inherited_storage&#32;=&#32;0;
+740 &#32;&#32;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>.has_sign&#32;=&#32;0;
+741 &#32;&#32;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>.splittable&#32;=&#32;0;
+742 &#32;&#32;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>.input&#32;=&#32;<link linkend="_unicode_8c_1ad402abe37ad858306ccfe75bcd985080">unicode_table</link>;
+743 &#32;&#32;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>.input_size&#32;=&#32;<link linkend="_unicode_8c_1a97cd04ff61c7f95e0a076660ffb0c4aa">size_for_max_number</link>(maxv);
+744 &#32;&#32;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>.length&#32;=&#32;0x110000;
+745 &#32;&#32;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>.replace_fallback_with_codepoint&#32;=&#32;1;
+746 
+747 &#32;&#32;&#32;<link linkend="_unicode_8c_1ad027b9c313063ff81ff6221543298e42">optimize_table</link>(&amp;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>,&#32;<emphasis role="stringliteral">&quot;stbu_upppercase&quot;</emphasis>);
+748 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+749 }
+</programlisting>    </section><anchor xml:id="_unicode_8c_1ad027b9c313063ff81ff6221543298e42"/>    <section>
+    <title>optimize_table()</title>
+<indexterm><primary>optimize_table</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>optimize_table</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> optimize_table (<link linkend="_structtable">table</link> * t, char * table_name)</computeroutput></para><para>
+Definition at line 610 of file unicode.c.</para>
+<programlisting>611 {
+612 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;modelist[3]&#32;=&#32;{&#32;85,&#32;-1&#32;};
+613 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_unicode_8c_1a94c4c0cf850e916912929ee98dbff3fc">modes</link>[8];
+614 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;num_modes&#32;=&#32;0;
+615 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;decent_size;
+616 &#32;&#32;&#32;<link linkend="_structresult">result</link>&#32;<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>;
+617 &#32;&#32;&#32;<emphasis role="keywordtype">size_t</emphasis>&#32;<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>;
+618 &#32;&#32;&#32;<link linkend="_structtable">table</link>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>;
+619 
+620 &#32;&#32;&#32;<emphasis role="comment">//&#32;strip&#32;tail&#32;end&#32;of&#32;table</emphasis>
+621 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;orig_length&#32;=&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;length;
+622 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;threshhold&#32;=&#32;0xffff;
+623 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;=&#32;<link linkend="_unicode_8c_1ac679b1be3888c7ed3dcfacb94b3bb795">strip_table</link>(<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>,&#32;2);
+624 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;len_saved&#32;=&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;length&#32;-&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>;
+625 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(len_saved&#32;&gt;=&#32;threshhold)&#32;{
+626 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;length&#32;=&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>;
+627 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;&gt;&#32;0x10000)&#32;{
+628 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;=&#32;<link linkend="_unicode_8c_1ac679b1be3888c7ed3dcfacb94b3bb795">strip_table</link>(<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>,&#32;0);
+629 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;len_saved&#32;=&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;length&#32;-&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>;
+630 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(len_saved&#32;&lt;&#32;0x10000)
+631 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+632 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;len_saved&#32;=&#32;orig_length&#32;-&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>;
+633 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(len_saved&#32;&lt;&#32;threshhold)
+634 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+635 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;threshhold&#32;*=&#32;2;
+636 &#32;&#32;&#32;&#32;&#32;&#32;}
+637 &#32;&#32;&#32;}
+638 
+639 &#32;&#32;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;depth&#32;=&#32;1;
+640 
+641 
+642 &#32;&#32;&#32;<emphasis role="comment">//&#32;find&#32;size&#32;of&#32;table&#32;if&#32;we&#32;use&#32;path&#32;86</emphasis>
+643 &#32;&#32;&#32;decent_size&#32;=&#32;<link linkend="_unicode_8c_1a491dd2b21685d52ee87b7baf8a1b987a">pack_table_by_modes</link>(<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>,&#32;modelist);
+644 
+645 
+646 <emphasis role="preprocessor">&#32;&#32;&#32;#if&#32;1</emphasis>
+647 &#32;&#32;&#32;<emphasis role="comment">//&#32;find&#32;best&#32;packing&#32;of&#32;remainder&#32;of&#32;table&#32;by&#32;exploring&#32;tree&#32;of&#32;packings</emphasis>
+648 &#32;&#32;&#32;<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>&#32;=&#32;<link linkend="_unicode_8c_1ad104b0caa281468cf5d6bf62d6f7bd44">pack_table</link>(<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>,&#32;0,&#32;decent_size);
+649 &#32;&#32;&#32;<emphasis role="comment">//&#32;use&#32;the&#32;computed&#32;&apos;path&apos;&#32;to&#32;evaluate&#32;and&#32;output&#32;tree</emphasis>
+650 &#32;&#32;&#32;<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>&#32;=&#32;<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>.path;
+651 <emphasis role="preprocessor">&#32;&#32;&#32;#else</emphasis>
+652 &#32;&#32;&#32;<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>&#32;=&#32;86;<emphasis role="comment">//90;//132097;</emphasis>
+653 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+654 
+655 &#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>)&#32;{
+656 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1a94c4c0cf850e916912929ee98dbff3fc">modes</link>[num_modes++]&#32;=&#32;(<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>&#32;&amp;&#32;127)&#32;-&#32;1;
+657 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>&#32;&gt;&gt;=&#32;7;
+658 &#32;&#32;&#32;}
+659 
+660 &#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;//&#32;modes:&#32;%d\n&quot;</emphasis>,&#32;<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>.path);
+661 &#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;=&#32;*<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>;
+662 &#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(num_modes&#32;&gt;&#32;0)&#32;{
+663 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>[256];
+664 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_rrsprintf_8h_1a9b1bcf2b847c7e2a9e4d06b7bb6fa018">sprintf</link>(<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>,&#32;<emphasis role="stringliteral">&quot;%s_%d&quot;</emphasis>,&#32;table_name,&#32;num_modes+1);
+665 &#32;&#32;&#32;&#32;&#32;&#32;--num_modes;
+666 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;=&#32;<link linkend="_unicode_8c_1aa7fa7bf68dcdca7c9cafd0e09b874408">pack_for_mode</link>(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,&#32;<link linkend="_unicode_8c_1a94c4c0cf850e916912929ee98dbff3fc">modes</link>[num_modes],&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>);
+667 &#32;&#32;&#32;}
+668 &#32;&#32;&#32;<emphasis role="comment">//&#32;output&#32;the&#32;final&#32;table&#32;as-is</emphasis>
+669 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>.splittable)
+670 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1aabf88f32a9217c0ddefc00c9e27be74f">output_table_with_trims</link>(table_name,&#32;<emphasis role="stringliteral">&quot;_1&quot;</emphasis>,&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>.input,&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>.length);
+671 &#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+672 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1ae2e29c49c62fc0719e2ababbe88e84dd">output_table</link>(table_name,&#32;<emphasis role="stringliteral">&quot;_1&quot;</emphasis>,&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>.input,&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>.length,&#32;0,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+673 }
+</programlisting>    </section><anchor xml:id="_unicode_8c_1ae2e29c49c62fc0719e2ababbe88e84dd"/>    <section>
+    <title>output_table()</title>
+<indexterm><primary>output_table</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>output_table</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> output_table (char * name1, char * name2, <link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> * data, int length, int sign, char ** names)</computeroutput></para><para>
+Definition at line 190 of file unicode.c.</para>
+<programlisting>191 {
+192 &#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;temp[20];
+193 &#32;&#32;&#32;<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>&#32;maxv&#32;=&#32;0;
+194 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;bytes,&#32;numlen,&#32;at_newline;
+195 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;linelen&#32;=&#32;79;&#32;<emphasis role="comment">//&#32;@TODO:&#32;make&#32;table&#32;more&#32;readable&#32;by&#32;choosing&#32;a&#32;length&#32;that&apos;s&#32;a&#32;multiple?</emphasis>
+196 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i,pos,&#32;do_split=0;
+197 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>;&#32;++i)
+198 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(sign)
+199 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;maxv&#32;=&#32;<link linkend="_stb_8h_1a254a62dfa60c086a020a0fe83d4400e5">stb_max</link>(maxv,&#32;(<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>)abs((<emphasis role="keywordtype">int</emphasis>)<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[i]));
+200 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+201 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;maxv&#32;=&#32;<link linkend="_stb_8h_1a254a62dfa60c086a020a0fe83d4400e5">stb_max</link>(maxv,&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[i]);
+202 &#32;&#32;&#32;bytes&#32;=&#32;<link linkend="_unicode_8c_1a82ea88b6ef299cf480072d4ff97d3bf2">size_for_max_number_aligned</link>(maxv);
+203 &#32;&#32;&#32;<link linkend="_rrsprintf_8h_1a9b1bcf2b847c7e2a9e4d06b7bb6fa018">sprintf</link>(temp,&#32;<emphasis role="stringliteral">&quot;%d&quot;</emphasis>,&#32;maxv);
+204 &#32;&#32;&#32;numlen=strlen(temp);
+205 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(sign)
+206 &#32;&#32;&#32;&#32;&#32;&#32;++numlen;
+207 &#32;&#32;&#32;
+208 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(bytes&#32;==&#32;0)
+209 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+210 
+211 &#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;uint%d&#32;%s%s[%d]&#32;=&#32;{\n&quot;</emphasis>,&#32;bytes*8,&#32;name1,&#32;name2,&#32;<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>);
+212 &#32;&#32;&#32;at_newline&#32;=&#32;1;
+213 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>;&#32;++i)&#32;{
+214 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(pos&#32;+&#32;numlen&#32;+&#32;2&#32;&gt;&#32;linelen)&#32;{
+215 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;\n&quot;</emphasis>);
+216 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;at_newline&#32;=&#32;1;
+217 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pos&#32;=&#32;0;
+218 &#32;&#32;&#32;&#32;&#32;&#32;}
+219 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(at_newline)&#32;{
+220 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&#32;&#32;&quot;</emphasis>);
+221 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pos&#32;=&#32;2;
+222 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;at_newline&#32;=&#32;0;
+223 &#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+224 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>);
+225 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;++pos;
+226 &#32;&#32;&#32;&#32;&#32;&#32;}
+227 &#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%*d,&quot;</emphasis>,&#32;numlen,&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[i]);
+228 &#32;&#32;&#32;&#32;&#32;&#32;pos&#32;+=&#32;numlen+1;
+229 &#32;&#32;&#32;}
+230 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!at_newline)&#32;printf(<emphasis role="stringliteral">&quot;\n&quot;</emphasis>);
+231 &#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;};\n&quot;</emphasis>);
+232 }
+</programlisting>    </section><anchor xml:id="_unicode_8c_1aabf88f32a9217c0ddefc00c9e27be74f"/>    <section>
+    <title>output_table_with_trims()</title>
+<indexterm><primary>output_table_with_trims</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>output_table_with_trims</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> output_table_with_trims (char * name1, char * name2, <link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> * data, int length)</computeroutput></para><para>
+Definition at line 234 of file unicode.c.</para>
+<programlisting>235 {
+236 &#32;&#32;&#32;<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>&#32;maxt=0,&#32;maxp=0;
+237 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i,d,<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>,&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>;
+238 &#32;&#32;&#32;<emphasis role="comment">//&#32;split&#32;the&#32;table&#32;into&#32;two&#32;pieces</emphasis>
+239 &#32;&#32;&#32;<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>&#32;*trims&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+240 
+241 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>&#32;==&#32;0)
+242 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+243 
+244 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>);&#32;++i)&#32;{
+245 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a30a089ec00300b0c18918dd60bbd6854">stb_arr_push</link>(trims,&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[i]&#32;&gt;&gt;&#32;16);
+246 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[i]&#32;&amp;=&#32;0xffff;
+247 &#32;&#32;&#32;&#32;&#32;&#32;maxt&#32;=&#32;<link linkend="_stb_8h_1a254a62dfa60c086a020a0fe83d4400e5">stb_max</link>(maxt,&#32;trims[i]);
+248 &#32;&#32;&#32;&#32;&#32;&#32;maxp&#32;=&#32;<link linkend="_stb_8h_1a254a62dfa60c086a020a0fe83d4400e5">stb_max</link>(maxp,&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[i]);
+249 &#32;&#32;&#32;}
+250 
+251 &#32;&#32;&#32;d=<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>=<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>=1;
+252 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(maxt&#32;&gt;=&#32;256)&#32;{
+253 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;need&#32;to&#32;output&#32;start&#32;&amp;&#32;end&#32;values</emphasis>
+254 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(maxp&#32;&gt;=&#32;256)&#32;{
+255 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;can&#32;pack&#32;into&#32;a&#32;single&#32;table</emphasis>
+256 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;struct&#32;{&#32;uint16&#32;val;&#32;uint8&#32;start,&#32;end;&#32;}&#32;%s%s[%d]&#32;=&#32;{\n&quot;</emphasis>,&#32;name1,&#32;name2,&#32;<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>);
+257 &#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+258 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1ae2e29c49c62fc0719e2ababbe88e84dd">output_table</link>(name1,&#32;name2,&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>,&#32;<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>,&#32;0,&#32;0);
+259 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;d=0;
+260 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;struct&#32;{&#32;uint8&#32;start,&#32;end;&#32;}&#32;%s%s_trim[%d]&#32;=&#32;{\n&quot;</emphasis>,&#32;name1,&#32;name2,&#32;<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>);
+261 &#32;&#32;&#32;&#32;&#32;&#32;}
+262 &#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(maxt&#32;&gt;&#32;0)&#32;{
+263 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(maxp&#32;&gt;=&#32;256)&#32;{
+264 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1ae2e29c49c62fc0719e2ababbe88e84dd">output_table</link>(name1,&#32;name2,&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>,&#32;<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>,&#32;0,&#32;0);
+265 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1ae2e29c49c62fc0719e2ababbe88e84dd">output_table</link>(name1,&#32;<link linkend="_stb_8h_1adaabe895f1a146aa609843309b34a5d3">stb_sprintf</link>(<emphasis role="stringliteral">&quot;%s_end&quot;</emphasis>,&#32;name2),&#32;trims,&#32;<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>,&#32;0,&#32;0);
+266 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+267 &#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+268 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;struct&#32;{&#32;uint8&#32;val,&#32;end;&#32;}&#32;%s%s[%d]&#32;=&#32;{\n&quot;</emphasis>,&#32;name1,&#32;name2,&#32;<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>);
+269 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>=0;
+270 &#32;&#32;&#32;&#32;&#32;&#32;}
+271 &#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+272 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1ae2e29c49c62fc0719e2ababbe88e84dd">output_table</link>(name1,&#32;name2,&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>,&#32;<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>,&#32;0,&#32;0);
+273 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+274 &#32;&#32;&#32;}
+275 &#32;&#32;&#32;<emphasis role="comment">//&#32;d&#32;or&#32;s&#32;can&#32;be&#32;zero&#32;(but&#32;not&#32;both),&#32;e&#32;is&#32;always&#32;present&#32;and&#32;last</emphasis>
+276 &#32;&#32;&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;=&#32;d&#32;+&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;+&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>;
+277 &#32;&#32;&#32;assert(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;&gt;=&#32;2&#32;&amp;&amp;&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;&lt;=&#32;3);
+278 
+279 &#32;&#32;&#32;{
+280 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;temp[60];
+281 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>&#32;maxv&#32;=&#32;0;
+282 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;numlen,&#32;at_newline,&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+283 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;linelen&#32;=&#32;79;&#32;<emphasis role="comment">//&#32;@TODO:&#32;make&#32;table&#32;more&#32;readable&#32;by&#32;choosing&#32;a&#32;length&#32;that&apos;s&#32;a&#32;multiple?</emphasis>
+284 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i,pos,&#32;do_split=0;
+285 &#32;&#32;&#32;&#32;&#32;&#32;numlen&#32;=&#32;0;
+286 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>;&#32;++i)&#32;{
+287 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;==&#32;2)
+288 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_rrsprintf_8h_1a9b1bcf2b847c7e2a9e4d06b7bb6fa018">sprintf</link>(temp,&#32;<emphasis role="stringliteral">&quot;{%d,%d}&quot;</emphasis>,&#32;d&#32;?&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[i]&#32;:&#32;(trims[i]&gt;&gt;8),&#32;trims[i]&amp;255);
+289 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+290 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_rrsprintf_8h_1a9b1bcf2b847c7e2a9e4d06b7bb6fa018">sprintf</link>(temp,&#32;<emphasis role="stringliteral">&quot;{%d,%d,%d}&quot;</emphasis>,&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[i],&#32;trims[i]&gt;&gt;8,&#32;trims[i]&amp;255);
+291 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;=&#32;strlen(temp);
+292 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;numlen&#32;=&#32;<link linkend="_stb_8h_1a254a62dfa60c086a020a0fe83d4400e5">stb_max</link>(<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>,&#32;numlen);
+293 &#32;&#32;&#32;&#32;&#32;&#32;}
+294 &#32;&#32;&#32;
+295 &#32;&#32;&#32;&#32;&#32;&#32;at_newline&#32;=&#32;1;
+296 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>;&#32;++i)&#32;{
+297 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(pos&#32;+&#32;numlen&#32;+&#32;2&#32;&gt;&#32;linelen)&#32;{
+298 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;\n&quot;</emphasis>);
+299 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;at_newline&#32;=&#32;1;
+300 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pos&#32;=&#32;0;
+301 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+302 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(at_newline)&#32;{
+303 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&#32;&#32;&quot;</emphasis>);
+304 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pos&#32;=&#32;2;
+305 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;at_newline&#32;=&#32;0;
+306 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+307 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>);
+308 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;++pos;
+309 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+310 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;==&#32;2)
+311 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_rrsprintf_8h_1a9b1bcf2b847c7e2a9e4d06b7bb6fa018">sprintf</link>(temp,&#32;<emphasis role="stringliteral">&quot;{%d,%d}&quot;</emphasis>,&#32;d&#32;?&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[i]&#32;:&#32;(trims[i]&gt;&gt;8),&#32;trims[i]&amp;255);
+312 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+313 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_rrsprintf_8h_1a9b1bcf2b847c7e2a9e4d06b7bb6fa018">sprintf</link>(temp,&#32;<emphasis role="stringliteral">&quot;{%d,%d,%d}&quot;</emphasis>,&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[i],&#32;trims[i]&gt;&gt;8,&#32;trims[i]&amp;255);
+314 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%*s,&quot;</emphasis>,&#32;numlen,&#32;temp);
+315 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pos&#32;+=&#32;numlen+1;
+316 &#32;&#32;&#32;&#32;&#32;&#32;}
+317 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!at_newline)&#32;printf(<emphasis role="stringliteral">&quot;\n&quot;</emphasis>);
+318 &#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;};\n&quot;</emphasis>);
+319 &#32;&#32;&#32;}
+320 }
+</programlisting>    </section><anchor xml:id="_unicode_8c_1aa7fa7bf68dcdca7c9cafd0e09b874408"/>    <section>
+    <title>pack_for_mode()</title>
+<indexterm><primary>pack_for_mode</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>pack_for_mode</secondary></indexterm>
+<para><computeroutput><link linkend="_structtable">table</link> pack_for_mode (<link linkend="_structtable">table</link> * t, int mode, char * table_name)</computeroutput></para><para>
+Definition at line 324 of file unicode.c.</para>
+<programlisting>325 {
+326 &#32;&#32;&#32;<emphasis role="keywordtype">size_t</emphasis>&#32;extra_size;
+327 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+328 &#32;&#32;&#32;<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>&#32;maxv;
+329 &#32;&#32;&#32;<link linkend="_structmode__info">mode_info</link>&#32;mi&#32;=&#32;<link linkend="_unicode_8c_1a94c4c0cf850e916912929ee98dbff3fc">modes</link>[<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>&#32;%&#32;<link linkend="_unicode_8c_1a85071534397d42eba9a1397eeee3b3a6">MODECOUNT</link>];
+330 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&#32;=&#32;8&#32;&lt;&lt;&#32;(<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>&#32;/&#32;<link linkend="_unicode_8c_1a85071534397d42eba9a1397eeee3b3a6">MODECOUNT</link>);
+331 &#32;&#32;&#32;<link linkend="_structtable">table</link>&#32;newtab;
+332 &#32;&#32;&#32;<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>&#32;*<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+333 &#32;&#32;&#32;<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>&#32;*<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+334 &#32;&#32;&#32;<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>&#32;*<link linkend="_glad_8h_1a5fad6fcb3a031758dadc2c2e533f15a5">indirect</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+335 &#32;&#32;&#32;<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>&#32;*specials&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+336 &#32;&#32;&#32;newtab.<link linkend="_structtable_1ac23f87331c2f25b8feebd81fb618d8f1">dont_care</link>&#32;=&#32;<link linkend="_unicode_8c_1ad390531d42856413e2fc5f2ff16d7ae8">UVAL_DONT_CARE_DEFAULT</link>;
+337 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(table_name)
+338 &#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;//&#32;clusters&#32;of&#32;%d\n&quot;</emphasis>,&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>);
+339 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;length;&#32;i&#32;+=&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)&#32;{
+340 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>&#32;newval;
+341 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;fastpath&#32;=&#32;(i&#32;&lt;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;fastpath);
+342 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(mi.<link linkend="_structmode__info_1aa1c8d2e3852863b172ce9a747ad4f29b">special</link>)&#32;{
+343 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;end_trim&#32;=&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>-1;
+344 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;start_trim&#32;=&#32;0;
+345 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>&#32;special;
+346 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;@TODO:&#32;pick&#32;special&#32;from&#32;start&#32;or&#32;end&#32;instead&#32;of&#32;only&#32;end&#32;depending&#32;on&#32;which&#32;is&#32;longer</emphasis>
+347 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>(;;)&#32;{
+348 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;special&#32;=&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[i&#32;+&#32;end_trim];
+349 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(special&#32;!=&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;dont_care&#32;||&#32;end_trim&#32;==&#32;0)
+350 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+351 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;--end_trim;
+352 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+353 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;at&#32;this&#32;point,&#32;special==inp[end_trim],&#32;and&#32;end_trim&#32;&gt;=&#32;0</emphasis>
+354 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(special&#32;==&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;dont_care&#32;&amp;&amp;&#32;!fastpath)&#32;{
+355 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;entire&#32;block&#32;is&#32;don&apos;t&#32;care,&#32;so&#32;OUTPUT&#32;don&apos;t&#32;care</emphasis>
+356 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a30a089ec00300b0c18918dd60bbd6854">stb_arr_push</link>(<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>,&#32;newtab.<link linkend="_structtable_1ac23f87331c2f25b8feebd81fb618d8f1">dont_care</link>);
+357 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+358 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+359 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>&#32;pos,&#32;trim;
+360 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(mi.<link linkend="_structmode__info_1a9853de2c1908c478e7e5baf8ca917b37">trim_end</link>&#32;&amp;&amp;&#32;!fastpath)&#32;{
+361 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(end_trim&#32;&gt;=&#32;0)&#32;{
+362 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[i&#32;+&#32;end_trim]&#32;==&#32;special&#32;||&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[i&#32;+&#32;end_trim]&#32;==&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;dont_care)
+363 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;--end_trim;
+364 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+365 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+366 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+367 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+368 
+369 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(mi.<link linkend="_structmode__info_1a9aedf409f9c5fc9842723f8d9f406332">trim_start</link>&#32;&amp;&amp;&#32;!fastpath)&#32;{
+370 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(start_trim&#32;&lt;&#32;end_trim)&#32;{
+371 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[i&#32;+&#32;start_trim]&#32;==&#32;special&#32;||&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[i&#32;+&#32;start_trim]&#32;==&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;dont_care)
+372 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;++start_trim;
+373 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+374 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+375 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+376 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+377 
+378 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;end_trim&#32;points&#32;to&#32;the&#32;last&#32;character&#32;we&#32;have&#32;to&#32;output</emphasis>
+379 
+380 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;find&#32;the&#32;first&#32;match,&#32;or&#32;add&#32;it</emphasis>
+381 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pos&#32;=&#32;<link linkend="_unicode_8c_1a7fa0560c70ff036d46a5e2baeff58758">find_packed</link>(&amp;<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>,&#32;&amp;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[i+start_trim],&#32;end_trim-start_trim+1,&#32;mi.<link linkend="_structmode__info_1a998d31bb32124b87746f064c621a386c">aligned</link>,&#32;fastpath,&#32;&amp;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;length],&#32;i+start_trim,&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;replace_fallback_with_codepoint);
+382 
+383 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;encode&#32;as&#32;a&#32;uval</emphasis>
+384 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!mi.<link linkend="_structmode__info_1a9853de2c1908c478e7e5baf8ca917b37">trim_end</link>)&#32;{
+385 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(end_trim&#32;==&#32;0)
+386 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pos&#32;=&#32;special;
+387 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+388 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pos&#32;=&#32;pos&#32;|&#32;0x80000000;
+389 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+390 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;assert(end_trim&#32;&lt;&#32;size&#32;&amp;&amp;&#32;end_trim&#32;&gt;=&#32;-1);
+391 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!fastpath)&#32;assert(end_trim&#32;&lt;&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>-1);&#32;<emphasis role="comment">//&#32;special&#32;always&#32;matches&#32;last&#32;one</emphasis>
+392 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;assert(end_trim&#32;&lt;&#32;size&#32;&amp;&amp;&#32;end_trim+1&#32;&gt;=&#32;0);
+393 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!fastpath)&#32;assert(end_trim+1&#32;&lt;&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>);
+394 
+395 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(mi.<link linkend="_structmode__info_1a9aedf409f9c5fc9842723f8d9f406332">trim_start</link>)
+396 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;trim&#32;=&#32;start_trim*256&#32;+&#32;(end_trim+1);
+397 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+398 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;trim&#32;=&#32;end_trim+1;
+399 
+400 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;assert(pos&#32;&lt;&#32;65536);&#32;<emphasis role="comment">//&#32;@TODO:&#32;if&#32;this&#32;triggers,&#32;just&#32;bail&#32;on&#32;this&#32;search&#32;path</emphasis>
+401 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pos&#32;=&#32;pos&#32;+&#32;(trim&#32;&lt;&lt;&#32;16);
+402 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+403 
+404 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;newval&#32;=&#32;pos;
+405 
+406 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a30a089ec00300b0c18918dd60bbd6854">stb_arr_push</link>(specials,&#32;special);
+407 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+408 &#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(mi.<link linkend="_structmode__info_1a9853de2c1908c478e7e5baf8ca917b37">trim_end</link>)&#32;{
+409 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;end_trim&#32;=&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>-1;
+410 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;start_trim&#32;=&#32;0;
+411 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>&#32;pos,&#32;trim;
+412 
+413 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(end_trim&#32;&gt;=&#32;0&#32;&amp;&amp;&#32;!fastpath)
+414 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[i&#32;+&#32;end_trim]&#32;==&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;fallback&#32;||&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[i&#32;+&#32;end_trim]&#32;==&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;dont_care)
+415 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;--end_trim;
+416 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+417 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+418 
+419 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(mi.<link linkend="_structmode__info_1a9aedf409f9c5fc9842723f8d9f406332">trim_start</link>&#32;&amp;&amp;&#32;!fastpath)&#32;{
+420 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(start_trim&#32;&lt;&#32;end_trim)&#32;{
+421 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[i&#32;+&#32;start_trim]&#32;==&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;fallback&#32;||&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[i&#32;+&#32;start_trim]&#32;==&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;dont_care)
+422 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;++start_trim;
+423 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+424 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+425 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+426 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+427 
+428 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;end_trim&#32;points&#32;to&#32;the&#32;last&#32;character&#32;we&#32;have&#32;to&#32;output,&#32;and&#32;can&#32;be&#32;-1</emphasis>
+429 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;++end_trim;&#32;<emphasis role="comment">//&#32;make&#32;exclusive&#32;at&#32;end</emphasis>
+430 
+431 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(end_trim&#32;==&#32;0&#32;&amp;&amp;&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&#32;==&#32;256)
+432 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;start_trim&#32;=&#32;end_trim&#32;=&#32;1;&#32;&#32;<emphasis role="comment">//&#32;we&#32;can&apos;t&#32;make&#32;encode&#32;a&#32;length&#32;from&#32;0..256&#32;in&#32;8&#32;bits,&#32;so&#32;restrict&#32;end_trim&#32;to&#32;1..256</emphasis>
+433 
+434 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;find&#32;the&#32;first&#32;match,&#32;or&#32;add&#32;it</emphasis>
+435 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pos&#32;=&#32;<link linkend="_unicode_8c_1a7fa0560c70ff036d46a5e2baeff58758">find_packed</link>(&amp;<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>,&#32;&amp;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[i+start_trim],&#32;end_trim&#32;-&#32;start_trim,&#32;mi.<link linkend="_structmode__info_1a998d31bb32124b87746f064c621a386c">aligned</link>,&#32;fastpath,&#32;&amp;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;length],&#32;i+start_trim,&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;replace_fallback_with_codepoint);
+436 
+437 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;assert(end_trim&#32;&lt;=&#32;size&#32;&amp;&amp;&#32;end_trim&#32;&gt;=&#32;0);
+438 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&#32;==&#32;256)
+439 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;assert(end_trim-1&#32;&lt;&#32;256&#32;&amp;&amp;&#32;end_trim-1&#32;&gt;=&#32;0);
+440 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+441 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;assert(end_trim&#32;&lt;&#32;256&#32;&amp;&amp;&#32;end_trim&#32;&gt;=&#32;0);
+442 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&#32;==&#32;256)
+443 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;--end_trim;
+444 
+445 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(mi.<link linkend="_structmode__info_1a9aedf409f9c5fc9842723f8d9f406332">trim_start</link>)
+446 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;trim&#32;=&#32;start_trim*256&#32;+&#32;end_trim;
+447 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+448 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;trim&#32;=&#32;end_trim;
+449 
+450 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;assert(pos&#32;&lt;&#32;65536);&#32;<emphasis role="comment">//&#32;@TODO:&#32;if&#32;this&#32;triggers,&#32;just&#32;bail&#32;on&#32;this&#32;search&#32;path</emphasis>
+451 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pos&#32;=&#32;pos&#32;+&#32;(trim&#32;&lt;&lt;&#32;16);
+452 
+453 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;newval&#32;=&#32;pos;
+454 &#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+455 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;newval&#32;=&#32;<link linkend="_unicode_8c_1a7fa0560c70ff036d46a5e2baeff58758">find_packed</link>(&amp;<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>,&#32;&amp;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[i],&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>,&#32;mi.<link linkend="_structmode__info_1a998d31bb32124b87746f064c621a386c">aligned</link>,&#32;fastpath,&#32;&amp;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;length],&#32;i,&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;replace_fallback_with_codepoint);
+456 &#32;&#32;&#32;&#32;&#32;&#32;}
+457 
+458 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(mi.<link linkend="_structmode__info_1a2c1bec30ff29013781be3b2babd4844a">indirect</link>)&#32;{
+459 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;j;
+460 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(j=0;&#32;j&#32;&lt;&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_glad_8h_1a5fad6fcb3a031758dadc2c2e533f15a5">indirect</link>);&#32;++j)
+461 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a5fad6fcb3a031758dadc2c2e533f15a5">indirect</link>[j]&#32;==&#32;newval)
+462 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+463 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(j&#32;==&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_glad_8h_1a5fad6fcb3a031758dadc2c2e533f15a5">indirect</link>))
+464 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a30a089ec00300b0c18918dd60bbd6854">stb_arr_push</link>(<link linkend="_glad_8h_1a5fad6fcb3a031758dadc2c2e533f15a5">indirect</link>,&#32;newval);
+465 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a30a089ec00300b0c18918dd60bbd6854">stb_arr_push</link>(<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>,&#32;j);
+466 &#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+467 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a30a089ec00300b0c18918dd60bbd6854">stb_arr_push</link>(<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>,&#32;newval);
+468 &#32;&#32;&#32;&#32;&#32;&#32;}
+469 &#32;&#32;&#32;}
+470 
+471 &#32;&#32;&#32;<emphasis role="comment">//&#32;total&#32;up&#32;the&#32;new&#32;size&#32;for&#32;everything&#32;but&#32;the&#32;index&#32;table</emphasis>
+472 &#32;&#32;&#32;extra_size&#32;=&#32;mi.<link linkend="_structmode__info_1a64edbc2efec66d00868635b9f1f52831">overhead</link>&#32;*&#32;<link linkend="_unicode_8c_1aa01147b1f07072d246c76dc85d69df7c">weight</link>;&#32;<emphasis role="comment">//&#32;not&#32;the&#32;actual&#32;overhead&#32;cost;&#32;a&#32;penalty&#32;to&#32;avoid&#32;excessive&#32;complexity</emphasis>
+473 &#32;&#32;&#32;extra_size&#32;+=&#32;150;&#32;<emphasis role="comment">//&#32;per&#32;indirection</emphasis>
+474 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(table_name)
+475 &#32;&#32;&#32;&#32;&#32;&#32;extra_size&#32;=&#32;0;
+476 &#32;&#32;&#32;
+477 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;has_sign)&#32;{
+478 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&apos;packed&apos;&#32;contains&#32;two&#32;values,&#32;which&#32;should&#32;be&#32;packed&#32;positive&#32;&amp;&#32;negative&#32;for&#32;size</emphasis>
+479 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>&#32;maxv2;
+480 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>);&#32;++i)
+481 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>[i]&#32;&amp;&#32;0x80000000)
+482 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;maxv2&#32;=&#32;<link linkend="_stb_8h_1a254a62dfa60c086a020a0fe83d4400e5">stb_max</link>(maxv2,&#32;<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>[i]);
+483 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+484 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;maxv&#32;&#32;=&#32;<link linkend="_stb_8h_1a254a62dfa60c086a020a0fe83d4400e5">stb_max</link>(maxv,&#32;<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>[i]);
+485 &#32;&#32;&#32;&#32;&#32;&#32;maxv&#32;=&#32;<link linkend="_stb_8h_1a254a62dfa60c086a020a0fe83d4400e5">stb_max</link>(maxv,&#32;maxv2)&#32;&lt;&lt;&#32;1;
+486 &#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+487 &#32;&#32;&#32;&#32;&#32;&#32;maxv&#32;=&#32;0;
+488 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>);&#32;++i)
+489 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>[i]&#32;&gt;&#32;maxv&#32;&amp;&amp;&#32;<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>[i]&#32;!=&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;dont_care)
+490 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;maxv&#32;=&#32;<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>[i];
+491 &#32;&#32;&#32;}
+492 &#32;&#32;&#32;extra_size&#32;+=&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>)&#32;*&#32;(<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;splittable&#32;?&#32;<link linkend="_unicode_8c_1a97cd04ff61c7f95e0a076660ffb0c4aa">size_for_max_number</link>(maxv)&#32;:&#32;<link linkend="_unicode_8c_1a82ea88b6ef299cf480072d4ff97d3bf2">size_for_max_number_aligned</link>(maxv));
+493 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(table_name)&#32;{
+494 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;splittable)
+495 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1aabf88f32a9217c0ddefc00c9e27be74f">output_table_with_trims</link>(table_name,&#32;<emphasis role="stringliteral">&quot;&quot;</emphasis>,&#32;<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>,&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>));
+496 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+497 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1ae2e29c49c62fc0719e2ababbe88e84dd">output_table</link>(table_name,&#32;<emphasis role="stringliteral">&quot;&quot;</emphasis>,&#32;<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>,&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>),&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;has_sign,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+498 &#32;&#32;&#32;}
+499 
+500 &#32;&#32;&#32;maxv&#32;=&#32;0;
+501 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(specials);&#32;++i)
+502 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(specials[i]&#32;&gt;&#32;maxv)
+503 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;maxv&#32;=&#32;specials[i];
+504 &#32;&#32;&#32;extra_size&#32;+=&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(specials)&#32;*&#32;<link linkend="_unicode_8c_1a82ea88b6ef299cf480072d4ff97d3bf2">size_for_max_number_aligned</link>(maxv);
+505 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(table_name)
+506 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1ae2e29c49c62fc0719e2ababbe88e84dd">output_table</link>(table_name,&#32;<emphasis role="stringliteral">&quot;_default&quot;</emphasis>,&#32;specials,&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(specials),&#32;0,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+507 
+508 &#32;&#32;&#32;maxv&#32;=&#32;0;
+509 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_glad_8h_1a5fad6fcb3a031758dadc2c2e533f15a5">indirect</link>);&#32;++i)
+510 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a5fad6fcb3a031758dadc2c2e533f15a5">indirect</link>[i]&#32;&gt;&#32;maxv)
+511 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;maxv&#32;=&#32;<link linkend="_glad_8h_1a5fad6fcb3a031758dadc2c2e533f15a5">indirect</link>[i];
+512 &#32;&#32;&#32;extra_size&#32;+=&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_glad_8h_1a5fad6fcb3a031758dadc2c2e533f15a5">indirect</link>)&#32;*&#32;<link linkend="_unicode_8c_1a97cd04ff61c7f95e0a076660ffb0c4aa">size_for_max_number</link>(maxv);
+513 
+514 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(table_name&#32;&amp;&amp;&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_glad_8h_1a5fad6fcb3a031758dadc2c2e533f15a5">indirect</link>))&#32;{
+515 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(mi.<link linkend="_structmode__info_1a9853de2c1908c478e7e5baf8ca917b37">trim_end</link>)
+516 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1aabf88f32a9217c0ddefc00c9e27be74f">output_table_with_trims</link>(table_name,&#32;<emphasis role="stringliteral">&quot;_index&quot;</emphasis>,&#32;<link linkend="_glad_8h_1a5fad6fcb3a031758dadc2c2e533f15a5">indirect</link>,&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_glad_8h_1a5fad6fcb3a031758dadc2c2e533f15a5">indirect</link>));
+517 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+518 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;assert(0);&#32;<emphasis role="comment">//&#32;this&#32;case&#32;should&#32;only&#32;trigger&#32;in&#32;very&#32;extreme&#32;circumstances</emphasis>
+519 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_unicode_8c_1ae2e29c49c62fc0719e2ababbe88e84dd">output_table</link>(table_name,&#32;<emphasis role="stringliteral">&quot;_index&quot;</emphasis>,&#32;<link linkend="_glad_8h_1a5fad6fcb3a031758dadc2c2e533f15a5">indirect</link>,&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_glad_8h_1a5fad6fcb3a031758dadc2c2e533f15a5">indirect</link>),&#32;0,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+520 &#32;&#32;&#32;&#32;&#32;&#32;}
+521 &#32;&#32;&#32;&#32;&#32;&#32;mi.<link linkend="_structmode__info_1a9853de2c1908c478e7e5baf8ca917b37">trim_end</link>&#32;=&#32;mi.<link linkend="_structmode__info_1aa1c8d2e3852863b172ce9a747ad4f29b">special</link>&#32;=&#32;0;
+522 &#32;&#32;&#32;}
+523 
+524 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(table_name)
+525 &#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;//&#32;above&#32;tables&#32;should&#32;be&#32;%d&#32;bytes\n&quot;</emphasis>,&#32;extra_size);
+526 
+527 &#32;&#32;&#32;maxv&#32;=&#32;0;
+528 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>);&#32;++i)
+529 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>[i]&#32;&gt;&#32;maxv&#32;&amp;&amp;&#32;<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>[i]&#32;!=&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;dont_care)
+530 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;maxv&#32;=&#32;<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>[i];
+531 &#32;&#32;&#32;newtab.<link linkend="_structtable_1a8cb8ff0e63a1f9f0585c29135676f8d5">splittable</link>&#32;=&#32;mi.<link linkend="_structmode__info_1a9853de2c1908c478e7e5baf8ca917b37">trim_end</link>;
+532 &#32;&#32;&#32;newtab.<link linkend="_structtable_1a6ba5d89d1b25fe9747e1dfa9a99e2fe0">input_size</link>&#32;=&#32;newtab.<link linkend="_structtable_1a8cb8ff0e63a1f9f0585c29135676f8d5">splittable</link>&#32;?&#32;<link linkend="_unicode_8c_1a97cd04ff61c7f95e0a076660ffb0c4aa">size_for_max_number</link>(maxv)&#32;:&#32;<link linkend="_unicode_8c_1a82ea88b6ef299cf480072d4ff97d3bf2">size_for_max_number_aligned</link>(maxv);
+533 &#32;&#32;&#32;newtab.<link linkend="_structtable_1a079ef026b911b09c30d2e3fe5ffd0a8d">input</link>&#32;=&#32;<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>;
+534 &#32;&#32;&#32;newtab.<link linkend="_structtable_1a51b8ad75f9a0bd93795b16e4053ca99d">length</link>&#32;=&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>);
+535 &#32;&#32;&#32;newtab.<link linkend="_structtable_1ac0b67c6f0058f831158d239d1e307769">inherited_storage</link>&#32;=&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;inherited_storage&#32;+&#32;extra_size;
+536 &#32;&#32;&#32;newtab.<link linkend="_structtable_1a2d65c94a0b00f2512718abb359c24706">fastpath</link>&#32;=&#32;0;
+537 &#32;&#32;&#32;newtab.<link linkend="_structtable_1a0353dd6454a6acccebc2cf463211d7a7">depth</link>&#32;=&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;depth+1;
+538 &#32;&#32;&#32;<link linkend="_stb_8h_1a2b27c08a6a560f790ee93a8c95b869f0">stb_arr_free</link>(<link linkend="_glad_8h_1a5fad6fcb3a031758dadc2c2e533f15a5">indirect</link>);
+539 &#32;&#32;&#32;<link linkend="_stb_8h_1a2b27c08a6a560f790ee93a8c95b869f0">stb_arr_free</link>(<link linkend="_glext_8h_1ae1a14bfbe53957836e1fa28741e673af">packed</link>);
+540 &#32;&#32;&#32;<link linkend="_stb_8h_1a2b27c08a6a560f790ee93a8c95b869f0">stb_arr_free</link>(specials);
+541 
+542 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;newtab;
+543 }
+</programlisting>    </section><anchor xml:id="_unicode_8c_1ad104b0caa281468cf5d6bf62d6f7bd44"/>    <section>
+    <title>pack_table()</title>
+<indexterm><primary>pack_table</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>pack_table</secondary></indexterm>
+<para><computeroutput><link linkend="_structresult">result</link> pack_table (<link linkend="_structtable">table</link> * t, size_t path, int min_storage)</computeroutput></para><para>
+Definition at line 545 of file unicode.c.</para>
+<programlisting>546 {
+547 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+548 &#32;&#32;&#32;<link linkend="_structresult">result</link>&#32;best;
+549 &#32;&#32;&#32;best.<link linkend="_structresult_1a6041db48bedfb0e32fb777c7c115732e">size</link>&#32;=&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;inherited_storage&#32;+&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input_size&#32;*&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;length;
+550 &#32;&#32;&#32;best.<link linkend="_structresult_1a08dbbe38ba73d8e515205ef82e104790">path</link>&#32;=&#32;<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>;
+551 
+552 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((<emphasis role="keywordtype">int</emphasis>)&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;inherited_storage&#32;&gt;&#32;min_storage)&#32;{
+553 &#32;&#32;&#32;&#32;&#32;&#32;best.<link linkend="_structresult_1a6041db48bedfb0e32fb777c7c115732e">size</link>&#32;=&#32;<link linkend="_stb_8h_1a254a62dfa60c086a020a0fe83d4400e5">stb_max</link>(best.<link linkend="_structresult_1a6041db48bedfb0e32fb777c7c115732e">size</link>,&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;inherited_storage);
+554 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;best;
+555 &#32;&#32;&#32;}
+556 
+557 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;length&#32;&lt;=&#32;256&#32;||&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;depth&#32;&gt;=&#32;4)&#32;{
+558 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//printf(&quot;%08x:&#32;%7d\n&quot;,&#32;best.path,&#32;best.size);</emphasis>
+559 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;best;
+560 &#32;&#32;&#32;}
+561 
+562 &#32;&#32;&#32;<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>&#32;&lt;&lt;=&#32;7;
+563 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_unicode_8c_1a85071534397d42eba9a1397eeee3b3a6">MODECOUNT</link>&#32;*&#32;<link linkend="_unicode_8c_1a261dc022705e4267b0263986e206a69f">CLUSTERSIZECOUNT</link>;&#32;++i)&#32;{
+564 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structtable">table</link>&#32;newtab;
+565 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structresult">result</link>&#32;<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>;
+566 &#32;&#32;&#32;&#32;&#32;&#32;newtab&#32;=&#32;<link linkend="_unicode_8c_1aa7fa7bf68dcdca7c9cafd0e09b874408">pack_for_mode</link>(<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>,&#32;i,&#32;0);
+567 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>&#32;=&#32;<link linkend="_unicode_8c_1ad104b0caa281468cf5d6bf62d6f7bd44">pack_table</link>(&amp;newtab,&#32;<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>+i+1,&#32;min_storage);
+568 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>.size&#32;&lt;&#32;best.<link linkend="_structresult_1a6041db48bedfb0e32fb777c7c115732e">size</link>)
+569 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;best&#32;=&#32;<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>;
+570 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a2b27c08a6a560f790ee93a8c95b869f0">stb_arr_free</link>(newtab.<link linkend="_structtable_1a079ef026b911b09c30d2e3fe5ffd0a8d">input</link>);
+571 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//printf(&quot;Size:&#32;%6d&#32;+&#32;%6d\n&quot;,&#32;newtab.inherited_storage,&#32;newtab.input_size&#32;*&#32;newtab.length);</emphasis>
+572 &#32;&#32;&#32;}
+573 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;best;
+574 }
+</programlisting>    </section><anchor xml:id="_unicode_8c_1a491dd2b21685d52ee87b7baf8a1b987a"/>    <section>
+    <title>pack_table_by_modes()</title>
+<indexterm><primary>pack_table_by_modes</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>pack_table_by_modes</secondary></indexterm>
+<para><computeroutput>int pack_table_by_modes (<link linkend="_structtable">table</link> * t, int * modes)</computeroutput></para><para>
+Definition at line 576 of file unicode.c.</para>
+<programlisting>577 {
+578 &#32;&#32;&#32;<link linkend="_structtable">table</link>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;=&#32;*<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>;
+579 &#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(*<link linkend="_unicode_8c_1a94c4c0cf850e916912929ee98dbff3fc">modes</link>&#32;&gt;&#32;-1)&#32;{
+580 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structtable">table</link>&#32;newtab;
+581 &#32;&#32;&#32;&#32;&#32;&#32;newtab&#32;=&#32;<link linkend="_unicode_8c_1aa7fa7bf68dcdca7c9cafd0e09b874408">pack_for_mode</link>(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,&#32;*<link linkend="_unicode_8c_1a94c4c0cf850e916912929ee98dbff3fc">modes</link>,&#32;0);
+582 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>.input&#32;!=&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input)
+583 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a2b27c08a6a560f790ee93a8c95b869f0">stb_arr_free</link>(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>.input);
+584 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;=&#32;newtab;
+585 &#32;&#32;&#32;&#32;&#32;&#32;++<link linkend="_unicode_8c_1a94c4c0cf850e916912929ee98dbff3fc">modes</link>;
+586 &#32;&#32;&#32;}
+587 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>.inherited_storage&#32;+&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>.input_size&#32;*&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>.length;
+588 }
+</programlisting>    </section><anchor xml:id="_unicode_8c_1afe9206acb0d3f2faedd2eecce65e2afb"/>    <section>
+    <title>safe_len()</title>
+<indexterm><primary>safe_len</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>safe_len</secondary></indexterm>
+<para><computeroutput>int safe_len (<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> * data, int len, <link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> * end)</computeroutput></para><para>
+Definition at line 141 of file unicode.c.</para>
+<programlisting>142 {
+143 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;&gt;&#32;<link linkend="_glad_8h_1a432111147038972f06e049e18a837002">end</link>&#32;-&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>)
+144 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a432111147038972f06e049e18a837002">end</link>&#32;-&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>;
+145 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+146 }
+</programlisting>    </section><anchor xml:id="_unicode_8c_1a97cd04ff61c7f95e0a076660ffb0c4aa"/>    <section>
+    <title>size_for_max_number()</title>
+<indexterm><primary>size_for_max_number</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>size_for_max_number</secondary></indexterm>
+<para><computeroutput>size_t size_for_max_number (<link linkend="_stb_8h_1a1134b580f8da4de94ca6b1de4d37975e">uint32</link> number)</computeroutput></para><para>
+Definition at line 118 of file unicode.c.</para>
+<programlisting>119 {
+120 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(number&#32;==&#32;0)&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+121 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(number&#32;&lt;&#32;256)&#32;<emphasis role="keywordflow">return</emphasis>&#32;1;
+122 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(number&#32;&lt;&#32;256*256)&#32;<emphasis role="keywordflow">return</emphasis>&#32;2;
+123 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(number&#32;&lt;&#32;256*256*256)&#32;<emphasis role="keywordflow">return</emphasis>&#32;3;
+124 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;4;
+125 }
+</programlisting>    </section><anchor xml:id="_unicode_8c_1a82ea88b6ef299cf480072d4ff97d3bf2"/>    <section>
+    <title>size_for_max_number_aligned()</title>
+<indexterm><primary>size_for_max_number_aligned</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>size_for_max_number_aligned</secondary></indexterm>
+<para><computeroutput>size_t size_for_max_number_aligned (<link linkend="_stb_8h_1a1134b580f8da4de94ca6b1de4d37975e">uint32</link> number)</computeroutput></para><para>
+Definition at line 127 of file unicode.c.</para>
+<programlisting>128 {
+129 &#32;&#32;&#32;<emphasis role="keywordtype">size_t</emphasis>&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;=&#32;<link linkend="_unicode_8c_1a97cd04ff61c7f95e0a076660ffb0c4aa">size_for_max_number</link>(number);
+130 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>&#32;==&#32;3&#32;?&#32;4&#32;:&#32;<link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>;
+131 }
+</programlisting>    </section><anchor xml:id="_unicode_8c_1ada30b540d1fe28b4b2be8ab70eb4c295"/>    <section>
+    <title>skip_semi()</title>
+<indexterm><primary>skip_semi</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>skip_semi</secondary></indexterm>
+<para><computeroutput>char* skip_semi (char * s, int count)</computeroutput></para><para>
+Definition at line 695 of file unicode.c.</para>
+<programlisting>696 {
+697 &#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>)&#32;{
+698 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;=&#32;strchr(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,&#32;<emphasis role="charliteral">&apos;;&apos;</emphasis>);
+699 &#32;&#32;&#32;&#32;&#32;&#32;assert(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;!=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+700 &#32;&#32;&#32;&#32;&#32;&#32;++<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>;
+701 &#32;&#32;&#32;&#32;&#32;&#32;--<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>;
+702 &#32;&#32;&#32;}
+703 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>;
+704 }
+</programlisting>    </section><anchor xml:id="_unicode_8c_1ac679b1be3888c7ed3dcfacb94b3bb795"/>    <section>
+    <title>strip_table()</title>
+<indexterm><primary>strip_table</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>strip_table</secondary></indexterm>
+<para><computeroutput>int strip_table (<link linkend="_structtable">table</link> * t, int exceptions)</computeroutput></para><para>
+Definition at line 590 of file unicode.c.</para>
+<programlisting>591 {
+592 &#32;&#32;&#32;<link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link>&#32;terminal_value;
+593 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;=&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;length-1;
+594 &#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>]&#32;==&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;dont_care)
+595 &#32;&#32;&#32;&#32;&#32;&#32;--<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>;
+596 &#32;&#32;&#32;terminal_value&#32;=&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>];
+597 
+598 &#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;&gt;=&#32;0x10000)&#32;{
+599 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>]&#32;!=&#32;terminal_value&#32;&amp;&amp;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;input[<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>]&#32;!=&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>-&gt;dont_care)&#32;{
+600 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(exceptions)
+601 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;--exceptions;
+602 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+603 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+604 &#32;&#32;&#32;&#32;&#32;&#32;}
+605 &#32;&#32;&#32;&#32;&#32;&#32;--<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>;
+606 &#32;&#32;&#32;}
+607 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>+1;&#32;<emphasis role="comment">//&#32;p&#32;is&#32;a&#32;character&#32;we&#32;must&#32;output</emphasis>
+608 }
+</programlisting></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_unicode_8c_1a120b75c12097e7fdda71535d04ae7880"/>    <section>
+    <title>dirty</title>
+<indexterm><primary>dirty</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>dirty</secondary></indexterm>
+<para><computeroutput>int dirty =0</computeroutput></para><para>
+Definition at line 149 of file unicode.c.</para>
+    </section><anchor xml:id="_unicode_8c_1a94c4c0cf850e916912929ee98dbff3fc"/>    <section>
+    <title>modes</title>
+<indexterm><primary>modes</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>modes</secondary></indexterm>
+<para><computeroutput><link linkend="_structmode__info">mode_info</link> modes[]</computeroutput></para><emphasis role="strong">Initial value:</emphasis><programlisting>=
+{
+&#32;&#32;&#32;{&#32;&#32;&#32;0,0,0,0,0,&#32;&#32;&#32;&#32;32,&#32;},
+&#32;&#32;&#32;{&#32;&#32;&#32;0,0,0,0,1,&#32;&#32;&#32;100,&#32;},
+&#32;&#32;&#32;{&#32;&#32;&#32;0,0,0,1,0,&#32;&#32;&#32;&#32;32,&#32;},
+&#32;&#32;&#32;{&#32;&#32;&#32;0,0,0,1,1,&#32;&#32;&#32;100,&#32;},
+&#32;&#32;&#32;{&#32;&#32;&#32;0,0,1,0,1,&#32;&#32;&#32;100,&#32;},
+&#32;&#32;&#32;{&#32;&#32;&#32;0,0,1,1,0,&#32;&#32;&#32;&#32;32,&#32;},
+&#32;&#32;&#32;{&#32;&#32;&#32;0,0,1,1,1,&#32;&#32;&#32;200,&#32;},
+&#32;&#32;&#32;{&#32;&#32;&#32;1,0,0,0,0,&#32;&#32;&#32;100,&#32;},
+&#32;&#32;&#32;{&#32;&#32;&#32;1,0,0,0,1,&#32;&#32;&#32;120,&#32;},
+&#32;&#32;&#32;{&#32;&#32;&#32;1,1,0,0,0,&#32;&#32;&#32;100,&#32;},
+&#32;&#32;&#32;{&#32;&#32;&#32;1,1,0,0,1,&#32;&#32;&#32;130,&#32;},
+&#32;&#32;&#32;{&#32;&#32;&#32;1,0,1,0,0,&#32;&#32;&#32;130,&#32;},
+&#32;&#32;&#32;{&#32;&#32;&#32;1,0,1,0,1,&#32;&#32;&#32;180,&#32;},
+&#32;&#32;&#32;{&#32;&#32;&#32;1,1,1,0,0,&#32;&#32;&#32;180,&#32;},
+&#32;&#32;&#32;{&#32;&#32;&#32;1,1,1,0,1,&#32;&#32;&#32;200,&#32;},
+}
+</programlisting><para>
+Definition at line 96 of file unicode.c.</para>
+    </section><anchor xml:id="_unicode_8c_1af40b88a0ae02ccc6c27ea0f3dc7b64ba"/>    <section>
+    <title>tempdata</title>
+<indexterm><primary>tempdata</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>tempdata</secondary></indexterm>
+<para><computeroutput><link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> tempdata[256]</computeroutput></para><para>
+Definition at line 148 of file unicode.c.</para>
+    </section><anchor xml:id="_unicode_8c_1ad402abe37ad858306ccfe75bcd985080"/>    <section>
+    <title>unicode_table</title>
+<indexterm><primary>unicode_table</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>unicode_table</secondary></indexterm>
+<para><computeroutput><link linkend="_unicode_8c_1a69546e591259dd0533ee12ce9af1d83f">uval</link> unicode_table[0x110000]</computeroutput></para><para>
+Definition at line 675 of file unicode.c.</para>
+    </section><anchor xml:id="_unicode_8c_1aa01147b1f07072d246c76dc85d69df7c"/>    <section>
+    <title>weight</title>
+<indexterm><primary>weight</primary><secondary>unicode.c</secondary></indexterm>
+<indexterm><primary>unicode.c</primary><secondary>weight</secondary></indexterm>
+<para><computeroutput>int <link linkend="_glext_8h_1a6b425be07cfa8ac09043ef8391e7e514">weight</link> =1</computeroutput></para><para>
+Definition at line 322 of file unicode.c.</para>
+</section>
+</section>
+</section>

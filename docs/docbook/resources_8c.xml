@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_resources_8c">
+<title>src/vally/resources/resources.c File Reference</title>
+<indexterm><primary>src/vally/resources/resources.c</primary></indexterm>
+<programlisting>#include &lt;vally/resources/resources.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;cvec.h&gt;
+#include &lt;vally/core/logger.h&gt;
+#include &lt;vally/resources/resource_types.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structresources__state">resources_state</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_resources_8c_1a2bdcbd579f013459bcc7f55b7457613b">resources_init</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_resources_8c_1a16641af0e8abb4648df5964f32f30adb">resources_add</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>, <link linkend="_resource__types_8h_1aa85b9c7b73d9d573581d08728fff4faa">destructor_fun</link> destructor)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_resources_8c_1a6105d50e032c659b7403561b1f108195">resources_terminate</link> ()</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_resources_8c_1a16641af0e8abb4648df5964f32f30adb"/>    <section>
+    <title>resources_add()</title>
+<indexterm><primary>resources_add</primary><secondary>resources.c</secondary></indexterm>
+<indexterm><primary>resources.c</primary><secondary>resources_add</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> resources_add (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * data, <link linkend="_resource__types_8h_1aa85b9c7b73d9d573581d08728fff4faa">destructor_fun</link> destructor)</computeroutput></para><para>
+Definition at line 29 of file resources.c.</para>
+<programlisting>29 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+30 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initalized)&#32;{
+31 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+32 &#32;&#32;}
+33 
+34 &#32;&#32;<link linkend="_structresource">resource</link>&#32;<link linkend="_glext_8h_1a1dbb21208b9047cc8031ca9c840d3c2f">res</link>;
+35 &#32;&#32;<link linkend="_glext_8h_1a1dbb21208b9047cc8031ca9c840d3c2f">res</link>.data&#32;=&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>;
+36 &#32;&#32;<link linkend="_glext_8h_1a1dbb21208b9047cc8031ca9c840d3c2f">res</link>.destructor&#32;=&#32;destructor;
+37 &#32;&#32;<link linkend="_cvec_8h_1a589dd3e539e29524d806dd67fef1161f">cvec_push_back</link>(state.<link linkend="_structresources__state_1ab7bd90e7ca8afd01f5c0fa54bcf38dab">resources</link>,&#32;<link linkend="_glext_8h_1a1dbb21208b9047cc8031ca9c840d3c2f">res</link>);
+38 }
+</programlisting>    </section><anchor xml:id="_resources_8c_1a2bdcbd579f013459bcc7f55b7457613b"/>    <section>
+    <title>resources_init()</title>
+<indexterm><primary>resources_init</primary><secondary>resources.c</secondary></indexterm>
+<indexterm><primary>resources.c</primary><secondary>resources_init</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> resources_init ( )</computeroutput></para><para>
+Definition at line 17 of file resources.c.</para>
+<programlisting>17 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+18 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(initalized)&#32;{
+19 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+20 &#32;&#32;}
+21 
+22 &#32;&#32;initalized&#32;=&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+23 &#32;&#32;state.<link linkend="_structresources__state_1ab7bd90e7ca8afd01f5c0fa54bcf38dab">resources</link>&#32;=&#32;<link linkend="_cvec_8h_1a3d7122698c976f6369cf5356c1d7f44c">cvec_create</link>(<link linkend="_structresource">resource</link>);
+24 
+25 &#32;&#32;<link linkend="_logger_8h_1af933c6341b0deeb4ee1a540da61b9536">VALLY_TRACE</link>(<emphasis role="stringliteral">&quot;Resource&#32;system&#32;initialized&quot;</emphasis>);
+26 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+27 }
+</programlisting>    </section><anchor xml:id="_resources_8c_1a6105d50e032c659b7403561b1f108195"/>    <section>
+    <title>resources_terminate()</title>
+<indexterm><primary>resources_terminate</primary><secondary>resources.c</secondary></indexterm>
+<indexterm><primary>resources.c</primary><secondary>resources_terminate</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> resources_terminate ( )</computeroutput></para><para>
+Definition at line 40 of file resources.c.</para>
+<programlisting>40 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+41 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initalized)&#32;{
+42 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+43 &#32;&#32;}&#32;
+44 
+45 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;<link linkend="_cvec_8c_1a8a6a2015774042d6bfc978989e91e561">cvec_size</link>(state.<link linkend="_structresources__state_1ab7bd90e7ca8afd01f5c0fa54bcf38dab">resources</link>);&#32;i++)&#32;{
+46 &#32;&#32;&#32;&#32;<link linkend="_structresource">resource</link>&#32;<link linkend="_glext_8h_1a1dbb21208b9047cc8031ca9c840d3c2f">res</link>&#32;=&#32;<link linkend="_cvec_8h_1abb99bfeea098f652e3efedb6e23004f2">cvec_at</link>(state.<link linkend="_structresources__state_1ab7bd90e7ca8afd01f5c0fa54bcf38dab">resources</link>,&#32;i,&#32;<link linkend="_structresource">resource</link>);
+47 &#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a1dbb21208b9047cc8031ca9c840d3c2f">res</link>.destructor(<link linkend="_glext_8h_1a1dbb21208b9047cc8031ca9c840d3c2f">res</link>.data);
+48 &#32;&#32;}
+49 
+50 &#32;&#32;<link linkend="_logger_8h_1a787875cab0f42571d60be03d1762c00a">VALLY_INFO</link>(<emphasis role="stringliteral">&quot;Resource&#32;system:&#32;%d&#32;objects&#32;destroyed&quot;</emphasis>,&#32;<link linkend="_cvec_8c_1a8a6a2015774042d6bfc978989e91e561">cvec_size</link>(state.<link linkend="_structresources__state_1ab7bd90e7ca8afd01f5c0fa54bcf38dab">resources</link>));
+51 &#32;&#32;<link linkend="_cvec_8c_1a17c81de6fcbe0e5df5f4f0f7a71ac996">cvec_destroy</link>(state.<link linkend="_structresources__state_1ab7bd90e7ca8afd01f5c0fa54bcf38dab">resources</link>);
+52 
+53 &#32;&#32;<link linkend="_logger_8h_1af933c6341b0deeb4ee1a540da61b9536">VALLY_TRACE</link>(<emphasis role="stringliteral">&quot;Resource&#32;system&#32;terminated&quot;</emphasis>);
+54 }
+</programlisting></section>
+</section>
+</section>

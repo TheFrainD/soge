@@ -1,0 +1,252 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_context_guide">
+
+<para>This guide introduces the OpenGL and OpenGL ES context related functions of GLFW. For details on a specific function in this category, see the <link linkend="_group__context">Context reference</link>. There are also guides for the other areas of the GLFW API.</para>
+
+<para><itemizedlist>
+<listitem>
+<para><link linkend="_intro_guide">Introduction to the API</link></para>
+</listitem><listitem>
+<para><link linkend="_window_guide">Window guide</link></para>
+</listitem><listitem>
+<para><link linkend="_vulkan_guide">Vulkan guide</link></para>
+</listitem><listitem>
+<para><link linkend="_monitor_guide">Monitor guide</link></para>
+</listitem><listitem>
+<para><link linkend="_input_guide">Input guide</link></para>
+</listitem></itemizedlist>
+</para>
+<section xml:id="_context_guide_1context_object">
+<title>Context objects</title>
+
+<para>A window object encapsulates both a top-level window and an OpenGL or OpenGL ES context. It is created with <link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link> and destroyed with <link linkend="_group__window_1ga806747476b7247d292be3711c323ea10">glfwDestroyWindow</link> or <link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>. See <link linkend="_window_guide_1window_creation">Window creation</link> for more information.</para>
+
+<para>As the window and context are inseparably linked, the window object also serves as the context handle.</para>
+
+<para>To test the creation of various kinds of contexts and see their properties, run the <computeroutput>glfwinfo</computeroutput> test program.</para>
+
+<para><note><title>Note</title>
+
+<para>Vulkan does not have a context and the Vulkan instance is created via the Vulkan API itself. If you will be using Vulkan to render to a window, disable context creation by setting the <link linkend="_window_guide_1GLFW_CLIENT_API_hint">GLFW_CLIENT_API</link> hint to <computeroutput>GLFW_NO_API</computeroutput>. For more information, see the <link linkend="_vulkan_guide">Vulkan guide</link>.</para>
+</note>
+</para>
+<section xml:id="_context_guide_1context_hints">
+<title>Context creation hints</title>
+
+<para>There are a number of hints, specified using <link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>, related to what kind of context is created. See <link linkend="_window_guide_1window_hints_ctx">context related hints</link> in the window guide.</para>
+</section>
+<section xml:id="_context_guide_1context_sharing">
+<title>Context object sharing</title>
+
+<para>When creating a window and its OpenGL or OpenGL ES context with <link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link>, you can specify another window whose context the new one should share its objects (textures, vertex and element buffers, etc.) with.</para>
+
+<para><literallayout><computeroutput>GLFWwindow*&#32;second_window&#32;=&#32;glfwCreateWindow(640,&#32;480,&#32;&quot;Second&#32;Window&quot;,&#32;NULL,&#32;first_window);
+</computeroutput></literallayout></para>
+
+<para>Object sharing is implemented by the operating system and graphics driver. On platforms where it is possible to choose which types of objects are shared, GLFW requests that all types are shared.</para>
+
+<para>See the relevant chapter of the <link xlink:href="https://www.opengl.org/registry/">OpenGL</link> or <link xlink:href="https://www.khronos.org/opengles/">OpenGL ES</link> reference documents for more information. The name and number of this chapter unfortunately varies between versions and APIs, but has at times been named <emphasis>Shared Objects and Multiple Contexts</emphasis>.</para>
+
+<para>GLFW comes with a barebones object sharing example program called <computeroutput>sharing</computeroutput>.</para>
+</section>
+<section xml:id="_context_guide_1context_offscreen">
+<title>Offscreen contexts</title>
+
+<para>GLFW doesn&apos;t support creating contexts without an associated window. However, contexts with hidden windows can be created with the <link linkend="_window_guide_1GLFW_VISIBLE_hint">GLFW_VISIBLE</link> window hint.</para>
+
+<para><literallayout><computeroutput>glfwWindowHint(GLFW_VISIBLE,&#32;GLFW_FALSE);
+
+GLFWwindow*&#32;offscreen_context&#32;=&#32;glfwCreateWindow(640,&#32;480,&#32;&quot;&quot;,&#32;NULL,&#32;NULL);
+</computeroutput></literallayout></para>
+
+<para>The window never needs to be shown and its context can be used as a plain offscreen context. Depending on the window manager, the size of a hidden window&apos;s framebuffer may not be usable or modifiable, so framebuffer objects are recommended for rendering with such contexts.</para>
+
+<para>You should still <link linkend="_input_guide_1events">process events</link> as long as you have at least one window, even if none of them are visible.</para>
+</section>
+<section xml:id="_context_guide_1context_less">
+<title>Windows without contexts</title>
+
+<para>You can disable context creation by setting the <link linkend="_window_guide_1GLFW_CLIENT_API_hint">GLFW_CLIENT_API</link> hint to <computeroutput>GLFW_NO_API</computeroutput>. Windows without contexts must not be passed to <link linkend="_group__context_1gafd76c93e15ec8b0b90506a9936a46185">glfwMakeContextCurrent</link> or <link linkend="_group__window_1gafb827800eedbfcbc97b1e5408df668d7">glfwSwapBuffers</link>.</para>
+</section>
+</section>
+<section xml:id="_context_guide_1context_current">
+<title>Current context</title>
+
+<para>Before you can make OpenGL or OpenGL ES calls, you need to have a current context of the correct type. A context can only be current for a single thread at a time, and a thread can only have a single context current at a time.</para>
+
+<para>When moving a context between threads, you must make it non-current on the old thread before making it current on the new one.</para>
+
+<para>The context of a window is made current with <link linkend="_group__context_1gafd76c93e15ec8b0b90506a9936a46185">glfwMakeContextCurrent</link>.</para>
+
+<para><literallayout><computeroutput>glfwMakeContextCurrent(window);
+</computeroutput></literallayout></para>
+
+<para>The window of the current context is returned by <link linkend="_group__context_1gac28d98c655377d81a516bf5ef90780c8">glfwGetCurrentContext</link>.</para>
+
+<para><literallayout><computeroutput>GLFWwindow*&#32;window&#32;=&#32;glfwGetCurrentContext();
+</computeroutput></literallayout></para>
+
+<para>The following GLFW functions require a context to be current. Calling any these functions without a current context will generate a <link linkend="_group__errors_1gaa8290386e9528ccb9e42a3a4e16fc0d0">GLFW_NO_CURRENT_CONTEXT</link> error.</para>
+
+<para><itemizedlist>
+<listitem>
+<para><link linkend="_group__context_1ga12a595c06947cec4967c6e1f14210a8a">glfwSwapInterval</link></para>
+</listitem><listitem>
+<para><link linkend="_group__context_1ga9a28c712d35f9e43534e1d03b051c04c">glfwExtensionSupported</link></para>
+</listitem><listitem>
+<para><link linkend="_group__context_1ga0e8af175218929615c16e74938c10f2a">glfwGetProcAddress</link></para>
+</listitem></itemizedlist>
+</para>
+</section>
+<section xml:id="_context_guide_1context_swap">
+<title>Buffer swapping</title>
+
+<para>See <link linkend="_window_guide_1buffer_swap">Buffer swapping</link> in the window guide.</para>
+</section>
+<section xml:id="_context_guide_1context_glext">
+<title>OpenGL and OpenGL ES extensions</title>
+
+<para>One of the benefits of OpenGL and OpenGL ES is their extensibility. Hardware vendors may include extensions in their implementations that extend the API before that functionality is included in a new version of the OpenGL or OpenGL ES specification, and some extensions are never included and remain as extensions until they become obsolete.</para>
+
+<para>An extension is defined by:</para>
+
+<para><itemizedlist>
+<listitem>
+<para>An extension name (e.g. <computeroutput>GL_ARB_gl_spirv</computeroutput>)</para>
+</listitem><listitem>
+<para>New OpenGL tokens (e.g. <computeroutput>GL_SPIR_V_BINARY_ARB</computeroutput>)</para>
+</listitem><listitem>
+<para>New OpenGL functions (e.g. <computeroutput>glSpecializeShaderARB</computeroutput>)</para>
+</listitem></itemizedlist>
+</para>
+
+<para>Note the <computeroutput>ARB</computeroutput> affix, which stands for Architecture Review Board and is used for official extensions. The extension above was created by the ARB, but there are many different affixes, like <computeroutput>NV</computeroutput> for Nvidia and <computeroutput>AMD</computeroutput> for, well, AMD. Any group may also use the generic <computeroutput>EXT</computeroutput> affix. Lists of extensions, together with their specifications, can be found at the <link xlink:href="https://www.opengl.org/registry/">OpenGL Registry</link> and <link xlink:href="https://www.khronos.org/registry/gles/">OpenGL ES Registry</link>.</para>
+<section xml:id="_context_guide_1context_glext_auto">
+<title>Loading extension with a loader library</title>
+
+<para>An extension loader library is the easiest and best way to access both OpenGL and OpenGL ES extensions and modern versions of the core OpenGL or OpenGL ES APIs. They will take care of all the details of declaring and loading everything you need. One such library is <link xlink:href="https://github.com/Dav1dde/glad">glad</link> and there are several others.</para>
+
+<para>The following example will use glad but all extension loader libraries work similarly.</para>
+
+<para>First you need to generate the source files using the glad Python script. This example generates a loader for any version of OpenGL, which is the default for both GLFW and glad, but loaders for OpenGL ES, as well as loaders for specific API versions and extension sets can be generated. The generated files are written to the <computeroutput>output</computeroutput> directory.</para>
+
+<para><literallayout><computeroutput>python&#32;main.py&#32;--generator&#32;c&#32;--no-loader&#32;--out-path&#32;output
+</computeroutput></literallayout></para>
+
+<para>The <computeroutput>--no-loader</computeroutput> option is added because GLFW already provides a function for loading OpenGL and OpenGL ES function pointers, one that automatically uses the selected context creation API, and glad can call this instead of having to implement its own. There are several other command-line options as well. See the glad documentation for details.</para>
+
+<para>Add the generated <computeroutput>output/src/glad.c</computeroutput>, <computeroutput>output/include/glad/glad.h</computeroutput> and <computeroutput>output/include/KHR/khrplatform.h</computeroutput> files to your build. Then you need to include the glad header file, which will replace the OpenGL header of your development environment. By including the glad header before the GLFW header, it suppresses the development environment&apos;s OpenGL or OpenGL ES header.</para>
+
+<para><literallayout><computeroutput>#include&#32;&lt;glad/glad.h&gt;
+#include&#32;&lt;GLFW/glfw3.h&gt;
+</computeroutput></literallayout></para>
+
+<para>Finally you need to initialize glad once you have a suitable current context.</para>
+
+<para><literallayout><computeroutput>window&#32;=&#32;glfwCreateWindow(640,&#32;480,&#32;&quot;My&#32;Window&quot;,&#32;NULL,&#32;NULL);
+if&#32;(!window)
+{
+&#32;&#32;&#32;&#32;...
+}
+
+glfwMakeContextCurrent(window);
+
+gladLoadGLLoader((GLADloadproc)&#32;glfwGetProcAddress);
+</computeroutput></literallayout></para>
+
+<para>Once glad has been loaded, you have access to all OpenGL core and extension functions supported by both the context you created and the glad loader you generated and you are ready to start rendering.</para>
+
+<para>You can specify a minimum required OpenGL or OpenGL ES version with <link linkend="_window_guide_1window_hints_ctx">context hints</link>. If your needs are more complex, you can check the actual OpenGL or OpenGL ES version with <link linkend="_window_guide_1window_attribs_ctx">context attributes</link>, or you can check whether a specific version is supported by the current context with the <computeroutput>GLAD_GL_VERSION_x_x</computeroutput> booleans.</para>
+
+<para><literallayout><computeroutput>if&#32;(GLAD_GL_VERSION_3_2)
+{
+&#32;&#32;&#32;&#32;//&#32;Call&#32;OpenGL&#32;3.2+&#32;specific&#32;code
+}
+</computeroutput></literallayout></para>
+
+<para>To check whether a specific extension is supported, use the <computeroutput>GLAD_GL_xxx</computeroutput> booleans.</para>
+
+<para><literallayout><computeroutput>if&#32;(GLAD_GL_ARB_gl_spirv)
+{
+&#32;&#32;&#32;&#32;//&#32;Use&#32;GL_ARB_gl_spirv
+}
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_context_guide_1context_glext_manual">
+<title>Loading extensions manually</title>
+
+<para><emphasis role="bold">Do not use this technique</emphasis> unless it is absolutely necessary. An <link linkend="_context_guide_1context_glext_auto">extension loader library</link> will save you a ton of tedious, repetitive, error prone work.</para>
+
+<para>To use a certain extension, you must first check whether the context supports that extension and then, if it introduces new functions, retrieve the pointers to those functions. GLFW provides <link linkend="_group__context_1ga9a28c712d35f9e43534e1d03b051c04c">glfwExtensionSupported</link> and <link linkend="_group__context_1ga0e8af175218929615c16e74938c10f2a">glfwGetProcAddress</link> for manual loading of extensions and new API functions.</para>
+
+<para>This section will demonstrate manual loading of OpenGL extensions. The loading of OpenGL ES extensions is identical except for the name of the extension header.</para>
+<section xml:id="_context_guide_1context_glext_header">
+<title>The glext.h header</title>
+
+<para>The <computeroutput>glext.h</computeroutput> extension header is a continually updated file that defines the interfaces for all OpenGL extensions. The latest version of this can always be found at the <link xlink:href="https://www.opengl.org/registry/">OpenGL Registry</link>. There are also extension headers for the various versions of OpenGL ES at the <link xlink:href="https://www.khronos.org/registry/gles/">OpenGL ES Registry</link>. It it strongly recommended that you use your own copy of the extension header, as the one included in your development environment may be several years out of date and may not include the extensions you wish to use.</para>
+
+<para>The header defines function pointer types for all functions of all extensions it supports. These have names like <computeroutput>PFNGLSPECIALIZESHADERARBPROC</computeroutput> (for <computeroutput>glSpecializeShaderARB</computeroutput>), i.e. the name is made uppercase and <computeroutput>PFN</computeroutput> (pointer to function) and <computeroutput>PROC</computeroutput> (procedure) are added to the ends.</para>
+
+<para>To include the extension header, define <link linkend="_build_guide_1GLFW_INCLUDE_GLEXT">GLFW_INCLUDE_GLEXT</link> before including the GLFW header.</para>
+
+<para><literallayout><computeroutput>#define&#32;GLFW_INCLUDE_GLEXT
+#include&#32;&lt;GLFW/glfw3.h&gt;
+</computeroutput></literallayout></para>
+</section>
+<section xml:id="_context_guide_1context_glext_string">
+<title>Checking for extensions</title>
+
+<para>A given machine may not actually support the extension (it may have older drivers or a graphics card that lacks the necessary hardware features), so it is necessary to check at run-time whether the context supports the extension. This is done with <link linkend="_group__context_1ga9a28c712d35f9e43534e1d03b051c04c">glfwExtensionSupported</link>.</para>
+
+<para><literallayout><computeroutput>if&#32;(glfwExtensionSupported(&quot;GL_ARB_gl_spirv&quot;))
+{
+&#32;&#32;&#32;&#32;//&#32;The&#32;extension&#32;is&#32;supported&#32;by&#32;the&#32;current&#32;context
+}
+</computeroutput></literallayout></para>
+
+<para>The argument is a null terminated ASCII string with the extension name. If the extension is supported, <link linkend="_group__context_1ga9a28c712d35f9e43534e1d03b051c04c">glfwExtensionSupported</link> returns <computeroutput>GLFW_TRUE</computeroutput>, otherwise it returns <computeroutput>GLFW_FALSE</computeroutput>.</para>
+</section>
+<section xml:id="_context_guide_1context_glext_proc">
+<title>Fetching function pointers</title>
+
+<para>Many extensions, though not all, require the use of new OpenGL functions. These functions often do not have entry points in the client API libraries of your operating system, making it necessary to fetch them at run time. You can retrieve pointers to these functions with <link linkend="_group__context_1ga0e8af175218929615c16e74938c10f2a">glfwGetProcAddress</link>.</para>
+
+<para><literallayout><computeroutput>PFNGLSPECIALIZESHADERARBPROC&#32;pfnSpecializeShaderARB&#32;=&#32;glfwGetProcAddress(&quot;glSpecializeShaderARB&quot;);
+</computeroutput></literallayout></para>
+
+<para>In general, you should avoid giving the function pointer variables the (exact) same name as the function, as this may confuse your linker. Instead, you can use a different prefix, like above, or some other naming scheme.</para>
+
+<para>Now that all the pieces have been introduced, here is what they might look like when used together.</para>
+
+<para><literallayout><computeroutput>#define&#32;GLFW_INCLUDE_GLEXT
+#include&#32;&lt;GLFW/glfw3.h&gt;
+
+#define&#32;glSpecializeShaderARB&#32;pfnSpecializeShaderARB
+PFNGLSPECIALIZESHADERARBPROC&#32;pfnSpecializeShaderARB;
+
+//&#32;Flag&#32;indicating&#32;whether&#32;the&#32;extension&#32;is&#32;supported
+int&#32;has_ARB_gl_spirv&#32;=&#32;0;
+
+void&#32;load_extensions(void)
+{
+&#32;&#32;&#32;&#32;if&#32;(glfwExtensionSupported(&quot;GL_ARB_gl_spirv&quot;))
+&#32;&#32;&#32;&#32;{
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pfnSpecializeShaderARB&#32;=&#32;(PFNGLSPECIALIZESHADERARBPROC)
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;glfwGetProcAddress(&quot;glSpecializeShaderARB&quot;);
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;has_ARB_gl_spirv&#32;=&#32;1;
+&#32;&#32;&#32;&#32;}
+}
+
+void&#32;some_function(void)
+{
+&#32;&#32;&#32;&#32;if&#32;(has_ARB_gl_spirv)
+&#32;&#32;&#32;&#32;{
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;Now&#32;the&#32;extension&#32;function&#32;can&#32;be&#32;called&#32;as&#32;usual
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;glSpecializeShaderARB(...);
+&#32;&#32;&#32;&#32;}
+}
+</computeroutput></literallayout> </para>
+</section>
+</section>
+</section>
+</section>

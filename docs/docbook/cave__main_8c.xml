@@ -1,0 +1,1053 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_cave__main_8c">
+<title>deps/stb/tests/caveview/cave_main.c File Reference</title>
+<indexterm><primary>deps/stb/tests/caveview/cave_main.c</primary></indexterm>
+<programlisting>#include &lt;assert.h&gt;
+#include &lt;windows.h&gt;
+#include &quot;stb.h&quot;
+#include &quot;stb_gl.h&quot;
+#include &quot;sdl.h&quot;
+#include &quot;SDL_opengl.h&quot;
+#include &quot;stb_glprog.h&quot;
+#include &quot;stb_image.h&quot;
+#include &quot;stb_easy_font.h&quot;
+#include &quot;caveview.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_cave__main_8c_1ac50762666aa00bd3a4308158510f1748">_WIN32_WINNT</link>   0x400</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__main_8c_1a5640e9acc84db268e2628d4c5dad308c">STB_DEFINE</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__main_8c_1af5925050ff11904f5a33c72447b69344">STB_GL_IMPLEMENTATION</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__main_8c_1af7e016db9832d3f2064ab1877e69fdc7">STB_GLEXT_DEFINE</link>   &quot;glext_list.h&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__main_8c_1a5c4941a7dccf5104be585dc04b2ff60b">STB_GLPROG_IMPLEMENTATION</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__main_8c_1a53254879d4575e504967d7718ded9e42">STB_GLPROG_ARB_DEFINE_EXTENSIONS</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__main_8c_1a18372412ad2fc3ce1e3240b3cf0efe78">STB_IMAGE_IMPLEMENTATION</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__main_8c_1a523566500dd6043c40f1504f85eb3a38">REVERSE_DEPTH</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__main_8c_1a249e00fdccfe7edf6ebbcf22a17af4ed">MAX_VEL</link>   150.0f</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__main_8c_1ad2d7243c099b33b2343976dd3ee8b36b">ACCEL</link>   6.0f</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__main_8c_1a8e111344ca6ef978238061294b46c5f9">DECEL</link>   3.0f</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__main_8c_1a211ce03dbaf6f9f4da0e3f7132413e6a">STATIC_FRICTION</link>   <link linkend="_cave__main_8c_1a8e111344ca6ef978238061294b46c5f9">DECEL</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__main_8c_1a4f3d5f36ab6fb8b921f7e04fb30016fb">EFFECTIVE_ACCEL</link>   (<link linkend="_cave__main_8c_1ad2d7243c099b33b2343976dd3ee8b36b">ACCEL</link>+<link linkend="_cave__main_8c_1a8e111344ca6ef978238061294b46c5f9">DECEL</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__main_8c_1aa2015505f30c0dd0f6c4527d9e478031">DYNAMIC_FRICTION</link>   (<link linkend="_cave__main_8c_1ad2d7243c099b33b2343976dd3ee8b36b">ACCEL</link>/(float)<link linkend="_cave__main_8c_1a249e00fdccfe7edf6ebbcf22a17af4ed">MAX_VEL</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__main_8c_1a0cbea62f1ce2043dd08108e65ed8de1d">SCALE</link>   2</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__main_8c_1a3dd7b7d41c220904632461a2d95d61cf">TICKS_PER_SECOND</link>   60</para>
+</listitem>
+            <listitem><para>#define <link linkend="_cave__main_8c_1a7f21fe9fdb3605017d51d802b41910ac">TICKRATE</link>   60</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__main_8c_1aad8ffbe0cece04516715cf4044db6fa3">camera_to_worldspace</link> (float world[3], float cam_x, float cam_y, float cam_z)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__main_8c_1a9271a99365ce7fce229bb24a0c32168a">process_tick_raw</link> (float <link linkend="_wave_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__main_8c_1acbe793ac4d97a00e63527fc291ce2c7f">process_tick</link> (float <link linkend="_wave_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__main_8c_1ae31705b5bd68d5a4ba31047f81b3c049">update_view</link> (float dx, float dy)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__main_8c_1acec8e3baa9c05996d40d87c6228b7b50">draw_stats</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__main_8c_1af26e86c4290d6427b6bcd8db2854ba32">draw_main</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link> (char *<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__main_8c_1aefd62d461236c6e9ced738eac9d8042c">ods</link> (char *fmt,...)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__main_8c_1a30962c693d3d8ad14f46baf596a1a9ea">editor_init</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__main_8c_1ad2e97e7b54d0bf35e406b91fbdd2f256">draw</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1aad9e5bb882536e9493613e3a44cb3532">loopmode</link> (float <link linkend="_wave_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>, int real, int in_client)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__main_8c_1ae2c6ca903b28f2accecc0e1829e881fa">active_control_set</link> (int <link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__main_8c_1a7e08896b045b9ff7d1092fd3d4749ac1">active_control_clear</link> (int <link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__main_8c_1a9afc0e2e299862a4a52263a634a8cb45">process_sdl_mouse</link> (SDL_Event *<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__main_8c_1a9c89be96d2490c73b000b539b0194970">process_event</link> (SDL_Event *<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_oversample_2main_8c_1a428a91acf2c2439dc1a257708ee1f805">APIENTRY</link> <link linkend="_cave__main_8c_1a5c9a931e73142615837e86fc6bf39fe1">gl_debug</link> (<link linkend="_glad_8h_1a5d5233918a454ad3975c620a69ac5f0b">GLenum</link> <link linkend="_glad_8h_1afdd0f0e67e302eefcb4f6b23732e7ea3">source</link>, <link linkend="_glad_8h_1a5d5233918a454ad3975c620a69ac5f0b">GLenum</link> <link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>, <link linkend="_glad_8h_1a68c4714e43d8e827d80759f9cb864f3c">GLuint</link> <link linkend="_glad_8h_1a58c2a664503e14ffb8f21012aabff3e9">id</link>, <link linkend="_glad_8h_1a5d5233918a454ad3975c620a69ac5f0b">GLenum</link> <link linkend="_glad_8h_1aa9ef9fc6186ec914a859436da4764bca">severity</link>, <link linkend="_glad_8h_1a9289d5b99dc1f27f01480360f2e18ae0">GLsizei</link> <link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>, const <link linkend="_glad_8h_1af7575655ac056b187ea385966b95a22d">GLchar</link> *<link linkend="_glad_8h_1ab5d4c2bfcb78f279c688575297d42f74">message</link>, const <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_glad_8h_1ac7c896d55e93a6cf7ff8524005b4e7b4">param</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__main_8c_1ad6778cf97e1219f2773f3fb686b4fa71">enable_synchronous</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cave__main_8c_1a3a88de78ef4cee2f85236e996e8682d6">prepare_threads</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1a931bf5c36761a734718dd4ec48bcd2ae">SDL_main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>char * <link linkend="_cave__main_8c_1a1a5e508ba959c6aceed91ab41fe996bd">game_name</link> = &quot;caveview&quot;</para>
+</listitem>
+            <listitem><para>float <link linkend="_cave__main_8c_1a02fa4b7f1eb01c2578fec233e84a5928">camang</link> [3]</para>
+</listitem>
+            <listitem><para>float <link linkend="_cave__main_8c_1ae78aa37f84aac578042904b08a4ee279">camloc</link> [3] = { 60,22,77 }</para>
+</listitem>
+            <listitem><para>float <link linkend="_cave__main_8c_1afb1acc223cf591dff9057d2f6d640070">player_zoom</link> = 1.0</para>
+</listitem>
+            <listitem><para>float <link linkend="_cave__main_8c_1a4c32ac02998fe51a0dc1958c2802f5d2">rotate_view</link> = 0.0</para>
+</listitem>
+            <listitem><para>float <link linkend="_cave__main_8c_1a53e3e7c536025495c7c617d8221e1dbb">cam_vel</link> [3]</para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1a6700b9ba3b618ca48419f0838946df67">controls</link></para>
+</listitem>
+            <listitem><para>float <link linkend="_cave__main_8c_1a0158eb23a95651db545c4c13f6de99c7">view_x_vel</link> = 0</para>
+</listitem>
+            <listitem><para>float <link linkend="_cave__main_8c_1ad4635b9b39d206a634fa7460b8b22c1f">view_z_vel</link> = 0</para>
+</listitem>
+            <listitem><para>float <link linkend="_cave__main_8c_1ad47f7d8a4c5f1fc933ab9b5398b17f68">pending_view_x</link></para>
+</listitem>
+            <listitem><para>float <link linkend="_cave__main_8c_1ad421a131c595a410afc004f59ebb8fbc">pending_view_z</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1ae7a1da973b3443e759c988205365298b">screen_x</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1aba889b3689a913bbfa6741a3d0dbc10d">screen_y</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1a41059ccf240c155b41205717d37aa563">is_synchronous_debug</link></para>
+</listitem>
+            <listitem><para>float <link linkend="_cave__main_8c_1a78885e7e1b53fbbdb7bc39b7eff18828">render_time</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1a1a7fcf5f88dd3987df4f5a83618c8487">chunk_locations</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1a90766e990c4a0a3299dae681bef26211">chunks_considered</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1aabc2460c0dbf3bb17bf2c768624a37a2">chunks_in_frustum</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1a7eb76aa1c7fbf02b3f4cf94c13ba7836">quads_considered</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1a55f891b23463a28bdca885af7b70b4db">quads_rendered</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1a2a36f03ff6514a6581bbfdb8c6912a5e">chunk_storage_rendered</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1aac1c4d107c5e708ee713ec9a6ccddc84">chunk_storage_considered</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1a6289a09b47b1176d64fa499faa7c73ce">chunk_storage_total</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1a7287aa4341d0bc802616e36453418217">view_dist_in_chunks</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1a080346cc58cb8f8b780aa706f20a1bdc">num_threads_active</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1a71cf846b08a6962abf1c34ab13da6933">num_meshes_started</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1a0ced74c1235cfa302b0fda9cba9682e4">num_meshes_uploaded</link></para>
+</listitem>
+            <listitem><para>float <link linkend="_cave__main_8c_1a9605ff44e577ffadbd55c8a55fc4ea5a">chunk_server_activity</link></para>
+</listitem>
+            <listitem><para>float <link linkend="_cave__main_8c_1a2ab5496432180abdd6842d343ab779e7">chunk_server_status</link> [32]</para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1ad608048de183ff60e9ae53a142d4cda9">chunk_server_pos</link></para>
+</listitem>
+            <listitem><para>float <link linkend="_cave__main_8c_1a7f70443885d15a398eb8ff6e101a3e73">carried_dt</link> = 0</para>
+</listitem>
+            <listitem><para>float <link linkend="_cave__main_8c_1aae02e1ae69339213673af37e15e343b4">tex2_alpha</link> = 1.0</para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1a134d635f2afe37480812feaf8c7c5319">raw_level_time</link></para>
+</listitem>
+            <listitem><para>float <link linkend="_cave__main_8c_1a520cd8bd22edc77078d54e0521b0bf02">global_timer</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_cave__main_8c_1ab714d9bf6480e3842f9174937f6257c9">global_hack</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_cave__main_8c_1ac50762666aa00bd3a4308158510f1748"/>    <section>
+    <title>_WIN32_WINNT</title>
+<indexterm><primary>_WIN32_WINNT</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>_WIN32_WINNT</secondary></indexterm>
+<para><computeroutput>#define _WIN32_WINNT   0x400</computeroutput></para><para>
+Definition at line 1 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1ad2d7243c099b33b2343976dd3ee8b36b"/>    <section>
+    <title>ACCEL</title>
+<indexterm><primary>ACCEL</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>ACCEL</secondary></indexterm>
+<para><computeroutput>#define ACCEL   6.0f</computeroutput></para><para>
+Definition at line 99 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a8e111344ca6ef978238061294b46c5f9"/>    <section>
+    <title>DECEL</title>
+<indexterm><primary>DECEL</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>DECEL</secondary></indexterm>
+<para><computeroutput>#define DECEL   3.0f</computeroutput></para><para>
+Definition at line 100 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1aa2015505f30c0dd0f6c4527d9e478031"/>    <section>
+    <title>DYNAMIC_FRICTION</title>
+<indexterm><primary>DYNAMIC_FRICTION</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>DYNAMIC_FRICTION</secondary></indexterm>
+<para><computeroutput>#define DYNAMIC_FRICTION   (<link linkend="_cave__main_8c_1ad2d7243c099b33b2343976dd3ee8b36b">ACCEL</link>/(float)<link linkend="_cave__main_8c_1a249e00fdccfe7edf6ebbcf22a17af4ed">MAX_VEL</link>)</computeroutput></para><para>
+Definition at line 109 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a4f3d5f36ab6fb8b921f7e04fb30016fb"/>    <section>
+    <title>EFFECTIVE_ACCEL</title>
+<indexterm><primary>EFFECTIVE_ACCEL</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>EFFECTIVE_ACCEL</secondary></indexterm>
+<para><computeroutput>#define EFFECTIVE_ACCEL   (<link linkend="_cave__main_8c_1ad2d7243c099b33b2343976dd3ee8b36b">ACCEL</link>+<link linkend="_cave__main_8c_1a8e111344ca6ef978238061294b46c5f9">DECEL</link>)</computeroutput></para><para>
+Definition at line 103 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a249e00fdccfe7edf6ebbcf22a17af4ed"/>    <section>
+    <title>MAX_VEL</title>
+<indexterm><primary>MAX_VEL</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>MAX_VEL</secondary></indexterm>
+<para><computeroutput>#define MAX_VEL   150.0f</computeroutput></para><para>
+Definition at line 98 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a523566500dd6043c40f1504f85eb3a38"/>    <section>
+    <title>REVERSE_DEPTH</title>
+<indexterm><primary>REVERSE_DEPTH</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>REVERSE_DEPTH</secondary></indexterm>
+<para><computeroutput>#define REVERSE_DEPTH</computeroutput></para><para>
+Definition at line 36 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a0cbea62f1ce2043dd08108e65ed8de1d"/>    <section>
+    <title>SCALE</title>
+<indexterm><primary>SCALE</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>SCALE</secondary></indexterm>
+<para><computeroutput>#define SCALE   2</computeroutput></para><para>
+Definition at line 303 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a211ce03dbaf6f9f4da0e3f7132413e6a"/>    <section>
+    <title>STATIC_FRICTION</title>
+<indexterm><primary>STATIC_FRICTION</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>STATIC_FRICTION</secondary></indexterm>
+<para><computeroutput>#define STATIC_FRICTION   <link linkend="_cave__main_8c_1a8e111344ca6ef978238061294b46c5f9">DECEL</link></computeroutput></para><para>
+Definition at line 102 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a5640e9acc84db268e2628d4c5dad308c"/>    <section>
+    <title>STB_DEFINE</title>
+<indexterm><primary>STB_DEFINE</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>STB_DEFINE</secondary></indexterm>
+<para><computeroutput>#define STB_DEFINE</computeroutput></para><para>
+Definition at line 7 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1af5925050ff11904f5a33c72447b69344"/>    <section>
+    <title>STB_GL_IMPLEMENTATION</title>
+<indexterm><primary>STB_GL_IMPLEMENTATION</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>STB_GL_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define STB_GL_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 11 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1af7e016db9832d3f2064ab1877e69fdc7"/>    <section>
+    <title>STB_GLEXT_DEFINE</title>
+<indexterm><primary>STB_GLEXT_DEFINE</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>STB_GLEXT_DEFINE</secondary></indexterm>
+<para><computeroutput>#define STB_GLEXT_DEFINE   &quot;glext_list.h&quot;</computeroutput></para><para>
+Definition at line 12 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a53254879d4575e504967d7718ded9e42"/>    <section>
+    <title>STB_GLPROG_ARB_DEFINE_EXTENSIONS</title>
+<indexterm><primary>STB_GLPROG_ARB_DEFINE_EXTENSIONS</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>STB_GLPROG_ARB_DEFINE_EXTENSIONS</secondary></indexterm>
+<para><computeroutput>#define STB_GLPROG_ARB_DEFINE_EXTENSIONS</computeroutput></para><para>
+Definition at line 21 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a5c4941a7dccf5104be585dc04b2ff60b"/>    <section>
+    <title>STB_GLPROG_IMPLEMENTATION</title>
+<indexterm><primary>STB_GLPROG_IMPLEMENTATION</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>STB_GLPROG_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define STB_GLPROG_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 20 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a18372412ad2fc3ce1e3240b3cf0efe78"/>    <section>
+    <title>STB_IMAGE_IMPLEMENTATION</title>
+<indexterm><primary>STB_IMAGE_IMPLEMENTATION</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>STB_IMAGE_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define STB_IMAGE_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 25 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a7f21fe9fdb3605017d51d802b41910ac"/>    <section>
+    <title>TICKRATE</title>
+<indexterm><primary>TICKRATE</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>TICKRATE</secondary></indexterm>
+<para><computeroutput>#define TICKRATE   60</computeroutput></para><para>
+Definition at line 342 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a3dd7b7d41c220904632461a2d95d61cf"/>    <section>
+    <title>TICKS_PER_SECOND</title>
+<indexterm><primary>TICKS_PER_SECOND</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>TICKS_PER_SECOND</secondary></indexterm>
+<para><computeroutput>#define TICKS_PER_SECOND   60</computeroutput></para><para>
+Definition at line 321 of file cave_main.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_cave__main_8c_1a7e08896b045b9ff7d1092fd3d4749ac1"/>    <section>
+    <title>active_control_clear()</title>
+<indexterm><primary>active_control_clear</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>active_control_clear</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> active_control_clear (int key)</computeroutput></para><para>
+Definition at line 390 of file cave_main.c.</para>
+<programlisting>391 {
+392 &#32;&#32;&#32;<link linkend="_cave__main_8c_1a6700b9ba3b618ca48419f0838946df67">controls</link>&#32;&amp;=&#32;~(1&#32;&lt;&lt;&#32;<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>);
+393 }
+</programlisting>    </section><anchor xml:id="_cave__main_8c_1ae2c6ca903b28f2accecc0e1829e881fa"/>    <section>
+    <title>active_control_set()</title>
+<indexterm><primary>active_control_set</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>active_control_set</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> active_control_set (int key)</computeroutput></para><para>
+Definition at line 385 of file cave_main.c.</para>
+<programlisting>386 {
+387 &#32;&#32;&#32;<link linkend="_cave__main_8c_1a6700b9ba3b618ca48419f0838946df67">controls</link>&#32;|=&#32;1&#32;&lt;&lt;&#32;<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>;
+388 }
+</programlisting>    </section><anchor xml:id="_cave__main_8c_1aad8ffbe0cece04516715cf4044db6fa3"/>    <section>
+    <title>camera_to_worldspace()</title>
+<indexterm><primary>camera_to_worldspace</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>camera_to_worldspace</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> camera_to_worldspace (float world[3], float cam_x, float cam_y, float cam_z)</computeroutput></para><para>
+Definition at line 74 of file cave_main.c.</para>
+<programlisting>75 {
+76 &#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;vec[3]&#32;=&#32;{&#32;cam_x,&#32;cam_y,&#32;cam_z&#32;};
+77 &#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>[3];
+78 &#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>;
+79 &#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;=&#32;(float)&#32;sin(<link linkend="_cave__main_8c_1a02fa4b7f1eb01c2578fec233e84a5928">camang</link>[0]*3.141592/180);
+80 &#32;&#32;&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>&#32;=&#32;(float)&#32;cos(<link linkend="_cave__main_8c_1a02fa4b7f1eb01c2578fec233e84a5928">camang</link>[0]*3.141592/180);
+81 
+82 &#32;&#32;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>[0]&#32;=&#32;vec[0];
+83 &#32;&#32;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>[1]&#32;=&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>*vec[1]&#32;-&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>*vec[2];
+84 &#32;&#32;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>[2]&#32;=&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>*vec[1]&#32;+&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>*vec[2];
+85 
+86 &#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;=&#32;(float)&#32;sin(<link linkend="_cave__main_8c_1a02fa4b7f1eb01c2578fec233e84a5928">camang</link>[2]*3.141592/180);
+87 &#32;&#32;&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>&#32;=&#32;(float)&#32;cos(<link linkend="_cave__main_8c_1a02fa4b7f1eb01c2578fec233e84a5928">camang</link>[2]*3.141592/180);
+88 &#32;&#32;&#32;world[0]&#32;=&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>*<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>[0]&#32;-&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>*<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>[1];
+89 &#32;&#32;&#32;world[1]&#32;=&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>*<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>[0]&#32;+&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>*<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>[1];
+90 &#32;&#32;&#32;world[2]&#32;=&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>[2];
+91 }
+</programlisting>    </section><anchor xml:id="_cave__main_8c_1ad2e97e7b54d0bf35e406b91fbdd2f256"/>    <section>
+    <title>draw()</title>
+<indexterm><primary>draw</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>draw</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> draw (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 329 of file cave_main.c.</para>
+<programlisting>330 {
+331 &#32;&#32;&#32;<link linkend="_cave__main_8c_1af26e86c4290d6427b6bcd8db2854ba32">draw_main</link>();
+332 &#32;&#32;&#32;SDL_GL_SwapWindow(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+333 }
+</programlisting>    </section><anchor xml:id="_cave__main_8c_1af26e86c4290d6427b6bcd8db2854ba32"/>    <section>
+    <title>draw_main()</title>
+<indexterm><primary>draw_main</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>draw_main</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> draw_main (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 239 of file cave_main.c.</para>
+<programlisting>240 {
+241 &#32;&#32;&#32;<link linkend="_glad_8h_1a3f7fa0df22505dd09a24a4e1e74eca09">glEnable</link>(<link linkend="_glad_8h_1a8c4f153ed20a741aaae952650fec46f0">GL_CULL_FACE</link>);
+242 &#32;&#32;&#32;<link linkend="_glad_8h_1adbbb0a7d41b44182b74a9d4f62ca8a63">glDisable</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>);
+243 &#32;&#32;&#32;<link linkend="_glad_8h_1adbbb0a7d41b44182b74a9d4f62ca8a63">glDisable</link>(<link linkend="_gl_8h_1afc85bbf684091bb3ae03070b521739cf">GL_LIGHTING</link>);
+244 &#32;&#32;&#32;<link linkend="_glad_8h_1a3f7fa0df22505dd09a24a4e1e74eca09">glEnable</link>(<link linkend="_glad_8h_1a4ccf1dc093190cc3798b9abea3655f98">GL_DEPTH_TEST</link>);
+245 <emphasis role="preprocessor">&#32;&#32;&#32;#ifdef&#32;REVERSE_DEPTH</emphasis>
+246 &#32;&#32;&#32;<link linkend="_glad_8h_1a5489df792b3263170eea381093ee6111">glDepthFunc</link>(<link linkend="_glad_8h_1aa3bfa1f454ff5072bc1b64e7d30e9584">GL_GREATER</link>);
+247 &#32;&#32;&#32;<link linkend="_glad_8h_1a5e730f2f937dd3ff1acf2cac8671fa39">glClearDepth</link>(0);
+248 <emphasis role="preprocessor">&#32;&#32;&#32;#else</emphasis>
+249 &#32;&#32;&#32;<link linkend="_glad_8h_1a5489df792b3263170eea381093ee6111">glDepthFunc</link>(<link linkend="_glad_8h_1a19d83affd8f0b06c09940cff7da428d2">GL_LESS</link>);
+250 &#32;&#32;&#32;<link linkend="_glad_8h_1a5e730f2f937dd3ff1acf2cac8671fa39">glClearDepth</link>(1);
+251 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+252 &#32;&#32;&#32;<link linkend="_glad_8h_1a93d8da71f9a009043f304be589ed00db">glDepthMask</link>(<link linkend="_glad_8h_1a06316bc3c17db78ce93419fb208945ba">GL_TRUE</link>);
+253 &#32;&#32;&#32;<link linkend="_glad_8h_1adbbb0a7d41b44182b74a9d4f62ca8a63">glDisable</link>(<link linkend="_glad_8h_1abe1c2e1876841bc483127fd45d7ca3b1">GL_SCISSOR_TEST</link>);
+254 &#32;&#32;&#32;<link linkend="_glad_8h_1a12060509af7dc9c8353810eb8b7f145c">glClearColor</link>(0.6<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,0.7<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,0.9<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,0.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+255 &#32;&#32;&#32;<link linkend="_glad_8h_1afc250a2b6bf11f24bb73534a2f053c0d">glClear</link>(<link linkend="_glad_8h_1a947db9ff944c4b78e652144c3dd1060c">GL_COLOR_BUFFER_BIT</link>&#32;|&#32;<link linkend="_glad_8h_1aef2a9e9a4b130bc4de57514327847b4f">GL_DEPTH_BUFFER_BIT</link>);
+256 
+257 &#32;&#32;&#32;<link linkend="_glad_8h_1afbdb5d9533b5a5ed6c66f4ee46025e66">glBlendFunc</link>(<link linkend="_glad_8h_1a51e6c75d54b3a9fb93fbc880463c212c">GL_SRC_ALPHA</link>,&#32;<link linkend="_glad_8h_1aa3926eb5e008f14829baa8d72435215f">GL_ONE_MINUS_SRC_ALPHA</link>);
+258 &#32;&#32;&#32;<link linkend="_gl_8h_1a156bc5fbf2770392dd3106c0af412235">glColor3f</link>(1,1,1);
+259 &#32;&#32;&#32;<link linkend="_glad_8h_1aa19401138cf27b24bb610dea3ef633ec">glFrontFace</link>(<link linkend="_glad_8h_1a4c5d89dc1a4ba5669af56d43ad6d26e8">GL_CW</link>);
+260 &#32;&#32;&#32;<link linkend="_glad_8h_1a3f7fa0df22505dd09a24a4e1e74eca09">glEnable</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>);
+261 &#32;&#32;&#32;<link linkend="_glad_8h_1adbbb0a7d41b44182b74a9d4f62ca8a63">glDisable</link>(<link linkend="_glad_8h_1aa290e8f9ee6f6862778355aa22bb0b13">GL_BLEND</link>);
+262 
+263 
+264 &#32;&#32;&#32;<link linkend="_gl_8h_1a984de7349d373e1088d1c31135c3a9fb">glMatrixMode</link>(<link linkend="_gl_8h_1a85e93b355494186ced027f1a1142fefb">GL_PROJECTION</link>);
+265 &#32;&#32;&#32;<link linkend="_gl_8h_1aef09a58ebe88d25712b8a015889e3612">glLoadIdentity</link>();
+266 
+267 <emphasis role="preprocessor">&#32;&#32;&#32;#ifdef&#32;REVERSE_DEPTH</emphasis>
+268 &#32;&#32;&#32;<link linkend="_stb__gl_8h_1a5359ad0dd89316614e0c29a52bd2bd6f">stbgl_Perspective</link>(<link linkend="_cave__main_8c_1afb1acc223cf591dff9057d2f6d640070">player_zoom</link>,&#32;90,&#32;70,&#32;3000,&#32;1.0/16);
+269 <emphasis role="preprocessor">&#32;&#32;&#32;#else</emphasis>
+270 &#32;&#32;&#32;<link linkend="_stb__gl_8h_1a5359ad0dd89316614e0c29a52bd2bd6f">stbgl_Perspective</link>(<link linkend="_cave__main_8c_1afb1acc223cf591dff9057d2f6d640070">player_zoom</link>,&#32;90,&#32;70,&#32;1.0/16,&#32;3000);
+271 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+272 
+273 &#32;&#32;&#32;<emphasis role="comment">//&#32;now&#32;compute&#32;where&#32;the&#32;camera&#32;should&#32;be</emphasis>
+274 &#32;&#32;&#32;<link linkend="_gl_8h_1a984de7349d373e1088d1c31135c3a9fb">glMatrixMode</link>(<link linkend="_gl_8h_1a8c0f92b5d50914825a1424b1cd4480cd">GL_MODELVIEW</link>);
+275 &#32;&#32;&#32;<link linkend="_gl_8h_1aef09a58ebe88d25712b8a015889e3612">glLoadIdentity</link>();
+276 &#32;&#32;&#32;<link linkend="_stb__gl_8h_1a1428bddc2ca42862c9d149148949eb4f">stbgl_initCamera_zup_facing_y</link>();
+277 
+278 &#32;&#32;&#32;<link linkend="_gl_8h_1a9a0010822b3a45b62142878ad90926e6">glRotatef</link>(-<link linkend="_cave__main_8c_1a02fa4b7f1eb01c2578fec233e84a5928">camang</link>[0],1,0,0);
+279 &#32;&#32;&#32;<link linkend="_gl_8h_1a9a0010822b3a45b62142878ad90926e6">glRotatef</link>(-<link linkend="_cave__main_8c_1a02fa4b7f1eb01c2578fec233e84a5928">camang</link>[2],0,0,1);
+280 &#32;&#32;&#32;<link linkend="_gl_8h_1a4b8d59e72147f88dd928f570d9a1713a">glTranslatef</link>(-<link linkend="_cave__main_8c_1ae78aa37f84aac578042904b08a4ee279">camloc</link>[0],&#32;-<link linkend="_cave__main_8c_1ae78aa37f84aac578042904b08a4ee279">camloc</link>[1],&#32;-<link linkend="_cave__main_8c_1ae78aa37f84aac578042904b08a4ee279">camloc</link>[2]);
+281 
+282 &#32;&#32;&#32;start_time&#32;=&#32;SDL_GetPerformanceCounter();
+283 &#32;&#32;&#32;<link linkend="_cave__render_8c_1a89dc2c85caece8e70d773437fdc2884e">render_caves</link>(<link linkend="_cave__main_8c_1ae78aa37f84aac578042904b08a4ee279">camloc</link>);
+284 &#32;&#32;&#32;end_time&#32;=&#32;SDL_GetPerformanceCounter();
+285 
+286 &#32;&#32;&#32;<link linkend="_cave__main_8c_1a78885e7e1b53fbbdb7bc39b7eff18828">render_time</link>&#32;=&#32;(end_time&#32;-&#32;start_time)&#32;/&#32;(<emphasis role="keywordtype">float</emphasis>)&#32;SDL_GetPerformanceFrequency();
+287 
+288 &#32;&#32;&#32;<link linkend="_gl_8h_1a984de7349d373e1088d1c31135c3a9fb">glMatrixMode</link>(<link linkend="_gl_8h_1a85e93b355494186ced027f1a1142fefb">GL_PROJECTION</link>);
+289 &#32;&#32;&#32;<link linkend="_gl_8h_1aef09a58ebe88d25712b8a015889e3612">glLoadIdentity</link>();
+290 &#32;&#32;&#32;gluOrtho2D(0,<link linkend="_cave__main_8c_1ae7a1da973b3443e759c988205365298b">screen_x</link>/2,<link linkend="_cave__main_8c_1aba889b3689a913bbfa6741a3d0dbc10d">screen_y</link>/2,0);
+291 &#32;&#32;&#32;<link linkend="_gl_8h_1a984de7349d373e1088d1c31135c3a9fb">glMatrixMode</link>(<link linkend="_gl_8h_1a8c0f92b5d50914825a1424b1cd4480cd">GL_MODELVIEW</link>);
+292 &#32;&#32;&#32;<link linkend="_gl_8h_1aef09a58ebe88d25712b8a015889e3612">glLoadIdentity</link>();
+293 &#32;&#32;&#32;<link linkend="_glad_8h_1adbbb0a7d41b44182b74a9d4f62ca8a63">glDisable</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>);
+294 &#32;&#32;&#32;<link linkend="_glad_8h_1adbbb0a7d41b44182b74a9d4f62ca8a63">glDisable</link>(<link linkend="_glad_8h_1aa290e8f9ee6f6862778355aa22bb0b13">GL_BLEND</link>);
+295 &#32;&#32;&#32;<link linkend="_glad_8h_1adbbb0a7d41b44182b74a9d4f62ca8a63">glDisable</link>(<link linkend="_glad_8h_1a8c4f153ed20a741aaae952650fec46f0">GL_CULL_FACE</link>);
+296 &#32;&#32;&#32;<link linkend="_cave__main_8c_1acec8e3baa9c05996d40d87c6228b7b50">draw_stats</link>();
+297 }
+</programlisting>    </section><anchor xml:id="_cave__main_8c_1acec8e3baa9c05996d40d87c6228b7b50"/>    <section>
+    <title>draw_stats()</title>
+<indexterm><primary>draw_stats</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>draw_stats</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> draw_stats (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 203 of file cave_main.c.</para>
+<programlisting>204 {
+205 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+206 
+207 &#32;&#32;&#32;<emphasis role="keyword">static</emphasis>&#32;Uint64&#32;last_frame_time;
+208 &#32;&#32;&#32;Uint64&#32;cur_time&#32;=&#32;SDL_GetPerformanceCounter();
+209 &#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;chunk_server=0;
+210 &#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;frame_time&#32;=&#32;(cur_time&#32;-&#32;last_frame_time)&#32;/&#32;(<emphasis role="keywordtype">float</emphasis>)&#32;SDL_GetPerformanceFrequency();
+211 &#32;&#32;&#32;last_frame_time&#32;=&#32;cur_time;
+212 
+213 &#32;&#32;&#32;<link linkend="_cave__main_8c_1a2ab5496432180abdd6842d343ab779e7">chunk_server_status</link>[<link linkend="_cave__main_8c_1ad608048de183ff60e9ae53a142d4cda9">chunk_server_pos</link>]&#32;=&#32;<link linkend="_cave__main_8c_1a9605ff44e577ffadbd55c8a55fc4ea5a">chunk_server_activity</link>;
+214 &#32;&#32;&#32;<link linkend="_cave__main_8c_1ad608048de183ff60e9ae53a142d4cda9">chunk_server_pos</link>&#32;=&#32;(<link linkend="_cave__main_8c_1ad608048de183ff60e9ae53a142d4cda9">chunk_server_pos</link>+1)&#32;%32;
+215 
+216 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;32;&#32;++i)
+217 &#32;&#32;&#32;&#32;&#32;&#32;chunk_server&#32;+=&#32;<link linkend="_cave__main_8c_1a2ab5496432180abdd6842d343ab779e7">chunk_server_status</link>[i]&#32;/&#32;32.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>;
+218 
+219 &#32;&#32;&#32;stb_easy_font_spacing(-0.75);
+220 &#32;&#32;&#32;pos_y&#32;=&#32;10;
+221 &#32;&#32;&#32;text_color[0]&#32;=&#32;text_color[1]&#32;=&#32;text_color[2]&#32;=&#32;1.0f;
+222 &#32;&#32;&#32;print(<emphasis role="stringliteral">&quot;Frame&#32;time:&#32;%6.2fms,&#32;CPU&#32;frame&#32;render&#32;time:&#32;%5.2fms&quot;</emphasis>,&#32;frame_time*1000,&#32;<link linkend="_cave__main_8c_1a78885e7e1b53fbbdb7bc39b7eff18828">render_time</link>*1000);
+223 &#32;&#32;&#32;print(<emphasis role="stringliteral">&quot;Tris:&#32;%4.1fM&#32;drawn&#32;of&#32;%4.1fM&#32;in&#32;range&quot;</emphasis>,&#32;2*<link linkend="_cave__main_8c_1a55f891b23463a28bdca885af7b70b4db">quads_rendered</link>/1000000.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;2*<link linkend="_cave__main_8c_1a7eb76aa1c7fbf02b3f4cf94c13ba7836">quads_considered</link>/1000000.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+224 &#32;&#32;&#32;print(<emphasis role="stringliteral">&quot;Vbuf&#32;storage:&#32;%dMB&#32;in&#32;frustum&#32;of&#32;%dMB&#32;in&#32;range&#32;of&#32;%dMB&#32;in&#32;cache&quot;</emphasis>,&#32;<link linkend="_cave__main_8c_1a2a36f03ff6514a6581bbfdb8c6912a5e">chunk_storage_rendered</link>&gt;&gt;20,&#32;<link linkend="_cave__main_8c_1aac1c4d107c5e708ee713ec9a6ccddc84">chunk_storage_considered</link>&gt;&gt;20,&#32;<link linkend="_cave__main_8c_1a6289a09b47b1176d64fa499faa7c73ce">chunk_storage_total</link>&gt;&gt;20);
+225 &#32;&#32;&#32;print(<emphasis role="stringliteral">&quot;Num&#32;mesh&#32;builds&#32;started&#32;this&#32;frame:&#32;%d;&#32;num&#32;uploaded&#32;this&#32;frame:&#32;%d\n&quot;</emphasis>,&#32;<link linkend="_cave__main_8c_1a71cf846b08a6962abf1c34ab13da6933">num_meshes_started</link>,&#32;<link linkend="_cave__main_8c_1a0ced74c1235cfa302b0fda9cba9682e4">num_meshes_uploaded</link>);
+226 &#32;&#32;&#32;print(<emphasis role="stringliteral">&quot;QChunks:&#32;%3d&#32;in&#32;frustum&#32;of&#32;%3d&#32;valid&#32;of&#32;%3d&#32;in&#32;range&quot;</emphasis>,&#32;<link linkend="_cave__main_8c_1aabc2460c0dbf3bb17bf2c768624a37a2">chunks_in_frustum</link>,&#32;<link linkend="_cave__main_8c_1a90766e990c4a0a3299dae681bef26211">chunks_considered</link>,&#32;<link linkend="_cave__main_8c_1a1a7fcf5f88dd3987df4f5a83618c8487">chunk_locations</link>);
+227 &#32;&#32;&#32;print(<emphasis role="stringliteral">&quot;Mesh&#32;worker&#32;threads&#32;active:&#32;%d&quot;</emphasis>,&#32;<link linkend="_cave__main_8c_1a080346cc58cb8f8b780aa706f20a1bdc">num_threads_active</link>);
+228 &#32;&#32;&#32;print(<emphasis role="stringliteral">&quot;View&#32;distance:&#32;%d&#32;blocks&quot;</emphasis>,&#32;<link linkend="_cave__main_8c_1a7287aa4341d0bc802616e36453418217">view_dist_in_chunks</link>*16);
+229 &#32;&#32;&#32;print(<emphasis role="stringliteral">&quot;%s&quot;</emphasis>,&#32;<link linkend="_glad_8h_1a766db4e4de8f98981e53ea03bd47a004">glGetString</link>(<link linkend="_glad_8h_1ad9a4639428d8407083b0c842e8926973">GL_RENDERER</link>));
+230 
+231 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__main_8c_1a41059ccf240c155b41205717d37aa563">is_synchronous_debug</link>)&#32;{
+232 &#32;&#32;&#32;&#32;&#32;&#32;text_color[0]&#32;=&#32;1.0;
+233 &#32;&#32;&#32;&#32;&#32;&#32;text_color[1]&#32;=&#32;0.5;
+234 &#32;&#32;&#32;&#32;&#32;&#32;text_color[2]&#32;=&#32;0.5;
+235 &#32;&#32;&#32;&#32;&#32;&#32;print(<emphasis role="stringliteral">&quot;SLOWNESS:&#32;Synchronous&#32;debug&#32;output&#32;is&#32;enabled!&quot;</emphasis>);
+236 &#32;&#32;&#32;}
+237 }
+</programlisting>    </section><anchor xml:id="_cave__main_8c_1a30962c693d3d8ad14f46baf596a1a9ea"/>    <section>
+    <title>editor_init()</title>
+<indexterm><primary>editor_init</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>editor_init</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> editor_init (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 92 of file tilemap_editor_integration_example.c.</para>
+<programlisting>93 {
+94 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+95 &#32;&#32;&#32;<link linkend="_tilemap__editor__integration__example_8c_1a79fefaeaa40baa8397b68093b669a024">edit_map</link>&#32;=&#32;<link linkend="_stb__tilemap__editor_8h_1ad55839664c3676f7f3a3bdb07aa81297">stbte_create_map</link>(20,14,&#32;8,&#32;16,16,&#32;100);
+96 
+97 &#32;&#32;&#32;<link linkend="_stb__tilemap__editor_8h_1ab376c07fd370625478fbedc24208ef7a">stbte_set_background_tile</link>(<link linkend="_tilemap__editor__integration__example_8c_1a79fefaeaa40baa8397b68093b669a024">edit_map</link>,&#32;T_empty);
+98 
+99 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;T__num_types;&#32;++i)&#32;{
+100 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(i&#32;!=&#32;T_reserved1&#32;&amp;&amp;&#32;i&#32;!=&#32;T_entry&#32;&amp;&amp;&#32;i&#32;!=&#32;T_doorframe)
+101 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__tilemap__editor_8h_1a532d59e89a4d7b992b64e4b1199391d5">stbte_define_tile</link>(<link linkend="_tilemap__editor__integration__example_8c_1a79fefaeaa40baa8397b68093b669a024">edit_map</link>,&#32;0+i,&#32;1,&#32;<emphasis role="stringliteral">&quot;Background&quot;</emphasis>);
+102 &#32;&#32;&#32;}
+103 &#32;&#32;&#32;<link linkend="_stb__tilemap__editor_8h_1a532d59e89a4d7b992b64e4b1199391d5">stbte_define_tile</link>(<link linkend="_tilemap__editor__integration__example_8c_1a79fefaeaa40baa8397b68093b669a024">edit_map</link>,&#32;256+O_player&#32;&#32;&#32;,&#32;8,&#32;<emphasis role="stringliteral">&quot;Char&quot;</emphasis>);
+104 &#32;&#32;&#32;<link linkend="_stb__tilemap__editor_8h_1a532d59e89a4d7b992b64e4b1199391d5">stbte_define_tile</link>(<link linkend="_tilemap__editor__integration__example_8c_1a79fefaeaa40baa8397b68093b669a024">edit_map</link>,&#32;256+O_robot&#32;&#32;&#32;&#32;,&#32;8,&#32;<emphasis role="stringliteral">&quot;Char&quot;</emphasis>);
+105 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=O_lockeddoor;&#32;i&#32;&lt;&#32;O__num_types-2;&#32;++i)
+106 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(i&#32;==&#32;O_platform&#32;||&#32;i&#32;==&#32;O_vplatform)
+107 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__tilemap__editor_8h_1a532d59e89a4d7b992b64e4b1199391d5">stbte_define_tile</link>(<link linkend="_tilemap__editor__integration__example_8c_1a79fefaeaa40baa8397b68093b669a024">edit_map</link>,&#32;256+i,&#32;4,&#32;<emphasis role="stringliteral">&quot;Object&quot;</emphasis>);
+108 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+109 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__tilemap__editor_8h_1a532d59e89a4d7b992b64e4b1199391d5">stbte_define_tile</link>(<link linkend="_tilemap__editor__integration__example_8c_1a79fefaeaa40baa8397b68093b669a024">edit_map</link>,&#32;256+i,&#32;2,&#32;<emphasis role="stringliteral">&quot;Object&quot;</emphasis>);
+110 
+111 &#32;&#32;&#32;<emphasis role="comment">//stbte_set_layername(edit_map,&#32;0,&#32;&quot;background&quot;);</emphasis>
+112 &#32;&#32;&#32;<emphasis role="comment">//stbte_set_layername(edit_map,&#32;1,&#32;&quot;objects&quot;);</emphasis>
+113 &#32;&#32;&#32;<emphasis role="comment">//stbte_set_layername(edit_map,&#32;2,&#32;&quot;platforms&quot;);</emphasis>
+114 &#32;&#32;&#32;<emphasis role="comment">//stbte_set_layername(edit_map,&#32;3,&#32;&quot;characters&quot;);</emphasis>
+115 }
+</programlisting>    </section><anchor xml:id="_cave__main_8c_1ad6778cf97e1219f2773f3fb686b4fa71"/>    <section>
+    <title>enable_synchronous()</title>
+<indexterm><primary>enable_synchronous</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>enable_synchronous</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> enable_synchronous (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 520 of file cave_main.c.</para>
+<programlisting>521 {
+522 &#32;&#32;&#32;<link linkend="_glad_8h_1a3f7fa0df22505dd09a24a4e1e74eca09">glEnable</link>(<link linkend="_glext_8h_1adde566134875c145a76304c8a38f4927">GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB</link>);
+523 &#32;&#32;&#32;<link linkend="_cave__main_8c_1a41059ccf240c155b41205717d37aa563">is_synchronous_debug</link>&#32;=&#32;1;
+524 }
+</programlisting>    </section><anchor xml:id="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793"/>    <section>
+    <title>error()</title>
+<indexterm><primary>error</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>error</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> error (char * s)</computeroutput></para><para>
+Definition at line 305 of file cave_main.c.</para>
+<programlisting>306 {
+307 &#32;&#32;&#32;SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,&#32;<emphasis role="stringliteral">&quot;Error&quot;</emphasis>,&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+308 &#32;&#32;&#32;exit(0);
+309 }
+</programlisting>    </section><anchor xml:id="_cave__main_8c_1a5c9a931e73142615837e86fc6bf39fe1"/>    <section>
+    <title>gl_debug()</title>
+<indexterm><primary>gl_debug</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>gl_debug</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_oversample_2main_8c_1a428a91acf2c2439dc1a257708ee1f805">APIENTRY</link> gl_debug (<link linkend="_glad_8h_1a5d5233918a454ad3975c620a69ac5f0b">GLenum</link> source, <link linkend="_glad_8h_1a5d5233918a454ad3975c620a69ac5f0b">GLenum</link> type, <link linkend="_glad_8h_1a68c4714e43d8e827d80759f9cb864f3c">GLuint</link> id, <link linkend="_glad_8h_1a5d5233918a454ad3975c620a69ac5f0b">GLenum</link> severity, <link linkend="_glad_8h_1a9289d5b99dc1f27f01480360f2e18ae0">GLsizei</link> length, const <link linkend="_glad_8h_1af7575655ac056b187ea385966b95a22d">GLchar</link> * message, const <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * param)</computeroutput></para><para>
+Definition at line 514 of file cave_main.c.</para>
+<programlisting>515 {
+516 &#32;&#32;&#32;<link linkend="_cave__main_8c_1aefd62d461236c6e9ced738eac9d8042c">ods</link>(<emphasis role="stringliteral">&quot;%s\n&quot;</emphasis>,&#32;<link linkend="_glad_8h_1ab5d4c2bfcb78f279c688575297d42f74">message</link>);
+517 }
+</programlisting>    </section><anchor xml:id="_cave__main_8c_1aad9e5bb882536e9493613e3a44cb3532"/>    <section>
+    <title>loopmode()</title>
+<indexterm><primary>loopmode</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>loopmode</secondary></indexterm>
+<para><computeroutput>int loopmode (float dt, int real, int in_client)</computeroutput></para><para>
+Definition at line 351 of file cave_main.c.</para>
+<programlisting>352 {
+353 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized)&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+354 
+355 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!real)
+356 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+357 
+358 &#32;&#32;&#32;<emphasis role="comment">//&#32;don&apos;t&#32;allow&#32;more&#32;than&#32;6&#32;frames&#32;to&#32;update&#32;at&#32;a&#32;time</emphasis>
+359 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>&#32;&gt;&#32;0.075)&#32;<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>&#32;=&#32;0.075;
+360 
+361 &#32;&#32;&#32;<link linkend="_cave__main_8c_1a520cd8bd22edc77078d54e0521b0bf02">global_timer</link>&#32;+=&#32;<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>;
+362 
+363 &#32;&#32;&#32;<link linkend="_cave__main_8c_1a7f70443885d15a398eb8ff6e101a3e73">carried_dt</link>&#32;+=&#32;<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>;
+364 &#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_cave__main_8c_1a7f70443885d15a398eb8ff6e101a3e73">carried_dt</link>&#32;&gt;&#32;1.0/<link linkend="_cave__main_8c_1a7f21fe9fdb3605017d51d802b41910ac">TICKRATE</link>)&#32;{
+365 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__main_8c_1ab714d9bf6480e3842f9174937f6257c9">global_hack</link>)&#32;{
+366 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1aae02e1ae69339213673af37e15e343b4">tex2_alpha</link>&#32;+=&#32;<link linkend="_cave__main_8c_1ab714d9bf6480e3842f9174937f6257c9">global_hack</link>&#32;/&#32;60.0f;
+367 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__main_8c_1aae02e1ae69339213673af37e15e343b4">tex2_alpha</link>&#32;&lt;&#32;0)&#32;<link linkend="_cave__main_8c_1aae02e1ae69339213673af37e15e343b4">tex2_alpha</link>&#32;=&#32;0;
+368 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__main_8c_1aae02e1ae69339213673af37e15e343b4">tex2_alpha</link>&#32;&gt;&#32;1)&#32;<link linkend="_cave__main_8c_1aae02e1ae69339213673af37e15e343b4">tex2_alpha</link>&#32;=&#32;1;
+369 &#32;&#32;&#32;&#32;&#32;&#32;}
+370 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//update_input();</emphasis>
+371 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;if&#32;the&#32;player&#32;is&#32;dead,&#32;stop&#32;the&#32;sim</emphasis>
+372 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1a7f70443885d15a398eb8ff6e101a3e73">carried_dt</link>&#32;-=&#32;1.0/<link linkend="_cave__main_8c_1a7f21fe9fdb3605017d51d802b41910ac">TICKRATE</link>;
+373 &#32;&#32;&#32;}
+374 
+375 &#32;&#32;&#32;<link linkend="_cave__main_8c_1acbe793ac4d97a00e63527fc291ce2c7f">process_tick</link>(<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>);
+376 &#32;&#32;&#32;<link linkend="_cave__main_8c_1ad2e97e7b54d0bf35e406b91fbdd2f256">draw</link>();
+377 
+378 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+379 }
+</programlisting>    </section><anchor xml:id="_cave__main_8c_1aefd62d461236c6e9ced738eac9d8042c"/>    <section>
+    <title>ods()</title>
+<indexterm><primary>ods</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>ods</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> ods (char * fmt,  ...)</computeroutput></para><para>
+Definition at line 311 of file cave_main.c.</para>
+<programlisting>312 {
+313 &#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_structbuffer">buffer</link>[1000];
+314 &#32;&#32;&#32;va_list&#32;va;
+315 &#32;&#32;&#32;va_start(va,&#32;fmt);
+316 &#32;&#32;&#32;<link linkend="_rrsprintf_8h_1a3e41f3ed65b0d392da13d3341751b5a5">vsprintf</link>(<link linkend="_structbuffer">buffer</link>,&#32;fmt,&#32;va);
+317 &#32;&#32;&#32;va_end(va);
+318 &#32;&#32;&#32;SDL_Log(<emphasis role="stringliteral">&quot;%s&quot;</emphasis>,&#32;<link linkend="_structbuffer">buffer</link>);
+319 }
+</programlisting>    </section><anchor xml:id="_cave__main_8c_1a3a88de78ef4cee2f85236e996e8682d6"/>    <section>
+    <title>prepare_threads()</title>
+<indexterm><primary>prepare_threads</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>prepare_threads</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> prepare_threads (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 598 of file cave_render.c.</para>
+<programlisting>599 {
+600 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+601 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;num_proc&#32;=&#32;SDL_GetCPUCount();
+602 
+603 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(num_proc&#32;&gt;&#32;6)
+604 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__render_8c_1a7cd3d17270efa49416663f4e571144cc">num_mesh_workers</link>&#32;=&#32;num_proc/2;
+605 &#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(num_proc&#32;&gt;&#32;4)
+606 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__render_8c_1a7cd3d17270efa49416663f4e571144cc">num_mesh_workers</link>&#32;=&#32;4;
+607 &#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;
+608 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__render_8c_1a7cd3d17270efa49416663f4e571144cc">num_mesh_workers</link>&#32;=&#32;num_proc-1;
+609 
+610 <emphasis role="comment">//&#32;@TODO</emphasis>
+611 <emphasis role="comment">//&#32;&#32;&#32;Thread&#32;usage&#32;is&#32;probably&#32;pretty&#32;terrible;&#32;need&#32;to&#32;make&#32;a</emphasis>
+612 <emphasis role="comment">//&#32;&#32;&#32;separate&#32;queue&#32;of&#32;needed&#32;chunks,&#32;instead&#32;of&#32;just&#32;generating</emphasis>
+613 <emphasis role="comment">//&#32;&#32;&#32;one&#32;request&#32;per&#32;thread&#32;per&#32;frame,&#32;and&#32;a&#32;separate&#32;queue&#32;of</emphasis>
+614 <emphasis role="comment">//&#32;&#32;&#32;results.&#32;(E.g.&#32;If&#32;it&#32;takes&#32;1.5&#32;frames&#32;to&#32;build&#32;mesh,&#32;thread</emphasis>
+615 <emphasis role="comment">//&#32;&#32;&#32;is&#32;idle&#32;for&#32;0.5&#32;frames.)&#32;To&#32;fake&#32;this&#32;for&#32;now,&#32;I&apos;ve&#32;just</emphasis>
+616 <emphasis role="comment">//&#32;&#32;&#32;doubled&#32;the&#32;number&#32;of&#32;threads&#32;to&#32;let&#32;those&#32;serve&#32;as&#32;a&#32;&apos;queue&apos;,</emphasis>
+617 <emphasis role="comment">//&#32;&#32;&#32;but&#32;that&apos;s&#32;dumb.</emphasis>
+618 
+619 &#32;&#32;&#32;<link linkend="_cave__render_8c_1a7cd3d17270efa49416663f4e571144cc">num_mesh_workers</link>&#32;*=&#32;2;&#32;<emphasis role="comment">//&#32;try&#32;to&#32;get&#32;better&#32;thread&#32;usage</emphasis>
+620 
+621 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__render_8c_1a7cd3d17270efa49416663f4e571144cc">num_mesh_workers</link>&#32;&gt;&#32;<link linkend="_cave__render_8c_1ab54d50961c308cab099df191eae355dc">MAX_MESH_WORKERS</link>)
+622 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__render_8c_1a7cd3d17270efa49416663f4e571144cc">num_mesh_workers</link>&#32;=&#32;<link linkend="_cave__render_8c_1ab54d50961c308cab099df191eae355dc">MAX_MESH_WORKERS</link>;
+623 
+624 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_cave__render_8c_1a7cd3d17270efa49416663f4e571144cc">num_mesh_workers</link>;&#32;++i)&#32;{
+625 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structmesh__worker">mesh_worker</link>&#32;*<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>&#32;=&#32;&amp;<link linkend="_cave__render_8c_1a285a49a21e43d98e9f7ea0f052a733dc">mesh_data</link>[i];
+626 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>-&gt;<link linkend="_structmesh__worker_1a4a16ef6832c227c1b909a178b8556e53">request_received</link>&#32;=&#32;SDL_CreateSemaphore(0);
+627 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>-&gt;chunk_server_done_processing&#32;=&#32;SDL_CreateSemaphore(0);
+628 &#32;&#32;&#32;&#32;&#32;&#32;SDL_CreateThread(<link linkend="_cave__render_8c_1a0f9a7e36ad9614200f0404d37b26b9e6">mesh_worker_handler</link>,&#32;<emphasis role="stringliteral">&quot;mesh&#32;worker&quot;</emphasis>,&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>);
+629 &#32;&#32;&#32;}
+630 }
+</programlisting>    </section><anchor xml:id="_cave__main_8c_1a9c89be96d2490c73b000b539b0194970"/>    <section>
+    <title>process_event()</title>
+<indexterm><primary>process_event</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>process_event</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> process_event (SDL_Event * e)</computeroutput></para><para>
+Definition at line 402 of file cave_main.c.</para>
+<programlisting>403 {
+404 &#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;type)&#32;{
+405 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_MOUSEMOTION:
+406 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1a9afc0e2e299862a4a52263a634a8cb45">process_sdl_mouse</link>(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>);
+407 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+408 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_MOUSEBUTTONDOWN:
+409 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_MOUSEBUTTONUP:
+410 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+411 
+412 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_QUIT:
+413 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;quit&#32;=&#32;1;
+414 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+415 
+416 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_WINDOWEVENT:
+417 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;window.event)&#32;{
+418 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_WINDOWEVENT_SIZE_CHANGED:
+419 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1ae7a1da973b3443e759c988205365298b">screen_x</link>&#32;=&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;window.data1;
+420 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1aba889b3689a913bbfa6741a3d0dbc10d">screen_y</link>&#32;=&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;window.data2;
+421 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1aad9e5bb882536e9493613e3a44cb3532">loopmode</link>(0,1,0);
+422 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+423 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+424 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+425 
+426 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_KEYDOWN:&#32;{
+427 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;k&#32;=&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;key.keysym.sym;
+428 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;=&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;key.keysym.scancode;
+429 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SDL_Keymod&#32;mod;
+430 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;mod&#32;=&#32;SDL_GetModState();
+431 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(k&#32;==&#32;SDLK_ESCAPE)
+432 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;quit&#32;=&#32;1;
+433 
+434 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;==&#32;SDL_SCANCODE_D)&#32;&#32;&#32;<link linkend="_cave__main_8c_1ae2c6ca903b28f2accecc0e1829e881fa">active_control_set</link>(0);
+435 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;==&#32;SDL_SCANCODE_A)&#32;&#32;&#32;<link linkend="_cave__main_8c_1ae2c6ca903b28f2accecc0e1829e881fa">active_control_set</link>(1);
+436 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;==&#32;SDL_SCANCODE_W)&#32;&#32;&#32;<link linkend="_cave__main_8c_1ae2c6ca903b28f2accecc0e1829e881fa">active_control_set</link>(2);
+437 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;==&#32;SDL_SCANCODE_S)&#32;&#32;&#32;<link linkend="_cave__main_8c_1ae2c6ca903b28f2accecc0e1829e881fa">active_control_set</link>(3);
+438 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(k&#32;==&#32;SDLK_SPACE)&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1ae2c6ca903b28f2accecc0e1829e881fa">active_control_set</link>(4);&#32;
+439 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;==&#32;SDL_SCANCODE_LCTRL)&#32;&#32;&#32;<link linkend="_cave__main_8c_1ae2c6ca903b28f2accecc0e1829e881fa">active_control_set</link>(5);
+440 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;==&#32;SDL_SCANCODE_S)&#32;&#32;&#32;<link linkend="_cave__main_8c_1ae2c6ca903b28f2accecc0e1829e881fa">active_control_set</link>(6);
+441 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;==&#32;SDL_SCANCODE_D)&#32;&#32;&#32;<link linkend="_cave__main_8c_1ae2c6ca903b28f2accecc0e1829e881fa">active_control_set</link>(7);
+442 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(k&#32;==&#32;<emphasis role="charliteral">&apos;1&apos;</emphasis>)&#32;<link linkend="_cave__main_8c_1ab714d9bf6480e3842f9174937f6257c9">global_hack</link>&#32;=&#32;!<link linkend="_cave__main_8c_1ab714d9bf6480e3842f9174937f6257c9">global_hack</link>;
+443 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(k&#32;==&#32;<emphasis role="charliteral">&apos;2&apos;</emphasis>)&#32;<link linkend="_cave__main_8c_1ab714d9bf6480e3842f9174937f6257c9">global_hack</link>&#32;=&#32;-1;
+444 
+445 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;#if&#32;0</emphasis>
+446 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(game_mode&#32;==&#32;GAME_editor)&#32;{
+447 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(k)&#32;{
+448 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDLK_RIGHT:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489ba144ea20a132345c10d9ca53a6d02ba19">STBTE_scroll_right</link>);&#32;<emphasis role="keywordflow">break</emphasis>;
+449 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDLK_LEFT&#32;:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489bae1d9ac30a5e2b3e333da82f9f64e7ee5">STBTE_scroll_left</link>&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+450 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDLK_UP&#32;&#32;&#32;:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489baf1d442243546075cdf22300644830165">STBTE_scroll_up</link>&#32;&#32;&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+451 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDLK_DOWN&#32;:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489ba55752707f18e9e16ff02c9c6cbcc8420">STBTE_scroll_down</link>&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+452 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+453 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>)&#32;{
+454 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_S:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489ba165230ce39d882a97144e6227e69f9ad">STBTE_tool_select</link>);&#32;<emphasis role="keywordflow">break</emphasis>;
+455 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_B:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489ba32cde384d0d8a6714f94d9dcc3849a3f">STBTE_tool_brush</link>&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+456 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_E:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489baa35a62c011e46341589fb46002660521">STBTE_tool_erase</link>&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+457 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_R:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489baca063ebe73fa14e2fa11aa988d7449e0">STBTE_tool_rectangle</link>&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+458 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_I:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489bab062287551b5ee45068a64fa837637a9">STBTE_tool_eyedropper</link>);&#32;<emphasis role="keywordflow">break</emphasis>;
+459 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_L:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489ba6f60681098ec465c4ed2655dbfa368e1">STBTE_tool_link</link>);&#32;<emphasis role="keywordflow">break</emphasis>;
+460 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_G:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489bae81816d78c404bd57c0e8ed67be8f222">STBTE_act_toggle_grid</link>);&#32;<emphasis role="keywordflow">break</emphasis>;
+461 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+462 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;key.keysym.mod&#32;&amp;&#32;KMOD_CTRL)&#32;&amp;&amp;&#32;!(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;key.keysym.mod&#32;&amp;&#32;~KMOD_CTRL))&#32;{
+463 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>)&#32;{
+464 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_X:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489baed6f197db53051e958e29ff9cfd6b92d">STBTE_act_cut</link>&#32;&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+465 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_C:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489ba05555aa5cee661a131fb491b28a23211">STBTE_act_copy</link>&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+466 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_V:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489ba9f148beb095d8cac4c9b534de3de0e7c">STBTE_act_paste</link>);&#32;<emphasis role="keywordflow">break</emphasis>;
+467 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_Z:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489bae46c9443f03e78bbde3e88a65c29895b">STBTE_act_undo</link>&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+468 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_SCANCODE_Y:&#32;<link linkend="_tilemap__editor__integration__example_8c_1aa726864b681c2673d597a35af441790a">editor_key</link>(<link linkend="_stb__tilemap__editor_8h_1a2079dfc8862b75681f6f25afb163489ba0cc48c1485f6aa0637963b3ff6ba807f">STBTE_act_redo</link>&#32;);&#32;<emphasis role="keywordflow">break</emphasis>;
+469 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+470 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+471 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+472 <emphasis role="preprocessor">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;#endif</emphasis>
+473 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+474 &#32;&#32;&#32;&#32;&#32;&#32;}
+475 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;SDL_KEYUP:&#32;{
+476 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;k&#32;=&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;key.keysym.sym;
+477 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;=&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;key.keysym.scancode;
+478 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;==&#32;SDL_SCANCODE_D)&#32;&#32;&#32;<link linkend="_cave__main_8c_1a7e08896b045b9ff7d1092fd3d4749ac1">active_control_clear</link>(0);
+479 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;==&#32;SDL_SCANCODE_A)&#32;&#32;&#32;<link linkend="_cave__main_8c_1a7e08896b045b9ff7d1092fd3d4749ac1">active_control_clear</link>(1);
+480 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;==&#32;SDL_SCANCODE_W)&#32;&#32;&#32;<link linkend="_cave__main_8c_1a7e08896b045b9ff7d1092fd3d4749ac1">active_control_clear</link>(2);
+481 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;==&#32;SDL_SCANCODE_S)&#32;&#32;&#32;<link linkend="_cave__main_8c_1a7e08896b045b9ff7d1092fd3d4749ac1">active_control_clear</link>(3);
+482 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(k&#32;==&#32;SDLK_SPACE)&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1a7e08896b045b9ff7d1092fd3d4749ac1">active_control_clear</link>(4);&#32;
+483 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;==&#32;SDL_SCANCODE_LCTRL)&#32;&#32;&#32;<link linkend="_cave__main_8c_1a7e08896b045b9ff7d1092fd3d4749ac1">active_control_clear</link>(5);
+484 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;==&#32;SDL_SCANCODE_S)&#32;&#32;&#32;<link linkend="_cave__main_8c_1a7e08896b045b9ff7d1092fd3d4749ac1">active_control_clear</link>(6);
+485 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>&#32;==&#32;SDL_SCANCODE_D)&#32;&#32;&#32;<link linkend="_cave__main_8c_1a7e08896b045b9ff7d1092fd3d4749ac1">active_control_clear</link>(7);
+486 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+487 &#32;&#32;&#32;&#32;&#32;&#32;}
+488 &#32;&#32;&#32;}
+489 }
+</programlisting>    </section><anchor xml:id="_cave__main_8c_1a9afc0e2e299862a4a52263a634a8cb45"/>    <section>
+    <title>process_sdl_mouse()</title>
+<indexterm><primary>process_sdl_mouse</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>process_sdl_mouse</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> process_sdl_mouse (SDL_Event * e)</computeroutput></para><para>
+Definition at line 397 of file cave_main.c.</para>
+<programlisting>398 {
+399 &#32;&#32;&#32;<link linkend="_cave__main_8c_1ae31705b5bd68d5a4ba31047f81b3c049">update_view</link>((<emphasis role="keywordtype">float</emphasis>)&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;motion.xrel&#32;/&#32;<link linkend="_cave__main_8c_1ae7a1da973b3443e759c988205365298b">screen_x</link>,&#32;(<emphasis role="keywordtype">float</emphasis>)&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;motion.yrel&#32;/&#32;<link linkend="_cave__main_8c_1aba889b3689a913bbfa6741a3d0dbc10d">screen_y</link>);
+400 }
+</programlisting>    </section><anchor xml:id="_cave__main_8c_1acbe793ac4d97a00e63527fc291ce2c7f"/>    <section>
+    <title>process_tick()</title>
+<indexterm><primary>process_tick</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>process_tick</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> process_tick (float dt)</computeroutput></para><para>
+Definition at line 171 of file cave_main.c.</para>
+<programlisting>172 {
+173 &#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>&#32;&gt;&#32;1.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>/60)&#32;{
+174 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1a9271a99365ce7fce229bb24a0c32168a">process_tick_raw</link>(1.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>/60);
+175 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>&#32;-=&#32;1.0f/60;
+176 &#32;&#32;&#32;}
+177 &#32;&#32;&#32;<link linkend="_cave__main_8c_1a9271a99365ce7fce229bb24a0c32168a">process_tick_raw</link>(<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>);
+178 }
+</programlisting>    </section><anchor xml:id="_cave__main_8c_1a9271a99365ce7fce229bb24a0c32168a"/>    <section>
+    <title>process_tick_raw()</title>
+<indexterm><primary>process_tick_raw</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>process_tick_raw</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> process_tick_raw (float dt)</computeroutput></para><para>
+Definition at line 118 of file cave_main.c.</para>
+<programlisting>119 {
+120 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+121 &#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;thrust[3]&#32;=&#32;{&#32;0,0,0&#32;};
+122 &#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;world_thrust[3];
+123 
+124 &#32;&#32;&#32;<emphasis role="comment">//&#32;choose&#32;direction&#32;to&#32;apply&#32;thrust</emphasis>
+125 
+126 &#32;&#32;&#32;thrust[0]&#32;=&#32;(<link linkend="_cave__main_8c_1a6700b9ba3b618ca48419f0838946df67">controls</link>&#32;&amp;&#32;&#32;3)==&#32;1&#32;?&#32;<link linkend="_cave__main_8c_1a4f3d5f36ab6fb8b921f7e04fb30016fb">EFFECTIVE_ACCEL</link>&#32;:&#32;(<link linkend="_cave__main_8c_1a6700b9ba3b618ca48419f0838946df67">controls</link>&#32;&amp;&#32;&#32;3)==&#32;2&#32;?&#32;-<link linkend="_cave__main_8c_1a4f3d5f36ab6fb8b921f7e04fb30016fb">EFFECTIVE_ACCEL</link>&#32;:&#32;0;
+127 &#32;&#32;&#32;thrust[1]&#32;=&#32;(<link linkend="_cave__main_8c_1a6700b9ba3b618ca48419f0838946df67">controls</link>&#32;&amp;&#32;12)==&#32;4&#32;?&#32;<link linkend="_cave__main_8c_1a4f3d5f36ab6fb8b921f7e04fb30016fb">EFFECTIVE_ACCEL</link>&#32;:&#32;(<link linkend="_cave__main_8c_1a6700b9ba3b618ca48419f0838946df67">controls</link>&#32;&amp;&#32;12)==&#32;8&#32;?&#32;-<link linkend="_cave__main_8c_1a4f3d5f36ab6fb8b921f7e04fb30016fb">EFFECTIVE_ACCEL</link>&#32;:&#32;0;
+128 &#32;&#32;&#32;thrust[2]&#32;=&#32;(<link linkend="_cave__main_8c_1a6700b9ba3b618ca48419f0838946df67">controls</link>&#32;&amp;&#32;48)==16&#32;?&#32;<link linkend="_cave__main_8c_1a4f3d5f36ab6fb8b921f7e04fb30016fb">EFFECTIVE_ACCEL</link>&#32;:&#32;(<link linkend="_cave__main_8c_1a6700b9ba3b618ca48419f0838946df67">controls</link>&#32;&amp;&#32;48)==32&#32;?&#32;-<link linkend="_cave__main_8c_1a4f3d5f36ab6fb8b921f7e04fb30016fb">EFFECTIVE_ACCEL</link>&#32;:&#32;0;
+129 
+130 &#32;&#32;&#32;<emphasis role="comment">//&#32;@TODO&#32;clamp&#32;thrust[0]&#32;&amp;&#32;thrust[1]&#32;vector&#32;length&#32;to&#32;EFFECTIVE_ACCEL</emphasis>
+131 
+132 &#32;&#32;&#32;<link linkend="_cave__main_8c_1aad8ffbe0cece04516715cf4044db6fa3">camera_to_worldspace</link>(world_thrust,&#32;thrust[0],&#32;thrust[1],&#32;0);
+133 &#32;&#32;&#32;world_thrust[2]&#32;+=&#32;thrust[2];
+134 
+135 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;3;&#32;++i)&#32;{
+136 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;acc&#32;=&#32;world_thrust[i];
+137 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1a53e3e7c536025495c7c617d8221e1dbb">cam_vel</link>[i]&#32;+=&#32;acc*<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>;
+138 &#32;&#32;&#32;}
+139 
+140 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__main_8c_1a53e3e7c536025495c7c617d8221e1dbb">cam_vel</link>[0]&#32;||&#32;<link linkend="_cave__main_8c_1a53e3e7c536025495c7c617d8221e1dbb">cam_vel</link>[1]&#32;||&#32;<link linkend="_cave__main_8c_1a53e3e7c536025495c7c617d8221e1dbb">cam_vel</link>[2])
+141 &#32;&#32;&#32;{
+142 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;vel&#32;=&#32;(float)&#32;sqrt(<link linkend="_cave__main_8c_1a53e3e7c536025495c7c617d8221e1dbb">cam_vel</link>[0]*<link linkend="_cave__main_8c_1a53e3e7c536025495c7c617d8221e1dbb">cam_vel</link>[0]&#32;+&#32;<link linkend="_cave__main_8c_1a53e3e7c536025495c7c617d8221e1dbb">cam_vel</link>[1]*<link linkend="_cave__main_8c_1a53e3e7c536025495c7c617d8221e1dbb">cam_vel</link>[1]&#32;+&#32;<link linkend="_cave__main_8c_1a53e3e7c536025495c7c617d8221e1dbb">cam_vel</link>[2]*<link linkend="_cave__main_8c_1a53e3e7c536025495c7c617d8221e1dbb">cam_vel</link>[2]);
+143 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;newvel&#32;=&#32;vel;
+144 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;dec&#32;=&#32;<link linkend="_cave__main_8c_1a211ce03dbaf6f9f4da0e3f7132413e6a">STATIC_FRICTION</link>&#32;+&#32;<link linkend="_cave__main_8c_1aa2015505f30c0dd0f6c4527d9e478031">DYNAMIC_FRICTION</link>*vel;
+145 &#32;&#32;&#32;&#32;&#32;&#32;newvel&#32;=&#32;vel&#32;-&#32;dec*<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>;
+146 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(newvel&#32;&lt;&#32;0)
+147 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;newvel&#32;=&#32;0;
+148 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1a53e3e7c536025495c7c617d8221e1dbb">cam_vel</link>[0]&#32;*=&#32;newvel/vel;
+149 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1a53e3e7c536025495c7c617d8221e1dbb">cam_vel</link>[1]&#32;*=&#32;newvel/vel;
+150 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1a53e3e7c536025495c7c617d8221e1dbb">cam_vel</link>[2]&#32;*=&#32;newvel/vel;
+151 &#32;&#32;&#32;}
+152 
+153 &#32;&#32;&#32;<link linkend="_cave__main_8c_1ae78aa37f84aac578042904b08a4ee279">camloc</link>[0]&#32;+=&#32;<link linkend="_cave__main_8c_1a53e3e7c536025495c7c617d8221e1dbb">cam_vel</link>[0]&#32;*&#32;<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>;
+154 &#32;&#32;&#32;<link linkend="_cave__main_8c_1ae78aa37f84aac578042904b08a4ee279">camloc</link>[1]&#32;+=&#32;<link linkend="_cave__main_8c_1a53e3e7c536025495c7c617d8221e1dbb">cam_vel</link>[1]&#32;*&#32;<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>;
+155 &#32;&#32;&#32;<link linkend="_cave__main_8c_1ae78aa37f84aac578042904b08a4ee279">camloc</link>[2]&#32;+=&#32;<link linkend="_cave__main_8c_1a53e3e7c536025495c7c617d8221e1dbb">cam_vel</link>[2]&#32;*&#32;<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>;
+156 
+157 &#32;&#32;&#32;<link linkend="_cave__main_8c_1a0158eb23a95651db545c4c13f6de99c7">view_x_vel</link>&#32;*=&#32;(float)&#32;pow(0.75,&#32;<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>);
+158 &#32;&#32;&#32;<link linkend="_cave__main_8c_1ad4635b9b39d206a634fa7460b8b22c1f">view_z_vel</link>&#32;*=&#32;(float)&#32;pow(0.75,&#32;<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>);
+159 
+160 &#32;&#32;&#32;<link linkend="_cave__main_8c_1a0158eb23a95651db545c4c13f6de99c7">view_x_vel</link>&#32;+=&#32;(<link linkend="_cave__main_8c_1ad47f7d8a4c5f1fc933ab9b5398b17f68">pending_view_x</link>&#32;-&#32;<link linkend="_cave__main_8c_1a0158eb23a95651db545c4c13f6de99c7">view_x_vel</link>)*<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>*60;
+161 &#32;&#32;&#32;<link linkend="_cave__main_8c_1ad4635b9b39d206a634fa7460b8b22c1f">view_z_vel</link>&#32;+=&#32;(<link linkend="_cave__main_8c_1ad421a131c595a410afc004f59ebb8fbc">pending_view_z</link>&#32;-&#32;<link linkend="_cave__main_8c_1ad4635b9b39d206a634fa7460b8b22c1f">view_z_vel</link>)*<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>*60;
+162 
+163 &#32;&#32;&#32;<link linkend="_cave__main_8c_1ad47f7d8a4c5f1fc933ab9b5398b17f68">pending_view_x</link>&#32;-=&#32;<link linkend="_cave__main_8c_1a0158eb23a95651db545c4c13f6de99c7">view_x_vel</link>&#32;*&#32;<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>;
+164 &#32;&#32;&#32;<link linkend="_cave__main_8c_1ad421a131c595a410afc004f59ebb8fbc">pending_view_z</link>&#32;-=&#32;<link linkend="_cave__main_8c_1ad4635b9b39d206a634fa7460b8b22c1f">view_z_vel</link>&#32;*&#32;<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>;
+165 &#32;&#32;&#32;<link linkend="_cave__main_8c_1a02fa4b7f1eb01c2578fec233e84a5928">camang</link>[0]&#32;+=&#32;<link linkend="_cave__main_8c_1a0158eb23a95651db545c4c13f6de99c7">view_x_vel</link>&#32;*&#32;<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>;
+166 &#32;&#32;&#32;<link linkend="_cave__main_8c_1a02fa4b7f1eb01c2578fec233e84a5928">camang</link>[2]&#32;+=&#32;<link linkend="_cave__main_8c_1ad4635b9b39d206a634fa7460b8b22c1f">view_z_vel</link>&#32;*&#32;<link linkend="_boing_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>;
+167 &#32;&#32;&#32;<link linkend="_cave__main_8c_1a02fa4b7f1eb01c2578fec233e84a5928">camang</link>[0]&#32;=&#32;<link linkend="_stb_8h_1aa2da260fd60eea58549bb266f54a4d85">stb_clamp</link>(<link linkend="_cave__main_8c_1a02fa4b7f1eb01c2578fec233e84a5928">camang</link>[0],&#32;-90,&#32;90);
+168 &#32;&#32;&#32;<link linkend="_cave__main_8c_1a02fa4b7f1eb01c2578fec233e84a5928">camang</link>[2]&#32;=&#32;(float)&#32;fmod(<link linkend="_cave__main_8c_1a02fa4b7f1eb01c2578fec233e84a5928">camang</link>[2],&#32;360);
+169 }
+</programlisting>    </section><anchor xml:id="_cave__main_8c_1a931bf5c36761a734718dd4ec48bcd2ae"/>    <section>
+    <title>SDL_main()</title>
+<indexterm><primary>SDL_main</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>SDL_main</secondary></indexterm>
+<para><computeroutput>int SDL_main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 529 of file cave_main.c.</para>
+<programlisting>530 {
+531 &#32;&#32;&#32;SDL_Init(SDL_INIT_VIDEO);
+532 
+533 &#32;&#32;&#32;<link linkend="_cave__main_8c_1a3a88de78ef4cee2f85236e996e8682d6">prepare_threads</link>();
+534 
+535 &#32;&#32;&#32;SDL_GL_SetAttribute(SDL_GL_RED_SIZE&#32;&#32;,&#32;8);
+536 &#32;&#32;&#32;SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,&#32;8);
+537 &#32;&#32;&#32;SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE&#32;,&#32;8);
+538 &#32;&#32;&#32;SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,&#32;24);
+539 
+540 &#32;&#32;&#32;SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,&#32;SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
+541 &#32;&#32;&#32;SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION,&#32;3);
+542 &#32;&#32;&#32;SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION,&#32;1);
+543 
+544 <emphasis role="preprocessor">&#32;&#32;&#32;#ifdef&#32;GL_DEBUG</emphasis>
+545 &#32;&#32;&#32;SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS,&#32;SDL_GL_CONTEXT_DEBUG_FLAG);
+546 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+547 
+548 &#32;&#32;&#32;SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES,&#32;4);
+549 
+550 &#32;&#32;&#32;<link linkend="_cave__main_8c_1ae7a1da973b3443e759c988205365298b">screen_x</link>&#32;=&#32;1920;
+551 &#32;&#32;&#32;<link linkend="_cave__main_8c_1aba889b3689a913bbfa6741a3d0dbc10d">screen_y</link>&#32;=&#32;1080;
+552 
+553 &#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;SDL_CreateWindow(<emphasis role="stringliteral">&quot;caveview&quot;</emphasis>,&#32;SDL_WINDOWPOS_UNDEFINED,&#32;SDL_WINDOWPOS_UNDEFINED,
+554 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1ae7a1da973b3443e759c988205365298b">screen_x</link>,&#32;<link linkend="_cave__main_8c_1aba889b3689a913bbfa6741a3d0dbc10d">screen_y</link>,
+555 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SDL_WINDOW_OPENGL&#32;|&#32;SDL_WINDOW_RESIZABLE
+556 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;);
+557 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>(<emphasis role="stringliteral">&quot;Couldn&apos;t&#32;create&#32;window&quot;</emphasis>);
+558 
+559 &#32;&#32;&#32;context&#32;=&#32;SDL_GL_CreateContext(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+560 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!context)&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>(<emphasis role="stringliteral">&quot;Couldn&apos;t&#32;create&#32;context&quot;</emphasis>);
+561 
+562 &#32;&#32;&#32;SDL_GL_MakeCurrent(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;context);&#32;<emphasis role="comment">//&#32;is&#32;this&#32;true&#32;by&#32;default?</emphasis>
+563 
+564 &#32;&#32;&#32;SDL_SetRelativeMouseMode(SDL_TRUE);
+565 <emphasis role="preprocessor">&#32;&#32;&#32;#if&#32;defined(_MSC_VER)&#32;&amp;&amp;&#32;_MSC_VER&#32;&lt;&#32;1300</emphasis>
+566 &#32;&#32;&#32;<emphasis role="comment">//&#32;work&#32;around&#32;broken&#32;behavior&#32;in&#32;VC6&#32;debugging</emphasis>
+567 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(IsDebuggerPresent())
+568 &#32;&#32;&#32;&#32;&#32;&#32;SDL_SetHint(SDL_HINT_MOUSE_RELATIVE_MODE_WARP,&#32;<emphasis role="stringliteral">&quot;1&quot;</emphasis>);
+569 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+570 
+571 &#32;&#32;&#32;stbgl_initExtensions();
+572 
+573 <emphasis role="preprocessor">&#32;&#32;&#32;#ifdef&#32;GL_DEBUG</emphasis>
+574 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(glDebugMessageCallbackARB)&#32;{
+575 &#32;&#32;&#32;&#32;&#32;&#32;glDebugMessageCallbackARB(<link linkend="_cave__main_8c_1a5c9a931e73142615837e86fc6bf39fe1">gl_debug</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+576 
+577 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1ad6778cf97e1219f2773f3fb686b4fa71">enable_synchronous</link>();
+578 &#32;&#32;&#32;}
+579 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+580 
+581 &#32;&#32;&#32;SDL_GL_SetSwapInterval(1);
+582 
+583 &#32;&#32;&#32;<link linkend="_cave__render_8c_1a19d602180d3af1e1e3969518075548cc">render_init</link>();
+584 &#32;&#32;&#32;<link linkend="_cave__mesher_8c_1a24f0dbbfdca90a74902964396c137bac">mesh_init</link>();
+585 &#32;&#32;&#32;<link linkend="_cave__render_8c_1a5a106573dea6ac6f71be5e80fb56eefc">world_init</link>();
+586 
+587 &#32;&#32;&#32;initialized&#32;=&#32;1;
+588 
+589 &#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(!quit)&#32;{
+590 &#32;&#32;&#32;&#32;&#32;&#32;SDL_Event&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>;
+591 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(SDL_PollEvent(&amp;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>))
+592 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1a9c89be96d2490c73b000b539b0194970">process_event</link>(&amp;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>);
+593 
+594 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1aad9e5bb882536e9493613e3a44cb3532">loopmode</link>(getTimestep(0.0166<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>/8),&#32;1,&#32;1);
+595 &#32;&#32;&#32;}
+596 
+597 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+598 }
+</programlisting>    </section><anchor xml:id="_cave__main_8c_1ae31705b5bd68d5a4ba31047f81b3c049"/>    <section>
+    <title>update_view()</title>
+<indexterm><primary>update_view</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>update_view</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> update_view (float dx, float dy)</computeroutput></para><para>
+Definition at line 180 of file cave_main.c.</para>
+<programlisting>181 {
+182 &#32;&#32;&#32;<emphasis role="comment">//&#32;hard-coded&#32;mouse&#32;sensitivity,&#32;not&#32;resolution&#32;independent?</emphasis>
+183 &#32;&#32;&#32;<link linkend="_cave__main_8c_1ad421a131c595a410afc004f59ebb8fbc">pending_view_z</link>&#32;-=&#32;dx*300;
+184 &#32;&#32;&#32;<link linkend="_cave__main_8c_1ad47f7d8a4c5f1fc933ab9b5398b17f68">pending_view_x</link>&#32;-=&#32;dy*700;
+185 }
+</programlisting></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_cave__main_8c_1a53e3e7c536025495c7c617d8221e1dbb"/>    <section>
+    <title>cam_vel</title>
+<indexterm><primary>cam_vel</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>cam_vel</secondary></indexterm>
+<para><computeroutput>float cam_vel[3]</computeroutput></para><para>
+Definition at line 94 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a02fa4b7f1eb01c2578fec233e84a5928"/>    <section>
+    <title>camang</title>
+<indexterm><primary>camang</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>camang</secondary></indexterm>
+<para><computeroutput>float camang[3]</computeroutput></para><para>
+Definition at line 69 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1ae78aa37f84aac578042904b08a4ee279"/>    <section>
+    <title>camloc</title>
+<indexterm><primary>camloc</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>camloc</secondary></indexterm>
+<para><computeroutput>float camloc[3] = { 60,22,77 }</computeroutput></para><para>
+Definition at line 69 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a7f70443885d15a398eb8ff6e101a3e73"/>    <section>
+    <title>carried_dt</title>
+<indexterm><primary>carried_dt</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>carried_dt</secondary></indexterm>
+<para><computeroutput>float carried_dt = 0</computeroutput></para><para>
+Definition at line 341 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a1a7fcf5f88dd3987df4f5a83618c8487"/>    <section>
+    <title>chunk_locations</title>
+<indexterm><primary>chunk_locations</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>chunk_locations</secondary></indexterm>
+<para><computeroutput>int chunk_locations</computeroutput></para><para>
+Definition at line 717 of file cave_render.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a9605ff44e577ffadbd55c8a55fc4ea5a"/>    <section>
+    <title>chunk_server_activity</title>
+<indexterm><primary>chunk_server_activity</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>chunk_server_activity</secondary></indexterm>
+<para><computeroutput>float chunk_server_activity</computeroutput></para><para>
+Definition at line 750 of file cave_render.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1ad608048de183ff60e9ae53a142d4cda9"/>    <section>
+    <title>chunk_server_pos</title>
+<indexterm><primary>chunk_server_pos</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>chunk_server_pos</secondary></indexterm>
+<para><computeroutput>int chunk_server_pos</computeroutput></para><para>
+Definition at line 201 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a2ab5496432180abdd6842d343ab779e7"/>    <section>
+    <title>chunk_server_status</title>
+<indexterm><primary>chunk_server_status</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>chunk_server_status</secondary></indexterm>
+<para><computeroutput>float chunk_server_status[32]</computeroutput></para><para>
+Definition at line 200 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1aac1c4d107c5e708ee713ec9a6ccddc84"/>    <section>
+    <title>chunk_storage_considered</title>
+<indexterm><primary>chunk_storage_considered</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>chunk_storage_considered</secondary></indexterm>
+<para><computeroutput>int chunk_storage_considered</computeroutput></para><para>
+Definition at line 193 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a2a36f03ff6514a6581bbfdb8c6912a5e"/>    <section>
+    <title>chunk_storage_rendered</title>
+<indexterm><primary>chunk_storage_rendered</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>chunk_storage_rendered</secondary></indexterm>
+<para><computeroutput>int chunk_storage_rendered</computeroutput></para><para>
+Definition at line 719 of file cave_render.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a6289a09b47b1176d64fa499faa7c73ce"/>    <section>
+    <title>chunk_storage_total</title>
+<indexterm><primary>chunk_storage_total</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>chunk_storage_total</secondary></indexterm>
+<para><computeroutput>int chunk_storage_total</computeroutput></para><para>
+Definition at line 193 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a90766e990c4a0a3299dae681bef26211"/>    <section>
+    <title>chunks_considered</title>
+<indexterm><primary>chunks_considered</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>chunks_considered</secondary></indexterm>
+<para><computeroutput>int chunks_considered</computeroutput></para><para>
+Definition at line 191 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1aabc2460c0dbf3bb17bf2c768624a37a2"/>    <section>
+    <title>chunks_in_frustum</title>
+<indexterm><primary>chunks_in_frustum</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>chunks_in_frustum</secondary></indexterm>
+<para><computeroutput>int chunks_in_frustum</computeroutput></para><para>
+Definition at line 191 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a6700b9ba3b618ca48419f0838946df67"/>    <section>
+    <title>controls</title>
+<indexterm><primary>controls</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>controls</secondary></indexterm>
+<para><computeroutput>int controls</computeroutput></para><para>
+Definition at line 96 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a1a5e508ba959c6aceed91ab41fe996bd"/>    <section>
+    <title>game_name</title>
+<indexterm><primary>game_name</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>game_name</secondary></indexterm>
+<para><computeroutput>char* game_name = &quot;caveview&quot;</computeroutput></para><para>
+Definition at line 33 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1ab714d9bf6480e3842f9174937f6257c9"/>    <section>
+    <title>global_hack</title>
+<indexterm><primary>global_hack</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>global_hack</secondary></indexterm>
+<para><computeroutput>int global_hack</computeroutput></para><para>
+Definition at line 349 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a520cd8bd22edc77078d54e0521b0bf02"/>    <section>
+    <title>global_timer</title>
+<indexterm><primary>global_timer</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>global_timer</secondary></indexterm>
+<para><computeroutput>float global_timer</computeroutput></para><para>
+Definition at line 348 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a41059ccf240c155b41205717d37aa563"/>    <section>
+    <title>is_synchronous_debug</title>
+<indexterm><primary>is_synchronous_debug</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>is_synchronous_debug</secondary></indexterm>
+<para><computeroutput>int is_synchronous_debug</computeroutput></para><para>
+Definition at line 519 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a71cf846b08a6962abf1c34ab13da6933"/>    <section>
+    <title>num_meshes_started</title>
+<indexterm><primary>num_meshes_started</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>num_meshes_started</secondary></indexterm>
+<para><computeroutput>int num_meshes_started</computeroutput></para><para>
+Definition at line 195 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a0ced74c1235cfa302b0fda9cba9682e4"/>    <section>
+    <title>num_meshes_uploaded</title>
+<indexterm><primary>num_meshes_uploaded</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>num_meshes_uploaded</secondary></indexterm>
+<para><computeroutput>int num_meshes_uploaded</computeroutput></para><para>
+Definition at line 195 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a080346cc58cb8f8b780aa706f20a1bdc"/>    <section>
+    <title>num_threads_active</title>
+<indexterm><primary>num_threads_active</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>num_threads_active</secondary></indexterm>
+<para><computeroutput>int num_threads_active</computeroutput></para><para>
+Definition at line 749 of file cave_render.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1ad47f7d8a4c5f1fc933ab9b5398b17f68"/>    <section>
+    <title>pending_view_x</title>
+<indexterm><primary>pending_view_x</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>pending_view_x</secondary></indexterm>
+<para><computeroutput>float pending_view_x</computeroutput></para><para>
+Definition at line 113 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1ad421a131c595a410afc004f59ebb8fbc"/>    <section>
+    <title>pending_view_z</title>
+<indexterm><primary>pending_view_z</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>pending_view_z</secondary></indexterm>
+<para><computeroutput>float pending_view_z</computeroutput></para><para>
+Definition at line 114 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1afb1acc223cf591dff9057d2f6d640070"/>    <section>
+    <title>player_zoom</title>
+<indexterm><primary>player_zoom</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>player_zoom</secondary></indexterm>
+<para><computeroutput>float player_zoom = 1.0</computeroutput></para><para>
+Definition at line 70 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a7eb76aa1c7fbf02b3f4cf94c13ba7836"/>    <section>
+    <title>quads_considered</title>
+<indexterm><primary>quads_considered</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>quads_considered</secondary></indexterm>
+<para><computeroutput>int quads_considered</computeroutput></para><para>
+Definition at line 718 of file cave_render.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a55f891b23463a28bdca885af7b70b4db"/>    <section>
+    <title>quads_rendered</title>
+<indexterm><primary>quads_rendered</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>quads_rendered</secondary></indexterm>
+<para><computeroutput>int quads_rendered</computeroutput></para><para>
+Definition at line 192 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a134d635f2afe37480812feaf8c7c5319"/>    <section>
+    <title>raw_level_time</title>
+<indexterm><primary>raw_level_time</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>raw_level_time</secondary></indexterm>
+<para><computeroutput>int raw_level_time</computeroutput></para><para>
+Definition at line 346 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a78885e7e1b53fbbdb7bc39b7eff18828"/>    <section>
+    <title>render_time</title>
+<indexterm><primary>render_time</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>render_time</secondary></indexterm>
+<para><computeroutput>float render_time</computeroutput></para><para>
+Definition at line 189 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a4c32ac02998fe51a0dc1958c2802f5d2"/>    <section>
+    <title>rotate_view</title>
+<indexterm><primary>rotate_view</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>rotate_view</secondary></indexterm>
+<para><computeroutput>float rotate_view = 0.0</computeroutput></para><para>
+Definition at line 71 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1ae7a1da973b3443e759c988205365298b"/>    <section>
+    <title>screen_x</title>
+<indexterm><primary>screen_x</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>screen_x</secondary></indexterm>
+<para><computeroutput>int screen_x</computeroutput></para><para>
+Definition at line 339 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1aba889b3689a913bbfa6741a3d0dbc10d"/>    <section>
+    <title>screen_y</title>
+<indexterm><primary>screen_y</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>screen_y</secondary></indexterm>
+<para><computeroutput>int screen_y</computeroutput></para><para>
+Definition at line 187 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1aae02e1ae69339213673af37e15e343b4"/>    <section>
+    <title>tex2_alpha</title>
+<indexterm><primary>tex2_alpha</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>tex2_alpha</secondary></indexterm>
+<para><computeroutput>float tex2_alpha = 1.0</computeroutput></para><para>
+Definition at line 344 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a7287aa4341d0bc802616e36453418217"/>    <section>
+    <title>view_dist_in_chunks</title>
+<indexterm><primary>view_dist_in_chunks</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>view_dist_in_chunks</secondary></indexterm>
+<para><computeroutput>int view_dist_in_chunks</computeroutput></para><para>
+Definition at line 194 of file cave_render.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1a0158eb23a95651db545c4c13f6de99c7"/>    <section>
+    <title>view_x_vel</title>
+<indexterm><primary>view_x_vel</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>view_x_vel</secondary></indexterm>
+<para><computeroutput>float view_x_vel = 0</computeroutput></para><para>
+Definition at line 111 of file cave_main.c.</para>
+    </section><anchor xml:id="_cave__main_8c_1ad4635b9b39d206a634fa7460b8b22c1f"/>    <section>
+    <title>view_z_vel</title>
+<indexterm><primary>view_z_vel</primary><secondary>cave_main.c</secondary></indexterm>
+<indexterm><primary>cave_main.c</primary><secondary>view_z_vel</secondary></indexterm>
+<para><computeroutput>float view_z_vel = 0</computeroutput></para><para>
+Definition at line 112 of file cave_main.c.</para>
+</section>
+</section>
+</section>

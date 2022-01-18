@@ -1,0 +1,380 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_stb__wingraph_8h">
+<title>deps/stb/tests/oversample/stb_wingraph.h File Reference</title>
+<indexterm><primary>deps/stb/tests/oversample/stb_wingraph.h</primary></indexterm>
+<programlisting>#include &lt;windows.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+#include &lt;time.h&gt;
+#include &lt;string.h&gt;
+#include &lt;assert.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structstbwingraph__event">stbwingraph_event</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_stb__wingraph_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Typedefs    </title>
+        <itemizedlist>
+            <listitem><para>typedef <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * <link linkend="_stb__wingraph_8h_1a38bcc8575f9b976ed11f5b681eb02b48">stbwingraph_hwnd</link></para>
+</listitem>
+            <listitem><para>typedef <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * <link linkend="_stb__wingraph_8h_1a3055813fd7dc35c4c982a7b8f015c067">stbwingraph_hinstance</link></para>
+</listitem>
+            <listitem><para>typedef int(* <link linkend="_stb__wingraph_8h_1a5336bc1d6acad00950be46c47a41db52">stbwingraph_window_proc</link>) (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>, <link linkend="_structstbwingraph__event">stbwingraph_event</link> *<link linkend="_glext_8h_1a03b04a5a978bad576866339075de01f6">event</link>)</para>
+</listitem>
+            <listitem><para>typedef int(* <link linkend="_stb__wingraph_8h_1a77f7fe279e20fe44f425c1f77e5f06b5">stbwingraph_update</link>) (float timestep, int real, int in_client)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Enumerations    </title>
+        <itemizedlist>
+            <listitem><para>enum { 
+<link linkend="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340a0abd305bbf7e96a887ba2002fb544022">STBWINGRAPH_unprocessed</link> = -(1 &lt;&lt; 24), 
+<link linkend="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340ac040b830d63fe6e1fef698660daf445f">STBWINGRAPH_do_not_show</link>, 
+<link linkend="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340a2caa0d3288cb0a50a3fa26c47c871798">STBWINGRAPH_winproc_exit</link>, 
+<link linkend="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340a96875155b26001d5a28e8f4ec80cfd55">STBWINGRAPH_winproc_update</link>, 
+
+<link linkend="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340a03a1db9d18704d363d3b668f29882e25">STBWINGRAPH_update_exit</link>, 
+<link linkend="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340ac02c0140fda4ce29139b18ee16000b93">STBWINGRAPH_update_pause</link>
+ }</para>
+</listitem>
+            <listitem><para>enum <link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0">stbwingraph_event_type</link> { 
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0ac83d3abb76baecfcfd9dbb3f68b5e092">STBWGE__none</link> =0, 
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a9e41b857359fffc6fc28b0ac59bc44b2">STBWGE_create</link>, 
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0aae777b201f555bcb2a6dbf01c48aafda">STBWGE_create_postshow</link>, 
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a20554484698e8f99d37fb4e4ace5cc97">STBWGE_draw</link>, 
+
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a7025f8e4f3460ab7b1a364df720a95a8">STBWGE_destroy</link>, 
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a252b13b28d5af6c680e349fbb2b52bf6">STBWGE_char</link>, 
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a4162704e1ab2a093d101c88ca43564f9">STBWGE_keydown</link>, 
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0abe27b88a6e4880d32ab3bb1d862b50c3">STBWGE_syskeydown</link>, 
+
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0acc85248b62d47623143da1c4a25bd6dc">STBWGE_keyup</link>, 
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a1e21aeaa5d1b85a505405f2810e1f18a">STBWGE_syskeyup</link>, 
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0aadc6474472806f8868e67e40e0d74dec">STBWGE_deactivate</link>, 
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0aa15d996d7fdb81d9a74caff89ef1c783">STBWGE_activate</link>, 
+
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a0ae6c08ff867d9a07fdb9ac545393556">STBWGE_size</link>, 
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a03dbeb85f65b365de433cc881e4cab2c">STBWGE_mousemove</link>, 
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a30698e96eb811a20447f1106bab3e9ab">STBWGE_leftdown</link>, 
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a28d3eb09f59e3b732606d0326eb8e24d">STBWGE_leftup</link>, 
+
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0ab97b5235629626877636bd2ca46e6735">STBWGE_middledown</link>, 
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a60488d47fa7a532df98c91216724e0cf">STBWGE_middleup</link>, 
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0adf79ede0ef8aff2eb94cc00e7ee939c0">STBWGE_rightdown</link>, 
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0ad503da7984508b00f9d8781e2571efb6">STBWGE_rightup</link>, 
+
+<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0ad7d18c24fd94c2d05339ba73f46528ad">STBWGE_mousewheel</link>
+ }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__wingraph_8h_1a1ed090d5fca7314858c94783be11f7ab">stbwingraph_ods</link> (char *str,...)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> int <link linkend="_stb__wingraph_8h_1adc186a95d219c03dd1430e02f4d6c080">stbwingraph_MessageBox</link> (<link linkend="_stb__wingraph_8h_1a38bcc8575f9b976ed11f5b681eb02b48">stbwingraph_hwnd</link> win, unsigned int <link linkend="_glad_8h_1ab7c1afc09f67635c2c376638fcc0db5f">type</link>, char *caption, char *text,...)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> int <link linkend="_stb__wingraph_8h_1aa206d1d8b2fd66fd4852dd89dd524531">stbwingraph_ChangeResolution</link> (unsigned int <link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>, unsigned int <link linkend="_glad_8h_1afa0fb1b5e976920c0abeff2dca3ed774">h</link>, unsigned int <link linkend="_glext_8h_1a8dc2cc80c52413d48ac45732e90d3a66">bits</link>, int use_message_box)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> int <link linkend="_stb__wingraph_8h_1ad85568aa8a4ad3107da2b8ea2bb9e6d1">stbwingraph_SetPixelFormat</link> (<link linkend="_stb__wingraph_8h_1a38bcc8575f9b976ed11f5b681eb02b48">stbwingraph_hwnd</link> win, int color_bits, int alpha_bits, int depth_bits, int stencil_bits, int accum_bits)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> int <link linkend="_stb__wingraph_8h_1af9adc3d6ee67bbb05e3036af6609bb03">stbwingraph_DefineClass</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *hinstance, char *iconname)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__wingraph_8h_1a945127c796d3c3564f53ca8663f6db98">stbwingraph_SwapBuffers</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *win)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__wingraph_8h_1a7457090264a1492ddd88b9690033d2b9">stbwingraph_Priority</link> (int <link linkend="_glad_8h_1ae2b4646468bc89d0ba646f5cf838e051">n</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__wingraph_8h_1a35684621c373af2d969a9f3d93035f4c">stbwingraph_MakeFonts</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int font_base)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__wingraph_8h_1aff10a60450e160400c95c5cc497ad72a">stbwingraph_ShowWindow</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * <link linkend="_stb__wingraph_8h_1a528744c81e2c83e4f33d35f7701b6d05">stbwingraph_CreateWindow</link> (int primary, <link linkend="_stb__wingraph_8h_1a5336bc1d6acad00950be46c47a41db52">stbwingraph_window_proc</link> <link linkend="_glad_8h_1a18ae3ab36a07e388833b568cfdfa90c8">func</link>, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>, char *text, int <link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>, int <link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>, int fullscreen, int resizeable, int dest_alpha, int <link linkend="_glad_8h_1ac490b2f418f3a459d0bd28ec4d6b71c2">stencil</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * <link linkend="_stb__wingraph_8h_1a7cbaad1d845e2d1ced1c2521b5860a00">stbwingraph_CreateWindowSimple</link> (<link linkend="_stb__wingraph_8h_1a5336bc1d6acad00950be46c47a41db52">stbwingraph_window_proc</link> <link linkend="_glad_8h_1a18ae3ab36a07e388833b568cfdfa90c8">func</link>, int <link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>, int <link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * <link linkend="_stb__wingraph_8h_1a2443aa1fd03283dbe05874d2c75056f7">stbwingraph_CreateWindowSimpleFull</link> (<link linkend="_stb__wingraph_8h_1a5336bc1d6acad00950be46c47a41db52">stbwingraph_window_proc</link> <link linkend="_glad_8h_1a18ae3ab36a07e388833b568cfdfa90c8">func</link>, int fullscreen, int ww, int wh, int fw, int fh)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__wingraph_8h_1a6712449b3817cd0e486cebb2c3bc4cf0">stbwingraph_DestroyWindow</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__wingraph_8h_1add6fc9ae6dd8dc4fa63c4a37362e80fb">stbwingraph_ShowCursor</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int visible)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> float <link linkend="_stb__wingraph_8h_1a2f10d16aad0f99663c1b8810eeedfc0f">stbwingraph_GetTimestep</link> (float minimum_time)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__wingraph_8h_1aab20d233153086a6147b485f37c3a1db">stbwingraph_SetGLWindow</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *win)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> int <link linkend="_stb__wingraph_8h_1ae54009f824b73f58afa45d04b799974f">stbwingraph_MainLoop</link> (<link linkend="_stb__wingraph_8h_1a77f7fe279e20fe44f425c1f77e5f06b5">stbwingraph_update</link> <link linkend="_glad_8h_1a18ae3ab36a07e388833b568cfdfa90c8">func</link>, float mintime)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_stb__wingraph_8h_1a3055813fd7dc35c4c982a7b8f015c067">stbwingraph_hinstance</link> <link linkend="_stb__wingraph_8h_1aa2084b4cea236eb06202ff3bb1807aee">stbwingraph_app</link></para>
+</listitem>
+            <listitem><para><link linkend="_stb__wingraph_8h_1a38bcc8575f9b976ed11f5b681eb02b48">stbwingraph_hwnd</link> <link linkend="_stb__wingraph_8h_1ab41580286093d5c70357e1723550884d">stbwingraph_primary_window</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__wingraph_8h_1a343eef91a0966da7de83c70df52d0d94">stbwingraph_request_fullscreen</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__wingraph_8h_1a915de14227091aace2f8da3e55571513">stbwingraph_request_windowed</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_stb__wingraph_8h_1a40db4e8d14536af27d20fd5a702a126d"/>    <section>
+    <title>STB_EXTERN</title>
+<indexterm><primary>STB_EXTERN</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STB_EXTERN</secondary></indexterm>
+<para><computeroutput>#define STB_EXTERN</computeroutput></para><para>
+Definition at line 35 of file stb_wingraph.h.</para>
+</section>
+</section>
+<section>
+<title>Typedef Documentation</title>
+<anchor xml:id="_stb__wingraph_8h_1a3055813fd7dc35c4c982a7b8f015c067"/>    <section>
+    <title>stbwingraph_hinstance</title>
+<indexterm><primary>stbwingraph_hinstance</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_hinstance</secondary></indexterm>
+<para><computeroutput>typedef <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>* <link linkend="_stb__wingraph_8h_1a3055813fd7dc35c4c982a7b8f015c067">stbwingraph_hinstance</link></computeroutput></para><para>
+Definition at line 57 of file stb_wingraph.h.</para>
+    </section><anchor xml:id="_stb__wingraph_8h_1a38bcc8575f9b976ed11f5b681eb02b48"/>    <section>
+    <title>stbwingraph_hwnd</title>
+<indexterm><primary>stbwingraph_hwnd</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_hwnd</secondary></indexterm>
+<para><computeroutput>typedef <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>* <link linkend="_stb__wingraph_8h_1a38bcc8575f9b976ed11f5b681eb02b48">stbwingraph_hwnd</link></computeroutput></para><para>
+Definition at line 56 of file stb_wingraph.h.</para>
+    </section><anchor xml:id="_stb__wingraph_8h_1a77f7fe279e20fe44f425c1f77e5f06b5"/>    <section>
+    <title>stbwingraph_update</title>
+<indexterm><primary>stbwingraph_update</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_update</secondary></indexterm>
+<para><computeroutput>typedef int(* stbwingraph_update) (float timestep, int real, int in_client)</computeroutput></para><para>
+Definition at line 142 of file stb_wingraph.h.</para>
+    </section><anchor xml:id="_stb__wingraph_8h_1a5336bc1d6acad00950be46c47a41db52"/>    <section>
+    <title>stbwingraph_window_proc</title>
+<indexterm><primary>stbwingraph_window_proc</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_window_proc</secondary></indexterm>
+<para><computeroutput>typedef int(* stbwingraph_window_proc) (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>, <link linkend="_structstbwingraph__event">stbwingraph_event</link> *<link linkend="_glext_8h_1a03b04a5a978bad576866339075de01f6">event</link>)</computeroutput></para><para>
+Definition at line 115 of file stb_wingraph.h.</para>
+</section>
+</section>
+<section>
+<title>Enumeration Type Documentation</title>
+<anchor xml:id="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340"/>    <section>
+    <title>anonymous enum</title>
+<para><computeroutput>anonymous enum</computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>STBWINGRAPH_unprocessed</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWINGRAPH_unprocessed</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340a0abd305bbf7e96a887ba2002fb544022"/>STBWINGRAPH_unprocessed</entry><entry></entry></row><row><entry><indexterm><primary>STBWINGRAPH_do_not_show</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWINGRAPH_do_not_show</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340ac040b830d63fe6e1fef698660daf445f"/>STBWINGRAPH_do_not_show</entry><entry></entry></row><row><entry><indexterm><primary>STBWINGRAPH_winproc_exit</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWINGRAPH_winproc_exit</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340a2caa0d3288cb0a50a3fa26c47c871798"/>STBWINGRAPH_winproc_exit</entry><entry></entry></row><row><entry><indexterm><primary>STBWINGRAPH_winproc_update</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWINGRAPH_winproc_update</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340a96875155b26001d5a28e8f4ec80cfd55"/>STBWINGRAPH_winproc_update</entry><entry></entry></row><row><entry><indexterm><primary>STBWINGRAPH_update_exit</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWINGRAPH_update_exit</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340a03a1db9d18704d363d3b668f29882e25"/>STBWINGRAPH_update_exit</entry><entry></entry></row><row><entry><indexterm><primary>STBWINGRAPH_update_pause</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWINGRAPH_update_pause</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340ac02c0140fda4ce29139b18ee16000b93"/>STBWINGRAPH_update_pause</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 59 of file stb_wingraph.h.</para>
+<programlisting>60 {
+61 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340a0abd305bbf7e96a887ba2002fb544022">STBWINGRAPH_unprocessed</link>&#32;=&#32;-(1&#32;&lt;&lt;&#32;24),
+62 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340ac040b830d63fe6e1fef698660daf445f">STBWINGRAPH_do_not_show</link>,
+63 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340a2caa0d3288cb0a50a3fa26c47c871798">STBWINGRAPH_winproc_exit</link>,
+64 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340a96875155b26001d5a28e8f4ec80cfd55">STBWINGRAPH_winproc_update</link>,
+65 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340a03a1db9d18704d363d3b668f29882e25">STBWINGRAPH_update_exit</link>,
+66 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1a950bf8e3371138ceb9649d45e9a96340ac02c0140fda4ce29139b18ee16000b93">STBWINGRAPH_update_pause</link>,
+67 };
+</programlisting>    </section><anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0"/>    <section>
+    <title>stbwingraph_event_type</title>
+<indexterm><primary>stbwingraph_event_type</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_event_type</secondary></indexterm>
+<para><computeroutput>enum <link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0">stbwingraph_event_type</link></computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>STBWGE__none</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE__none</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0ac83d3abb76baecfcfd9dbb3f68b5e092"/>STBWGE__none</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_create</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_create</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a9e41b857359fffc6fc28b0ac59bc44b2"/>STBWGE_create</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_create_postshow</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_create_postshow</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0aae777b201f555bcb2a6dbf01c48aafda"/>STBWGE_create_postshow</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_draw</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_draw</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a20554484698e8f99d37fb4e4ace5cc97"/>STBWGE_draw</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_destroy</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_destroy</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a7025f8e4f3460ab7b1a364df720a95a8"/>STBWGE_destroy</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_char</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_char</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a252b13b28d5af6c680e349fbb2b52bf6"/>STBWGE_char</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_keydown</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_keydown</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a4162704e1ab2a093d101c88ca43564f9"/>STBWGE_keydown</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_syskeydown</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_syskeydown</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0abe27b88a6e4880d32ab3bb1d862b50c3"/>STBWGE_syskeydown</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_keyup</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_keyup</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0acc85248b62d47623143da1c4a25bd6dc"/>STBWGE_keyup</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_syskeyup</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_syskeyup</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a1e21aeaa5d1b85a505405f2810e1f18a"/>STBWGE_syskeyup</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_deactivate</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_deactivate</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0aadc6474472806f8868e67e40e0d74dec"/>STBWGE_deactivate</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_activate</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_activate</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0aa15d996d7fdb81d9a74caff89ef1c783"/>STBWGE_activate</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_size</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_size</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a0ae6c08ff867d9a07fdb9ac545393556"/>STBWGE_size</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_mousemove</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_mousemove</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a03dbeb85f65b365de433cc881e4cab2c"/>STBWGE_mousemove</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_leftdown</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_leftdown</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a30698e96eb811a20447f1106bab3e9ab"/>STBWGE_leftdown</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_leftup</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_leftup</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a28d3eb09f59e3b732606d0326eb8e24d"/>STBWGE_leftup</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_middledown</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_middledown</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0ab97b5235629626877636bd2ca46e6735"/>STBWGE_middledown</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_middleup</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_middleup</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a60488d47fa7a532df98c91216724e0cf"/>STBWGE_middleup</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_rightdown</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_rightdown</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0adf79ede0ef8aff2eb94cc00e7ee939c0"/>STBWGE_rightdown</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_rightup</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_rightup</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0ad503da7984508b00f9d8781e2571efb6"/>STBWGE_rightup</entry><entry></entry></row><row><entry><indexterm><primary>STBWGE_mousewheel</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>STBWGE_mousewheel</secondary></indexterm>
+<anchor xml:id="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0ad7d18c24fd94c2d05339ba73f46528ad"/>STBWGE_mousewheel</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 69 of file stb_wingraph.h.</para>
+<programlisting>70 {
+71 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0ac83d3abb76baecfcfd9dbb3f68b5e092">STBWGE__none</link>=0,
+72 
+73 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a9e41b857359fffc6fc28b0ac59bc44b2">STBWGE_create</link>,
+74 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0aae777b201f555bcb2a6dbf01c48aafda">STBWGE_create_postshow</link>,
+75 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a20554484698e8f99d37fb4e4ace5cc97">STBWGE_draw</link>,
+76 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a7025f8e4f3460ab7b1a364df720a95a8">STBWGE_destroy</link>,
+77 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a252b13b28d5af6c680e349fbb2b52bf6">STBWGE_char</link>,
+78 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a4162704e1ab2a093d101c88ca43564f9">STBWGE_keydown</link>,
+79 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0abe27b88a6e4880d32ab3bb1d862b50c3">STBWGE_syskeydown</link>,
+80 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0acc85248b62d47623143da1c4a25bd6dc">STBWGE_keyup</link>,
+81 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a1e21aeaa5d1b85a505405f2810e1f18a">STBWGE_syskeyup</link>,
+82 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0aadc6474472806f8868e67e40e0d74dec">STBWGE_deactivate</link>,
+83 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0aa15d996d7fdb81d9a74caff89ef1c783">STBWGE_activate</link>,
+84 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a0ae6c08ff867d9a07fdb9ac545393556">STBWGE_size</link>,
+85 
+86 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a03dbeb85f65b365de433cc881e4cab2c">STBWGE_mousemove</link>&#32;,
+87 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a30698e96eb811a20447f1106bab3e9ab">STBWGE_leftdown</link>&#32;&#32;,&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a28d3eb09f59e3b732606d0326eb8e24d">STBWGE_leftup</link>&#32;&#32;,
+88 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0ab97b5235629626877636bd2ca46e6735">STBWGE_middledown</link>,&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0a60488d47fa7a532df98c91216724e0cf">STBWGE_middleup</link>,
+89 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0adf79ede0ef8aff2eb94cc00e7ee939c0">STBWGE_rightdown</link>&#32;,&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0ad503da7984508b00f9d8781e2571efb6">STBWGE_rightup</link>&#32;,
+90 &#32;&#32;&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0ad7d18c24fd94c2d05339ba73f46528ad">STBWGE_mousewheel</link>,
+91 }&#32;<link linkend="_stb__wingraph_8h_1aef110b19535da501fec7003cd83c43a0">stbwingraph_event_type</link>;
+</programlisting></section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_stb__wingraph_8h_1aa206d1d8b2fd66fd4852dd89dd524531"/>    <section>
+    <title>stbwingraph_ChangeResolution()</title>
+<indexterm><primary>stbwingraph_ChangeResolution</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_ChangeResolution</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> int stbwingraph_ChangeResolution (unsigned int w, unsigned int h, unsigned int bits, int use_message_box)</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1a528744c81e2c83e4f33d35f7701b6d05"/>    <section>
+    <title>stbwingraph_CreateWindow()</title>
+<indexterm><primary>stbwingraph_CreateWindow</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_CreateWindow</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>* stbwingraph_CreateWindow (int primary, <link linkend="_stb__wingraph_8h_1a5336bc1d6acad00950be46c47a41db52">stbwingraph_window_proc</link> func, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * data, char * text, int width, int height, int fullscreen, int resizeable, int dest_alpha, int stencil)</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1a7cbaad1d845e2d1ced1c2521b5860a00"/>    <section>
+    <title>stbwingraph_CreateWindowSimple()</title>
+<indexterm><primary>stbwingraph_CreateWindowSimple</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_CreateWindowSimple</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>* stbwingraph_CreateWindowSimple (<link linkend="_stb__wingraph_8h_1a5336bc1d6acad00950be46c47a41db52">stbwingraph_window_proc</link> func, int width, int height)</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1a2443aa1fd03283dbe05874d2c75056f7"/>    <section>
+    <title>stbwingraph_CreateWindowSimpleFull()</title>
+<indexterm><primary>stbwingraph_CreateWindowSimpleFull</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_CreateWindowSimpleFull</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>* stbwingraph_CreateWindowSimpleFull (<link linkend="_stb__wingraph_8h_1a5336bc1d6acad00950be46c47a41db52">stbwingraph_window_proc</link> func, int fullscreen, int ww, int wh, int fw, int fh)</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1af9adc3d6ee67bbb05e3036af6609bb03"/>    <section>
+    <title>stbwingraph_DefineClass()</title>
+<indexterm><primary>stbwingraph_DefineClass</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_DefineClass</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> int stbwingraph_DefineClass (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * hinstance, char * iconname)</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1a6712449b3817cd0e486cebb2c3bc4cf0"/>    <section>
+    <title>stbwingraph_DestroyWindow()</title>
+<indexterm><primary>stbwingraph_DestroyWindow</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_DestroyWindow</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbwingraph_DestroyWindow (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * window)</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1a2f10d16aad0f99663c1b8810eeedfc0f"/>    <section>
+    <title>stbwingraph_GetTimestep()</title>
+<indexterm><primary>stbwingraph_GetTimestep</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_GetTimestep</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> float stbwingraph_GetTimestep (float minimum_time)</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1ae54009f824b73f58afa45d04b799974f"/>    <section>
+    <title>stbwingraph_MainLoop()</title>
+<indexterm><primary>stbwingraph_MainLoop</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_MainLoop</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> int stbwingraph_MainLoop (<link linkend="_stb__wingraph_8h_1a77f7fe279e20fe44f425c1f77e5f06b5">stbwingraph_update</link> func, float mintime)</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1a35684621c373af2d969a9f3d93035f4c"/>    <section>
+    <title>stbwingraph_MakeFonts()</title>
+<indexterm><primary>stbwingraph_MakeFonts</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_MakeFonts</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbwingraph_MakeFonts (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * window, int font_base)</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1adc186a95d219c03dd1430e02f4d6c080"/>    <section>
+    <title>stbwingraph_MessageBox()</title>
+<indexterm><primary>stbwingraph_MessageBox</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_MessageBox</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> int stbwingraph_MessageBox (<link linkend="_stb__wingraph_8h_1a38bcc8575f9b976ed11f5b681eb02b48">stbwingraph_hwnd</link> win, unsigned int type, char * caption, char * text,  ...)</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1a1ed090d5fca7314858c94783be11f7ab"/>    <section>
+    <title>stbwingraph_ods()</title>
+<indexterm><primary>stbwingraph_ods</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_ods</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbwingraph_ods (char * str,  ...)</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1a7457090264a1492ddd88b9690033d2b9"/>    <section>
+    <title>stbwingraph_Priority()</title>
+<indexterm><primary>stbwingraph_Priority</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_Priority</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbwingraph_Priority (int n)</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1aab20d233153086a6147b485f37c3a1db"/>    <section>
+    <title>stbwingraph_SetGLWindow()</title>
+<indexterm><primary>stbwingraph_SetGLWindow</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_SetGLWindow</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbwingraph_SetGLWindow (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * win)</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1ad85568aa8a4ad3107da2b8ea2bb9e6d1"/>    <section>
+    <title>stbwingraph_SetPixelFormat()</title>
+<indexterm><primary>stbwingraph_SetPixelFormat</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_SetPixelFormat</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> int stbwingraph_SetPixelFormat (<link linkend="_stb__wingraph_8h_1a38bcc8575f9b976ed11f5b681eb02b48">stbwingraph_hwnd</link> win, int color_bits, int alpha_bits, int depth_bits, int stencil_bits, int accum_bits)</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1add6fc9ae6dd8dc4fa63c4a37362e80fb"/>    <section>
+    <title>stbwingraph_ShowCursor()</title>
+<indexterm><primary>stbwingraph_ShowCursor</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_ShowCursor</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbwingraph_ShowCursor (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * window, int visible)</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1aff10a60450e160400c95c5cc497ad72a"/>    <section>
+    <title>stbwingraph_ShowWindow()</title>
+<indexterm><primary>stbwingraph_ShowWindow</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_ShowWindow</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbwingraph_ShowWindow (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * window)</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1a945127c796d3c3564f53ca8663f6db98"/>    <section>
+    <title>stbwingraph_SwapBuffers()</title>
+<indexterm><primary>stbwingraph_SwapBuffers</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_SwapBuffers</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__lib_8h_1a40db4e8d14536af27d20fd5a702a126d">STB_EXTERN</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbwingraph_SwapBuffers (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * win)</computeroutput></para></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_stb__wingraph_8h_1aa2084b4cea236eb06202ff3bb1807aee"/>    <section>
+    <title>stbwingraph_app</title>
+<indexterm><primary>stbwingraph_app</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_app</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__wingraph_8h_1a3055813fd7dc35c4c982a7b8f015c067">stbwingraph_hinstance</link> stbwingraph_app</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1ab41580286093d5c70357e1723550884d"/>    <section>
+    <title>stbwingraph_primary_window</title>
+<indexterm><primary>stbwingraph_primary_window</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_primary_window</secondary></indexterm>
+<para><computeroutput><link linkend="_stb__wingraph_8h_1a38bcc8575f9b976ed11f5b681eb02b48">stbwingraph_hwnd</link> stbwingraph_primary_window</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1a343eef91a0966da7de83c70df52d0d94"/>    <section>
+    <title>stbwingraph_request_fullscreen</title>
+<indexterm><primary>stbwingraph_request_fullscreen</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_request_fullscreen</secondary></indexterm>
+<para><computeroutput>int stbwingraph_request_fullscreen</computeroutput></para>    </section><anchor xml:id="_stb__wingraph_8h_1a915de14227091aace2f8da3e55571513"/>    <section>
+    <title>stbwingraph_request_windowed</title>
+<indexterm><primary>stbwingraph_request_windowed</primary><secondary>stb_wingraph.h</secondary></indexterm>
+<indexterm><primary>stb_wingraph.h</primary><secondary>stbwingraph_request_windowed</secondary></indexterm>
+<para><computeroutput>int stbwingraph_request_windowed</computeroutput></para></section>
+</section>
+</section>

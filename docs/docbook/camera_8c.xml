@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_camera_8c">
+<title>src/vally/renderer/camera.c File Reference</title>
+<indexterm><primary>src/vally/renderer/camera.c</primary></indexterm>
+<programlisting>#include &lt;vally/renderer/camera.h&gt;
+#include &lt;vally/core/event.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structcamera__state">camera_state</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_camera_8c_1a0e26ce6a304023f597deb5a35c990c49">camera_init</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_unionmat4s">mat4s</link> <link linkend="_camera_8c_1ab016d0896b09876b237b0ba4c31d6ddd">camera_update_projection</link> (<link linkend="_include_2vally_2config_8h_1a48d6cd8e4135fb2ff7e7f2dac84089ec">i32</link> <link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>, <link linkend="_include_2vally_2config_8h_1a48d6cd8e4135fb2ff7e7f2dac84089ec">i32</link> <link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_unionmat4s">mat4s</link> <link linkend="_camera_8c_1ad9f3c915323cb46514ed404d5fa45771">camera_update_view</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_unionmat4s">mat4s</link> <link linkend="_camera_8c_1afb6d8b1bdf63bb262a12686ec0cd8167">camera_get_projection</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_unionmat4s">mat4s</link> <link linkend="_camera_8c_1a27cecdd897b79aaa2da03253dc192c8b">camera_get_view</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_camera_8c_1a17617007205905a5e1dbe750f4101182">camera_translate</link> (<link linkend="_unionvec2s">vec2s</link> translation)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_camera_8c_1afb6d8b1bdf63bb262a12686ec0cd8167"/>    <section>
+    <title>camera_get_projection()</title>
+<indexterm><primary>camera_get_projection</primary><secondary>camera.c</secondary></indexterm>
+<indexterm><primary>camera.c</primary><secondary>camera_get_projection</secondary></indexterm>
+<para><computeroutput><link linkend="_unionmat4s">mat4s</link> camera_get_projection ( )</computeroutput></para><para>
+Definition at line 45 of file camera.c.</para>
+<programlisting>45 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+46 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized)&#32;{
+47 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_struct_2mat4_8h_1a102e940dd5831ecdfe1ff0011fa90e31">GLMS_MAT4_ZERO</link>;
+48 &#32;&#32;}
+49 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;state.<link linkend="_structcamera__state_1addff7ad170cbd9d956cc209a3d94b390">projection</link>;
+50 }
+</programlisting>    </section><anchor xml:id="_camera_8c_1a27cecdd897b79aaa2da03253dc192c8b"/>    <section>
+    <title>camera_get_view()</title>
+<indexterm><primary>camera_get_view</primary><secondary>camera.c</secondary></indexterm>
+<indexterm><primary>camera.c</primary><secondary>camera_get_view</secondary></indexterm>
+<para><computeroutput><link linkend="_unionmat4s">mat4s</link> camera_get_view ( )</computeroutput></para><para>
+Definition at line 52 of file camera.c.</para>
+<programlisting>52 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+53 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized)&#32;{
+54 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_struct_2mat4_8h_1a102e940dd5831ecdfe1ff0011fa90e31">GLMS_MAT4_ZERO</link>;
+55 &#32;&#32;}
+56 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;state.<link linkend="_structcamera__state_1a49624d46173893d377bcab7d3ba44e49">view</link>;
+57 }
+</programlisting>    </section><anchor xml:id="_camera_8c_1a0e26ce6a304023f597deb5a35c990c49"/>    <section>
+    <title>camera_init()</title>
+<indexterm><primary>camera_init</primary><secondary>camera.c</secondary></indexterm>
+<indexterm><primary>camera.c</primary><secondary>camera_init</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> camera_init ( )</computeroutput></para><para>
+Definition at line 14 of file camera.c.</para>
+<programlisting>14 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+15 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(initialized)&#32;{
+16 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+17 &#32;&#32;}
+18 &#32;&#32;state.<link linkend="_structcamera__state_1a92c4046efa90e58eda3f902a14ab1ae9">position</link>&#32;=&#32;<link linkend="_struct_2vec2_8h_1a6394be18cf022b4caba1836128d500ae">GLMS_VEC2_ZERO</link>;
+19 &#32;&#32;initialized&#32;=&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+20 
+21 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+22 }
+</programlisting>    </section><anchor xml:id="_camera_8c_1a17617007205905a5e1dbe750f4101182"/>    <section>
+    <title>camera_translate()</title>
+<indexterm><primary>camera_translate</primary><secondary>camera.c</secondary></indexterm>
+<indexterm><primary>camera.c</primary><secondary>camera_translate</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> camera_translate (<link linkend="_unionvec2s">vec2s</link> translation)</computeroutput></para><para>
+Definition at line 59 of file camera.c.</para>
+<programlisting>59 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+60 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized)&#32;{
+61 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+62 &#32;&#32;}
+63 
+64 &#32;&#32;state.<link linkend="_structcamera__state_1a92c4046efa90e58eda3f902a14ab1ae9">position</link>&#32;=&#32;<link linkend="_struct_2vec2_8h_1a5027be60826ab0e3a3ae5667520bb07d">glms_vec2_add</link>(state.<link linkend="_structcamera__state_1a92c4046efa90e58eda3f902a14ab1ae9">position</link>,&#32;translation);
+65 &#32;&#32;<link linkend="_structevent__context">event_context</link>&#32;context;
+66 &#32;&#32;context.<link linkend="_structevent__context_1a37626a2166126e0253acb56f57b38635">data</link>.<link linkend="_structevent__context_1aecc1d2cac72d7cf178b96163232840cb">f32</link>[0]&#32;=&#32;state.<link linkend="_structcamera__state_1a92c4046efa90e58eda3f902a14ab1ae9">position</link>.x;
+67 &#32;&#32;context.<link linkend="_structevent__context_1a37626a2166126e0253acb56f57b38635">data</link>.<link linkend="_structevent__context_1aecc1d2cac72d7cf178b96163232840cb">f32</link>[1]&#32;=&#32;state.<link linkend="_structcamera__state_1a92c4046efa90e58eda3f902a14ab1ae9">position</link>.y;
+68 &#32;&#32;<link linkend="_event_8h_1a16616312a9088582d01e4267bd7d8fdd">event_publish</link>(<link linkend="_event_8h_1ab1a5ea1b9d3d15f083a6d01c3ab3c2b7a3599e37cddac3749062b20372bedb8b0">EVENT_CODE_CAMERA_MOVED</link>,&#32;&amp;state,&#32;context);
+69 }
+</programlisting>    </section><anchor xml:id="_camera_8c_1ab016d0896b09876b237b0ba4c31d6ddd"/>    <section>
+    <title>camera_update_projection()</title>
+<indexterm><primary>camera_update_projection</primary><secondary>camera.c</secondary></indexterm>
+<indexterm><primary>camera.c</primary><secondary>camera_update_projection</secondary></indexterm>
+<para><computeroutput><link linkend="_unionmat4s">mat4s</link> camera_update_projection (<link linkend="_include_2vally_2config_8h_1a48d6cd8e4135fb2ff7e7f2dac84089ec">i32</link> width, <link linkend="_include_2vally_2config_8h_1a48d6cd8e4135fb2ff7e7f2dac84089ec">i32</link> height)</computeroutput></para><para>
+Definition at line 24 of file camera.c.</para>
+<programlisting>24 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+25 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized)&#32;{
+26 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_struct_2mat4_8h_1a102e940dd5831ecdfe1ff0011fa90e31">GLMS_MAT4_ZERO</link>;
+27 &#32;&#32;}
+28 
+29 &#32;&#32;state.<link linkend="_structcamera__state_1addff7ad170cbd9d956cc209a3d94b390">projection</link>&#32;=&#32;<link linkend="_struct_2cam_8h_1a3eb2fa44a4cd87dfe5d231ecf4d561bd">glms_ortho</link>(0.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;(<emphasis role="keywordtype">float</emphasis>)<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;(<emphasis role="keywordtype">float</emphasis>)<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>,&#32;0.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;100.0<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+30 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;state.<link linkend="_structcamera__state_1addff7ad170cbd9d956cc209a3d94b390">projection</link>;
+31 }
+</programlisting>    </section><anchor xml:id="_camera_8c_1ad9f3c915323cb46514ed404d5fa45771"/>    <section>
+    <title>camera_update_view()</title>
+<indexterm><primary>camera_update_view</primary><secondary>camera.c</secondary></indexterm>
+<indexterm><primary>camera.c</primary><secondary>camera_update_view</secondary></indexterm>
+<para><computeroutput><link linkend="_unionmat4s">mat4s</link> camera_update_view ( )</computeroutput></para><para>
+Definition at line 33 of file camera.c.</para>
+<programlisting>33 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+34 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized)&#32;{
+35 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_struct_2mat4_8h_1a102e940dd5831ecdfe1ff0011fa90e31">GLMS_MAT4_ZERO</link>;
+36 &#32;&#32;}
+37 
+38 &#32;&#32;<link linkend="_unionvec3s">vec3s</link>&#32;front&#32;=&#32;{0.0f,&#32;0.0f,&#32;-1.0f};
+39 &#32;&#32;<link linkend="_unionvec3s">vec3s</link>&#32;up&#32;=&#32;{0.0f,&#32;1.0f,&#32;0.0f};
+40 &#32;&#32;state.<link linkend="_structcamera__state_1a49624d46173893d377bcab7d3ba44e49">view</link>&#32;=&#32;<link linkend="_struct_2cam_8h_1a5805b4b04ce2d8dc0e45d19b77cc31b0">glms_lookat</link>((<link linkend="_unionvec3s">vec3s</link>){state.<link linkend="_structcamera__state_1a92c4046efa90e58eda3f902a14ab1ae9">position</link>.x,&#32;state.<link linkend="_structcamera__state_1a92c4046efa90e58eda3f902a14ab1ae9">position</link>.y,&#32;20.0f},
+41 &#32;&#32;&#32;&#32;<link linkend="_struct_2vec3_8h_1a3b4f7078a16035dea29106560f77bb3c">glms_vec3_add</link>(front,&#32;(<link linkend="_unionvec3s">vec3s</link>){state.<link linkend="_structcamera__state_1a92c4046efa90e58eda3f902a14ab1ae9">position</link>.x,&#32;state.<link linkend="_structcamera__state_1a92c4046efa90e58eda3f902a14ab1ae9">position</link>.y,&#32;0.0f}),&#32;up);
+42 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;state.<link linkend="_structcamera__state_1a49624d46173893d377bcab7d3ba44e49">view</link>;
+43 }
+</programlisting></section>
+</section>
+</section>

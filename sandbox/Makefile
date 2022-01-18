@@ -1,14 +1,14 @@
 UNAME_S=$(shell uname -s)
 
-CC=gcc
+CC=clang
 CFLAGS=-g -DVALLY_DEBUG -O3
-LDFLAGS=-L../bin/ -lvally -mwindows
+LDFLAGS=-L../bin/ -lvally
 INCLUDES=-Isrc -I../include
 
 ifeq ($(UNAME_S), Linux)
-	LDFLAGS+=-Wl,-rpath=./
+	LDFLAGS+=-Wl,-rpath=../bin
 else
-	LDFLAGS+=-static-libgcc
+	LDFLAGS+=-mwindows -static-libgcc
 endif
 
 SRC=$(wildcard src/**/*.c) $(wildcard src/*.c) $(wildcard src/**/**/*.c) $(wildcard src/**/**/**/*.c)
@@ -20,8 +20,8 @@ BIN=bin/game
 all: dirs engine $(BIN)
 
 dirs:
-	mkdir -p ../bin
-	mkdir -p ../bin/logs
+	mkdir -p bin
+	mkdir -p bin/logs
 
 engine:
 	cd .. && make

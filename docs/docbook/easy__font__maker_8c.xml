@@ -1,0 +1,323 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_easy__font__maker_8c">
+<title>deps/stb/tools/easy_font_maker.c File Reference</title>
+<indexterm><primary>deps/stb/tools/easy_font_maker.c</primary></indexterm>
+<programlisting>#include &quot;stb.h&quot;
+#include &quot;stb_image.h&quot;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structchardata">chardata</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structsegment">segment</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_easy__font__maker_8c_1a5640e9acc84db268e2628d4c5dad308c">STB_DEFINE</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_easy__font__maker_8c_1a18372412ad2fc3ce1e3240b3cf0efe78">STB_IMAGE_IMPLEMENTATION</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_easy__font__maker_8c_1a6e4aff9e4cdffe7f285ea256c59b74ba">X_LIMIT</link>   1</para>
+</listitem>
+            <listitem><para>#define <link linkend="_easy__font__maker_8c_1a6d21a7b5e31e6e39d914f1aa9766da7d">LEN_LIMIT</link>   7</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_easy__font__maker_8c_1af7dae6868a7f08beb66bfa2548436b5a">add_seg</link> (int <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, int <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>, int <link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>, int horizontal)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_easy__font__maker_8c_1a2c7499e2505dfae6f86d38ff6be891a7">print_segments</link> (<link linkend="_structsegment">segment</link> *<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_easy__font__maker_8c_1aeab99dc57eafaa03c4a84b3618a3087f">parse_char</link> (int <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, <link linkend="_structchardata">chardata</link> *<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>, int <link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_easy__font__maker_8c_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_easy__font__maker_8c_1aac374e320caaadeca4874add33b62af2">w</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_easy__font__maker_8c_1a16611451551e3d15916bae723c3f59f7">h</link></para>
+</listitem>
+            <listitem><para><link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link> * <link linkend="_easy__font__maker_8c_1a37ff4391dae5f118fe84a3e16fae8769">data</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_easy__font__maker_8c_1a949211f118eacd9b3b8d31adc1f81914">last_x</link> [2]</para>
+</listitem>
+            <listitem><para>int <link linkend="_easy__font__maker_8c_1a56a60a64e9069b6211c410c3b51c4e76">last_y</link> [2]</para>
+</listitem>
+            <listitem><para>int <link linkend="_easy__font__maker_8c_1a4053d50f4ec8aae401842adb0baa855d">num_seg</link> [2]</para>
+</listitem>
+            <listitem><para>int <link linkend="_easy__font__maker_8c_1a7c82e827fb1aea94dd6f9f3cd57a791c">non_empty</link></para>
+</listitem>
+            <listitem><para><link linkend="_structsegment">segment</link> * <link linkend="_easy__font__maker_8c_1a17752d8bac61da344b0d0ced8bc41cdd">segments</link></para>
+</listitem>
+            <listitem><para><link linkend="_structsegment">segment</link> * <link linkend="_easy__font__maker_8c_1a2615c6e8bba931be16977c187e36784c">vsegments</link></para>
+</listitem>
+            <listitem><para><link linkend="_structchardata">chardata</link> <link linkend="_easy__font__maker_8c_1ac7cf251fc0f9ee72f51b12beda6d27e6">charinfo</link> [128]</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_easy__font__maker_8c_1a6d21a7b5e31e6e39d914f1aa9766da7d"/>    <section>
+    <title>LEN_LIMIT</title>
+<indexterm><primary>LEN_LIMIT</primary><secondary>easy_font_maker.c</secondary></indexterm>
+<indexterm><primary>easy_font_maker.c</primary><secondary>LEN_LIMIT</secondary></indexterm>
+<para><computeroutput>#define LEN_LIMIT   7</computeroutput></para><para>
+Definition at line 52 of file easy_font_maker.c.</para>
+    </section><anchor xml:id="_easy__font__maker_8c_1a5640e9acc84db268e2628d4c5dad308c"/>    <section>
+    <title>STB_DEFINE</title>
+<indexterm><primary>STB_DEFINE</primary><secondary>easy_font_maker.c</secondary></indexterm>
+<indexterm><primary>easy_font_maker.c</primary><secondary>STB_DEFINE</secondary></indexterm>
+<para><computeroutput>#define STB_DEFINE</computeroutput></para><para>
+Definition at line 3 of file easy_font_maker.c.</para>
+    </section><anchor xml:id="_easy__font__maker_8c_1a18372412ad2fc3ce1e3240b3cf0efe78"/>    <section>
+    <title>STB_IMAGE_IMPLEMENTATION</title>
+<indexterm><primary>STB_IMAGE_IMPLEMENTATION</primary><secondary>easy_font_maker.c</secondary></indexterm>
+<indexterm><primary>easy_font_maker.c</primary><secondary>STB_IMAGE_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define STB_IMAGE_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 5 of file easy_font_maker.c.</para>
+    </section><anchor xml:id="_easy__font__maker_8c_1a6e4aff9e4cdffe7f285ea256c59b74ba"/>    <section>
+    <title>X_LIMIT</title>
+<indexterm><primary>X_LIMIT</primary><secondary>easy_font_maker.c</secondary></indexterm>
+<indexterm><primary>easy_font_maker.c</primary><secondary>X_LIMIT</secondary></indexterm>
+<para><computeroutput>#define X_LIMIT   1</computeroutput></para><para>
+Definition at line 51 of file easy_font_maker.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_easy__font__maker_8c_1af7dae6868a7f08beb66bfa2548436b5a"/>    <section>
+    <title>add_seg()</title>
+<indexterm><primary>add_seg</primary><secondary>easy_font_maker.c</secondary></indexterm>
+<indexterm><primary>easy_font_maker.c</primary><secondary>add_seg</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> add_seg (int x, int y, int len, int horizontal)</computeroutput></para><para>
+Definition at line 64 of file easy_font_maker.c.</para>
+<programlisting>65 {
+66 &#32;&#32;&#32;<link linkend="_structsegment">segment</link>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>;
+67 
+68 &#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;-&#32;<link linkend="_easy__font__maker_8c_1a949211f118eacd9b3b8d31adc1f81914">last_x</link>[horizontal]&#32;&gt;&#32;<link linkend="_easy__font__maker_8c_1a6e4aff9e4cdffe7f285ea256c59b74ba">X_LIMIT</link>)&#32;{
+69 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_easy__font__maker_8c_1af7dae6868a7f08beb66bfa2548436b5a">add_seg</link>(<link linkend="_easy__font__maker_8c_1a949211f118eacd9b3b8d31adc1f81914">last_x</link>[horizontal]&#32;+&#32;<link linkend="_easy__font__maker_8c_1a6e4aff9e4cdffe7f285ea256c59b74ba">X_LIMIT</link>,&#32;0,&#32;0,&#32;horizontal);
+70 &#32;&#32;&#32;}
+71 &#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;&gt;&#32;<link linkend="_easy__font__maker_8c_1a6d21a7b5e31e6e39d914f1aa9766da7d">LEN_LIMIT</link>)&#32;{
+72 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_easy__font__maker_8c_1af7dae6868a7f08beb66bfa2548436b5a">add_seg</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,&#32;<link linkend="_easy__font__maker_8c_1a6d21a7b5e31e6e39d914f1aa9766da7d">LEN_LIMIT</link>,&#32;horizontal);
+73 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;-=&#32;<link linkend="_easy__font__maker_8c_1a6d21a7b5e31e6e39d914f1aa9766da7d">LEN_LIMIT</link>;
+74 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;+=&#32;<link linkend="_easy__font__maker_8c_1a6d21a7b5e31e6e39d914f1aa9766da7d">LEN_LIMIT</link>*horizontal;
+75 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;+=&#32;<link linkend="_easy__font__maker_8c_1a6d21a7b5e31e6e39d914f1aa9766da7d">LEN_LIMIT</link>*!horizontal;
+76 &#32;&#32;&#32;}
+77 
+78 &#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>.dx&#32;=&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;-&#32;<link linkend="_easy__font__maker_8c_1a949211f118eacd9b3b8d31adc1f81914">last_x</link>[horizontal];
+79 &#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>.y&#32;=&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>;
+80 &#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>.len&#32;=&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+81 &#32;&#32;&#32;<link linkend="_easy__font__maker_8c_1a7c82e827fb1aea94dd6f9f3cd57a791c">non_empty</link>&#32;+=&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;!=&#32;0;
+82 &#32;&#32;&#32;<emphasis role="comment">//assert(s.x&#32;==&#32;x);</emphasis>
+83 &#32;&#32;&#32;assert(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>.y&#32;==&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>);
+84 &#32;&#32;&#32;assert(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>.len&#32;==&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>);
+85 &#32;&#32;&#32;++<link linkend="_easy__font__maker_8c_1a4053d50f4ec8aae401842adb0baa855d">num_seg</link>[horizontal];
+86 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(horizontal)
+87 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a30a089ec00300b0c18918dd60bbd6854">stb_arr_push</link>(<link linkend="_easy__font__maker_8c_1a17752d8bac61da344b0d0ced8bc41cdd">segments</link>,&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>);
+88 &#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+89 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb_8h_1a30a089ec00300b0c18918dd60bbd6854">stb_arr_push</link>(<link linkend="_easy__font__maker_8c_1a2615c6e8bba931be16977c187e36784c">vsegments</link>,&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>);
+90 &#32;&#32;&#32;<link linkend="_easy__font__maker_8c_1a949211f118eacd9b3b8d31adc1f81914">last_x</link>[horizontal]&#32;=&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>;
+91 }
+</programlisting>    </section><anchor xml:id="_easy__font__maker_8c_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>easy_font_maker.c</secondary></indexterm>
+<indexterm><primary>easy_font_maker.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 173 of file easy_font_maker.c.</para>
+<programlisting>174 {
+175 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>,&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>=0;
+176 &#32;&#32;&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>&#32;=&#32;<link linkend="_stb__image_8c_1a6e3bfbdf11886669cd2153c1136f29db">stbi_load</link>(<emphasis role="stringliteral">&quot;easy_font_raw.png&quot;</emphasis>,&#32;&amp;<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>,&#32;&amp;<link linkend="_glad_8h_1afa0fb1b5e976920c0abeff2dca3ed774">h</link>,&#32;0,&#32;3);
+177 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>=32;&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>&#32;&lt;&#32;127;&#32;++<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)&#32;{
+178 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;=&#32;<link linkend="_easy__font__maker_8c_1aeab99dc57eafaa03c4a84b3618a3087f">parse_char</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,&#32;&amp;<link linkend="_easy__font__maker_8c_1ac7cf251fc0f9ee72f51b12beda6d27e6">charinfo</link>[<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>],&#32;0);
+179 &#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%3d&#32;--&#32;%3d&#32;%3d\n&quot;</emphasis>,&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>,&#32;<link linkend="_easy__font__maker_8c_1ac7cf251fc0f9ee72f51b12beda6d27e6">charinfo</link>[<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>].first_segment,&#32;<link linkend="_easy__font__maker_8c_1ac7cf251fc0f9ee72f51b12beda6d27e6">charinfo</link>[<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>].first_v_segment);
+180 &#32;&#32;&#32;}
+181 &#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;===\n&quot;</emphasis>);
+182 &#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%d&#32;%d&#32;%d\n&quot;</emphasis>,&#32;<link linkend="_easy__font__maker_8c_1a4053d50f4ec8aae401842adb0baa855d">num_seg</link>[0],&#32;<link linkend="_easy__font__maker_8c_1a4053d50f4ec8aae401842adb0baa855d">num_seg</link>[1],&#32;<link linkend="_easy__font__maker_8c_1a7c82e827fb1aea94dd6f9f3cd57a791c">non_empty</link>);
+183 &#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%d\n&quot;</emphasis>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_easy__font__maker_8c_1a17752d8bac61da344b0d0ced8bc41cdd">segments</link>[0])&#32;*&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_easy__font__maker_8c_1a17752d8bac61da344b0d0ced8bc41cdd">segments</link>));
+184 &#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;%d\n&quot;</emphasis>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_easy__font__maker_8c_1a17752d8bac61da344b0d0ced8bc41cdd">segments</link>[0])&#32;*&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_easy__font__maker_8c_1a17752d8bac61da344b0d0ced8bc41cdd">segments</link>)&#32;+&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_easy__font__maker_8c_1a17752d8bac61da344b0d0ced8bc41cdd">segments</link>[0])&#32;*&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_easy__font__maker_8c_1a2615c6e8bba931be16977c187e36784c">vsegments</link>)&#32;+&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_easy__font__maker_8c_1ac7cf251fc0f9ee72f51b12beda6d27e6">charinfo</link>[32])*95);
+185 
+186 &#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;struct&#32;{\n&quot;</emphasis>
+187 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;unsigned&#32;char&#32;advance;\n&quot;</emphasis>
+188 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;unsigned&#32;char&#32;h_seg;\n&quot;</emphasis>
+189 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;unsigned&#32;char&#32;v_seg;\n&quot;</emphasis>
+190 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;}&#32;stb_easy_font_charinfo[96]&#32;=&#32;{\n&quot;</emphasis>);
+191 &#32;&#32;&#32;<link linkend="_easy__font__maker_8c_1ac7cf251fc0f9ee72f51b12beda6d27e6">charinfo</link>[<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>].<link linkend="_structchardata_1a22962e412ccc97aa5b75a67680eaa556">first_segment</link>&#32;=&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_easy__font__maker_8c_1a17752d8bac61da344b0d0ced8bc41cdd">segments</link>);
+192 &#32;&#32;&#32;<link linkend="_easy__font__maker_8c_1ac7cf251fc0f9ee72f51b12beda6d27e6">charinfo</link>[<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>].<link linkend="_structchardata_1abf0a30b6075985b810974be738dc7bb6">first_v_segment</link>&#32;=&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_easy__font__maker_8c_1a2615c6e8bba931be16977c187e36784c">vsegments</link>);
+193 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>=32;&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>&#32;&lt;&#32;128;&#32;++<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>)&#32;{
+194 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>&#32;&amp;&#32;3)&#32;==&#32;0)&#32;printf(<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&quot;</emphasis>);
+195 &#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;{&#32;%2d,%3d,%3d&#32;},&quot;</emphasis>,
+196 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_easy__font__maker_8c_1ac7cf251fc0f9ee72f51b12beda6d27e6">charinfo</link>[<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>].advance&#32;+&#32;16*<link linkend="_easy__font__maker_8c_1ac7cf251fc0f9ee72f51b12beda6d27e6">charinfo</link>[<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>].voff,
+197 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_easy__font__maker_8c_1ac7cf251fc0f9ee72f51b12beda6d27e6">charinfo</link>[<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>].first_segment,
+198 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_easy__font__maker_8c_1ac7cf251fc0f9ee72f51b12beda6d27e6">charinfo</link>[<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>].first_v_segment);
+199 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>&#32;&amp;&#32;3)&#32;==&#32;3)&#32;printf(<emphasis role="stringliteral">&quot;\n&quot;</emphasis>);&#32;<emphasis role="keywordflow">else</emphasis>&#32;printf(<emphasis role="stringliteral">&quot;&#32;&#32;&quot;</emphasis>);
+200 &#32;&#32;&#32;}
+201 &#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;};\n\n&quot;</emphasis>);
+202 
+203 &#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;unsigned&#32;char&#32;stb_easy_font_hseg[%d]&#32;=&#32;{\n&quot;</emphasis>,&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_easy__font__maker_8c_1a17752d8bac61da344b0d0ced8bc41cdd">segments</link>));
+204 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_easy__font__maker_8c_1a2c7499e2505dfae6f86d38ff6be891a7">print_segments</link>(<link linkend="_easy__font__maker_8c_1a17752d8bac61da344b0d0ced8bc41cdd">segments</link>);
+205 &#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;};\n\n&quot;</emphasis>);
+206 
+207 &#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;unsigned&#32;char&#32;stb_easy_font_vseg[%d]&#32;=&#32;{\n&quot;</emphasis>,&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_easy__font__maker_8c_1a2615c6e8bba931be16977c187e36784c">vsegments</link>));
+208 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_easy__font__maker_8c_1a2c7499e2505dfae6f86d38ff6be891a7">print_segments</link>(<link linkend="_easy__font__maker_8c_1a2615c6e8bba931be16977c187e36784c">vsegments</link>);
+209 &#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;};\n&quot;</emphasis>);
+210 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+211 }
+</programlisting>    </section><anchor xml:id="_easy__font__maker_8c_1aeab99dc57eafaa03c4a84b3618a3087f"/>    <section>
+    <title>parse_char()</title>
+<indexterm><primary>parse_char</primary><secondary>easy_font_maker.c</secondary></indexterm>
+<indexterm><primary>easy_font_maker.c</primary><secondary>parse_char</secondary></indexterm>
+<para><computeroutput>int parse_char (int x, <link linkend="_structchardata">chardata</link> * c, int offset)</computeroutput></para><para>
+Definition at line 114 of file easy_font_maker.c.</para>
+<programlisting>115 {
+116 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;start_x&#32;=&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,&#32;end_x,&#32;top_y&#32;=&#32;0,&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>;
+117 
+118 &#32;&#32;&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>-&gt;first_segment&#32;=&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_easy__font__maker_8c_1a17752d8bac61da344b0d0ced8bc41cdd">segments</link>);
+119 &#32;&#32;&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>-&gt;first_v_segment&#32;=&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_easy__font__maker_8c_1a2615c6e8bba931be16977c187e36784c">vsegments</link>)&#32;-&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>;
+120 &#32;&#32;&#32;assert(<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>-&gt;first_segment&#32;==&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_easy__font__maker_8c_1a17752d8bac61da344b0d0ced8bc41cdd">segments</link>));
+121 &#32;&#32;&#32;assert(<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>-&gt;first_v_segment&#32;+&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>&#32;==&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_easy__font__maker_8c_1a2615c6e8bba931be16977c187e36784c">vsegments</link>));
+122 
+123 &#32;&#32;&#32;<emphasis role="comment">//&#32;find&#32;advance&#32;distance</emphasis>
+124 &#32;&#32;&#32;end_x&#32;=&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>+1;
+125 &#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[end_x*3]&#32;==&#32;255)
+126 &#32;&#32;&#32;&#32;&#32;&#32;++end_x;
+127 &#32;&#32;&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>-&gt;advance&#32;=&#32;end_x&#32;-&#32;start_x&#32;+&#32;1;
+128 
+129 &#32;&#32;&#32;<link linkend="_easy__font__maker_8c_1a949211f118eacd9b3b8d31adc1f81914">last_x</link>[0]&#32;=&#32;<link linkend="_easy__font__maker_8c_1a949211f118eacd9b3b8d31adc1f81914">last_x</link>[1]&#32;=&#32;0;
+130 &#32;&#32;&#32;<link linkend="_easy__font__maker_8c_1a56a60a64e9069b6211c410c3b51c4e76">last_y</link>[0]&#32;=&#32;<link linkend="_easy__font__maker_8c_1a56a60a64e9069b6211c410c3b51c4e76">last_y</link>[1]&#32;=&#32;0;
+131 
+132 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>=2;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;&lt;&#32;<link linkend="_easy__font__maker_8c_1a16611451551e3d15916bae723c3f59f7">h</link>;&#32;++<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)&#32;{
+133 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>=start_x;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;&lt;&#32;end_x;&#32;++<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)&#32;{
+134 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>*3*<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>+<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>*3+1]&#32;&lt;&#32;255)&#32;{
+135 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;top_y&#32;=&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>;
+136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+137 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+138 &#32;&#32;&#32;&#32;&#32;&#32;}
+139 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(top_y)
+140 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+141 &#32;&#32;&#32;}
+142 &#32;&#32;&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>-&gt;voff&#32;=&#32;top_y&#32;&gt;&#32;2;
+143 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(top_y&#32;&gt;&#32;2)&#32;
+144 &#32;&#32;&#32;&#32;&#32;&#32;top_y&#32;=&#32;3;
+145 
+146 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>=start_x;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;&lt;&#32;end_x;&#32;++<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)&#32;{
+147 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>;
+148 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>=2;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;&lt;&#32;<link linkend="_easy__font__maker_8c_1a16611451551e3d15916bae723c3f59f7">h</link>;&#32;++<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)&#32;{
+149 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>*3*<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>+<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>*3+1]&#32;&lt;&#32;255)&#32;{
+150 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>*3*<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>+<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>*3+0]&#32;==&#32;255)&#32;{&#32;<emphasis role="comment">//&#32;red</emphasis>
+151 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>=0;
+152 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>+<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;&lt;&#32;<link linkend="_glad_8h_1afa0fb1b5e976920c0abeff2dca3ed774">h</link>&#32;&amp;&amp;&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>+<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)*3*<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>+<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>*3+0]&#32;==&#32;255&#32;&amp;&amp;&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>+<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)*3*<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>+<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>*3+1]&#32;==&#32;0)&#32;{
+153 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>+<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)*3*<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>+<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>*3+0]&#32;=&#32;0;
+154 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;++<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+155 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+156 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_easy__font__maker_8c_1af7dae6868a7f08beb66bfa2548436b5a">add_seg</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>-start_x,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>-top_y,<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>,0);
+157 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+158 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>*3*<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>+<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>*3+2]&#32;==&#32;255)&#32;{&#32;<emphasis role="comment">//&#32;blue</emphasis>
+159 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>=0;
+160 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>+<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;&lt;&#32;end_x&#32;&amp;&amp;&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>*3*<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>+(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>+<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)*3+2]&#32;==&#32;255&#32;&amp;&amp;&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>*3*<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>+(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>+<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)*3+1]&#32;==&#32;0)&#32;{
+161 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>[<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>*3*<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>+(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>+<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)*3+2]&#32;=&#32;0;
+162 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;++<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+163 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+164 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_easy__font__maker_8c_1af7dae6868a7f08beb66bfa2548436b5a">add_seg</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>-start_x,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>-top_y,<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>,1);
+165 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+166 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+167 &#32;&#32;&#32;&#32;&#32;&#32;}
+168 &#32;&#32;&#32;}
+169 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;end_x;
+170 }
+</programlisting>    </section><anchor xml:id="_easy__font__maker_8c_1a2c7499e2505dfae6f86d38ff6be891a7"/>    <section>
+    <title>print_segments()</title>
+<indexterm><primary>print_segments</primary><secondary>easy_font_maker.c</secondary></indexterm>
+<indexterm><primary>easy_font_maker.c</primary><secondary>print_segments</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> print_segments (<link linkend="_structsegment">segment</link> * s)</computeroutput></para><para>
+Definition at line 93 of file easy_font_maker.c.</para>
+<programlisting>94 {
+95 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i,&#32;hpos;
+96 &#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&quot;</emphasis>);
+97 &#32;&#32;&#32;hpos&#32;=&#32;4;
+98 &#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i=0;&#32;i&#32;&lt;&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>);&#32;++i)&#32;{
+99 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;repack&#32;for&#32;portability</emphasis>
+100 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;seg&#32;=&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>[i].len&#32;+&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>[i].dx*8&#32;+&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>[i].y*16;
+101 &#32;&#32;&#32;&#32;&#32;&#32;hpos&#32;+=&#32;printf(<emphasis role="stringliteral">&quot;%d,&quot;</emphasis>,&#32;seg);
+102 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(hpos&#32;&gt;&#32;72&#32;&amp;&amp;&#32;i+1&#32;&lt;&#32;<link linkend="_stb_8h_1a390307ca0fd1c2ae0c633a16a47d3c85">stb_arr_len</link>(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>))&#32;{
+103 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;hpos&#32;=&#32;4;
+104 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;\n&#32;&#32;&#32;&#32;&quot;</emphasis>);
+105 &#32;&#32;&#32;&#32;&#32;&#32;}
+106 &#32;&#32;&#32;}
+107 &#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;\n&quot;</emphasis>);
+108 }
+</programlisting></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_easy__font__maker_8c_1ac7cf251fc0f9ee72f51b12beda6d27e6"/>    <section>
+    <title>charinfo</title>
+<indexterm><primary>charinfo</primary><secondary>easy_font_maker.c</secondary></indexterm>
+<indexterm><primary>easy_font_maker.c</primary><secondary>charinfo</secondary></indexterm>
+<para><computeroutput><link linkend="_structchardata">chardata</link> charinfo[128]</computeroutput></para><para>
+Definition at line 112 of file easy_font_maker.c.</para>
+    </section><anchor xml:id="_easy__font__maker_8c_1a37ff4391dae5f118fe84a3e16fae8769"/>    <section>
+    <title>data</title>
+<indexterm><primary>data</primary><secondary>easy_font_maker.c</secondary></indexterm>
+<indexterm><primary>easy_font_maker.c</primary><secondary>data</secondary></indexterm>
+<para><computeroutput><link linkend="_stb_8h_1adde6aaee8457bee49c2a92621fe22b79">uint8</link>* <link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link></computeroutput></para><para>
+Definition at line 9 of file easy_font_maker.c.</para>
+    </section><anchor xml:id="_easy__font__maker_8c_1a16611451551e3d15916bae723c3f59f7"/>    <section>
+    <title>h</title>
+<indexterm><primary>h</primary><secondary>easy_font_maker.c</secondary></indexterm>
+<indexterm><primary>easy_font_maker.c</primary><secondary>h</secondary></indexterm>
+<para><computeroutput>int <link linkend="_glad_8h_1afa0fb1b5e976920c0abeff2dca3ed774">h</link></computeroutput></para><para>
+Definition at line 8 of file easy_font_maker.c.</para>
+    </section><anchor xml:id="_easy__font__maker_8c_1a949211f118eacd9b3b8d31adc1f81914"/>    <section>
+    <title>last_x</title>
+<indexterm><primary>last_x</primary><secondary>easy_font_maker.c</secondary></indexterm>
+<indexterm><primary>easy_font_maker.c</primary><secondary>last_x</secondary></indexterm>
+<para><computeroutput>int last_x[2]</computeroutput></para><para>
+Definition at line 11 of file easy_font_maker.c.</para>
+    </section><anchor xml:id="_easy__font__maker_8c_1a56a60a64e9069b6211c410c3b51c4e76"/>    <section>
+    <title>last_y</title>
+<indexterm><primary>last_y</primary><secondary>easy_font_maker.c</secondary></indexterm>
+<indexterm><primary>easy_font_maker.c</primary><secondary>last_y</secondary></indexterm>
+<para><computeroutput>int last_y[2]</computeroutput></para><para>
+Definition at line 11 of file easy_font_maker.c.</para>
+    </section><anchor xml:id="_easy__font__maker_8c_1a7c82e827fb1aea94dd6f9f3cd57a791c"/>    <section>
+    <title>non_empty</title>
+<indexterm><primary>non_empty</primary><secondary>easy_font_maker.c</secondary></indexterm>
+<indexterm><primary>easy_font_maker.c</primary><secondary>non_empty</secondary></indexterm>
+<para><computeroutput>int non_empty</computeroutput></para><para>
+Definition at line 12 of file easy_font_maker.c.</para>
+    </section><anchor xml:id="_easy__font__maker_8c_1a4053d50f4ec8aae401842adb0baa855d"/>    <section>
+    <title>num_seg</title>
+<indexterm><primary>num_seg</primary><secondary>easy_font_maker.c</secondary></indexterm>
+<indexterm><primary>easy_font_maker.c</primary><secondary>num_seg</secondary></indexterm>
+<para><computeroutput>int num_seg[2]</computeroutput></para><para>
+Definition at line 12 of file easy_font_maker.c.</para>
+    </section><anchor xml:id="_easy__font__maker_8c_1a17752d8bac61da344b0d0ced8bc41cdd"/>    <section>
+    <title>segments</title>
+<indexterm><primary>segments</primary><secondary>easy_font_maker.c</secondary></indexterm>
+<indexterm><primary>easy_font_maker.c</primary><secondary>segments</secondary></indexterm>
+<para><computeroutput><link linkend="_structsegment">segment</link>* segments</computeroutput></para><para>
+Definition at line 61 of file easy_font_maker.c.</para>
+    </section><anchor xml:id="_easy__font__maker_8c_1a2615c6e8bba931be16977c187e36784c"/>    <section>
+    <title>vsegments</title>
+<indexterm><primary>vsegments</primary><secondary>easy_font_maker.c</secondary></indexterm>
+<indexterm><primary>easy_font_maker.c</primary><secondary>vsegments</secondary></indexterm>
+<para><computeroutput><link linkend="_structsegment">segment</link>* vsegments</computeroutput></para><para>
+Definition at line 62 of file easy_font_maker.c.</para>
+    </section><anchor xml:id="_easy__font__maker_8c_1aac374e320caaadeca4874add33b62af2"/>    <section>
+    <title>w</title>
+<indexterm><primary>w</primary><secondary>easy_font_maker.c</secondary></indexterm>
+<indexterm><primary>easy_font_maker.c</primary><secondary>w</secondary></indexterm>
+<para><computeroutput>int <link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link></computeroutput></para><para>
+Definition at line 8 of file easy_font_maker.c.</para>
+</section>
+</section>
+</section>

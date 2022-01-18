@@ -1,0 +1,197 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_events_8c">
+<title>deps/glfw/tests/events.c File Reference</title>
+<indexterm><primary>deps/glfw/tests/events.c</primary></indexterm>
+<programlisting>#include &lt;glad/gl.h&gt;
+#include &lt;GLFW/glfw3.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;ctype.h&gt;
+#include &lt;string.h&gt;
+#include &lt;locale.h&gt;
+#include &quot;getopt.h&quot;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_struct_slot">Slot</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_events_8c_1a09f9c3bf094ecaf707c673924ffd615a">GLAD_GL_IMPLEMENTATION</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_events_8c_1a088324ad8995e3eb76024e3e79083d48">GLFW_INCLUDE_NONE</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_events_8c_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_events_8c_1a09f9c3bf094ecaf707c673924ffd615a"/>    <section>
+    <title>GLAD_GL_IMPLEMENTATION</title>
+<indexterm><primary>GLAD_GL_IMPLEMENTATION</primary><secondary>events.c</secondary></indexterm>
+<indexterm><primary>events.c</primary><secondary>GLAD_GL_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define GLAD_GL_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 34 of file events.c.</para>
+    </section><anchor xml:id="_events_8c_1a088324ad8995e3eb76024e3e79083d48"/>    <section>
+    <title>GLFW_INCLUDE_NONE</title>
+<indexterm><primary>GLFW_INCLUDE_NONE</primary><secondary>events.c</secondary></indexterm>
+<indexterm><primary>events.c</primary><secondary>GLFW_INCLUDE_NONE</secondary></indexterm>
+<para><computeroutput>#define GLFW_INCLUDE_NONE</computeroutput></para><para>
+Definition at line 36 of file events.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_events_8c_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>events.c</secondary></indexterm>
+<indexterm><primary>events.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 535 of file events.c.</para>
+<programlisting>536 {
+537 &#32;&#32;&#32;&#32;<link linkend="_struct_slot">Slot</link>*&#32;slots;
+538 &#32;&#32;&#32;&#32;<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link>*&#32;monitor&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+539 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;ch,&#32;i,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>,&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;=&#32;1;
+540 
+541 &#32;&#32;&#32;&#32;<link linkend="_group__init_1ga746e2757d069eaea423349aca6ae097a">glfwSetErrorCallback</link>(<link linkend="_inputlag_8c_1a4ee391c8bab624943c822faafb2c320e">error_callback</link>);
+542 
+543 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_group__init_1gab41771f0215a2e0afb4cf1cf98082d40">glfwInit</link>())
+544 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+545 
+546 &#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Library&#32;initialized\n&quot;</emphasis>);
+547 
+548 &#32;&#32;&#32;&#32;<link linkend="_group__monitor_1ga9fa7cc37cd79216a7fc0b77af54109a1">glfwSetMonitorCallback</link>(monitor_callback);
+549 &#32;&#32;&#32;&#32;<link linkend="_group__input_1gad90f60a4c0e04629928305b53e96154a">glfwSetJoystickCallback</link>(joystick_callback);
+550 
+551 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;((ch&#32;=&#32;<link linkend="_getopt_8c_1a5ffa4c677fc71cecd94f140ef9db624c">getopt</link>(argc,&#32;argv,&#32;<emphasis role="stringliteral">&quot;hfn:&quot;</emphasis>))&#32;!=&#32;-1)
+552 &#32;&#32;&#32;&#32;{
+553 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(ch)
+554 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+555 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;h&apos;</emphasis>:
+556 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afb85c5d9b1bce96aa3b530d581194d1a">usage</link>();
+557 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_SUCCESS);
+558 
+559 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;f&apos;</emphasis>:
+560 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;monitor&#32;=&#32;<link linkend="_group__monitor_1ga59ea49f377fe701dd76764183e64d9f4">glfwGetPrimaryMonitor</link>();
+561 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+562 
+563 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;n&apos;</emphasis>:
+564 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;=&#32;(int)&#32;strtoul(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;10);
+565 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+566 
+567 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">default</emphasis>:
+568 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afb85c5d9b1bce96aa3b530d581194d1a">usage</link>();
+569 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+570 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+571 &#32;&#32;&#32;&#32;}
+572 
+573 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(monitor)
+574 &#32;&#32;&#32;&#32;{
+575 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>*&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>&#32;=&#32;<link linkend="_group__monitor_1ga27319d7f045c4cbbeae5651696cacd5f">glfwGetVideoMode</link>(monitor);
+576 
+577 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga0f20825e6e47ee8ba389024519682212">GLFW_REFRESH_RATE</link>,&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;refreshRate);
+578 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gaf78ed8e417dbcc1e354906cc2708c982">GLFW_RED_BITS</link>,&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;redBits);
+579 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gafba3b72638c914e5fb8a237dd4c50d4d">GLFW_GREEN_BITS</link>,&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;greenBits);
+580 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gab292ea403db6d514537b515311bf9ae3">GLFW_BLUE_BITS</link>,&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;blueBits);
+581 
+582 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>&#32;=&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;width;
+583 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>&#32;=&#32;<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>-&gt;height;
+584 &#32;&#32;&#32;&#32;}
+585 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+586 &#32;&#32;&#32;&#32;{
+587 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>&#32;&#32;=&#32;640;
+588 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>&#32;=&#32;480;
+589 &#32;&#32;&#32;&#32;}
+590 
+591 &#32;&#32;&#32;&#32;slots&#32;=&#32;calloc(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct_slot">Slot</link>));
+592 
+593 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>;&#32;&#32;i++)
+594 &#32;&#32;&#32;&#32;{
+595 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;title[128];
+596 
+597 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;slots[i].<link linkend="_struct_slot_1aa0d37b6ab4bb3b80baf443d4b3183633">closeable</link>&#32;=&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+598 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;slots[i].<link linkend="_struct_slot_1a75f94e08120f69047ec87b920011b62b">number</link>&#32;=&#32;i&#32;+&#32;1;
+599 
+600 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_rrsprintf_8h_1afebf4922e1c440094d77aeec3657eb12">snprintf</link>(title,&#32;<emphasis role="keyword">sizeof</emphasis>(title),&#32;<emphasis role="stringliteral">&quot;Event&#32;Linter&#32;(Window&#32;%i)&quot;</emphasis>,&#32;slots[i].number);
+601 
+602 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(monitor)
+603 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+604 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Creating&#32;full&#32;screen&#32;window&#32;%i&#32;(%ix%i&#32;on&#32;%s)\n&quot;</emphasis>,
+605 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;slots[i].number,
+606 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>,
+607 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__monitor_1ga9bb1b5712a5a4f1478ed74513e02d148">glfwGetMonitorName</link>(monitor));
+608 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+609 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+610 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+611 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Creating&#32;windowed&#32;mode&#32;window&#32;%i&#32;(%ix%i)\n&quot;</emphasis>,
+612 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;slots[i].number,
+613 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+614 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+615 
+616 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;slots[i].<link linkend="_struct_slot_1a4b5e7eed4763361b8bf2a78a3b28913c">window</link>&#32;=&#32;<link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link>(<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>,&#32;title,&#32;monitor,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+617 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)
+618 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+619 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(slots);
+620 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+621 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+622 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+623 
+624 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1gacc9e68faee3c1763b54cd9bc405cf43e">glfwSetWindowUserPointer</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;slots&#32;+&#32;i);
+625 
+626 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga517b6e80b982efa06e9b8ca89d4a75a6">glfwSetWindowPosCallback</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;window_pos_callback);
+627 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1gab0754f8d5c7c4d5cae2a9937a0e00bc5">glfwSetWindowSizeCallback</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;window_size_callback);
+628 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga41d69f9f263d7b33ea03cf58772b4ea0">glfwSetFramebufferSizeCallback</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_wave_8c_1a5180f7bf2b71421af837035824a8c8ac">framebuffer_size_callback</link>);
+629 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1gac6edcddbe785445d0d2b7b7be500836e">glfwSetWindowContentScaleCallback</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;window_content_scale_callback);
+630 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga693d778815971a06e1a5a7bcdeff3d36">glfwSetWindowCloseCallback</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;window_close_callback);
+631 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga62bfa902c07a03b8ad9be37da31a4be7">glfwSetWindowRefreshCallback</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;window_refresh_callback);
+632 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1gacce1c4dd273b5c4c60b05599f8725b4e">glfwSetWindowFocusCallback</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;window_focus_callback);
+633 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga3e9f355edb6b9247149ddea2335eda69">glfwSetWindowIconifyCallback</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;window_iconify_callback);
+634 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1gae77b3960dcd40514fb7b2b8a6eb98137">glfwSetWindowMaximizeCallback</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;window_maximize_callback);
+635 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__input_1gab8f17646f43cdca14e5095512618fdf6">glfwSetMouseButtonCallback</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;mouse_button_callback);
+636 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__input_1ga74124d0eff27040fd10e4df9e17d129c">glfwSetCursorPosCallback</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;cursor_position_callback);
+637 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__input_1gacdb3490e374c8bc08549c6f173ffa7c2">glfwSetCursorEnterCallback</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;cursor_enter_callback);
+638 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__input_1gaa786b59f19ad8525d251cda8e0d7d29b">glfwSetScrollCallback</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_wave_8c_1a6bec52479312a11696798b50140f227d">scroll_callback</link>);
+639 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__input_1gaa4cbcb81b939b8800e44cea971ddae47">glfwSetKeyCallback</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;key_callback);
+640 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__input_1gad3d7e6e3134fa034cc1604162579585e">glfwSetCharCallback</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;char_callback);
+641 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__input_1ga8bab819b7b0ef9bc1a38e58c577c1d13">glfwSetDropCallback</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;drop_callback);
+642 
+643 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__context_1gafd76c93e15ec8b0b90506a9936a46185">glfwMakeContextCurrent</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+644 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a7e9e0ebe65864f5f2bcd289c5736041b">gladLoadGL</link>(<link linkend="_group__context_1ga0e8af175218929615c16e74938c10f2a">glfwGetProcAddress</link>);
+645 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__context_1ga12a595c06947cec4967c6e1f14210a8a">glfwSwapInterval</link>(1);
+646 &#32;&#32;&#32;&#32;}
+647 
+648 &#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Main&#32;loop&#32;starting\n&quot;</emphasis>);
+649 
+650 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(;;)
+651 &#32;&#32;&#32;&#32;{
+652 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>;&#32;&#32;i++)
+653 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+654 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_group__window_1gaa6162f67dfa38b8beda2fea623649332">glfwWindowShouldClose</link>(slots[i].<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>))
+655 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+656 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+657 
+658 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(i&#32;&lt;&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>)
+659 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+660 
+661 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga6e042d05823c11e11c7339b81a237738">glfwWaitEvents</link>();
+662 
+663 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Workaround&#32;for&#32;an&#32;issue&#32;with&#32;msvcrt&#32;and&#32;mintty</emphasis>
+664 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fflush(stdout);
+665 &#32;&#32;&#32;&#32;}
+666 
+667 &#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(slots);
+668 &#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+669 &#32;&#32;&#32;&#32;exit(EXIT_SUCCESS);
+670 }
+</programlisting></section>
+</section>
+</section>

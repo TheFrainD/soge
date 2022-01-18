@@ -1,0 +1,998 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_stb__image_8c">
+<title>deps/stb/deprecated/stb_image.c File Reference</title>
+<indexterm><primary>deps/stb/deprecated/stb_image.c</primary></indexterm>
+<programlisting>#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;memory.h&gt;
+#include &lt;assert.h&gt;
+#include &lt;stdarg.h&gt;
+#include &lt;stddef.h&gt;
+#include &lt;stdint.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structstbi__io__callbacks">stbi_io_callbacks</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structstbi">stbi</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structhuffman">huffman</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structjpeg">jpeg</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structstbi__resample">stbi_resample</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structzhuffman">zhuffman</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structzbuf">zbuf</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structchunk">chunk</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structpng">png</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structpic__packet__t">pic_packet_t</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structstbi__gif__lzw__struct">stbi_gif_lzw_struct</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structstbi__gif__struct">stbi_gif_struct</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a065480d61391686cb4ea8a995b94f84a">STBI_INCLUDE_STB_IMAGE_H</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1aed6cd14a3bf678808c4c179e808866aa">STBI_VERSION</link>   1</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a952111e72ed4262552e413e5938089b8">stbi_inline</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a3970ebac9a09e8116fa5855b334ca6ab">STBI_NOTUSED</link>(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>)   (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)sizeof(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a9fbddf96684d05016c5c72fc7d54f076">stbi_lrot</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,  <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)   (((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) &lt;&lt; (<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)) | ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) &gt;&gt; (32 - (<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>))))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,  <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)   e(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a6d4ec1e550488376c800b0fd015b61cb">epf</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,  <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)   ((float *) (<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)?NULL:NULL))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a561c4b95e46ce2bbb293646527b41b5c">epuc</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,  <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)   ((unsigned char *) (<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)?NULL:NULL))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1adb2d77dae99f6d33dd9be33305186925">COMBO</link>(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,  <link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)   ((<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)*8+(<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a313e27a7a8b70c45c2a0b450454b880c">CASE</link>(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,  <link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)   case <link linkend="_stb__image_8c_1adb2d77dae99f6d33dd9be33305186925">COMBO</link>(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>): for(i=<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>-1; i &gt;= 0; --i, <link linkend="_glad_8h_1a72e0fdf0f845ded60b1fada9e9195cd7">src</link> += <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>, dest += <link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1ab57b5a4c33f7a407498f93c6c3eb213b">float2int</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((int) (<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1add78822c51f4692289f2ce174bdf82b0">FAST_BITS</link>   9</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a9717131be1639d94ecfdc4792f6c2b3e">f2f</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   (int) (((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) * 4096 + 0.5))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a375f901f1eb889847110ecafc6e9ea01">fsh</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) &lt;&lt; 12)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a53f514da1aad41b798186341dcca9d1e">IDCT_1D</link>(<link linkend="_glext_8h_1afeed0b7958979c6add0e425baba3b41f">s0</link>,  <link linkend="_glext_8h_1a4ed25fb4dc5bf1a768a78d2e2f0ca003">s1</link>,  s2,  s3,  s4,  s5,  s6,  s7)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1ab01514a0a369dc40bb53e2855521694a">MARKER_none</link>   0xff</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a3743ff2eb7667f3a1a2cb411ad8203ec">RESTART</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) &gt;= 0xd0 &amp;&amp; (<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) &lt;= 0xd7)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a5f0e72d88591aa28aa05cf900c6b2073">DNL</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) == 0xdc)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a96e825d5dcf3bf3f26b073c77032b96d">SOI</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) == 0xd8)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a7c42f53f185ee25bf95cd27297893c1f">EOI</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) == 0xd9)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a9f337463bc4bedeb9bc3e51db0ba0a56">SOF</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) == 0xc0 || (<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) == 0xc1)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1acd317d0705293360e6837fc308e2752c">SOS</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) == 0xda)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1ad4d47775eeedafd3d0baf604e928926e">div4</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((<link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link>) ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) &gt;&gt; 2))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a7bca20397b32c16a40c69145763bb028">div16</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((<link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link>) ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) &gt;&gt; 4))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a78857167af92ac9e8deb1f7fa7696a60">float2fixed</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((int) ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) * 65536 + 0.5))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a37d8564ae0a820fb44b1a751c702e33a">ZFAST_BITS</link>   9</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a7d437afc1bf1ea5a0a2441f3c0aca1fb">ZFAST_MASK</link>   ((1 &lt;&lt; <link linkend="_stb__image_8c_1a37d8564ae0a820fb44b1a751c702e33a">ZFAST_BITS</link>) - 1)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1acaff58a0e5160754a6b6afbefff148f9">PNG_TYPE</link>(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,  <link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>,  <link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>,  d)   (((<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>) &lt;&lt; 24) + ((<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>) &lt;&lt; 16) + ((<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>) &lt;&lt; 8) + (d))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1ae3be5b5378ea8cef95140897f7270a09">CASE</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1ae3be5b5378ea8cef95140897f7270a09">CASE</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_stb__image_8c_1a05382fb60839c0f242ac7f9f24d8adf0">HDR_BUFLEN</link>   1024</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Typedefs    </title>
+        <itemizedlist>
+            <listitem><para>typedef unsigned char <link linkend="_stb__image_8c_1a28eb51a1512ce382ee50f20e1d04d50d">stbi_uc</link></para>
+</listitem>
+            <listitem><para>typedef <link linkend="_stdint_8h_1aba7bc1797add20fe3efdf37ced1182c5">uint8_t</link> <link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link></para>
+</listitem>
+            <listitem><para>typedef <link linkend="_stdint_8h_1a273cf69d639a59973b6019625df33e30">uint16_t</link> <link linkend="_stb__image_8c_1a38c41d822de912df31fb56df26a9cb8c">stbi__uint16</link></para>
+</listitem>
+            <listitem><para>typedef <link linkend="_stdint_8h_1a269259c924dce846340ddbb810db2e3c">int16_t</link> <link linkend="_stb__image_8c_1ae4cbd54705261d6f2d44b97ca536f14f">stbi__int16</link></para>
+</listitem>
+            <listitem><para>typedef <link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link> <link linkend="_stb__image_8c_1a9f4c7fe585bda3cc749e576bcf341d7e">stbi__uint32</link></para>
+</listitem>
+            <listitem><para>typedef <link linkend="_stdint_8h_1ab1967d8591af1a4e48c37fd2b0f184d0">int32_t</link> <link linkend="_stb__image_8c_1aa22ffdc0f962b06610737eaab3ac6b63">stbi__int32</link></para>
+</listitem>
+            <listitem><para>typedef unsigned char <link linkend="_stb__image_8c_1a88d07433d887bfad2b4b8a302f47f240">validate_uint32</link>[sizeof(<link linkend="_stb__image_8c_1a9f4c7fe585bda3cc749e576bcf341d7e">stbi__uint32</link>)==4 ? 1 :-1]</para>
+</listitem>
+            <listitem><para>typedef <link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link> <link linkend="_stb__image_8c_1afac632f65d3daa108ef4f2dd56fb5be7">stbi_dequantize_t</link></para>
+</listitem>
+            <listitem><para>typedef <link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link> *(* <link linkend="_stb__image_8c_1ac5c70a4d11d61d7fcc82c6269be95127">resample_row_func</link>) (<link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link> *out, <link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link> *in0, <link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link> *in1, int <link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>, int hs)</para>
+</listitem>
+            <listitem><para>typedef struct <link linkend="_structstbi__gif__lzw__struct">stbi_gif_lzw_struct</link> <link linkend="_stb__image_8c_1a5d3b24598f39d74a5d892af054523bfa">stbi_gif_lzw</link></para>
+</listitem>
+            <listitem><para>typedef struct <link linkend="_structstbi__gif__struct">stbi_gif_struct</link> <link linkend="_stb__image_8c_1a594005b9b173118d19cac788ada77df9">stbi_gif</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Enumerations    </title>
+        <itemizedlist>
+            <listitem><para>enum { 
+<link linkend="_stb__image_8c_1ae6dceca96ec2c7a1b4aa211264a87ef6a0177ac2c5002f4f251bb766d41752029">STBI_default</link> = 0, 
+<link linkend="_stb__image_8c_1ae6dceca96ec2c7a1b4aa211264a87ef6ad1eb95ca1fa7706bf732bf35a0ed40aa">STBI_grey</link> = 1, 
+<link linkend="_stb__image_8c_1ae6dceca96ec2c7a1b4aa211264a87ef6af5829d16d4cca6077465c5abd346e2f8">STBI_grey_alpha</link> = 2, 
+<link linkend="_stb__image_8c_1ae6dceca96ec2c7a1b4aa211264a87ef6aa59123e5d0af25f9b1539f5cf1facddf">STBI_rgb</link> = 3, 
+
+<link linkend="_stb__image_8c_1ae6dceca96ec2c7a1b4aa211264a87ef6aa7b1af0c9f0310c3ada2aa29a32de293">STBI_rgb_alpha</link> = 4
+ }</para>
+</listitem>
+            <listitem><para>enum { <link linkend="_stb__image_8c_1a56a0f36da7f9eaaf54bd05cc2bf49173a85a0b66d6fdde378fa20b491fdf24f8a">SCAN_load</link> =0, 
+<link linkend="_stb__image_8c_1a56a0f36da7f9eaaf54bd05cc2bf49173ab156e11a1618eb1afb3e1482ff29675e">SCAN_type</link>, 
+<link linkend="_stb__image_8c_1a56a0f36da7f9eaaf54bd05cc2bf49173a833170a40f969d501a1697ee49a48bfb">SCAN_header</link>
+ }</para>
+</listitem>
+            <listitem><para>enum { 
+<link linkend="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aa16f71f569e3f9321da21f1249e2773fd">F_none</link> =0, 
+<link linkend="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aafc14a072a264bba5ec906f64af96faeb">F_sub</link> =1, 
+<link linkend="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aaac432bb3d57c85f1f2c82019426cab42">F_up</link> =2, 
+<link linkend="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aa4f647a9352589e534a0d8a513d67d28e">F_avg</link> =3, 
+
+<link linkend="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aa048f016fa714cc5e0f6c41e35d10fa6d">F_paeth</link> =4, 
+<link linkend="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aa4de5672ef1ab76c920893203b67a6246">F_avg_first</link>, 
+<link linkend="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aa7310c91cd24ab3f794937b630faf4afa">F_paeth_first</link>
+ }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_stb__image_8c_1a28eb51a1512ce382ee50f20e1d04d50d">stbi_uc</link> * <link linkend="_stb__image_8c_1a2ed09e0346d59f575ebb17e1ed91cd6b">stbi_load_from_memory</link> (<link linkend="_stb__image_8c_1a28eb51a1512ce382ee50f20e1d04d50d">stbi_uc</link> const *<link linkend="_structbuffer">buffer</link>, int <link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>, int *<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, int *<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>, int *comp, int req_comp)</para>
+
+<para>STBI_NO_STDIO. </para>
+</listitem>
+            <listitem><para><link linkend="_stb__image_8c_1a28eb51a1512ce382ee50f20e1d04d50d">stbi_uc</link> * <link linkend="_stb__image_8c_1a6e3bfbdf11886669cd2153c1136f29db">stbi_load</link> (char const *filename, int *<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, int *<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>, int *comp, int req_comp)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__image_8c_1a28eb51a1512ce382ee50f20e1d04d50d">stbi_uc</link> * <link linkend="_stb__image_8c_1a1425e85e77b6ae1e630d9f5c6a764a3a">stbi_load_from_file</link> (FILE *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>, int *<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, int *<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>, int *comp, int req_comp)</para>
+</listitem>
+            <listitem><para><link linkend="_stb__image_8c_1a28eb51a1512ce382ee50f20e1d04d50d">stbi_uc</link> * <link linkend="_stb__image_8c_1a6096435d90834b7645f25ebd727928ae">stbi_load_from_callbacks</link> (<link linkend="_structstbi__io__callbacks">stbi_io_callbacks</link> const *clbk, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *user, int *<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, int *<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>, int *comp, int req_comp)</para>
+</listitem>
+            <listitem><para>float * <link linkend="_stb__image_8c_1aefa0aac08f604862a1bb8d8401602eca">stbi_loadf_from_memory</link> (<link linkend="_stb__image_8c_1a28eb51a1512ce382ee50f20e1d04d50d">stbi_uc</link> const *<link linkend="_structbuffer">buffer</link>, int <link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>, int *<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, int *<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>, int *comp, int req_comp)</para>
+</listitem>
+            <listitem><para>float * <link linkend="_stb__image_8c_1a143179f0a8808a0de4eba5cb5da1ec56">stbi_loadf</link> (char const *filename, int *<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, int *<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>, int *comp, int req_comp)</para>
+</listitem>
+            <listitem><para>float * <link linkend="_stb__image_8c_1a1aeca869b8b68db1a81d6c8a5cc77e2d">stbi_loadf_from_file</link> (FILE *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>, int *<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, int *<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>, int *comp, int req_comp)</para>
+</listitem>
+            <listitem><para>float * <link linkend="_stb__image_8c_1ad9042d60dee30e533f742067abe29a79">stbi_loadf_from_callbacks</link> (<link linkend="_structstbi__io__callbacks">stbi_io_callbacks</link> const *clbk, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *user, int *<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, int *<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>, int *comp, int req_comp)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__image_8c_1a981084e66668ed998832b84dad50bed7">stbi_hdr_to_ldr_gamma</link> (float gamma)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__image_8c_1a269aa666e5df1051c04f28479add324e">stbi_hdr_to_ldr_scale</link> (float <link linkend="_glext_8h_1a281421b881aa7a1266842b73a3bc7655">scale</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__image_8c_1a392b50c731d9969456006783e2a6f012">stbi_ldr_to_hdr_gamma</link> (float gamma)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__image_8c_1a1457f71183493d5a6100ee6a9785e744">stbi_ldr_to_hdr_scale</link> (float <link linkend="_glext_8h_1a281421b881aa7a1266842b73a3bc7655">scale</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__image_8c_1a894f9f42a78d83fa913bfa6190b5fb8d">stbi_is_hdr_from_callbacks</link> (<link linkend="_structstbi__io__callbacks">stbi_io_callbacks</link> const *clbk, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *user)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__image_8c_1acd0819e90be8de94e8841d7140d4262c">stbi_is_hdr_from_memory</link> (<link linkend="_stb__image_8c_1a28eb51a1512ce382ee50f20e1d04d50d">stbi_uc</link> const *<link linkend="_structbuffer">buffer</link>, int <link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__image_8c_1a828738812bd834ea9af464ce9826008a">stbi_is_hdr</link> (char const *filename)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__image_8c_1a6b45e9af5f0b0f76cc33bcb5b08bb7d8">stbi_is_hdr_from_file</link> (FILE *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</para>
+</listitem>
+            <listitem><para>const char * <link linkend="_stb__image_8c_1a69d3ed7ef9b520b8a42f75ef479e3ede">stbi_failure_reason</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__image_8c_1ad47e820c6695b0cf5cfb63a29f4452d0">stbi_image_free</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *retval_from_stbi_load)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__image_8c_1a8a876cda0f7ca91dcb0acb0206799ad7">stbi_info_from_memory</link> (<link linkend="_stb__image_8c_1a28eb51a1512ce382ee50f20e1d04d50d">stbi_uc</link> const *<link linkend="_structbuffer">buffer</link>, int <link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>, int *<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, int *<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>, int *comp)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__image_8c_1adda3645c29ab5a4cd7762e758687de06">stbi_info_from_callbacks</link> (<link linkend="_structstbi__io__callbacks">stbi_io_callbacks</link> const *clbk, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *user, int *<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, int *<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>, int *comp)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__image_8c_1ac94b9565008cb24823826506f9e97def">stbi_info</link> (char const *filename, int *<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, int *<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>, int *comp)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__image_8c_1a5560f2807ab53f12ab062235b14f3a3c">stbi_info_from_file</link> (FILE *<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>, int *<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, int *<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>, int *comp)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__image_8c_1acce0a2f278f8e003648f9c76c149e42a">stbi_set_unpremultiply_on_load</link> (int flag_true_if_should_unpremultiply)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_stb__image_8c_1afbb4acd1b28fb72059bed9e6285a2961">stbi_convert_iphone_png_to_rgb</link> (int flag_true_if_should_convert)</para>
+</listitem>
+            <listitem><para>char * <link linkend="_stb__image_8c_1ad58a5fbe941f1cc170dba564f6d2bdc3">stbi_zlib_decode_malloc_guesssize</link> (const char *<link linkend="_structbuffer">buffer</link>, int <link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>, int initial_size, int *outlen)</para>
+</listitem>
+            <listitem><para>char * <link linkend="_stb__image_8c_1a85453cb86c180f1478d4df4913078800">stbi_zlib_decode_malloc_guesssize_headerflag</link> (const char *<link linkend="_structbuffer">buffer</link>, int <link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>, int initial_size, int *outlen, int parse_header)</para>
+</listitem>
+            <listitem><para>char * <link linkend="_stb__image_8c_1a22c3096e4a8005d1376003d62f59351e">stbi_zlib_decode_malloc</link> (const char *<link linkend="_structbuffer">buffer</link>, int <link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>, int *outlen)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__image_8c_1a5bb68fa61fe9bba85a1ed744e33599dc">stbi_zlib_decode_buffer</link> (char *obuffer, int olen, const char *ibuffer, int ilen)</para>
+</listitem>
+            <listitem><para>char * <link linkend="_stb__image_8c_1a9ac0a7b2514e7b6069bcb79ee21ebc06">stbi_zlib_decode_noheader_malloc</link> (const char *<link linkend="_structbuffer">buffer</link>, int <link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>, int *outlen)</para>
+</listitem>
+            <listitem><para>int <link linkend="_stb__image_8c_1af84d32350b9a983570a9b28204ee62f4">stbi_zlib_decode_noheader_buffer</link> (char *obuffer, int olen, const char *ibuffer, int ilen)</para>
+</listitem>
+            <listitem><para>float * <link linkend="_stb__image_8c_1af158585fc62315500a54fc9622339f91">stbi_loadf_main</link> (<link linkend="_structstbi">stbi</link> *<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>, int *<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, int *<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>, int *comp, int req_comp)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_stb__image_8c_1acec14b0fa02632f29efbe91f27ab5281">stbi_png_partial</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_stb__image_8c_1a313e27a7a8b70c45c2a0b450454b880c"/>    <section>
+    <title>CASE<computeroutput>[1/3]</computeroutput></title>
+<indexterm><primary>CASE</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>CASE</secondary></indexterm>
+<para><computeroutput>#define CASE( <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,  <link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)   case <link linkend="_stb__image_8c_1adb2d77dae99f6d33dd9be33305186925">COMBO</link>(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>): for(i=<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>-1; i &gt;= 0; --i, <link linkend="_glad_8h_1a72e0fdf0f845ded60b1fada9e9195cd7">src</link> += <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>, dest += <link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)</computeroutput></para>    </section><anchor xml:id="_stb__image_8c_1ae3be5b5378ea8cef95140897f7270a09"/>    <section>
+    <title>CASE<computeroutput>[2/3]</computeroutput></title>
+<indexterm><primary>CASE</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>CASE</secondary></indexterm>
+<para><computeroutput>#define CASE( <link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</computeroutput></para><emphasis role="strong">Value:</emphasis><programlisting>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>:&#32;&#32;&#32;&#32;&#32;\
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;for&#32;(i=<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>-1;&#32;i&#32;&gt;=&#32;1;&#32;--i,&#32;raw+=img_n,cur+=img_n,prior+=img_n)&#32;\
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(k=0;&#32;k&#32;&lt;&#32;img_n;&#32;++k)
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1ae3be5b5378ea8cef95140897f7270a09"/>    <section>
+    <title>CASE<computeroutput>[3/3]</computeroutput></title>
+<indexterm><primary>CASE</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>CASE</secondary></indexterm>
+<para><computeroutput>#define CASE( <link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)</computeroutput></para><emphasis role="strong">Value:</emphasis><programlisting>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>:&#32;&#32;&#32;&#32;&#32;\
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;for&#32;(i=<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>-1;&#32;i&#32;&gt;=&#32;1;&#32;--i,&#32;cur[img_n]=255,raw+=img_n,cur+=out_n,prior+=out_n)&#32;\
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(k=0;&#32;k&#32;&lt;&#32;img_n;&#32;++k)
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1adb2d77dae99f6d33dd9be33305186925"/>    <section>
+    <title>COMBO</title>
+<indexterm><primary>COMBO</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>COMBO</secondary></indexterm>
+<para><computeroutput>#define COMBO( <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,  <link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)   ((<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)*8+(<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>))</computeroutput></para>    </section><anchor xml:id="_stb__image_8c_1a7bca20397b32c16a40c69145763bb028"/>    <section>
+    <title>div16</title>
+<indexterm><primary>div16</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>div16</secondary></indexterm>
+<para><computeroutput>#define div16( <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((<link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link>) ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) &gt;&gt; 4))</computeroutput></para><para>
+Definition at line 1729 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1ad4d47775eeedafd3d0baf604e928926e"/>    <section>
+    <title>div4</title>
+<indexterm><primary>div4</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>div4</secondary></indexterm>
+<para><computeroutput>#define div4( <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((<link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link>) ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) &gt;&gt; 2))</computeroutput></para><para>
+Definition at line 1680 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a5f0e72d88591aa28aa05cf900c6b2073"/>    <section>
+    <title>DNL</title>
+<indexterm><primary>DNL</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>DNL</secondary></indexterm>
+<para><computeroutput>#define DNL( <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) == 0xdc)</computeroutput></para><para>
+Definition at line 1617 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc"/>    <section>
+    <title>e</title>
+<indexterm><primary>e</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>e</secondary></indexterm>
+<para><computeroutput>#define e( <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,  <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)   e(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)</computeroutput></para><para>
+Definition at line 533 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a7c42f53f185ee25bf95cd27297893c1f"/>    <section>
+    <title>EOI</title>
+<indexterm><primary>EOI</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>EOI</secondary></indexterm>
+<para><computeroutput>#define EOI( <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) == 0xd9)</computeroutput></para><para>
+Definition at line 1619 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a6d4ec1e550488376c800b0fd015b61cb"/>    <section>
+    <title>epf</title>
+<indexterm><primary>epf</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>epf</secondary></indexterm>
+<para><computeroutput>#define epf( <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,  <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)   ((float *) (<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)?NULL:NULL))</computeroutput></para><para>
+Definition at line 536 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a561c4b95e46ce2bbb293646527b41b5c"/>    <section>
+    <title>epuc</title>
+<indexterm><primary>epuc</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>epuc</secondary></indexterm>
+<para><computeroutput>#define epuc( <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,  <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)   ((unsigned char *) (<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)?NULL:NULL))</computeroutput></para><para>
+Definition at line 537 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a9717131be1639d94ecfdc4792f6c2b3e"/>    <section>
+    <title>f2f</title>
+<indexterm><primary>f2f</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>f2f</secondary></indexterm>
+<para><computeroutput>#define f2f( <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   (int) (((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) * 4096 + 0.5))</computeroutput></para><para>
+Definition at line 1227 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1add78822c51f4692289f2ce174bdf82b0"/>    <section>
+    <title>FAST_BITS</title>
+<indexterm><primary>FAST_BITS</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>FAST_BITS</secondary></indexterm>
+<para><computeroutput>#define FAST_BITS   9</computeroutput></para><para>
+Definition at line 974 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a78857167af92ac9e8deb1f7fa7696a60"/>    <section>
+    <title>float2fixed</title>
+<indexterm><primary>float2fixed</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>float2fixed</secondary></indexterm>
+<para><computeroutput>#define float2fixed( <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((int) ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) * 65536 + 0.5))</computeroutput></para><para>
+Definition at line 1766 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1ab57b5a4c33f7a407498f93c6c3eb213b"/>    <section>
+    <title>float2int</title>
+<indexterm><primary>float2int</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>float2int</secondary></indexterm>
+<para><computeroutput>#define float2int( <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((int) (<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>))</computeroutput></para><para>
+Definition at line 919 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a375f901f1eb889847110ecafc6e9ea01"/>    <section>
+    <title>fsh</title>
+<indexterm><primary>fsh</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>fsh</secondary></indexterm>
+<para><computeroutput>#define fsh( <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) &lt;&lt; 12)</computeroutput></para><para>
+Definition at line 1228 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a05382fb60839c0f242ac7f9f24d8adf0"/>    <section>
+    <title>HDR_BUFLEN</title>
+<indexterm><primary>HDR_BUFLEN</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>HDR_BUFLEN</secondary></indexterm>
+<para><computeroutput>#define HDR_BUFLEN   1024</computeroutput></para><para>
+Definition at line 4207 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a53f514da1aad41b798186341dcca9d1e"/>    <section>
+    <title>IDCT_1D</title>
+<indexterm><primary>IDCT_1D</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>IDCT_1D</secondary></indexterm>
+<para><computeroutput>#define IDCT_1D( <link linkend="_glext_8h_1afeed0b7958979c6add0e425baba3b41f">s0</link>,  <link linkend="_glext_8h_1a4ed25fb4dc5bf1a768a78d2e2f0ca003">s1</link>,  s2,  s3,  s4,  s5,  s6,  s7)</computeroutput></para><para>
+Definition at line 1231 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1ab01514a0a369dc40bb53e2855521694a"/>    <section>
+    <title>MARKER_none</title>
+<indexterm><primary>MARKER_none</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>MARKER_none</secondary></indexterm>
+<para><computeroutput>#define MARKER_none   0xff</computeroutput></para><para>
+Definition at line 1345 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1acaff58a0e5160754a6b6afbefff148f9"/>    <section>
+    <title>PNG_TYPE</title>
+<indexterm><primary>PNG_TYPE</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>PNG_TYPE</secondary></indexterm>
+<para><computeroutput>#define PNG_TYPE( <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,  <link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>,  <link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>,  d)   (((<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>) &lt;&lt; 24) + ((<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>) &lt;&lt; 16) + ((<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>) &lt;&lt; 8) + (d))</computeroutput></para><para>
+Definition at line 2418 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a3743ff2eb7667f3a1a2cb411ad8203ec"/>    <section>
+    <title>RESTART</title>
+<indexterm><primary>RESTART</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>RESTART</secondary></indexterm>
+<para><computeroutput>#define RESTART( <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) &gt;= 0xd0 &amp;&amp; (<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) &lt;= 0xd7)</computeroutput></para><para>
+Definition at line 1362 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a9f337463bc4bedeb9bc3e51db0ba0a56"/>    <section>
+    <title>SOF</title>
+<indexterm><primary>SOF</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>SOF</secondary></indexterm>
+<para><computeroutput>#define SOF( <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) == 0xc0 || (<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) == 0xc1)</computeroutput></para><para>
+Definition at line 1620 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a96e825d5dcf3bf3f26b073c77032b96d"/>    <section>
+    <title>SOI</title>
+<indexterm><primary>SOI</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>SOI</secondary></indexterm>
+<para><computeroutput>#define SOI( <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) == 0xd8)</computeroutput></para><para>
+Definition at line 1618 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1acd317d0705293360e6837fc308e2752c"/>    <section>
+    <title>SOS</title>
+<indexterm><primary>SOS</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>SOS</secondary></indexterm>
+<para><computeroutput>#define SOS( <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) == 0xda)</computeroutput></para><para>
+Definition at line 1621 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a065480d61391686cb4ea8a995b94f84a"/>    <section>
+    <title>STBI_INCLUDE_STB_IMAGE_H</title>
+<indexterm><primary>STBI_INCLUDE_STB_IMAGE_H</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>STBI_INCLUDE_STB_IMAGE_H</secondary></indexterm>
+<para><computeroutput>#define STBI_INCLUDE_STB_IMAGE_H</computeroutput></para><para>
+Definition at line 68 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a952111e72ed4262552e413e5938089b8"/>    <section>
+    <title>stbi_inline</title>
+<indexterm><primary>stbi_inline</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_inline</secondary></indexterm>
+<para><computeroutput>#define stbi_inline</computeroutput></para><para>
+Definition at line 359 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a9fbddf96684d05016c5c72fc7d54f076"/>    <section>
+    <title>stbi_lrot</title>
+<indexterm><primary>stbi_lrot</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_lrot</secondary></indexterm>
+<para><computeroutput>#define stbi_lrot( <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,  <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)   (((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) &lt;&lt; (<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)) | ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) &gt;&gt; (32 - (<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>))))</computeroutput></para><para>
+Definition at line 397 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a3970ebac9a09e8116fa5855b334ca6ab"/>    <section>
+    <title>STBI_NOTUSED</title>
+<indexterm><primary>STBI_NOTUSED</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>STBI_NOTUSED</secondary></indexterm>
+<para><computeroutput>#define STBI_NOTUSED( <link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>)   (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)sizeof(<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>)</computeroutput></para><para>
+Definition at line 387 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1aed6cd14a3bf678808c4c179e808866aa"/>    <section>
+    <title>STBI_VERSION</title>
+<indexterm><primary>STBI_VERSION</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>STBI_VERSION</secondary></indexterm>
+<para><computeroutput>#define STBI_VERSION   1</computeroutput></para><para>
+Definition at line 200 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a37d8564ae0a820fb44b1a751c702e33a"/>    <section>
+    <title>ZFAST_BITS</title>
+<indexterm><primary>ZFAST_BITS</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>ZFAST_BITS</secondary></indexterm>
+<para><computeroutput>#define ZFAST_BITS   9</computeroutput></para><para>
+Definition at line 1975 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a7d437afc1bf1ea5a0a2441f3c0aca1fb"/>    <section>
+    <title>ZFAST_MASK</title>
+<indexterm><primary>ZFAST_MASK</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>ZFAST_MASK</secondary></indexterm>
+<para><computeroutput>#define ZFAST_MASK   ((1 &lt;&lt; <link linkend="_stb__image_8c_1a37d8564ae0a820fb44b1a751c702e33a">ZFAST_BITS</link>) - 1)</computeroutput></para><para>
+Definition at line 1976 of file stb_image.c.</para>
+</section>
+</section>
+<section>
+<title>Typedef Documentation</title>
+<anchor xml:id="_stb__image_8c_1ac5c70a4d11d61d7fcc82c6269be95127"/>    <section>
+    <title>resample_row_func</title>
+<indexterm><primary>resample_row_func</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>resample_row_func</secondary></indexterm>
+<para><computeroutput>typedef <link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link>*(* resample_row_func) (<link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link> *out, <link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link> *in0, <link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link> *in1, int <link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>, int hs)</computeroutput></para><para>
+Definition at line 1677 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1ae4cbd54705261d6f2d44b97ca536f14f"/>    <section>
+    <title>stbi__int16</title>
+<indexterm><primary>stbi__int16</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi__int16</secondary></indexterm>
+<para><computeroutput>typedef <link linkend="_stdint_8h_1a269259c924dce846340ddbb810db2e3c">int16_t</link> <link linkend="_stb__image_8c_1ae4cbd54705261d6f2d44b97ca536f14f">stbi__int16</link></computeroutput></para><para>
+Definition at line 376 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1aa22ffdc0f962b06610737eaab3ac6b63"/>    <section>
+    <title>stbi__int32</title>
+<indexterm><primary>stbi__int32</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi__int32</secondary></indexterm>
+<para><computeroutput>typedef <link linkend="_stdint_8h_1ab1967d8591af1a4e48c37fd2b0f184d0">int32_t</link> <link linkend="_stb__image_8c_1aa22ffdc0f962b06610737eaab3ac6b63">stbi__int32</link></computeroutput></para><para>
+Definition at line 378 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a38c41d822de912df31fb56df26a9cb8c"/>    <section>
+    <title>stbi__uint16</title>
+<indexterm><primary>stbi__uint16</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi__uint16</secondary></indexterm>
+<para><computeroutput>typedef <link linkend="_stdint_8h_1a273cf69d639a59973b6019625df33e30">uint16_t</link> <link linkend="_stb__image_8c_1a38c41d822de912df31fb56df26a9cb8c">stbi__uint16</link></computeroutput></para><para>
+Definition at line 375 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a9f4c7fe585bda3cc749e576bcf341d7e"/>    <section>
+    <title>stbi__uint32</title>
+<indexterm><primary>stbi__uint32</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi__uint32</secondary></indexterm>
+<para><computeroutput>typedef <link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link> <link linkend="_stb__image_8c_1a9f4c7fe585bda3cc749e576bcf341d7e">stbi__uint32</link></computeroutput></para><para>
+Definition at line 377 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761"/>    <section>
+    <title>stbi__uint8</title>
+<indexterm><primary>stbi__uint8</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi__uint8</secondary></indexterm>
+<para><computeroutput>typedef <link linkend="_stdint_8h_1aba7bc1797add20fe3efdf37ced1182c5">uint8_t</link> <link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link></computeroutput></para><para>
+Definition at line 374 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1afac632f65d3daa108ef4f2dd56fb5be7"/>    <section>
+    <title>stbi_dequantize_t</title>
+<indexterm><primary>stbi_dequantize_t</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_dequantize_t</secondary></indexterm>
+<para><computeroutput>typedef <link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link> <link linkend="_stb__image_8c_1afac632f65d3daa108ef4f2dd56fb5be7">stbi_dequantize_t</link></computeroutput></para><para>
+Definition at line 1271 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a594005b9b173118d19cac788ada77df9"/>    <section>
+    <title>stbi_gif</title>
+<indexterm><primary>stbi_gif</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_gif</secondary></indexterm>
+<para><computeroutput>typedef struct <link linkend="_structstbi__gif__struct">stbi_gif_struct</link> <link linkend="_stb__image_8c_1a594005b9b173118d19cac788ada77df9">stbi_gif</link></computeroutput></para>    </section><anchor xml:id="_stb__image_8c_1a5d3b24598f39d74a5d892af054523bfa"/>    <section>
+    <title>stbi_gif_lzw</title>
+<indexterm><primary>stbi_gif_lzw</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_gif_lzw</secondary></indexterm>
+<para><computeroutput>typedef struct <link linkend="_structstbi__gif__lzw__struct">stbi_gif_lzw_struct</link> <link linkend="_stb__image_8c_1a5d3b24598f39d74a5d892af054523bfa">stbi_gif_lzw</link></computeroutput></para>    </section><anchor xml:id="_stb__image_8c_1a28eb51a1512ce382ee50f20e1d04d50d"/>    <section>
+    <title>stbi_uc</title>
+<indexterm><primary>stbi_uc</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_uc</secondary></indexterm>
+<para><computeroutput>typedef unsigned char <link linkend="_stb__image_8c_1a28eb51a1512ce382ee50f20e1d04d50d">stbi_uc</link></computeroutput></para><para>
+Definition at line 212 of file stb_image.c.</para>
+    </section><anchor xml:id="_stb__image_8c_1a88d07433d887bfad2b4b8a302f47f240"/>    <section>
+    <title>validate_uint32</title>
+<indexterm><primary>validate_uint32</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>validate_uint32</secondary></indexterm>
+<para><computeroutput>typedef unsigned char validate_uint32[sizeof(<link linkend="_stb__image_8c_1a9f4c7fe585bda3cc749e576bcf341d7e">stbi__uint32</link>)==4 ? 1 :-1]</computeroutput></para><para>
+Definition at line 382 of file stb_image.c.</para>
+</section>
+</section>
+<section>
+<title>Enumeration Type Documentation</title>
+<anchor xml:id="_stb__image_8c_1ae6dceca96ec2c7a1b4aa211264a87ef6"/>    <section>
+    <title>anonymous enum</title>
+<para><computeroutput>anonymous enum</computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>STBI_default</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>STBI_default</secondary></indexterm>
+<anchor xml:id="_stb__image_8c_1ae6dceca96ec2c7a1b4aa211264a87ef6a0177ac2c5002f4f251bb766d41752029"/>STBI_default</entry><entry></entry></row><row><entry><indexterm><primary>STBI_grey</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>STBI_grey</secondary></indexterm>
+<anchor xml:id="_stb__image_8c_1ae6dceca96ec2c7a1b4aa211264a87ef6ad1eb95ca1fa7706bf732bf35a0ed40aa"/>STBI_grey</entry><entry></entry></row><row><entry><indexterm><primary>STBI_grey_alpha</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>STBI_grey_alpha</secondary></indexterm>
+<anchor xml:id="_stb__image_8c_1ae6dceca96ec2c7a1b4aa211264a87ef6af5829d16d4cca6077465c5abd346e2f8"/>STBI_grey_alpha</entry><entry></entry></row><row><entry><indexterm><primary>STBI_rgb</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>STBI_rgb</secondary></indexterm>
+<anchor xml:id="_stb__image_8c_1ae6dceca96ec2c7a1b4aa211264a87ef6aa59123e5d0af25f9b1539f5cf1facddf"/>STBI_rgb</entry><entry></entry></row><row><entry><indexterm><primary>STBI_rgb_alpha</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>STBI_rgb_alpha</secondary></indexterm>
+<anchor xml:id="_stb__image_8c_1ae6dceca96ec2c7a1b4aa211264a87ef6aa7b1af0c9f0310c3ada2aa29a32de293"/>STBI_rgb_alpha</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 202 of file stb_image.c.</para>
+<programlisting>203 {
+204 &#32;&#32;&#32;<link linkend="_stb__image_8c_1ae6dceca96ec2c7a1b4aa211264a87ef6a0177ac2c5002f4f251bb766d41752029">STBI_default</link>&#32;=&#32;0,&#32;<emphasis role="comment">//&#32;only&#32;used&#32;for&#32;req_comp</emphasis>
+205 
+206 &#32;&#32;&#32;<link linkend="_stb__image_8c_1ae6dceca96ec2c7a1b4aa211264a87ef6ad1eb95ca1fa7706bf732bf35a0ed40aa">STBI_grey</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;1,
+207 &#32;&#32;&#32;<link linkend="_stb__image_8c_1ae6dceca96ec2c7a1b4aa211264a87ef6af5829d16d4cca6077465c5abd346e2f8">STBI_grey_alpha</link>&#32;=&#32;2,
+208 &#32;&#32;&#32;<link linkend="_stb__image_8c_1ae6dceca96ec2c7a1b4aa211264a87ef6aa59123e5d0af25f9b1539f5cf1facddf">STBI_rgb</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;3,
+209 &#32;&#32;&#32;<link linkend="_stb__image_8c_1ae6dceca96ec2c7a1b4aa211264a87ef6aa7b1af0c9f0310c3ada2aa29a32de293">STBI_rgb_alpha</link>&#32;&#32;=&#32;4
+210 };
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a56a0f36da7f9eaaf54bd05cc2bf49173"/>    <section>
+    <title>anonymous enum</title>
+<para><computeroutput>anonymous enum</computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>SCAN_load</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>SCAN_load</secondary></indexterm>
+<anchor xml:id="_stb__image_8c_1a56a0f36da7f9eaaf54bd05cc2bf49173a85a0b66d6fdde378fa20b491fdf24f8a"/>SCAN_load</entry><entry></entry></row><row><entry><indexterm><primary>SCAN_type</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>SCAN_type</secondary></indexterm>
+<anchor xml:id="_stb__image_8c_1a56a0f36da7f9eaaf54bd05cc2bf49173ab156e11a1618eb1afb3e1482ff29675e"/>SCAN_type</entry><entry></entry></row><row><entry><indexterm><primary>SCAN_header</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>SCAN_header</secondary></indexterm>
+<anchor xml:id="_stb__image_8c_1a56a0f36da7f9eaaf54bd05cc2bf49173a833170a40f969d501a1697ee49a48bfb"/>SCAN_header</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 729 of file stb_image.c.</para>
+<programlisting>730 {
+731 &#32;&#32;&#32;<link linkend="_stb__image_8c_1a56a0f36da7f9eaaf54bd05cc2bf49173a85a0b66d6fdde378fa20b491fdf24f8a">SCAN_load</link>=0,
+732 &#32;&#32;&#32;<link linkend="_stb__image_8c_1a56a0f36da7f9eaaf54bd05cc2bf49173ab156e11a1618eb1afb3e1482ff29675e">SCAN_type</link>,
+733 &#32;&#32;&#32;<link linkend="_stb__image_8c_1a56a0f36da7f9eaaf54bd05cc2bf49173a833170a40f969d501a1697ee49a48bfb">SCAN_header</link>
+734 };
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012a"/>    <section>
+    <title>anonymous enum</title>
+<para><computeroutput>anonymous enum</computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>F_none</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>F_none</secondary></indexterm>
+<anchor xml:id="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aa16f71f569e3f9321da21f1249e2773fd"/>F_none</entry><entry></entry></row><row><entry><indexterm><primary>F_sub</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>F_sub</secondary></indexterm>
+<anchor xml:id="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aafc14a072a264bba5ec906f64af96faeb"/>F_sub</entry><entry></entry></row><row><entry><indexterm><primary>F_up</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>F_up</secondary></indexterm>
+<anchor xml:id="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aaac432bb3d57c85f1f2c82019426cab42"/>F_up</entry><entry></entry></row><row><entry><indexterm><primary>F_avg</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>F_avg</secondary></indexterm>
+<anchor xml:id="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aa4f647a9352589e534a0d8a513d67d28e"/>F_avg</entry><entry></entry></row><row><entry><indexterm><primary>F_paeth</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>F_paeth</secondary></indexterm>
+<anchor xml:id="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aa048f016fa714cc5e0f6c41e35d10fa6d"/>F_paeth</entry><entry></entry></row><row><entry><indexterm><primary>F_avg_first</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>F_avg_first</secondary></indexterm>
+<anchor xml:id="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aa4de5672ef1ab76c920893203b67a6246"/>F_avg_first</entry><entry></entry></row><row><entry><indexterm><primary>F_paeth_first</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>F_paeth_first</secondary></indexterm>
+<anchor xml:id="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aa7310c91cd24ab3f794937b630faf4afa"/>F_paeth_first</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 2444 of file stb_image.c.</para>
+<programlisting>2444 &#32;&#32;&#32;&#32;&#32;{
+2445 &#32;&#32;&#32;<link linkend="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aa16f71f569e3f9321da21f1249e2773fd">F_none</link>=0,&#32;<link linkend="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aafc14a072a264bba5ec906f64af96faeb">F_sub</link>=1,&#32;<link linkend="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aaac432bb3d57c85f1f2c82019426cab42">F_up</link>=2,&#32;<link linkend="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aa4f647a9352589e534a0d8a513d67d28e">F_avg</link>=3,&#32;<link linkend="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aa048f016fa714cc5e0f6c41e35d10fa6d">F_paeth</link>=4,
+2446 &#32;&#32;&#32;<link linkend="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aa4de5672ef1ab76c920893203b67a6246">F_avg_first</link>,&#32;<link linkend="_stb__image_8c_1aa156d1cebb38c8a65846c4d9c006012aa7310c91cd24ab3f794937b630faf4afa">F_paeth_first</link>
+2447 };
+</programlisting></section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_stb__image_8c_1afbb4acd1b28fb72059bed9e6285a2961"/>    <section>
+    <title>stbi_convert_iphone_png_to_rgb()</title>
+<indexterm><primary>stbi_convert_iphone_png_to_rgb</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_convert_iphone_png_to_rgb</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbi_convert_iphone_png_to_rgb (int flag_true_if_should_convert)</computeroutput></para><para>
+Definition at line 2653 of file stb_image.c.</para>
+<programlisting>2654 {
+2655 &#32;&#32;&#32;stbi_de_iphone_flag&#32;=&#32;flag_true_if_should_convert;
+2656 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a69d3ed7ef9b520b8a42f75ef479e3ede"/>    <section>
+    <title>stbi_failure_reason()</title>
+<indexterm><primary>stbi_failure_reason</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_failure_reason</secondary></indexterm>
+<para><computeroutput>const char * stbi_failure_reason (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 513 of file stb_image.c.</para>
+<programlisting>514 {
+515 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;failure_reason;
+516 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a981084e66668ed998832b84dad50bed7"/>    <section>
+    <title>stbi_hdr_to_ldr_gamma()</title>
+<indexterm><primary>stbi_hdr_to_ldr_gamma</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_hdr_to_ldr_gamma</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbi_hdr_to_ldr_gamma (float gamma)</computeroutput></para><para>
+Definition at line 716 of file stb_image.c.</para>
+<programlisting>716 {&#32;h2l_gamma_i&#32;=&#32;1/gamma;&#32;}
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a269aa666e5df1051c04f28479add324e"/>    <section>
+    <title>stbi_hdr_to_ldr_scale()</title>
+<indexterm><primary>stbi_hdr_to_ldr_scale</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_hdr_to_ldr_scale</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbi_hdr_to_ldr_scale (float scale)</computeroutput></para><para>
+Definition at line 717 of file stb_image.c.</para>
+<programlisting>717 {&#32;h2l_scale_i&#32;=&#32;1/<link linkend="_glext_8h_1a281421b881aa7a1266842b73a3bc7655">scale</link>;&#32;}
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1ad47e820c6695b0cf5cfb63a29f4452d0"/>    <section>
+    <title>stbi_image_free()</title>
+<indexterm><primary>stbi_image_free</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_image_free</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbi_image_free (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * retval_from_stbi_load)</computeroutput></para><para>
+Definition at line 539 of file stb_image.c.</para>
+<programlisting>540 {
+541 &#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(retval_from_stbi_load);
+542 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1ac94b9565008cb24823826506f9e97def"/>    <section>
+    <title>stbi_info()</title>
+<indexterm><primary>stbi_info</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_info</secondary></indexterm>
+<para><computeroutput>int stbi_info (char const * filename, int * x, int * y, int * comp)</computeroutput></para><para>
+Definition at line 4542 of file stb_image.c.</para>
+<programlisting>4543 {
+4544 &#32;&#32;&#32;&#32;FILE&#32;*<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;=&#32;fopen(filename,&#32;<emphasis role="stringliteral">&quot;rb&quot;</emphasis>);
+4545 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1a321ff419cd5252e54cf95e64dc6687ee">result</link>;
+4546 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>(<emphasis role="stringliteral">&quot;can&apos;t&#32;fopen&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;Unable&#32;to&#32;open&#32;file&quot;</emphasis>);
+4547 &#32;&#32;&#32;&#32;<link linkend="_structresult">result</link>&#32;=&#32;<link linkend="_stb__image_8c_1a5560f2807ab53f12ab062235b14f3a3c">stbi_info_from_file</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,&#32;comp);
+4548 &#32;&#32;&#32;&#32;fclose(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+4549 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glext_8h_1a321ff419cd5252e54cf95e64dc6687ee">result</link>;
+4550 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1adda3645c29ab5a4cd7762e758687de06"/>    <section>
+    <title>stbi_info_from_callbacks()</title>
+<indexterm><primary>stbi_info_from_callbacks</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_info_from_callbacks</secondary></indexterm>
+<para><computeroutput>int stbi_info_from_callbacks (<link linkend="_structstbi__io__callbacks">stbi_io_callbacks</link> const * clbk, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * user, int * x, int * y, int * comp)</computeroutput></para><para>
+Definition at line 4571 of file stb_image.c.</para>
+<programlisting>4572 {
+4573 &#32;&#32;&#32;<link linkend="_structstbi">stbi</link>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>;
+4574 &#32;&#32;&#32;start_callbacks(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,&#32;(<link linkend="_structstbi__io__callbacks">stbi_io_callbacks</link>&#32;*)&#32;<link linkend="_glext_8h_1a1f2d7f8147412c43ba2303a56f97ee73">c</link>,&#32;user);
+4575 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;stbi_info_main(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,comp);
+4576 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a5560f2807ab53f12ab062235b14f3a3c"/>    <section>
+    <title>stbi_info_from_file()</title>
+<indexterm><primary>stbi_info_from_file</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_info_from_file</secondary></indexterm>
+<para><computeroutput>int stbi_info_from_file (FILE * f, int * x, int * y, int * comp)</computeroutput></para><para>
+Definition at line 4552 of file stb_image.c.</para>
+<programlisting>4553 {
+4554 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>;
+4555 &#32;&#32;&#32;<link linkend="_structstbi">stbi</link>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>;
+4556 &#32;&#32;&#32;<emphasis role="keywordtype">long</emphasis>&#32;pos&#32;=&#32;ftell(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+4557 &#32;&#32;&#32;start_file(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+4558 &#32;&#32;&#32;<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>&#32;=&#32;stbi_info_main(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,comp);
+4559 &#32;&#32;&#32;fseek(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,pos,SEEK_SET);
+4560 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>;
+4561 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a8a876cda0f7ca91dcb0acb0206799ad7"/>    <section>
+    <title>stbi_info_from_memory()</title>
+<indexterm><primary>stbi_info_from_memory</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_info_from_memory</secondary></indexterm>
+<para><computeroutput>int stbi_info_from_memory (<link linkend="_stb__image_8c_1a28eb51a1512ce382ee50f20e1d04d50d">stbi_uc</link> const * buffer, int len, int * x, int * y, int * comp)</computeroutput></para><para>
+Definition at line 4564 of file stb_image.c.</para>
+<programlisting>4565 {
+4566 &#32;&#32;&#32;<link linkend="_structstbi">stbi</link>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>;
+4567 &#32;&#32;&#32;start_mem(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_structbuffer">buffer</link>,<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>);
+4568 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;stbi_info_main(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,comp);
+4569 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a828738812bd834ea9af464ce9826008a"/>    <section>
+    <title>stbi_is_hdr()</title>
+<indexterm><primary>stbi_is_hdr</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_is_hdr</secondary></indexterm>
+<para><computeroutput>int stbi_is_hdr (char const * filename)</computeroutput></para><para>
+Definition at line 678 of file stb_image.c.</para>
+<programlisting>679 {
+680 &#32;&#32;&#32;FILE&#32;*<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;=&#32;fopen(filename,&#32;<emphasis role="stringliteral">&quot;rb&quot;</emphasis>);
+681 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_structresult">result</link>=0;
+682 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)&#32;{
+683 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structresult">result</link>&#32;=&#32;<link linkend="_stb__image_8c_1a6b45e9af5f0b0f76cc33bcb5b08bb7d8">stbi_is_hdr_from_file</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+684 &#32;&#32;&#32;&#32;&#32;&#32;fclose(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+685 &#32;&#32;&#32;}
+686 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glext_8h_1a321ff419cd5252e54cf95e64dc6687ee">result</link>;
+687 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a894f9f42a78d83fa913bfa6190b5fb8d"/>    <section>
+    <title>stbi_is_hdr_from_callbacks()</title>
+<indexterm><primary>stbi_is_hdr_from_callbacks</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_is_hdr_from_callbacks</secondary></indexterm>
+<para><computeroutput>int stbi_is_hdr_from_callbacks (<link linkend="_structstbi__io__callbacks">stbi_io_callbacks</link> const * clbk, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * user)</computeroutput></para><para>
+Definition at line 701 of file stb_image.c.</para>
+<programlisting>702 {
+703 <emphasis role="preprocessor">&#32;&#32;&#32;#ifndef&#32;STBI_NO_HDR</emphasis>
+704 &#32;&#32;&#32;<link linkend="_structstbi">stbi</link>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>;
+705 &#32;&#32;&#32;start_callbacks(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,&#32;(<link linkend="_structstbi__io__callbacks">stbi_io_callbacks</link>&#32;*)&#32;clbk,&#32;user);
+706 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;stbi_hdr_test(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>);
+707 <emphasis role="preprocessor">&#32;&#32;&#32;#else</emphasis>
+708 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+709 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+710 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a6b45e9af5f0b0f76cc33bcb5b08bb7d8"/>    <section>
+    <title>stbi_is_hdr_from_file()</title>
+<indexterm><primary>stbi_is_hdr_from_file</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_is_hdr_from_file</secondary></indexterm>
+<para><computeroutput>int stbi_is_hdr_from_file (FILE * f)</computeroutput></para><para>
+Definition at line 689 of file stb_image.c.</para>
+<programlisting>690 {
+691 <emphasis role="preprocessor">&#32;&#32;&#32;#ifndef&#32;STBI_NO_HDR</emphasis>
+692 &#32;&#32;&#32;<link linkend="_structstbi">stbi</link>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>;
+693 &#32;&#32;&#32;start_file(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+694 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;stbi_hdr_test(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>);
+695 <emphasis role="preprocessor">&#32;&#32;&#32;#else</emphasis>
+696 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+697 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+698 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1acd0819e90be8de94e8841d7140d4262c"/>    <section>
+    <title>stbi_is_hdr_from_memory()</title>
+<indexterm><primary>stbi_is_hdr_from_memory</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_is_hdr_from_memory</secondary></indexterm>
+<para><computeroutput>int stbi_is_hdr_from_memory (<link linkend="_stb__image_8c_1a28eb51a1512ce382ee50f20e1d04d50d">stbi_uc</link> const * buffer, int len)</computeroutput></para><para>
+Definition at line 664 of file stb_image.c.</para>
+<programlisting>665 {
+666 <emphasis role="preprocessor">&#32;&#32;&#32;#ifndef&#32;STBI_NO_HDR</emphasis>
+667 &#32;&#32;&#32;<link linkend="_structstbi">stbi</link>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>;
+668 &#32;&#32;&#32;start_mem(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_structbuffer">buffer</link>,<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>);
+669 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;stbi_hdr_test(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>);
+670 <emphasis role="preprocessor">&#32;&#32;&#32;#else</emphasis>
+671 &#32;&#32;&#32;<link linkend="_stb__image_8c_1a3970ebac9a09e8116fa5855b334ca6ab">STBI_NOTUSED</link>(<link linkend="_structbuffer">buffer</link>);
+672 &#32;&#32;&#32;<link linkend="_stb__image_8c_1a3970ebac9a09e8116fa5855b334ca6ab">STBI_NOTUSED</link>(<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>);
+673 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+674 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+675 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a392b50c731d9969456006783e2a6f012"/>    <section>
+    <title>stbi_ldr_to_hdr_gamma()</title>
+<indexterm><primary>stbi_ldr_to_hdr_gamma</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_ldr_to_hdr_gamma</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbi_ldr_to_hdr_gamma (float gamma)</computeroutput></para><para>
+Definition at line 719 of file stb_image.c.</para>
+<programlisting>719 {&#32;l2h_gamma&#32;=&#32;gamma;&#32;}
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a1457f71183493d5a6100ee6a9785e744"/>    <section>
+    <title>stbi_ldr_to_hdr_scale()</title>
+<indexterm><primary>stbi_ldr_to_hdr_scale</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_ldr_to_hdr_scale</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbi_ldr_to_hdr_scale (float scale)</computeroutput></para><para>
+Definition at line 720 of file stb_image.c.</para>
+<programlisting>720 {&#32;l2h_scale&#32;=&#32;<link linkend="_glext_8h_1a281421b881aa7a1266842b73a3bc7655">scale</link>;&#32;}
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a6e3bfbdf11886669cd2153c1136f29db"/>    <section>
+    <title>stbi_load()</title>
+<indexterm><primary>stbi_load</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_load</secondary></indexterm>
+<para><computeroutput>unsigned char * stbi_load (char const * filename, int * x, int * y, int * comp, int req_comp)</computeroutput></para><para>
+Definition at line 572 of file stb_image.c.</para>
+<programlisting>573 {
+574 &#32;&#32;&#32;FILE&#32;*<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;=&#32;fopen(filename,&#32;<emphasis role="stringliteral">&quot;rb&quot;</emphasis>);
+575 &#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;*<link linkend="_glext_8h_1a321ff419cd5252e54cf95e64dc6687ee">result</link>;
+576 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_stb__image_8c_1a561c4b95e46ce2bbb293646527b41b5c">epuc</link>(<emphasis role="stringliteral">&quot;can&apos;t&#32;fopen&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;Unable&#32;to&#32;open&#32;file&quot;</emphasis>);
+577 &#32;&#32;&#32;<link linkend="_structresult">result</link>&#32;=&#32;<link linkend="_stb__image_8c_1a1425e85e77b6ae1e630d9f5c6a764a3a">stbi_load_from_file</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,comp,req_comp);
+578 &#32;&#32;&#32;fclose(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+579 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glext_8h_1a321ff419cd5252e54cf95e64dc6687ee">result</link>;
+580 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a6096435d90834b7645f25ebd727928ae"/>    <section>
+    <title>stbi_load_from_callbacks()</title>
+<indexterm><primary>stbi_load_from_callbacks</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_load_from_callbacks</secondary></indexterm>
+<para><computeroutput>unsigned char * stbi_load_from_callbacks (<link linkend="_structstbi__io__callbacks">stbi_io_callbacks</link> const * clbk, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * user, int * x, int * y, int * comp, int req_comp)</computeroutput></para><para>
+Definition at line 603 of file stb_image.c.</para>
+<programlisting>604 {
+605 &#32;&#32;&#32;<link linkend="_structstbi">stbi</link>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>;
+606 &#32;&#32;&#32;start_callbacks(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,&#32;(<link linkend="_structstbi__io__callbacks">stbi_io_callbacks</link>&#32;*)&#32;clbk,&#32;user);
+607 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;stbi_load_main(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,comp,req_comp);
+608 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a1425e85e77b6ae1e630d9f5c6a764a3a"/>    <section>
+    <title>stbi_load_from_file()</title>
+<indexterm><primary>stbi_load_from_file</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_load_from_file</secondary></indexterm>
+<para><computeroutput>unsigned char * stbi_load_from_file (FILE * f, int * x, int * y, int * comp, int req_comp)</computeroutput></para><para>
+Definition at line 582 of file stb_image.c.</para>
+<programlisting>583 {
+584 &#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;*<link linkend="_glext_8h_1a321ff419cd5252e54cf95e64dc6687ee">result</link>;
+585 &#32;&#32;&#32;<link linkend="_structstbi">stbi</link>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>;
+586 &#32;&#32;&#32;start_file(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+587 &#32;&#32;&#32;<link linkend="_structresult">result</link>&#32;=&#32;stbi_load_main(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,comp,req_comp);
+588 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_structresult">result</link>)&#32;{
+589 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;need&#32;to&#32;&apos;unget&apos;&#32;all&#32;the&#32;characters&#32;in&#32;the&#32;IO&#32;buffer</emphasis>
+590 &#32;&#32;&#32;&#32;&#32;&#32;fseek(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;-&#32;(<emphasis role="keywordtype">int</emphasis>)&#32;(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>.img_buffer_end&#32;-&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>.img_buffer),&#32;SEEK_CUR);
+591 &#32;&#32;&#32;}
+592 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glext_8h_1a321ff419cd5252e54cf95e64dc6687ee">result</link>;
+593 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a2ed09e0346d59f575ebb17e1ed91cd6b"/>    <section>
+    <title>stbi_load_from_memory()</title>
+<indexterm><primary>stbi_load_from_memory</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_load_from_memory</secondary></indexterm>
+<para><computeroutput>unsigned char * stbi_load_from_memory (<link linkend="_stb__image_8c_1a28eb51a1512ce382ee50f20e1d04d50d">stbi_uc</link> const * buffer, int len, int * x, int * y, int * comp, int req_comp)</computeroutput></para><para>
+
+<para>STBI_NO_STDIO. </para>
+</para>
+<para>
+Definition at line 596 of file stb_image.c.</para>
+<programlisting>597 {
+598 &#32;&#32;&#32;<link linkend="_structstbi">stbi</link>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>;
+599 &#32;&#32;&#32;start_mem(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_structbuffer">buffer</link>,<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>);
+600 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;stbi_load_main(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,comp,req_comp);
+601 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a143179f0a8808a0de4eba5cb5da1ec56"/>    <section>
+    <title>stbi_loadf()</title>
+<indexterm><primary>stbi_loadf</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_loadf</secondary></indexterm>
+<para><computeroutput>float * stbi_loadf (char const * filename, int * x, int * y, int * comp, int req_comp)</computeroutput></para><para>
+Definition at line 640 of file stb_image.c.</para>
+<programlisting>641 {
+642 &#32;&#32;&#32;FILE&#32;*<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;=&#32;fopen(filename,&#32;<emphasis role="stringliteral">&quot;rb&quot;</emphasis>);
+643 &#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;*<link linkend="_glext_8h_1a321ff419cd5252e54cf95e64dc6687ee">result</link>;
+644 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_stb__image_8c_1a6d4ec1e550488376c800b0fd015b61cb">epf</link>(<emphasis role="stringliteral">&quot;can&apos;t&#32;fopen&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;Unable&#32;to&#32;open&#32;file&quot;</emphasis>);
+645 &#32;&#32;&#32;<link linkend="_structresult">result</link>&#32;=&#32;<link linkend="_stb__image_8c_1a1aeca869b8b68db1a81d6c8a5cc77e2d">stbi_loadf_from_file</link>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,comp,req_comp);
+646 &#32;&#32;&#32;fclose(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+647 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glext_8h_1a321ff419cd5252e54cf95e64dc6687ee">result</link>;
+648 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1ad9042d60dee30e533f742067abe29a79"/>    <section>
+    <title>stbi_loadf_from_callbacks()</title>
+<indexterm><primary>stbi_loadf_from_callbacks</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_loadf_from_callbacks</secondary></indexterm>
+<para><computeroutput>float * stbi_loadf_from_callbacks (<link linkend="_structstbi__io__callbacks">stbi_io_callbacks</link> const * clbk, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * user, int * x, int * y, int * comp, int req_comp)</computeroutput></para><para>
+Definition at line 632 of file stb_image.c.</para>
+<programlisting>633 {
+634 &#32;&#32;&#32;<link linkend="_structstbi">stbi</link>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>;
+635 &#32;&#32;&#32;start_callbacks(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,&#32;(<link linkend="_structstbi__io__callbacks">stbi_io_callbacks</link>&#32;*)&#32;clbk,&#32;user);
+636 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_stb__image_8c_1af158585fc62315500a54fc9622339f91">stbi_loadf_main</link>(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,comp,req_comp);
+637 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a1aeca869b8b68db1a81d6c8a5cc77e2d"/>    <section>
+    <title>stbi_loadf_from_file()</title>
+<indexterm><primary>stbi_loadf_from_file</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_loadf_from_file</secondary></indexterm>
+<para><computeroutput>float * stbi_loadf_from_file (FILE * f, int * x, int * y, int * comp, int req_comp)</computeroutput></para><para>
+Definition at line 650 of file stb_image.c.</para>
+<programlisting>651 {
+652 &#32;&#32;&#32;<link linkend="_structstbi">stbi</link>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>;
+653 &#32;&#32;&#32;start_file(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+654 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_stb__image_8c_1af158585fc62315500a54fc9622339f91">stbi_loadf_main</link>(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,comp,req_comp);
+655 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1aefa0aac08f604862a1bb8d8401602eca"/>    <section>
+    <title>stbi_loadf_from_memory()</title>
+<indexterm><primary>stbi_loadf_from_memory</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_loadf_from_memory</secondary></indexterm>
+<para><computeroutput>float * stbi_loadf_from_memory (<link linkend="_stb__image_8c_1a28eb51a1512ce382ee50f20e1d04d50d">stbi_uc</link> const * buffer, int len, int * x, int * y, int * comp, int req_comp)</computeroutput></para><para>
+Definition at line 625 of file stb_image.c.</para>
+<programlisting>626 {
+627 &#32;&#32;&#32;<link linkend="_structstbi">stbi</link>&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>;
+628 &#32;&#32;&#32;start_mem(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_structbuffer">buffer</link>,<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>);
+629 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_stb__image_8c_1af158585fc62315500a54fc9622339f91">stbi_loadf_main</link>(&amp;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,comp,req_comp);
+630 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1af158585fc62315500a54fc9622339f91"/>    <section>
+    <title>stbi_loadf_main()</title>
+<indexterm><primary>stbi_loadf_main</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_loadf_main</secondary></indexterm>
+<para><computeroutput>float* stbi_loadf_main (<link linkend="_structstbi">stbi</link> * s, int * x, int * y, int * comp, int req_comp)</computeroutput></para><para>
+Definition at line 612 of file stb_image.c.</para>
+<programlisting>613 {
+614 &#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;*<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>;
+615 <emphasis role="preprocessor">&#32;&#32;&#32;#ifndef&#32;STBI_NO_HDR</emphasis>
+616 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(stbi_hdr_test(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>))
+617 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;stbi_hdr_load(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,comp,req_comp);
+618 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+619 &#32;&#32;&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>&#32;=&#32;stbi_load_main(<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>,&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,&#32;comp,&#32;req_comp);
+620 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>)
+621 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;ldr_to_hdr(<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>,&#32;*<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,&#32;*<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,&#32;req_comp&#32;?&#32;req_comp&#32;:&#32;*comp);
+622 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_stb__image_8c_1a6d4ec1e550488376c800b0fd015b61cb">epf</link>(<emphasis role="stringliteral">&quot;unknown&#32;image&#32;type&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;Image&#32;not&#32;of&#32;any&#32;known&#32;type,&#32;or&#32;corrupt&quot;</emphasis>);
+623 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1acce0a2f278f8e003648f9c76c149e42a"/>    <section>
+    <title>stbi_set_unpremultiply_on_load()</title>
+<indexterm><primary>stbi_set_unpremultiply_on_load</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_set_unpremultiply_on_load</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> stbi_set_unpremultiply_on_load (int flag_true_if_should_unpremultiply)</computeroutput></para><para>
+Definition at line 2649 of file stb_image.c.</para>
+<programlisting>2650 {
+2651 &#32;&#32;&#32;stbi_unpremultiply_on_load&#32;=&#32;flag_true_if_should_unpremultiply;
+2652 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a5bb68fa61fe9bba85a1ed744e33599dc"/>    <section>
+    <title>stbi_zlib_decode_buffer()</title>
+<indexterm><primary>stbi_zlib_decode_buffer</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_zlib_decode_buffer</secondary></indexterm>
+<para><computeroutput>int stbi_zlib_decode_buffer (char * obuffer, int olen, const char * ibuffer, int ilen)</computeroutput></para><para>
+Definition at line 2363 of file stb_image.c.</para>
+<programlisting>2364 {
+2365 &#32;&#32;&#32;<link linkend="_structzbuf">zbuf</link>&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>;
+2366 &#32;&#32;&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zbuffer&#32;=&#32;(<link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link>&#32;*)&#32;ibuffer;
+2367 &#32;&#32;&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zbuffer_end&#32;=&#32;(<link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link>&#32;*)&#32;ibuffer&#32;+&#32;ilen;
+2368 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(do_zlib(&amp;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,&#32;obuffer,&#32;olen,&#32;0,&#32;1))
+2369 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>)&#32;(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zout&#32;-&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zout_start);
+2370 &#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+2371 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;-1;
+2372 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a22c3096e4a8005d1376003d62f59351e"/>    <section>
+    <title>stbi_zlib_decode_malloc()</title>
+<indexterm><primary>stbi_zlib_decode_malloc</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_zlib_decode_malloc</secondary></indexterm>
+<para><computeroutput>char * stbi_zlib_decode_malloc (const char * buffer, int len, int * outlen)</computeroutput></para><para>
+Definition at line 2342 of file stb_image.c.</para>
+<programlisting>2343 {
+2344 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_stb__image_8c_1ad58a5fbe941f1cc170dba564f6d2bdc3">stbi_zlib_decode_malloc_guesssize</link>(<link linkend="_structbuffer">buffer</link>,&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>,&#32;16384,&#32;outlen);
+2345 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1ad58a5fbe941f1cc170dba564f6d2bdc3"/>    <section>
+    <title>stbi_zlib_decode_malloc_guesssize()</title>
+<indexterm><primary>stbi_zlib_decode_malloc_guesssize</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_zlib_decode_malloc_guesssize</secondary></indexterm>
+<para><computeroutput>char * stbi_zlib_decode_malloc_guesssize (const char * buffer, int len, int initial_size, int * outlen)</computeroutput></para><para>
+Definition at line 2326 of file stb_image.c.</para>
+<programlisting>2327 {
+2328 &#32;&#32;&#32;<link linkend="_structzbuf">zbuf</link>&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>;
+2329 &#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;*<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;=&#32;(<emphasis role="keywordtype">char</emphasis>&#32;*)&#32;<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>(initial_size);
+2330 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+2331 &#32;&#32;&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zbuffer&#32;=&#32;(<link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link>&#32;*)&#32;<link linkend="_structbuffer">buffer</link>;
+2332 &#32;&#32;&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zbuffer_end&#32;=&#32;(<link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link>&#32;*)&#32;<link linkend="_structbuffer">buffer</link>&#32;+&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+2333 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(do_zlib(&amp;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>,&#32;initial_size,&#32;1,&#32;1))&#32;{
+2334 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(outlen)&#32;*outlen&#32;=&#32;(int)&#32;(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zout&#32;-&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zout_start);
+2335 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zout_start;
+2336 &#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+2337 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zout_start);
+2338 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+2339 &#32;&#32;&#32;}
+2340 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a85453cb86c180f1478d4df4913078800"/>    <section>
+    <title>stbi_zlib_decode_malloc_guesssize_headerflag()</title>
+<indexterm><primary>stbi_zlib_decode_malloc_guesssize_headerflag</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_zlib_decode_malloc_guesssize_headerflag</secondary></indexterm>
+<para><computeroutput>char * stbi_zlib_decode_malloc_guesssize_headerflag (const char * buffer, int len, int initial_size, int * outlen, int parse_header)</computeroutput></para><para>
+Definition at line 2347 of file stb_image.c.</para>
+<programlisting>2348 {
+2349 &#32;&#32;&#32;<link linkend="_structzbuf">zbuf</link>&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>;
+2350 &#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;*<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;=&#32;(<emphasis role="keywordtype">char</emphasis>&#32;*)&#32;<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>(initial_size);
+2351 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+2352 &#32;&#32;&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zbuffer&#32;=&#32;(<link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link>&#32;*)&#32;<link linkend="_structbuffer">buffer</link>;
+2353 &#32;&#32;&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zbuffer_end&#32;=&#32;(<link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link>&#32;*)&#32;<link linkend="_structbuffer">buffer</link>&#32;+&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+2354 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(do_zlib(&amp;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>,&#32;initial_size,&#32;1,&#32;parse_header))&#32;{
+2355 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(outlen)&#32;*outlen&#32;=&#32;(int)&#32;(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zout&#32;-&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zout_start);
+2356 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zout_start;
+2357 &#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+2358 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zout_start);
+2359 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+2360 &#32;&#32;&#32;}
+2361 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1af84d32350b9a983570a9b28204ee62f4"/>    <section>
+    <title>stbi_zlib_decode_noheader_buffer()</title>
+<indexterm><primary>stbi_zlib_decode_noheader_buffer</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_zlib_decode_noheader_buffer</secondary></indexterm>
+<para><computeroutput>int stbi_zlib_decode_noheader_buffer (char * obuffer, int olen, const char * ibuffer, int ilen)</computeroutput></para><para>
+Definition at line 2390 of file stb_image.c.</para>
+<programlisting>2391 {
+2392 &#32;&#32;&#32;<link linkend="_structzbuf">zbuf</link>&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>;
+2393 &#32;&#32;&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zbuffer&#32;=&#32;(<link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link>&#32;*)&#32;ibuffer;
+2394 &#32;&#32;&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zbuffer_end&#32;=&#32;(<link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link>&#32;*)&#32;ibuffer&#32;+&#32;ilen;
+2395 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(do_zlib(&amp;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,&#32;obuffer,&#32;olen,&#32;0,&#32;0))
+2396 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>)&#32;(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zout&#32;-&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zout_start);
+2397 &#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+2398 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;-1;
+2399 }
+</programlisting>    </section><anchor xml:id="_stb__image_8c_1a9ac0a7b2514e7b6069bcb79ee21ebc06"/>    <section>
+    <title>stbi_zlib_decode_noheader_malloc()</title>
+<indexterm><primary>stbi_zlib_decode_noheader_malloc</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_zlib_decode_noheader_malloc</secondary></indexterm>
+<para><computeroutput>char * stbi_zlib_decode_noheader_malloc (const char * buffer, int len, int * outlen)</computeroutput></para><para>
+Definition at line 2374 of file stb_image.c.</para>
+<programlisting>2375 {
+2376 &#32;&#32;&#32;<link linkend="_structzbuf">zbuf</link>&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>;
+2377 &#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;*<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;=&#32;(<emphasis role="keywordtype">char</emphasis>&#32;*)&#32;<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>(16384);
+2378 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+2379 &#32;&#32;&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zbuffer&#32;=&#32;(<link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link>&#32;*)&#32;<link linkend="_structbuffer">buffer</link>;
+2380 &#32;&#32;&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zbuffer_end&#32;=&#32;(<link linkend="_stb__image_8c_1a5e7a39bc0f2f7bad5568c1f1c5aaf761">stbi__uint8</link>&#32;*)&#32;<link linkend="_structbuffer">buffer</link>+<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+2381 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(do_zlib(&amp;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>,&#32;16384,&#32;1,&#32;0))&#32;{
+2382 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(outlen)&#32;*outlen&#32;=&#32;(int)&#32;(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zout&#32;-&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zout_start);
+2383 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zout_start;
+2384 &#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+2385 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>.zout_start);
+2386 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+2387 &#32;&#32;&#32;}
+2388 }
+</programlisting></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_stb__image_8c_1acec14b0fa02632f29efbe91f27ab5281"/>    <section>
+    <title>stbi_png_partial</title>
+<indexterm><primary>stbi_png_partial</primary><secondary>stb_image.c</secondary></indexterm>
+<indexterm><primary>stb_image.c</primary><secondary>stbi_png_partial</secondary></indexterm>
+<para><computeroutput>int stbi_png_partial</computeroutput></para><para>
+Definition at line 2284 of file stb_image.c.</para>
+</section>
+</section>
+</section>

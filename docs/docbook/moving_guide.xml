@@ -1,0 +1,685 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_moving_guide">
+
+<para>This is a transition guide for moving from GLFW 2 to 3. It describes what has changed or been removed, but does <emphasis>not</emphasis> include <link linkend="_news">new features</link> unless they are required when moving an existing code base onto the new API. For example, the new multi-monitor functions are required to create full screen windows with GLFW 3.</para>
+<section xml:id="_moving_guide_1moving_removed">
+<title>Changed and removed features</title>
+<section xml:id="_moving_guide_1moving_renamed_files">
+<title>Renamed library and header file</title>
+
+<para>The GLFW 3 header is named <link linkend="_glfw3_8h">glfw3.h</link> and moved to the <computeroutput>GLFW</computeroutput> directory, to avoid collisions with the headers of other major versions. Similarly, the GLFW 3 library is named <computeroutput>glfw3,</computeroutput> except when it&apos;s installed as a shared library on Unix-like systems, where it uses the <link xlink:href="https://en.wikipedia.org/wiki/soname">soname</link> <computeroutput>libglfw.so.3</computeroutput>.</para>
+
+<para><formalpara>
+<title>Old syntax</title>
+<para><literallayout><computeroutput>#include&#32;&lt;GL/glfw.h&gt;
+</computeroutput></literallayout></para>
+</formalpara>
+<formalpara>
+<title>New syntax</title>
+<para><literallayout><computeroutput>#include&#32;&lt;GLFW/glfw3.h&gt;
+</computeroutput></literallayout></para>
+</formalpara>
+</para>
+</section>
+<section xml:id="_moving_guide_1moving_threads">
+<title>Removal of threading functions</title>
+
+<para>The threading functions have been removed, including the per-thread sleep function. They were fairly primitive, under-used, poorly integrated and took time away from the focus of GLFW (i.e. context, input and window). There are better threading libraries available and native threading support is available in both <link xlink:href="https://en.cppreference.com/w/cpp/thread">C++11</link> and <link xlink:href="https://en.cppreference.com/w/c/thread">C11</link>, both of which are gaining traction.</para>
+
+<para>If you wish to use the C++11 or C11 facilities but your compiler doesn&apos;t yet support them, see the <link xlink:href="https://gitorious.org/tinythread/tinythreadpp">TinyThread++</link> and <link xlink:href="https://github.com/tinycthread/tinycthread">TinyCThread</link> projects created by the original author of GLFW. These libraries implement a usable subset of the threading APIs in C++11 and C11, and in fact some GLFW 3 test programs use TinyCThread.</para>
+
+<para>However, GLFW 3 has better support for <emphasis>use from multiple threads</emphasis> than GLFW 2 had. Contexts can be made current on any thread, although only a single thread at a time, and the documentation explicitly states which functions may be used from any thread and which must only be used from the main thread.</para>
+
+<para><formalpara>
+<title>Removed functions</title>
+<para><computeroutput>glfwSleep</computeroutput>, <computeroutput>glfwCreateThread</computeroutput>, <computeroutput>glfwDestroyThread</computeroutput>, <computeroutput>glfwWaitThread</computeroutput>, <computeroutput>glfwGetThreadID</computeroutput>, <computeroutput>glfwCreateMutex</computeroutput>, <computeroutput>glfwDestroyMutex</computeroutput>, <computeroutput>glfwLockMutex</computeroutput>, <computeroutput>glfwUnlockMutex</computeroutput>, <computeroutput>glfwCreateCond</computeroutput>, <computeroutput>glfwDestroyCond</computeroutput>, <computeroutput>glfwWaitCond</computeroutput>, <computeroutput>glfwSignalCond</computeroutput>, <computeroutput>glfwBroadcastCond</computeroutput> and <computeroutput>glfwGetNumberOfProcessors</computeroutput>.</para>
+</formalpara>
+<formalpara>
+<title>Removed types</title>
+<para><computeroutput>GLFWthreadfun</computeroutput></para>
+</formalpara>
+</para>
+</section>
+<section xml:id="_moving_guide_1moving_image">
+<title>Removal of image and texture loading</title>
+
+<para>The image and texture loading functions have been removed. They only supported the Targa image format, making them mostly useful for beginner level examples. To become of sufficiently high quality to warrant keeping them in GLFW 3, they would need not only to support other formats, but also modern extensions to OpenGL texturing. This would either add a number of external dependencies (libjpeg, libpng, etc.), or force GLFW to ship with inline versions of these libraries.</para>
+
+<para>As there already are libraries doing this, it is unnecessary both to duplicate the work and to tie the duplicate to GLFW. The resulting library would also be platform-independent, as both OpenGL and stdio are available wherever GLFW is.</para>
+
+<para><formalpara>
+<title>Removed functions</title>
+<para><computeroutput>glfwReadImage</computeroutput>, <computeroutput>glfwReadMemoryImage</computeroutput>, <computeroutput>glfwFreeImage</computeroutput>, <computeroutput>glfwLoadTexture2D</computeroutput>, <computeroutput>glfwLoadMemoryTexture2D</computeroutput> and <computeroutput>glfwLoadTextureImage2D</computeroutput>.</para>
+</formalpara>
+</para>
+</section>
+<section xml:id="_moving_guide_1moving_stdcall">
+<title>Removal of GLFWCALL macro</title>
+
+<para>The <computeroutput>GLFWCALL</computeroutput> macro, which made callback functions use <link xlink:href="https://msdn.microsoft.com/en-us/library/zxk0tw93.aspx">__stdcall</link> on Windows, has been removed. GLFW is written in C, not Pascal. Removing this macro means there&apos;s one less thing for application programmers to remember, i.e. the requirement to mark all callback functions with <computeroutput>GLFWCALL</computeroutput>. It also simplifies the creation of DLLs and DLL link libraries, as there&apos;s no need to explicitly disable <computeroutput>@n</computeroutput> entry point suffixes.</para>
+
+<para><formalpara>
+<title>Old syntax</title>
+<para><literallayout><computeroutput>void&#32;GLFWCALL&#32;callback_function(...);
+</computeroutput></literallayout></para>
+</formalpara>
+<formalpara>
+<title>New syntax</title>
+<para><literallayout><computeroutput>void&#32;callback_function(...);
+</computeroutput></literallayout></para>
+</formalpara>
+</para>
+</section>
+<section xml:id="_moving_guide_1moving_window_handles">
+<title>Window handle parameters</title>
+
+<para>Because GLFW 3 supports multiple windows, window handle parameters have been added to all window-related GLFW functions and callbacks. The handle of a newly created window is returned by <link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link> (formerly <computeroutput>glfwOpenWindow</computeroutput>). Window handles are pointers to the <link xlink:href="https://en.wikipedia.org/wiki/Opaque_data_type">opaque</link> type <link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>.</para>
+
+<para><formalpara>
+<title>Old syntax</title>
+<para><literallayout><computeroutput>glfwSetWindowTitle(&quot;New&#32;Window&#32;Title&quot;);
+</computeroutput></literallayout></para>
+</formalpara>
+<formalpara>
+<title>New syntax</title>
+<para><literallayout><computeroutput>glfwSetWindowTitle(window,&#32;&quot;New&#32;Window&#32;Title&quot;);
+</computeroutput></literallayout></para>
+</formalpara>
+</para>
+</section>
+<section xml:id="_moving_guide_1moving_monitor">
+<title>Explicit monitor selection</title>
+
+<para>GLFW 3 provides support for multiple monitors. To request a full screen mode window, instead of passing <computeroutput>GLFW_FULLSCREEN</computeroutput> you specify which monitor you wish the window to use. The <link linkend="_group__monitor_1ga59ea49f377fe701dd76764183e64d9f4">glfwGetPrimaryMonitor</link> function returns the monitor that GLFW 2 would have selected, but there are many other <link linkend="_monitor_guide">monitor functions</link>. Monitor handles are pointers to the <link xlink:href="https://en.wikipedia.org/wiki/Opaque_data_type">opaque</link> type <link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link>.</para>
+
+<para><formalpara>
+<title>Old basic full screen</title>
+<para><literallayout><computeroutput>glfwOpenWindow(640,&#32;480,&#32;8,&#32;8,&#32;8,&#32;0,&#32;24,&#32;0,&#32;GLFW_FULLSCREEN);
+</computeroutput></literallayout></para>
+</formalpara>
+<formalpara>
+<title>New basic full screen</title>
+<para><literallayout><computeroutput>window&#32;=&#32;glfwCreateWindow(640,&#32;480,&#32;&quot;My&#32;Window&quot;,&#32;glfwGetPrimaryMonitor(),&#32;NULL);
+</computeroutput></literallayout></para>
+</formalpara>
+<note><title>Note</title>
+
+<para>The framebuffer bit depth parameters of <computeroutput>glfwOpenWindow</computeroutput> have been turned into <link linkend="_window_guide_1window_hints">window hints</link>, but as they have been given <link linkend="_window_guide_1window_hints_values">sane defaults</link> you rarely need to set these hints.</para>
+</note>
+</para>
+</section>
+<section xml:id="_moving_guide_1moving_autopoll">
+<title>Removal of automatic event polling</title>
+
+<para>GLFW 3 does not automatically poll for events in <link linkend="_group__window_1gafb827800eedbfcbc97b1e5408df668d7">glfwSwapBuffers</link>, meaning you need to call <link linkend="_group__window_1ga872d16e4c77f58c0436f356255920cfc">glfwPollEvents</link> or <link linkend="_group__window_1ga6e042d05823c11e11c7339b81a237738">glfwWaitEvents</link> yourself. Unlike buffer swap, which acts on a single window, the event processing functions act on all windows at once.</para>
+
+<para><formalpara>
+<title>Old basic main loop</title>
+<para><literallayout><computeroutput>while&#32;(...)
+{
+&#32;&#32;&#32;&#32;//&#32;Process&#32;input
+&#32;&#32;&#32;&#32;//&#32;Render&#32;output
+&#32;&#32;&#32;&#32;glfwSwapBuffers();
+}
+</computeroutput></literallayout></para>
+</formalpara>
+<formalpara>
+<title>New basic main loop</title>
+<para><literallayout><computeroutput>while&#32;(...)
+{
+&#32;&#32;&#32;&#32;//&#32;Process&#32;input
+&#32;&#32;&#32;&#32;//&#32;Render&#32;output
+&#32;&#32;&#32;&#32;glfwSwapBuffers(window);
+&#32;&#32;&#32;&#32;glfwPollEvents();
+}
+</computeroutput></literallayout></para>
+</formalpara>
+</para>
+</section>
+<section xml:id="_moving_guide_1moving_context">
+<title>Explicit context management</title>
+
+<para>Each GLFW 3 window has its own OpenGL context and only you, the application programmer, can know which context should be current on which thread at any given time. Therefore, GLFW 3 leaves that decision to you.</para>
+
+<para>This means that you need to call <link linkend="_group__context_1gafd76c93e15ec8b0b90506a9936a46185">glfwMakeContextCurrent</link> after creating a window before you can call any OpenGL functions.</para>
+</section>
+<section xml:id="_moving_guide_1moving_hidpi">
+<title>Separation of window and framebuffer sizes</title>
+
+<para>Window positions and sizes now use screen coordinates, which may not be the same as pixels on machines with high-DPI monitors. This is important as OpenGL uses pixels, not screen coordinates. For example, the rectangle specified with <computeroutput>glViewport</computeroutput> needs to use pixels. Therefore, framebuffer size functions have been added. You can retrieve the size of the framebuffer of a window with <link linkend="_group__window_1gaf7d17f3534b4b6dc9a6f905e3a240b7e">glfwGetFramebufferSize</link> function. A framebuffer size callback has also been added, which can be set with <link linkend="_group__window_1ga41d69f9f263d7b33ea03cf58772b4ea0">glfwSetFramebufferSizeCallback</link>.</para>
+
+<para><formalpara>
+<title>Old basic viewport setup</title>
+<para><literallayout><computeroutput>glfwGetWindowSize(&amp;width,&#32;&amp;height);
+glViewport(0,&#32;0,&#32;width,&#32;height);
+</computeroutput></literallayout></para>
+</formalpara>
+<formalpara>
+<title>New basic viewport setup</title>
+<para><literallayout><computeroutput>glfwGetFramebufferSize(window,&#32;&amp;width,&#32;&amp;height);
+glViewport(0,&#32;0,&#32;width,&#32;height);
+</computeroutput></literallayout></para>
+</formalpara>
+</para>
+</section>
+<section xml:id="_moving_guide_1moving_window_close">
+<title>Window closing changes</title>
+
+<para>The <computeroutput>GLFW_OPENED</computeroutput> window parameter has been removed. As long as the window has not been destroyed, whether through <link linkend="_group__window_1ga806747476b7247d292be3711c323ea10">glfwDestroyWindow</link> or <link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>, the window is &quot;open&quot;.</para>
+
+<para>A user attempting to close a window is now just an event like any other. Unlike GLFW 2, windows and contexts created with GLFW 3 will never be destroyed unless you choose them to be. Each window now has a close flag that is set to <computeroutput>GLFW_TRUE</computeroutput> when the user attempts to close that window. By default, nothing else happens and the window stays visible. It is then up to you to either destroy the window, take some other action or ignore the request.</para>
+
+<para>You can query the close flag at any time with <link linkend="_group__window_1gaa6162f67dfa38b8beda2fea623649332">glfwWindowShouldClose</link> and set it at any time with <link linkend="_group__window_1ga1cadeda7a1e2f224e06a8415d30741aa">glfwSetWindowShouldClose</link>.</para>
+
+<para><formalpara>
+<title>Old basic main loop</title>
+<para><literallayout><computeroutput>while&#32;(glfwGetWindowParam(GLFW_OPENED))
+{
+&#32;&#32;&#32;&#32;...
+}
+</computeroutput></literallayout></para>
+</formalpara>
+<formalpara>
+<title>New basic main loop</title>
+<para><literallayout><computeroutput>while&#32;(!glfwWindowShouldClose(window))
+{
+&#32;&#32;&#32;&#32;...
+}
+</computeroutput></literallayout></para>
+</formalpara>
+The close callback no longer returns a value. Instead, it is called after the close flag has been set so it can override its value, if it chooses to, before event processing completes. You may however not call <link linkend="_group__window_1ga806747476b7247d292be3711c323ea10">glfwDestroyWindow</link> from the close callback (or any other window related callback).</para>
+
+<para><formalpara>
+<title>Old syntax</title>
+<para><literallayout><computeroutput>int&#32;GLFWCALL&#32;window_close_callback(void);
+</computeroutput></literallayout></para>
+</formalpara>
+<formalpara>
+<title>New syntax</title>
+<para><literallayout><computeroutput>void&#32;window_close_callback(GLFWwindow*&#32;window);
+</computeroutput></literallayout></para>
+</formalpara>
+<note><title>Note</title>
+
+<para>GLFW never clears the close flag to <computeroutput>GLFW_FALSE</computeroutput>, meaning you can use it for other reasons to close the window as well, for example the user choosing Quit from an in-game menu.</para>
+</note>
+</para>
+</section>
+<section xml:id="_moving_guide_1moving_hints">
+<title>Persistent window hints</title>
+
+<para>The <computeroutput>glfwOpenWindowHint</computeroutput> function has been renamed to <link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>.</para>
+
+<para>Window hints are no longer reset to their default values on window creation, but instead retain their values until modified by <link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link> or <link linkend="_group__window_1ga8050ddceed9dc6bd9d3aa35666195cd4">glfwDefaultWindowHints</link>, or until the library is terminated and re-initialized.</para>
+</section>
+<section xml:id="_moving_guide_1moving_video_modes">
+<title>Video mode enumeration</title>
+
+<para>Video mode enumeration is now per-monitor. The <link linkend="_group__monitor_1ga4fcbc9865c18acb7fbf60cb6c156cef7">glfwGetVideoModes</link> function now returns all available modes for a specific monitor instead of requiring you to guess how large an array you need. The <computeroutput>glfwGetDesktopMode</computeroutput> function, which had poorly defined behavior, has been replaced by <link linkend="_group__monitor_1ga27319d7f045c4cbbeae5651696cacd5f">glfwGetVideoMode</link>, which returns the current mode of a monitor.</para>
+</section>
+<section xml:id="_moving_guide_1moving_char_up">
+<title>Removal of character actions</title>
+
+<para>The action parameter of the <link linkend="_group__input_1ga1ab90a55cf3f58639b893c0f4118cb6e">character callback</link> has been removed. This was an artefact of the origin of GLFW, i.e. being developed in English by a Swede. However, many keyboard layouts require more than one key to produce characters with diacritical marks. Even the Swedish keyboard layout requires this for uncommon cases like ü.</para>
+
+<para><formalpara>
+<title>Old syntax</title>
+<para><literallayout><computeroutput>void&#32;GLFWCALL&#32;character_callback(int&#32;character,&#32;int&#32;action);
+</computeroutput></literallayout></para>
+</formalpara>
+<formalpara>
+<title>New syntax</title>
+<para><literallayout><computeroutput>void&#32;character_callback(GLFWwindow*&#32;window,&#32;int&#32;character);
+</computeroutput></literallayout></para>
+</formalpara>
+</para>
+</section>
+<section xml:id="_moving_guide_1moving_cursorpos">
+<title>Cursor position changes</title>
+
+<para>The <computeroutput>glfwGetMousePos</computeroutput> function has been renamed to <link linkend="_group__input_1gad289438eb7cf53d11eca685373f44105">glfwGetCursorPos</link>, <computeroutput>glfwSetMousePos</computeroutput> to <link linkend="_group__input_1gaaf152cc93418acb0ba342e3f4af922bc">glfwSetCursorPos</link> and <computeroutput>glfwSetMousePosCallback</computeroutput> to <link linkend="_group__input_1ga74124d0eff27040fd10e4df9e17d129c">glfwSetCursorPosCallback</link>.</para>
+
+<para>The cursor position is now <computeroutput>double</computeroutput> instead of <computeroutput>int</computeroutput>, both for the direct functions and for the callback. Some platforms can provide sub-pixel cursor movement and this data is now passed on to the application where available. On platforms where this is not provided, the decimal part is zero.</para>
+
+<para>GLFW 3 only allows you to position the cursor within a window using <link linkend="_group__input_1gaaf152cc93418acb0ba342e3f4af922bc">glfwSetCursorPos</link> (formerly <computeroutput>glfwSetMousePos</computeroutput>) when that window is active. Unless the window is active, the function fails silently.</para>
+</section>
+<section xml:id="_moving_guide_1moving_wheel">
+<title>Wheel position replaced by scroll offsets</title>
+
+<para>The <computeroutput>glfwGetMouseWheel</computeroutput> function has been removed. Scrolling is the input of offsets and has no absolute position. The mouse wheel callback has been replaced by a <link linkend="_group__input_1gaf656112c33de3efdb227fa58f0134cf5">scroll callback</link> that receives two-dimensional floating point scroll offsets. This allows you to receive precise scroll data from for example modern touchpads.</para>
+
+<para><formalpara>
+<title>Old syntax</title>
+<para><literallayout><computeroutput>void&#32;GLFWCALL&#32;mouse_wheel_callback(int&#32;position);
+</computeroutput></literallayout></para>
+</formalpara>
+<formalpara>
+<title>New syntax</title>
+<para><literallayout><computeroutput>void&#32;scroll_callback(GLFWwindow*&#32;window,&#32;double&#32;xoffset,&#32;double&#32;yoffset);
+</computeroutput></literallayout></para>
+</formalpara>
+<formalpara>
+<title>Removed functions</title>
+<para><computeroutput>glfwGetMouseWheel</computeroutput></para>
+</formalpara>
+</para>
+</section>
+<section xml:id="_moving_guide_1moving_repeat">
+<title>Key repeat action</title>
+
+<para>The <computeroutput>GLFW_KEY_REPEAT</computeroutput> enable has been removed and key repeat is always enabled for both keys and characters. A new key action, <computeroutput>GLFW_REPEAT</computeroutput>, has been added to allow the <link linkend="_group__input_1ga5bd751b27b90f865d2ea613533f0453c">key callback</link> to distinguish an initial key press from a repeat. Note that <link linkend="_group__input_1ga7d8ad8ffaf272808f04e1d5d33ec8859">glfwGetKey</link> still returns only <computeroutput>GLFW_PRESS</computeroutput> or <computeroutput>GLFW_RELEASE</computeroutput>.</para>
+</section>
+<section xml:id="_moving_guide_1moving_keys">
+<title>Physical key input</title>
+
+<para>GLFW 3 key tokens map to physical keys, unlike in GLFW 2 where they mapped to the values generated by the current keyboard layout. The tokens are named according to the values they would have using the standard US layout, but this is only a convenience, as most programmers are assumed to know that layout. This means that (for example) <computeroutput>GLFW_KEY_LEFT_BRACKET</computeroutput> is always a single key and is the same key in the same place regardless of what keyboard layouts the users of your program has.</para>
+
+<para>The key input facility was never meant for text input, although using it that way worked slightly better in GLFW 2. If you were using it to input text, you should be using the character callback instead, on both GLFW 2 and 3. This will give you the characters being input, as opposed to the keys being pressed.</para>
+
+<para>GLFW 3 has key tokens for all keys on a standard 105 key keyboard, so instead of having to remember whether to check for <computeroutput>a</computeroutput> or <computeroutput>A</computeroutput>, you now check for <link linkend="_group__keys_1ga03e842608e1ea323370889d33b8f70ff">GLFW_KEY_A</link>.</para>
+</section>
+<section xml:id="_moving_guide_1moving_joystick">
+<title>Joystick function changes</title>
+
+<para>The <computeroutput>glfwGetJoystickPos</computeroutput> function has been renamed to <link linkend="_group__input_1gaf0537d8832818963f8d24ac1c98e42a3">glfwGetJoystickAxes</link>.</para>
+
+<para>The <computeroutput>glfwGetJoystickParam</computeroutput> function and the <computeroutput>GLFW_PRESENT</computeroutput>, <computeroutput>GLFW_AXES</computeroutput> and <computeroutput>GLFW_BUTTONS</computeroutput> tokens have been replaced by the <link linkend="_group__input_1gacb1b7dfd79df673d48814c06fc436eff">glfwJoystickPresent</link> function as well as axis and button counts returned by the <link linkend="_group__input_1gaf0537d8832818963f8d24ac1c98e42a3">glfwGetJoystickAxes</link> and <link linkend="_group__input_1gaee8f9532b2dff9278cee70d0e6cde82c">glfwGetJoystickButtons</link> functions.</para>
+</section>
+<section xml:id="_moving_guide_1moving_mbcs">
+<title>Win32 MBCS support</title>
+
+<para>The Win32 port of GLFW 3 will not compile in <link xlink:href="https://msdn.microsoft.com/en-us/library/5z097dxa.aspx">MBCS mode</link>. However, because the use of the Unicode version of the Win32 API doesn&apos;t affect the process as a whole, but only those windows created using it, it&apos;s perfectly possible to call MBCS functions from other parts of the same application. Therefore, even if an application using GLFW has MBCS mode code, there&apos;s no need for GLFW itself to support it.</para>
+</section>
+<section xml:id="_moving_guide_1moving_windows">
+<title>Support for versions of Windows older than XP</title>
+
+<para>All explicit support for version of Windows older than XP has been removed. There is no code that actively prevents GLFW 3 from running on these earlier versions, but it uses Win32 functions that those versions lack.</para>
+
+<para>Windows XP was released in 2001, and by now (January 2015) it has not only replaced almost all earlier versions of Windows, but is itself rapidly being replaced by Windows 7 and 8. The MSDN library doesn&apos;t even provide documentation for version older than Windows 2000, making it difficult to maintain compatibility with these versions even if it was deemed worth the effort.</para>
+
+<para>The Win32 API has also not stood still, and GLFW 3 uses many functions only present on Windows XP or later. Even supporting an OS as new as XP (new from the perspective of GLFW 2, which still supports Windows 95) requires runtime checking for a number of functions that are present only on modern version of Windows.</para>
+</section>
+<section xml:id="_moving_guide_1moving_syskeys">
+<title>Capture of system-wide hotkeys</title>
+
+<para>The ability to disable and capture system-wide hotkeys like Alt+Tab has been removed. Modern applications, whether they&apos;re games, scientific visualisations or something else, are nowadays expected to be good desktop citizens and allow these hotkeys to function even when running in full screen mode.</para>
+</section>
+<section xml:id="_moving_guide_1moving_terminate">
+<title>Automatic termination</title>
+
+<para>GLFW 3 does not register <link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link> with <computeroutput>atexit</computeroutput> at initialization, because <computeroutput>exit</computeroutput> calls registered functions from the calling thread and while it is permitted to call <computeroutput>exit</computeroutput> from any thread, <link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link> must only be called from the main thread.</para>
+
+<para>To release all resources allocated by GLFW, you should call <link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link> yourself, from the main thread, before the program terminates. Note that this destroys all windows not already destroyed with <link linkend="_group__window_1ga806747476b7247d292be3711c323ea10">glfwDestroyWindow</link>, invalidating any window handles you may still have.</para>
+</section>
+<section xml:id="_moving_guide_1moving_glu">
+<title>GLU header inclusion</title>
+
+<para>GLFW 3 does not by default include the GLU header and GLU itself has been deprecated by <link xlink:href="https://en.wikipedia.org/wiki/Khronos_Group">Khronos</link>. <emphasis role="bold">New projects should not use GLU</emphasis>, but if you need it for legacy code that has been moved to GLFW 3, you can request that the GLFW header includes it by defining <link linkend="_build_guide_1GLFW_INCLUDE_GLU">GLFW_INCLUDE_GLU</link> before the inclusion of the GLFW header.</para>
+
+<para><formalpara>
+<title>Old syntax</title>
+<para><literallayout><computeroutput>#include&#32;&lt;GL/glfw.h&gt;
+</computeroutput></literallayout></para>
+</formalpara>
+<formalpara>
+<title>New syntax</title>
+<para><literallayout><computeroutput>#define&#32;GLFW_INCLUDE_GLU
+#include&#32;&lt;GLFW/glfw3.h&gt;
+</computeroutput></literallayout></para>
+</formalpara>
+There are many libraries that offer replacements for the functionality offered by GLU. For the matrix helper functions, see math libraries like <link xlink:href="https://github.com/g-truc/glm">GLM</link> (for C++), <link xlink:href="https://github.com/datenwolf/linmath.h">linmath.h</link> (for C) and others. For the tessellation functions, see for example <link xlink:href="https://github.com/memononen/libtess2">libtess2</link>.</para>
+</section>
+</section>
+<section xml:id="_moving_guide_1moving_tables">
+<title>Name change tables</title>
+<section xml:id="_moving_guide_1moving_renamed_functions">
+<title>Renamed functions</title>
+
+<para><informaltable frame="all">
+    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+      <colspec colname='c3'/>
+<thead>
+      <row >
+<entry>
+<para>GLFW 2 </para>
+</entry><entry>
+<para>GLFW 3 </para>
+</entry><entry>
+<para>Notes  </para>
+</entry></row>
+</thead><tbody>
+      <row >
+<entry>
+<para><computeroutput>glfwOpenWindow</computeroutput> </para>
+</entry><entry>
+<para><link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link> </para>
+</entry><entry>
+<para>All channel bit depths are now hints  </para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>glfwCloseWindow</computeroutput> </para>
+</entry><entry>
+<para><link linkend="_group__window_1ga806747476b7247d292be3711c323ea10">glfwDestroyWindow</link> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>glfwOpenWindowHint</computeroutput> </para>
+</entry><entry>
+<para><link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link> </para>
+</entry><entry>
+<para>Now accepts all <computeroutput>GLFW_*_BITS</computeroutput> tokens  </para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>glfwEnable</computeroutput> </para>
+</entry><entry>
+<para><link linkend="_group__input_1gae1eb729d2dd91dc33fd60e150a6e1684">glfwSetInputMode</link> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>glfwDisable</computeroutput> </para>
+</entry><entry>
+<para><link linkend="_group__input_1gae1eb729d2dd91dc33fd60e150a6e1684">glfwSetInputMode</link> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>glfwGetMousePos</computeroutput> </para>
+</entry><entry>
+<para><link linkend="_group__input_1gad289438eb7cf53d11eca685373f44105">glfwGetCursorPos</link> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>glfwSetMousePos</computeroutput> </para>
+</entry><entry>
+<para><link linkend="_group__input_1gaaf152cc93418acb0ba342e3f4af922bc">glfwSetCursorPos</link> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>glfwSetMousePosCallback</computeroutput> </para>
+</entry><entry>
+<para><link linkend="_group__input_1ga74124d0eff27040fd10e4df9e17d129c">glfwSetCursorPosCallback</link> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>glfwSetMouseWheelCallback</computeroutput> </para>
+</entry><entry>
+<para><link linkend="_group__input_1gaa786b59f19ad8525d251cda8e0d7d29b">glfwSetScrollCallback</link> </para>
+</entry><entry>
+<para>Accepts two-dimensional scroll offsets as doubles  </para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>glfwGetJoystickPos</computeroutput> </para>
+</entry><entry>
+<para><link linkend="_group__input_1gaf0537d8832818963f8d24ac1c98e42a3">glfwGetJoystickAxes</link> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>glfwGetWindowParam</computeroutput> </para>
+</entry><entry>
+<para><link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>glfwGetGLVersion</computeroutput> </para>
+</entry><entry>
+<para><link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link> </para>
+</entry><entry>
+<para>Use <computeroutput>GLFW_CONTEXT_VERSION_MAJOR</computeroutput>, <computeroutput>GLFW_CONTEXT_VERSION_MINOR</computeroutput> and <computeroutput>GLFW_CONTEXT_REVISION</computeroutput>  </para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>glfwGetDesktopMode</computeroutput> </para>
+</entry><entry>
+<para><link linkend="_group__monitor_1ga27319d7f045c4cbbeae5651696cacd5f">glfwGetVideoMode</link> </para>
+</entry><entry>
+<para>Returns the current mode of a monitor  </para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>glfwGetJoystickParam</computeroutput> </para>
+</entry><entry>
+<para><link linkend="_group__input_1gacb1b7dfd79df673d48814c06fc436eff">glfwJoystickPresent</link> </para>
+</entry><entry>
+<para>The axis and button counts are provided by <link linkend="_group__input_1gaf0537d8832818963f8d24ac1c98e42a3">glfwGetJoystickAxes</link> and <link linkend="_group__input_1gaee8f9532b2dff9278cee70d0e6cde82c">glfwGetJoystickButtons</link>  </para>
+</entry></row>
+    </tbody>
+    </tgroup>
+</informaltable>
+</para>
+</section>
+<section xml:id="_moving_guide_1moving_renamed_types">
+<title>Renamed types</title>
+
+<para><informaltable frame="all">
+    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+      <colspec colname='c3'/>
+<thead>
+      <row >
+<entry>
+<para>GLFW 2 </para>
+</entry><entry>
+<para>GLFW 3 </para>
+</entry><entry>
+<para>Notes  </para>
+</entry></row>
+</thead><tbody>
+      <row >
+<entry>
+<para><computeroutput>GLFWmousewheelfun</computeroutput> </para>
+</entry><entry>
+<para><link linkend="_group__input_1gaf656112c33de3efdb227fa58f0134cf5">GLFWscrollfun</link> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFWmouseposfun</computeroutput> </para>
+</entry><entry>
+<para><link linkend="_group__input_1gad6fae41b3ac2e4209aaa87b596c57f68">GLFWcursorposfun</link> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+    </tbody>
+    </tgroup>
+</informaltable>
+</para>
+</section>
+<section xml:id="_moving_guide_1moving_renamed_tokens">
+<title>Renamed tokens</title>
+
+<para><informaltable frame="all">
+    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+      <colspec colname='c3'/>
+<thead>
+      <row >
+<entry>
+<para>GLFW 2 </para>
+</entry><entry>
+<para>GLFW 3 </para>
+</entry><entry>
+<para>Notes  </para>
+</entry></row>
+</thead><tbody>
+      <row >
+<entry>
+<para><computeroutput>GLFW_OPENGL_VERSION_MAJOR</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_CONTEXT_VERSION_MAJOR</computeroutput> </para>
+</entry><entry>
+<para>Renamed as it applies to OpenGL ES as well  </para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFW_OPENGL_VERSION_MINOR</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_CONTEXT_VERSION_MINOR</computeroutput> </para>
+</entry><entry>
+<para>Renamed as it applies to OpenGL ES as well  </para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFW_FSAA_SAMPLES</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_SAMPLES</computeroutput> </para>
+</entry><entry>
+<para>Renamed to match the OpenGL API  </para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFW_ACTIVE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_FOCUSED</computeroutput> </para>
+</entry><entry>
+<para>Renamed to match the window focus callback  </para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFW_WINDOW_NO_RESIZE</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_RESIZABLE</computeroutput> </para>
+</entry><entry>
+<para>The default has been inverted  </para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFW_MOUSE_CURSOR</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_CURSOR</computeroutput> </para>
+</entry><entry>
+<para>Used with <link linkend="_group__input_1gae1eb729d2dd91dc33fd60e150a6e1684">glfwSetInputMode</link>  </para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFW_KEY_ESC</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_KEY_ESCAPE</computeroutput> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFW_KEY_DEL</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_KEY_DELETE</computeroutput> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFW_KEY_PAGEUP</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_KEY_PAGE_UP</computeroutput> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFW_KEY_PAGEDOWN</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_KEY_PAGE_DOWN</computeroutput> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFW_KEY_KP_NUM_LOCK</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_KEY_NUM_LOCK</computeroutput> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFW_KEY_LCTRL</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_KEY_LEFT_CONTROL</computeroutput> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFW_KEY_LSHIFT</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_KEY_LEFT_SHIFT</computeroutput> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFW_KEY_LALT</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_KEY_LEFT_ALT</computeroutput> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFW_KEY_LSUPER</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_KEY_LEFT_SUPER</computeroutput> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFW_KEY_RCTRL</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_KEY_RIGHT_CONTROL</computeroutput> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFW_KEY_RSHIFT</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_KEY_RIGHT_SHIFT</computeroutput> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFW_KEY_RALT</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_KEY_RIGHT_ALT</computeroutput> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+      <row >
+<entry>
+<para><computeroutput>GLFW_KEY_RSUPER</computeroutput> </para>
+</entry><entry>
+<para><computeroutput>GLFW_KEY_RIGHT_SUPER</computeroutput> </para>
+</entry><entry>
+<para></para>
+</entry></row>
+    </tbody>
+    </tgroup>
+</informaltable>
+</para>
+</section>
+</section>
+</section>

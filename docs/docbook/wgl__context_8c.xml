@@ -1,0 +1,459 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_wgl__context_8c">
+<title>deps/glfw/src/wgl_context.c File Reference</title>
+<indexterm><primary>deps/glfw/src/wgl_context.c</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+#include &lt;stdlib.h&gt;
+#include &lt;assert.h&gt;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_wgl__context_8c_1ae24f754d0973d289958e25833b5025f1">addAttrib</link>(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_wgl__context_8c_1a6583dd9a12cd302ae6325ea0e26e60ff">findAttribValue</link>(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)   findPixelFormatAttribValueWGL(<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>, attribCount, <link linkend="_glad_8h_1a0aa8cf39c79d294b1d9f4daef5020bec">values</link>, <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_wgl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,  <link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_wgl__context_8c_1ac60452e7fb9f2b0fdc2050999a889fe1">_glfwInitWGL</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wgl__context_8c_1a441ed61fa295e53fca605f2e00c51e83">_glfwTerminateWGL</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_wgl__context_8c_1a3a91c3b275d47f0fbe923cca11194502">_glfwCreateContextWGL</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, const <link linkend="_struct___g_l_f_wctxconfig">_GLFWctxconfig</link> *ctxconfig, const <link linkend="_struct___g_l_f_wfbconfig">_GLFWfbconfig</link> *fbconfig)</para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> HGLRC <link linkend="_wgl__context_8c_1aea24bcc9541e5d67c3e9f414b4688221">glfwGetWGLContext</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_wgl__context_8c_1ae24f754d0973d289958e25833b5025f1"/>    <section>
+    <title>addAttrib</title>
+<indexterm><primary>addAttrib</primary><secondary>wgl_context.c</secondary></indexterm>
+<indexterm><primary>wgl_context.c</primary><secondary>addAttrib</secondary></indexterm>
+<para><computeroutput>#define addAttrib( <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)</computeroutput></para><emphasis role="strong">Value:</emphasis><programlisting>{&#32;\
+&#32;&#32;&#32;&#32;assert((<emphasis role="keywordtype">size_t</emphasis>)&#32;attribCount&#32;&lt;&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>)&#32;/&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>[0]));&#32;\
+&#32;&#32;&#32;&#32;attribs[attribCount++]&#32;=&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>;&#32;\
+}
+</programlisting><para>
+Definition at line 55 of file wgl_context.c.</para>
+    </section><anchor xml:id="_wgl__context_8c_1a6583dd9a12cd302ae6325ea0e26e60ff"/>    <section>
+    <title>findAttribValue</title>
+<indexterm><primary>findAttribValue</primary><secondary>wgl_context.c</secondary></indexterm>
+<indexterm><primary>wgl_context.c</primary><secondary>findAttribValue</secondary></indexterm>
+<para><computeroutput>#define findAttribValue( <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)   findPixelFormatAttribValueWGL(<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>, attribCount, <link linkend="_glad_8h_1a0aa8cf39c79d294b1d9f4daef5020bec">values</link>, <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)</computeroutput></para><para>
+Definition at line 60 of file wgl_context.c.</para>
+    </section><anchor xml:id="_wgl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7"/>    <section>
+    <title>setAttrib</title>
+<indexterm><primary>setAttrib</primary><secondary>wgl_context.c</secondary></indexterm>
+<indexterm><primary>wgl_context.c</primary><secondary>setAttrib</secondary></indexterm>
+<para><computeroutput>#define setAttrib( <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>,  <link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>)</computeroutput></para><emphasis role="strong">Value:</emphasis><programlisting>{&#32;\
+&#32;&#32;&#32;&#32;assert(((<emphasis role="keywordtype">size_t</emphasis>)&#32;<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>&#32;+&#32;1)&#32;&lt;&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>)&#32;/&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>[0]));&#32;\
+&#32;&#32;&#32;&#32;attribs[<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>++]&#32;=&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>;&#32;\
+&#32;&#32;&#32;&#32;attribs[<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>++]&#32;=&#32;<link linkend="_glad_8h_1a10a82eabcb59d2fcd74acee063775f90">v</link>;&#32;\
+}
+</programlisting><para>
+Definition at line 526 of file wgl_context.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_wgl__context_8c_1a3a91c3b275d47f0fbe923cca11194502"/>    <section>
+    <title>_glfwCreateContextWGL()</title>
+<indexterm><primary>_glfwCreateContextWGL</primary><secondary>wgl_context.c</secondary></indexterm>
+<indexterm><primary>wgl_context.c</primary><secondary>_glfwCreateContextWGL</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwCreateContextWGL (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, const <link linkend="_struct___g_l_f_wctxconfig">_GLFWctxconfig</link> * ctxconfig, const <link linkend="_struct___g_l_f_wfbconfig">_GLFWfbconfig</link> * fbconfig)</computeroutput></para><para>
+Definition at line 535 of file wgl_context.c.</para>
+<programlisting>538 {
+539 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>[40];
+540 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;pixelFormat;
+541 &#32;&#32;&#32;&#32;PIXELFORMATDESCRIPTOR&#32;pfd;
+542 &#32;&#32;&#32;&#32;HGLRC&#32;share&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+543 
+544 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1ae2de5454bfc052ffa9c27f300fcc0425">share</link>)
+545 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;share&#32;=&#32;ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1ae2de5454bfc052ffa9c27f300fcc0425">share</link>-&gt;<link linkend="_struct___g_l_f_wwindow_1af46919bccfa19f04aa11a3b9900f2ce0">context</link>.wgl.<link linkend="_struct___g_l_f_wcontext_1a6dfe395af278c63cd5efb05e84fb74c7">handle</link>;
+546 
+547 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.wgl.dc&#32;=&#32;GetDC(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;win32.handle);
+548 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.wgl.dc)
+549 &#32;&#32;&#32;&#32;{
+550 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+551 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;Failed&#32;to&#32;retrieve&#32;DC&#32;for&#32;window&quot;</emphasis>);
+552 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+553 &#32;&#32;&#32;&#32;}
+554 
+555 &#32;&#32;&#32;&#32;pixelFormat&#32;=&#32;choosePixelFormatWGL(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;ctxconfig,&#32;fbconfig);
+556 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!pixelFormat)
+557 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+558 
+559 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!DescribePixelFormat(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.wgl.dc,
+560 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pixelFormat,&#32;<emphasis role="keyword">sizeof</emphasis>(pfd),&#32;&amp;pfd))
+561 &#32;&#32;&#32;&#32;{
+562 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__init_8c_1a596868de8858d6d69cc642152a319b24">_glfwInputErrorWin32</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+563 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;Failed&#32;to&#32;retrieve&#32;PFD&#32;for&#32;selected&#32;pixel&#32;format&quot;</emphasis>);
+564 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+565 &#32;&#32;&#32;&#32;}
+566 
+567 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!SetPixelFormat(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.wgl.dc,&#32;pixelFormat,&#32;&amp;pfd))
+568 &#32;&#32;&#32;&#32;{
+569 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__init_8c_1a596868de8858d6d69cc642152a319b24">_glfwInputErrorWin32</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+570 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;Failed&#32;to&#32;set&#32;selected&#32;pixel&#32;format&quot;</emphasis>);
+571 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+572 &#32;&#32;&#32;&#32;}
+573 
+574 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a9d54584dc156b04e39d7567a70e13ef8">client</link>&#32;==&#32;<link linkend="_glfw3_8h_1a01b3f66db266341425e9abee6b257db2">GLFW_OPENGL_API</link>)
+575 &#32;&#32;&#32;&#32;{
+576 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1ae7a2859b35b0bf3692abd6bf076ef4c7">forward</link>)
+577 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+578 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.ARB_create_context)
+579 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+580 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad16c5565b4a69f9c2a9ac2c0dbc89462">GLFW_VERSION_UNAVAILABLE</link>,
+581 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;A&#32;forward&#32;compatible&#32;OpenGL&#32;context&#32;requested&#32;but&#32;WGL_ARB_create_context&#32;is&#32;unavailable&quot;</emphasis>);
+582 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+583 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+584 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+585 
+586 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a0c56aeafa0f85b1b0ba3e9371a737770">profile</link>)
+587 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+588 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.ARB_create_context_profile)
+589 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+590 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad16c5565b4a69f9c2a9ac2c0dbc89462">GLFW_VERSION_UNAVAILABLE</link>,
+591 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;OpenGL&#32;profile&#32;requested&#32;but&#32;WGL_ARB_create_context_profile&#32;is&#32;unavailable&quot;</emphasis>);
+592 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+593 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+594 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+595 &#32;&#32;&#32;&#32;}
+596 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+597 &#32;&#32;&#32;&#32;{
+598 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.ARB_create_context&#32;||
+599 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.ARB_create_context_profile&#32;||
+600 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.EXT_create_context_es2_profile)
+601 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+602 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga56882b290db23261cc6c053c40c2d08e">GLFW_API_UNAVAILABLE</link>,
+603 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;OpenGL&#32;ES&#32;requested&#32;but&#32;WGL_ARB_create_context_es2_profile&#32;is&#32;unavailable&quot;</emphasis>);
+604 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+605 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+606 &#32;&#32;&#32;&#32;}
+607 
+608 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.ARB_create_context)
+609 &#32;&#32;&#32;&#32;{
+610 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a57f14e05b1900f16a2da82ade47d0c6d">index</link>&#32;=&#32;0,&#32;<link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>&#32;=&#32;0,&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;=&#32;0;
+611 
+612 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a9d54584dc156b04e39d7567a70e13ef8">client</link>&#32;==&#32;<link linkend="_glfw3_8h_1a01b3f66db266341425e9abee6b257db2">GLFW_OPENGL_API</link>)
+613 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+614 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1ae7a2859b35b0bf3692abd6bf076ef4c7">forward</link>)
+615 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;|=&#32;<link linkend="_win32__platform_8h_1aaec3bbb2c9fb813e229ad64f25130da6">WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB</link>;
+616 
+617 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a0c56aeafa0f85b1b0ba3e9371a737770">profile</link>&#32;==&#32;<link linkend="_glfw3_8h_1af094bb16da76f66ebceb19ee213b3de8">GLFW_OPENGL_CORE_PROFILE</link>)
+618 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>&#32;|=&#32;<link linkend="_win32__platform_8h_1a956f8c0391ca8b3076aacdd11123ab23">WGL_CONTEXT_CORE_PROFILE_BIT_ARB</link>;
+619 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a0c56aeafa0f85b1b0ba3e9371a737770">profile</link>&#32;==&#32;<link linkend="_glfw3_8h_1ac06b663d79c8fcf04669cc8fcc0b7670">GLFW_OPENGL_COMPAT_PROFILE</link>)
+620 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>&#32;|=&#32;<link linkend="_win32__platform_8h_1ac0e0f83037fd693f85a0a382245cded4">WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB</link>;
+621 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+622 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+623 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>&#32;|=&#32;<link linkend="_win32__platform_8h_1a5eb4392eceedc35a06f15bba687daff4">WGL_CONTEXT_ES2_PROFILE_BIT_EXT</link>;
+624 
+625 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a694b0434791f532ddf39bca57b94042e">debug</link>)
+626 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;|=&#32;<link linkend="_win32__platform_8h_1a8a600cc66dbc5a788e7b16dd9c116055">WGL_CONTEXT_DEBUG_BIT_ARB</link>;
+627 
+628 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a5aaf92358c6be9ac0dac61cc916b968f">robustness</link>)
+629 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+630 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.ARB_create_context_robustness)
+631 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+632 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a5aaf92358c6be9ac0dac61cc916b968f">robustness</link>&#32;==&#32;<link linkend="_glfw3_8h_1aee84a679230d205005e22487ff678a85">GLFW_NO_RESET_NOTIFICATION</link>)
+633 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+634 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wgl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_win32__platform_8h_1a276501381fad6637056ecc04c5439e31">WGL_CONTEXT_RESET_NOTIFICATION_STRATEGY_ARB</link>,
+635 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1ac2884bc3b423afa8ef44d4426370b7bf">WGL_NO_RESET_NOTIFICATION_ARB</link>);
+636 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+637 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a5aaf92358c6be9ac0dac61cc916b968f">robustness</link>&#32;==&#32;<link linkend="_glfw3_8h_1aec1132f245143fc915b2f0995228564c">GLFW_LOSE_CONTEXT_ON_RESET</link>)
+638 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+639 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wgl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_win32__platform_8h_1a276501381fad6637056ecc04c5439e31">WGL_CONTEXT_RESET_NOTIFICATION_STRATEGY_ARB</link>,
+640 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1aba383b9c347928b3ba1d1f749763f697">WGL_LOSE_CONTEXT_ON_RESET_ARB</link>);
+641 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+642 
+643 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>&#32;|=&#32;<link linkend="_win32__platform_8h_1aa003e5620fa6d66c356ede014cdf1648">WGL_CONTEXT_ROBUST_ACCESS_BIT_ARB</link>;
+644 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+645 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+646 
+647 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a70db828a89fe653b4efd5ec03419b46d">release</link>)
+648 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+649 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.ARB_context_flush_control)
+650 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+651 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a70db828a89fe653b4efd5ec03419b46d">release</link>&#32;==&#32;<link linkend="_glfw3_8h_1afca09088eccacdce4b59036cfae349c5">GLFW_RELEASE_BEHAVIOR_NONE</link>)
+652 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+653 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wgl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_win32__platform_8h_1a82a475adf314346fe8a5375edfa0560d">WGL_CONTEXT_RELEASE_BEHAVIOR_ARB</link>,
+654 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1a1c52f05f8e71f0ad70cc196e390b8d9f">WGL_CONTEXT_RELEASE_BEHAVIOR_NONE_ARB</link>);
+655 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+656 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a70db828a89fe653b4efd5ec03419b46d">release</link>&#32;==&#32;<link linkend="_glfw3_8h_1a999961d391db49cb4f949c1dece0e13b">GLFW_RELEASE_BEHAVIOR_FLUSH</link>)
+657 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+658 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wgl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_win32__platform_8h_1a82a475adf314346fe8a5375edfa0560d">WGL_CONTEXT_RELEASE_BEHAVIOR_ARB</link>,
+659 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1a0fbf2bf72421745143dd3505d18cb53c">WGL_CONTEXT_RELEASE_BEHAVIOR_FLUSH_ARB</link>);
+660 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+661 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+662 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+663 
+664 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a7c97fb74d89b1666d0de89222551a2ee">noerror</link>)
+665 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+666 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.ARB_create_context_no_error)
+667 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wgl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_win32__platform_8h_1a396878906cfef21a6b43de8c238f6a40">WGL_CONTEXT_OPENGL_NO_ERROR_ARB</link>,&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>);
+668 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+669 
+670 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NOTE:&#32;Only&#32;request&#32;an&#32;explicitly&#32;versioned&#32;context&#32;when&#32;necessary,&#32;as</emphasis>
+671 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;explicitly&#32;requesting&#32;version&#32;1.0&#32;does&#32;not&#32;always&#32;return&#32;the</emphasis>
+672 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;highest&#32;version&#32;supported&#32;by&#32;the&#32;driver</emphasis>
+673 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a51a8fa315dccf7f6217098cf0413a7a9">major</link>&#32;!=&#32;1&#32;||&#32;ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a250a475c8d778778bb8fb4ab942eddd9">minor</link>&#32;!=&#32;0)
+674 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+675 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wgl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_win32__platform_8h_1a64d5f1fa63a1979e33aee2949f6f21ad">WGL_CONTEXT_MAJOR_VERSION_ARB</link>,&#32;ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a51a8fa315dccf7f6217098cf0413a7a9">major</link>);
+676 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wgl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_win32__platform_8h_1a043b9ae0e73a1ff853339c02a3026096">WGL_CONTEXT_MINOR_VERSION_ARB</link>,&#32;ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a250a475c8d778778bb8fb4ab942eddd9">minor</link>);
+677 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+678 
+679 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>)
+680 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wgl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_win32__platform_8h_1aa9b5de1c7cb84a809ad79296192a76d3">WGL_CONTEXT_FLAGS_ARB</link>,&#32;<link linkend="_glad_8h_1aa9459b47e7388437191d2d9a69c10d98">flags</link>);
+681 
+682 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>)
+683 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wgl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(<link linkend="_win32__platform_8h_1a6847a02f9b4e6e9712a4b32250337dc1">WGL_CONTEXT_PROFILE_MASK_ARB</link>,&#32;<link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>);
+684 
+685 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wgl__context_8c_1a8f427f7949c0cb386b5632aa88cb30c7">setAttrib</link>(0,&#32;0);
+686 
+687 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.wgl.handle&#32;=
+688 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1acdca080586c894bbe2244900e8dfa24c">wglCreateContextAttribsARB</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.wgl.dc,&#32;share,&#32;<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>);
+689 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.wgl.handle)
+690 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+691 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;DWORD&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;=&#32;GetLastError();
+692 
+693 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;==&#32;(0xc0070000&#32;|&#32;<link linkend="_win32__platform_8h_1aa711b7b414242207d8f58d9e9a8feb73">ERROR_INVALID_VERSION_ARB</link>))
+694 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+695 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a9d54584dc156b04e39d7567a70e13ef8">client</link>&#32;==&#32;<link linkend="_glfw3_8h_1a01b3f66db266341425e9abee6b257db2">GLFW_OPENGL_API</link>)
+696 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+697 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad16c5565b4a69f9c2a9ac2c0dbc89462">GLFW_VERSION_UNAVAILABLE</link>,
+698 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;Driver&#32;does&#32;not&#32;support&#32;OpenGL&#32;version&#32;%i.%i&quot;</emphasis>,
+699 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a51a8fa315dccf7f6217098cf0413a7a9">major</link>,
+700 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a250a475c8d778778bb8fb4ab942eddd9">minor</link>);
+701 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+702 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+703 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+704 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad16c5565b4a69f9c2a9ac2c0dbc89462">GLFW_VERSION_UNAVAILABLE</link>,
+705 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;Driver&#32;does&#32;not&#32;support&#32;OpenGL&#32;ES&#32;version&#32;%i.%i&quot;</emphasis>,
+706 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a51a8fa315dccf7f6217098cf0413a7a9">major</link>,
+707 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a250a475c8d778778bb8fb4ab942eddd9">minor</link>);
+708 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+709 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+710 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;==&#32;(0xc0070000&#32;|&#32;<link linkend="_win32__platform_8h_1a685e9dcd28f13baaa254a1c41a796a5a">ERROR_INVALID_PROFILE_ARB</link>))
+711 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+712 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad16c5565b4a69f9c2a9ac2c0dbc89462">GLFW_VERSION_UNAVAILABLE</link>,
+713 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;Driver&#32;does&#32;not&#32;support&#32;the&#32;requested&#32;OpenGL&#32;profile&quot;</emphasis>);
+714 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+715 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;==&#32;(0xc0070000&#32;|&#32;<link linkend="_win32__platform_8h_1adf20e6297613c960933d70196939049d">ERROR_INCOMPATIBLE_DEVICE_CONTEXTS_ARB</link>))
+716 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+717 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gaaf2ef9aa8202c2b82ac2d921e554c687">GLFW_INVALID_VALUE</link>,
+718 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;The&#32;share&#32;context&#32;is&#32;not&#32;compatible&#32;with&#32;the&#32;requested&#32;context&quot;</emphasis>);
+719 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+720 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+721 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+722 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a9d54584dc156b04e39d7567a70e13ef8">client</link>&#32;==&#32;<link linkend="_glfw3_8h_1a01b3f66db266341425e9abee6b257db2">GLFW_OPENGL_API</link>)
+723 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+724 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad16c5565b4a69f9c2a9ac2c0dbc89462">GLFW_VERSION_UNAVAILABLE</link>,
+725 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;Failed&#32;to&#32;create&#32;OpenGL&#32;context&quot;</emphasis>);
+726 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+727 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+728 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+729 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad16c5565b4a69f9c2a9ac2c0dbc89462">GLFW_VERSION_UNAVAILABLE</link>,
+730 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;Failed&#32;to&#32;create&#32;OpenGL&#32;ES&#32;context&quot;</emphasis>);
+731 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+732 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+733 
+734 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+735 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+736 &#32;&#32;&#32;&#32;}
+737 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+738 &#32;&#32;&#32;&#32;{
+739 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.wgl.handle&#32;=&#32;<link linkend="_win32__platform_8h_1a750f042435b05950e7739cbc3e0b2bd1">wglCreateContext</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.wgl.dc);
+740 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.wgl.handle)
+741 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+742 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__init_8c_1a596868de8858d6d69cc642152a319b24">_glfwInputErrorWin32</link>(<link linkend="_group__errors_1gad16c5565b4a69f9c2a9ac2c0dbc89462">GLFW_VERSION_UNAVAILABLE</link>,
+743 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;Failed&#32;to&#32;create&#32;OpenGL&#32;context&quot;</emphasis>);
+744 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+745 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+746 
+747 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(share)
+748 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+749 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_win32__platform_8h_1a6658a50ceb506c7b2cbdf85d06cfb495">wglShareLists</link>(share,&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.wgl.handle))
+750 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+751 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__init_8c_1a596868de8858d6d69cc642152a319b24">_glfwInputErrorWin32</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+752 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;Failed&#32;to&#32;enable&#32;sharing&#32;with&#32;specified&#32;OpenGL&#32;context&quot;</emphasis>);
+753 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+754 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+755 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+756 &#32;&#32;&#32;&#32;}
+757 
+758 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.makeCurrent&#32;=&#32;makeContextCurrentWGL;
+759 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.swapBuffers&#32;=&#32;swapBuffersWGL;
+760 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.swapInterval&#32;=&#32;swapIntervalWGL;
+761 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.extensionSupported&#32;=&#32;extensionSupportedWGL;
+762 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.getProcAddress&#32;=&#32;getProcAddressWGL;
+763 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.destroy&#32;=&#32;destroyContextWGL;
+764 
+765 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+766 }
+</programlisting>    </section><anchor xml:id="_wgl__context_8c_1ac60452e7fb9f2b0fdc2050999a889fe1"/>    <section>
+    <title>_glfwInitWGL()</title>
+<indexterm><primary>_glfwInitWGL</primary><secondary>wgl_context.c</secondary></indexterm>
+<indexterm><primary>wgl_context.c</primary><secondary>_glfwInitWGL</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwInitWGL (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 400 of file wgl_context.c.</para>
+<programlisting>401 {
+402 &#32;&#32;&#32;&#32;PIXELFORMATDESCRIPTOR&#32;pfd;
+403 &#32;&#32;&#32;&#32;HGLRC&#32;prc,&#32;<link linkend="_truetype__test__win32_8c_1a474d98ad521f5aad6b7f75b8de66a1e0">rc</link>;
+404 &#32;&#32;&#32;&#32;HDC&#32;pdc,&#32;<link linkend="_truetype__test__win32_8c_1a107e8c958b2db614ef53259d777a5752">dc</link>;
+405 
+406 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.instance)
+407 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+408 
+409 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.instance&#32;=&#32;<link linkend="_internal_8h_1a0ca69d860ad190bdb5beab6de9160842">_glfwPlatformLoadModule</link>(<emphasis role="stringliteral">&quot;opengl32.dll&quot;</emphasis>);
+410 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.instance)
+411 &#32;&#32;&#32;&#32;{
+412 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__init_8c_1a596868de8858d6d69cc642152a319b24">_glfwInputErrorWin32</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+413 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;Failed&#32;to&#32;load&#32;opengl32.dll&quot;</emphasis>);
+414 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+415 &#32;&#32;&#32;&#32;}
+416 
+417 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.<link linkend="_struct___g_l_f_wlibrary_1ab54a110bc2f6c69907856d9375fa882c">CreateContext</link>&#32;=&#32;(<link linkend="_win32__platform_8h_1acd4ffae7f53c6e3df2f1bd1feae206a1">PFN_wglCreateContext</link>)
+418 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.instance,&#32;<emphasis role="stringliteral">&quot;wglCreateContext&quot;</emphasis>);
+419 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.DeleteContext&#32;=&#32;(<link linkend="_win32__platform_8h_1a680be7b362dea206756ecf78046ec568">PFN_wglDeleteContext</link>)
+420 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.instance,&#32;<emphasis role="stringliteral">&quot;wglDeleteContext&quot;</emphasis>);
+421 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.<link linkend="_struct___g_l_f_wlibrary_1adcf8173be4e691390a0bc60540509c9e">GetProcAddress</link>&#32;=&#32;(<link linkend="_win32__platform_8h_1afe938f6abc996c782668b4830fd49844">PFN_wglGetProcAddress</link>)
+422 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.instance,&#32;<emphasis role="stringliteral">&quot;wglGetProcAddress&quot;</emphasis>);
+423 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.GetCurrentDC&#32;=&#32;(<link linkend="_win32__platform_8h_1ab7fdfe541f5de8218150ec71991b5e1a">PFN_wglGetCurrentDC</link>)
+424 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.instance,&#32;<emphasis role="stringliteral">&quot;wglGetCurrentDC&quot;</emphasis>);
+425 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.GetCurrentContext&#32;=&#32;(<link linkend="_win32__platform_8h_1ab67fa4ec6b012531a46090e0b6c73543">PFN_wglGetCurrentContext</link>)
+426 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.instance,&#32;<emphasis role="stringliteral">&quot;wglGetCurrentContext&quot;</emphasis>);
+427 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.<link linkend="_struct___g_l_f_wlibrary_1ab4b9194ec5fbc1114553f9665cb990c3">MakeCurrent</link>&#32;=&#32;(<link linkend="_win32__platform_8h_1a01b96444528ae07c30f644ad3b75dd79">PFN_wglMakeCurrent</link>)
+428 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.instance,&#32;<emphasis role="stringliteral">&quot;wglMakeCurrent&quot;</emphasis>);
+429 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.ShareLists&#32;=&#32;(<link linkend="_win32__platform_8h_1a4282d885859a70343d72b80af9380b27">PFN_wglShareLists</link>)
+430 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.instance,&#32;<emphasis role="stringliteral">&quot;wglShareLists&quot;</emphasis>);
+431 
+432 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NOTE:&#32;A&#32;dummy&#32;context&#32;has&#32;to&#32;be&#32;created&#32;for&#32;opengl32.dll&#32;to&#32;load&#32;the</emphasis>
+433 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;OpenGL&#32;ICD,&#32;from&#32;which&#32;we&#32;can&#32;then&#32;query&#32;WGL&#32;extensions</emphasis>
+434 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NOTE:&#32;This&#32;code&#32;will&#32;accept&#32;the&#32;Microsoft&#32;GDI&#32;ICD;&#32;accelerated&#32;context</emphasis>
+435 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;creation&#32;failure&#32;occurs&#32;during&#32;manual&#32;pixel&#32;format&#32;enumeration</emphasis>
+436 
+437 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a107e8c958b2db614ef53259d777a5752">dc</link>&#32;=&#32;GetDC(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.win32.helperWindowHandle);
+438 
+439 &#32;&#32;&#32;&#32;ZeroMemory(&amp;pfd,&#32;<emphasis role="keyword">sizeof</emphasis>(pfd));
+440 &#32;&#32;&#32;&#32;pfd.nSize&#32;=&#32;<emphasis role="keyword">sizeof</emphasis>(pfd);
+441 &#32;&#32;&#32;&#32;pfd.nVersion&#32;=&#32;1;
+442 &#32;&#32;&#32;&#32;pfd.dwFlags&#32;=&#32;PFD_DRAW_TO_WINDOW&#32;|&#32;PFD_SUPPORT_OPENGL&#32;|&#32;PFD_DOUBLEBUFFER;
+443 &#32;&#32;&#32;&#32;pfd.iPixelType&#32;=&#32;PFD_TYPE_RGBA;
+444 &#32;&#32;&#32;&#32;pfd.cColorBits&#32;=&#32;24;
+445 
+446 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!SetPixelFormat(<link linkend="_truetype__test__win32_8c_1a107e8c958b2db614ef53259d777a5752">dc</link>,&#32;ChoosePixelFormat(<link linkend="_truetype__test__win32_8c_1a107e8c958b2db614ef53259d777a5752">dc</link>,&#32;&amp;pfd),&#32;&amp;pfd))
+447 &#32;&#32;&#32;&#32;{
+448 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__init_8c_1a596868de8858d6d69cc642152a319b24">_glfwInputErrorWin32</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+449 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;Failed&#32;to&#32;set&#32;pixel&#32;format&#32;for&#32;dummy&#32;context&quot;</emphasis>);
+450 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+451 &#32;&#32;&#32;&#32;}
+452 
+453 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a474d98ad521f5aad6b7f75b8de66a1e0">rc</link>&#32;=&#32;<link linkend="_win32__platform_8h_1a750f042435b05950e7739cbc3e0b2bd1">wglCreateContext</link>(<link linkend="_truetype__test__win32_8c_1a107e8c958b2db614ef53259d777a5752">dc</link>);
+454 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a474d98ad521f5aad6b7f75b8de66a1e0">rc</link>)
+455 &#32;&#32;&#32;&#32;{
+456 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__init_8c_1a596868de8858d6d69cc642152a319b24">_glfwInputErrorWin32</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+457 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;Failed&#32;to&#32;create&#32;dummy&#32;context&quot;</emphasis>);
+458 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+459 &#32;&#32;&#32;&#32;}
+460 
+461 &#32;&#32;&#32;&#32;pdc&#32;=&#32;<link linkend="_win32__platform_8h_1a8d5248de079ec0afe7a9ccaccfc0bfce">wglGetCurrentDC</link>();
+462 &#32;&#32;&#32;&#32;prc&#32;=&#32;<link linkend="_win32__platform_8h_1af28a48d6d098fef9e6e79cbe9df8c87d">wglGetCurrentContext</link>();
+463 
+464 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_win32__platform_8h_1a2aa491735fbf4ee7df91c6a7cef32d5d">wglMakeCurrent</link>(<link linkend="_truetype__test__win32_8c_1a107e8c958b2db614ef53259d777a5752">dc</link>,&#32;<link linkend="_truetype__test__win32_8c_1a474d98ad521f5aad6b7f75b8de66a1e0">rc</link>))
+465 &#32;&#32;&#32;&#32;{
+466 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__init_8c_1a596868de8858d6d69cc642152a319b24">_glfwInputErrorWin32</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+467 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;Failed&#32;to&#32;make&#32;dummy&#32;context&#32;current&quot;</emphasis>);
+468 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1a2aa491735fbf4ee7df91c6a7cef32d5d">wglMakeCurrent</link>(pdc,&#32;prc);
+469 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1aab1f95aa242eec7e28d7bc559b7e1d3b">wglDeleteContext</link>(<link linkend="_truetype__test__win32_8c_1a474d98ad521f5aad6b7f75b8de66a1e0">rc</link>);
+470 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+471 &#32;&#32;&#32;&#32;}
+472 
+473 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NOTE:&#32;Functions&#32;must&#32;be&#32;loaded&#32;first&#32;as&#32;they&apos;re&#32;needed&#32;to&#32;retrieve&#32;the</emphasis>
+474 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;extension&#32;string&#32;that&#32;tells&#32;us&#32;whether&#32;the&#32;functions&#32;are&#32;supported</emphasis>
+475 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.GetExtensionsStringEXT&#32;=&#32;(<link linkend="_win32__platform_8h_1a7614b1a68db31fbed2cf336f2b74994b">PFNWGLGETEXTENSIONSSTRINGEXTPROC</link>)
+476 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1a1ac6c8ffa0b1d53fc4fc812f471d6524">wglGetProcAddress</link>(<emphasis role="stringliteral">&quot;wglGetExtensionsStringEXT&quot;</emphasis>);
+477 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.GetExtensionsStringARB&#32;=&#32;(<link linkend="_win32__platform_8h_1a3428606a981275d46b67922d5b97e498">PFNWGLGETEXTENSIONSSTRINGARBPROC</link>)
+478 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1a1ac6c8ffa0b1d53fc4fc812f471d6524">wglGetProcAddress</link>(<emphasis role="stringliteral">&quot;wglGetExtensionsStringARB&quot;</emphasis>);
+479 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.CreateContextAttribsARB&#32;=&#32;(<link linkend="_win32__platform_8h_1ada319dc3b2d571bc9f4d242e5cb9a543">PFNWGLCREATECONTEXTATTRIBSARBPROC</link>)
+480 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1a1ac6c8ffa0b1d53fc4fc812f471d6524">wglGetProcAddress</link>(<emphasis role="stringliteral">&quot;wglCreateContextAttribsARB&quot;</emphasis>);
+481 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.SwapIntervalEXT&#32;=&#32;(<link linkend="_win32__platform_8h_1a9157176fda95d4db49f3a552978c43e6">PFNWGLSWAPINTERVALEXTPROC</link>)
+482 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1a1ac6c8ffa0b1d53fc4fc812f471d6524">wglGetProcAddress</link>(<emphasis role="stringliteral">&quot;wglSwapIntervalEXT&quot;</emphasis>);
+483 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.GetPixelFormatAttribivARB&#32;=&#32;(<link linkend="_win32__platform_8h_1a39931f248131b270558f144f21b3c2af">PFNWGLGETPIXELFORMATATTRIBIVARBPROC</link>)
+484 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1a1ac6c8ffa0b1d53fc4fc812f471d6524">wglGetProcAddress</link>(<emphasis role="stringliteral">&quot;wglGetPixelFormatAttribivARB&quot;</emphasis>);
+485 
+486 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NOTE:&#32;WGL_ARB_extensions_string&#32;and&#32;WGL_EXT_extensions_string&#32;are&#32;not</emphasis>
+487 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;checked&#32;below&#32;as&#32;we&#32;are&#32;already&#32;using&#32;them</emphasis>
+488 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.ARB_multisample&#32;=
+489 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionSupportedWGL(<emphasis role="stringliteral">&quot;WGL_ARB_multisample&quot;</emphasis>);
+490 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.ARB_framebuffer_sRGB&#32;=
+491 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionSupportedWGL(<emphasis role="stringliteral">&quot;WGL_ARB_framebuffer_sRGB&quot;</emphasis>);
+492 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.EXT_framebuffer_sRGB&#32;=
+493 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionSupportedWGL(<emphasis role="stringliteral">&quot;WGL_EXT_framebuffer_sRGB&quot;</emphasis>);
+494 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.ARB_create_context&#32;=
+495 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionSupportedWGL(<emphasis role="stringliteral">&quot;WGL_ARB_create_context&quot;</emphasis>);
+496 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.ARB_create_context_profile&#32;=
+497 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionSupportedWGL(<emphasis role="stringliteral">&quot;WGL_ARB_create_context_profile&quot;</emphasis>);
+498 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.EXT_create_context_es2_profile&#32;=
+499 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionSupportedWGL(<emphasis role="stringliteral">&quot;WGL_EXT_create_context_es2_profile&quot;</emphasis>);
+500 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.ARB_create_context_robustness&#32;=
+501 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionSupportedWGL(<emphasis role="stringliteral">&quot;WGL_ARB_create_context_robustness&quot;</emphasis>);
+502 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.ARB_create_context_no_error&#32;=
+503 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionSupportedWGL(<emphasis role="stringliteral">&quot;WGL_ARB_create_context_no_error&quot;</emphasis>);
+504 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.EXT_swap_control&#32;=
+505 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionSupportedWGL(<emphasis role="stringliteral">&quot;WGL_EXT_swap_control&quot;</emphasis>);
+506 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.EXT_colorspace&#32;=
+507 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionSupportedWGL(<emphasis role="stringliteral">&quot;WGL_EXT_colorspace&quot;</emphasis>);
+508 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.ARB_pixel_format&#32;=
+509 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionSupportedWGL(<emphasis role="stringliteral">&quot;WGL_ARB_pixel_format&quot;</emphasis>);
+510 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.ARB_context_flush_control&#32;=
+511 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;extensionSupportedWGL(<emphasis role="stringliteral">&quot;WGL_ARB_context_flush_control&quot;</emphasis>);
+512 
+513 &#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1a2aa491735fbf4ee7df91c6a7cef32d5d">wglMakeCurrent</link>(pdc,&#32;prc);
+514 &#32;&#32;&#32;&#32;<link linkend="_win32__platform_8h_1aab1f95aa242eec7e28d7bc559b7e1d3b">wglDeleteContext</link>(<link linkend="_truetype__test__win32_8c_1a474d98ad521f5aad6b7f75b8de66a1e0">rc</link>);
+515 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+516 }
+</programlisting>    </section><anchor xml:id="_wgl__context_8c_1a441ed61fa295e53fca605f2e00c51e83"/>    <section>
+    <title>_glfwTerminateWGL()</title>
+<indexterm><primary>_glfwTerminateWGL</primary><secondary>wgl_context.c</secondary></indexterm>
+<indexterm><primary>wgl_context.c</primary><secondary>_glfwTerminateWGL</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwTerminateWGL (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 520 of file wgl_context.c.</para>
+<programlisting>521 {
+522 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.instance)
+523 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ad4b9e48b150850f6ee00874f85036715">_glfwPlatformFreeModule</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wgl.instance);
+524 }
+</programlisting>    </section><anchor xml:id="_wgl__context_8c_1aea24bcc9541e5d67c3e9f414b4688221"/>    <section>
+    <title>glfwGetWGLContext()</title>
+<indexterm><primary>glfwGetWGLContext</primary><secondary>wgl_context.c</secondary></indexterm>
+<indexterm><primary>wgl_context.c</primary><secondary>glfwGetWGLContext</secondary></indexterm>
+<para><computeroutput><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> HGLRC glfwGetWGLContext (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> * handle)</computeroutput></para><para>
+Definition at line 770 of file wgl_context.c.</para>
+<programlisting>771 {
+772 &#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link>*&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;(<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link>*)&#32;handle;
+773 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a69563c87fe776d416636a4d1b0e9e599">_GLFW_REQUIRE_INIT_OR_RETURN</link>(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+774 
+775 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>.<link linkend="_struct___g_l_f_wplatform_1adadc0cac5c197cc28788bc4993a9f6da">platformID</link>&#32;!=&#32;<link linkend="_group__init_1ga8d3d17df2ab57492cef665da52c603a1">GLFW_PLATFORM_WIN32</link>)
+776 &#32;&#32;&#32;&#32;{
+777 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga3608c6c29ab7a72f3bf019f4c3a2563d">GLFW_PLATFORM_UNAVAILABLE</link>,
+778 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;WGL:&#32;Platform&#32;not&#32;initialized&quot;</emphasis>);
+779 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+780 &#32;&#32;&#32;&#32;}
+781 
+782 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.source&#32;!=&#32;<link linkend="_glfw3_8h_1a0494c9bfd3f584ab41e6dbeeaa0e6a19">GLFW_NATIVE_CONTEXT_API</link>)
+783 &#32;&#32;&#32;&#32;{
+784 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gacff24d2757da752ae4c80bf452356487">GLFW_NO_WINDOW_CONTEXT</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+785 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+786 &#32;&#32;&#32;&#32;}
+787 
+788 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.wgl.handle;
+789 }
+</programlisting></section>
+</section>
+</section>

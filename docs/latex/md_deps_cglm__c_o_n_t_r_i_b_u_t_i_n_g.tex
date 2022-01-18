@@ -1,0 +1,66 @@
+Any contributions (code, documentation, ...) are welcome.\hypertarget{md_deps_cglm__c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md1}{}\doxysection{New Features}\label{md_deps_cglm__c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md1}
+
+\begin{DoxyItemize}
+\item This library may not accept all new features, it is better to create an issue and get approval before coding
+\item You must add test for every new feature
+\item The feature must be compiled on both U\+N\+I\+X/\+P\+O\+S\+IX systems (e.\+g. macos, linux...) and Windows
+\end{DoxyItemize}\hypertarget{md_deps_cglm__c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md2}{}\doxysection{Code Style}\label{md_deps_cglm__c_o_n_t_r_i_b_u_t_i_n_g_autotoc_md2}
+This library is written with C99, don\textquotesingle{}t try to add C++ files (yes it can compiled into lib), if you have enough reason to add C++ files than create an issue and get approval before coding,
+
+
+\begin{DoxyItemize}
+\item All functions must have {\ttfamily glm} prefix
+\item Lines should be wrapped at 80 characters.
+\item Don\textquotesingle{}t invent new style for existing ones
+\item Use C89 style comments ({\ttfamily /$\ast$ comments $\ast$/}) not C++ style comments ({\ttfamily // comments})
+\item Don\textquotesingle{}t use T\+A\+Bs instead use 2 spaces for T\+A\+Bs
+\item All indents must be 2 spaces, not 1 nor 4 space
+\item All functions in {\ttfamily include} folder must be exported by {\ttfamily C\+G\+L\+M\+\_\+\+E\+X\+P\+O\+RT} and wrapped by {\ttfamily extern \char`\"{}\+C\char`\"{} \{} for C++
+\item Crate new line for return type, attribs\+:
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{CGLM\_INLINE}}}
+\DoxyCodeLine{\textcolor{keywordtype}{void}}
+\DoxyCodeLine{\mbox{\hyperlink{affine-mat_8h_a7b037f8a0cc9322c8e39e23d5aa5a678}{glm\_mul}}(\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} m1, \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} m2, \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} dest)}
+\end{DoxyCode}
+
+
+not acceptable\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{CGLM\_INLINE}} \textcolor{keywordtype}{void} \mbox{\hyperlink{affine-mat_8h_a7b037f8a0cc9322c8e39e23d5aa5a678}{glm\_mul}}(\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} m1, \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} m2, \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} dest)}
+\end{DoxyCode}
+
+
+
+\begin{DoxyItemize}
+\item Variables must be declared at the top of a scope before usage\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} \mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}};}
+\DoxyCodeLine{\textcolor{keywordtype}{int} \mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}} = \mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}} = 0;}
+\end{DoxyCode}
+
+\end{DoxyItemize}
+
+not acceptable\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} \mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}} = 0;}
+\DoxyCodeLine{\textcolor{keywordtype}{int} \mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}} = 0;}
+\end{DoxyCode}
+
+
+
+\begin{DoxyItemize}
+\item All files must retain same L\+I\+C\+E\+N\+SE statement
+\item Code with warnings will not be accepted, please suppress them (not by disabling them)
+\item Run code anaylysis before submitting pull requests, if you use Xcode you can enable Sanitizer in scheme, you can use valgrind in linux 
+\end{DoxyItemize}

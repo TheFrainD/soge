@@ -1,0 +1,77 @@
+\hypertarget{posix__time_8c}{}\doxysection{deps/glfw/src/posix\+\_\+time.c File Reference}
+\label{posix__time_8c}\index{deps/glfw/src/posix\_time.c@{deps/glfw/src/posix\_time.c}}
+{\ttfamily \#include \char`\"{}internal.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$sys/time.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{posix__time_8c_a6029c1379e357d7b4e8836e1c1ad2fa2}{\+\_\+glfw\+Platform\+Init\+Timer}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{stdint_8h_aec6fcb673ff035718c238c8c9d544c47}{uint64\+\_\+t}} \mbox{\hyperlink{posix__time_8c_a5ee7e09b380d3afdd3c2738b726a2a6e}{\+\_\+glfw\+Platform\+Get\+Timer\+Value}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{stdint_8h_aec6fcb673ff035718c238c8c9d544c47}{uint64\+\_\+t}} \mbox{\hyperlink{posix__time_8c_ab3fe69b1eec5554114fe774623a15137}{\+\_\+glfw\+Platform\+Get\+Timer\+Frequency}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{posix__time_8c_ab3fe69b1eec5554114fe774623a15137}\label{posix__time_8c_ab3fe69b1eec5554114fe774623a15137}} 
+\index{posix\_time.c@{posix\_time.c}!\_glfwPlatformGetTimerFrequency@{\_glfwPlatformGetTimerFrequency}}
+\index{\_glfwPlatformGetTimerFrequency@{\_glfwPlatformGetTimerFrequency}!posix\_time.c@{posix\_time.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwPlatformGetTimerFrequency()}{\_glfwPlatformGetTimerFrequency()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stdint_8h_aec6fcb673ff035718c238c8c9d544c47}{uint64\+\_\+t}} \+\_\+glfw\+Platform\+Get\+Timer\+Frequency (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 59 of file posix\+\_\+time.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{60 \{}
+\DoxyCodeLine{61     \textcolor{keywordflow}{return} \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_aad3e22c47c3095922e6bcbab7f4fe113}{timer}}.posix.frequency;}
+\DoxyCodeLine{62 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{posix__time_8c_a5ee7e09b380d3afdd3c2738b726a2a6e}\label{posix__time_8c_a5ee7e09b380d3afdd3c2738b726a2a6e}} 
+\index{posix\_time.c@{posix\_time.c}!\_glfwPlatformGetTimerValue@{\_glfwPlatformGetTimerValue}}
+\index{\_glfwPlatformGetTimerValue@{\_glfwPlatformGetTimerValue}!posix\_time.c@{posix\_time.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwPlatformGetTimerValue()}{\_glfwPlatformGetTimerValue()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stdint_8h_aec6fcb673ff035718c238c8c9d544c47}{uint64\+\_\+t}} \+\_\+glfw\+Platform\+Get\+Timer\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 52 of file posix\+\_\+time.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{53 \{}
+\DoxyCodeLine{54     \textcolor{keyword}{struct }timespec ts;}
+\DoxyCodeLine{55     clock\_gettime(\mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_aad3e22c47c3095922e6bcbab7f4fe113}{timer}}.posix.clock, \&ts);}
+\DoxyCodeLine{56     \textcolor{keywordflow}{return} (\mbox{\hyperlink{stdint_8h_aec6fcb673ff035718c238c8c9d544c47}{uint64\_t}}) ts.tv\_sec * \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_aad3e22c47c3095922e6bcbab7f4fe113}{timer}}.posix.frequency + (\mbox{\hyperlink{stdint_8h_aec6fcb673ff035718c238c8c9d544c47}{uint64\_t}}) ts.tv\_nsec;}
+\DoxyCodeLine{57 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{posix__time_8c_a6029c1379e357d7b4e8836e1c1ad2fa2}\label{posix__time_8c_a6029c1379e357d7b4e8836e1c1ad2fa2}} 
+\index{posix\_time.c@{posix\_time.c}!\_glfwPlatformInitTimer@{\_glfwPlatformInitTimer}}
+\index{\_glfwPlatformInitTimer@{\_glfwPlatformInitTimer}!posix\_time.c@{posix\_time.c}}
+\doxysubsubsection{\texorpdfstring{\_glfwPlatformInitTimer()}{\_glfwPlatformInitTimer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \+\_\+glfw\+Platform\+Init\+Timer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 40 of file posix\+\_\+time.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{41 \{}
+\DoxyCodeLine{42     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_aad3e22c47c3095922e6bcbab7f4fe113}{timer}}.posix.clock = CLOCK\_REALTIME;}
+\DoxyCodeLine{43     \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_aad3e22c47c3095922e6bcbab7f4fe113}{timer}}.posix.frequency = 1000000000;}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#if defined(\_POSIX\_MONOTONIC\_CLOCK)}}
+\DoxyCodeLine{46     \textcolor{keyword}{struct }timespec ts;}
+\DoxyCodeLine{47     \textcolor{keywordflow}{if} (clock\_gettime(CLOCK\_MONOTONIC, \&ts) == 0)}
+\DoxyCodeLine{48         \mbox{\hyperlink{init_8c_a3007bc654ca6468ee69759007f70ba1e}{\_glfw}}.\mbox{\hyperlink{struct___g_l_f_wlibrary_aad3e22c47c3095922e6bcbab7f4fe113}{timer}}.posix.clock = CLOCK\_MONOTONIC;}
+\DoxyCodeLine{49 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{50 \}}
+
+\end{DoxyCode}

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['window_5fstate_0',['window_state',['../structwindow__state.html',1,'']]]
+  ['log_5fevent_21922',['log_Event',['../structlog___event.html',1,'']]]
 ];

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_time_8c">
+<title>src/vally/core/time.c File Reference</title>
+<indexterm><primary>src/vally/core/time.c</primary></indexterm>
+<programlisting>#include &lt;vally/core/time.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a94dab5770726ccbef8c7d026cfbdf8e5">f64</link> <link linkend="_time_8c_1a40c527fa3a4dfe786ce3f977c78e653a">time_now</link> ()</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_time_8c_1a40c527fa3a4dfe786ce3f977c78e653a"/>    <section>
+    <title>time_now()</title>
+<indexterm><primary>time_now</primary><secondary>time.c</secondary></indexterm>
+<indexterm><primary>time.c</primary><secondary>time_now</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a94dab5770726ccbef8c7d026cfbdf8e5">f64</link> time_now ( )</computeroutput></para><para>
+Definition at line 26 of file time.c.</para>
+<programlisting>26 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+27 <emphasis role="preprocessor">#ifdef&#32;__linux__</emphasis>
+28 &#32;&#32;<emphasis role="keyword">struct&#32;</emphasis>timespec&#32;now;
+29 &#32;&#32;clock_gettime(CLOCK_MONOTONIC,&#32;&amp;now);
+30 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;now.tv_sec&#32;+&#32;now.tv_nsec&#32;*&#32;0.000000001;
+31 <emphasis role="preprocessor">#endif</emphasis>
+32 
+33 <emphasis role="preprocessor">#ifdef&#32;_WIN32</emphasis>
+34 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!clock_frequency)&#32;{
+35 &#32;&#32;&#32;&#32;time_init();
+36 &#32;&#32;}
+37 
+38 &#32;&#32;LARGE_INTEGER&#32;now_time;
+39 &#32;&#32;QueryPerformanceCounter(&amp;now_time);
+40 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;(<link linkend="_include_2vally_2config_8h_1a94dab5770726ccbef8c7d026cfbdf8e5">f64</link>)now_time.QuadPart&#32;*&#32;clock_frequency;
+41 <emphasis role="preprocessor">#endif</emphasis>
+42 }
+</programlisting></section>
+</section>
+</section>

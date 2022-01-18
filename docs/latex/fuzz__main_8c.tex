@@ -1,0 +1,114 @@
+\hypertarget{fuzz__main_8c}{}\doxysection{deps/stb/tests/fuzz\+\_\+main.c File Reference}
+\label{fuzz__main_8c}\index{deps/stb/tests/fuzz\_main.c@{deps/stb/tests/fuzz\_main.c}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{fuzz__main_8c_a91ce7c16e9840492202299da2b451e60}{L\+L\+V\+M\+Fuzzer\+Test\+One\+Input}} (const \mbox{\hyperlink{stdint_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} $\ast$\mbox{\hyperlink{glad_8h_a41a8247b39e9cdb744299c3331ca3453}{data}}, size\+\_\+t \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}})
+\item 
+int \mbox{\hyperlink{fuzz__main_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{fuzz__main_8c_a91ce7c16e9840492202299da2b451e60}\label{fuzz__main_8c_a91ce7c16e9840492202299da2b451e60}} 
+\index{fuzz\_main.c@{fuzz\_main.c}!LLVMFuzzerTestOneInput@{LLVMFuzzerTestOneInput}}
+\index{LLVMFuzzerTestOneInput@{LLVMFuzzerTestOneInput}!fuzz\_main.c@{fuzz\_main.c}}
+\doxysubsubsection{\texorpdfstring{LLVMFuzzerTestOneInput()}{LLVMFuzzerTestOneInput()}}
+{\footnotesize\ttfamily int L\+L\+V\+M\+Fuzzer\+Test\+One\+Input (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{stdint_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} $\ast$}]{data,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+
+
+Definition at line 48 of file stb\+\_\+c\+\_\+lexer\+\_\+fuzzer.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{49 \{}
+\DoxyCodeLine{50   \textcolor{keywordflow}{if}(\mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}}<3)\{}
+\DoxyCodeLine{51     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{52   \}}
+\DoxyCodeLine{53   \textcolor{keywordtype}{char} *input\_stream = (\textcolor{keywordtype}{char} *)\mbox{\hyperlink{stb__leakcheck_8h_ac71ce303a4b993665ae00f1e1293ba8b}{malloc}}(\mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}});}
+\DoxyCodeLine{54   \textcolor{keywordflow}{if} (input\_stream == \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}})\{}
+\DoxyCodeLine{55     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{56   \}}
+\DoxyCodeLine{57   memcpy(input\_stream, \mbox{\hyperlink{glad_8h_a41a8247b39e9cdb744299c3331ca3453}{data}}, \mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}});}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59   \mbox{\hyperlink{structstb__lexer}{stb\_lexer}} lex;}
+\DoxyCodeLine{60   \textcolor{keywordtype}{char} *input\_end = input\_stream+\mbox{\hyperlink{glad_8h_a3d1e3edfcf61ca2d831883e1afbad89e}{size}}-\/1;}
+\DoxyCodeLine{61   \textcolor{keywordtype}{char} *store = (\textcolor{keywordtype}{char} *)\mbox{\hyperlink{stb__leakcheck_8h_ac71ce303a4b993665ae00f1e1293ba8b}{malloc}}(0x10000);}
+\DoxyCodeLine{62   \textcolor{keywordtype}{int} \mbox{\hyperlink{glext_8h_a652168017ea9a8bbcead03d5c16269fb}{len}} = 0x10000;}
+\DoxyCodeLine{63   }
+\DoxyCodeLine{64   \mbox{\hyperlink{stb__c__lexer_8h_aceb0ec34ddd2da2ccce7648fa26494ee}{stb\_c\_lexer\_init}}(\&lex, input\_stream, input\_end, store, \mbox{\hyperlink{glext_8h_a652168017ea9a8bbcead03d5c16269fb}{len}});}
+\DoxyCodeLine{65   \textcolor{keywordflow}{while} (\mbox{\hyperlink{stb__c__lexer_8h_aa99130f041253ed326a09e3dcb865ec1}{stb\_c\_lexer\_get\_token}}(\&lex)) \{}
+\DoxyCodeLine{66     \textcolor{keywordflow}{if} (lex.\mbox{\hyperlink{structstb__lexer_afcdc0f31aa0f0ed2d7eeef7262f395da}{token}} == \mbox{\hyperlink{stb__c__lexer_8h_a2f80701c36e79c0640d91c788feee0b3a78dbfa9627c833153a5a17442a3a7c1c}{CLEX\_parse\_error}}) \{}
+\DoxyCodeLine{67       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{68     \}}
+\DoxyCodeLine{69   \}}
+\DoxyCodeLine{70   }
+\DoxyCodeLine{71   \mbox{\hyperlink{stb__leakcheck_8h_a9d4b5df3530d1bc733070a4669ba6ebc}{free}}(input\_stream);}
+\DoxyCodeLine{72   \mbox{\hyperlink{stb__leakcheck_8h_a9d4b5df3530d1bc733070a4669ba6ebc}{free}}(store);}
+\DoxyCodeLine{73   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{74 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{fuzz__main_8c_a3c04138a5bfe5d72780bb7e82a18e627}\label{fuzz__main_8c_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{fuzz\_main.c@{fuzz\_main.c}!main@{main}}
+\index{main@{main}!fuzz\_main.c@{fuzz\_main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+Definition at line 9 of file fuzz\+\_\+main.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{10 \{}
+\DoxyCodeLine{11     FILE *\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}};}
+\DoxyCodeLine{12     \textcolor{keywordtype}{char} *\mbox{\hyperlink{glad_8h_aa3b73d9ca9f2e2396cbeae1ce6ce14be}{buf}} = \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}};}
+\DoxyCodeLine{13     \textcolor{keywordtype}{long} siz\_buf;}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15     \textcolor{keywordflow}{if}(argc < 2)}
+\DoxyCodeLine{16     \{}
+\DoxyCodeLine{17         fprintf(stderr, \textcolor{stringliteral}{"no input file\(\backslash\)n"});}
+\DoxyCodeLine{18         \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{19     \}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} = fopen(argv[1], \textcolor{stringliteral}{"rb"});}
+\DoxyCodeLine{22     \textcolor{keywordflow}{if}(\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} == \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}})}
+\DoxyCodeLine{23     \{}
+\DoxyCodeLine{24         fprintf(stderr, \textcolor{stringliteral}{"error opening input file \%s\(\backslash\)n"}, argv[1]);}
+\DoxyCodeLine{25         \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{26     \}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28     fseek(\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, 0, SEEK\_END);}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30     siz\_buf = ftell(\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}});}
+\DoxyCodeLine{31     rewind(\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}});}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33     \textcolor{keywordflow}{if}(siz\_buf < 1) \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \mbox{\hyperlink{glad_8h_aa3b73d9ca9f2e2396cbeae1ce6ce14be}{buf}} = (\textcolor{keywordtype}{char}*)\mbox{\hyperlink{stb__leakcheck_8h_ac71ce303a4b993665ae00f1e1293ba8b}{malloc}}((\textcolor{keywordtype}{size\_t})siz\_buf);}
+\DoxyCodeLine{36     \textcolor{keywordflow}{if}(\mbox{\hyperlink{glad_8h_aa3b73d9ca9f2e2396cbeae1ce6ce14be}{buf}} == \mbox{\hyperlink{include_2vally_2config_8h_a070d2ce7b6bb7e5c05602aa8c308d0c4}{NULL}})}
+\DoxyCodeLine{37     \{}
+\DoxyCodeLine{38         fprintf(stderr, \textcolor{stringliteral}{"malloc() failed\(\backslash\)n"});}
+\DoxyCodeLine{39         \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{40     \}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{keywordflow}{if}(fread(\mbox{\hyperlink{glad_8h_aa3b73d9ca9f2e2396cbeae1ce6ce14be}{buf}}, (\textcolor{keywordtype}{size\_t})siz\_buf, 1, \mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}) != 1)}
+\DoxyCodeLine{43     \{}
+\DoxyCodeLine{44         fprintf(stderr, \textcolor{stringliteral}{"fread() failed\(\backslash\)n"});}
+\DoxyCodeLine{45         \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{46     \}}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     (\mbox{\hyperlink{glad_8h_aef30cfca5b4a4c292babb2f60f6d3296}{void}})\mbox{\hyperlink{fuzz__main_8c_a91ce7c16e9840492202299da2b451e60}{LLVMFuzzerTestOneInput}}((\mbox{\hyperlink{stdint_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\_t}}*)\mbox{\hyperlink{glad_8h_aa3b73d9ca9f2e2396cbeae1ce6ce14be}{buf}}, (size\_t)siz\_buf);}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 err:}
+\DoxyCodeLine{51     \mbox{\hyperlink{stb__leakcheck_8h_a9d4b5df3530d1bc733070a4669ba6ebc}{free}}(\mbox{\hyperlink{glad_8h_aa3b73d9ca9f2e2396cbeae1ce6ce14be}{buf}});}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{54 \}}
+
+\end{DoxyCode}

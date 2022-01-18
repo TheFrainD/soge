@@ -1,0 +1,246 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_cocoa__joystick_8m">
+<title>deps/glfw/src/cocoa_joystick.m File Reference</title>
+<indexterm><primary>deps/glfw/src/cocoa_joystick.m</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+#include &lt;unistd.h&gt;
+#include &lt;ctype.h&gt;
+#include &lt;string.h&gt;
+#include &lt;mach/mach.h&gt;
+#include &lt;mach/mach_error.h&gt;
+#include &lt;CoreFoundation/CoreFoundation.h&gt;
+#include &lt;Kernel/IOKit/hidsystem/IOHIDUsageTables.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_struct___g_l_f_wjoyelement_n_s">_GLFWjoyelementNS</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Typedefs    </title>
+        <itemizedlist>
+            <listitem><para>typedef struct <link linkend="_struct___g_l_f_wjoyelement_n_s">_GLFWjoyelementNS</link> <link linkend="_cocoa__joystick_8m_1ab6bd3da6c56b26813c15b18611077df1">_GLFWjoyelementNS</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_cocoa__joystick_8m_1ac8c394752f844948b4582ee0d04106d3">_glfwInitJoysticksCocoa</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cocoa__joystick_8m_1a5a66e720d7aee763c2edef561cc025e6">_glfwTerminateJoysticksCocoa</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_cocoa__joystick_8m_1abc598b49388a340c69b8699a15e6d783">_glfwPollJoystickCocoa</link> (<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link> *js, int <link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>)</para>
+</listitem>
+            <listitem><para>const char * <link linkend="_cocoa__joystick_8m_1ab1d60c8a6033cac7370e423c54f9cf66">_glfwGetMappingNameCocoa</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_cocoa__joystick_8m_1a87f3fa1e202e7ba6872cae9a5a18accd">_glfwUpdateGamepadGUIDCocoa</link> (char *guid)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Typedef Documentation</title>
+<anchor xml:id="_cocoa__joystick_8m_1ab6bd3da6c56b26813c15b18611077df1"/>    <section>
+    <title>_GLFWjoyelementNS</title>
+<indexterm><primary>_GLFWjoyelementNS</primary><secondary>cocoa_joystick.m</secondary></indexterm>
+<indexterm><primary>cocoa_joystick.m</primary><secondary>_GLFWjoyelementNS</secondary></indexterm>
+<para><computeroutput>typedef struct <link linkend="_struct___g_l_f_wjoyelement_n_s">_GLFWjoyelementNS</link> <link linkend="_struct___g_l_f_wjoyelement_n_s">_GLFWjoyelementNS</link></computeroutput></para></section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_cocoa__joystick_8m_1ab1d60c8a6033cac7370e423c54f9cf66"/>    <section>
+    <title>_glfwGetMappingNameCocoa()</title>
+<indexterm><primary>_glfwGetMappingNameCocoa</primary><secondary>cocoa_joystick.m</secondary></indexterm>
+<indexterm><primary>cocoa_joystick.m</primary><secondary>_glfwGetMappingNameCocoa</secondary></indexterm>
+<para><computeroutput>const char* _glfwGetMappingNameCocoa (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 461 of file cocoa_joystick.m.</para>
+<programlisting>462 {
+463 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="stringliteral">&quot;Mac&#32;OS&#32;X&quot;</emphasis>;
+464 }
+</programlisting>    </section><anchor xml:id="_cocoa__joystick_8m_1ac8c394752f844948b4582ee0d04106d3"/>    <section>
+    <title>_glfwInitJoysticksCocoa()</title>
+<indexterm><primary>_glfwInitJoysticksCocoa</primary><secondary>cocoa_joystick.m</secondary></indexterm>
+<indexterm><primary>cocoa_joystick.m</primary><secondary>_glfwInitJoysticksCocoa</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwInitJoysticksCocoa (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 305 of file cocoa_joystick.m.</para>
+<programlisting>306 {
+307 &#32;&#32;&#32;&#32;CFMutableArrayRef&#32;matching;
+308 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">long</emphasis>&#32;usages[]&#32;=
+309 &#32;&#32;&#32;&#32;{
+310 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;kHIDUsage_GD_Joystick,
+311 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;kHIDUsage_GD_GamePad,
+312 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;kHIDUsage_GD_MultiAxisController
+313 &#32;&#32;&#32;&#32;};
+314 
+315 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.hidManager&#32;=&#32;IOHIDManagerCreate(kCFAllocatorDefault,
+316 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;kIOHIDOptionsTypeNone);
+317 
+318 &#32;&#32;&#32;&#32;matching&#32;=&#32;CFArrayCreateMutable(kCFAllocatorDefault,
+319 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0,
+320 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;kCFTypeArrayCallBacks);
+321 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!matching)
+322 &#32;&#32;&#32;&#32;{
+323 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,&#32;<emphasis role="stringliteral">&quot;Cocoa:&#32;Failed&#32;to&#32;create&#32;array&quot;</emphasis>);
+324 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+325 &#32;&#32;&#32;&#32;}
+326 
+327 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">size_t</emphasis>&#32;i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;<emphasis role="keyword">sizeof</emphasis>(usages)&#32;/&#32;<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keywordtype">long</emphasis>);&#32;&#32;i++)
+328 &#32;&#32;&#32;&#32;{
+329 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">long</emphasis>&#32;page&#32;=&#32;kHIDPage_GenericDesktop;
+330 
+331 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFMutableDictionaryRef&#32;dict&#32;=
+332 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFDictionaryCreateMutable(kCFAllocatorDefault,
+333 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0,
+334 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;kCFTypeDictionaryKeyCallBacks,
+335 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;kCFTypeDictionaryValueCallBacks);
+336 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!dict)
+337 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+338 
+339 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFNumberRef&#32;pageRef&#32;=&#32;CFNumberCreate(kCFAllocatorDefault,
+340 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;kCFNumberLongType,
+341 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;page);
+342 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFNumberRef&#32;usageRef&#32;=&#32;CFNumberCreate(kCFAllocatorDefault,
+343 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;kCFNumberLongType,
+344 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;usages[i]);
+345 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(pageRef&#32;&amp;&amp;&#32;usageRef)
+346 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+347 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFDictionarySetValue(dict,
+348 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFSTR(kIOHIDDeviceUsagePageKey),
+349 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pageRef);
+350 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFDictionarySetValue(dict,
+351 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFSTR(kIOHIDDeviceUsageKey),
+352 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;usageRef);
+353 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFArrayAppendValue(matching,&#32;dict);
+354 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+355 
+356 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(pageRef)
+357 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFRelease(pageRef);
+358 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(usageRef)
+359 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFRelease(usageRef);
+360 
+361 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFRelease(dict);
+362 &#32;&#32;&#32;&#32;}
+363 
+364 &#32;&#32;&#32;&#32;IOHIDManagerSetDeviceMatchingMultiple(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.hidManager,&#32;matching);
+365 &#32;&#32;&#32;&#32;CFRelease(matching);
+366 
+367 &#32;&#32;&#32;&#32;IOHIDManagerRegisterDeviceMatchingCallback(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.hidManager,
+368 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;matchCallback,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+369 &#32;&#32;&#32;&#32;IOHIDManagerRegisterDeviceRemovalCallback(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.hidManager,
+370 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;removeCallback,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+371 &#32;&#32;&#32;&#32;IOHIDManagerScheduleWithRunLoop(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.hidManager,
+372 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFRunLoopGetMain(),
+373 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;kCFRunLoopDefaultMode);
+374 &#32;&#32;&#32;&#32;IOHIDManagerOpen(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.hidManager,&#32;kIOHIDOptionsTypeNone);
+375 
+376 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Execute&#32;the&#32;run&#32;loop&#32;once&#32;in&#32;order&#32;to&#32;register&#32;any&#32;initially-attached</emphasis>
+377 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;joysticks</emphasis>
+378 &#32;&#32;&#32;&#32;CFRunLoopRunInMode(kCFRunLoopDefaultMode,&#32;0,&#32;<emphasis role="keyword">false</emphasis>);
+379 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+380 }
+</programlisting>    </section><anchor xml:id="_cocoa__joystick_8m_1abc598b49388a340c69b8699a15e6d783"/>    <section>
+    <title>_glfwPollJoystickCocoa()</title>
+<indexterm><primary>_glfwPollJoystickCocoa</primary><secondary>cocoa_joystick.m</secondary></indexterm>
+<indexterm><primary>cocoa_joystick.m</primary><secondary>_glfwPollJoystickCocoa</secondary></indexterm>
+<para><computeroutput>int _glfwPollJoystickCocoa (<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link> * js, int mode)</computeroutput></para><para>
+Definition at line 395 of file cocoa_joystick.m.</para>
+<programlisting>396 {
+397 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>&#32;&amp;&#32;<link linkend="_internal_8h_1a0acae8f66cc17e577defec7b7f3ffaa9">_GLFW_POLL_AXES</link>)
+398 &#32;&#32;&#32;&#32;{
+399 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(CFIndex&#32;i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;CFArrayGetCount(js-&gt;ns.<link linkend="_struct___g_l_f_wjoystick_1a9412079f36e6531022d5fcb9efa3a156">axes</link>);&#32;&#32;i++)
+400 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+401 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wjoyelement_n_s">_GLFWjoyelementNS</link>*&#32;axis&#32;=&#32;(<link linkend="_struct___g_l_f_wjoyelement_n_s">_GLFWjoyelementNS</link>*)
+402 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFArrayGetValueAtIndex(js-&gt;ns.<link linkend="_struct___g_l_f_wjoystick_1a9412079f36e6531022d5fcb9efa3a156">axes</link>,&#32;i);
+403 
+404 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">long</emphasis>&#32;raw&#32;=&#32;getElementValue(js,&#32;axis);
+405 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Perform&#32;auto&#32;calibration</emphasis>
+406 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(raw&#32;&lt;&#32;axis-&gt;minimum)
+407 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;axis-&gt;<link linkend="_struct___g_l_f_wjoyelement_n_s_1ab4b205185de993506724cb6a23052c26">minimum</link>&#32;=&#32;raw;
+408 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(raw&#32;&gt;&#32;axis-&gt;<link linkend="_struct___g_l_f_wjoyelement_n_s_1a56c12fe459762d99416dab04d02e0d49">maximum</link>)
+409 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;axis-&gt;<link linkend="_struct___g_l_f_wjoyelement_n_s_1a56c12fe459762d99416dab04d02e0d49">maximum</link>&#32;=&#32;raw;
+410 
+411 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">long</emphasis>&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&#32;=&#32;axis-&gt;<link linkend="_struct___g_l_f_wjoyelement_n_s_1a56c12fe459762d99416dab04d02e0d49">maximum</link>&#32;-&#32;axis-&gt;minimum;
+412 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&#32;==&#32;0)
+413 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1ab91e3f3a89daff3809c3817a57a4f523">_glfwInputJoystickAxis</link>(js,&#32;(<emphasis role="keywordtype">int</emphasis>)&#32;i,&#32;0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+414 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+415 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+416 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">float</emphasis>&#32;<link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>&#32;=&#32;(2.f&#32;*&#32;(raw&#32;-&#32;axis-&gt;minimum)&#32;/&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)&#32;-&#32;1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>;
+417 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1ab91e3f3a89daff3809c3817a57a4f523">_glfwInputJoystickAxis</link>(js,&#32;(<emphasis role="keywordtype">int</emphasis>)&#32;i,&#32;<link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>);
+418 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+419 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+420 &#32;&#32;&#32;&#32;}
+421 
+422 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>&#32;&amp;&#32;<link linkend="_internal_8h_1a92d2619dac62f3f6a7585562f3ab24a5">_GLFW_POLL_BUTTONS</link>)
+423 &#32;&#32;&#32;&#32;{
+424 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(CFIndex&#32;i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;CFArrayGetCount(js-&gt;ns.<link linkend="_struct___g_l_f_wjoystick_1acb06a7749913576f172ea34950b8ec1c">buttons</link>);&#32;&#32;i++)
+425 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+426 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wjoyelement_n_s">_GLFWjoyelementNS</link>*&#32;button&#32;=&#32;(<link linkend="_struct___g_l_f_wjoyelement_n_s">_GLFWjoyelementNS</link>*)
+427 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFArrayGetValueAtIndex(js-&gt;ns.<link linkend="_struct___g_l_f_wjoystick_1acb06a7749913576f172ea34950b8ec1c">buttons</link>,&#32;i);
+428 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>&#32;=&#32;getElementValue(js,&#32;button)&#32;-&#32;button-&gt;minimum;
+429 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;state&#32;=&#32;(<link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>&#32;&gt;&#32;0)&#32;?&#32;<link linkend="_group__input_1ga2485743d0b59df3791c45951c4195265">GLFW_PRESS</link>&#32;:&#32;<link linkend="_group__input_1gada11d965c4da13090ad336e030e4d11f">GLFW_RELEASE</link>;
+430 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1af1048006805591e17cc431c016f539f5">_glfwInputJoystickButton</link>(js,&#32;(<emphasis role="keywordtype">int</emphasis>)&#32;i,&#32;state);
+431 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+432 
+433 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(CFIndex&#32;i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;CFArrayGetCount(js-&gt;ns.<link linkend="_struct___g_l_f_wjoystick_1a84e345346f70340100edf3a715fd11f0">hats</link>);&#32;&#32;i++)
+434 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+435 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;states[9]&#32;=
+436 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+437 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__hat__state_1ga8c9720c76cd1b912738159ed74c85b36">GLFW_HAT_UP</link>,
+438 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__hat__state_1ga94aea0ae241a8b902883536c592ee693">GLFW_HAT_RIGHT_UP</link>,
+439 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__hat__state_1ga252586e3bbde75f4b0e07ad3124867f5">GLFW_HAT_RIGHT</link>,
+440 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__hat__state_1gad7f0e4f52fd68d734863aaeadab3a3f5">GLFW_HAT_RIGHT_DOWN</link>,
+441 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__hat__state_1gad60d1fd0dc85c18f2642cbae96d3deff">GLFW_HAT_DOWN</link>,
+442 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__hat__state_1ga76c02baf1ea345fcbe3e8ff176a73e19">GLFW_HAT_LEFT_DOWN</link>,
+443 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__hat__state_1gac775f4b3154fdf5db93eb432ba546dff">GLFW_HAT_LEFT</link>,
+444 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__hat__state_1ga638f0e20dc5de90de21a33564e8ce129">GLFW_HAT_LEFT_UP</link>,
+445 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__hat__state_1gae2c0bcb7aec609e4736437554f6638fd">GLFW_HAT_CENTERED</link>
+446 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;};
+447 
+448 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wjoyelement_n_s">_GLFWjoyelementNS</link>*&#32;hat&#32;=&#32;(<link linkend="_struct___g_l_f_wjoyelement_n_s">_GLFWjoyelementNS</link>*)
+449 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFArrayGetValueAtIndex(js-&gt;ns.<link linkend="_struct___g_l_f_wjoystick_1a84e345346f70340100edf3a715fd11f0">hats</link>,&#32;i);
+450 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">long</emphasis>&#32;state&#32;=&#32;getElementValue(js,&#32;hat)&#32;-&#32;hat-&gt;minimum;
+451 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(state&#32;&lt;&#32;0&#32;||&#32;state&#32;&gt;&#32;8)
+452 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;state&#32;=&#32;8;
+453 
+454 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1aca3d4e257b8212cf2a713f9a1069ff08">_glfwInputJoystickHat</link>(js,&#32;(<emphasis role="keywordtype">int</emphasis>)&#32;i,&#32;states[state]);
+455 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+456 &#32;&#32;&#32;&#32;}
+457 
+458 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a88a2e71ed9c3be6eca850577a104d611">present</link>;
+459 }
+</programlisting>    </section><anchor xml:id="_cocoa__joystick_8m_1a5a66e720d7aee763c2edef561cc025e6"/>    <section>
+    <title>_glfwTerminateJoysticksCocoa()</title>
+<indexterm><primary>_glfwTerminateJoysticksCocoa</primary><secondary>cocoa_joystick.m</secondary></indexterm>
+<indexterm><primary>cocoa_joystick.m</primary><secondary>_glfwTerminateJoysticksCocoa</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwTerminateJoysticksCocoa (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 382 of file cocoa_joystick.m.</para>
+<programlisting>383 {
+384 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;jid&#32;=&#32;0;&#32;&#32;jid&#32;&lt;=&#32;<link linkend="_group__joysticks_1ga9ca13ebf24c331dd98df17d84a4b72c9">GLFW_JOYSTICK_LAST</link>;&#32;&#32;jid++)
+385 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;closeJoystick(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.joysticks&#32;+&#32;jid);
+386 
+387 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.ns.hidManager)
+388 &#32;&#32;&#32;&#32;{
+389 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CFRelease(_glfw.ns.hidManager);
+390 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;_glfw.ns.hidManager&#32;=&#32;NULL;
+391 &#32;&#32;&#32;&#32;}
+392 }
+</programlisting>    </section><anchor xml:id="_cocoa__joystick_8m_1a87f3fa1e202e7ba6872cae9a5a18accd"/>    <section>
+    <title>_glfwUpdateGamepadGUIDCocoa()</title>
+<indexterm><primary>_glfwUpdateGamepadGUIDCocoa</primary><secondary>cocoa_joystick.m</secondary></indexterm>
+<indexterm><primary>cocoa_joystick.m</primary><secondary>_glfwUpdateGamepadGUIDCocoa</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwUpdateGamepadGUIDCocoa (char * guid)</computeroutput></para><para>
+Definition at line 466 of file cocoa_joystick.m.</para>
+<programlisting>467 {
+468 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((strncmp(guid&#32;+&#32;4,&#32;<emphasis role="stringliteral">&quot;000000000000&quot;</emphasis>,&#32;12)&#32;==&#32;0)&#32;&amp;&amp;
+469 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(strncmp(guid&#32;+&#32;20,&#32;<emphasis role="stringliteral">&quot;000000000000&quot;</emphasis>,&#32;12)&#32;==&#32;0))
+470 &#32;&#32;&#32;&#32;{
+471 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;original[33];
+472 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strncpy(original,&#32;guid,&#32;<emphasis role="keyword">sizeof</emphasis>(original)&#32;-&#32;1);
+473 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_rrsprintf_8h_1a9b1bcf2b847c7e2a9e4d06b7bb6fa018">sprintf</link>(guid,&#32;<emphasis role="stringliteral">&quot;03000000%.4s0000%.4s000000000000&quot;</emphasis>,
+474 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;original,&#32;original&#32;+&#32;16);
+475 &#32;&#32;&#32;&#32;}
+476 }
+</programlisting></section>
+</section>
+</section>

@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_include_2cglm_2common_8h">
+<title>deps/cglm/include/cglm/common.h File Reference</title>
+<indexterm><primary>deps/cglm/include/cglm/common.h</primary></indexterm>
+<programlisting>#include &lt;stdint.h&gt;
+#include &lt;stddef.h&gt;
+#include &lt;math.h&gt;
+#include &lt;float.h&gt;
+#include &lt;stdbool.h&gt;
+#include &quot;types.h&quot;
+#include &quot;simd/intrin.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_include_2cglm_2common_8h_1a525335710b53cb064ca56b936120431e">_USE_MATH_DEFINES</link>   /* for windows */</para>
+</listitem>
+            <listitem><para>#define <link linkend="_include_2cglm_2common_8h_1af08ec37a8c99d747fb60fa15bc28678b">_CRT_SECURE_NO_WARNINGS</link>   /* for windows */</para>
+</listitem>
+            <listitem><para>#define <link linkend="_include_2cglm_2common_8h_1a66f9ee97f5a959768da5dcc0601c8f6d">CGLM_EXPORT</link>   __attribute__((visibility(&quot;default&quot;)))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_include_2cglm_2common_8h_1a132eda4e8b82a997831a6c857f7d26c1">CGLM_INLINE</link>   static inline __attribute((always_inline))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_include_2cglm_2common_8h_1ab961f538df86b87a3bb28c066e40bf7d">GLM_SHUFFLE4</link>(<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>,  <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,  <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,  <link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>)   (((<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>) &lt;&lt; 6) | ((<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>) &lt;&lt; 4) | ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) &lt;&lt; 2) | (<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_include_2cglm_2common_8h_1ad16f8f2ce3bf87faa080ae237e5824f9">GLM_SHUFFLE3</link>(<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>,  <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,  <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   (((<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>) &lt;&lt; 4) | ((<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>) &lt;&lt; 2) | (<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>))</para>
+</listitem>
+            <listitem><para>#define <link linkend="_include_2cglm_2common_8h_1a9d4d1682b34f0efd224db211b6aa9d8b">GLM_FLT_EPSILON</link>   1<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-5</para>
+</listitem>
+            <listitem><para>#define <link linkend="_include_2cglm_2common_8h_1a23ec15b8ba49082536362720dca0a706">CGLM_CLIP_CONTROL_ZO_BIT</link>   (1 &lt;&lt; 0) /* ZERO_TO_ONE */</para>
+</listitem>
+            <listitem><para>#define <link linkend="_include_2cglm_2common_8h_1a695f553ba0d8709981f6bffa40ba3263">CGLM_CLIP_CONTROL_NO_BIT</link>   (1 &lt;&lt; 1) /* NEGATIVE_ONE_TO_ONE */</para>
+</listitem>
+            <listitem><para>#define <link linkend="_include_2cglm_2common_8h_1a9a8fff2329a66a9ad8d626678a865d92">CGLM_CLIP_CONTROL_LH_BIT</link>   (1 &lt;&lt; 2) /* LEFT_HANDED, For DirectX, Metal, Vulkan */</para>
+</listitem>
+            <listitem><para>#define <link linkend="_include_2cglm_2common_8h_1a63f663caa4329138ba9e65a1dea14a12">CGLM_CLIP_CONTROL_RH_BIT</link>   (1 &lt;&lt; 3) /* RIGHT_HANDED, For OpenGL, default <link linkend="_glext_8h_1a83ad0ee7f1e06b59c90271716e689080">in</link> <link linkend="_tests_8c_1ad5e9109befc2df7d1e17bb4e46610342">GLM</link> */</para>
+</listitem>
+            <listitem><para>#define <link linkend="_include_2cglm_2common_8h_1a831bf008b5a80a652f9aeaebdcb1cc3d">CGLM_CLIP_CONTROL_LH_ZO</link>   (<link linkend="_include_2cglm_2common_8h_1a9a8fff2329a66a9ad8d626678a865d92">CGLM_CLIP_CONTROL_LH_BIT</link> | <link linkend="_include_2cglm_2common_8h_1a23ec15b8ba49082536362720dca0a706">CGLM_CLIP_CONTROL_ZO_BIT</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_include_2cglm_2common_8h_1af0d01784e7c2c8411fac6ab772fd2c55">CGLM_CLIP_CONTROL_LH_NO</link>   (<link linkend="_include_2cglm_2common_8h_1a9a8fff2329a66a9ad8d626678a865d92">CGLM_CLIP_CONTROL_LH_BIT</link> | <link linkend="_include_2cglm_2common_8h_1a695f553ba0d8709981f6bffa40ba3263">CGLM_CLIP_CONTROL_NO_BIT</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_include_2cglm_2common_8h_1a24b115a58334f8331c21789253719a01">CGLM_CLIP_CONTROL_RH_ZO</link>   (<link linkend="_include_2cglm_2common_8h_1a63f663caa4329138ba9e65a1dea14a12">CGLM_CLIP_CONTROL_RH_BIT</link> | <link linkend="_include_2cglm_2common_8h_1a23ec15b8ba49082536362720dca0a706">CGLM_CLIP_CONTROL_ZO_BIT</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_include_2cglm_2common_8h_1ad2dbf85793e1836890a67bb41bfad568">CGLM_CLIP_CONTROL_RH_NO</link>   (<link linkend="_include_2cglm_2common_8h_1a63f663caa4329138ba9e65a1dea14a12">CGLM_CLIP_CONTROL_RH_BIT</link> | <link linkend="_include_2cglm_2common_8h_1a695f553ba0d8709981f6bffa40ba3263">CGLM_CLIP_CONTROL_NO_BIT</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_include_2cglm_2common_8h_1a64f9a2e2a77c6d1cb9a74c6b264a3fad">CGLM_CONFIG_CLIP_CONTROL</link>   <link linkend="_include_2cglm_2common_8h_1ad2dbf85793e1836890a67bb41bfad568">CGLM_CLIP_CONTROL_RH_NO</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_include_2cglm_2common_8h_1af08ec37a8c99d747fb60fa15bc28678b"/>    <section>
+    <title>_CRT_SECURE_NO_WARNINGS</title>
+<indexterm><primary>_CRT_SECURE_NO_WARNINGS</primary><secondary>common.h</secondary></indexterm>
+<indexterm><primary>common.h</primary><secondary>_CRT_SECURE_NO_WARNINGS</secondary></indexterm>
+<para><computeroutput>#define _CRT_SECURE_NO_WARNINGS   /* for windows */</computeroutput></para><para>
+Definition at line 16 of file common.h.</para>
+    </section><anchor xml:id="_include_2cglm_2common_8h_1a525335710b53cb064ca56b936120431e"/>    <section>
+    <title>_USE_MATH_DEFINES</title>
+<indexterm><primary>_USE_MATH_DEFINES</primary><secondary>common.h</secondary></indexterm>
+<indexterm><primary>common.h</primary><secondary>_USE_MATH_DEFINES</secondary></indexterm>
+<para><computeroutput>#define _USE_MATH_DEFINES   /* for windows */</computeroutput></para><para>
+Definition at line 12 of file common.h.</para>
+    </section><anchor xml:id="_include_2cglm_2common_8h_1a9a8fff2329a66a9ad8d626678a865d92"/>    <section>
+    <title>CGLM_CLIP_CONTROL_LH_BIT</title>
+<indexterm><primary>CGLM_CLIP_CONTROL_LH_BIT</primary><secondary>common.h</secondary></indexterm>
+<indexterm><primary>common.h</primary><secondary>CGLM_CLIP_CONTROL_LH_BIT</secondary></indexterm>
+<para><computeroutput>#define CGLM_CLIP_CONTROL_LH_BIT   (1 &lt;&lt; 2) /* LEFT_HANDED, For DirectX, Metal, Vulkan */</computeroutput></para><para>
+Definition at line 62 of file common.h.</para>
+    </section><anchor xml:id="_include_2cglm_2common_8h_1af0d01784e7c2c8411fac6ab772fd2c55"/>    <section>
+    <title>CGLM_CLIP_CONTROL_LH_NO</title>
+<indexterm><primary>CGLM_CLIP_CONTROL_LH_NO</primary><secondary>common.h</secondary></indexterm>
+<indexterm><primary>common.h</primary><secondary>CGLM_CLIP_CONTROL_LH_NO</secondary></indexterm>
+<para><computeroutput>#define CGLM_CLIP_CONTROL_LH_NO   (<link linkend="_include_2cglm_2common_8h_1a9a8fff2329a66a9ad8d626678a865d92">CGLM_CLIP_CONTROL_LH_BIT</link> | <link linkend="_include_2cglm_2common_8h_1a695f553ba0d8709981f6bffa40ba3263">CGLM_CLIP_CONTROL_NO_BIT</link>)</computeroutput></para><para>
+Definition at line 66 of file common.h.</para>
+    </section><anchor xml:id="_include_2cglm_2common_8h_1a831bf008b5a80a652f9aeaebdcb1cc3d"/>    <section>
+    <title>CGLM_CLIP_CONTROL_LH_ZO</title>
+<indexterm><primary>CGLM_CLIP_CONTROL_LH_ZO</primary><secondary>common.h</secondary></indexterm>
+<indexterm><primary>common.h</primary><secondary>CGLM_CLIP_CONTROL_LH_ZO</secondary></indexterm>
+<para><computeroutput>#define CGLM_CLIP_CONTROL_LH_ZO   (<link linkend="_include_2cglm_2common_8h_1a9a8fff2329a66a9ad8d626678a865d92">CGLM_CLIP_CONTROL_LH_BIT</link> | <link linkend="_include_2cglm_2common_8h_1a23ec15b8ba49082536362720dca0a706">CGLM_CLIP_CONTROL_ZO_BIT</link>)</computeroutput></para><para>
+Definition at line 65 of file common.h.</para>
+    </section><anchor xml:id="_include_2cglm_2common_8h_1a695f553ba0d8709981f6bffa40ba3263"/>    <section>
+    <title>CGLM_CLIP_CONTROL_NO_BIT</title>
+<indexterm><primary>CGLM_CLIP_CONTROL_NO_BIT</primary><secondary>common.h</secondary></indexterm>
+<indexterm><primary>common.h</primary><secondary>CGLM_CLIP_CONTROL_NO_BIT</secondary></indexterm>
+<para><computeroutput>#define CGLM_CLIP_CONTROL_NO_BIT   (1 &lt;&lt; 1) /* NEGATIVE_ONE_TO_ONE */</computeroutput></para><para>
+Definition at line 61 of file common.h.</para>
+    </section><anchor xml:id="_include_2cglm_2common_8h_1a63f663caa4329138ba9e65a1dea14a12"/>    <section>
+    <title>CGLM_CLIP_CONTROL_RH_BIT</title>
+<indexterm><primary>CGLM_CLIP_CONTROL_RH_BIT</primary><secondary>common.h</secondary></indexterm>
+<indexterm><primary>common.h</primary><secondary>CGLM_CLIP_CONTROL_RH_BIT</secondary></indexterm>
+<para><computeroutput>#define CGLM_CLIP_CONTROL_RH_BIT   (1 &lt;&lt; 3) /* RIGHT_HANDED, For OpenGL, default <link linkend="_glext_8h_1a83ad0ee7f1e06b59c90271716e689080">in</link> <link linkend="_tests_8c_1ad5e9109befc2df7d1e17bb4e46610342">GLM</link> */</computeroutput></para><para>
+Definition at line 63 of file common.h.</para>
+    </section><anchor xml:id="_include_2cglm_2common_8h_1ad2dbf85793e1836890a67bb41bfad568"/>    <section>
+    <title>CGLM_CLIP_CONTROL_RH_NO</title>
+<indexterm><primary>CGLM_CLIP_CONTROL_RH_NO</primary><secondary>common.h</secondary></indexterm>
+<indexterm><primary>common.h</primary><secondary>CGLM_CLIP_CONTROL_RH_NO</secondary></indexterm>
+<para><computeroutput>#define CGLM_CLIP_CONTROL_RH_NO   (<link linkend="_include_2cglm_2common_8h_1a63f663caa4329138ba9e65a1dea14a12">CGLM_CLIP_CONTROL_RH_BIT</link> | <link linkend="_include_2cglm_2common_8h_1a695f553ba0d8709981f6bffa40ba3263">CGLM_CLIP_CONTROL_NO_BIT</link>)</computeroutput></para><para>
+Definition at line 68 of file common.h.</para>
+    </section><anchor xml:id="_include_2cglm_2common_8h_1a24b115a58334f8331c21789253719a01"/>    <section>
+    <title>CGLM_CLIP_CONTROL_RH_ZO</title>
+<indexterm><primary>CGLM_CLIP_CONTROL_RH_ZO</primary><secondary>common.h</secondary></indexterm>
+<indexterm><primary>common.h</primary><secondary>CGLM_CLIP_CONTROL_RH_ZO</secondary></indexterm>
+<para><computeroutput>#define CGLM_CLIP_CONTROL_RH_ZO   (<link linkend="_include_2cglm_2common_8h_1a63f663caa4329138ba9e65a1dea14a12">CGLM_CLIP_CONTROL_RH_BIT</link> | <link linkend="_include_2cglm_2common_8h_1a23ec15b8ba49082536362720dca0a706">CGLM_CLIP_CONTROL_ZO_BIT</link>)</computeroutput></para><para>
+Definition at line 67 of file common.h.</para>
+    </section><anchor xml:id="_include_2cglm_2common_8h_1a23ec15b8ba49082536362720dca0a706"/>    <section>
+    <title>CGLM_CLIP_CONTROL_ZO_BIT</title>
+<indexterm><primary>CGLM_CLIP_CONTROL_ZO_BIT</primary><secondary>common.h</secondary></indexterm>
+<indexterm><primary>common.h</primary><secondary>CGLM_CLIP_CONTROL_ZO_BIT</secondary></indexterm>
+<para><computeroutput>#define CGLM_CLIP_CONTROL_ZO_BIT   (1 &lt;&lt; 0) /* ZERO_TO_ONE */</computeroutput></para><para>
+Definition at line 60 of file common.h.</para>
+    </section><anchor xml:id="_include_2cglm_2common_8h_1a64f9a2e2a77c6d1cb9a74c6b264a3fad"/>    <section>
+    <title>CGLM_CONFIG_CLIP_CONTROL</title>
+<indexterm><primary>CGLM_CONFIG_CLIP_CONTROL</primary><secondary>common.h</secondary></indexterm>
+<indexterm><primary>common.h</primary><secondary>CGLM_CONFIG_CLIP_CONTROL</secondary></indexterm>
+<para><computeroutput>#define CGLM_CONFIG_CLIP_CONTROL   <link linkend="_include_2cglm_2common_8h_1ad2dbf85793e1836890a67bb41bfad568">CGLM_CLIP_CONTROL_RH_NO</link></computeroutput></para><para>
+Definition at line 80 of file common.h.</para>
+    </section><anchor xml:id="_include_2cglm_2common_8h_1a66f9ee97f5a959768da5dcc0601c8f6d"/>    <section>
+    <title>CGLM_EXPORT</title>
+<indexterm><primary>CGLM_EXPORT</primary><secondary>common.h</secondary></indexterm>
+<indexterm><primary>common.h</primary><secondary>CGLM_EXPORT</secondary></indexterm>
+<para><computeroutput>#define CGLM_EXPORT   __attribute__((visibility(&quot;default&quot;)))</computeroutput></para><para>
+Definition at line 35 of file common.h.</para>
+    </section><anchor xml:id="_include_2cglm_2common_8h_1a132eda4e8b82a997831a6c857f7d26c1"/>    <section>
+    <title>CGLM_INLINE</title>
+<indexterm><primary>CGLM_INLINE</primary><secondary>common.h</secondary></indexterm>
+<indexterm><primary>common.h</primary><secondary>CGLM_INLINE</secondary></indexterm>
+<para><computeroutput>#define CGLM_INLINE   static inline __attribute((always_inline))</computeroutput></para><para>
+Definition at line 36 of file common.h.</para>
+    </section><anchor xml:id="_include_2cglm_2common_8h_1a9d4d1682b34f0efd224db211b6aa9d8b"/>    <section>
+    <title>GLM_FLT_EPSILON</title>
+<indexterm><primary>GLM_FLT_EPSILON</primary><secondary>common.h</secondary></indexterm>
+<indexterm><primary>common.h</primary><secondary>GLM_FLT_EPSILON</secondary></indexterm>
+<para><computeroutput>#define GLM_FLT_EPSILON   1<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-5</computeroutput></para><para>
+Definition at line 47 of file common.h.</para>
+    </section><anchor xml:id="_include_2cglm_2common_8h_1ad16f8f2ce3bf87faa080ae237e5824f9"/>    <section>
+    <title>GLM_SHUFFLE3</title>
+<indexterm><primary>GLM_SHUFFLE3</primary><secondary>common.h</secondary></indexterm>
+<indexterm><primary>common.h</primary><secondary>GLM_SHUFFLE3</secondary></indexterm>
+<para><computeroutput>#define GLM_SHUFFLE3( <link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>,  <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,  <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>)   (((<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>) &lt;&lt; 4) | ((<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>) &lt;&lt; 2) | (<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>))</computeroutput></para><para>
+Definition at line 40 of file common.h.</para>
+    </section><anchor xml:id="_include_2cglm_2common_8h_1ab961f538df86b87a3bb28c066e40bf7d"/>    <section>
+    <title>GLM_SHUFFLE4</title>
+<indexterm><primary>GLM_SHUFFLE4</primary><secondary>common.h</secondary></indexterm>
+<indexterm><primary>common.h</primary><secondary>GLM_SHUFFLE4</secondary></indexterm>
+<para><computeroutput>#define GLM_SHUFFLE4( <link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>,  <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,  <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,  <link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>)   (((<link linkend="_glad_8h_1a1483160fae141afea848a5393c286b2b">z</link>) &lt;&lt; 6) | ((<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>) &lt;&lt; 4) | ((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>) &lt;&lt; 2) | (<link linkend="_glad_8h_1a713abae75276598501f75c68917c5e2d">w</link>))</computeroutput></para><para>
+Definition at line 39 of file common.h.</para>
+</section>
+</section>
+</section>

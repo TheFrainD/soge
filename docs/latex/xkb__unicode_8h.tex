@@ -1,0 +1,73 @@
+\hypertarget{xkb__unicode_8h}{}\doxysection{deps/glfw/src/xkb\+\_\+unicode.h File Reference}
+\label{xkb__unicode_8h}\index{deps/glfw/src/xkb\_unicode.h@{deps/glfw/src/xkb\_unicode.h}}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{xkb__unicode_8h_a45fc2e5a3ba025f1ac362831cfe04416}{G\+L\+F\+W\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+C\+O\+D\+E\+P\+O\+I\+NT}}~0xffffffffu
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{stdint_8h_a435d1572bf3f880d55459d9805097f62}{uint32\+\_\+t}} \mbox{\hyperlink{xkb__unicode_8h_acc4747eb62386c01c9dd0cd6997c8983}{\+\_\+glfw\+Key\+Sym2\+Unicode}} (unsigned int keysym)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{xkb__unicode_8h_a45fc2e5a3ba025f1ac362831cfe04416}\label{xkb__unicode_8h_a45fc2e5a3ba025f1ac362831cfe04416}} 
+\index{xkb\_unicode.h@{xkb\_unicode.h}!GLFW\_INVALID\_CODEPOINT@{GLFW\_INVALID\_CODEPOINT}}
+\index{GLFW\_INVALID\_CODEPOINT@{GLFW\_INVALID\_CODEPOINT}!xkb\_unicode.h@{xkb\_unicode.h}}
+\doxysubsubsection{\texorpdfstring{GLFW\_INVALID\_CODEPOINT}{GLFW\_INVALID\_CODEPOINT}}
+{\footnotesize\ttfamily \#define G\+L\+F\+W\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+C\+O\+D\+E\+P\+O\+I\+NT~0xffffffffu}
+
+
+
+Definition at line 27 of file xkb\+\_\+unicode.\+h.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{xkb__unicode_8h_acc4747eb62386c01c9dd0cd6997c8983}\label{xkb__unicode_8h_acc4747eb62386c01c9dd0cd6997c8983}} 
+\index{xkb\_unicode.h@{xkb\_unicode.h}!\_glfwKeySym2Unicode@{\_glfwKeySym2Unicode}}
+\index{\_glfwKeySym2Unicode@{\_glfwKeySym2Unicode}!xkb\_unicode.h@{xkb\_unicode.h}}
+\doxysubsubsection{\texorpdfstring{\_glfwKeySym2Unicode()}{\_glfwKeySym2Unicode()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stdint_8h_a435d1572bf3f880d55459d9805097f62}{uint32\+\_\+t}} \+\_\+glfw\+Key\+Sym2\+Unicode (\begin{DoxyParamCaption}\item[{unsigned int}]{keysym }\end{DoxyParamCaption})}
+
+
+
+Definition at line 910 of file xkb\+\_\+unicode.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{911 \{}
+\DoxyCodeLine{912     \textcolor{keywordtype}{int} \mbox{\hyperlink{stb_8h_abb702d8b501669a23aa0ab3b281b9384}{min}} = 0;}
+\DoxyCodeLine{913     \textcolor{keywordtype}{int} \mbox{\hyperlink{stb_8h_ac39d9cef6a5e030ba8d9e11121054268}{max}} = \textcolor{keyword}{sizeof}(keysymtab) / \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} codepair) -\/ 1;}
+\DoxyCodeLine{914     \textcolor{keywordtype}{int} mid;}
+\DoxyCodeLine{915 }
+\DoxyCodeLine{916     \textcolor{comment}{// First check for Latin-\/1 characters (1:1 mapping)}}
+\DoxyCodeLine{917     \textcolor{keywordflow}{if} ((keysym >= 0x0020 \&\& keysym <= 0x007e) ||}
+\DoxyCodeLine{918         (keysym >= 0x00a0 \&\& keysym <= 0x00ff))}
+\DoxyCodeLine{919     \{}
+\DoxyCodeLine{920         \textcolor{keywordflow}{return} keysym;}
+\DoxyCodeLine{921     \}}
+\DoxyCodeLine{922 }
+\DoxyCodeLine{923     \textcolor{comment}{// Also check for directly encoded 24-\/bit UCS characters}}
+\DoxyCodeLine{924     \textcolor{keywordflow}{if} ((keysym \& 0xff000000) == 0x01000000)}
+\DoxyCodeLine{925         \textcolor{keywordflow}{return} keysym \& 0x00ffffff;}
+\DoxyCodeLine{926 }
+\DoxyCodeLine{927     \textcolor{comment}{// Binary search in table}}
+\DoxyCodeLine{928     \textcolor{keywordflow}{while} (\mbox{\hyperlink{stb_8h_ac39d9cef6a5e030ba8d9e11121054268}{max}} >= \mbox{\hyperlink{stb_8h_abb702d8b501669a23aa0ab3b281b9384}{min}})}
+\DoxyCodeLine{929     \{}
+\DoxyCodeLine{930         mid = (\mbox{\hyperlink{stb_8h_abb702d8b501669a23aa0ab3b281b9384}{min}} + \mbox{\hyperlink{stb_8h_ac39d9cef6a5e030ba8d9e11121054268}{max}}) / 2;}
+\DoxyCodeLine{931         \textcolor{keywordflow}{if} (keysymtab[mid].keysym < keysym)}
+\DoxyCodeLine{932             \mbox{\hyperlink{stb_8h_abb702d8b501669a23aa0ab3b281b9384}{min}} = mid + 1;}
+\DoxyCodeLine{933         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (keysymtab[mid].keysym > keysym)}
+\DoxyCodeLine{934             \mbox{\hyperlink{stb_8h_ac39d9cef6a5e030ba8d9e11121054268}{max}} = mid -\/ 1;}
+\DoxyCodeLine{935         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{936             \textcolor{keywordflow}{return} keysymtab[mid].ucs;}
+\DoxyCodeLine{937     \}}
+\DoxyCodeLine{938 }
+\DoxyCodeLine{939     \textcolor{comment}{// No matching Unicode value found}}
+\DoxyCodeLine{940     \textcolor{keywordflow}{return} \mbox{\hyperlink{xkb__unicode_8h_a45fc2e5a3ba025f1ac362831cfe04416}{GLFW\_INVALID\_CODEPOINT}};}
+\DoxyCodeLine{941 \}}
+
+\end{DoxyCode}

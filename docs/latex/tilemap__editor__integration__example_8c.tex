@@ -1,0 +1,298 @@
+\hypertarget{tilemap__editor__integration__example_8c}{}\doxysection{deps/stb/tests/tilemap\+\_\+editor\+\_\+integration\+\_\+example.c File Reference}
+\label{tilemap__editor__integration__example_8c}\index{deps/stb/tests/tilemap\_editor\_integration\_example.c@{deps/stb/tests/tilemap\_editor\_integration\_example.c}}
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$ctype.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}game.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}S\+D\+L.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stb\+\_\+tilemap\+\_\+editor.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{tilemap__editor__integration__example_8c_a1042875aa70040c17bf65f1d73cc7b3c}{S\+T\+B\+T\+E\+\_\+\+M\+A\+X\+\_\+\+P\+R\+O\+P\+E\+R\+T\+I\+ES}}~8
+\item 
+\#define \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa40b3c75e55b04422fe1fcfbbb37dd94}{S\+T\+B\+T\+E\+\_\+\+P\+R\+O\+P\+\_\+\+T\+Y\+PE}}(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  tiledata,  \mbox{\hyperlink{glext_8h_aa5367c14d90f462230c2611b81b41d23}{p}})~prop\+\_\+type(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},tiledata)
+\item 
+\#define \mbox{\hyperlink{tilemap__editor__integration__example_8c_a898e79f515d8f40b7baed40bb66c9a6a}{S\+T\+B\+T\+E\+\_\+\+P\+R\+O\+P\+\_\+\+N\+A\+ME}}(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  tiledata,  \mbox{\hyperlink{glext_8h_aa5367c14d90f462230c2611b81b41d23}{p}})~prop\+\_\+name(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},tiledata)
+\item 
+\#define \mbox{\hyperlink{tilemap__editor__integration__example_8c_acf4389caa414189f611ab306baed73fd}{S\+T\+B\+T\+E\+\_\+\+P\+R\+O\+P\+\_\+\+M\+IN}}(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  tiledata,  \mbox{\hyperlink{glext_8h_aa5367c14d90f462230c2611b81b41d23}{p}})~prop\+\_\+range(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},tiledata,0)
+\item 
+\#define \mbox{\hyperlink{tilemap__editor__integration__example_8c_a7e7ab932016a38fb4f6d8c7d0457b614}{S\+T\+B\+T\+E\+\_\+\+P\+R\+O\+P\+\_\+\+M\+AX}}(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  tiledata,  \mbox{\hyperlink{glext_8h_aa5367c14d90f462230c2611b81b41d23}{p}})~prop\+\_\+range(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},tiledata,1)
+\item 
+\#define \mbox{\hyperlink{tilemap__editor__integration__example_8c_ad902c7d8c5fc8afbd0e53ebaacc24d51}{S\+T\+B\+T\+E\+\_\+\+P\+R\+O\+P\+\_\+\+F\+L\+O\+A\+T\+\_\+\+S\+C\+A\+LE}}(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  td,  \mbox{\hyperlink{glext_8h_aa5367c14d90f462230c2611b81b41d23}{p}})~(0.\+1)
+\item 
+\#define \mbox{\hyperlink{tilemap__editor__integration__example_8c_a034118506cd51dc54a2d0c04e267b390}{S\+T\+B\+T\+E\+\_\+\+A\+L\+L\+O\+W\+\_\+\+L\+I\+NK}}(srctile,  srcprop,  desttile,  destprop)~allow\+\_\+link(srctile, desttile)
+\item 
+\#define \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa6e44cfc6e5e41bafc45fe743b3a5087}{S\+T\+B\+T\+E\+\_\+\+L\+I\+N\+K\+\_\+\+C\+O\+L\+OR}}(srctile,  srcprop,  desttile,  destprop)~(is\+\_\+platform(srctile) ? 0xff80ff \+: 0x808040)
+\item 
+\#define \mbox{\hyperlink{tilemap__editor__integration__example_8c_a076bf3af5bf7f59909d6e7521d5bd2bc}{S\+T\+B\+T\+E\+\_\+\+D\+R\+A\+W\+\_\+\+R\+E\+CT}}(\mbox{\hyperlink{glext_8h_a98ac434677655cc8438bb72de2719f39}{x0}},  \mbox{\hyperlink{glext_8h_ae7f97ed6c9c8e502fcbc44c7cb8a8312}{y0}},  \mbox{\hyperlink{glext_8h_a49825216c96caaeb09237b36651181c5}{x1}},  \mbox{\hyperlink{glext_8h_a3af6c78fcdfccea028a5878bc747ef39}{y1}},  \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}})~\mbox{\hyperlink{tilemap__editor__integration__example_8c_a030e28df7e8330064f0f9cc13e98cc9f}{editor\+\_\+draw\+\_\+rect}}(\mbox{\hyperlink{glext_8h_a98ac434677655cc8438bb72de2719f39}{x0}},\mbox{\hyperlink{glext_8h_ae7f97ed6c9c8e502fcbc44c7cb8a8312}{y0}},\mbox{\hyperlink{glext_8h_a49825216c96caaeb09237b36651181c5}{x1}},\mbox{\hyperlink{glext_8h_a3af6c78fcdfccea028a5878bc747ef39}{y1}},(\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}})$>$$>$16,((\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}})$>$$>$8)\&255,(\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}})\&255)
+\item 
+\#define \mbox{\hyperlink{tilemap__editor__integration__example_8c_ac561edcc59a25cc123bc0c059e9b3924}{S\+T\+B\+T\+E\+\_\+\+D\+R\+A\+W\+\_\+\+T\+I\+LE}}(\mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}},  \mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}},  \mbox{\hyperlink{glad_8h_a58c2a664503e14ffb8f21012aabff3e9}{id}},  highlight,  \mbox{\hyperlink{glad_8h_a5eca93bfc840dd9013a5fcf04dbaf051}{props}})~\mbox{\hyperlink{tilemap__editor__integration__example_8c_ac4a59a956e246a43fdfc8c1eebe0c6d1}{editor\+\_\+draw\+\_\+tile}}(\mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}},\mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}},\mbox{\hyperlink{glad_8h_a58c2a664503e14ffb8f21012aabff3e9}{id}},highlight,\mbox{\hyperlink{glad_8h_a5eca93bfc840dd9013a5fcf04dbaf051}{props}})
+\item 
+\#define \mbox{\hyperlink{tilemap__editor__integration__example_8c_ab8d570f6e93f0243c6d34b93de13ff50}{S\+T\+B\+\_\+\+T\+I\+L\+E\+M\+A\+P\+\_\+\+E\+D\+I\+T\+O\+R\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+A\+T\+I\+ON}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{tilemap__editor__integration__example_8c_ac4a59a956e246a43fdfc8c1eebe0c6d1}{editor\+\_\+draw\+\_\+tile}} (int \mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}}, int \mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}}, unsigned short tile, int \mbox{\hyperlink{glad_8h_a1e71d9c196e4683cc06c4b54d53f7ef5}{mode}}, float $\ast$\mbox{\hyperlink{glad_8h_a5eca93bfc840dd9013a5fcf04dbaf051}{props}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{tilemap__editor__integration__example_8c_a030e28df7e8330064f0f9cc13e98cc9f}{editor\+\_\+draw\+\_\+rect}} (int \mbox{\hyperlink{glext_8h_a98ac434677655cc8438bb72de2719f39}{x0}}, int \mbox{\hyperlink{glext_8h_ae7f97ed6c9c8e502fcbc44c7cb8a8312}{y0}}, int \mbox{\hyperlink{glext_8h_a49825216c96caaeb09237b36651181c5}{x1}}, int \mbox{\hyperlink{glext_8h_a3af6c78fcdfccea028a5878bc747ef39}{y1}}, unsigned char \mbox{\hyperlink{glad_8h_a42ce7cdc612e53abee15043f80220d97}{r}}, unsigned char \mbox{\hyperlink{glad_8h_acaceb3a655ff28b75259860bcb868f9f}{g}}, unsigned char \mbox{\hyperlink{glad_8h_a0f71581a41fd2264c8944126dabbd010}{b}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}{editor\+\_\+key}} (enum \mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489b}{stbte\+\_\+action}} act)
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{tilemap__editor__integration__example_8c_acd83cebe5b37d1c3961060b9e32ff298}{editor\+\_\+process\+\_\+sdl\+\_\+event}} (S\+D\+L\+\_\+\+Event $\ast$\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}})
+\item 
+\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{tilemap__editor__integration__example_8c_a30962c693d3d8ad14f46baf596a1a9ea}{editor\+\_\+init}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{stb__tilemap__editor_8h_a1eb4417db66bd630e3d03310a03416c5}{stbte\+\_\+tilemap}} $\ast$ \mbox{\hyperlink{tilemap__editor__integration__example_8c_a79fefaeaa40baa8397b68093b669a024}{edit\+\_\+map}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{tilemap__editor__integration__example_8c_ab8d570f6e93f0243c6d34b93de13ff50}\label{tilemap__editor__integration__example_8c_ab8d570f6e93f0243c6d34b93de13ff50}} 
+\index{tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}!STB\_TILEMAP\_EDITOR\_IMPLEMENTATION@{STB\_TILEMAP\_EDITOR\_IMPLEMENTATION}}
+\index{STB\_TILEMAP\_EDITOR\_IMPLEMENTATION@{STB\_TILEMAP\_EDITOR\_IMPLEMENTATION}!tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}}
+\doxysubsubsection{\texorpdfstring{STB\_TILEMAP\_EDITOR\_IMPLEMENTATION}{STB\_TILEMAP\_EDITOR\_IMPLEMENTATION}}
+{\footnotesize\ttfamily \#define S\+T\+B\+\_\+\+T\+I\+L\+E\+M\+A\+P\+\_\+\+E\+D\+I\+T\+O\+R\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+A\+T\+I\+ON}
+
+
+
+Definition at line 41 of file tilemap\+\_\+editor\+\_\+integration\+\_\+example.\+c.
+
+\mbox{\Hypertarget{tilemap__editor__integration__example_8c_a034118506cd51dc54a2d0c04e267b390}\label{tilemap__editor__integration__example_8c_a034118506cd51dc54a2d0c04e267b390}} 
+\index{tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}!STBTE\_ALLOW\_LINK@{STBTE\_ALLOW\_LINK}}
+\index{STBTE\_ALLOW\_LINK@{STBTE\_ALLOW\_LINK}!tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}}
+\doxysubsubsection{\texorpdfstring{STBTE\_ALLOW\_LINK}{STBTE\_ALLOW\_LINK}}
+{\footnotesize\ttfamily \#define S\+T\+B\+T\+E\+\_\+\+A\+L\+L\+O\+W\+\_\+\+L\+I\+NK(\begin{DoxyParamCaption}\item[{}]{srctile,  }\item[{}]{srcprop,  }\item[{}]{desttile,  }\item[{}]{destprop }\end{DoxyParamCaption})~allow\+\_\+link(srctile, desttile)}
+
+
+
+Definition at line 27 of file tilemap\+\_\+editor\+\_\+integration\+\_\+example.\+c.
+
+\mbox{\Hypertarget{tilemap__editor__integration__example_8c_a076bf3af5bf7f59909d6e7521d5bd2bc}\label{tilemap__editor__integration__example_8c_a076bf3af5bf7f59909d6e7521d5bd2bc}} 
+\index{tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}!STBTE\_DRAW\_RECT@{STBTE\_DRAW\_RECT}}
+\index{STBTE\_DRAW\_RECT@{STBTE\_DRAW\_RECT}!tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}}
+\doxysubsubsection{\texorpdfstring{STBTE\_DRAW\_RECT}{STBTE\_DRAW\_RECT}}
+{\footnotesize\ttfamily \#define S\+T\+B\+T\+E\+\_\+\+D\+R\+A\+W\+\_\+\+R\+E\+CT(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{glext_8h_a98ac434677655cc8438bb72de2719f39}{x0}},  }\item[{}]{\mbox{\hyperlink{glext_8h_ae7f97ed6c9c8e502fcbc44c7cb8a8312}{y0}},  }\item[{}]{\mbox{\hyperlink{glext_8h_a49825216c96caaeb09237b36651181c5}{x1}},  }\item[{}]{\mbox{\hyperlink{glext_8h_a3af6c78fcdfccea028a5878bc747ef39}{y1}},  }\item[{}]{\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}} }\end{DoxyParamCaption})~\mbox{\hyperlink{tilemap__editor__integration__example_8c_a030e28df7e8330064f0f9cc13e98cc9f}{editor\+\_\+draw\+\_\+rect}}(\mbox{\hyperlink{glext_8h_a98ac434677655cc8438bb72de2719f39}{x0}},\mbox{\hyperlink{glext_8h_ae7f97ed6c9c8e502fcbc44c7cb8a8312}{y0}},\mbox{\hyperlink{glext_8h_a49825216c96caaeb09237b36651181c5}{x1}},\mbox{\hyperlink{glext_8h_a3af6c78fcdfccea028a5878bc747ef39}{y1}},(\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}})$>$$>$16,((\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}})$>$$>$8)\&255,(\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}})\&255)}
+
+
+
+Definition at line 33 of file tilemap\+\_\+editor\+\_\+integration\+\_\+example.\+c.
+
+\mbox{\Hypertarget{tilemap__editor__integration__example_8c_ac561edcc59a25cc123bc0c059e9b3924}\label{tilemap__editor__integration__example_8c_ac561edcc59a25cc123bc0c059e9b3924}} 
+\index{tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}!STBTE\_DRAW\_TILE@{STBTE\_DRAW\_TILE}}
+\index{STBTE\_DRAW\_TILE@{STBTE\_DRAW\_TILE}!tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}}
+\doxysubsubsection{\texorpdfstring{STBTE\_DRAW\_TILE}{STBTE\_DRAW\_TILE}}
+{\footnotesize\ttfamily \#define S\+T\+B\+T\+E\+\_\+\+D\+R\+A\+W\+\_\+\+T\+I\+LE(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}},  }\item[{}]{\mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}},  }\item[{}]{\mbox{\hyperlink{glad_8h_a58c2a664503e14ffb8f21012aabff3e9}{id}},  }\item[{}]{highlight,  }\item[{}]{\mbox{\hyperlink{glad_8h_a5eca93bfc840dd9013a5fcf04dbaf051}{props}} }\end{DoxyParamCaption})~\mbox{\hyperlink{tilemap__editor__integration__example_8c_ac4a59a956e246a43fdfc8c1eebe0c6d1}{editor\+\_\+draw\+\_\+tile}}(\mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}},\mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}},\mbox{\hyperlink{glad_8h_a58c2a664503e14ffb8f21012aabff3e9}{id}},highlight,\mbox{\hyperlink{glad_8h_a5eca93bfc840dd9013a5fcf04dbaf051}{props}})}
+
+
+
+Definition at line 36 of file tilemap\+\_\+editor\+\_\+integration\+\_\+example.\+c.
+
+\mbox{\Hypertarget{tilemap__editor__integration__example_8c_aa6e44cfc6e5e41bafc45fe743b3a5087}\label{tilemap__editor__integration__example_8c_aa6e44cfc6e5e41bafc45fe743b3a5087}} 
+\index{tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}!STBTE\_LINK\_COLOR@{STBTE\_LINK\_COLOR}}
+\index{STBTE\_LINK\_COLOR@{STBTE\_LINK\_COLOR}!tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}}
+\doxysubsubsection{\texorpdfstring{STBTE\_LINK\_COLOR}{STBTE\_LINK\_COLOR}}
+{\footnotesize\ttfamily \#define S\+T\+B\+T\+E\+\_\+\+L\+I\+N\+K\+\_\+\+C\+O\+L\+OR(\begin{DoxyParamCaption}\item[{}]{srctile,  }\item[{}]{srcprop,  }\item[{}]{desttile,  }\item[{}]{destprop }\end{DoxyParamCaption})~(is\+\_\+platform(srctile) ? 0xff80ff \+: 0x808040)}
+
+
+
+Definition at line 30 of file tilemap\+\_\+editor\+\_\+integration\+\_\+example.\+c.
+
+\mbox{\Hypertarget{tilemap__editor__integration__example_8c_a1042875aa70040c17bf65f1d73cc7b3c}\label{tilemap__editor__integration__example_8c_a1042875aa70040c17bf65f1d73cc7b3c}} 
+\index{tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}!STBTE\_MAX\_PROPERTIES@{STBTE\_MAX\_PROPERTIES}}
+\index{STBTE\_MAX\_PROPERTIES@{STBTE\_MAX\_PROPERTIES}!tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}}
+\doxysubsubsection{\texorpdfstring{STBTE\_MAX\_PROPERTIES}{STBTE\_MAX\_PROPERTIES}}
+{\footnotesize\ttfamily \#define S\+T\+B\+T\+E\+\_\+\+M\+A\+X\+\_\+\+P\+R\+O\+P\+E\+R\+T\+I\+ES~8}
+
+
+
+Definition at line 19 of file tilemap\+\_\+editor\+\_\+integration\+\_\+example.\+c.
+
+\mbox{\Hypertarget{tilemap__editor__integration__example_8c_ad902c7d8c5fc8afbd0e53ebaacc24d51}\label{tilemap__editor__integration__example_8c_ad902c7d8c5fc8afbd0e53ebaacc24d51}} 
+\index{tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}!STBTE\_PROP\_FLOAT\_SCALE@{STBTE\_PROP\_FLOAT\_SCALE}}
+\index{STBTE\_PROP\_FLOAT\_SCALE@{STBTE\_PROP\_FLOAT\_SCALE}!tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}}
+\doxysubsubsection{\texorpdfstring{STBTE\_PROP\_FLOAT\_SCALE}{STBTE\_PROP\_FLOAT\_SCALE}}
+{\footnotesize\ttfamily \#define S\+T\+B\+T\+E\+\_\+\+P\+R\+O\+P\+\_\+\+F\+L\+O\+A\+T\+\_\+\+S\+C\+A\+LE(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  }\item[{}]{td,  }\item[{}]{\mbox{\hyperlink{glext_8h_aa5367c14d90f462230c2611b81b41d23}{p}} }\end{DoxyParamCaption})~(0.\+1)}
+
+
+
+Definition at line 25 of file tilemap\+\_\+editor\+\_\+integration\+\_\+example.\+c.
+
+\mbox{\Hypertarget{tilemap__editor__integration__example_8c_a7e7ab932016a38fb4f6d8c7d0457b614}\label{tilemap__editor__integration__example_8c_a7e7ab932016a38fb4f6d8c7d0457b614}} 
+\index{tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}!STBTE\_PROP\_MAX@{STBTE\_PROP\_MAX}}
+\index{STBTE\_PROP\_MAX@{STBTE\_PROP\_MAX}!tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}}
+\doxysubsubsection{\texorpdfstring{STBTE\_PROP\_MAX}{STBTE\_PROP\_MAX}}
+{\footnotesize\ttfamily \#define S\+T\+B\+T\+E\+\_\+\+P\+R\+O\+P\+\_\+\+M\+AX(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  }\item[{}]{tiledata,  }\item[{}]{\mbox{\hyperlink{glext_8h_aa5367c14d90f462230c2611b81b41d23}{p}} }\end{DoxyParamCaption})~prop\+\_\+range(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},tiledata,1)}
+
+
+
+Definition at line 24 of file tilemap\+\_\+editor\+\_\+integration\+\_\+example.\+c.
+
+\mbox{\Hypertarget{tilemap__editor__integration__example_8c_acf4389caa414189f611ab306baed73fd}\label{tilemap__editor__integration__example_8c_acf4389caa414189f611ab306baed73fd}} 
+\index{tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}!STBTE\_PROP\_MIN@{STBTE\_PROP\_MIN}}
+\index{STBTE\_PROP\_MIN@{STBTE\_PROP\_MIN}!tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}}
+\doxysubsubsection{\texorpdfstring{STBTE\_PROP\_MIN}{STBTE\_PROP\_MIN}}
+{\footnotesize\ttfamily \#define S\+T\+B\+T\+E\+\_\+\+P\+R\+O\+P\+\_\+\+M\+IN(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  }\item[{}]{tiledata,  }\item[{}]{\mbox{\hyperlink{glext_8h_aa5367c14d90f462230c2611b81b41d23}{p}} }\end{DoxyParamCaption})~prop\+\_\+range(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},tiledata,0)}
+
+
+
+Definition at line 23 of file tilemap\+\_\+editor\+\_\+integration\+\_\+example.\+c.
+
+\mbox{\Hypertarget{tilemap__editor__integration__example_8c_a898e79f515d8f40b7baed40bb66c9a6a}\label{tilemap__editor__integration__example_8c_a898e79f515d8f40b7baed40bb66c9a6a}} 
+\index{tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}!STBTE\_PROP\_NAME@{STBTE\_PROP\_NAME}}
+\index{STBTE\_PROP\_NAME@{STBTE\_PROP\_NAME}!tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}}
+\doxysubsubsection{\texorpdfstring{STBTE\_PROP\_NAME}{STBTE\_PROP\_NAME}}
+{\footnotesize\ttfamily \#define S\+T\+B\+T\+E\+\_\+\+P\+R\+O\+P\+\_\+\+N\+A\+ME(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  }\item[{}]{tiledata,  }\item[{}]{\mbox{\hyperlink{glext_8h_aa5367c14d90f462230c2611b81b41d23}{p}} }\end{DoxyParamCaption})~prop\+\_\+name(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},tiledata)}
+
+
+
+Definition at line 22 of file tilemap\+\_\+editor\+\_\+integration\+\_\+example.\+c.
+
+\mbox{\Hypertarget{tilemap__editor__integration__example_8c_aa40b3c75e55b04422fe1fcfbbb37dd94}\label{tilemap__editor__integration__example_8c_aa40b3c75e55b04422fe1fcfbbb37dd94}} 
+\index{tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}!STBTE\_PROP\_TYPE@{STBTE\_PROP\_TYPE}}
+\index{STBTE\_PROP\_TYPE@{STBTE\_PROP\_TYPE}!tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}}
+\doxysubsubsection{\texorpdfstring{STBTE\_PROP\_TYPE}{STBTE\_PROP\_TYPE}}
+{\footnotesize\ttfamily \#define S\+T\+B\+T\+E\+\_\+\+P\+R\+O\+P\+\_\+\+T\+Y\+PE(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  }\item[{}]{tiledata,  }\item[{}]{\mbox{\hyperlink{glext_8h_aa5367c14d90f462230c2611b81b41d23}{p}} }\end{DoxyParamCaption})~prop\+\_\+type(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},tiledata)}
+
+
+
+Definition at line 21 of file tilemap\+\_\+editor\+\_\+integration\+\_\+example.\+c.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{tilemap__editor__integration__example_8c_a030e28df7e8330064f0f9cc13e98cc9f}\label{tilemap__editor__integration__example_8c_a030e28df7e8330064f0f9cc13e98cc9f}} 
+\index{tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}!editor\_draw\_rect@{editor\_draw\_rect}}
+\index{editor\_draw\_rect@{editor\_draw\_rect}!tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}}
+\doxysubsubsection{\texorpdfstring{editor\_draw\_rect()}{editor\_draw\_rect()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} editor\+\_\+draw\+\_\+rect (\begin{DoxyParamCaption}\item[{int}]{x0,  }\item[{int}]{y0,  }\item[{int}]{x1,  }\item[{int}]{y1,  }\item[{unsigned char}]{r,  }\item[{unsigned char}]{g,  }\item[{unsigned char}]{b }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{tilemap__editor__integration__example_8c_ac4a59a956e246a43fdfc8c1eebe0c6d1}\label{tilemap__editor__integration__example_8c_ac4a59a956e246a43fdfc8c1eebe0c6d1}} 
+\index{tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}!editor\_draw\_tile@{editor\_draw\_tile}}
+\index{editor\_draw\_tile@{editor\_draw\_tile}!tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}}
+\doxysubsubsection{\texorpdfstring{editor\_draw\_tile()}{editor\_draw\_tile()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} editor\+\_\+draw\+\_\+tile (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{unsigned short}]{tile,  }\item[{int}]{mode,  }\item[{float $\ast$}]{props }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{tilemap__editor__integration__example_8c_a30962c693d3d8ad14f46baf596a1a9ea}\label{tilemap__editor__integration__example_8c_a30962c693d3d8ad14f46baf596a1a9ea}} 
+\index{tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}!editor\_init@{editor\_init}}
+\index{editor\_init@{editor\_init}!tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}}
+\doxysubsubsection{\texorpdfstring{editor\_init()}{editor\_init()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} editor\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 92 of file tilemap\+\_\+editor\+\_\+integration\+\_\+example.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{93 \{}
+\DoxyCodeLine{94    \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{95    \mbox{\hyperlink{tilemap__editor__integration__example_8c_a79fefaeaa40baa8397b68093b669a024}{edit\_map}} = \mbox{\hyperlink{stb__tilemap__editor_8h_ad55839664c3676f7f3a3bdb07aa81297}{stbte\_create\_map}}(20,14, 8, 16,16, 100);}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97    \mbox{\hyperlink{stb__tilemap__editor_8h_ab376c07fd370625478fbedc24208ef7a}{stbte\_set\_background\_tile}}(\mbox{\hyperlink{tilemap__editor__integration__example_8c_a79fefaeaa40baa8397b68093b669a024}{edit\_map}}, T\_empty);}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99    \textcolor{keywordflow}{for} (i=0; i < T\_\_num\_types; ++i) \{}
+\DoxyCodeLine{100       \textcolor{keywordflow}{if} (i != T\_reserved1 \&\& i != T\_entry \&\& i != T\_doorframe)}
+\DoxyCodeLine{101          \mbox{\hyperlink{stb__tilemap__editor_8h_a532d59e89a4d7b992b64e4b1199391d5}{stbte\_define\_tile}}(\mbox{\hyperlink{tilemap__editor__integration__example_8c_a79fefaeaa40baa8397b68093b669a024}{edit\_map}}, 0+i, 1, \textcolor{stringliteral}{"Background"});}
+\DoxyCodeLine{102    \}}
+\DoxyCodeLine{103    \mbox{\hyperlink{stb__tilemap__editor_8h_a532d59e89a4d7b992b64e4b1199391d5}{stbte\_define\_tile}}(\mbox{\hyperlink{tilemap__editor__integration__example_8c_a79fefaeaa40baa8397b68093b669a024}{edit\_map}}, 256+O\_player   , 8, \textcolor{stringliteral}{"Char"});}
+\DoxyCodeLine{104    \mbox{\hyperlink{stb__tilemap__editor_8h_a532d59e89a4d7b992b64e4b1199391d5}{stbte\_define\_tile}}(\mbox{\hyperlink{tilemap__editor__integration__example_8c_a79fefaeaa40baa8397b68093b669a024}{edit\_map}}, 256+O\_robot    , 8, \textcolor{stringliteral}{"Char"});}
+\DoxyCodeLine{105    \textcolor{keywordflow}{for} (i=O\_lockeddoor; i < O\_\_num\_types-\/2; ++i)}
+\DoxyCodeLine{106       \textcolor{keywordflow}{if} (i == O\_platform || i == O\_vplatform)}
+\DoxyCodeLine{107          \mbox{\hyperlink{stb__tilemap__editor_8h_a532d59e89a4d7b992b64e4b1199391d5}{stbte\_define\_tile}}(\mbox{\hyperlink{tilemap__editor__integration__example_8c_a79fefaeaa40baa8397b68093b669a024}{edit\_map}}, 256+i, 4, \textcolor{stringliteral}{"Object"});}
+\DoxyCodeLine{108       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{109          \mbox{\hyperlink{stb__tilemap__editor_8h_a532d59e89a4d7b992b64e4b1199391d5}{stbte\_define\_tile}}(\mbox{\hyperlink{tilemap__editor__integration__example_8c_a79fefaeaa40baa8397b68093b669a024}{edit\_map}}, 256+i, 2, \textcolor{stringliteral}{"Object"});}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111    \textcolor{comment}{//stbte\_set\_layername(edit\_map, 0, "background");}}
+\DoxyCodeLine{112    \textcolor{comment}{//stbte\_set\_layername(edit\_map, 1, "objects");}}
+\DoxyCodeLine{113    \textcolor{comment}{//stbte\_set\_layername(edit\_map, 2, "platforms");}}
+\DoxyCodeLine{114    \textcolor{comment}{//stbte\_set\_layername(edit\_map, 3, "characters");}}
+\DoxyCodeLine{115 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}\label{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}} 
+\index{tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}!editor\_key@{editor\_key}}
+\index{editor\_key@{editor\_key}!tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}}
+\doxysubsubsection{\texorpdfstring{editor\_key()}{editor\_key()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} editor\+\_\+key (\begin{DoxyParamCaption}\item[{enum \mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489b}{stbte\+\_\+action}}}]{act }\end{DoxyParamCaption})}
+
+
+
+Definition at line 46 of file tilemap\+\_\+editor\+\_\+integration\+\_\+example.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{47 \{}
+\DoxyCodeLine{48    \mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489b}{stbte\_action}}(\mbox{\hyperlink{tilemap__editor__integration__example_8c_a79fefaeaa40baa8397b68093b669a024}{edit\_map}}, act);}
+\DoxyCodeLine{49 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{tilemap__editor__integration__example_8c_acd83cebe5b37d1c3961060b9e32ff298}\label{tilemap__editor__integration__example_8c_acd83cebe5b37d1c3961060b9e32ff298}} 
+\index{tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}!editor\_process\_sdl\_event@{editor\_process\_sdl\_event}}
+\index{editor\_process\_sdl\_event@{editor\_process\_sdl\_event}!tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}}
+\doxysubsubsection{\texorpdfstring{editor\_process\_sdl\_event()}{editor\_process\_sdl\_event()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} editor\+\_\+process\+\_\+sdl\+\_\+event (\begin{DoxyParamCaption}\item[{S\+D\+L\+\_\+\+Event $\ast$}]{e }\end{DoxyParamCaption})}
+
+
+
+Definition at line 51 of file tilemap\+\_\+editor\+\_\+integration\+\_\+example.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{52 \{}
+\DoxyCodeLine{53    \textcolor{keywordflow}{switch} (\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}-\/>type) \{}
+\DoxyCodeLine{54       \textcolor{keywordflow}{case} SDL\_MOUSEMOTION:}
+\DoxyCodeLine{55       \textcolor{keywordflow}{case} SDL\_MOUSEBUTTONDOWN:}
+\DoxyCodeLine{56       \textcolor{keywordflow}{case} SDL\_MOUSEBUTTONUP:}
+\DoxyCodeLine{57       \textcolor{keywordflow}{case} SDL\_MOUSEWHEEL:}
+\DoxyCodeLine{58          \mbox{\hyperlink{stb__tilemap__editor_8h_acafb5cfed567392a1baf79eeaae5e000}{stbte\_mouse\_sdl}}(\mbox{\hyperlink{tilemap__editor__integration__example_8c_a79fefaeaa40baa8397b68093b669a024}{edit\_map}}, \mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}, 1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}/editor\_scale,1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}/editor\_scale,0,0);}
+\DoxyCodeLine{59          \textcolor{keywordflow}{break};}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61       \textcolor{keywordflow}{case} SDL\_KEYDOWN:}
+\DoxyCodeLine{62          \textcolor{keywordflow}{if} (in\_editor) \{}
+\DoxyCodeLine{63             \textcolor{keywordflow}{switch} (\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}-\/>key.keysym.sym) \{}
+\DoxyCodeLine{64                \textcolor{keywordflow}{case} SDLK\_RIGHT: \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}{editor\_key}}(\mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489ba144ea20a132345c10d9ca53a6d02ba19}{STBTE\_scroll\_right}}); \textcolor{keywordflow}{break};}
+\DoxyCodeLine{65                \textcolor{keywordflow}{case} SDLK\_LEFT : \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}{editor\_key}}(\mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489bae1d9ac30a5e2b3e333da82f9f64e7ee5}{STBTE\_scroll\_left}} ); \textcolor{keywordflow}{break};}
+\DoxyCodeLine{66                \textcolor{keywordflow}{case} SDLK\_UP   : \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}{editor\_key}}(\mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489baf1d442243546075cdf22300644830165}{STBTE\_scroll\_up}}   ); \textcolor{keywordflow}{break};}
+\DoxyCodeLine{67                \textcolor{keywordflow}{case} SDLK\_DOWN : \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}{editor\_key}}(\mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489ba55752707f18e9e16ff02c9c6cbcc8420}{STBTE\_scroll\_down}} ); \textcolor{keywordflow}{break};}
+\DoxyCodeLine{68             \}}
+\DoxyCodeLine{69             \textcolor{keywordflow}{switch} (\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}-\/>key.keysym.scancode) \{}
+\DoxyCodeLine{70                \textcolor{keywordflow}{case} SDL\_SCANCODE\_S: \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}{editor\_key}}(\mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489ba165230ce39d882a97144e6227e69f9ad}{STBTE\_tool\_select}}); \textcolor{keywordflow}{break};}
+\DoxyCodeLine{71                \textcolor{keywordflow}{case} SDL\_SCANCODE\_B: \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}{editor\_key}}(\mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489ba32cde384d0d8a6714f94d9dcc3849a3f}{STBTE\_tool\_brush}} ); \textcolor{keywordflow}{break};}
+\DoxyCodeLine{72                \textcolor{keywordflow}{case} SDL\_SCANCODE\_E: \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}{editor\_key}}(\mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489baa35a62c011e46341589fb46002660521}{STBTE\_tool\_erase}} ); \textcolor{keywordflow}{break};}
+\DoxyCodeLine{73                \textcolor{keywordflow}{case} SDL\_SCANCODE\_R: \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}{editor\_key}}(\mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489baca063ebe73fa14e2fa11aa988d7449e0}{STBTE\_tool\_rectangle}} ); \textcolor{keywordflow}{break};}
+\DoxyCodeLine{74                \textcolor{keywordflow}{case} SDL\_SCANCODE\_I: \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}{editor\_key}}(\mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489bab062287551b5ee45068a64fa837637a9}{STBTE\_tool\_eyedropper}}); \textcolor{keywordflow}{break};}
+\DoxyCodeLine{75                \textcolor{keywordflow}{case} SDL\_SCANCODE\_L: \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}{editor\_key}}(\mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489ba6f60681098ec465c4ed2655dbfa368e1}{STBTE\_tool\_link}});       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{76                \textcolor{keywordflow}{case} SDL\_SCANCODE\_G: \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}{editor\_key}}(\mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489bae81816d78c404bd57c0e8ed67be8f222}{STBTE\_act\_toggle\_grid}}); \textcolor{keywordflow}{break};}
+\DoxyCodeLine{77             \}}
+\DoxyCodeLine{78             \textcolor{keywordflow}{if} ((\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}-\/>key.keysym.mod \& KMOD\_CTRL) \&\& !(\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}-\/>key.keysym.mod \& \string~KMOD\_CTRL)) \{}
+\DoxyCodeLine{79                \textcolor{keywordflow}{switch} (\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}}-\/>key.keysym.scancode) \{}
+\DoxyCodeLine{80                   \textcolor{keywordflow}{case} SDL\_SCANCODE\_X: \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}{editor\_key}}(\mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489baed6f197db53051e958e29ff9cfd6b92d}{STBTE\_act\_cut}}  ); \textcolor{keywordflow}{break};}
+\DoxyCodeLine{81                   \textcolor{keywordflow}{case} SDL\_SCANCODE\_C: \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}{editor\_key}}(\mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489ba05555aa5cee661a131fb491b28a23211}{STBTE\_act\_copy}} ); \textcolor{keywordflow}{break};}
+\DoxyCodeLine{82                   \textcolor{keywordflow}{case} SDL\_SCANCODE\_V: \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}{editor\_key}}(\mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489ba9f148beb095d8cac4c9b534de3de0e7c}{STBTE\_act\_paste}}); \textcolor{keywordflow}{break};}
+\DoxyCodeLine{83                   \textcolor{keywordflow}{case} SDL\_SCANCODE\_Z: \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}{editor\_key}}(\mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489bae46c9443f03e78bbde3e88a65c29895b}{STBTE\_act\_undo}} ); \textcolor{keywordflow}{break};}
+\DoxyCodeLine{84                   \textcolor{keywordflow}{case} SDL\_SCANCODE\_Y: \mbox{\hyperlink{tilemap__editor__integration__example_8c_aa726864b681c2673d597a35af441790a}{editor\_key}}(\mbox{\hyperlink{stb__tilemap__editor_8h_a2079dfc8862b75681f6f25afb163489ba0cc48c1485f6aa0637963b3ff6ba807f}{STBTE\_act\_redo}} ); \textcolor{keywordflow}{break};}
+\DoxyCodeLine{85                \}}
+\DoxyCodeLine{86             \}}
+\DoxyCodeLine{87          \}}
+\DoxyCodeLine{88          \textcolor{keywordflow}{break};}
+\DoxyCodeLine{89    \}}
+\DoxyCodeLine{90 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{tilemap__editor__integration__example_8c_a79fefaeaa40baa8397b68093b669a024}\label{tilemap__editor__integration__example_8c_a79fefaeaa40baa8397b68093b669a024}} 
+\index{tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}!edit\_map@{edit\_map}}
+\index{edit\_map@{edit\_map}!tilemap\_editor\_integration\_example.c@{tilemap\_editor\_integration\_example.c}}
+\doxysubsubsection{\texorpdfstring{edit\_map}{edit\_map}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__tilemap__editor_8h_a1eb4417db66bd630e3d03310a03416c5}{stbte\+\_\+tilemap}}$\ast$ edit\+\_\+map}
+
+
+
+Definition at line 44 of file tilemap\+\_\+editor\+\_\+integration\+\_\+example.\+c.
+

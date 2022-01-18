@@ -35,7 +35,7 @@ var searchData=
   ['engine_5frun_32',['engine_run',['../engine_8h.html#a5af50542aabb976d20e6f9bfa7a3ca32',1,'engine.h']]],
   ['engine_5fstart_33',['engine_start',['../engine_8h.html#a08ecdce65eb5571457cdb141ec5aa149',1,'engine.h']]],
   ['engine_5fupdate_34',['engine_update',['../engine_8h.html#ae089957072efde72d93b362604bae8d4',1,'engine.h']]],
-  ['entity_35',['entity',['../structtransform.html#a87255977c168389786210448fbc0e3c3',1,'transform::entity()'],['../structspriterenderer.html#a0593fa06c4d365d80c8202c32acc240d',1,'spriterenderer::entity()'],['../ecs__types_8h.html#a4ea73a010095ca6cbf39e33b1c31c42f',1,'entity():&#160;ecs_types.h']]],
+  ['entity_35',['entity',['../structspriterenderer.html#a0593fa06c4d365d80c8202c32acc240d',1,'spriterenderer::entity()'],['../structtransform.html#a87255977c168389786210448fbc0e3c3',1,'transform::entity()'],['../ecs__types_8h.html#a4ea73a010095ca6cbf39e33b1c31c42f',1,'entity():&#160;ecs_types.h']]],
   ['event_2eh_36',['event.h',['../event_8h.html',1,'']]],
   ['event_5fcode_5fapp_5fquit_37',['EVENT_CODE_APP_QUIT',['../event_8h.html#ab1a5ea1b9d3d15f083a6d01c3ab3c2b7a50a321096bf6817403d8286b174722d3',1,'event.h']]],
   ['event_5fcode_5fcamera_5fmoved_38',['EVENT_CODE_CAMERA_MOVED',['../event_8h.html#ab1a5ea1b9d3d15f083a6d01c3ab3c2b7a3599e37cddac3749062b20372bedb8b0',1,'event.h']]],

@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_md_deps_stb_docs_stb_voxel_render_interview">
+
+<para><emphasis role="bold">Q:</emphasis> I suppose you really like Minecraft?</para>
+
+<para><emphasis role="bold">A:</emphasis> Not really. I mean, I do own it and play it some, and I do watch YouTube videos of other people playing it once in a while, but I&apos;m not saying it&apos;s that great.</para>
+
+<para>But I do love voxels. I&apos;ve been playing with voxel rendering since the mid-late 90&apos;s when we were still doing software rendering and thinking maybe polygons weren&apos;t the answer. Once GPUs came along that kind of died off, at least until Minecraft brought it back to attention.</para>
+
+<para><emphasis role="bold">Q:</emphasis> Do you expect people will make a lot of Minecraft clones with this?</para>
+
+<para><emphasis role="bold">A:</emphasis> I hope not!</para>
+
+<para>For one thing, it&apos;s a terrible idea for the developer. Remember before Minecraft was on the Xbox 360, there were a ton of &quot;indie&quot; clones (some maybe making decent money even), but then the real Minecraft came out and just crushed them (as far as I know). It&apos;s just not something you really want to compete with.</para>
+
+<para>The reason I made this library is because I&apos;d like to see more games with Minecraft&apos;s <emphasis>art style</emphasis>, not necessary its <emphasis>gameplay</emphasis>.</para>
+
+<para>I can understand the urge to clone the gameplay. When you have a world made of voxels/blocks, there are a few things that become incredibly easy to do that would otherwise be very hard (at least for an indie) to do in 3D. One thing is that procedural generation becomes much easier. Another is that destructible environments are easy. Another is that you have a world where your average user can build stuff that they find satisfactory.</para>
+
+<para>Minecraft is at a sort of local maximum, a sweet spot, where it leverages all of those easy-to-dos. And so I&apos;m sure it&apos;s hard to look at the space of &apos;games using voxels&apos; and move away from that local maximum, to give up some of that. But I think that&apos;s what people should do.</para>
+
+<para><emphasis role="bold">Q:</emphasis> So what else can people do with stb_voxel_render?</para>
+
+<para><emphasis role="bold">A:</emphasis> All of those benefits I mentioned above are still valid even if you stay away from the sweet spot. You can make a 3D roguelike without player-creation/destruction that uses procedural generation. You could make a shooter with pre-designed maps but destructible environments.</para>
+
+<para>And I&apos;m sure there are other possible benefits to using voxels/blocks. Hopefully this will make it easier for people to explore the space.</para>
+
+<para>The library has a pretty wide range of features to allow people to come up with some distinctive looks. For example, the art style of Continue?9876543210 was one of the inspirations for trying to make the multitexturing capabilities flexible. I&apos;m terrible at art, so this isn&apos;t really something I can come up with myself, but I tried to put in flexible technology that could be used multiple ways.</para>
+
+<para>One thing I did intentionally was try to make it possible to make nicer looking ground terrain, using the half-height slopes and &quot;weird slopes&quot;. There are Minecraft mods with drivable cars and they just go up these blocky slopes and, like, what? So I wanted you to be able to make smoother terrain, either just for the look, or for vehicles etc. Also, you can spatially cross-fade between two ground textures for that classic bad dirt/grass transition that has shipped in plenty of professional games. Of course, you could just use a separate non-voxel ground renderer for all of this. But this way, you can seamlessly integrate everything else with it. E.g. in your authoring tool (or procedural generation) you can make smooth ground and then cut a sharp-edged hole in it for a building&apos;s basement or whatever.</para>
+
+<para>Another thing you can do is work at a very different scale. In Minecraft, a person is just under 2 blocks tall. In Ace of Spades, a person is just under 3 blocks tall. Why not 4 or 6? Well, partly because you just need a lot more voxels; if a meter is 2 voxels in Mineraft and 4 voxels in your game, and you draw the same number of voxels due to hardware limits, then your game has half the view distance of Minecraft. Since stb_voxel_render is designed to keep the meshes small and render efficiently, you can push the view distance out further than Minecraft&#8211;or use a similar view distance and a higher voxel resolution. You could also stop making infinite worlds and work at entirely different scales; where Minecraft is 1 voxel per meter, you could have 20 voxels per meter and make a small arena that&apos;s 50 meters wide and 5 meters tall.</para>
+
+<para>Back when the voxel game Voxatron was announced, the weekend after the trailer came out I wrote my own little GPU-accelerated version of the engine and thought that was pretty cool. I&apos;ve been tempted many times to extract that and release it as a library, but I don&apos;t want to steal Voxatron&apos;s thunder so I&apos;ve avoided it. You could use this engine to do the same kind of thing, although it won&apos;t be as efficient as an engine dedicated to that style of thing would be.</para>
+
+<para><emphasis role="bold">Q:</emphasis> What one thing would you really like to see somebody do?</para>
+
+<para><emphasis role="bold">A:</emphasis> Before Unity, 3D has seemed deeply problematic in the indie space. Software like GameMaker has tried to support 3D but it seems like little of note has been done with it.</para>
+
+<para>Minecraft has shown that people can build worlds with the Minecraft toolset far more easily than we&apos;ve ever seen from those other tools. Obviously people have done great things with Unity, but those people are much closer to professional developers; typically they still need real 3D modelling and all of that stuff.</para>
+
+<para>So what I&apos;d really like to see is someone build some kind of voxel-game-construction-set. Start with stb_voxel_render, maybe expose all the flexibility of stb_voxel_render (so people can do different things). Thrown in lua or something else for scripting, make some kind of editor that feels at least as good as Minecraft and Infinifactory, and see where that gets you.</para>
+
+<para><emphasis role="bold">Q:</emphasis> Why&apos;d you make this library?</para>
+
+<para><emphasis role="bold">A:</emphasis> Mainly as a way of releasing this technology I&apos;ve been working on since 2011 and seemed unlikely to ever ship myself. In 2011 I was playing the voxel shooter Ace of Spades. One of the maps that we played on was a partial port of Broville (which is the first Minecraft map in stb_voxel_render release trailer). I&apos;d made a bunch of procedural level generators for the game, and I started trying to make a city generator inspired by Broville.</para>
+
+<para>But I realized it would be a lot of work, and of very little value (most of my maps didn&apos;t get much play because people preferred to play on maps where they could charge straight at the enemies and shoot them as fast as possible). So I wrote my own voxel engine and started working on a procedural city game. But I got bogged down after I finally got the road generator working and never got anywhere with building generation or gameplay.</para>
+
+<para>stb_voxel_render is actually a complete rewrite from scratch, but it&apos;s based a lot on what I learned from that previous work.</para>
+
+<para><emphasis role="bold">Q:</emphasis> About the release video... how long did that take to edit?</para>
+
+<para><emphasis role="bold">A:</emphasis> About seven or eight hours. I had the first version done in maybe six or seven hours, but then I realized I&apos;d left out one clip, and when I went back to add it I also gussied up a couple other moments in the video. But there was something basically identical to it that was done in around six.</para>
+
+<para><emphasis role="bold">Q:</emphasis> Ok, that&apos;s it. Thanks, me.</para>
+
+<para><emphasis role="bold">A:</emphasis> Thanks <emphasis>me!</emphasis> </para>
+</section>

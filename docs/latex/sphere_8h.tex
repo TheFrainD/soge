@@ -1,0 +1,179 @@
+\hypertarget{sphere_8h}{}\doxysection{deps/cglm/include/cglm/sphere.h File Reference}
+\label{sphere_8h}\index{deps/cglm/include/cglm/sphere.h@{deps/cglm/include/cglm/sphere.h}}
+{\ttfamily \#include \char`\"{}common.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mat4.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} float \mbox{\hyperlink{sphere_8h_ac34ef43cd75876440a5f55e4c220d95a}{glm\+\_\+sphere\+\_\+radii}} (vec4 \mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}})
+\begin{DoxyCompactList}\small\item\em helper for getting sphere radius \end{DoxyCompactList}\item 
+\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{sphere_8h_a080d4c062023a50020dad8b0990850b5}{glm\+\_\+sphere\+\_\+transform}} (vec4 \mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}}, \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} \mbox{\hyperlink{glext_8h_af593500c283bf1a787a6f947f503a5c2}{m}}, vec4 dest)
+\begin{DoxyCompactList}\small\item\em apply transform to sphere, it is just wrapper for glm\+\_\+mat4\+\_\+mulv3 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{sphere_8h_ad419c597eda712e9a740797edaf17d36}{glm\+\_\+sphere\+\_\+merge}} (vec4 \mbox{\hyperlink{glext_8h_a4ed25fb4dc5bf1a768a78d2e2f0ca003}{s1}}, vec4 s2, vec4 dest)
+\begin{DoxyCompactList}\small\item\em merges two spheres and creates a new one \end{DoxyCompactList}\item 
+\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} bool \mbox{\hyperlink{sphere_8h_a3f9ce39d96b633f1e8180eeebb02b1c0}{glm\+\_\+sphere\+\_\+sphere}} (vec4 \mbox{\hyperlink{glext_8h_a4ed25fb4dc5bf1a768a78d2e2f0ca003}{s1}}, vec4 s2)
+\begin{DoxyCompactList}\small\item\em check if two sphere intersects \end{DoxyCompactList}\item 
+\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} bool \mbox{\hyperlink{sphere_8h_aaab708ae9c1f9a23b1ee1a31b0408995}{glm\+\_\+sphere\+\_\+point}} (vec4 \mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}}, \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} point)
+\begin{DoxyCompactList}\small\item\em check if sphere intersects with point \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{sphere_8h_ad419c597eda712e9a740797edaf17d36}\label{sphere_8h_ad419c597eda712e9a740797edaf17d36}} 
+\index{sphere.h@{sphere.h}!glm\_sphere\_merge@{glm\_sphere\_merge}}
+\index{glm\_sphere\_merge@{glm\_sphere\_merge}!sphere.h@{sphere.h}}
+\doxysubsubsection{\texorpdfstring{glm\_sphere\_merge()}{glm\_sphere\_merge()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} glm\+\_\+sphere\+\_\+merge (\begin{DoxyParamCaption}\item[{vec4}]{s1,  }\item[{vec4}]{s2,  }\item[{vec4}]{dest }\end{DoxyParamCaption})}
+
+
+
+merges two spheres and creates a new one 
+
+two sphere must be in same space, for instance if one in world space then the other must be in world space too, not in local space.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s1} & sphere 1 \\
+\hline
+\mbox{\texttt{ in}}  & {\em s2} & sphere 2 \\
+\hline
+\mbox{\texttt{ out}}  & {\em dest} & merged/extended sphere \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 60 of file sphere.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{60                                               \{}
+\DoxyCodeLine{61   \textcolor{keywordtype}{float} dist, radii;}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63   dist  = \mbox{\hyperlink{vec3_8h_ae1fd284a9aaa6588a4a9d3cd0f86e349}{glm\_vec3\_distance}}(\mbox{\hyperlink{glext_8h_a4ed25fb4dc5bf1a768a78d2e2f0ca003}{s1}}, s2);}
+\DoxyCodeLine{64   radii = dist + \mbox{\hyperlink{glext_8h_a4ed25fb4dc5bf1a768a78d2e2f0ca003}{s1}}[3] + s2[3];}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66   radii = \mbox{\hyperlink{util_8h_a3bc7e88f0c39b455f0c59c8851b71040}{glm\_max}}(radii, \mbox{\hyperlink{glext_8h_a4ed25fb4dc5bf1a768a78d2e2f0ca003}{s1}}[3]);}
+\DoxyCodeLine{67   radii = \mbox{\hyperlink{util_8h_a3bc7e88f0c39b455f0c59c8851b71040}{glm\_max}}(radii, s2[3]);}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69   \mbox{\hyperlink{vec3_8h_a99b593fb23686276d7fa2cd09b6ca902}{glm\_vec3\_center}}(\mbox{\hyperlink{glext_8h_a4ed25fb4dc5bf1a768a78d2e2f0ca003}{s1}}, s2, dest);}
+\DoxyCodeLine{70   dest[3] = radii;}
+\DoxyCodeLine{71 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{sphere_8h_aaab708ae9c1f9a23b1ee1a31b0408995}\label{sphere_8h_aaab708ae9c1f9a23b1ee1a31b0408995}} 
+\index{sphere.h@{sphere.h}!glm\_sphere\_point@{glm\_sphere\_point}}
+\index{glm\_sphere\_point@{glm\_sphere\_point}!sphere.h@{sphere.h}}
+\doxysubsubsection{\texorpdfstring{glm\_sphere\_point()}{glm\_sphere\_point()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} bool glm\+\_\+sphere\+\_\+point (\begin{DoxyParamCaption}\item[{vec4}]{s,  }\item[{\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}}}]{point }\end{DoxyParamCaption})}
+
+
+
+check if sphere intersects with point 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & sphere \\
+\hline
+\mbox{\texttt{ in}}  & {\em point} & point \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 93 of file sphere.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{93                                      \{}
+\DoxyCodeLine{94   \textcolor{keywordtype}{float} rr;}
+\DoxyCodeLine{95   rr = \mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}}[3] * \mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}}[3];}
+\DoxyCodeLine{96   \textcolor{keywordflow}{return} \mbox{\hyperlink{vec3_8h_a54c9be97cf373ddccf9464a7dea925b7}{glm\_vec3\_distance2}}(point, \mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}}) <= rr;}
+\DoxyCodeLine{97 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{sphere_8h_ac34ef43cd75876440a5f55e4c220d95a}\label{sphere_8h_ac34ef43cd75876440a5f55e4c220d95a}} 
+\index{sphere.h@{sphere.h}!glm\_sphere\_radii@{glm\_sphere\_radii}}
+\index{glm\_sphere\_radii@{glm\_sphere\_radii}!sphere.h@{sphere.h}}
+\doxysubsubsection{\texorpdfstring{glm\_sphere\_radii()}{glm\_sphere\_radii()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} float glm\+\_\+sphere\+\_\+radii (\begin{DoxyParamCaption}\item[{vec4}]{s }\end{DoxyParamCaption})}
+
+
+
+helper for getting sphere radius 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & sphere\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns radii 
+\end{DoxyReturn}
+
+
+Definition at line 30 of file sphere.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{30                          \{}
+\DoxyCodeLine{31   \textcolor{keywordflow}{return} \mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}}[3];}
+\DoxyCodeLine{32 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{sphere_8h_a3f9ce39d96b633f1e8180eeebb02b1c0}\label{sphere_8h_a3f9ce39d96b633f1e8180eeebb02b1c0}} 
+\index{sphere.h@{sphere.h}!glm\_sphere\_sphere@{glm\_sphere\_sphere}}
+\index{glm\_sphere\_sphere@{glm\_sphere\_sphere}!sphere.h@{sphere.h}}
+\doxysubsubsection{\texorpdfstring{glm\_sphere\_sphere()}{glm\_sphere\_sphere()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} bool glm\+\_\+sphere\+\_\+sphere (\begin{DoxyParamCaption}\item[{vec4}]{s1,  }\item[{vec4}]{s2 }\end{DoxyParamCaption})}
+
+
+
+check if two sphere intersects 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s1} & sphere \\
+\hline
+\mbox{\texttt{ in}}  & {\em s2} & other sphere \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 81 of file sphere.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{81                                     \{}
+\DoxyCodeLine{82   \textcolor{keywordflow}{return} \mbox{\hyperlink{vec3_8h_a54c9be97cf373ddccf9464a7dea925b7}{glm\_vec3\_distance2}}(\mbox{\hyperlink{glext_8h_a4ed25fb4dc5bf1a768a78d2e2f0ca003}{s1}}, s2) <= \mbox{\hyperlink{util_8h_a24dd4cb299b0969fd1224479c810fbef}{glm\_pow2}}(\mbox{\hyperlink{glext_8h_a4ed25fb4dc5bf1a768a78d2e2f0ca003}{s1}}[3] + s2[3]);}
+\DoxyCodeLine{83 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{sphere_8h_a080d4c062023a50020dad8b0990850b5}\label{sphere_8h_a080d4c062023a50020dad8b0990850b5}} 
+\index{sphere.h@{sphere.h}!glm\_sphere\_transform@{glm\_sphere\_transform}}
+\index{glm\_sphere\_transform@{glm\_sphere\_transform}!sphere.h@{sphere.h}}
+\doxysubsubsection{\texorpdfstring{glm\_sphere\_transform()}{glm\_sphere\_transform()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} glm\+\_\+sphere\+\_\+transform (\begin{DoxyParamCaption}\item[{vec4}]{s,  }\item[{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}}}]{m,  }\item[{vec4}]{dest }\end{DoxyParamCaption})}
+
+
+
+apply transform to sphere, it is just wrapper for glm\+\_\+mat4\+\_\+mulv3 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & sphere \\
+\hline
+\mbox{\texttt{ in}}  & {\em m} & transform matrix \\
+\hline
+\mbox{\texttt{ out}}  & {\em dest} & transformed sphere \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 43 of file sphere.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{43                                                 \{}
+\DoxyCodeLine{44   \mbox{\hyperlink{mat4_8h_ab7bef4d14733cbcafbf7dba45b2d050b}{glm\_mat4\_mulv3}}(\mbox{\hyperlink{glext_8h_af593500c283bf1a787a6f947f503a5c2}{m}}, \mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}}, 1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, dest);}
+\DoxyCodeLine{45   dest[3] = \mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}}[3];}
+\DoxyCodeLine{46 \}}
+
+\end{DoxyCode}

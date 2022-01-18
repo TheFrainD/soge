@@ -1,3 +1,14 @@
+/*********************************************************************
+ * renderer.c                                                        *
+ *                                                                   *
+ * Copyright (c) 2022 Dmytro Zykov                                   *
+ *                                                                   *
+ * This file is a part of the vally project, and may only be used,   *
+ * modified and distributed under the terms of the MIT License,      *
+ * LICENSE.md. By continuing to use, modify and distribute this file *
+ * you inidicate that you have read the license and accept it fully. *
+ *********************************************************************/
+
 #include <vally/renderer/renderer.h>
 
 #include <glad/glad.h>
@@ -9,10 +20,11 @@
 #include <vally/renderer/texture.h>
 #include <vally/renderer/shader.h>
 #include <vally/renderer/camera.h>
+#include <vally/renderer/projection.h>
 #include <vally/renderer/buffer.h>
 
 typedef struct {
-  shader shader_;
+  shader *shader_;
   buffer *buffer_;
 
   texture *tex_white;
@@ -29,12 +41,12 @@ static b8 initialized = FALSE;
 static renderer_state state;
 
 static b8 renderer_update_projection(u16 code, void *sender, void *listener, event_context context) {
-  shader_send_mat4(&state.shader_, "u_proj", camera_update_projection(context.data.f32[0], context.data.f32[1]));
+  shader_send_mat4(state.shader_, "u_proj", camera_update_projection(context.data.f32[0], context.data.f32[1]));
   return TRUE;
 }
 
 static b8 renderer_update_view(u16 code, void *sender, void *listener, event_context context) {
-  shader_send_mat4(&state.shader_, "u_view", camera_update_view());
+  shader_send_mat4(state.shader_, "u_view", camera_update_view());
   return TRUE;
 }
 
@@ -60,15 +72,15 @@ b8 renderer_init() {
 
   camera_init();
 
-  shader_send_int_array(&state.shader_, "u_image", RENDERER_MAX_TEXTURES, state.sampler);
-  shader_send_mat4(&state.shader_, "u_proj", camera_update_projection(window_get_width(), window_get_height()));
-  shader_send_mat4(&state.shader_, "u_view", camera_update_view());
+  shader_send_int_array(state.shader_, "u_image", RENDERER_MAX_TEXTURES, state.sampler);
+  shader_send_mat4(state.shader_, "u_proj", camera_update_projection(window_get_width(), window_get_height()));
+  shader_send_mat4(state.shader_, "u_view", camera_update_view());
 
   event_subscribe(EVENT_CODE_CAMERA_MOVED, &state, renderer_update_view);
   event_subscribe(EVENT_CODE_WINDOW_RESIZED, &state, renderer_update_projection);
 
   initialized = TRUE;
-  VALLY_TRACE("Renderer system initialized");
+  LOG_TRACE("Renderer system initialized");
 
   return TRUE;
 }
@@ -98,7 +110,7 @@ void renderer_flush() {
     texture_bind(i, state.textures[i]);
   }
 
-  shader_attach(&state.shader_);
+  shader_attach(state.shader_);
   buffer_bind(state.buffer_);
 
   glDrawElements(GL_TRIANGLES, state.index_count, GL_UNSIGNED_INT, NULL);
@@ -116,7 +128,7 @@ void renderer_terminate() {
 
   initialized = FALSE;
 
-  VALLY_TRACE("Renderer system terminated");
+  LOG_TRACE("Renderer system terminated");
 }
 
 void renderer_clear_screen() {

@@ -1,0 +1,1240 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_wl__window_8c">
+<title>deps/glfw/src/wl_window.c File Reference</title>
+<indexterm><primary>deps/glfw/src/wl_window.c</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;string.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;sys/mman.h&gt;
+#include &lt;sys/timerfd.h&gt;
+#include &lt;poll.h&gt;
+#include &quot;wayland-client-protocol.h&quot;
+#include &quot;wayland-xdg-shell-client-protocol.h&quot;
+#include &quot;wayland-xdg-decoration-client-protocol.h&quot;
+#include &quot;wayland-viewporter-client-protocol.h&quot;
+#include &quot;wayland-relative-pointer-unstable-v1-client-protocol.h&quot;
+#include &quot;wayland-pointer-constraints-unstable-v1-client-protocol.h&quot;
+#include &quot;wayland-idle-inhibit-unstable-v1-client-protocol.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_wl__window_8c_1a369266c24eacffb87046522897a570d5">_GNU_SOURCE</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_wl__window_8c_1a8fbd5336c54afc9760a89acca1b5bd20">_glfwCreateWindowWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, const <link linkend="_struct___g_l_f_wwndconfig">_GLFWwndconfig</link> *wndconfig, const <link linkend="_struct___g_l_f_wctxconfig">_GLFWctxconfig</link> *ctxconfig, const <link linkend="_struct___g_l_f_wfbconfig">_GLFWfbconfig</link> *fbconfig)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a4f9e23a94f70832b66ea4ff6f7e6c98d">_glfwDestroyWindowWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a2a03cb3eb1fa3720991ad2503dd65e2a">_glfwSetWindowTitleWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, const char *title)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1af3bdf666499b335663748945d01b1aab">_glfwSetWindowIconWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int <link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>, const <link linkend="_struct_g_l_f_wimage">GLFWimage</link> *images)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a325fef5dd107caef5a4620ec0e5ee9bd">_glfwGetWindowPosWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int *xpos, int *ypos)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a5adb7549f1afecf80241a68fe7d2f2e0">_glfwSetWindowPosWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int xpos, int ypos)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a7139656b9b92a558042462c05e71f17e">_glfwGetWindowSizeWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int *<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>, int *<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a782e4e77e16e03c5340748e43e808828">_glfwSetWindowSizeWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int <link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>, int <link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1acd2b24bb6d3dc8bf27de6306a5d5397d">_glfwSetWindowSizeLimitsWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int minwidth, int minheight, int maxwidth, int maxheight)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a67850a44f6265bfa151ef3e3637bca55">_glfwSetWindowAspectRatioWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int numer, int denom)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1afa69ff28fa47d232843f620120391e97">_glfwGetFramebufferSizeWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int *<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>, int *<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a1c0713597287aec915fa764efdebf1f9">_glfwGetWindowFrameSizeWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int *<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>, int *<link linkend="_glext_8h_1a5ab323daeacf8dfdb8f91132fecdca23">top</link>, int *<link linkend="_glext_8h_1a5ffadbbacc6b89cf6218bc43b384d3fe">right</link>, int *<link linkend="_glad_8h_1a95fc257e5ddf46f7db9d5e898cdf1991">bottom</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1ab3e8d510f751fca3c9b60aa03d321cba">_glfwGetWindowContentScaleWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, float *xscale, float *yscale)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a2786524a443b7f4a2ff53055366e1169">_glfwIconifyWindowWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a25c9fe00185d9a1b8badf038b7634b88">_glfwRestoreWindowWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a8dcc43854cfabe4d324154d2eeebd44e">_glfwMaximizeWindowWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a7a956e757e29f06d5efcae33b58025cb">_glfwShowWindowWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1ad519388eb25d04c1a4db2df34169efb4">_glfwHideWindowWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a8a1b249be1215f514f923f91656030c3">_glfwRequestWindowAttentionWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a29aeccafd183ea2e1f5bab9a44ad6122">_glfwFocusWindowWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a76e4715c3d943636ba1b71afea0c97c2">_glfwSetWindowMonitorWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, <link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, int xpos, int ypos, int <link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>, int <link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>, int refreshRate)</para>
+</listitem>
+            <listitem><para>int <link linkend="_wl__window_8c_1ab0d72e6bf663506ff3f138bc670b2f6c">_glfwWindowFocusedWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_wl__window_8c_1a44752c656c8cee3498776b851285dca6">_glfwWindowIconifiedWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_wl__window_8c_1abb9d2bf1aac035ff3ae3abcc9e0a7f09">_glfwWindowVisibleWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_wl__window_8c_1a7676d7f4167b65f29aedf393e14174ed">_glfwWindowMaximizedWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_wl__window_8c_1af427fb6a233af50a51858a9908d196fb">_glfwWindowHoveredWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_wl__window_8c_1a2a78a10b4fa6a214a2bebf4f1ec9b868">_glfwFramebufferTransparentWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1aa7d932102710313b7cc131d45413cd06">_glfwSetWindowResizableWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_glad_8h_1a0455a397ab5468d21c3021f2efa6dd3c">enabled</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1afcacd9ea3cb285c1266871d13a723e4c">_glfwSetWindowDecoratedWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_glad_8h_1a0455a397ab5468d21c3021f2efa6dd3c">enabled</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1aebcd0db81b67e416f775e4b0d8facdc1">_glfwSetWindowFloatingWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_glad_8h_1a0455a397ab5468d21c3021f2efa6dd3c">enabled</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1acad95c7e85177725f95463ffe86015d4">_glfwSetWindowMousePassthroughWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_glad_8h_1a0455a397ab5468d21c3021f2efa6dd3c">enabled</link>)</para>
+</listitem>
+            <listitem><para>float <link linkend="_wl__window_8c_1a741ad4527adc24d5f6732ac27fa32678">_glfwGetWindowOpacityWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a43f0c40c30c7bc0216b51cfae59c3629">_glfwSetWindowOpacityWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, float opacity)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1aeb3438865c89b17a2142cfc4509dbd28">_glfwSetRawMouseMotionWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_glad_8h_1a0455a397ab5468d21c3021f2efa6dd3c">enabled</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_wl__window_8c_1aa0c6e411bf8eef4b73bc98e0974f2a78">_glfwRawMouseMotionSupportedWayland</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a7a315f4b4c3263efc0960094698de618">_glfwPollEventsWayland</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a7cc624f3d8429b0d35ad163092b4821a">_glfwWaitEventsWayland</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a43d44933860ce6e5802733777edae04b">_glfwWaitEventsTimeoutWayland</link> (double <link linkend="_glad_8h_1ad29bb0d8468b264a4e3d9204366cfaab">timeout</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a34984c3cc558a291b1721288c8b5ebe6">_glfwPostEmptyEventWayland</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a68e7966431b3829e09186d88c057e683">_glfwGetCursorPosWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, double *xpos, double *ypos)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a62964c8a134ffddbab5b24db5b5ba1e9">_glfwSetCursorPosWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, double <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, double <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1ae993bd14d7db090c84fb9799fc556bbd">_glfwSetCursorModeWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int <link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>)</para>
+</listitem>
+            <listitem><para>const char * <link linkend="_wl__window_8c_1a066d33db2119fb1bba6a5127abd3530c">_glfwGetScancodeNameWayland</link> (int scancode)</para>
+</listitem>
+            <listitem><para>int <link linkend="_wl__window_8c_1a3e2e4e589e75df85898b33ff459f60ee">_glfwGetKeyScancodeWayland</link> (int <link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_wl__window_8c_1abdb1b358173a9cd27ed43e2492c40c20">_glfwCreateCursorWayland</link> (<link linkend="_struct___g_l_f_wcursor">_GLFWcursor</link> *cursor, const <link linkend="_struct_g_l_f_wimage">GLFWimage</link> *<link linkend="_structimage">image</link>, int xhot, int yhot)</para>
+</listitem>
+            <listitem><para>int <link linkend="_wl__window_8c_1aadea2d69e02bfba04cf90e07501aa467">_glfwCreateStandardCursorWayland</link> (<link linkend="_struct___g_l_f_wcursor">_GLFWcursor</link> *cursor, int shape)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1ac215aeab29ad474956c27f4f6ddfc65a">_glfwDestroyCursorWayland</link> (<link linkend="_struct___g_l_f_wcursor">_GLFWcursor</link> *cursor)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1aabccf38d8d6f6e29e4a63345a850bfa9">_glfwSetCursorWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, <link linkend="_struct___g_l_f_wcursor">_GLFWcursor</link> *cursor)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a74f40e21bcc7f5a646ecc5f80f25a6c3">_glfwSetClipboardStringWayland</link> (const char *<link linkend="_glad_8h_1ae84541b4f3d8e1ea24ec0f466a8c568b">string</link>)</para>
+</listitem>
+            <listitem><para>const char * <link linkend="_wl__window_8c_1a491fcd8a56c175d24dc286660fe7475b">_glfwGetClipboardStringWayland</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1a3a1da159bbe7bd56490f67d96dce3bf9">EGLenum</link> <link linkend="_wl__window_8c_1ad3a432eeab11d12463568f267ba0dc59">_glfwGetEGLPlatformWayland</link> (<link linkend="_internal_8h_1a97030274d045a36c550fc0d66d26f175">EGLint</link> **<link linkend="_glext_8h_1af53ceb1060941f33639f84f48d5b9273">attribs</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1a551f78efa88a306d86efa8af0ec94349">EGLNativeDisplayType</link> <link linkend="_wl__window_8c_1a504e09d478703e56da9a9b8204bdddd5">_glfwGetEGLNativeDisplayWayland</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1a858431dc7d9081b52dc734956fd1f563">EGLNativeWindowType</link> <link linkend="_wl__window_8c_1a1aa2aacf3bb7726a0cb96c138cda4f43">_glfwGetEGLNativeWindowWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__window_8c_1a82b45703386cfc7543957d2160b482a5">_glfwGetRequiredInstanceExtensionsWayland</link> (char **extensions)</para>
+</listitem>
+            <listitem><para>int <link linkend="_wl__window_8c_1a5b300bf0217ad4d0c73c7c44eb53062d">_glfwGetPhysicalDevicePresentationSupportWayland</link> (<link linkend="_internal_8h_1a25ae5082a7c01af345570ed09d724881">VkInstance</link> instance, <link linkend="_internal_8h_1aa9acbee1e762fde021511a1b47678a38">VkPhysicalDevice</link> device, <link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link> queuefamily)</para>
+</listitem>
+            <listitem><para><link linkend="_vulkan_8h_1abe3614d1bd40772bc2398a4a86ea4a45">VkResult</link> <link linkend="_wl__window_8c_1a88b24d7cb3bc64abfc826fd23cf17ad4">_glfwCreateWindowSurfaceWayland</link> (<link linkend="_internal_8h_1a25ae5082a7c01af345570ed09d724881">VkInstance</link> instance, <link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, const <link linkend="_struct_vk_allocation_callbacks">VkAllocationCallbacks</link> *allocator, <link linkend="_internal_8h_1a09787d7da5f3146095ed80ceccc2d794">VkSurfaceKHR</link> *surface)</para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> struct wl_display * <link linkend="_wl__window_8c_1adc34e43e770676d600b962856da8dd83">glfwGetWaylandDisplay</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> struct wl_surface * <link linkend="_wl__window_8c_1a170f451581f6a1051512e2897d336675">glfwGetWaylandWindow</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *handle)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_wl__window_8c_1a369266c24eacffb87046522897a570d5"/>    <section>
+    <title>_GNU_SOURCE</title>
+<indexterm><primary>_GNU_SOURCE</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_GNU_SOURCE</secondary></indexterm>
+<para><computeroutput>#define _GNU_SOURCE</computeroutput></para><para>
+Definition at line 29 of file wl_window.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_wl__window_8c_1abdb1b358173a9cd27ed43e2492c40c20"/>    <section>
+    <title>_glfwCreateCursorWayland()</title>
+<indexterm><primary>_glfwCreateCursorWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwCreateCursorWayland</secondary></indexterm>
+<para><computeroutput>int _glfwCreateCursorWayland (<link linkend="_struct___g_l_f_wcursor">_GLFWcursor</link> * cursor, const <link linkend="_struct_g_l_f_wimage">GLFWimage</link> * image, int xhot, int yhot)</computeroutput></para><para>
+Definition at line 1256 of file wl_window.c.</para>
+<programlisting>1259 {
+1260 &#32;&#32;&#32;&#32;cursor-&gt;wl.buffer&#32;=&#32;createShmBuffer(<link linkend="_structimage">image</link>);
+1261 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!cursor-&gt;wl.buffer)
+1262 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1263 
+1264 &#32;&#32;&#32;&#32;cursor-&gt;wl.width&#32;=&#32;<link linkend="_structimage">image</link>-&gt;<link linkend="_structimage_1a42ecfe2675278f6b7e70033e3ff89e4a">width</link>;
+1265 &#32;&#32;&#32;&#32;cursor-&gt;wl.height&#32;=&#32;<link linkend="_structimage">image</link>-&gt;<link linkend="_structimage_1aa478e4be0fe527274f9233cc11ec71e9">height</link>;
+1266 &#32;&#32;&#32;&#32;cursor-&gt;wl.xhot&#32;=&#32;xhot;
+1267 &#32;&#32;&#32;&#32;cursor-&gt;wl.yhot&#32;=&#32;yhot;
+1268 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+1269 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1aadea2d69e02bfba04cf90e07501aa467"/>    <section>
+    <title>_glfwCreateStandardCursorWayland()</title>
+<indexterm><primary>_glfwCreateStandardCursorWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwCreateStandardCursorWayland</secondary></indexterm>
+<para><computeroutput>int _glfwCreateStandardCursorWayland (<link linkend="_struct___g_l_f_wcursor">_GLFWcursor</link> * cursor, int shape)</computeroutput></para><para>
+Definition at line 1271 of file wl_window.c.</para>
+<programlisting>1272 {
+1273 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>*&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1274 
+1275 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Try&#32;the&#32;XDG&#32;names&#32;first</emphasis>
+1276 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(shape)
+1277 &#32;&#32;&#32;&#32;{
+1278 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1ga8ab0e717245b85506cb0eaefdea39d0a">GLFW_ARROW_CURSOR</link>:
+1279 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;<emphasis role="stringliteral">&quot;default&quot;</emphasis>;
+1280 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1281 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1ga36185f4375eaada1b04e431244774c86">GLFW_IBEAM_CURSOR</link>:
+1282 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;<emphasis role="stringliteral">&quot;text&quot;</emphasis>;
+1283 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1284 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1ga8af88c0ea05ab9e8f9ac1530e8873c22">GLFW_CROSSHAIR_CURSOR</link>:
+1285 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;<emphasis role="stringliteral">&quot;crosshair&quot;</emphasis>;
+1286 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1287 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1gaad01a50929fb515bf27e4462c51f6ed0">GLFW_POINTING_HAND_CURSOR</link>:
+1288 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;<emphasis role="stringliteral">&quot;pointer&quot;</emphasis>;
+1289 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1290 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1ga2010a43dc1050a7c9154148a63cf01ad">GLFW_RESIZE_EW_CURSOR</link>:
+1291 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;<emphasis role="stringliteral">&quot;ew-resize&quot;</emphasis>;
+1292 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1293 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1gaa59214e8cdc8c8adf08fdf125ed68388">GLFW_RESIZE_NS_CURSOR</link>:
+1294 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;<emphasis role="stringliteral">&quot;ns-resize&quot;</emphasis>;
+1295 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1296 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1gadf2c0a495ec9cef4e1a364cc99aa78da">GLFW_RESIZE_NWSE_CURSOR</link>:
+1297 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;<emphasis role="stringliteral">&quot;nwse-resize&quot;</emphasis>;
+1298 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1299 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1gab06bba3b407f92807ba9b48de667a323">GLFW_RESIZE_NESW_CURSOR</link>:
+1300 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;<emphasis role="stringliteral">&quot;nesw-resize&quot;</emphasis>;
+1301 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1302 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1ga3a5f4811155f95ccafbbb4c9a899fc1d">GLFW_RESIZE_ALL_CURSOR</link>:
+1303 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;<emphasis role="stringliteral">&quot;all-scroll&quot;</emphasis>;
+1304 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1305 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1ga297c503095b034bc8891393b637844b1">GLFW_NOT_ALLOWED_CURSOR</link>:
+1306 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;<emphasis role="stringliteral">&quot;not-allowed&quot;</emphasis>;
+1307 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1308 &#32;&#32;&#32;&#32;}
+1309 
+1310 &#32;&#32;&#32;&#32;cursor-&gt;wl.cursor&#32;=&#32;<link linkend="_wl__platform_8h_1a987f4277f2574417ab58ebdb8f5de58f">wl_cursor_theme_get_cursor</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorTheme,&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>);
+1311 
+1312 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorThemeHiDPI)
+1313 &#32;&#32;&#32;&#32;{
+1314 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cursor-&gt;wl.cursorHiDPI&#32;=
+1315 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a987f4277f2574417ab58ebdb8f5de58f">wl_cursor_theme_get_cursor</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorThemeHiDPI,&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>);
+1316 &#32;&#32;&#32;&#32;}
+1317 
+1318 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!cursor-&gt;wl.cursor)
+1319 &#32;&#32;&#32;&#32;{
+1320 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Fall&#32;back&#32;to&#32;the&#32;core&#32;X11&#32;names</emphasis>
+1321 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(shape)
+1322 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1323 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1ga8ab0e717245b85506cb0eaefdea39d0a">GLFW_ARROW_CURSOR</link>:
+1324 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;<emphasis role="stringliteral">&quot;left_ptr&quot;</emphasis>;
+1325 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1326 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1ga36185f4375eaada1b04e431244774c86">GLFW_IBEAM_CURSOR</link>:
+1327 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;<emphasis role="stringliteral">&quot;xterm&quot;</emphasis>;
+1328 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1329 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1ga8af88c0ea05ab9e8f9ac1530e8873c22">GLFW_CROSSHAIR_CURSOR</link>:
+1330 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;<emphasis role="stringliteral">&quot;crosshair&quot;</emphasis>;
+1331 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1332 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1gaad01a50929fb515bf27e4462c51f6ed0">GLFW_POINTING_HAND_CURSOR</link>:
+1333 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;<emphasis role="stringliteral">&quot;hand2&quot;</emphasis>;
+1334 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1335 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1ga2010a43dc1050a7c9154148a63cf01ad">GLFW_RESIZE_EW_CURSOR</link>:
+1336 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;<emphasis role="stringliteral">&quot;sb_h_double_arrow&quot;</emphasis>;
+1337 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1338 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1gaa59214e8cdc8c8adf08fdf125ed68388">GLFW_RESIZE_NS_CURSOR</link>:
+1339 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;<emphasis role="stringliteral">&quot;sb_v_double_arrow&quot;</emphasis>;
+1340 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1341 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__shapes_1ga3a5f4811155f95ccafbbb4c9a899fc1d">GLFW_RESIZE_ALL_CURSOR</link>:
+1342 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>&#32;=&#32;<emphasis role="stringliteral">&quot;fleur&quot;</emphasis>;
+1343 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1344 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">default</emphasis>:
+1345 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga09d6943923a70ddef3a085f5baee786c">GLFW_CURSOR_UNAVAILABLE</link>,
+1346 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Standard&#32;cursor&#32;shape&#32;unavailable&quot;</emphasis>);
+1347 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1348 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1349 
+1350 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cursor-&gt;wl.cursor&#32;=&#32;<link linkend="_wl__platform_8h_1a987f4277f2574417ab58ebdb8f5de58f">wl_cursor_theme_get_cursor</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorTheme,&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>);
+1351 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!cursor-&gt;wl.cursor)
+1352 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1353 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1354 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Failed&#32;to&#32;create&#32;standard&#32;cursor&#32;\&quot;%s\&quot;&quot;</emphasis>,
+1355 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>);
+1356 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1357 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1358 
+1359 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorThemeHiDPI)
+1360 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1361 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!cursor-&gt;wl.cursorHiDPI)
+1362 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1363 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cursor-&gt;wl.cursorHiDPI&#32;=
+1364 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a987f4277f2574417ab58ebdb8f5de58f">wl_cursor_theme_get_cursor</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorThemeHiDPI,&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>);
+1365 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1366 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1367 &#32;&#32;&#32;&#32;}
+1368 
+1369 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+1370 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a88b24d7cb3bc64abfc826fd23cf17ad4"/>    <section>
+    <title>_glfwCreateWindowSurfaceWayland()</title>
+<indexterm><primary>_glfwCreateWindowSurfaceWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwCreateWindowSurfaceWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_vulkan_8h_1abe3614d1bd40772bc2398a4a86ea4a45">VkResult</link> _glfwCreateWindowSurfaceWayland (<link linkend="_internal_8h_1a25ae5082a7c01af345570ed09d724881">VkInstance</link> instance, <link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, const <link linkend="_struct_vk_allocation_callbacks">VkAllocationCallbacks</link> * allocator, <link linkend="_internal_8h_1a09787d7da5f3146095ed80ceccc2d794">VkSurfaceKHR</link> * surface)</computeroutput></para><para>
+Definition at line 1801 of file wl_window.c.</para>
+<programlisting>1805 {
+1806 &#32;&#32;&#32;&#32;<link linkend="_vulkan_8h_1abe3614d1bd40772bc2398a4a86ea4a45">VkResult</link>&#32;err;
+1807 &#32;&#32;&#32;&#32;<link linkend="_struct_vk_wayland_surface_create_info_k_h_r">VkWaylandSurfaceCreateInfoKHR</link>&#32;sci;
+1808 &#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a76222e93358f10e2b01bd5115dc01038">PFN_vkCreateWaylandSurfaceKHR</link>&#32;vkCreateWaylandSurfaceKHR;
+1809 
+1810 &#32;&#32;&#32;&#32;vkCreateWaylandSurfaceKHR&#32;=&#32;(<link linkend="_wl__platform_8h_1a76222e93358f10e2b01bd5115dc01038">PFN_vkCreateWaylandSurfaceKHR</link>)
+1811 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_vulkan_8h_1ae698fe946e5b75ed4a173e95133cf4f3">vkGetInstanceProcAddr</link>(instance,&#32;<emphasis role="stringliteral">&quot;vkCreateWaylandSurfaceKHR&quot;</emphasis>);
+1812 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!vkCreateWaylandSurfaceKHR)
+1813 &#32;&#32;&#32;&#32;{
+1814 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga56882b290db23261cc6c053c40c2d08e">GLFW_API_UNAVAILABLE</link>,
+1815 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Vulkan&#32;instance&#32;missing&#32;VK_KHR_wayland_surface&#32;extension&quot;</emphasis>);
+1816 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_vulkan_8h_1abe3614d1bd40772bc2398a4a86ea4a45a20b80caadaa3175652a04f2658f84b3e">VK_ERROR_EXTENSION_NOT_PRESENT</link>;
+1817 &#32;&#32;&#32;&#32;}
+1818 
+1819 &#32;&#32;&#32;&#32;memset(&amp;sci,&#32;0,&#32;<emphasis role="keyword">sizeof</emphasis>(sci));
+1820 &#32;&#32;&#32;&#32;sci.<link linkend="_struct_vk_wayland_surface_create_info_k_h_r_1adcee5594c6de411fcf6c612c40ddf995">sType</link>&#32;=&#32;<link linkend="_internal_8h_1aff9f2b99398eb80a2b5a146bc5534ce8a70b959bba54ca9729663349ce3442903">VK_STRUCTURE_TYPE_WAYLAND_SURFACE_CREATE_INFO_KHR</link>;
+1821 &#32;&#32;&#32;&#32;sci.<link linkend="_struct_vk_wayland_surface_create_info_k_h_r_1a4f49bbd03fe6e25deca11749756af037">display</link>&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>;
+1822 &#32;&#32;&#32;&#32;sci.<link linkend="_struct_vk_wayland_surface_create_info_k_h_r_1ac980b3618f9e9b7c741d0b85f351ff02">surface</link>&#32;=&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.surface;
+1823 
+1824 &#32;&#32;&#32;&#32;err&#32;=&#32;vkCreateWaylandSurfaceKHR(instance,&#32;&amp;sci,&#32;allocator,&#32;surface);
+1825 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(err)
+1826 &#32;&#32;&#32;&#32;{
+1827 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1828 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Failed&#32;to&#32;create&#32;Vulkan&#32;surface:&#32;%s&quot;</emphasis>,
+1829 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a512b47c0edcaaf41a4f70bfc8d4d78a7">_glfwGetVulkanResultString</link>(err));
+1830 &#32;&#32;&#32;&#32;}
+1831 
+1832 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;err;
+1833 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a8fbd5336c54afc9760a89acca1b5bd20"/>    <section>
+    <title>_glfwCreateWindowWayland()</title>
+<indexterm><primary>_glfwCreateWindowWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwCreateWindowWayland</secondary></indexterm>
+<para><computeroutput>int _glfwCreateWindowWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, const <link linkend="_struct___g_l_f_wwndconfig">_GLFWwndconfig</link> * wndconfig, const <link linkend="_struct___g_l_f_wctxconfig">_GLFWctxconfig</link> * ctxconfig, const <link linkend="_struct___g_l_f_wfbconfig">_GLFWfbconfig</link> * fbconfig)</computeroutput></para><para>
+Definition at line 792 of file wl_window.c.</para>
+<programlisting>796 {
+797 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!createSurface(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;wndconfig,&#32;fbconfig))
+798 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+799 
+800 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a9d54584dc156b04e39d7567a70e13ef8">client</link>&#32;!=&#32;<link linkend="_glfw3_8h_1a8f6dcdc968d214ff14779564f1389264">GLFW_NO_API</link>)
+801 &#32;&#32;&#32;&#32;{
+802 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a725120317549aa1eef2b88af5ac4c409">source</link>&#32;==&#32;<link linkend="_glfw3_8h_1a03cf65c9ab01fc8b872ba58842c531c9">GLFW_EGL_CONTEXT_API</link>&#32;||
+803 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a725120317549aa1eef2b88af5ac4c409">source</link>&#32;==&#32;<link linkend="_glfw3_8h_1a0494c9bfd3f584ab41e6dbeeaa0e6a19">GLFW_NATIVE_CONTEXT_API</link>)
+804 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+805 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_egl__context_8c_1ad83def5c7af30c3bfcc9371712ba96ac">_glfwInitEGL</link>())
+806 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+807 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_egl__context_8c_1adfb1d7aa925810c45a2ef4efc268c2fe">_glfwCreateContextEGL</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;ctxconfig,&#32;fbconfig))
+808 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+809 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+810 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ctxconfig-&gt;<link linkend="_struct___g_l_f_wctxconfig_1a725120317549aa1eef2b88af5ac4c409">source</link>&#32;==&#32;<link linkend="_glfw3_8h_1afd34a473af9fa81f317910ea371b19e3">GLFW_OSMESA_CONTEXT_API</link>)
+811 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+812 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_internal_8h_1a9dd1594b1f8991f90844fbeb4a664163">_glfwInitOSMesa</link>())
+813 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+814 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_internal_8h_1a59950232b3b545e1fa750f6bd7d46201">_glfwCreateContextOSMesa</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;ctxconfig,&#32;fbconfig))
+815 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+816 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+817 &#32;&#32;&#32;&#32;}
+818 
+819 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+820 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1ac215aeab29ad474956c27f4f6ddfc65a"/>    <section>
+    <title>_glfwDestroyCursorWayland()</title>
+<indexterm><primary>_glfwDestroyCursorWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwDestroyCursorWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwDestroyCursorWayland (<link linkend="_struct___g_l_f_wcursor">_GLFWcursor</link> * cursor)</computeroutput></para><para>
+Definition at line 1372 of file wl_window.c.</para>
+<programlisting>1373 {
+1374 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;If&#32;it&apos;s&#32;a&#32;standard&#32;cursor&#32;we&#32;don&apos;t&#32;need&#32;to&#32;do&#32;anything&#32;here</emphasis>
+1375 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cursor-&gt;wl.cursor)
+1376 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+1377 
+1378 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cursor-&gt;wl.buffer)
+1379 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_buffer_destroy(cursor-&gt;wl.buffer);
+1380 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a4f9e23a94f70832b66ea4ff6f7e6c98d"/>    <section>
+    <title>_glfwDestroyWindowWayland()</title>
+<indexterm><primary>_glfwDestroyWindowWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwDestroyWindowWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwDestroyWindowWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 822 of file wl_window.c.</para>
+<programlisting>823 {
+824 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;==&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.pointerFocus)
+825 &#32;&#32;&#32;&#32;{
+826 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.pointerFocus&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+827 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1a507361a8b8610b4daee7e83aa056f339">_glfwInputCursorEnter</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>);
+828 &#32;&#32;&#32;&#32;}
+829 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;==&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.keyboardFocus)
+830 &#32;&#32;&#32;&#32;{
+831 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.keyboardFocus&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+832 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1afb9ff9f75dd4d2dade4600dc38e8715e">_glfwInputWindowFocus</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>);
+833 &#32;&#32;&#32;&#32;}
+834 
+835 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.idleInhibitor)
+836 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;zwp_idle_inhibitor_v1_destroy(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.idleInhibitor);
+837 
+838 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.destroy)
+839 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;context.destroy(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+840 
+841 &#32;&#32;&#32;&#32;destroyDecorations(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+842 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.decoration)
+843 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;zxdg_toplevel_decoration_v1_destroy(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.decoration);
+844 
+845 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.decorations.buffer)
+846 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_buffer_destroy(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.decorations.buffer);
+847 
+848 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.native)
+849 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1adf173779ebc5cf85253a4d34918fd2cb">wl_egl_window_destroy</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.native);
+850 
+851 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.toplevel)
+852 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;xdg_toplevel_destroy(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.toplevel);
+853 
+854 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.surface)
+855 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;xdg_surface_destroy(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.surface);
+856 
+857 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.surface)
+858 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_surface_destroy(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.surface);
+859 
+860 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.title);
+861 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.monitors);
+862 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a29aeccafd183ea2e1f5bab9a44ad6122"/>    <section>
+    <title>_glfwFocusWindowWayland()</title>
+<indexterm><primary>_glfwFocusWindowWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwFocusWindowWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwFocusWindowWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1032 of file wl_window.c.</para>
+<programlisting>1033 {
+1034 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga526fba20a01504a8086c763b6ca53ce5">GLFW_FEATURE_UNAVAILABLE</link>,
+1035 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;The&#32;platform&#32;does&#32;not&#32;support&#32;setting&#32;the&#32;input&#32;focus&quot;</emphasis>);
+1036 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a2a78a10b4fa6a214a2bebf4f1ec9b868"/>    <section>
+    <title>_glfwFramebufferTransparentWayland()</title>
+<indexterm><primary>_glfwFramebufferTransparentWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwFramebufferTransparentWayland</secondary></indexterm>
+<para><computeroutput>int _glfwFramebufferTransparentWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1086 of file wl_window.c.</para>
+<programlisting>1087 {
+1088 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.transparent;
+1089 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a491fcd8a56c175d24dc286660fe7475b"/>    <section>
+    <title>_glfwGetClipboardStringWayland()</title>
+<indexterm><primary>_glfwGetClipboardStringWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwGetClipboardStringWayland</secondary></indexterm>
+<para><computeroutput>const char* _glfwGetClipboardStringWayland (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 1687 of file wl_window.c.</para>
+<programlisting>1688 {
+1689 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;fds[2];
+1690 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;ret;
+1691 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">size_t</emphasis>&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;=&#32;0;
+1692 
+1693 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataOffer)
+1694 &#32;&#32;&#32;&#32;{
+1695 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga196e125ef261d94184e2b55c05762f14">GLFW_FORMAT_UNAVAILABLE</link>,
+1696 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;No&#32;clipboard&#32;data&#32;has&#32;been&#32;sent&#32;yet&quot;</emphasis>);
+1697 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1698 &#32;&#32;&#32;&#32;}
+1699 
+1700 &#32;&#32;&#32;&#32;ret&#32;=&#32;pipe2(fds,&#32;O_CLOEXEC);
+1701 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ret&#32;&lt;&#32;0)
+1702 &#32;&#32;&#32;&#32;{
+1703 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TODO:&#32;also&#32;report&#32;errno&#32;maybe?</emphasis>
+1704 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1705 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Impossible&#32;to&#32;create&#32;clipboard&#32;pipe&#32;fds&quot;</emphasis>);
+1706 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1707 &#32;&#32;&#32;&#32;}
+1708 
+1709 &#32;&#32;&#32;&#32;wl_data_offer_receive(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataOffer,&#32;<emphasis role="stringliteral">&quot;text/plain;charset=utf-8&quot;</emphasis>,&#32;fds[1]);
+1710 &#32;&#32;&#32;&#32;close(fds[1]);
+1711 
+1712 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;XXX:&#32;this&#32;is&#32;a&#32;huge&#32;hack,&#32;this&#32;function&#32;shouldn’t&#32;be&#32;synchronous!</emphasis>
+1713 &#32;&#32;&#32;&#32;handleEvents(-1);
+1714 
+1715 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(1)
+1716 &#32;&#32;&#32;&#32;{
+1717 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Grow&#32;the&#32;clipboard&#32;if&#32;we&#32;need&#32;to&#32;paste&#32;something&#32;bigger,&#32;there&#32;is&#32;no</emphasis>
+1718 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;shrink&#32;operation&#32;yet.</emphasis>
+1719 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;+&#32;4096&#32;&gt;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardSize)
+1720 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1721 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!growClipboardString())
+1722 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1723 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;close(fds[0]);
+1724 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1725 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1726 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1727 
+1728 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Then&#32;read&#32;from&#32;the&#32;fd&#32;to&#32;the&#32;clipboard,&#32;handling&#32;all&#32;known&#32;errors.</emphasis>
+1729 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ret&#32;=&#32;read(fds[0],&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardString&#32;+&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>,&#32;4096);
+1730 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ret&#32;==&#32;0)
+1731 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1732 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ret&#32;==&#32;-1&#32;&amp;&amp;&#32;errno&#32;==&#32;EINTR)
+1733 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+1734 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ret&#32;==&#32;-1)
+1735 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1736 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TODO:&#32;also&#32;report&#32;errno&#32;maybe.</emphasis>
+1737 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1738 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Impossible&#32;to&#32;read&#32;from&#32;clipboard&#32;fd&quot;</emphasis>);
+1739 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;close(fds[0]);
+1740 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1741 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1742 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;+=&#32;ret;
+1743 &#32;&#32;&#32;&#32;}
+1744 &#32;&#32;&#32;&#32;close(fds[0]);
+1745 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;+&#32;1&#32;&gt;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardSize)
+1746 &#32;&#32;&#32;&#32;{
+1747 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!growClipboardString())
+1748 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1749 &#32;&#32;&#32;&#32;}
+1750 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardString[<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>]&#32;=&#32;<emphasis role="charliteral">&apos;\0&apos;</emphasis>;
+1751 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardString;
+1752 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a68e7966431b3829e09186d88c057e683"/>    <section>
+    <title>_glfwGetCursorPosWayland()</title>
+<indexterm><primary>_glfwGetCursorPosWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwGetCursorPosWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetCursorPosWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, double * xpos, double * ypos)</computeroutput></para><para>
+Definition at line 1170 of file wl_window.c.</para>
+<programlisting>1171 {
+1172 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xpos)
+1173 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*xpos&#32;=&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.cursorPosX;
+1174 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ypos)
+1175 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*ypos&#32;=&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.cursorPosY;
+1176 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a504e09d478703e56da9a9b8204bdddd5"/>    <section>
+    <title>_glfwGetEGLNativeDisplayWayland()</title>
+<indexterm><primary>_glfwGetEGLNativeDisplayWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwGetEGLNativeDisplayWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1a551f78efa88a306d86efa8af0ec94349">EGLNativeDisplayType</link> _glfwGetEGLNativeDisplayWayland (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 1762 of file wl_window.c.</para>
+<programlisting>1763 {
+1764 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>;
+1765 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a1aa2aacf3bb7726a0cb96c138cda4f43"/>    <section>
+    <title>_glfwGetEGLNativeWindowWayland()</title>
+<indexterm><primary>_glfwGetEGLNativeWindowWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwGetEGLNativeWindowWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1a858431dc7d9081b52dc734956fd1f563">EGLNativeWindowType</link> _glfwGetEGLNativeWindowWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1767 of file wl_window.c.</para>
+<programlisting>1768 {
+1769 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.native;
+1770 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1ad3a432eeab11d12463568f267ba0dc59"/>    <section>
+    <title>_glfwGetEGLPlatformWayland()</title>
+<indexterm><primary>_glfwGetEGLPlatformWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwGetEGLPlatformWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1a3a1da159bbe7bd56490f67d96dce3bf9">EGLenum</link> _glfwGetEGLPlatformWayland (<link linkend="_internal_8h_1a97030274d045a36c550fc0d66d26f175">EGLint</link> ** attribs)</computeroutput></para><para>
+Definition at line 1754 of file wl_window.c.</para>
+<programlisting>1755 {
+1756 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a709af831ee7cf025c3bc5bfa6d2527f2">EXT_platform_base</link>&#32;&amp;&amp;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1abbaa54e1a19006b93b64d5cae90f59ad">EXT_platform_wayland</link>)
+1757 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_internal_8h_1a95b995b45deab5d2cef7abd873be0233">EGL_PLATFORM_WAYLAND_EXT</link>;
+1758 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1759 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+1760 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1afa69ff28fa47d232843f620120391e97"/>    <section>
+    <title>_glfwGetFramebufferSizeWayland()</title>
+<indexterm><primary>_glfwGetFramebufferSizeWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwGetFramebufferSizeWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetFramebufferSizeWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int * width, int * height)</computeroutput></para><para>
+Definition at line 936 of file wl_window.c.</para>
+<programlisting>937 {
+938 &#32;&#32;&#32;&#32;<link linkend="_wl__window_8c_1a7139656b9b92a558042462c05e71f17e">_glfwGetWindowSizeWayland</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+939 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>)
+940 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>&#32;*=&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.scale;
+941 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)
+942 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>&#32;*=&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.scale;
+943 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a3e2e4e589e75df85898b33ff459f60ee"/>    <section>
+    <title>_glfwGetKeyScancodeWayland()</title>
+<indexterm><primary>_glfwGetKeyScancodeWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwGetKeyScancodeWayland</secondary></indexterm>
+<para><computeroutput>int _glfwGetKeyScancodeWayland (int key)</computeroutput></para><para>
+Definition at line 1251 of file wl_window.c.</para>
+<programlisting>1252 {
+1253 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.scancodes[<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>];
+1254 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a5b300bf0217ad4d0c73c7c44eb53062d"/>    <section>
+    <title>_glfwGetPhysicalDevicePresentationSupportWayland()</title>
+<indexterm><primary>_glfwGetPhysicalDevicePresentationSupportWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwGetPhysicalDevicePresentationSupportWayland</secondary></indexterm>
+<para><computeroutput>int _glfwGetPhysicalDevicePresentationSupportWayland (<link linkend="_internal_8h_1a25ae5082a7c01af345570ed09d724881">VkInstance</link> instance, <link linkend="_internal_8h_1aa9acbee1e762fde021511a1b47678a38">VkPhysicalDevice</link> device, <link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link> queuefamily)</computeroutput></para><para>
+Definition at line 1781 of file wl_window.c.</para>
+<programlisting>1784 {
+1785 &#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1ab2aa7548ffded3123627790f8bce8c95">PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR</link>
+1786 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;vkGetPhysicalDeviceWaylandPresentationSupportKHR&#32;=
+1787 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(<link linkend="_wl__platform_8h_1ab2aa7548ffded3123627790f8bce8c95">PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR</link>)
+1788 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_vulkan_8h_1ae698fe946e5b75ed4a173e95133cf4f3">vkGetInstanceProcAddr</link>(instance,&#32;<emphasis role="stringliteral">&quot;vkGetPhysicalDeviceWaylandPresentationSupportKHR&quot;</emphasis>);
+1789 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!vkGetPhysicalDeviceWaylandPresentationSupportKHR)
+1790 &#32;&#32;&#32;&#32;{
+1791 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga56882b290db23261cc6c053c40c2d08e">GLFW_API_UNAVAILABLE</link>,
+1792 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Vulkan&#32;instance&#32;missing&#32;VK_KHR_wayland_surface&#32;extension&quot;</emphasis>);
+1793 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_vulkan_8h_1ad1021f65d668acdf1644d94e0828bff0">VK_NULL_HANDLE</link>;
+1794 &#32;&#32;&#32;&#32;}
+1795 
+1796 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;vkGetPhysicalDeviceWaylandPresentationSupportKHR(device,
+1797 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;queuefamily,
+1798 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>);
+1799 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a82b45703386cfc7543957d2160b482a5"/>    <section>
+    <title>_glfwGetRequiredInstanceExtensionsWayland()</title>
+<indexterm><primary>_glfwGetRequiredInstanceExtensionsWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwGetRequiredInstanceExtensionsWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetRequiredInstanceExtensionsWayland (char ** extensions)</computeroutput></para><para>
+Definition at line 1772 of file wl_window.c.</para>
+<programlisting>1773 {
+1774 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a9beb6fda2a7600be02831853de896395">vk</link>.<link linkend="_struct___g_l_f_wlibrary_1a5169664f24499b5b82dec093165ca166">KHR_surface</link>&#32;||&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a9beb6fda2a7600be02831853de896395">vk</link>.<link linkend="_struct___g_l_f_wlibrary_1a669e44878dc6d35acc1dd9ba7d51548c">KHR_wayland_surface</link>)
+1775 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+1776 
+1777 &#32;&#32;&#32;&#32;<link linkend="_namespaceconf_1ae475e080536acb271a0a0efe56c3ba42">extensions</link>[0]&#32;=&#32;<emphasis role="stringliteral">&quot;VK_KHR_surface&quot;</emphasis>;
+1778 &#32;&#32;&#32;&#32;<link linkend="_namespaceconf_1ae475e080536acb271a0a0efe56c3ba42">extensions</link>[1]&#32;=&#32;<emphasis role="stringliteral">&quot;VK_KHR_wayland_surface&quot;</emphasis>;
+1779 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a066d33db2119fb1bba6a5127abd3530c"/>    <section>
+    <title>_glfwGetScancodeNameWayland()</title>
+<indexterm><primary>_glfwGetScancodeNameWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwGetScancodeNameWayland</secondary></indexterm>
+<para><computeroutput>const char* _glfwGetScancodeNameWayland (int scancode)</computeroutput></para><para>
+Definition at line 1196 of file wl_window.c.</para>
+<programlisting>1197 {
+1198 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(scancode&#32;&lt;&#32;0&#32;||&#32;scancode&#32;&gt;&#32;255&#32;||
+1199 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.keycodes[scancode]&#32;==&#32;<link linkend="_group__keys_1ga99aacc875b6b27a072552631e13775c7">GLFW_KEY_UNKNOWN</link>)
+1200 &#32;&#32;&#32;&#32;{
+1201 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gaaf2ef9aa8202c2b82ac2d921e554c687">GLFW_INVALID_VALUE</link>,
+1202 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Invalid&#32;scancode&#32;%i&quot;</emphasis>,
+1203 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;scancode);
+1204 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1205 &#32;&#32;&#32;&#32;}
+1206 
+1207 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.keycodes[scancode];
+1208 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;xkb_keycode_t&#32;keycode&#32;=&#32;scancode&#32;+&#32;8;
+1209 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;xkb_layout_index_t&#32;layout&#32;=
+1210 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1ab1d4db8d90560c06b7ac881b6591eaa0">xkb_state_key_get_layout</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.state,&#32;keycode);
+1211 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(layout&#32;==&#32;XKB_LAYOUT_INVALID)
+1212 &#32;&#32;&#32;&#32;{
+1213 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1214 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Failed&#32;to&#32;retrieve&#32;layout&#32;for&#32;key&#32;name&quot;</emphasis>);
+1215 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1216 &#32;&#32;&#32;&#32;}
+1217 
+1218 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;xkb_keysym_t*&#32;keysyms&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1219 &#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a426e6afbf7ce124d9a902f1ae4a119e4">xkb_keymap_key_get_syms_by_level</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.keymap,
+1220 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;keycode,
+1221 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;layout,
+1222 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0,
+1223 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;keysyms);
+1224 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(keysyms&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+1225 &#32;&#32;&#32;&#32;{
+1226 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1227 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Failed&#32;to&#32;retrieve&#32;keysym&#32;for&#32;key&#32;name&quot;</emphasis>);
+1228 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1229 &#32;&#32;&#32;&#32;}
+1230 
+1231 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link>&#32;codepoint&#32;=&#32;<link linkend="_xkb__unicode_8c_1acc4747eb62386c01c9dd0cd6997c8983">_glfwKeySym2Unicode</link>(keysyms[0]);
+1232 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(codepoint&#32;==&#32;<link linkend="_xkb__unicode_8h_1a45fc2e5a3ba025f1ac362831cfe04416">GLFW_INVALID_CODEPOINT</link>)
+1233 &#32;&#32;&#32;&#32;{
+1234 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1235 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Failed&#32;to&#32;retrieve&#32;codepoint&#32;for&#32;key&#32;name&quot;</emphasis>);
+1236 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1237 &#32;&#32;&#32;&#32;}
+1238 
+1239 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">size_t</emphasis>&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;=&#32;<link linkend="_init_8c_1a920bdd09bf605b918b93fbec1993c55b">_glfwEncodeUTF8</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.keynames[<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>],&#32;&#32;codepoint);
+1240 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;==&#32;0)
+1241 &#32;&#32;&#32;&#32;{
+1242 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1243 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Failed&#32;to&#32;encode&#32;codepoint&#32;for&#32;key&#32;name&quot;</emphasis>);
+1244 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1245 &#32;&#32;&#32;&#32;}
+1246 
+1247 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.keynames[<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>][<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>]&#32;=&#32;<emphasis role="charliteral">&apos;\0&apos;</emphasis>;
+1248 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.keynames[<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>];
+1249 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1ab3e8d510f751fca3c9b60aa03d321cba"/>    <section>
+    <title>_glfwGetWindowContentScaleWayland()</title>
+<indexterm><primary>_glfwGetWindowContentScaleWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwGetWindowContentScaleWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetWindowContentScaleWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, float * xscale, float * yscale)</computeroutput></para><para>
+Definition at line 962 of file wl_window.c.</para>
+<programlisting>964 {
+965 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xscale)
+966 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*xscale&#32;=&#32;(float)&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.scale;
+967 &#32;&#32;&#32;&#32;if&#32;(yscale)
+968 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*yscale&#32;=&#32;(float)&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.scale;
+969 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a1c0713597287aec915fa764efdebf1f9"/>    <section>
+    <title>_glfwGetWindowFrameSizeWayland()</title>
+<indexterm><primary>_glfwGetWindowFrameSizeWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwGetWindowFrameSizeWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetWindowFrameSizeWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int * left, int * top, int * right, int * bottom)</computeroutput></para><para>
+Definition at line 945 of file wl_window.c.</para>
+<programlisting>948 {
+949 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;decorated&#32;&amp;&amp;&#32;!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;monitor&#32;&amp;&amp;&#32;!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.decorations.serverSide)
+950 &#32;&#32;&#32;&#32;{
+951 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a5ab323daeacf8dfdb8f91132fecdca23">top</link>)
+952 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glext_8h_1a5ab323daeacf8dfdb8f91132fecdca23">top</link>&#32;=&#32;<link linkend="_wl__platform_8h_1abbd514b1fca6f13fe14c45f91478e033">_GLFW_DECORATION_TOP</link>;
+953 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>)
+954 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>&#32;=&#32;<link linkend="_wl__platform_8h_1ab0aa0ee53d9e7cb2f315acc731a9a977">_GLFW_DECORATION_WIDTH</link>;
+955 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glext_8h_1a5ffadbbacc6b89cf6218bc43b384d3fe">right</link>)
+956 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glext_8h_1a5ffadbbacc6b89cf6218bc43b384d3fe">right</link>&#32;=&#32;<link linkend="_wl__platform_8h_1ab0aa0ee53d9e7cb2f315acc731a9a977">_GLFW_DECORATION_WIDTH</link>;
+957 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a95fc257e5ddf46f7db9d5e898cdf1991">bottom</link>)
+958 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a95fc257e5ddf46f7db9d5e898cdf1991">bottom</link>&#32;=&#32;<link linkend="_wl__platform_8h_1ab0aa0ee53d9e7cb2f315acc731a9a977">_GLFW_DECORATION_WIDTH</link>;
+959 &#32;&#32;&#32;&#32;}
+960 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a741ad4527adc24d5f6732ac27fa32678"/>    <section>
+    <title>_glfwGetWindowOpacityWayland()</title>
+<indexterm><primary>_glfwGetWindowOpacityWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwGetWindowOpacityWayland</secondary></indexterm>
+<para><computeroutput>float _glfwGetWindowOpacityWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1129 of file wl_window.c.</para>
+<programlisting>1130 {
+1131 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;1.f;
+1132 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a325fef5dd107caef5a4620ec0e5ee9bd"/>    <section>
+    <title>_glfwGetWindowPosWayland()</title>
+<indexterm><primary>_glfwGetWindowPosWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwGetWindowPosWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetWindowPosWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int * xpos, int * ypos)</computeroutput></para><para>
+Definition at line 880 of file wl_window.c.</para>
+<programlisting>881 {
+882 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;A&#32;Wayland&#32;client&#32;is&#32;not&#32;aware&#32;of&#32;its&#32;position,&#32;so&#32;just&#32;warn&#32;and&#32;leave&#32;it</emphasis>
+883 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;as&#32;(0,&#32;0)</emphasis>
+884 
+885 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga526fba20a01504a8086c763b6ca53ce5">GLFW_FEATURE_UNAVAILABLE</link>,
+886 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;The&#32;platform&#32;does&#32;not&#32;provide&#32;the&#32;window&#32;position&quot;</emphasis>);
+887 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a7139656b9b92a558042462c05e71f17e"/>    <section>
+    <title>_glfwGetWindowSizeWayland()</title>
+<indexterm><primary>_glfwGetWindowSizeWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwGetWindowSizeWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetWindowSizeWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int * width, int * height)</computeroutput></para><para>
+Definition at line 897 of file wl_window.c.</para>
+<programlisting>898 {
+899 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>)
+900 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>&#32;=&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.width;
+901 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)
+902 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>&#32;=&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.height;
+903 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1ad519388eb25d04c1a4db2df34169efb4"/>    <section>
+    <title>_glfwHideWindowWayland()</title>
+<indexterm><primary>_glfwHideWindowWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwHideWindowWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwHideWindowWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1015 of file wl_window.c.</para>
+<programlisting>1016 {
+1017 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.visible)
+1018 &#32;&#32;&#32;&#32;{
+1019 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.visible&#32;=&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1020 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_surface_attach(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.surface,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;0,&#32;0);
+1021 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_surface_commit(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.surface);
+1022 &#32;&#32;&#32;&#32;}
+1023 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a2786524a443b7f4a2ff53055366e1169"/>    <section>
+    <title>_glfwIconifyWindowWayland()</title>
+<indexterm><primary>_glfwIconifyWindowWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwIconifyWindowWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwIconifyWindowWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 971 of file wl_window.c.</para>
+<programlisting>972 {
+973 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.toplevel)
+974 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;xdg_toplevel_set_minimized(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.toplevel);
+975 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a8dcc43854cfabe4d324154d2eeebd44e"/>    <section>
+    <title>_glfwMaximizeWindowWayland()</title>
+<indexterm><primary>_glfwMaximizeWindowWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwMaximizeWindowWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwMaximizeWindowWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 992 of file wl_window.c.</para>
+<programlisting>993 {
+994 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.toplevel)
+995 &#32;&#32;&#32;&#32;{
+996 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;xdg_toplevel_set_maximized(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.toplevel);
+997 &#32;&#32;&#32;&#32;}
+998 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.maximized&#32;=&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+999 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a7a315f4b4c3263efc0960094698de618"/>    <section>
+    <title>_glfwPollEventsWayland()</title>
+<indexterm><primary>_glfwPollEventsWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwPollEventsWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwPollEventsWayland (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 1150 of file wl_window.c.</para>
+<programlisting>1151 {
+1152 &#32;&#32;&#32;&#32;handleEvents(0);
+1153 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a34984c3cc558a291b1721288c8b5ebe6"/>    <section>
+    <title>_glfwPostEmptyEventWayland()</title>
+<indexterm><primary>_glfwPostEmptyEventWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwPostEmptyEventWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwPostEmptyEventWayland (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 1165 of file wl_window.c.</para>
+<programlisting>1166 {
+1167 &#32;&#32;&#32;&#32;wl_display_sync(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>);
+1168 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1aa0c6e411bf8eef4b73bc98e0974f2a78"/>    <section>
+    <title>_glfwRawMouseMotionSupportedWayland()</title>
+<indexterm><primary>_glfwRawMouseMotionSupportedWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwRawMouseMotionSupportedWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwRawMouseMotionSupportedWayland (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 1145 of file wl_window.c.</para>
+<programlisting>1146 {
+1147 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+1148 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a8a1b249be1215f514f923f91656030c3"/>    <section>
+    <title>_glfwRequestWindowAttentionWayland()</title>
+<indexterm><primary>_glfwRequestWindowAttentionWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwRequestWindowAttentionWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwRequestWindowAttentionWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1025 of file wl_window.c.</para>
+<programlisting>1026 {
+1027 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TODO</emphasis>
+1028 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga5dda77e023e83151e8bd55a6758f946a">GLFW_FEATURE_UNIMPLEMENTED</link>,
+1029 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Window&#32;attention&#32;request&#32;not&#32;implemented&#32;yet&quot;</emphasis>);
+1030 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a25c9fe00185d9a1b8badf038b7634b88"/>    <section>
+    <title>_glfwRestoreWindowWayland()</title>
+<indexterm><primary>_glfwRestoreWindowWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwRestoreWindowWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwRestoreWindowWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 977 of file wl_window.c.</para>
+<programlisting>978 {
+979 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.toplevel)
+980 &#32;&#32;&#32;&#32;{
+981 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;monitor)
+982 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;xdg_toplevel_unset_fullscreen(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.toplevel);
+983 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.maximized)
+984 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;xdg_toplevel_unset_maximized(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.toplevel);
+985 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;There&#32;is&#32;no&#32;way&#32;to&#32;unset&#32;minimized,&#32;or&#32;even&#32;to&#32;know&#32;if&#32;we&#32;are</emphasis>
+986 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;minimized,&#32;so&#32;there&#32;is&#32;nothing&#32;to&#32;do&#32;in&#32;this&#32;case.</emphasis>
+987 &#32;&#32;&#32;&#32;}
+988 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a5cfc56e9a5e1e8dd88862c9c7b8a6f7f">_glfwInputWindowMonitor</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+989 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.maximized&#32;=&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+990 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a74f40e21bcc7f5a646ecc5f80f25a6c3"/>    <section>
+    <title>_glfwSetClipboardStringWayland()</title>
+<indexterm><primary>_glfwSetClipboardStringWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwSetClipboardStringWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetClipboardStringWayland (const char * string)</computeroutput></para><para>
+Definition at line 1631 of file wl_window.c.</para>
+<programlisting>1632 {
+1633 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataSource)
+1634 &#32;&#32;&#32;&#32;{
+1635 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_data_source_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataSource);
+1636 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataSource&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1637 &#32;&#32;&#32;&#32;}
+1638 
+1639 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardSendString)
+1640 &#32;&#32;&#32;&#32;{
+1641 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardSendString);
+1642 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardSendString&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1643 &#32;&#32;&#32;&#32;}
+1644 
+1645 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardSendString&#32;=&#32;<link linkend="_init_8c_1a7f0a5b0d879baead229ef5e7381648e8">_glfw_strdup</link>(<emphasis role="keywordtype">string</emphasis>);
+1646 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardSendString)
+1647 &#32;&#32;&#32;&#32;{
+1648 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1649 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Impossible&#32;to&#32;allocate&#32;clipboard&#32;string&quot;</emphasis>);
+1650 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+1651 &#32;&#32;&#32;&#32;}
+1652 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardSendSize&#32;=&#32;strlen(<emphasis role="keywordtype">string</emphasis>);
+1653 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataSource&#32;=
+1654 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_data_device_manager_create_data_source(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataDeviceManager);
+1655 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataSource)
+1656 &#32;&#32;&#32;&#32;{
+1657 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1658 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Impossible&#32;to&#32;create&#32;clipboard&#32;source&quot;</emphasis>);
+1659 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardSendString);
+1660 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+1661 &#32;&#32;&#32;&#32;}
+1662 &#32;&#32;&#32;&#32;wl_data_source_add_listener(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataSource,
+1663 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;dataSourceListener,
+1664 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+1665 &#32;&#32;&#32;&#32;wl_data_source_offer(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataSource,&#32;<emphasis role="stringliteral">&quot;text/plain;charset=utf-8&quot;</emphasis>);
+1666 &#32;&#32;&#32;&#32;wl_data_device_set_selection(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataDevice,
+1667 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataSource,
+1668 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.serial);
+1669 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1ae993bd14d7db090c84fb9799fc556bbd"/>    <section>
+    <title>_glfwSetCursorModeWayland()</title>
+<indexterm><primary>_glfwSetCursorModeWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwSetCursorModeWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetCursorModeWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int mode)</computeroutput></para><para>
+Definition at line 1191 of file wl_window.c.</para>
+<programlisting>1192 {
+1193 &#32;&#32;&#32;&#32;<link linkend="_wl__window_8c_1aabccf38d8d6f6e29e4a63345a850bfa9">_glfwSetCursorWayland</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.currentCursor);
+1194 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a62964c8a134ffddbab5b24db5b5ba1e9"/>    <section>
+    <title>_glfwSetCursorPosWayland()</title>
+<indexterm><primary>_glfwSetCursorPosWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwSetCursorPosWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetCursorPosWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, double x, double y)</computeroutput></para><para>
+Definition at line 1180 of file wl_window.c.</para>
+<programlisting>1181 {
+1182 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(isPointerLocked(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>))
+1183 &#32;&#32;&#32;&#32;{
+1184 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;zwp_locked_pointer_v1_set_cursor_position_hint(
+1185 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.pointerLock.lockedPointer,
+1186 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_fixed_from_double(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>),&#32;wl_fixed_from_double(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>));
+1187 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_surface_commit(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.surface);
+1188 &#32;&#32;&#32;&#32;}
+1189 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1aabccf38d8d6f6e29e4a63345a850bfa9"/>    <section>
+    <title>_glfwSetCursorWayland()</title>
+<indexterm><primary>_glfwSetCursorWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwSetCursorWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetCursorWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, <link linkend="_struct___g_l_f_wcursor">_GLFWcursor</link> * cursor)</computeroutput></para><para>
+Definition at line 1490 of file wl_window.c.</para>
+<programlisting>1491 {
+1492 &#32;&#32;&#32;&#32;<emphasis role="keyword">struct&#32;</emphasis><link linkend="_structwl__cursor">wl_cursor</link>*&#32;defaultCursor;
+1493 &#32;&#32;&#32;&#32;<emphasis role="keyword">struct&#32;</emphasis><link linkend="_structwl__cursor">wl_cursor</link>*&#32;defaultCursorHiDPI&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1494 
+1495 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.pointer)
+1496 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+1497 
+1498 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.currentCursor&#32;=&#32;cursor;
+1499 
+1500 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;If&#32;we&apos;re&#32;not&#32;in&#32;the&#32;correct&#32;window&#32;just&#32;save&#32;the&#32;cursor</emphasis>
+1501 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;the&#32;next&#32;time&#32;the&#32;pointer&#32;enters&#32;the&#32;window&#32;the&#32;cursor&#32;will&#32;change</emphasis>
+1502 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;!=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.pointerFocus&#32;||&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.decorations.focus&#32;!=&#32;<link linkend="_wl__platform_8h_1ad60a0a27370d399e4f9fd58d1eeef1acab46a673d9ca7e2f82c3cdd4cc7118e6b">mainWindow</link>)
+1503 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+1504 
+1505 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Unlock&#32;possible&#32;pointer&#32;lock&#32;if&#32;no&#32;longer&#32;disabled.</emphasis>
+1506 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;cursorMode&#32;!=&#32;<link linkend="_glfw3_8h_1a2315b99a329ce53e6a13a9d46fd5ca88">GLFW_CURSOR_DISABLED</link>&#32;&amp;&amp;&#32;isPointerLocked(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>))
+1507 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;unlockPointer(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1508 
+1509 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;cursorMode&#32;==&#32;<link linkend="_glfw3_8h_1ae04dd25c8577e19fa8c97368561f6c68">GLFW_CURSOR_NORMAL</link>)
+1510 &#32;&#32;&#32;&#32;{
+1511 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cursor)
+1512 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;setCursorImage(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;&amp;cursor-&gt;wl);
+1513 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1514 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1515 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;defaultCursor&#32;=&#32;<link linkend="_wl__platform_8h_1a987f4277f2574417ab58ebdb8f5de58f">wl_cursor_theme_get_cursor</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorTheme,
+1516 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;left_ptr&quot;</emphasis>);
+1517 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!defaultCursor)
+1518 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1519 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1520 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Standard&#32;cursor&#32;not&#32;found&quot;</emphasis>);
+1521 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+1522 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1523 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorThemeHiDPI)
+1524 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;defaultCursorHiDPI&#32;=
+1525 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a987f4277f2574417ab58ebdb8f5de58f">wl_cursor_theme_get_cursor</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorThemeHiDPI,
+1526 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;left_ptr&quot;</emphasis>);
+1527 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wcursor_wayland">_GLFWcursorWayland</link>&#32;cursorWayland&#32;=&#32;{
+1528 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;defaultCursor,
+1529 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;defaultCursorHiDPI,
+1530 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,
+1531 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0,&#32;0,
+1532 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0,&#32;0,
+1533 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0
+1534 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;};
+1535 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;setCursorImage(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;&amp;cursorWayland);
+1536 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1537 &#32;&#32;&#32;&#32;}
+1538 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;cursorMode&#32;==&#32;<link linkend="_glfw3_8h_1a2315b99a329ce53e6a13a9d46fd5ca88">GLFW_CURSOR_DISABLED</link>)
+1539 &#32;&#32;&#32;&#32;{
+1540 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!isPointerLocked(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>))
+1541 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;lockPointer(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1542 &#32;&#32;&#32;&#32;}
+1543 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;cursorMode&#32;==&#32;<link linkend="_glfw3_8h_1ac4d5cb9d78de8573349c58763d53bf11">GLFW_CURSOR_HIDDEN</link>)
+1544 &#32;&#32;&#32;&#32;{
+1545 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_pointer_set_cursor(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.pointer,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.pointerEnterSerial,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;0,&#32;0);
+1546 &#32;&#32;&#32;&#32;}
+1547 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1aeb3438865c89b17a2142cfc4509dbd28"/>    <section>
+    <title>_glfwSetRawMouseMotionWayland()</title>
+<indexterm><primary>_glfwSetRawMouseMotionWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwSetRawMouseMotionWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetRawMouseMotionWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> enabled)</computeroutput></para><para>
+Definition at line 1140 of file wl_window.c.</para>
+<programlisting>1141 {
+1142 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;This&#32;is&#32;handled&#32;in&#32;relativePointerHandleRelativeMotion</emphasis>
+1143 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a67850a44f6265bfa151ef3e3637bca55"/>    <section>
+    <title>_glfwSetWindowAspectRatioWayland()</title>
+<indexterm><primary>_glfwSetWindowAspectRatioWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwSetWindowAspectRatioWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowAspectRatioWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int numer, int denom)</computeroutput></para><para>
+Definition at line 928 of file wl_window.c.</para>
+<programlisting>929 {
+930 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TODO:&#32;find&#32;out&#32;how&#32;to&#32;trigger&#32;a&#32;resize.</emphasis>
+931 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;actual&#32;limits&#32;are&#32;checked&#32;in&#32;the&#32;xdg_toplevel::configure&#32;handler.</emphasis>
+932 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga5dda77e023e83151e8bd55a6758f946a">GLFW_FEATURE_UNIMPLEMENTED</link>,
+933 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Window&#32;aspect&#32;ratio&#32;not&#32;yet&#32;implemented&quot;</emphasis>);
+934 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1afcacd9ea3cb285c1266871d13a723e4c"/>    <section>
+    <title>_glfwSetWindowDecoratedWayland()</title>
+<indexterm><primary>_glfwSetWindowDecoratedWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwSetWindowDecoratedWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowDecoratedWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> enabled)</computeroutput></para><para>
+Definition at line 1098 of file wl_window.c.</para>
+<programlisting>1099 {
+1100 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;monitor)
+1101 &#32;&#32;&#32;&#32;{
+1102 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a0455a397ab5468d21c3021f2efa6dd3c">enabled</link>)
+1103 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;createDecorations(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1104 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1105 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;destroyDecorations(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1106 &#32;&#32;&#32;&#32;}
+1107 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1aebcd0db81b67e416f775e4b0d8facdc1"/>    <section>
+    <title>_glfwSetWindowFloatingWayland()</title>
+<indexterm><primary>_glfwSetWindowFloatingWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwSetWindowFloatingWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowFloatingWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> enabled)</computeroutput></para><para>
+Definition at line 1109 of file wl_window.c.</para>
+<programlisting>1110 {
+1111 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TODO</emphasis>
+1112 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga5dda77e023e83151e8bd55a6758f946a">GLFW_FEATURE_UNIMPLEMENTED</link>,
+1113 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Window&#32;attribute&#32;setting&#32;not&#32;implemented&#32;yet&quot;</emphasis>);
+1114 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1af3bdf666499b335663748945d01b1aab"/>    <section>
+    <title>_glfwSetWindowIconWayland()</title>
+<indexterm><primary>_glfwSetWindowIconWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwSetWindowIconWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowIconWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int count, const <link linkend="_struct_g_l_f_wimage">GLFWimage</link> * images)</computeroutput></para><para>
+Definition at line 873 of file wl_window.c.</para>
+<programlisting>875 {
+876 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga526fba20a01504a8086c763b6ca53ce5">GLFW_FEATURE_UNAVAILABLE</link>,
+877 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;The&#32;platform&#32;does&#32;not&#32;support&#32;setting&#32;the&#32;window&#32;icon&quot;</emphasis>);
+878 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a76e4715c3d943636ba1b71afea0c97c2"/>    <section>
+    <title>_glfwSetWindowMonitorWayland()</title>
+<indexterm><primary>_glfwSetWindowMonitorWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwSetWindowMonitorWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowMonitorWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, <link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, int xpos, int ypos, int width, int height, int refreshRate)</computeroutput></para><para>
+Definition at line 1038 of file wl_window.c.</para>
+<programlisting>1043 {
+1044 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(monitor)
+1045 &#32;&#32;&#32;&#32;{
+1046 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;setFullscreen(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;monitor,&#32;refreshRate);
+1047 &#32;&#32;&#32;&#32;}
+1048 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1049 &#32;&#32;&#32;&#32;{
+1050 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.toplevel)
+1051 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;xdg_toplevel_unset_fullscreen(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.toplevel);
+1052 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;setIdleInhibitor(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>);
+1053 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.decorationManager)
+1054 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;createDecorations(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1055 &#32;&#32;&#32;&#32;}
+1056 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a5cfc56e9a5e1e8dd88862c9c7b8a6f7f">_glfwInputWindowMonitor</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;monitor);
+1057 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1acad95c7e85177725f95463ffe86015d4"/>    <section>
+    <title>_glfwSetWindowMousePassthroughWayland()</title>
+<indexterm><primary>_glfwSetWindowMousePassthroughWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwSetWindowMousePassthroughWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowMousePassthroughWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> enabled)</computeroutput></para><para>
+Definition at line 1116 of file wl_window.c.</para>
+<programlisting>1117 {
+1118 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a0455a397ab5468d21c3021f2efa6dd3c">enabled</link>)
+1119 &#32;&#32;&#32;&#32;{
+1120 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">struct&#32;</emphasis>wl_region*&#32;<link linkend="_structregion">region</link>&#32;=&#32;wl_compositor_create_region(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.compositor);
+1121 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_surface_set_input_region(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.surface,&#32;<link linkend="_structregion">region</link>);
+1122 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_region_destroy(<link linkend="_structregion">region</link>);
+1123 &#32;&#32;&#32;&#32;}
+1124 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1125 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_surface_set_input_region(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.surface,&#32;0);
+1126 &#32;&#32;&#32;&#32;wl_surface_commit(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.surface);
+1127 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a43f0c40c30c7bc0216b51cfae59c3629"/>    <section>
+    <title>_glfwSetWindowOpacityWayland()</title>
+<indexterm><primary>_glfwSetWindowOpacityWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwSetWindowOpacityWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowOpacityWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, float opacity)</computeroutput></para><para>
+Definition at line 1134 of file wl_window.c.</para>
+<programlisting>1135 {
+1136 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga526fba20a01504a8086c763b6ca53ce5">GLFW_FEATURE_UNAVAILABLE</link>,
+1137 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;The&#32;platform&#32;does&#32;not&#32;support&#32;setting&#32;the&#32;window&#32;opacity&quot;</emphasis>);
+1138 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a5adb7549f1afecf80241a68fe7d2f2e0"/>    <section>
+    <title>_glfwSetWindowPosWayland()</title>
+<indexterm><primary>_glfwSetWindowPosWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwSetWindowPosWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowPosWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int xpos, int ypos)</computeroutput></para><para>
+Definition at line 889 of file wl_window.c.</para>
+<programlisting>890 {
+891 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;A&#32;Wayland&#32;client&#32;can&#32;not&#32;set&#32;its&#32;position,&#32;so&#32;just&#32;warn</emphasis>
+892 
+893 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga526fba20a01504a8086c763b6ca53ce5">GLFW_FEATURE_UNAVAILABLE</link>,
+894 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;The&#32;platform&#32;does&#32;not&#32;support&#32;setting&#32;the&#32;window&#32;position&quot;</emphasis>);
+895 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1aa7d932102710313b7cc131d45413cd06"/>    <section>
+    <title>_glfwSetWindowResizableWayland()</title>
+<indexterm><primary>_glfwSetWindowResizableWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwSetWindowResizableWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowResizableWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, <link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> enabled)</computeroutput></para><para>
+Definition at line 1091 of file wl_window.c.</para>
+<programlisting>1092 {
+1093 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TODO</emphasis>
+1094 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga5dda77e023e83151e8bd55a6758f946a">GLFW_FEATURE_UNIMPLEMENTED</link>,
+1095 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Window&#32;attribute&#32;setting&#32;not&#32;implemented&#32;yet&quot;</emphasis>);
+1096 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1acd2b24bb6d3dc8bf27de6306a5d5397d"/>    <section>
+    <title>_glfwSetWindowSizeLimitsWayland()</title>
+<indexterm><primary>_glfwSetWindowSizeLimitsWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwSetWindowSizeLimitsWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowSizeLimitsWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int minwidth, int minheight, int maxwidth, int maxheight)</computeroutput></para><para>
+Definition at line 912 of file wl_window.c.</para>
+<programlisting>915 {
+916 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.toplevel)
+917 &#32;&#32;&#32;&#32;{
+918 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(minwidth&#32;==&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>&#32;||&#32;minheight&#32;==&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>)
+919 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;minwidth&#32;=&#32;minheight&#32;=&#32;0;
+920 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(maxwidth&#32;==&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>&#32;||&#32;maxheight&#32;==&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>)
+921 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;maxwidth&#32;=&#32;maxheight&#32;=&#32;0;
+922 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;xdg_toplevel_set_min_size(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.toplevel,&#32;minwidth,&#32;minheight);
+923 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;xdg_toplevel_set_max_size(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.toplevel,&#32;maxwidth,&#32;maxheight);
+924 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_surface_commit(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.surface);
+925 &#32;&#32;&#32;&#32;}
+926 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a782e4e77e16e03c5340748e43e808828"/>    <section>
+    <title>_glfwSetWindowSizeWayland()</title>
+<indexterm><primary>_glfwSetWindowSizeWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwSetWindowSizeWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowSizeWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, int width, int height)</computeroutput></para><para>
+Definition at line 905 of file wl_window.c.</para>
+<programlisting>906 {
+907 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.width&#32;=&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>;
+908 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.height&#32;=&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>;
+909 &#32;&#32;&#32;&#32;resizeWindow(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+910 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a2a03cb3eb1fa3720991ad2503dd65e2a"/>    <section>
+    <title>_glfwSetWindowTitleWayland()</title>
+<indexterm><primary>_glfwSetWindowTitleWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwSetWindowTitleWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetWindowTitleWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, const char * title)</computeroutput></para><para>
+Definition at line 864 of file wl_window.c.</para>
+<programlisting>865 {
+866 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.title)
+867 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.title);
+868 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.title&#32;=&#32;<link linkend="_init_8c_1a7f0a5b0d879baead229ef5e7381648e8">_glfw_strdup</link>(title);
+869 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.toplevel)
+870 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;xdg_toplevel_set_title(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.toplevel,&#32;title);
+871 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a7a956e757e29f06d5efcae33b58025cb"/>    <section>
+    <title>_glfwShowWindowWayland()</title>
+<indexterm><primary>_glfwShowWindowWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwShowWindowWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwShowWindowWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1001 of file wl_window.c.</para>
+<programlisting>1002 {
+1003 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.visible)
+1004 &#32;&#32;&#32;&#32;{
+1005 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NOTE:&#32;The&#32;XDG&#32;surface&#32;and&#32;role&#32;are&#32;created&#32;here&#32;so&#32;command-line&#32;applications</emphasis>
+1006 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;with&#32;off-screen&#32;windows&#32;do&#32;not&#32;appear&#32;in&#32;for&#32;example&#32;the&#32;Unity&#32;dock</emphasis>
+1007 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.xdg.toplevel)
+1008 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;createXdgSurface(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1009 
+1010 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.visible&#32;=&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+1011 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ad9d5a996eef8fe1afcacc325f4510d1b">_glfwInputWindowDamage</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+1012 &#32;&#32;&#32;&#32;}
+1013 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a43d44933860ce6e5802733777edae04b"/>    <section>
+    <title>_glfwWaitEventsTimeoutWayland()</title>
+<indexterm><primary>_glfwWaitEventsTimeoutWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwWaitEventsTimeoutWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwWaitEventsTimeoutWayland (double timeout)</computeroutput></para><para>
+Definition at line 1160 of file wl_window.c.</para>
+<programlisting>1161 {
+1162 &#32;&#32;&#32;&#32;handleEvents((<emphasis role="keywordtype">int</emphasis>)&#32;(<link linkend="_glad_8h_1ad29bb0d8468b264a4e3d9204366cfaab">timeout</link>&#32;*&#32;1e3));
+1163 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a7cc624f3d8429b0d35ad163092b4821a"/>    <section>
+    <title>_glfwWaitEventsWayland()</title>
+<indexterm><primary>_glfwWaitEventsWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwWaitEventsWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwWaitEventsWayland (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 1155 of file wl_window.c.</para>
+<programlisting>1156 {
+1157 &#32;&#32;&#32;&#32;handleEvents(-1);
+1158 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1ab0d72e6bf663506ff3f138bc670b2f6c"/>    <section>
+    <title>_glfwWindowFocusedWayland()</title>
+<indexterm><primary>_glfwWindowFocusedWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwWindowFocusedWayland</secondary></indexterm>
+<para><computeroutput>int _glfwWindowFocusedWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1059 of file wl_window.c.</para>
+<programlisting>1060 {
+1061 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.keyboardFocus&#32;==&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>;
+1062 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1af427fb6a233af50a51858a9908d196fb"/>    <section>
+    <title>_glfwWindowHoveredWayland()</title>
+<indexterm><primary>_glfwWindowHoveredWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwWindowHoveredWayland</secondary></indexterm>
+<para><computeroutput>int _glfwWindowHoveredWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1081 of file wl_window.c.</para>
+<programlisting>1082 {
+1083 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.hovered;
+1084 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a44752c656c8cee3498776b851285dca6"/>    <section>
+    <title>_glfwWindowIconifiedWayland()</title>
+<indexterm><primary>_glfwWindowIconifiedWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwWindowIconifiedWayland</secondary></indexterm>
+<para><computeroutput>int _glfwWindowIconifiedWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1064 of file wl_window.c.</para>
+<programlisting>1065 {
+1066 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;xdg-shell&#32;doesn’t&#32;give&#32;any&#32;way&#32;to&#32;request&#32;whether&#32;a&#32;surface&#32;is</emphasis>
+1067 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;iconified.</emphasis>
+1068 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1069 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a7676d7f4167b65f29aedf393e14174ed"/>    <section>
+    <title>_glfwWindowMaximizedWayland()</title>
+<indexterm><primary>_glfwWindowMaximizedWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwWindowMaximizedWayland</secondary></indexterm>
+<para><computeroutput>int _glfwWindowMaximizedWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1076 of file wl_window.c.</para>
+<programlisting>1077 {
+1078 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.maximized;
+1079 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1abb9d2bf1aac035ff3ae3abcc9e0a7f09"/>    <section>
+    <title>_glfwWindowVisibleWayland()</title>
+<indexterm><primary>_glfwWindowVisibleWayland</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>_glfwWindowVisibleWayland</secondary></indexterm>
+<para><computeroutput>int _glfwWindowVisibleWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 1071 of file wl_window.c.</para>
+<programlisting>1072 {
+1073 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.visible;
+1074 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1adc34e43e770676d600b962856da8dd83"/>    <section>
+    <title>glfwGetWaylandDisplay()</title>
+<indexterm><primary>glfwGetWaylandDisplay</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>glfwGetWaylandDisplay</secondary></indexterm>
+<para><computeroutput><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> struct wl_display* glfwGetWaylandDisplay (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 1840 of file wl_window.c.</para>
+<programlisting>1841 {
+1842 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a69563c87fe776d416636a4d1b0e9e599">_GLFW_REQUIRE_INIT_OR_RETURN</link>(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+1843 
+1844 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>.<link linkend="_struct___g_l_f_wplatform_1adadc0cac5c197cc28788bc4993a9f6da">platformID</link>&#32;!=&#32;<link linkend="_group__init_1gac4b08906a3cbf26c518a4a543eedd740">GLFW_PLATFORM_WAYLAND</link>)
+1845 &#32;&#32;&#32;&#32;{
+1846 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga3608c6c29ab7a72f3bf019f4c3a2563d">GLFW_PLATFORM_UNAVAILABLE</link>,
+1847 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Platform&#32;not&#32;initialized&quot;</emphasis>);
+1848 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1849 &#32;&#32;&#32;&#32;}
+1850 
+1851 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>;
+1852 }
+</programlisting>    </section><anchor xml:id="_wl__window_8c_1a170f451581f6a1051512e2897d336675"/>    <section>
+    <title>glfwGetWaylandWindow()</title>
+<indexterm><primary>glfwGetWaylandWindow</primary><secondary>wl_window.c</secondary></indexterm>
+<indexterm><primary>wl_window.c</primary><secondary>glfwGetWaylandWindow</secondary></indexterm>
+<para><computeroutput><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> struct wl_surface* glfwGetWaylandWindow (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> * handle)</computeroutput></para><para>
+Definition at line 1854 of file wl_window.c.</para>
+<programlisting>1855 {
+1856 &#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link>*&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;(<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link>*)&#32;handle;
+1857 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a69563c87fe776d416636a4d1b0e9e599">_GLFW_REQUIRE_INIT_OR_RETURN</link>(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+1858 
+1859 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>.<link linkend="_struct___g_l_f_wplatform_1adadc0cac5c197cc28788bc4993a9f6da">platformID</link>&#32;!=&#32;<link linkend="_group__init_1gac4b08906a3cbf26c518a4a543eedd740">GLFW_PLATFORM_WAYLAND</link>)
+1860 &#32;&#32;&#32;&#32;{
+1861 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga3608c6c29ab7a72f3bf019f4c3a2563d">GLFW_PLATFORM_UNAVAILABLE</link>,
+1862 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Platform&#32;not&#32;initialized&quot;</emphasis>);
+1863 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1864 &#32;&#32;&#32;&#32;}
+1865 
+1866 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;wl.surface;
+1867 }
+</programlisting></section>
+</section>
+</section>

@@ -1,35 +1,23 @@
-//================================================================================
-// Vally 0.1a
-//--------------------------------------------------------------------------------
-// Copyright (c) 2021 Dmytro Zykov
-
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
-//=================================================================================
+/*********************************************************************
+ * config.h                                                          *
+ *                                                                   *
+ * Copyright (c) 2022 Dmytro Zykov                                   *
+ *                                                                   *
+ * This file is a part of the vally project, and may only be used,   *
+ * modified and distributed under the terms of the MIT License,      *
+ * LICENSE.md. By continuing to use, modify and distribute this file *
+ * you inidicate that you have read the license and accept it fully. *
+ *********************************************************************/
 
 #ifndef VALLY_CONFIG_H_
 #define VALLY_CONFIG_H_
 
 #include <stdint.h>
 
-//=============================//
-// Identify OS                 //
-//=============================//
+/**
+ * @brief Identify OS.
+ * 
+ */
 #if defined(_WIN32)
 
   // Windows
@@ -46,9 +34,10 @@
 
 #endif
 
-//====================================//
-// Define import and export macros    //
-//====================================//
+/**
+ * @brief Define import and export macros.
+ * 
+ */
 #if !defined(VALLY_STATIC)
 
   #if defined(VALLY_PLATFORM_WINDOWS)
@@ -91,46 +80,53 @@
 
 #endif
 
-
-//=================================//
-// Define custom fixed-size types  //
-//=================================//
+/**
+ * @brief Fixed-size unsigned types.
+ * 
+ */
 typedef uint8_t u8;
 typedef uint16_t u16;
 typedef uint32_t u32;
 typedef uint64_t u64;
 
+/**
+ * @brief Fixed-size integer types.
+ * 
+ */
 typedef int8_t  i8;
 typedef int16_t i16;
 typedef int32_t i32;
 typedef int64_t i64;
 
+/**
+ * @brief Fixed-size decimal types.
+ * 
+ */
 typedef float f32;
 typedef double f64;
 
+/**
+ * @brief Custom booleans.
+ * 
+ */
 typedef int32_t b32;
 typedef uint8_t b8;
 
 
+/**
+ * @brief Boolean values.
+ * 
+ */
 #define TRUE 1
 #define FALSE 0
 
-#define NULL ((void *)0)
-
+/**
+ * @brief Creates a bit mask with certain bit toggled on.
+ * 
+ */
 #define BIT_MASK(n) (1 << n)
+
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
-
-// Inlining
-#if defined(__clang__) || defined(__gcc__)
-#define VALLY_INLINE __attribute__((always_inline)) inline
-#define VALLY_NOINLINE __attribute__((noinline))
-#elif defined(_MSC_VER)
-#define VALLY_INLINE __forceinline
-#define VALLY_NOINLINE __declspec(noinline)
-#else
-#define VALLY_INLINE static inline
-#define VALLY_NOINLINE
-#endif
 
 #endif // VALLY_CONFIG_H_

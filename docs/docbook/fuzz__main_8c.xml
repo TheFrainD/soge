@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_fuzz__main_8c">
+<title>deps/stb/tests/fuzz_main.c File Reference</title>
+<indexterm><primary>deps/stb/tests/fuzz_main.c</primary></indexterm>
+<programlisting>#include &lt;stdint.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_fuzz__main_8c_1a91ce7c16e9840492202299da2b451e60">LLVMFuzzerTestOneInput</link> (const <link linkend="_stdint_8h_1aba7bc1797add20fe3efdf37ced1182c5">uint8_t</link> *<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>, size_t <link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_fuzz__main_8c_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_fuzz__main_8c_1a91ce7c16e9840492202299da2b451e60"/>    <section>
+    <title>LLVMFuzzerTestOneInput()</title>
+<indexterm><primary>LLVMFuzzerTestOneInput</primary><secondary>fuzz_main.c</secondary></indexterm>
+<indexterm><primary>fuzz_main.c</primary><secondary>LLVMFuzzerTestOneInput</secondary></indexterm>
+<para><computeroutput>int LLVMFuzzerTestOneInput (const <link linkend="_stdint_8h_1aba7bc1797add20fe3efdf37ced1182c5">uint8_t</link> * data, size_t size)</computeroutput></para><para>
+Definition at line 48 of file stb_c_lexer_fuzzer.cpp.</para>
+<programlisting>49 {
+50 &#32;&#32;<emphasis role="keywordflow">if</emphasis>(<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&lt;3){
+51 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+52 &#32;&#32;}
+53 &#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;*input_stream&#32;=&#32;(<emphasis role="keywordtype">char</emphasis>&#32;*)<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>(<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>);
+54 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(input_stream&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>){
+55 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+56 &#32;&#32;}
+57 &#32;&#32;memcpy(input_stream,&#32;<link linkend="_glad_8h_1a41a8247b39e9cdb744299c3331ca3453">data</link>,&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>);
+58 
+59 &#32;&#32;<link linkend="_structstb__lexer">stb_lexer</link>&#32;lex;
+60 &#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;*input_end&#32;=&#32;input_stream+<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>-1;
+61 &#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;*store&#32;=&#32;(<emphasis role="keywordtype">char</emphasis>&#32;*)<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>(0x10000);
+62 &#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;=&#32;0x10000;
+63 &#32;&#32;
+64 &#32;&#32;<link linkend="_stb__c__lexer_8h_1aceb0ec34ddd2da2ccce7648fa26494ee">stb_c_lexer_init</link>(&amp;lex,&#32;input_stream,&#32;input_end,&#32;store,&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>);
+65 &#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_stb__c__lexer_8h_1aa99130f041253ed326a09e3dcb865ec1">stb_c_lexer_get_token</link>(&amp;lex))&#32;{
+66 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(lex.<link linkend="_structstb__lexer_1afcdc0f31aa0f0ed2d7eeef7262f395da">token</link>&#32;==&#32;<link linkend="_stb__c__lexer_8h_1a2f80701c36e79c0640d91c788feee0b3a78dbfa9627c833153a5a17442a3a7c1c">CLEX_parse_error</link>)&#32;{
+67 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+68 &#32;&#32;&#32;&#32;}
+69 &#32;&#32;}
+70 &#32;&#32;
+71 &#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(input_stream);
+72 &#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(store);
+73 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+74 }
+</programlisting>    </section><anchor xml:id="_fuzz__main_8c_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>fuzz_main.c</secondary></indexterm>
+<indexterm><primary>fuzz_main.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 9 of file fuzz_main.c.</para>
+<programlisting>10 {
+11 &#32;&#32;&#32;&#32;FILE&#32;*<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>;
+12 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;*<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+13 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">long</emphasis>&#32;siz_buf;
+14 
+15 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(argc&#32;&lt;&#32;2)
+16 &#32;&#32;&#32;&#32;{
+17 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<emphasis role="stringliteral">&quot;no&#32;input&#32;file\n&quot;</emphasis>);
+18 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;err;
+19 &#32;&#32;&#32;&#32;}
+20 
+21 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;=&#32;fopen(argv[1],&#32;<emphasis role="stringliteral">&quot;rb&quot;</emphasis>);
+22 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+23 &#32;&#32;&#32;&#32;{
+24 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<emphasis role="stringliteral">&quot;error&#32;opening&#32;input&#32;file&#32;%s\n&quot;</emphasis>,&#32;argv[1]);
+25 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;err;
+26 &#32;&#32;&#32;&#32;}
+27 
+28 &#32;&#32;&#32;&#32;fseek(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0,&#32;SEEK_END);
+29 
+30 &#32;&#32;&#32;&#32;siz_buf&#32;=&#32;ftell(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+31 &#32;&#32;&#32;&#32;rewind(<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+32 
+33 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(siz_buf&#32;&lt;&#32;1)&#32;<emphasis role="keywordflow">goto</emphasis>&#32;err;
+34 
+35 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>&#32;=&#32;(<emphasis role="keywordtype">char</emphasis>*)<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>((<emphasis role="keywordtype">size_t</emphasis>)siz_buf);
+36 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+37 &#32;&#32;&#32;&#32;{
+38 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<emphasis role="stringliteral">&quot;malloc()&#32;failed\n&quot;</emphasis>);
+39 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;err;
+40 &#32;&#32;&#32;&#32;}
+41 
+42 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>(fread(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>,&#32;(<emphasis role="keywordtype">size_t</emphasis>)siz_buf,&#32;1,&#32;<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)&#32;!=&#32;1)
+43 &#32;&#32;&#32;&#32;{
+44 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<emphasis role="stringliteral">&quot;fread()&#32;failed\n&quot;</emphasis>);
+45 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;err;
+46 &#32;&#32;&#32;&#32;}
+47 
+48 &#32;&#32;&#32;&#32;(<link linkend="_glad_8h_1aef30cfca5b4a4c292babb2f60f6d3296">void</link>)<link linkend="_fuzz__main_8c_1a91ce7c16e9840492202299da2b451e60">LLVMFuzzerTestOneInput</link>((<link linkend="_stdint_8h_1aba7bc1797add20fe3efdf37ced1182c5">uint8_t</link>*)<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>,&#32;(size_t)siz_buf);
+49 
+50 err:
+51 &#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(<link linkend="_glad_8h_1aa3b73d9ca9f2e2396cbeae1ce6ce14be">buf</link>);
+52 
+53 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+54 }
+</programlisting></section>
+</section>
+</section>

@@ -1,0 +1,521 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_wl__init_8c">
+<title>deps/glfw/src/wl_init.c File Reference</title>
+<indexterm><primary>deps/glfw/src/wl_init.c</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+#include &lt;assert.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;limits.h&gt;
+#include &lt;linux/input.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/mman.h&gt;
+#include &lt;sys/timerfd.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;time.h&gt;
+#include &quot;wayland-client-protocol.h&quot;
+#include &quot;wayland-xdg-shell-client-protocol.h&quot;
+#include &quot;wayland-xdg-decoration-client-protocol.h&quot;
+#include &quot;wayland-viewporter-client-protocol.h&quot;
+#include &quot;wayland-relative-pointer-unstable-v1-client-protocol.h&quot;
+#include &quot;wayland-pointer-constraints-unstable-v1-client-protocol.h&quot;
+#include &quot;wayland-idle-inhibit-unstable-v1-client-protocol.h&quot;
+#include &quot;wayland-client-protocol-code.h&quot;
+#include &quot;wayland-xdg-shell-client-protocol-code.h&quot;
+#include &quot;wayland-xdg-decoration-client-protocol-code.h&quot;
+#include &quot;wayland-viewporter-client-protocol-code.h&quot;
+#include &quot;wayland-relative-pointer-unstable-v1-client-protocol-code.h&quot;
+#include &quot;wayland-pointer-constraints-unstable-v1-client-protocol-code.h&quot;
+#include &quot;wayland-idle-inhibit-unstable-v1-client-protocol-code.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_wl__init_8c_1a590adac355ae7255f974357d3cc9bb82">_glfwInputTextWayland</link> (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, <link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link> scancode)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_wl__init_8c_1aa808bd5a1ba23557d20738142c2066e7">_glfwConnectWayland</link> (int platformID, <link linkend="_struct___g_l_f_wplatform">_GLFWplatform</link> *platform)</para>
+</listitem>
+            <listitem><para>int <link linkend="_wl__init_8c_1a8d640825daae6f39a0c20edba245470d">_glfwInitWayland</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__init_8c_1a21e32d7cde0c918c630329a1cde99f10">_glfwTerminateWayland</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_wl__init_8c_1aa808bd5a1ba23557d20738142c2066e7"/>    <section>
+    <title>_glfwConnectWayland()</title>
+<indexterm><primary>_glfwConnectWayland</primary><secondary>wl_init.c</secondary></indexterm>
+<indexterm><primary>wl_init.c</primary><secondary>_glfwConnectWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwConnectWayland (int platformID, <link linkend="_struct___g_l_f_wplatform">_GLFWplatform</link> * platform)</computeroutput></para><para>
+Definition at line 1032 of file wl_init.c.</para>
+<programlisting>1033 {
+1034 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_struct___g_l_f_wplatform">_GLFWplatform</link>&#32;wayland&#32;=
+1035 &#32;&#32;&#32;&#32;{
+1036 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gac4b08906a3cbf26c518a4a543eedd740">GLFW_PLATFORM_WAYLAND</link>,
+1037 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__init_8c_1a8d640825daae6f39a0c20edba245470d">_glfwInitWayland</link>,
+1038 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__init_8c_1a21e32d7cde0c918c630329a1cde99f10">_glfwTerminateWayland</link>,
+1039 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a68e7966431b3829e09186d88c057e683">_glfwGetCursorPosWayland</link>,
+1040 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1aab3ae730f795e2f68b395f1c0f7694c1">_glfwSetCursorPosWayland</link>,
+1041 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1ae993bd14d7db090c84fb9799fc556bbd">_glfwSetCursorModeWayland</link>,
+1042 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1aeb3438865c89b17a2142cfc4509dbd28">_glfwSetRawMouseMotionWayland</link>,
+1043 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1aa0c6e411bf8eef4b73bc98e0974f2a78">_glfwRawMouseMotionSupportedWayland</link>,
+1044 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1abdb1b358173a9cd27ed43e2492c40c20">_glfwCreateCursorWayland</link>,
+1045 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1aadea2d69e02bfba04cf90e07501aa467">_glfwCreateStandardCursorWayland</link>,
+1046 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1ac215aeab29ad474956c27f4f6ddfc65a">_glfwDestroyCursorWayland</link>,
+1047 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1aabccf38d8d6f6e29e4a63345a850bfa9">_glfwSetCursorWayland</link>,
+1048 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a066d33db2119fb1bba6a5127abd3530c">_glfwGetScancodeNameWayland</link>,
+1049 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a3e2e4e589e75df85898b33ff459f60ee">_glfwGetKeyScancodeWayland</link>,
+1050 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a74f40e21bcc7f5a646ecc5f80f25a6c3">_glfwSetClipboardStringWayland</link>,
+1051 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a491fcd8a56c175d24dc286660fe7475b">_glfwGetClipboardStringWayland</link>,
+1052 <emphasis role="preprocessor">#if&#32;defined(__linux__)</emphasis>
+1053 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linux__joystick_8c_1a17dc11e9772c08f5afdbe17d6830a8f5">_glfwInitJoysticksLinux</link>,
+1054 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linux__joystick_8c_1a64271879f7bf9f6a9e9631310a7e75f1">_glfwTerminateJoysticksLinux</link>,
+1055 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linux__joystick_8c_1a399ffcc99f12447944f2e7c2df237940">_glfwPollJoystickLinux</link>,
+1056 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linux__joystick_8c_1a3a9d5c327233cb7a3ead13f06928180d">_glfwGetMappingNameLinux</link>,
+1057 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linux__joystick_8c_1a4cf7ebdca81871f2a190618877764aa3">_glfwUpdateGamepadGUIDLinux</link>,
+1058 <emphasis role="preprocessor">#else</emphasis>
+1059 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_null__joystick_8c_1a708c96026644a7d2ab0b026911462616">_glfwInitJoysticksNull</link>,
+1060 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_null__joystick_8c_1af9151a206b9a9d8a0af0f51a12ab72fc">_glfwTerminateJoysticksNull</link>,
+1061 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_null__joystick_8c_1afebb7d158999e7225a3be48fe36005c7">_glfwPollJoystickNull</link>,
+1062 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_null__joystick_8c_1a1a02177d4c3e4dc7558203c00df1912b">_glfwGetMappingNameNull</link>,
+1063 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_null__joystick_8c_1a7d51d60bb59d35cb3e0af3782716f585">_glfwUpdateGamepadGUIDNull</link>,
+1064 <emphasis role="preprocessor">#endif</emphasis>
+1065 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__monitor_8c_1acaaad2590b0a15c2588e3d9f12c79863">_glfwFreeMonitorWayland</link>,
+1066 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__monitor_8c_1a35f10d415428b18f4a8d83e5e308f87f">_glfwGetMonitorPosWayland</link>,
+1067 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__monitor_8c_1ad2feca038ef5480163f360d16b7f6f4b">_glfwGetMonitorContentScaleWayland</link>,
+1068 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__monitor_8c_1afce0463dcba6f72acf3127c094635b47">_glfwGetMonitorWorkareaWayland</link>,
+1069 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__monitor_8c_1ab8c6631cf6c4432d0c4d8f10f4fb90fb">_glfwGetVideoModesWayland</link>,
+1070 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__monitor_8c_1aabd466779c94e6b0bf54f6fece70027c">_glfwGetVideoModeWayland</link>,
+1071 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__monitor_8c_1a70e276054b29b00bb118f4261643c428">_glfwGetGammaRampWayland</link>,
+1072 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__monitor_8c_1afa0e67469f56d48d100cfd1cb1ff25bc">_glfwSetGammaRampWayland</link>,
+1073 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a8fbd5336c54afc9760a89acca1b5bd20">_glfwCreateWindowWayland</link>,
+1074 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a4f9e23a94f70832b66ea4ff6f7e6c98d">_glfwDestroyWindowWayland</link>,
+1075 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a2a03cb3eb1fa3720991ad2503dd65e2a">_glfwSetWindowTitleWayland</link>,
+1076 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1af3bdf666499b335663748945d01b1aab">_glfwSetWindowIconWayland</link>,
+1077 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a325fef5dd107caef5a4620ec0e5ee9bd">_glfwGetWindowPosWayland</link>,
+1078 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a5adb7549f1afecf80241a68fe7d2f2e0">_glfwSetWindowPosWayland</link>,
+1079 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a7139656b9b92a558042462c05e71f17e">_glfwGetWindowSizeWayland</link>,
+1080 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a782e4e77e16e03c5340748e43e808828">_glfwSetWindowSizeWayland</link>,
+1081 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1acd2b24bb6d3dc8bf27de6306a5d5397d">_glfwSetWindowSizeLimitsWayland</link>,
+1082 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a67850a44f6265bfa151ef3e3637bca55">_glfwSetWindowAspectRatioWayland</link>,
+1083 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1afa69ff28fa47d232843f620120391e97">_glfwGetFramebufferSizeWayland</link>,
+1084 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a1c0713597287aec915fa764efdebf1f9">_glfwGetWindowFrameSizeWayland</link>,
+1085 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1ab3e8d510f751fca3c9b60aa03d321cba">_glfwGetWindowContentScaleWayland</link>,
+1086 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a2786524a443b7f4a2ff53055366e1169">_glfwIconifyWindowWayland</link>,
+1087 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a25c9fe00185d9a1b8badf038b7634b88">_glfwRestoreWindowWayland</link>,
+1088 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a8dcc43854cfabe4d324154d2eeebd44e">_glfwMaximizeWindowWayland</link>,
+1089 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a7a956e757e29f06d5efcae33b58025cb">_glfwShowWindowWayland</link>,
+1090 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1ad519388eb25d04c1a4db2df34169efb4">_glfwHideWindowWayland</link>,
+1091 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a8a1b249be1215f514f923f91656030c3">_glfwRequestWindowAttentionWayland</link>,
+1092 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a29aeccafd183ea2e1f5bab9a44ad6122">_glfwFocusWindowWayland</link>,
+1093 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a76e4715c3d943636ba1b71afea0c97c2">_glfwSetWindowMonitorWayland</link>,
+1094 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1ab0d72e6bf663506ff3f138bc670b2f6c">_glfwWindowFocusedWayland</link>,
+1095 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a44752c656c8cee3498776b851285dca6">_glfwWindowIconifiedWayland</link>,
+1096 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1abb9d2bf1aac035ff3ae3abcc9e0a7f09">_glfwWindowVisibleWayland</link>,
+1097 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a7676d7f4167b65f29aedf393e14174ed">_glfwWindowMaximizedWayland</link>,
+1098 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1af427fb6a233af50a51858a9908d196fb">_glfwWindowHoveredWayland</link>,
+1099 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a2a78a10b4fa6a214a2bebf4f1ec9b868">_glfwFramebufferTransparentWayland</link>,
+1100 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a741ad4527adc24d5f6732ac27fa32678">_glfwGetWindowOpacityWayland</link>,
+1101 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1aa7d932102710313b7cc131d45413cd06">_glfwSetWindowResizableWayland</link>,
+1102 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1afcacd9ea3cb285c1266871d13a723e4c">_glfwSetWindowDecoratedWayland</link>,
+1103 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1aebcd0db81b67e416f775e4b0d8facdc1">_glfwSetWindowFloatingWayland</link>,
+1104 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a43f0c40c30c7bc0216b51cfae59c3629">_glfwSetWindowOpacityWayland</link>,
+1105 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1acad95c7e85177725f95463ffe86015d4">_glfwSetWindowMousePassthroughWayland</link>,
+1106 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a7a315f4b4c3263efc0960094698de618">_glfwPollEventsWayland</link>,
+1107 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a7cc624f3d8429b0d35ad163092b4821a">_glfwWaitEventsWayland</link>,
+1108 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a43d44933860ce6e5802733777edae04b">_glfwWaitEventsTimeoutWayland</link>,
+1109 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a34984c3cc558a291b1721288c8b5ebe6">_glfwPostEmptyEventWayland</link>,
+1110 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1ad3a432eeab11d12463568f267ba0dc59">_glfwGetEGLPlatformWayland</link>,
+1111 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a504e09d478703e56da9a9b8204bdddd5">_glfwGetEGLNativeDisplayWayland</link>,
+1112 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a1aa2aacf3bb7726a0cb96c138cda4f43">_glfwGetEGLNativeWindowWayland</link>,
+1113 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a82b45703386cfc7543957d2160b482a5">_glfwGetRequiredInstanceExtensionsWayland</link>,
+1114 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a5b300bf0217ad4d0c73c7c44eb53062d">_glfwGetPhysicalDevicePresentationSupportWayland</link>,
+1115 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a88b24d7cb3bc64abfc826fd23cf17ad4">_glfwCreateWindowSurfaceWayland</link>,
+1116 &#32;&#32;&#32;&#32;};
+1117 
+1118 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>*&#32;module&#32;=&#32;<link linkend="_internal_8h_1a0ca69d860ad190bdb5beab6de9160842">_glfwPlatformLoadModule</link>(<emphasis role="stringliteral">&quot;libwayland-client.so.0&quot;</emphasis>);
+1119 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!module)
+1120 &#32;&#32;&#32;&#32;{
+1121 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(platformID&#32;==&#32;<link linkend="_group__init_1gac4b08906a3cbf26c518a4a543eedd740">GLFW_PLATFORM_WAYLAND</link>)
+1122 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1123 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1124 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Failed&#32;to&#32;open&#32;libwayland-client&quot;</emphasis>);
+1125 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1126 
+1127 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1128 &#32;&#32;&#32;&#32;}
+1129 
+1130 &#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1af300d1e95fd8bdf3acc4d79692a8b444">PFN_wl_display_connect</link>&#32;wl_display_connect&#32;=&#32;(<link linkend="_wl__platform_8h_1af300d1e95fd8bdf3acc4d79692a8b444">PFN_wl_display_connect</link>)
+1131 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(module,&#32;<emphasis role="stringliteral">&quot;wl_display_connect&quot;</emphasis>);
+1132 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!wl_display_connect)
+1133 &#32;&#32;&#32;&#32;{
+1134 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(platformID&#32;==&#32;<link linkend="_group__init_1gac4b08906a3cbf26c518a4a543eedd740">GLFW_PLATFORM_WAYLAND</link>)
+1135 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1137 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Failed&#32;to&#32;load&#32;libwayland-client&#32;entry&#32;point&quot;</emphasis>);
+1138 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1139 
+1140 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ad4b9e48b150850f6ee00874f85036715">_glfwPlatformFreeModule</link>(module);
+1141 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1142 &#32;&#32;&#32;&#32;}
+1143 
+1144 &#32;&#32;&#32;&#32;<emphasis role="keyword">struct&#32;</emphasis>wl_display*&#32;<link linkend="_boing_8c_1a4ea013001a5fb47853d0fab8f8de35cd">display</link>&#32;=&#32;wl_display_connect(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+1145 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_boing_8c_1a4ea013001a5fb47853d0fab8f8de35cd">display</link>)
+1146 &#32;&#32;&#32;&#32;{
+1147 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(platformID&#32;==&#32;<link linkend="_group__init_1gac4b08906a3cbf26c518a4a543eedd740">GLFW_PLATFORM_WAYLAND</link>)
+1148 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Failed&#32;to&#32;connect&#32;to&#32;display&quot;</emphasis>);
+1149 
+1150 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ad4b9e48b150850f6ee00874f85036715">_glfwPlatformFreeModule</link>(module);
+1151 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1152 &#32;&#32;&#32;&#32;}
+1153 
+1154 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>&#32;=&#32;<link linkend="_boing_8c_1a4ea013001a5fb47853d0fab8f8de35cd">display</link>;
+1155 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>&#32;=&#32;module;
+1156 
+1157 &#32;&#32;&#32;&#32;*platform&#32;=&#32;wayland;
+1158 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+1159 }
+</programlisting>    </section><anchor xml:id="_wl__init_8c_1a8d640825daae6f39a0c20edba245470d"/>    <section>
+    <title>_glfwInitWayland()</title>
+<indexterm><primary>_glfwInitWayland</primary><secondary>wl_init.c</secondary></indexterm>
+<indexterm><primary>wl_init.c</primary><secondary>_glfwInitWayland</secondary></indexterm>
+<para><computeroutput>int _glfwInitWayland (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 1161 of file wl_init.c.</para>
+<programlisting>1162 {
+1163 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;*cursorTheme;
+1164 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;*cursorSizeStr;
+1165 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;*cursorSizeEnd;
+1166 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">long</emphasis>&#32;cursorSizeLong;
+1167 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;cursorSize;
+1168 
+1169 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.display_flush&#32;=&#32;(<link linkend="_wl__platform_8h_1a2febf2819b199bcb0ad33bc9ec83ab13">PFN_wl_display_flush</link>)
+1170 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_display_flush&quot;</emphasis>);
+1171 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.display_cancel_read&#32;=&#32;(<link linkend="_wl__platform_8h_1a059454d3d45c515a1c9769b06f870f1a">PFN_wl_display_cancel_read</link>)
+1172 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_display_cancel_read&quot;</emphasis>);
+1173 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.display_dispatch_pending&#32;=&#32;(<link linkend="_wl__platform_8h_1ac1a1070aa10fb7385a25d8dcc6e75c75">PFN_wl_display_dispatch_pending</link>)
+1174 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_display_dispatch_pending&quot;</emphasis>);
+1175 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.display_read_events&#32;=&#32;(<link linkend="_wl__platform_8h_1a0f078a0719d6f9bbb387265c3db30704">PFN_wl_display_read_events</link>)
+1176 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_display_read_events&quot;</emphasis>);
+1177 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.display_disconnect&#32;=&#32;(<link linkend="_wl__platform_8h_1a884612b7f8d6ac2d1a09d43372c340f8">PFN_wl_display_disconnect</link>)
+1178 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_display_disconnect&quot;</emphasis>);
+1179 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.display_roundtrip&#32;=&#32;(<link linkend="_wl__platform_8h_1ac8941d25e88d5e10f33c5270efc46f45">PFN_wl_display_roundtrip</link>)
+1180 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_display_roundtrip&quot;</emphasis>);
+1181 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.display_get_fd&#32;=&#32;(<link linkend="_wl__platform_8h_1a8043dd7b64a5d5594d4db20613adfb7a">PFN_wl_display_get_fd</link>)
+1182 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_display_get_fd&quot;</emphasis>);
+1183 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.display_prepare_read&#32;=&#32;(<link linkend="_wl__platform_8h_1aaa3bfda091c49bf98074ff95c20be78f">PFN_wl_display_prepare_read</link>)
+1184 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_display_prepare_read&quot;</emphasis>);
+1185 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.proxy_marshal&#32;=&#32;(<link linkend="_wl__platform_8h_1a1e2c3d1ff026e91762ba9bb04b299e28">PFN_wl_proxy_marshal</link>)
+1186 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_proxy_marshal&quot;</emphasis>);
+1187 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.proxy_add_listener&#32;=&#32;(<link linkend="_wl__platform_8h_1a425b1cea5c34f65c0fb5fa08b5932a82">PFN_wl_proxy_add_listener</link>)
+1188 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_proxy_add_listener&quot;</emphasis>);
+1189 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.proxy_destroy&#32;=&#32;(<link linkend="_wl__platform_8h_1ad7a4e34186cb77594ffbccc472b10928">PFN_wl_proxy_destroy</link>)
+1190 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_proxy_destroy&quot;</emphasis>);
+1191 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.proxy_marshal_constructor&#32;=&#32;(<link linkend="_wl__platform_8h_1a2a355482006415dd4a3ebdc3d5db319c">PFN_wl_proxy_marshal_constructor</link>)
+1192 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_proxy_marshal_constructor&quot;</emphasis>);
+1193 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.proxy_marshal_constructor_versioned&#32;=&#32;(<link linkend="_wl__platform_8h_1ac37612cd6f868464f393263dcb5115ce">PFN_wl_proxy_marshal_constructor_versioned</link>)
+1194 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_proxy_marshal_constructor_versioned&quot;</emphasis>);
+1195 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.proxy_get_user_data&#32;=&#32;(<link linkend="_wl__platform_8h_1a66f071e0eac6f315abe216dd6e978985">PFN_wl_proxy_get_user_data</link>)
+1196 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_proxy_get_user_data&quot;</emphasis>);
+1197 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.proxy_set_user_data&#32;=&#32;(<link linkend="_wl__platform_8h_1a1652428fcf022f5c562ac5bd5efc0659">PFN_wl_proxy_set_user_data</link>)
+1198 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_proxy_set_user_data&quot;</emphasis>);
+1199 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.proxy_get_version&#32;=&#32;(<link linkend="_wl__platform_8h_1aaee9c638becf09cec42feb11c91a5860">PFN_wl_proxy_get_version</link>)
+1200 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_proxy_get_version&quot;</emphasis>);
+1201 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.proxy_marshal_flags&#32;=&#32;(<link linkend="_wl__platform_8h_1ae6ee6cd4db3115093cb0e3c6fa5e9f8a">PFN_wl_proxy_marshal_flags</link>)
+1202 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_proxy_marshal_flags&quot;</emphasis>);
+1203 
+1204 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.display_flush&#32;||
+1205 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.display_cancel_read&#32;||
+1206 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.display_dispatch_pending&#32;||
+1207 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.display_read_events&#32;||
+1208 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.display_disconnect&#32;||
+1209 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.display_roundtrip&#32;||
+1210 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.display_get_fd&#32;||
+1211 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.display_prepare_read&#32;||
+1212 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.proxy_marshal&#32;||
+1213 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.proxy_add_listener&#32;||
+1214 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.proxy_destroy&#32;||
+1215 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.proxy_marshal_constructor&#32;||
+1216 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.proxy_marshal_constructor_versioned&#32;||
+1217 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.proxy_get_user_data&#32;||
+1218 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.client.proxy_set_user_data)
+1219 &#32;&#32;&#32;&#32;{
+1220 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1221 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Failed&#32;to&#32;load&#32;libwayland-client&#32;entry&#32;point&quot;</emphasis>);
+1222 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1223 &#32;&#32;&#32;&#32;}
+1224 
+1225 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursor.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>&#32;=&#32;<link linkend="_internal_8h_1a0ca69d860ad190bdb5beab6de9160842">_glfwPlatformLoadModule</link>(<emphasis role="stringliteral">&quot;libwayland-cursor.so.0&quot;</emphasis>);
+1226 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursor.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+1227 &#32;&#32;&#32;&#32;{
+1228 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1229 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Failed&#32;to&#32;open&#32;libwayland-cursor&quot;</emphasis>);
+1230 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1231 &#32;&#32;&#32;&#32;}
+1232 
+1233 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursor.theme_load&#32;=&#32;(<link linkend="_wl__platform_8h_1a3d5be4ad6514481271f04e01687ba3cf">PFN_wl_cursor_theme_load</link>)
+1234 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursor.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_cursor_theme_load&quot;</emphasis>);
+1235 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursor.theme_destroy&#32;=&#32;(<link linkend="_wl__platform_8h_1a028b3d9313486c63f918b370f4290b46">PFN_wl_cursor_theme_destroy</link>)
+1236 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursor.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_cursor_theme_destroy&quot;</emphasis>);
+1237 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursor.theme_get_cursor&#32;=&#32;(<link linkend="_wl__platform_8h_1ad888f8476b9b83ca152e92f6b4d04b50">PFN_wl_cursor_theme_get_cursor</link>)
+1238 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursor.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_cursor_theme_get_cursor&quot;</emphasis>);
+1239 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursor.image_get_buffer&#32;=&#32;(<link linkend="_wl__platform_8h_1a71881ab6635d2de5a303349e16807430">PFN_wl_cursor_image_get_buffer</link>)
+1240 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursor.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_cursor_image_get_buffer&quot;</emphasis>);
+1241 
+1242 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>&#32;=&#32;<link linkend="_internal_8h_1a0ca69d860ad190bdb5beab6de9160842">_glfwPlatformLoadModule</link>(<emphasis role="stringliteral">&quot;libwayland-egl.so.1&quot;</emphasis>);
+1243 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+1244 &#32;&#32;&#32;&#32;{
+1245 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1246 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Failed&#32;to&#32;open&#32;libwayland-egl&quot;</emphasis>);
+1247 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1248 &#32;&#32;&#32;&#32;}
+1249 
+1250 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.window_create&#32;=&#32;(<link linkend="_wl__platform_8h_1a6b577197886e83e6550758fde49fcbf9">PFN_wl_egl_window_create</link>)
+1251 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_egl_window_create&quot;</emphasis>);
+1252 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.window_destroy&#32;=&#32;(<link linkend="_wl__platform_8h_1a2727d08bef446572e6f9e26801506ae1">PFN_wl_egl_window_destroy</link>)
+1253 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_egl_window_destroy&quot;</emphasis>);
+1254 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.window_resize&#32;=&#32;(<link linkend="_wl__platform_8h_1adcf78e57b989ea0e561208099dada945">PFN_wl_egl_window_resize</link>)
+1255 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;wl_egl_window_resize&quot;</emphasis>);
+1256 
+1257 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>&#32;=&#32;<link linkend="_internal_8h_1a0ca69d860ad190bdb5beab6de9160842">_glfwPlatformLoadModule</link>(<emphasis role="stringliteral">&quot;libxkbcommon.so.0&quot;</emphasis>);
+1258 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+1259 &#32;&#32;&#32;&#32;{
+1260 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1261 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Failed&#32;to&#32;open&#32;libxkbcommon&quot;</emphasis>);
+1262 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1263 &#32;&#32;&#32;&#32;}
+1264 
+1265 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.context_new&#32;=&#32;(<link linkend="_wl__platform_8h_1a0f6a5db093091ec57ac908e20bc205df">PFN_xkb_context_new</link>)
+1266 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_context_new&quot;</emphasis>);
+1267 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.context_unref&#32;=&#32;(<link linkend="_wl__platform_8h_1aeb826e6dece848b0e71cf98fcf3b6a34">PFN_xkb_context_unref</link>)
+1268 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_context_unref&quot;</emphasis>);
+1269 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.keymap_new_from_string&#32;=&#32;(<link linkend="_wl__platform_8h_1a7b808d4fcf4963467503704373c5cdd7">PFN_xkb_keymap_new_from_string</link>)
+1270 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_keymap_new_from_string&quot;</emphasis>);
+1271 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.keymap_unref&#32;=&#32;(<link linkend="_wl__platform_8h_1aa0778d7d934b96bf500f046368de1f45">PFN_xkb_keymap_unref</link>)
+1272 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_keymap_unref&quot;</emphasis>);
+1273 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.keymap_mod_get_index&#32;=&#32;(<link linkend="_wl__platform_8h_1a41d7cec916693645a46216cec1c0c6d7">PFN_xkb_keymap_mod_get_index</link>)
+1274 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_keymap_mod_get_index&quot;</emphasis>);
+1275 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.keymap_key_repeats&#32;=&#32;(<link linkend="_wl__platform_8h_1a10dd25305b8984d748e0c35db025106e">PFN_xkb_keymap_key_repeats</link>)
+1276 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_keymap_key_repeats&quot;</emphasis>);
+1277 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.keymap_key_get_syms_by_level&#32;=&#32;(<link linkend="_wl__platform_8h_1a9866b14ec9bf5013c49523c9a71c2660">PFN_xkb_keymap_key_get_syms_by_level</link>)
+1278 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_keymap_key_get_syms_by_level&quot;</emphasis>);
+1279 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.state_new&#32;=&#32;(<link linkend="_wl__platform_8h_1a2a900ea023b56cb0c6ec6feaf6b45854">PFN_xkb_state_new</link>)
+1280 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_state_new&quot;</emphasis>);
+1281 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.state_unref&#32;=&#32;(<link linkend="_wl__platform_8h_1a04a57f9f8326bd39a1525e4e0edd4951">PFN_xkb_state_unref</link>)
+1282 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_state_unref&quot;</emphasis>);
+1283 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.state_key_get_syms&#32;=&#32;(<link linkend="_wl__platform_8h_1ac93bb3679df2634f72bb35e1587b0459">PFN_xkb_state_key_get_syms</link>)
+1284 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_state_key_get_syms&quot;</emphasis>);
+1285 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.state_update_mask&#32;=&#32;(<link linkend="_wl__platform_8h_1a872e4657e3e1127caeb678c0b253b4f0">PFN_xkb_state_update_mask</link>)
+1286 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_state_update_mask&quot;</emphasis>);
+1287 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.state_serialize_mods&#32;=&#32;(<link linkend="_wl__platform_8h_1a963602febce41dbde7c037aaba7b7c0d">PFN_xkb_state_serialize_mods</link>)
+1288 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_state_serialize_mods&quot;</emphasis>);
+1289 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.state_key_get_layout&#32;=&#32;(<link linkend="_wl__platform_8h_1a1ddf8a57641c77805f0aedf68d7c715e">PFN_xkb_state_key_get_layout</link>)
+1290 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_state_key_get_layout&quot;</emphasis>);
+1291 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.compose_table_new_from_locale&#32;=&#32;(<link linkend="_wl__platform_8h_1a8a717fe416e52e9d6e5258caeb5281d4">PFN_xkb_compose_table_new_from_locale</link>)
+1292 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_compose_table_new_from_locale&quot;</emphasis>);
+1293 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.compose_table_unref&#32;=&#32;(<link linkend="_wl__platform_8h_1a94826943d69f9fce48bb246457692c2e">PFN_xkb_compose_table_unref</link>)
+1294 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_compose_table_unref&quot;</emphasis>);
+1295 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.compose_state_new&#32;=&#32;(<link linkend="_wl__platform_8h_1acde584df56f61030dd063d5bbf6ac838">PFN_xkb_compose_state_new</link>)
+1296 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_compose_state_new&quot;</emphasis>);
+1297 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.compose_state_unref&#32;=&#32;(<link linkend="_wl__platform_8h_1a5b405c88d81a608a1a447ac889f6485b">PFN_xkb_compose_state_unref</link>)
+1298 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_compose_state_unref&quot;</emphasis>);
+1299 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.compose_state_feed&#32;=&#32;(<link linkend="_wl__platform_8h_1a58829e3e18572f5e5e8d7d0349b3f092">PFN_xkb_compose_state_feed</link>)
+1300 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_compose_state_feed&quot;</emphasis>);
+1301 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.compose_state_get_status&#32;=&#32;(<link linkend="_wl__platform_8h_1aad8c18022b37e3cd5d8e38a621fa42ed">PFN_xkb_compose_state_get_status</link>)
+1302 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_compose_state_get_status&quot;</emphasis>);
+1303 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.compose_state_get_one_sym&#32;=&#32;(<link linkend="_wl__platform_8h_1a88d4343fefb99b57a83cb2609eebdf87">PFN_xkb_compose_state_get_one_sym</link>)
+1304 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a370840ea8f3f1016d07030f7a06bf36e">_glfwPlatformGetModuleSymbol</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>,&#32;<emphasis role="stringliteral">&quot;xkb_compose_state_get_one_sym&quot;</emphasis>);
+1305 
+1306 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.registry&#32;=&#32;wl_display_get_registry(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>);
+1307 &#32;&#32;&#32;&#32;wl_registry_add_listener(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.registry,&#32;&amp;registryListener,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+1308 
+1309 &#32;&#32;&#32;&#32;createKeyTables();
+1310 
+1311 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a681e7c0153724884070e9c94069693fb">context</link>&#32;=&#32;<link linkend="_wl__platform_8h_1ad3db83b8a04c02fad16d7f0eb9253651">xkb_context_new</link>(0);
+1312 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a681e7c0153724884070e9c94069693fb">context</link>)
+1313 &#32;&#32;&#32;&#32;{
+1314 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1315 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Failed&#32;to&#32;initialize&#32;xkb&#32;context&quot;</emphasis>);
+1316 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1317 &#32;&#32;&#32;&#32;}
+1318 
+1319 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Sync&#32;so&#32;we&#32;got&#32;all&#32;registry&#32;objects</emphasis>
+1320 &#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1afbff16ff914a6de7fb8b0947aa872df3">wl_display_roundtrip</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>);
+1321 
+1322 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Sync&#32;so&#32;we&#32;got&#32;all&#32;initial&#32;output&#32;events</emphasis>
+1323 &#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1afbff16ff914a6de7fb8b0947aa872df3">wl_display_roundtrip</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>);
+1324 
+1325 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.timerfd&#32;=&#32;-1;
+1326 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.seatVersion&#32;&gt;=&#32;4)
+1327 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.timerfd&#32;=&#32;timerfd_create(CLOCK_MONOTONIC,&#32;TFD_CLOEXEC&#32;|&#32;TFD_NONBLOCK);
+1328 
+1329 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.wmBase)
+1330 &#32;&#32;&#32;&#32;{
+1331 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1332 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Failed&#32;to&#32;find&#32;xdg-shell&#32;in&#32;your&#32;compositor&quot;</emphasis>);
+1333 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1334 &#32;&#32;&#32;&#32;}
+1335 
+1336 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.pointer&#32;&amp;&amp;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.shm)
+1337 &#32;&#32;&#32;&#32;{
+1338 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cursorTheme&#32;=&#32;getenv(<emphasis role="stringliteral">&quot;XCURSOR_THEME&quot;</emphasis>);
+1339 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cursorSizeStr&#32;=&#32;getenv(<emphasis role="stringliteral">&quot;XCURSOR_SIZE&quot;</emphasis>);
+1340 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cursorSize&#32;=&#32;32;
+1341 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cursorSizeStr)
+1342 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1343 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;errno&#32;=&#32;0;
+1344 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cursorSizeLong&#32;=&#32;strtol(cursorSizeStr,&#32;&amp;cursorSizeEnd,&#32;10);
+1345 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!*cursorSizeEnd&#32;&amp;&amp;&#32;!errno&#32;&amp;&amp;&#32;cursorSizeLong&#32;&gt;&#32;0&#32;&amp;&amp;&#32;cursorSizeLong&#32;&lt;=&#32;INT_MAX)
+1346 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cursorSize&#32;=&#32;(int)cursorSizeLong;
+1347 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1348 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorTheme&#32;=
+1349 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1af0849f9b39044874257dae01cf1ab056">wl_cursor_theme_load</link>(cursorTheme,&#32;cursorSize,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.shm);
+1350 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorTheme)
+1351 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1352 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1353 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Unable&#32;to&#32;load&#32;default&#32;cursor&#32;theme&quot;</emphasis>);
+1354 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1355 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1356 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;If&#32;this&#32;happens&#32;to&#32;be&#32;NULL,&#32;we&#32;just&#32;fallback&#32;to&#32;the&#32;scale=1&#32;version.</emphasis>
+1357 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorThemeHiDPI&#32;=
+1358 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1af0849f9b39044874257dae01cf1ab056">wl_cursor_theme_load</link>(cursorTheme,&#32;2&#32;*&#32;cursorSize,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.shm);
+1359 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorSurface&#32;=
+1360 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_compositor_create_surface(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.compositor);
+1361 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorTimerfd&#32;=&#32;timerfd_create(CLOCK_MONOTONIC,&#32;TFD_CLOEXEC&#32;|&#32;TFD_NONBLOCK);
+1362 &#32;&#32;&#32;&#32;}
+1363 
+1364 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.seat&#32;&amp;&amp;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataDeviceManager)
+1365 &#32;&#32;&#32;&#32;{
+1366 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataDevice&#32;=
+1367 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_data_device_manager_get_data_device(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataDeviceManager,
+1368 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.seat);
+1369 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_data_device_add_listener(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataDevice,&#32;&amp;dataDeviceListener,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+1370 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardString&#32;=&#32;<link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link>(4096,&#32;1);
+1371 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardString)
+1372 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+1373 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+1374 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Unable&#32;to&#32;allocate&#32;clipboard&#32;memory&quot;</emphasis>);
+1375 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+1376 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1377 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardSize&#32;=&#32;4096;
+1378 &#32;&#32;&#32;&#32;}
+1379 
+1380 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+1381 }
+</programlisting>    </section><anchor xml:id="_wl__init_8c_1a590adac355ae7255f974357d3cc9bb82"/>    <section>
+    <title>_glfwInputTextWayland()</title>
+<indexterm><primary>_glfwInputTextWayland</primary><secondary>wl_init.c</secondary></indexterm>
+<indexterm><primary>wl_init.c</primary><secondary>_glfwInputTextWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwInputTextWayland (<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window, <link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link> scancode)</computeroutput></para><para>
+Definition at line 538 of file wl_init.c.</para>
+<programlisting>539 {
+540 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;xkb_keysym_t*&#32;keysyms;
+541 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;xkb_keycode_t&#32;keycode&#32;=&#32;scancode&#32;+&#32;8;
+542 
+543 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_wl__platform_8h_1aae3ce4ad2452936ecc298d83cec75af8">xkb_state_key_get_syms</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.state,&#32;keycode,&#32;&amp;keysyms)&#32;==&#32;1)
+544 &#32;&#32;&#32;&#32;{
+545 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;xkb_keysym_t&#32;keysym&#32;=&#32;composeSymbol(keysyms[0]);
+546 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link>&#32;codepoint&#32;=&#32;<link linkend="_xkb__unicode_8c_1acc4747eb62386c01c9dd0cd6997c8983">_glfwKeySym2Unicode</link>(keysym);
+547 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(codepoint&#32;!=&#32;<link linkend="_xkb__unicode_8h_1a45fc2e5a3ba025f1ac362831cfe04416">GLFW_INVALID_CODEPOINT</link>)
+548 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+549 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;mods&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.modifiers;
+550 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;plain&#32;=&#32;!(mods&#32;&amp;&#32;(<link linkend="_group__mods_1ga6ed94871c3208eefd85713fa929d45aa">GLFW_MOD_CONTROL</link>&#32;|&#32;<link linkend="_group__mods_1gad2acd5633463c29e07008687ea73c0f4">GLFW_MOD_ALT</link>));
+551 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_deps_2glfw_2src_2input_8c_1aa778fa9144afadb49baa95f0178d3d3e">_glfwInputChar</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;codepoint,&#32;mods,&#32;plain);
+552 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+553 &#32;&#32;&#32;&#32;}
+554 
+555 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_wl__platform_8h_1a454cb66a6161b4d9fbfde69bf1b1adb1">xkb_keymap_key_repeats</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.keymap,&#32;keycode);
+556 }
+</programlisting>    </section><anchor xml:id="_wl__init_8c_1a21e32d7cde0c918c630329a1cde99f10"/>    <section>
+    <title>_glfwTerminateWayland()</title>
+<indexterm><primary>_glfwTerminateWayland</primary><secondary>wl_init.c</secondary></indexterm>
+<indexterm><primary>wl_init.c</primary><secondary>_glfwTerminateWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwTerminateWayland (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 1383 of file wl_init.c.</para>
+<programlisting>1384 {
+1385 &#32;&#32;&#32;&#32;<link linkend="_egl__context_8c_1ab095be9ec2b3a40942da090ee7ab2960">_glfwTerminateEGL</link>();
+1386 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+1387 &#32;&#32;&#32;&#32;{
+1388 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ad4b9e48b150850f6ee00874f85036715">_glfwPlatformFreeModule</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>);
+1389 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a7a5951c916147abd6d4d7330f687807d">egl</link>.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1390 &#32;&#32;&#32;&#32;}
+1391 
+1392 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.composeState)
+1393 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a73858a1a46e83ed97773dbbbdc541bbd">xkb_compose_state_unref</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.composeState);
+1394 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.keymap)
+1395 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a9707d19b164550101c688f6a8ad4cb56">xkb_keymap_unref</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.keymap);
+1396 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.state)
+1397 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a924ddb1dc7e73e83e207b2a1dc911504">xkb_state_unref</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.state);
+1398 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a681e7c0153724884070e9c94069693fb">context</link>)
+1399 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a7d4180d6a0192d57ed6bab2162b12444">xkb_context_unref</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a681e7c0153724884070e9c94069693fb">context</link>);
+1400 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+1401 &#32;&#32;&#32;&#32;{
+1402 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ad4b9e48b150850f6ee00874f85036715">_glfwPlatformFreeModule</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>);
+1403 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.xkb.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1404 &#32;&#32;&#32;&#32;}
+1405 
+1406 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorTheme)
+1407 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1af4ea3aeb622e33ebef78a5456e1f177f">wl_cursor_theme_destroy</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorTheme);
+1408 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorThemeHiDPI)
+1409 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1af4ea3aeb622e33ebef78a5456e1f177f">wl_cursor_theme_destroy</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorThemeHiDPI);
+1410 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursor.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>)
+1411 &#32;&#32;&#32;&#32;{
+1412 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1ad4b9e48b150850f6ee00874f85036715">_glfwPlatformFreeModule</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursor.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>);
+1413 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursor.<link linkend="_struct___g_l_f_wlibrary_1a5a67e92b012563943f1e1b26b0bf2645">handle</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+1414 &#32;&#32;&#32;&#32;}
+1415 
+1416 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorSurface)
+1417 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_surface_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorSurface);
+1418 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.subcompositor)
+1419 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_subcompositor_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.subcompositor);
+1420 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.compositor)
+1421 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_compositor_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.compositor);
+1422 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.shm)
+1423 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_shm_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.shm);
+1424 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.viewporter)
+1425 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wp_viewporter_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.viewporter);
+1426 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.decorationManager)
+1427 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;zxdg_decoration_manager_v1_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.decorationManager);
+1428 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.wmBase)
+1429 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;xdg_wm_base_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.wmBase);
+1430 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataSource)
+1431 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_data_source_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataSource);
+1432 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataDevice)
+1433 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_data_device_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataDevice);
+1434 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataOffer)
+1435 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_data_offer_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataOffer);
+1436 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataDeviceManager)
+1437 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_data_device_manager_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.dataDeviceManager);
+1438 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.pointer)
+1439 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_pointer_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.pointer);
+1440 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.keyboard)
+1441 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_keyboard_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.keyboard);
+1442 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.seat)
+1443 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_seat_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.seat);
+1444 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.relativePointerManager)
+1445 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;zwp_relative_pointer_manager_v1_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.relativePointerManager);
+1446 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.pointerConstraints)
+1447 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;zwp_pointer_constraints_v1_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.pointerConstraints);
+1448 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.idleInhibitManager)
+1449 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;zwp_idle_inhibit_manager_v1_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.idleInhibitManager);
+1450 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.registry)
+1451 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_registry_destroy(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.registry);
+1452 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>)
+1453 &#32;&#32;&#32;&#32;{
+1454 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a57bfe216b1e65a2208bc0f44ed3c4739">wl_display_flush</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>);
+1455 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wl__platform_8h_1a80f20a11b3b544c9c07cf3cc5006ba04">wl_display_disconnect</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.<link linkend="_struct___g_l_f_wlibrary_1a635044e02e1f98df1de3775ecac52569">display</link>);
+1456 &#32;&#32;&#32;&#32;}
+1457 
+1458 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.timerfd&#32;&gt;=&#32;0)
+1459 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;close(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.timerfd);
+1460 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorTimerfd&#32;&gt;=&#32;0)
+1461 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;close(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.cursorTimerfd);
+1462 
+1463 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardString)
+1464 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardString);
+1465 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardSendString)
+1466 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.clipboardSendString);
+1467 }
+</programlisting></section>
+</section>
+</section>

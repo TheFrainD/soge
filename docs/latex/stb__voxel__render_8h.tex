@@ -1,0 +1,1038 @@
+\hypertarget{stb__voxel__render_8h}{}\doxysection{deps/stb/stb\+\_\+voxel\+\_\+render.h File Reference}
+\label{stb__voxel__render_8h}\index{deps/stb/stb\_voxel\_render.h@{deps/stb/stb\_voxel\_render.h}}
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structstbvox__uniform__info}{stbvox\+\_\+uniform\+\_\+info}}
+\item 
+struct \mbox{\hyperlink{structstbvox__rgb}{stbvox\+\_\+rgb}}
+\item 
+struct \mbox{\hyperlink{structstbvox__input__description}{stbvox\+\_\+input\+\_\+description}}
+\item 
+struct \mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}}~extern
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a9f0707063571f7794e1ba83b090b0812}{S\+T\+B\+V\+O\+X\+\_\+\+C\+O\+L\+O\+R\+\_\+\+T\+E\+X1\+\_\+\+E\+N\+A\+B\+LE}}~64
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_aaa34a23227b55275b4233482ee36d1c3}{S\+T\+B\+V\+O\+X\+\_\+\+C\+O\+L\+O\+R\+\_\+\+T\+E\+X2\+\_\+\+E\+N\+A\+B\+LE}}~128
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a115801002e44ceef507858292d9763b7}{S\+T\+B\+V\+O\+X\+\_\+\+F\+A\+C\+E\+\_\+\+N\+O\+NE}}~7
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_aa12481bf548bfc870b0950e5fc93692d}{S\+T\+B\+V\+O\+X\+\_\+\+B\+L\+O\+C\+K\+T\+Y\+P\+E\+\_\+\+E\+M\+P\+TY}}~0
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_ae21cfc1c11173e91839cfe89e99faa25}{S\+T\+B\+V\+O\+X\+\_\+\+B\+L\+O\+C\+K\+T\+Y\+P\+E\+\_\+\+H\+O\+LE}}~255
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a15590f88a985eb242c6dffb8c462983a}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+G\+E\+O\+M\+E\+T\+RY}}(geom,  rotate,  vheight)~((geom) + (rotate)$\ast$16 + (vheight)$\ast$64)
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a7481d3530d34c5048938868910e259e3}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+V\+H\+E\+I\+G\+HT}}(v\+\_\+sw,  v\+\_\+se,  v\+\_\+nw,  v\+\_\+ne)~((v\+\_\+sw) + (v\+\_\+se)$\ast$4 + (v\+\_\+nw)$\ast$16 + (v\+\_\+ne)$\ast$64)
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a648b29130a3e66f4e7c21192bae19e20}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+M\+A\+T\+R\+OT}}(block,  overlay,  \mbox{\hyperlink{glad_8h_a3ea846f998d64f079b86052b6c4193a8}{color}})~((block) + (overlay)$\ast$4 + (\mbox{\hyperlink{glad_8h_a3ea846f998d64f079b86052b6c4193a8}{color}})$\ast$64)
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a3c2a25c7d1b181b32ccc8e34f81ac362}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+T\+E\+X2\+\_\+\+R\+E\+P\+L\+A\+CE}}(tex2,  tex2\+\_\+replace\+\_\+face)~((tex2) + ((tex2\+\_\+replace\+\_\+face) \& 3)$\ast$64)
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a4f13391708b23d536a614897eadf2ca4}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+T\+E\+X\+L\+E\+RP}}(ns2,  ew2,  ud2,  vert)~((ew2) + (ns2)$\ast$4 + (ud2)$\ast$16 + (vert)$\ast$64)
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a1dd71f4d5dd54614b656c2b17dc236c9}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+S\+I\+M\+P\+LE}}(baselerp,  vert,  \mbox{\hyperlink{glext_8h_a676ca580c460c0154eb58200433d2a9e}{face}})~((vert)$\ast$32 + (\mbox{\hyperlink{glext_8h_a676ca580c460c0154eb58200433d2a9e}{face}})$\ast$4 + (baselerp))
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a0a16737e453f13bc6bf110fa9169a1c1}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+T\+E\+X\+L\+E\+R\+P1}}(vert,  e2,  n2,  \mbox{\hyperlink{glext_8h_a1ca5aca787be24213d9591fdf074b094}{w2}},  s2,  u4,  d2)~\mbox{\hyperlink{stb__voxel__render_8h_a4f13391708b23d536a614897eadf2ca4}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+T\+E\+X\+L\+E\+RP}}(s2, \mbox{\hyperlink{glext_8h_a1ca5aca787be24213d9591fdf074b094}{w2}}, d2, vert)
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a26554d7969a866c9265c343c81c5063d}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+T\+E\+X\+L\+E\+R\+P2}}(vert,  e2,  n2,  \mbox{\hyperlink{glext_8h_a1ca5aca787be24213d9591fdf074b094}{w2}},  s2,  u4,  d2)~((\mbox{\hyperlink{glext_8h_a1c6bf6fa786a04b729b30e56d68474ef}{u2}})$\ast$16 + (n2)$\ast$4 + (s2))
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a05e1006252362770dcb8997704c87af0}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+F\+A\+C\+E\+\_\+\+M\+A\+SK}}(\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}},  \mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  \mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}},  \mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}},  u,  d)~((\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}})+(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}})$\ast$2+(\mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}})$\ast$4+(\mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}})$\ast$8+(u)$\ast$16+(d)$\ast$32)
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a62e6b4a4b3bbe3b5ca82434cd6b35c48}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+S\+I\+D\+E\+\_\+\+T\+E\+X\+R\+OT}}(\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}},  \mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  \mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}},  \mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}})~((\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}})+(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}})$\ast$4+(\mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}})$\ast$16+(\mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}})$\ast$64)
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_aa5c64524cb38841d0dd49b36149a3c83}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+C\+O\+L\+OR}}(\mbox{\hyperlink{glad_8h_a3ea846f998d64f079b86052b6c4193a8}{color}},  \mbox{\hyperlink{glext_8h_af48031a37b713afa3b0d0d7d29653d7c}{t1}},  t2)~((\mbox{\hyperlink{glad_8h_a3ea846f998d64f079b86052b6c4193a8}{color}})+(\mbox{\hyperlink{glext_8h_af48031a37b713afa3b0d0d7d29653d7c}{t1}})$\ast$64+(t2)$\ast$128)
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a6994c7a5b2a8be52d456bef366b739d7}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+V\+E\+R\+T3}}(\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}},  \mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  \mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}},  \mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}},  u)~((\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}})+(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}})$\ast$8+(\mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}})$\ast$64+(\mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}})$\ast$512+(u)$\ast$4096)
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_ab97c6061e45e27486e6a6022a382564a}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+F\+A\+C\+E3}}(\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}},  \mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  \mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}},  \mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}},  u,  d)~((\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}})+(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}})$\ast$8+(\mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}})$\ast$64+(\mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}})$\ast$512+(u)$\ast$4096+(d)$\ast$16384)
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a15683569184dbc025f3c799bfce5c585}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+P\+A\+C\+K\+E\+D\+\_\+\+C\+O\+M\+P\+A\+CT}}(rot,  vheight,  texlerp,  def)~((rot)+4$\ast$(vheight)+16$\ast$(use)+32$\ast$(texlerp))
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a010e6516eb03985257ba2a14eeea396c}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+L\+I\+G\+H\+T\+I\+N\+G\+\_\+\+E\+XT}}(lighting,  rot)~(((lighting)\&$\sim$3)+(rot))
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a731a149693aa9a021e7844ad6d5db249}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+L\+I\+G\+H\+T\+I\+NG}}(lighting)~(lighting)
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a9624467b8d0b4ae065bc5dadcc0ba2c2}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+X\+\_\+\+M\+E\+S\+H\+ES}}~2
+\item 
+\#define \mbox{\hyperlink{stb__voxel__render_8h_a03bfe9594a2da3f19c2e779d2c2edbaf}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+X\+\_\+\+M\+E\+S\+H\+\_\+\+S\+L\+O\+TS}}~3
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} \mbox{\hyperlink{stb__voxel__render_8h_a9af9a03e1ab5947cf7f357e3513013f2}{stbvox\+\_\+mesh\+\_\+maker}}
+\item 
+typedef struct \mbox{\hyperlink{structstbvox__input__description}{stbvox\+\_\+input\+\_\+description}} \mbox{\hyperlink{stb__voxel__render_8h_a7e0d9359468102f8a32a4c1802d3e680}{stbvox\+\_\+input\+\_\+description}}
+\item 
+typedef struct \mbox{\hyperlink{structstbvox__uniform__info}{stbvox\+\_\+uniform\+\_\+info}} \mbox{\hyperlink{stb__voxel__render_8h_aeab80555354a685a4978717aeecda080}{stbvox\+\_\+uniform\+\_\+info}}
+\item 
+typedef unsigned char \mbox{\hyperlink{stb__voxel__render_8h_a18bbd36e563065fc4c6c29e8f79d5b49}{stbvox\+\_\+block\+\_\+type}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \newline
+\mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051eae4a976805a2c137e4e56be03380ea2a2}{S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+face\+\_\+data}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051eab955886cfcf0c2c881d633beeb99ad93}{S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+transform}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea9415362fa2fe2833bbb221c12310dc81}{S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+tex\+\_\+array}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051eaf9b476df9befe12c8855d1ea20db22fe}{S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+texscale}}, 
+\newline
+\mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea1f8122611f70005180ede22ebffa840f}{S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+color\+\_\+table}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea67cfb94d15198e0d936ca263a2077b5e}{S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+normals}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea65f746116b3aa230da8bbb534e6cea97}{S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+texgen}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea87500607917aa427db2ff08fc3ea1ca8}{S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+ambient}}, 
+\newline
+\mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea82a48737d53c36a05fdf8138c17c349f}{S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+camera\+\_\+pos}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea463fbe04a519703eaad7ce1434576696}{S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+count}}
+ \}
+\item 
+enum \{ \newline
+\mbox{\hyperlink{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7ad342112fde8fd8be3edbd5a2120ca317}{S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+none}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7ac7047970a5db6dd015b117186730c558}{S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+sampler}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7adf4638d7323db2e592ee2d87917cd785}{S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+vec2}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7a01e4c8c453c9d498f2125eaeb26ebb5c}{S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+vec3}}, 
+\newline
+\mbox{\hyperlink{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7abb971ba14a3c74cddba2b40bf5cc3b8f}{S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+vec4}}
+ \}
+\item 
+enum \{ \newline
+\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3cacf4698c9739b8b6c1af7f8a124169cc9}{S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+empty}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca0c121ca2d1b34ddb76fc268d10251117}{S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+knockout}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca685a066c41ada07dc62ffaa16d23ccf5}{S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+solid}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca5921e838cb3457e8097fd111be407eec}{S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+transp}}, 
+\newline
+\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca30b6f0c40e6b6e40d49dab03c03fc327}{S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+slab\+\_\+upper}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca4d3a600f27892ef5bb64aa2e884b6570}{S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+slab\+\_\+lower}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca063a4146fc89954375c7fc7fa39e8747}{S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+floor\+\_\+slope\+\_\+north\+\_\+is\+\_\+top}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3caa5dcab0b072fb42d24d09d3ace41724d}{S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+ceil\+\_\+slope\+\_\+north\+\_\+is\+\_\+bottom}}, 
+\newline
+\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca967b6a84170cb5bbb3af61a3eda1e185}{S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+floor\+\_\+slope\+\_\+north\+\_\+is\+\_\+top\+\_\+as\+\_\+wall\+\_\+\+U\+N\+I\+M\+P\+L\+E\+M\+E\+N\+T\+ED}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca23b7fdc60695dd2873855631799b54d2}{S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+ceil\+\_\+slope\+\_\+north\+\_\+is\+\_\+bottom\+\_\+as\+\_\+wall\+\_\+\+U\+N\+I\+M\+P\+L\+E\+M\+E\+N\+T\+ED}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca9cd52f024f074ece1f5cecbcc517c54f}{S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+crossed\+\_\+pair}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca334b45fb41d2329d21d3bd81b8c2568d}{S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+force}}, 
+\newline
+\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3cada2a4d1b275d962d5c76388b2f731b3f}{S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+floor\+\_\+vheight\+\_\+03}} = 12, 
+\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca7511f84da0693e6147590c76a74480d6}{S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+floor\+\_\+vheight\+\_\+12}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca62855fb026ed6bb2b93a02f94b9eaacb}{S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+ceil\+\_\+vheight\+\_\+03}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca63a77bdea6849081b9924e525fe602df}{S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+ceil\+\_\+vheight\+\_\+12}}, 
+\newline
+\mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca392c7b9ba79ae0aec0364b3cbd57ad1c}{S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+count}}
+ \}
+\item 
+enum \{ \newline
+\mbox{\hyperlink{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7afa499b8104b6de8c8a86aa4ffaac4029}{S\+T\+B\+V\+O\+X\+\_\+\+F\+A\+C\+E\+\_\+east}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7ae6ab3be9f1d3f183497386adf6de0b7f}{S\+T\+B\+V\+O\+X\+\_\+\+F\+A\+C\+E\+\_\+north}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7a5d1070e526b0400de9341f0ea13d2761}{S\+T\+B\+V\+O\+X\+\_\+\+F\+A\+C\+E\+\_\+west}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7a989b46927a59c0e897e5a2132453a602}{S\+T\+B\+V\+O\+X\+\_\+\+F\+A\+C\+E\+\_\+south}}, 
+\newline
+\mbox{\hyperlink{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7aa81aa17ee2457c5e27dacbc28b081b70}{S\+T\+B\+V\+O\+X\+\_\+\+F\+A\+C\+E\+\_\+up}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7a0afd0d6f81410ddc95c3a6a8ed98ec22}{S\+T\+B\+V\+O\+X\+\_\+\+F\+A\+C\+E\+\_\+down}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7a65bdc989c6728bab691aad91e4d4ec05}{S\+T\+B\+V\+O\+X\+\_\+\+F\+A\+C\+E\+\_\+count}}
+ \}
+\item 
+enum \{ \mbox{\hyperlink{stb__voxel__render_8h_a70ad55be767ca0a42c9150d24618e4caa3fcc5a8bbe095c16e10c82d50c688685}{S\+T\+B\+V\+O\+X\+\_\+\+V\+E\+R\+T\+E\+X\+\_\+\+H\+E\+I\+G\+H\+T\+\_\+0}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a70ad55be767ca0a42c9150d24618e4caa4f4eb402db50e3377f15836b4a782c39}{S\+T\+B\+V\+O\+X\+\_\+\+V\+E\+R\+T\+E\+X\+\_\+\+H\+E\+I\+G\+H\+T\+\_\+half}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a70ad55be767ca0a42c9150d24618e4caa092bad5aa4358be71d81eaae4623e94b}{S\+T\+B\+V\+O\+X\+\_\+\+V\+E\+R\+T\+E\+X\+\_\+\+H\+E\+I\+G\+H\+T\+\_\+1}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a70ad55be767ca0a42c9150d24618e4caa280c918aae70c240be01dc4de2fb3f86}{S\+T\+B\+V\+O\+X\+\_\+\+V\+E\+R\+T\+E\+X\+\_\+\+H\+E\+I\+G\+H\+T\+\_\+one\+\_\+and\+\_\+a\+\_\+half}}
+ \}
+\item 
+enum \{ \mbox{\hyperlink{stb__voxel__render_8h_a4b4213b1f9d54da7c7e36bde32fc7c80aa70bad6df098dbf1accf2968094dbebb}{S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+F\+A\+C\+E\+\_\+0}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a4b4213b1f9d54da7c7e36bde32fc7c80a0adcec82e25711e882ca2142fcdf9f26}{S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+F\+A\+C\+E\+\_\+half}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a4b4213b1f9d54da7c7e36bde32fc7c80a0143df9adb613c460bca2a586504f084}{S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+F\+A\+C\+E\+\_\+1}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a4b4213b1f9d54da7c7e36bde32fc7c80a87926e8413a0d08ee2e482d5487772f9}{S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+F\+A\+C\+E\+\_\+use\+\_\+vert}}
+ \}
+\item 
+enum \{ \mbox{\hyperlink{stb__voxel__render_8h_aa491173a6b1628f4ff82067b2e1ceaa9aaad075e62e6c827472550b0a280d52b9}{S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+B\+A\+S\+E\+\_\+0}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_aa491173a6b1628f4ff82067b2e1ceaa9a0786a482a211591e81641bf5c4121444}{S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+B\+A\+S\+E\+\_\+2\+\_\+7}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_aa491173a6b1628f4ff82067b2e1ceaa9af8154cb231658e333b0f05883b87170d}{S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+B\+A\+S\+E\+\_\+5\+\_\+7}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_aa491173a6b1628f4ff82067b2e1ceaa9ab69e6ee711cc4542ea10ad5a16ee18d4}{S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+B\+A\+S\+E\+\_\+1}}
+ \}
+\item 
+enum \{ \newline
+\mbox{\hyperlink{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbdab96a9b5c77f77149dff728aacde0ff16}{S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P3\+\_\+0\+\_\+8}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbdaea2d40827737c1071f6dc6952a543059}{S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P3\+\_\+1\+\_\+8}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbda99d3b9c21f17c66cdbb8665cd0943cd7}{S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P3\+\_\+2\+\_\+8}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbdacdae7d0ff7353e002ae2eacf6b8aa88a}{S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P3\+\_\+3\+\_\+8}}, 
+\newline
+\mbox{\hyperlink{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbda7c684dcd79b403475e1d3c4eaf5f25fa}{S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P3\+\_\+4\+\_\+8}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbdafdc5d19076df6039c2c7b0d70a06e259}{S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P3\+\_\+5\+\_\+8}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbda9c2fad89edbd61a6c0b84476658420bb}{S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P3\+\_\+6\+\_\+8}}, 
+\mbox{\hyperlink{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbda87385e4fba94fdb00b6b3d03b5d54f05}{S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P3\+\_\+7\+\_\+8}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{stb__voxel__render_8h_a1b8b7770f24477cf39260eac3ade3400}{stbvox\+\_\+init\+\_\+mesh\+\_\+maker}} (\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$mm)
+\item 
+\mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{stb__voxel__render_8h_a3b24ab8855010267a0e93541d1673fb9}{stbvox\+\_\+set\+\_\+buffer}} (\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$mm, int mesh, int slot, \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} $\ast$\mbox{\hyperlink{structbuffer}{buffer}}, size\+\_\+t \mbox{\hyperlink{glext_8h_a652168017ea9a8bbcead03d5c16269fb}{len}})
+\item 
+\mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} int \mbox{\hyperlink{stb__voxel__render_8h_a3b537bb87f5e14c78f17f0b4d4ac29e9}{stbvox\+\_\+get\+\_\+buffer\+\_\+count}} (\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$mm)
+\item 
+\mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} int \mbox{\hyperlink{stb__voxel__render_8h_afe4a3740055547f625557281f5f56f11}{stbvox\+\_\+get\+\_\+buffer\+\_\+size\+\_\+per\+\_\+quad}} (\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$mm, int slot)
+\item 
+\mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{stb__voxel__render_8h_aae8b2a3e95db09861fef397aeb7cf10d}{stbvox\+\_\+set\+\_\+default\+\_\+mesh}} (\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$mm, int mesh)
+\item 
+\mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{structstbvox__input__description}{stbvox\+\_\+input\+\_\+description}} $\ast$ \mbox{\hyperlink{stb__voxel__render_8h_adadf81990fab203a9b48c738922899e1}{stbvox\+\_\+get\+\_\+input\+\_\+description}} (\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$mm)
+\item 
+\mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{stb__voxel__render_8h_a089559775ad9ffc7671d147ef40f6509}{stbvox\+\_\+set\+\_\+input\+\_\+stride}} (\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$mm, int x\+\_\+stride\+\_\+in\+\_\+elements, int y\+\_\+stride\+\_\+in\+\_\+elements)
+\item 
+\mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{stb__voxel__render_8h_a63fbb8703cf2c2718e6a0b4a90db00e6}{stbvox\+\_\+set\+\_\+input\+\_\+range}} (\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$mm, int \mbox{\hyperlink{glext_8h_a98ac434677655cc8438bb72de2719f39}{x0}}, int \mbox{\hyperlink{glext_8h_ae7f97ed6c9c8e502fcbc44c7cb8a8312}{y0}}, int z0, int \mbox{\hyperlink{glext_8h_a49825216c96caaeb09237b36651181c5}{x1}}, int \mbox{\hyperlink{glext_8h_a3af6c78fcdfccea028a5878bc747ef39}{y1}}, int z1)
+\item 
+\mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} int \mbox{\hyperlink{stb__voxel__render_8h_ab792b164e02789bce6e2ba96a4b8f935}{stbvox\+\_\+make\+\_\+mesh}} (\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$mm)
+\item 
+\mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} int \mbox{\hyperlink{stb__voxel__render_8h_ace18e150b58146e2ec7ecba5ca0517b6}{stbvox\+\_\+get\+\_\+quad\+\_\+count}} (\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$mm, int mesh)
+\item 
+\mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{stb__voxel__render_8h_a4592b690afe4825bfabdfd9ae29fb35e}{stbvox\+\_\+set\+\_\+mesh\+\_\+coordinates}} (\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$mm, int \mbox{\hyperlink{glad_8h_a1af10666aa42292f407f6acc2af11948}{x}}, int \mbox{\hyperlink{glad_8h_af2e2675ea2e0b9a7ec6a98fcb44a938a}{y}}, int \mbox{\hyperlink{glad_8h_a1483160fae141afea848a5393c286b2b}{z}})
+\item 
+\mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{stb__voxel__render_8h_a0ad8a7764f93c0592671bcf0e246dc6e}{stbvox\+\_\+get\+\_\+bounds}} (\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$mm, float bounds\mbox{[}2\mbox{]}\mbox{[}3\mbox{]})
+\item 
+\mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{stb__voxel__render_8h_a0a8668048f7cca70ef7043261761da90}{stbvox\+\_\+get\+\_\+transform}} (\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$mm, float \mbox{\hyperlink{structtransform}{transform}}\mbox{[}3\mbox{]}\mbox{[}3\mbox{]})
+\item 
+\mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{stb__voxel__render_8h_a34226517e08ca1da34b39d34a5c31031}{stbvox\+\_\+reset\+\_\+buffers}} (\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$mm)
+\item 
+\mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} char $\ast$ \mbox{\hyperlink{stb__voxel__render_8h_a79f9e4c051c53927e0f762910729860b}{stbvox\+\_\+get\+\_\+vertex\+\_\+shader}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} char $\ast$ \mbox{\hyperlink{stb__voxel__render_8h_a21e1e1586c93abcba24be8eb01d8fd3d}{stbvox\+\_\+get\+\_\+fragment\+\_\+shader}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} char $\ast$ \mbox{\hyperlink{stb__voxel__render_8h_add1d57d13c2dc697f3fc2782abf5c795}{stbvox\+\_\+get\+\_\+fragment\+\_\+shader\+\_\+alpha\+\_\+only}} (\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}})
+\item 
+\mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} int \mbox{\hyperlink{stb__voxel__render_8h_ac6724208eddce3a25e3927abed86426e}{stbvox\+\_\+get\+\_\+uniform\+\_\+info}} (\mbox{\hyperlink{structstbvox__uniform__info}{stbvox\+\_\+uniform\+\_\+info}} $\ast$\mbox{\hyperlink{structinfo}{info}}, int uniform)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{stb__voxel__render_8h_aa12481bf548bfc870b0950e5fc93692d}\label{stb__voxel__render_8h_aa12481bf548bfc870b0950e5fc93692d}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_BLOCKTYPE\_EMPTY@{STBVOX\_BLOCKTYPE\_EMPTY}}
+\index{STBVOX\_BLOCKTYPE\_EMPTY@{STBVOX\_BLOCKTYPE\_EMPTY}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_BLOCKTYPE\_EMPTY}{STBVOX\_BLOCKTYPE\_EMPTY}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+B\+L\+O\+C\+K\+T\+Y\+P\+E\+\_\+\+E\+M\+P\+TY~0}
+
+
+
+Definition at line 1147 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_ae21cfc1c11173e91839cfe89e99faa25}\label{stb__voxel__render_8h_ae21cfc1c11173e91839cfe89e99faa25}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_BLOCKTYPE\_HOLE@{STBVOX\_BLOCKTYPE\_HOLE}}
+\index{STBVOX\_BLOCKTYPE\_HOLE@{STBVOX\_BLOCKTYPE\_HOLE}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_BLOCKTYPE\_HOLE}{STBVOX\_BLOCKTYPE\_HOLE}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+B\+L\+O\+C\+K\+T\+Y\+P\+E\+\_\+\+H\+O\+LE~255}
+
+
+
+Definition at line 1152 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a9f0707063571f7794e1ba83b090b0812}\label{stb__voxel__render_8h_a9f0707063571f7794e1ba83b090b0812}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_COLOR\_TEX1\_ENABLE@{STBVOX\_COLOR\_TEX1\_ENABLE}}
+\index{STBVOX\_COLOR\_TEX1\_ENABLE@{STBVOX\_COLOR\_TEX1\_ENABLE}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_COLOR\_TEX1\_ENABLE}{STBVOX\_COLOR\_TEX1\_ENABLE}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+C\+O\+L\+O\+R\+\_\+\+T\+E\+X1\+\_\+\+E\+N\+A\+B\+LE~64}
+
+
+
+Definition at line 716 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_aaa34a23227b55275b4233482ee36d1c3}\label{stb__voxel__render_8h_aaa34a23227b55275b4233482ee36d1c3}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_COLOR\_TEX2\_ENABLE@{STBVOX\_COLOR\_TEX2\_ENABLE}}
+\index{STBVOX\_COLOR\_TEX2\_ENABLE@{STBVOX\_COLOR\_TEX2\_ENABLE}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_COLOR\_TEX2\_ENABLE}{STBVOX\_COLOR\_TEX2\_ENABLE}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+C\+O\+L\+O\+R\+\_\+\+T\+E\+X2\+\_\+\+E\+N\+A\+B\+LE~128}
+
+
+
+Definition at line 717 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a115801002e44ceef507858292d9763b7}\label{stb__voxel__render_8h_a115801002e44ceef507858292d9763b7}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_FACE\_NONE@{STBVOX\_FACE\_NONE}}
+\index{STBVOX\_FACE\_NONE@{STBVOX\_FACE\_NONE}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_FACE\_NONE}{STBVOX\_FACE\_NONE}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+F\+A\+C\+E\+\_\+\+N\+O\+NE~7}
+
+
+
+Definition at line 1145 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_aa5c64524cb38841d0dd49b36149a3c83}\label{stb__voxel__render_8h_aa5c64524cb38841d0dd49b36149a3c83}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_MAKE\_COLOR@{STBVOX\_MAKE\_COLOR}}
+\index{STBVOX\_MAKE\_COLOR@{STBVOX\_MAKE\_COLOR}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_MAKE\_COLOR}{STBVOX\_MAKE\_COLOR}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+C\+O\+L\+OR(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{glad_8h_a3ea846f998d64f079b86052b6c4193a8}{color}},  }\item[{}]{\mbox{\hyperlink{glext_8h_af48031a37b713afa3b0d0d7d29653d7c}{t1}},  }\item[{}]{t2 }\end{DoxyParamCaption})~((\mbox{\hyperlink{glad_8h_a3ea846f998d64f079b86052b6c4193a8}{color}})+(\mbox{\hyperlink{glext_8h_af48031a37b713afa3b0d0d7d29653d7c}{t1}})$\ast$64+(t2)$\ast$128)}
+
+
+
+Definition at line 1165 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a05e1006252362770dcb8997704c87af0}\label{stb__voxel__render_8h_a05e1006252362770dcb8997704c87af0}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_MAKE\_FACE\_MASK@{STBVOX\_MAKE\_FACE\_MASK}}
+\index{STBVOX\_MAKE\_FACE\_MASK@{STBVOX\_MAKE\_FACE\_MASK}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_MAKE\_FACE\_MASK}{STBVOX\_MAKE\_FACE\_MASK}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+F\+A\+C\+E\+\_\+\+M\+A\+SK(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}},  }\item[{}]{\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  }\item[{}]{\mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}},  }\item[{}]{\mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}},  }\item[{}]{u,  }\item[{}]{d }\end{DoxyParamCaption})~((\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}})+(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}})$\ast$2+(\mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}})$\ast$4+(\mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}})$\ast$8+(u)$\ast$16+(d)$\ast$32)}
+
+
+
+Definition at line 1163 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a15590f88a985eb242c6dffb8c462983a}\label{stb__voxel__render_8h_a15590f88a985eb242c6dffb8c462983a}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_MAKE\_GEOMETRY@{STBVOX\_MAKE\_GEOMETRY}}
+\index{STBVOX\_MAKE\_GEOMETRY@{STBVOX\_MAKE\_GEOMETRY}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_MAKE\_GEOMETRY}{STBVOX\_MAKE\_GEOMETRY}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+G\+E\+O\+M\+E\+T\+RY(\begin{DoxyParamCaption}\item[{}]{geom,  }\item[{}]{rotate,  }\item[{}]{vheight }\end{DoxyParamCaption})~((geom) + (rotate)$\ast$16 + (vheight)$\ast$64)}
+
+
+
+Definition at line 1155 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a731a149693aa9a021e7844ad6d5db249}\label{stb__voxel__render_8h_a731a149693aa9a021e7844ad6d5db249}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_MAKE\_LIGHTING@{STBVOX\_MAKE\_LIGHTING}}
+\index{STBVOX\_MAKE\_LIGHTING@{STBVOX\_MAKE\_LIGHTING}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_MAKE\_LIGHTING}{STBVOX\_MAKE\_LIGHTING}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+L\+I\+G\+H\+T\+I\+NG(\begin{DoxyParamCaption}\item[{}]{lighting }\end{DoxyParamCaption})~(lighting)}
+
+
+
+Definition at line 1171 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a010e6516eb03985257ba2a14eeea396c}\label{stb__voxel__render_8h_a010e6516eb03985257ba2a14eeea396c}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_MAKE\_LIGHTING\_EXT@{STBVOX\_MAKE\_LIGHTING\_EXT}}
+\index{STBVOX\_MAKE\_LIGHTING\_EXT@{STBVOX\_MAKE\_LIGHTING\_EXT}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_MAKE\_LIGHTING\_EXT}{STBVOX\_MAKE\_LIGHTING\_EXT}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+L\+I\+G\+H\+T\+I\+N\+G\+\_\+\+E\+XT(\begin{DoxyParamCaption}\item[{}]{lighting,  }\item[{}]{rot }\end{DoxyParamCaption})~(((lighting)\&$\sim$3)+(rot))}
+
+
+
+Definition at line 1170 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a648b29130a3e66f4e7c21192bae19e20}\label{stb__voxel__render_8h_a648b29130a3e66f4e7c21192bae19e20}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_MAKE\_MATROT@{STBVOX\_MAKE\_MATROT}}
+\index{STBVOX\_MAKE\_MATROT@{STBVOX\_MAKE\_MATROT}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_MAKE\_MATROT}{STBVOX\_MAKE\_MATROT}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+M\+A\+T\+R\+OT(\begin{DoxyParamCaption}\item[{}]{block,  }\item[{}]{overlay,  }\item[{}]{\mbox{\hyperlink{glad_8h_a3ea846f998d64f079b86052b6c4193a8}{color}} }\end{DoxyParamCaption})~((block) + (overlay)$\ast$4 + (\mbox{\hyperlink{glad_8h_a3ea846f998d64f079b86052b6c4193a8}{color}})$\ast$64)}
+
+
+
+Definition at line 1157 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a15683569184dbc025f3c799bfce5c585}\label{stb__voxel__render_8h_a15683569184dbc025f3c799bfce5c585}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_MAKE\_PACKED\_COMPACT@{STBVOX\_MAKE\_PACKED\_COMPACT}}
+\index{STBVOX\_MAKE\_PACKED\_COMPACT@{STBVOX\_MAKE\_PACKED\_COMPACT}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_MAKE\_PACKED\_COMPACT}{STBVOX\_MAKE\_PACKED\_COMPACT}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+P\+A\+C\+K\+E\+D\+\_\+\+C\+O\+M\+P\+A\+CT(\begin{DoxyParamCaption}\item[{}]{rot,  }\item[{}]{vheight,  }\item[{}]{texlerp,  }\item[{}]{def }\end{DoxyParamCaption})~((rot)+4$\ast$(vheight)+16$\ast$(use)+32$\ast$(texlerp))}
+
+
+
+Definition at line 1168 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a62e6b4a4b3bbe3b5ca82434cd6b35c48}\label{stb__voxel__render_8h_a62e6b4a4b3bbe3b5ca82434cd6b35c48}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_MAKE\_SIDE\_TEXROT@{STBVOX\_MAKE\_SIDE\_TEXROT}}
+\index{STBVOX\_MAKE\_SIDE\_TEXROT@{STBVOX\_MAKE\_SIDE\_TEXROT}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_MAKE\_SIDE\_TEXROT}{STBVOX\_MAKE\_SIDE\_TEXROT}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+S\+I\+D\+E\+\_\+\+T\+E\+X\+R\+OT(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}},  }\item[{}]{\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  }\item[{}]{\mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}},  }\item[{}]{\mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}} }\end{DoxyParamCaption})~((\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}})+(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}})$\ast$4+(\mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}})$\ast$16+(\mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}})$\ast$64)}
+
+
+
+Definition at line 1164 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a3c2a25c7d1b181b32ccc8e34f81ac362}\label{stb__voxel__render_8h_a3c2a25c7d1b181b32ccc8e34f81ac362}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_MAKE\_TEX2\_REPLACE@{STBVOX\_MAKE\_TEX2\_REPLACE}}
+\index{STBVOX\_MAKE\_TEX2\_REPLACE@{STBVOX\_MAKE\_TEX2\_REPLACE}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_MAKE\_TEX2\_REPLACE}{STBVOX\_MAKE\_TEX2\_REPLACE}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+T\+E\+X2\+\_\+\+R\+E\+P\+L\+A\+CE(\begin{DoxyParamCaption}\item[{}]{tex2,  }\item[{}]{tex2\+\_\+replace\+\_\+face }\end{DoxyParamCaption})~((tex2) + ((tex2\+\_\+replace\+\_\+face) \& 3)$\ast$64)}
+
+
+
+Definition at line 1158 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a4f13391708b23d536a614897eadf2ca4}\label{stb__voxel__render_8h_a4f13391708b23d536a614897eadf2ca4}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_MAKE\_TEXLERP@{STBVOX\_MAKE\_TEXLERP}}
+\index{STBVOX\_MAKE\_TEXLERP@{STBVOX\_MAKE\_TEXLERP}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_MAKE\_TEXLERP}{STBVOX\_MAKE\_TEXLERP}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+T\+E\+X\+L\+E\+RP(\begin{DoxyParamCaption}\item[{}]{ns2,  }\item[{}]{ew2,  }\item[{}]{ud2,  }\item[{}]{vert }\end{DoxyParamCaption})~((ew2) + (ns2)$\ast$4 + (ud2)$\ast$16 + (vert)$\ast$64)}
+
+
+
+Definition at line 1159 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a0a16737e453f13bc6bf110fa9169a1c1}\label{stb__voxel__render_8h_a0a16737e453f13bc6bf110fa9169a1c1}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_MAKE\_TEXLERP1@{STBVOX\_MAKE\_TEXLERP1}}
+\index{STBVOX\_MAKE\_TEXLERP1@{STBVOX\_MAKE\_TEXLERP1}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_MAKE\_TEXLERP1}{STBVOX\_MAKE\_TEXLERP1}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+T\+E\+X\+L\+E\+R\+P1(\begin{DoxyParamCaption}\item[{}]{vert,  }\item[{}]{e2,  }\item[{}]{n2,  }\item[{}]{\mbox{\hyperlink{glext_8h_a1ca5aca787be24213d9591fdf074b094}{w2}},  }\item[{}]{s2,  }\item[{}]{u4,  }\item[{}]{d2 }\end{DoxyParamCaption})~\mbox{\hyperlink{stb__voxel__render_8h_a4f13391708b23d536a614897eadf2ca4}{S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+T\+E\+X\+L\+E\+RP}}(s2, \mbox{\hyperlink{glext_8h_a1ca5aca787be24213d9591fdf074b094}{w2}}, d2, vert)}
+
+
+
+Definition at line 1161 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a26554d7969a866c9265c343c81c5063d}\label{stb__voxel__render_8h_a26554d7969a866c9265c343c81c5063d}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_MAKE\_TEXLERP2@{STBVOX\_MAKE\_TEXLERP2}}
+\index{STBVOX\_MAKE\_TEXLERP2@{STBVOX\_MAKE\_TEXLERP2}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_MAKE\_TEXLERP2}{STBVOX\_MAKE\_TEXLERP2}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+T\+E\+X\+L\+E\+R\+P2(\begin{DoxyParamCaption}\item[{}]{vert,  }\item[{}]{e2,  }\item[{}]{n2,  }\item[{}]{\mbox{\hyperlink{glext_8h_a1ca5aca787be24213d9591fdf074b094}{w2}},  }\item[{}]{s2,  }\item[{}]{u4,  }\item[{}]{d2 }\end{DoxyParamCaption})~((\mbox{\hyperlink{glext_8h_a1c6bf6fa786a04b729b30e56d68474ef}{u2}})$\ast$16 + (n2)$\ast$4 + (s2))}
+
+
+
+Definition at line 1162 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_ab97c6061e45e27486e6a6022a382564a}\label{stb__voxel__render_8h_ab97c6061e45e27486e6a6022a382564a}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_MAKE\_TEXLERP\_FACE3@{STBVOX\_MAKE\_TEXLERP\_FACE3}}
+\index{STBVOX\_MAKE\_TEXLERP\_FACE3@{STBVOX\_MAKE\_TEXLERP\_FACE3}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_MAKE\_TEXLERP\_FACE3}{STBVOX\_MAKE\_TEXLERP\_FACE3}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+F\+A\+C\+E3(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}},  }\item[{}]{\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  }\item[{}]{\mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}},  }\item[{}]{\mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}},  }\item[{}]{u,  }\item[{}]{d }\end{DoxyParamCaption})~((\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}})+(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}})$\ast$8+(\mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}})$\ast$64+(\mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}})$\ast$512+(u)$\ast$4096+(d)$\ast$16384)}
+
+
+
+Definition at line 1167 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a1dd71f4d5dd54614b656c2b17dc236c9}\label{stb__voxel__render_8h_a1dd71f4d5dd54614b656c2b17dc236c9}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_MAKE\_TEXLERP\_SIMPLE@{STBVOX\_MAKE\_TEXLERP\_SIMPLE}}
+\index{STBVOX\_MAKE\_TEXLERP\_SIMPLE@{STBVOX\_MAKE\_TEXLERP\_SIMPLE}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_MAKE\_TEXLERP\_SIMPLE}{STBVOX\_MAKE\_TEXLERP\_SIMPLE}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+S\+I\+M\+P\+LE(\begin{DoxyParamCaption}\item[{}]{baselerp,  }\item[{}]{vert,  }\item[{}]{\mbox{\hyperlink{glext_8h_a676ca580c460c0154eb58200433d2a9e}{face}} }\end{DoxyParamCaption})~((vert)$\ast$32 + (\mbox{\hyperlink{glext_8h_a676ca580c460c0154eb58200433d2a9e}{face}})$\ast$4 + (baselerp))}
+
+
+
+Definition at line 1160 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a6994c7a5b2a8be52d456bef366b739d7}\label{stb__voxel__render_8h_a6994c7a5b2a8be52d456bef366b739d7}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_MAKE\_TEXLERP\_VERT3@{STBVOX\_MAKE\_TEXLERP\_VERT3}}
+\index{STBVOX\_MAKE\_TEXLERP\_VERT3@{STBVOX\_MAKE\_TEXLERP\_VERT3}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_MAKE\_TEXLERP\_VERT3}{STBVOX\_MAKE\_TEXLERP\_VERT3}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+V\+E\+R\+T3(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}},  }\item[{}]{\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}},  }\item[{}]{\mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}},  }\item[{}]{\mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}},  }\item[{}]{u }\end{DoxyParamCaption})~((\mbox{\hyperlink{stb__image_8c_a43133ab631c96e9096c7f34895c05ccc}{e}})+(\mbox{\hyperlink{glad_8h_ae2b4646468bc89d0ba646f5cf838e051}{n}})$\ast$8+(\mbox{\hyperlink{glad_8h_a713abae75276598501f75c68917c5e2d}{w}})$\ast$64+(\mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}})$\ast$512+(u)$\ast$4096)}
+
+
+
+Definition at line 1166 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a7481d3530d34c5048938868910e259e3}\label{stb__voxel__render_8h_a7481d3530d34c5048938868910e259e3}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_MAKE\_VHEIGHT@{STBVOX\_MAKE\_VHEIGHT}}
+\index{STBVOX\_MAKE\_VHEIGHT@{STBVOX\_MAKE\_VHEIGHT}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_MAKE\_VHEIGHT}{STBVOX\_MAKE\_VHEIGHT}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+K\+E\+\_\+\+V\+H\+E\+I\+G\+HT(\begin{DoxyParamCaption}\item[{}]{v\+\_\+sw,  }\item[{}]{v\+\_\+se,  }\item[{}]{v\+\_\+nw,  }\item[{}]{v\+\_\+ne }\end{DoxyParamCaption})~((v\+\_\+sw) + (v\+\_\+se)$\ast$4 + (v\+\_\+nw)$\ast$16 + (v\+\_\+ne)$\ast$64)}
+
+
+
+Definition at line 1156 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a03bfe9594a2da3f19c2e779d2c2edbaf}\label{stb__voxel__render_8h_a03bfe9594a2da3f19c2e779d2c2edbaf}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_MAX\_MESH\_SLOTS@{STBVOX\_MAX\_MESH\_SLOTS}}
+\index{STBVOX\_MAX\_MESH\_SLOTS@{STBVOX\_MAX\_MESH\_SLOTS}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_MAX\_MESH\_SLOTS}{STBVOX\_MAX\_MESH\_SLOTS}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+X\+\_\+\+M\+E\+S\+H\+\_\+\+S\+L\+O\+TS~3}
+
+
+
+Definition at line 1177 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a9624467b8d0b4ae065bc5dadcc0ba2c2}\label{stb__voxel__render_8h_a9624467b8d0b4ae065bc5dadcc0ba2c2}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_MAX\_MESHES@{STBVOX\_MAX\_MESHES}}
+\index{STBVOX\_MAX\_MESHES@{STBVOX\_MAX\_MESHES}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVOX\_MAX\_MESHES}{STBVOX\_MAX\_MESHES}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+O\+X\+\_\+\+M\+A\+X\+\_\+\+M\+E\+S\+H\+ES~2}
+
+
+
+Definition at line 1174 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}\label{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVXDEC@{STBVXDEC}}
+\index{STBVXDEC@{STBVXDEC}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{STBVXDEC}{STBVXDEC}}
+{\footnotesize\ttfamily \#define S\+T\+B\+V\+X\+D\+EC~extern}
+
+
+
+Definition at line 239 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{stb__voxel__render_8h_a18bbd36e563065fc4c6c29e8f79d5b49}\label{stb__voxel__render_8h_a18bbd36e563065fc4c6c29e8f79d5b49}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_block\_type@{stbvox\_block\_type}}
+\index{stbvox\_block\_type@{stbvox\_block\_type}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_block\_type}{stbvox\_block\_type}}
+{\footnotesize\ttfamily typedef unsigned char \mbox{\hyperlink{stb__voxel__render_8h_a18bbd36e563065fc4c6c29e8f79d5b49}{stbvox\+\_\+block\+\_\+type}}}
+
+
+
+Definition at line 707 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a7e0d9359468102f8a32a4c1802d3e680}\label{stb__voxel__render_8h_a7e0d9359468102f8a32a4c1802d3e680}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_input\_description@{stbvox\_input\_description}}
+\index{stbvox\_input\_description@{stbvox\_input\_description}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_input\_description}{stbvox\_input\_description}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structstbvox__input__description}{stbvox\+\_\+input\+\_\+description}} \mbox{\hyperlink{structstbvox__input__description}{stbvox\+\_\+input\+\_\+description}}}
+
+
+
+Definition at line 234 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a9af9a03e1ab5947cf7f357e3513013f2}\label{stb__voxel__render_8h_a9af9a03e1ab5947cf7f357e3513013f2}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_mesh\_maker@{stbvox\_mesh\_maker}}
+\index{stbvox\_mesh\_maker@{stbvox\_mesh\_maker}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_mesh\_maker}{stbvox\_mesh\_maker}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} \mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}}}
+
+
+
+Definition at line 233 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+\mbox{\Hypertarget{stb__voxel__render_8h_aeab80555354a685a4978717aeecda080}\label{stb__voxel__render_8h_aeab80555354a685a4978717aeecda080}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_uniform\_info@{stbvox\_uniform\_info}}
+\index{stbvox\_uniform\_info@{stbvox\_uniform\_info}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_uniform\_info}{stbvox\_uniform\_info}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structstbvox__uniform__info}{stbvox\+\_\+uniform\+\_\+info}} \mbox{\hyperlink{structstbvox__uniform__info}{stbvox\+\_\+uniform\+\_\+info}}}
+
+
+
+Definition at line 529 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051e}\label{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051e}} 
+\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_UNIFORM\_face\_data@{STBVOX\_UNIFORM\_face\_data}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_UNIFORM\_face\_data@{STBVOX\_UNIFORM\_face\_data}}}\mbox{\Hypertarget{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051eae4a976805a2c137e4e56be03380ea2a2}\label{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051eae4a976805a2c137e4e56be03380ea2a2}} 
+S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+face\+\_\+data&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_UNIFORM\_transform@{STBVOX\_UNIFORM\_transform}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_UNIFORM\_transform@{STBVOX\_UNIFORM\_transform}}}\mbox{\Hypertarget{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051eab955886cfcf0c2c881d633beeb99ad93}\label{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051eab955886cfcf0c2c881d633beeb99ad93}} 
+S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+transform&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_UNIFORM\_tex\_array@{STBVOX\_UNIFORM\_tex\_array}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_UNIFORM\_tex\_array@{STBVOX\_UNIFORM\_tex\_array}}}\mbox{\Hypertarget{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea9415362fa2fe2833bbb221c12310dc81}\label{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea9415362fa2fe2833bbb221c12310dc81}} 
+S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+tex\+\_\+array&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_UNIFORM\_texscale@{STBVOX\_UNIFORM\_texscale}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_UNIFORM\_texscale@{STBVOX\_UNIFORM\_texscale}}}\mbox{\Hypertarget{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051eaf9b476df9befe12c8855d1ea20db22fe}\label{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051eaf9b476df9befe12c8855d1ea20db22fe}} 
+S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+texscale&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_UNIFORM\_color\_table@{STBVOX\_UNIFORM\_color\_table}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_UNIFORM\_color\_table@{STBVOX\_UNIFORM\_color\_table}}}\mbox{\Hypertarget{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea1f8122611f70005180ede22ebffa840f}\label{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea1f8122611f70005180ede22ebffa840f}} 
+S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+color\+\_\+table&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_UNIFORM\_normals@{STBVOX\_UNIFORM\_normals}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_UNIFORM\_normals@{STBVOX\_UNIFORM\_normals}}}\mbox{\Hypertarget{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea67cfb94d15198e0d936ca263a2077b5e}\label{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea67cfb94d15198e0d936ca263a2077b5e}} 
+S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+normals&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_UNIFORM\_texgen@{STBVOX\_UNIFORM\_texgen}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_UNIFORM\_texgen@{STBVOX\_UNIFORM\_texgen}}}\mbox{\Hypertarget{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea65f746116b3aa230da8bbb534e6cea97}\label{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea65f746116b3aa230da8bbb534e6cea97}} 
+S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+texgen&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_UNIFORM\_ambient@{STBVOX\_UNIFORM\_ambient}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_UNIFORM\_ambient@{STBVOX\_UNIFORM\_ambient}}}\mbox{\Hypertarget{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea87500607917aa427db2ff08fc3ea1ca8}\label{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea87500607917aa427db2ff08fc3ea1ca8}} 
+S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+ambient&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_UNIFORM\_camera\_pos@{STBVOX\_UNIFORM\_camera\_pos}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_UNIFORM\_camera\_pos@{STBVOX\_UNIFORM\_camera\_pos}}}\mbox{\Hypertarget{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea82a48737d53c36a05fdf8138c17c349f}\label{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea82a48737d53c36a05fdf8138c17c349f}} 
+S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+camera\+\_\+pos&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_UNIFORM\_count@{STBVOX\_UNIFORM\_count}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_UNIFORM\_count@{STBVOX\_UNIFORM\_count}}}\mbox{\Hypertarget{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea463fbe04a519703eaad7ce1434576696}\label{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea463fbe04a519703eaad7ce1434576696}} 
+S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+count&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 568 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{569 \{                              \textcolor{comment}{//  -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{570    \mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051eae4a976805a2c137e4e56be03380ea2a2}{STBVOX\_UNIFORM\_face\_data}},   \textcolor{comment}{//  n      the sampler with the face texture buffer}}
+\DoxyCodeLine{571    \mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051eab955886cfcf0c2c881d633beeb99ad93}{STBVOX\_UNIFORM\_transform}},   \textcolor{comment}{//  n      the transform data from stbvox\_get\_transform}}
+\DoxyCodeLine{572    \mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea9415362fa2fe2833bbb221c12310dc81}{STBVOX\_UNIFORM\_tex\_array}},   \textcolor{comment}{//  n      an array of two texture samplers containing the two texture arrays}}
+\DoxyCodeLine{573    \mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051eaf9b476df9befe12c8855d1ea20db22fe}{STBVOX\_UNIFORM\_texscale}},    \textcolor{comment}{//  Y      a table of texture properties, see above}}
+\DoxyCodeLine{574    \mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea1f8122611f70005180ede22ebffa840f}{STBVOX\_UNIFORM\_color\_table}}, \textcolor{comment}{//  Y      64 vec4 RGBA values; a default palette is provided; if A > 1.0, fullbright}}
+\DoxyCodeLine{575    \mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea67cfb94d15198e0d936ca263a2077b5e}{STBVOX\_UNIFORM\_normals}},     \textcolor{comment}{//  Y  Y   table of normals, internal-\/only}}
+\DoxyCodeLine{576    \mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea65f746116b3aa230da8bbb534e6cea97}{STBVOX\_UNIFORM\_texgen}},      \textcolor{comment}{//  Y  Y   table of texgen vectors, internal-\/only}}
+\DoxyCodeLine{577    \mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea87500607917aa427db2ff08fc3ea1ca8}{STBVOX\_UNIFORM\_ambient}},     \textcolor{comment}{//  n      lighting \& fog info, see above}}
+\DoxyCodeLine{578    \mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea82a48737d53c36a05fdf8138c17c349f}{STBVOX\_UNIFORM\_camera\_pos}},  \textcolor{comment}{//  Y      camera position in global voxel space (for lighting \& fog)}}
+\DoxyCodeLine{579 }
+\DoxyCodeLine{580    \mbox{\hyperlink{stb__voxel__render_8h_a7859c0a3efa8b1c360f5c2376baf051ea463fbe04a519703eaad7ce1434576696}{STBVOX\_UNIFORM\_count}},}
+\DoxyCodeLine{581 \};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7}\label{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7}} 
+\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_UNIFORM\_TYPE\_none@{STBVOX\_UNIFORM\_TYPE\_none}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_UNIFORM\_TYPE\_none@{STBVOX\_UNIFORM\_TYPE\_none}}}\mbox{\Hypertarget{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7ad342112fde8fd8be3edbd5a2120ca317}\label{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7ad342112fde8fd8be3edbd5a2120ca317}} 
+S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+none&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_UNIFORM\_TYPE\_sampler@{STBVOX\_UNIFORM\_TYPE\_sampler}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_UNIFORM\_TYPE\_sampler@{STBVOX\_UNIFORM\_TYPE\_sampler}}}\mbox{\Hypertarget{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7ac7047970a5db6dd015b117186730c558}\label{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7ac7047970a5db6dd015b117186730c558}} 
+S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+sampler&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_UNIFORM\_TYPE\_vec2@{STBVOX\_UNIFORM\_TYPE\_vec2}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_UNIFORM\_TYPE\_vec2@{STBVOX\_UNIFORM\_TYPE\_vec2}}}\mbox{\Hypertarget{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7adf4638d7323db2e592ee2d87917cd785}\label{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7adf4638d7323db2e592ee2d87917cd785}} 
+S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+vec2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_UNIFORM\_TYPE\_vec3@{STBVOX\_UNIFORM\_TYPE\_vec3}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_UNIFORM\_TYPE\_vec3@{STBVOX\_UNIFORM\_TYPE\_vec3}}}\mbox{\Hypertarget{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7a01e4c8c453c9d498f2125eaeb26ebb5c}\label{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7a01e4c8c453c9d498f2125eaeb26ebb5c}} 
+S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+vec3&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_UNIFORM\_TYPE\_vec4@{STBVOX\_UNIFORM\_TYPE\_vec4}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_UNIFORM\_TYPE\_vec4@{STBVOX\_UNIFORM\_TYPE\_vec4}}}\mbox{\Hypertarget{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7abb971ba14a3c74cddba2b40bf5cc3b8f}\label{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7abb971ba14a3c74cddba2b40bf5cc3b8f}} 
+S\+T\+B\+V\+O\+X\+\_\+\+U\+N\+I\+F\+O\+R\+M\+\_\+\+T\+Y\+P\+E\+\_\+vec4&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 583 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{584 \{}
+\DoxyCodeLine{585    \mbox{\hyperlink{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7ad342112fde8fd8be3edbd5a2120ca317}{STBVOX\_UNIFORM\_TYPE\_none}},}
+\DoxyCodeLine{586    \mbox{\hyperlink{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7ac7047970a5db6dd015b117186730c558}{STBVOX\_UNIFORM\_TYPE\_sampler}},}
+\DoxyCodeLine{587    \mbox{\hyperlink{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7adf4638d7323db2e592ee2d87917cd785}{STBVOX\_UNIFORM\_TYPE\_vec2}},}
+\DoxyCodeLine{588    \mbox{\hyperlink{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7a01e4c8c453c9d498f2125eaeb26ebb5c}{STBVOX\_UNIFORM\_TYPE\_vec3}},}
+\DoxyCodeLine{589    \mbox{\hyperlink{stb__voxel__render_8h_a79e9f285d34216706a748fd7ba8941b7abb971ba14a3c74cddba2b40bf5cc3b8f}{STBVOX\_UNIFORM\_TYPE\_vec4}},}
+\DoxyCodeLine{590 \};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3c}\label{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3c}} 
+\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_GEOM\_empty@{STBVOX\_GEOM\_empty}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_GEOM\_empty@{STBVOX\_GEOM\_empty}}}\mbox{\Hypertarget{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3cacf4698c9739b8b6c1af7f8a124169cc9}\label{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3cacf4698c9739b8b6c1af7f8a124169cc9}} 
+S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+empty&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_GEOM\_knockout@{STBVOX\_GEOM\_knockout}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_GEOM\_knockout@{STBVOX\_GEOM\_knockout}}}\mbox{\Hypertarget{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca0c121ca2d1b34ddb76fc268d10251117}\label{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca0c121ca2d1b34ddb76fc268d10251117}} 
+S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+knockout&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_GEOM\_solid@{STBVOX\_GEOM\_solid}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_GEOM\_solid@{STBVOX\_GEOM\_solid}}}\mbox{\Hypertarget{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca685a066c41ada07dc62ffaa16d23ccf5}\label{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca685a066c41ada07dc62ffaa16d23ccf5}} 
+S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+solid&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_GEOM\_transp@{STBVOX\_GEOM\_transp}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_GEOM\_transp@{STBVOX\_GEOM\_transp}}}\mbox{\Hypertarget{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca5921e838cb3457e8097fd111be407eec}\label{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca5921e838cb3457e8097fd111be407eec}} 
+S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+transp&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_GEOM\_slab\_upper@{STBVOX\_GEOM\_slab\_upper}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_GEOM\_slab\_upper@{STBVOX\_GEOM\_slab\_upper}}}\mbox{\Hypertarget{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca30b6f0c40e6b6e40d49dab03c03fc327}\label{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca30b6f0c40e6b6e40d49dab03c03fc327}} 
+S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+slab\+\_\+upper&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_GEOM\_slab\_lower@{STBVOX\_GEOM\_slab\_lower}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_GEOM\_slab\_lower@{STBVOX\_GEOM\_slab\_lower}}}\mbox{\Hypertarget{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca4d3a600f27892ef5bb64aa2e884b6570}\label{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca4d3a600f27892ef5bb64aa2e884b6570}} 
+S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+slab\+\_\+lower&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_GEOM\_floor\_slope\_north\_is\_top@{STBVOX\_GEOM\_floor\_slope\_north\_is\_top}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_GEOM\_floor\_slope\_north\_is\_top@{STBVOX\_GEOM\_floor\_slope\_north\_is\_top}}}\mbox{\Hypertarget{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca063a4146fc89954375c7fc7fa39e8747}\label{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca063a4146fc89954375c7fc7fa39e8747}} 
+S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+floor\+\_\+slope\+\_\+north\+\_\+is\+\_\+top&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_GEOM\_ceil\_slope\_north\_is\_bottom@{STBVOX\_GEOM\_ceil\_slope\_north\_is\_bottom}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_GEOM\_ceil\_slope\_north\_is\_bottom@{STBVOX\_GEOM\_ceil\_slope\_north\_is\_bottom}}}\mbox{\Hypertarget{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3caa5dcab0b072fb42d24d09d3ace41724d}\label{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3caa5dcab0b072fb42d24d09d3ace41724d}} 
+S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+ceil\+\_\+slope\+\_\+north\+\_\+is\+\_\+bottom&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_GEOM\_floor\_slope\_north\_is\_top\_as\_wall\_UNIMPLEMENTED@{STBVOX\_GEOM\_floor\_slope\_north\_is\_top\_as\_wall\_UNIMPLEMENTED}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_GEOM\_floor\_slope\_north\_is\_top\_as\_wall\_UNIMPLEMENTED@{STBVOX\_GEOM\_floor\_slope\_north\_is\_top\_as\_wall\_UNIMPLEMENTED}}}\mbox{\Hypertarget{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca967b6a84170cb5bbb3af61a3eda1e185}\label{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca967b6a84170cb5bbb3af61a3eda1e185}} 
+S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+floor\+\_\+slope\+\_\+north\+\_\+is\+\_\+top\+\_\+as\+\_\+wall\+\_\+\+U\+N\+I\+M\+P\+L\+E\+M\+E\+N\+T\+ED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_GEOM\_ceil\_slope\_north\_is\_bottom\_as\_wall\_UNIMPLEMENTED@{STBVOX\_GEOM\_ceil\_slope\_north\_is\_bottom\_as\_wall\_UNIMPLEMENTED}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_GEOM\_ceil\_slope\_north\_is\_bottom\_as\_wall\_UNIMPLEMENTED@{STBVOX\_GEOM\_ceil\_slope\_north\_is\_bottom\_as\_wall\_UNIMPLEMENTED}}}\mbox{\Hypertarget{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca23b7fdc60695dd2873855631799b54d2}\label{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca23b7fdc60695dd2873855631799b54d2}} 
+S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+ceil\+\_\+slope\+\_\+north\+\_\+is\+\_\+bottom\+\_\+as\+\_\+wall\+\_\+\+U\+N\+I\+M\+P\+L\+E\+M\+E\+N\+T\+ED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_GEOM\_crossed\_pair@{STBVOX\_GEOM\_crossed\_pair}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_GEOM\_crossed\_pair@{STBVOX\_GEOM\_crossed\_pair}}}\mbox{\Hypertarget{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca9cd52f024f074ece1f5cecbcc517c54f}\label{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca9cd52f024f074ece1f5cecbcc517c54f}} 
+S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+crossed\+\_\+pair&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_GEOM\_force@{STBVOX\_GEOM\_force}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_GEOM\_force@{STBVOX\_GEOM\_force}}}\mbox{\Hypertarget{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca334b45fb41d2329d21d3bd81b8c2568d}\label{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca334b45fb41d2329d21d3bd81b8c2568d}} 
+S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+force&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_GEOM\_floor\_vheight\_03@{STBVOX\_GEOM\_floor\_vheight\_03}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_GEOM\_floor\_vheight\_03@{STBVOX\_GEOM\_floor\_vheight\_03}}}\mbox{\Hypertarget{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3cada2a4d1b275d962d5c76388b2f731b3f}\label{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3cada2a4d1b275d962d5c76388b2f731b3f}} 
+S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+floor\+\_\+vheight\+\_\+03&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_GEOM\_floor\_vheight\_12@{STBVOX\_GEOM\_floor\_vheight\_12}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_GEOM\_floor\_vheight\_12@{STBVOX\_GEOM\_floor\_vheight\_12}}}\mbox{\Hypertarget{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca7511f84da0693e6147590c76a74480d6}\label{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca7511f84da0693e6147590c76a74480d6}} 
+S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+floor\+\_\+vheight\+\_\+12&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_GEOM\_ceil\_vheight\_03@{STBVOX\_GEOM\_ceil\_vheight\_03}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_GEOM\_ceil\_vheight\_03@{STBVOX\_GEOM\_ceil\_vheight\_03}}}\mbox{\Hypertarget{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca62855fb026ed6bb2b93a02f94b9eaacb}\label{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca62855fb026ed6bb2b93a02f94b9eaacb}} 
+S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+ceil\+\_\+vheight\+\_\+03&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_GEOM\_ceil\_vheight\_12@{STBVOX\_GEOM\_ceil\_vheight\_12}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_GEOM\_ceil\_vheight\_12@{STBVOX\_GEOM\_ceil\_vheight\_12}}}\mbox{\Hypertarget{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca63a77bdea6849081b9924e525fe602df}\label{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca63a77bdea6849081b9924e525fe602df}} 
+S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+ceil\+\_\+vheight\+\_\+12&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_GEOM\_count@{STBVOX\_GEOM\_count}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_GEOM\_count@{STBVOX\_GEOM\_count}}}\mbox{\Hypertarget{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca392c7b9ba79ae0aec0364b3cbd57ad1c}\label{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca392c7b9ba79ae0aec0364b3cbd57ad1c}} 
+S\+T\+B\+V\+O\+X\+\_\+\+G\+E\+O\+M\+\_\+count&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 665 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{666 \{}
+\DoxyCodeLine{667    \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3cacf4698c9739b8b6c1af7f8a124169cc9}{STBVOX\_GEOM\_empty}},}
+\DoxyCodeLine{668    \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca0c121ca2d1b34ddb76fc268d10251117}{STBVOX\_GEOM\_knockout}},  \textcolor{comment}{// creates a hole in the mesh}}
+\DoxyCodeLine{669    \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca685a066c41ada07dc62ffaa16d23ccf5}{STBVOX\_GEOM\_solid}},}
+\DoxyCodeLine{670    \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca5921e838cb3457e8097fd111be407eec}{STBVOX\_GEOM\_transp}},    \textcolor{comment}{// solid geometry, but transparent contents so neighbors generate normally, unless same blocktype}}
+\DoxyCodeLine{671 }
+\DoxyCodeLine{672    \textcolor{comment}{// following 4 can be represented by vheight as well}}
+\DoxyCodeLine{673    \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca30b6f0c40e6b6e40d49dab03c03fc327}{STBVOX\_GEOM\_slab\_upper}},}
+\DoxyCodeLine{674    \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca4d3a600f27892ef5bb64aa2e884b6570}{STBVOX\_GEOM\_slab\_lower}},}
+\DoxyCodeLine{675    \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca063a4146fc89954375c7fc7fa39e8747}{STBVOX\_GEOM\_floor\_slope\_north\_is\_top}},}
+\DoxyCodeLine{676    \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3caa5dcab0b072fb42d24d09d3ace41724d}{STBVOX\_GEOM\_ceil\_slope\_north\_is\_bottom}},}
+\DoxyCodeLine{677 }
+\DoxyCodeLine{678    \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca967b6a84170cb5bbb3af61a3eda1e185}{STBVOX\_GEOM\_floor\_slope\_north\_is\_top\_as\_wall\_UNIMPLEMENTED}},   \textcolor{comment}{// same as floor\_slope above, but uses wall's texture \& texture projection}}
+\DoxyCodeLine{679    \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca23b7fdc60695dd2873855631799b54d2}{STBVOX\_GEOM\_ceil\_slope\_north\_is\_bottom\_as\_wall\_UNIMPLEMENTED}},}
+\DoxyCodeLine{680    \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca9cd52f024f074ece1f5cecbcc517c54f}{STBVOX\_GEOM\_crossed\_pair}},    \textcolor{comment}{// corner-\/to-\/corner pairs, with normal vector bumped upwards}}
+\DoxyCodeLine{681    \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca334b45fb41d2329d21d3bd81b8c2568d}{STBVOX\_GEOM\_force}},           \textcolor{comment}{// like GEOM\_transp, but faces visible even if neighbor is same type, e.g. minecraft fancy leaves}}
+\DoxyCodeLine{682 }
+\DoxyCodeLine{683    \textcolor{comment}{// these access vheight input}}
+\DoxyCodeLine{684    \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3cada2a4d1b275d962d5c76388b2f731b3f}{STBVOX\_GEOM\_floor\_vheight\_03}} = 12,  \textcolor{comment}{// diagonal is SW-\/NE}}
+\DoxyCodeLine{685    \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca7511f84da0693e6147590c76a74480d6}{STBVOX\_GEOM\_floor\_vheight\_12}},       \textcolor{comment}{// diagonal is SE-\/NW}}
+\DoxyCodeLine{686    \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca62855fb026ed6bb2b93a02f94b9eaacb}{STBVOX\_GEOM\_ceil\_vheight\_03}},}
+\DoxyCodeLine{687    \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca63a77bdea6849081b9924e525fe602df}{STBVOX\_GEOM\_ceil\_vheight\_12}},}
+\DoxyCodeLine{688 }
+\DoxyCodeLine{689    \mbox{\hyperlink{stb__voxel__render_8h_abe974f22edeef8189603ba75fd90ff3ca392c7b9ba79ae0aec0364b3cbd57ad1c}{STBVOX\_GEOM\_count}}, \textcolor{comment}{// number of geom cases}}
+\DoxyCodeLine{690 \};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7}\label{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7}} 
+\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_FACE\_east@{STBVOX\_FACE\_east}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_FACE\_east@{STBVOX\_FACE\_east}}}\mbox{\Hypertarget{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7afa499b8104b6de8c8a86aa4ffaac4029}\label{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7afa499b8104b6de8c8a86aa4ffaac4029}} 
+S\+T\+B\+V\+O\+X\+\_\+\+F\+A\+C\+E\+\_\+east&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_FACE\_north@{STBVOX\_FACE\_north}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_FACE\_north@{STBVOX\_FACE\_north}}}\mbox{\Hypertarget{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7ae6ab3be9f1d3f183497386adf6de0b7f}\label{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7ae6ab3be9f1d3f183497386adf6de0b7f}} 
+S\+T\+B\+V\+O\+X\+\_\+\+F\+A\+C\+E\+\_\+north&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_FACE\_west@{STBVOX\_FACE\_west}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_FACE\_west@{STBVOX\_FACE\_west}}}\mbox{\Hypertarget{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7a5d1070e526b0400de9341f0ea13d2761}\label{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7a5d1070e526b0400de9341f0ea13d2761}} 
+S\+T\+B\+V\+O\+X\+\_\+\+F\+A\+C\+E\+\_\+west&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_FACE\_south@{STBVOX\_FACE\_south}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_FACE\_south@{STBVOX\_FACE\_south}}}\mbox{\Hypertarget{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7a989b46927a59c0e897e5a2132453a602}\label{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7a989b46927a59c0e897e5a2132453a602}} 
+S\+T\+B\+V\+O\+X\+\_\+\+F\+A\+C\+E\+\_\+south&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_FACE\_up@{STBVOX\_FACE\_up}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_FACE\_up@{STBVOX\_FACE\_up}}}\mbox{\Hypertarget{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7aa81aa17ee2457c5e27dacbc28b081b70}\label{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7aa81aa17ee2457c5e27dacbc28b081b70}} 
+S\+T\+B\+V\+O\+X\+\_\+\+F\+A\+C\+E\+\_\+up&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_FACE\_down@{STBVOX\_FACE\_down}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_FACE\_down@{STBVOX\_FACE\_down}}}\mbox{\Hypertarget{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7a0afd0d6f81410ddc95c3a6a8ed98ec22}\label{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7a0afd0d6f81410ddc95c3a6a8ed98ec22}} 
+S\+T\+B\+V\+O\+X\+\_\+\+F\+A\+C\+E\+\_\+down&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_FACE\_count@{STBVOX\_FACE\_count}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_FACE\_count@{STBVOX\_FACE\_count}}}\mbox{\Hypertarget{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7a65bdc989c6728bab691aad91e4d4ec05}\label{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7a65bdc989c6728bab691aad91e4d4ec05}} 
+S\+T\+B\+V\+O\+X\+\_\+\+F\+A\+C\+E\+\_\+count&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 692 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{693 \{}
+\DoxyCodeLine{694    \mbox{\hyperlink{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7afa499b8104b6de8c8a86aa4ffaac4029}{STBVOX\_FACE\_east}},}
+\DoxyCodeLine{695    \mbox{\hyperlink{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7ae6ab3be9f1d3f183497386adf6de0b7f}{STBVOX\_FACE\_north}},}
+\DoxyCodeLine{696    \mbox{\hyperlink{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7a5d1070e526b0400de9341f0ea13d2761}{STBVOX\_FACE\_west}},}
+\DoxyCodeLine{697    \mbox{\hyperlink{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7a989b46927a59c0e897e5a2132453a602}{STBVOX\_FACE\_south}},}
+\DoxyCodeLine{698    \mbox{\hyperlink{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7aa81aa17ee2457c5e27dacbc28b081b70}{STBVOX\_FACE\_up}},}
+\DoxyCodeLine{699    \mbox{\hyperlink{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7a0afd0d6f81410ddc95c3a6a8ed98ec22}{STBVOX\_FACE\_down}},}
+\DoxyCodeLine{700 }
+\DoxyCodeLine{701    \mbox{\hyperlink{stb__voxel__render_8h_a1b70d876770ccff427513794d6b0b2a7a65bdc989c6728bab691aad91e4d4ec05}{STBVOX\_FACE\_count}},}
+\DoxyCodeLine{702 \};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{stb__voxel__render_8h_a70ad55be767ca0a42c9150d24618e4ca}\label{stb__voxel__render_8h_a70ad55be767ca0a42c9150d24618e4ca}} 
+\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_VERTEX\_HEIGHT\_0@{STBVOX\_VERTEX\_HEIGHT\_0}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_VERTEX\_HEIGHT\_0@{STBVOX\_VERTEX\_HEIGHT\_0}}}\mbox{\Hypertarget{stb__voxel__render_8h_a70ad55be767ca0a42c9150d24618e4caa3fcc5a8bbe095c16e10c82d50c688685}\label{stb__voxel__render_8h_a70ad55be767ca0a42c9150d24618e4caa3fcc5a8bbe095c16e10c82d50c688685}} 
+S\+T\+B\+V\+O\+X\+\_\+\+V\+E\+R\+T\+E\+X\+\_\+\+H\+E\+I\+G\+H\+T\+\_\+0&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_VERTEX\_HEIGHT\_half@{STBVOX\_VERTEX\_HEIGHT\_half}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_VERTEX\_HEIGHT\_half@{STBVOX\_VERTEX\_HEIGHT\_half}}}\mbox{\Hypertarget{stb__voxel__render_8h_a70ad55be767ca0a42c9150d24618e4caa4f4eb402db50e3377f15836b4a782c39}\label{stb__voxel__render_8h_a70ad55be767ca0a42c9150d24618e4caa4f4eb402db50e3377f15836b4a782c39}} 
+S\+T\+B\+V\+O\+X\+\_\+\+V\+E\+R\+T\+E\+X\+\_\+\+H\+E\+I\+G\+H\+T\+\_\+half&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_VERTEX\_HEIGHT\_1@{STBVOX\_VERTEX\_HEIGHT\_1}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_VERTEX\_HEIGHT\_1@{STBVOX\_VERTEX\_HEIGHT\_1}}}\mbox{\Hypertarget{stb__voxel__render_8h_a70ad55be767ca0a42c9150d24618e4caa092bad5aa4358be71d81eaae4623e94b}\label{stb__voxel__render_8h_a70ad55be767ca0a42c9150d24618e4caa092bad5aa4358be71d81eaae4623e94b}} 
+S\+T\+B\+V\+O\+X\+\_\+\+V\+E\+R\+T\+E\+X\+\_\+\+H\+E\+I\+G\+H\+T\+\_\+1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_VERTEX\_HEIGHT\_one\_and\_a\_half@{STBVOX\_VERTEX\_HEIGHT\_one\_and\_a\_half}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_VERTEX\_HEIGHT\_one\_and\_a\_half@{STBVOX\_VERTEX\_HEIGHT\_one\_and\_a\_half}}}\mbox{\Hypertarget{stb__voxel__render_8h_a70ad55be767ca0a42c9150d24618e4caa280c918aae70c240be01dc4de2fb3f86}\label{stb__voxel__render_8h_a70ad55be767ca0a42c9150d24618e4caa280c918aae70c240be01dc4de2fb3f86}} 
+S\+T\+B\+V\+O\+X\+\_\+\+V\+E\+R\+T\+E\+X\+\_\+\+H\+E\+I\+G\+H\+T\+\_\+one\+\_\+and\+\_\+a\+\_\+half&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 1035 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1036 \{}
+\DoxyCodeLine{1037    \mbox{\hyperlink{stb__voxel__render_8h_a70ad55be767ca0a42c9150d24618e4caa3fcc5a8bbe095c16e10c82d50c688685}{STBVOX\_VERTEX\_HEIGHT\_0}},}
+\DoxyCodeLine{1038    \mbox{\hyperlink{stb__voxel__render_8h_a70ad55be767ca0a42c9150d24618e4caa4f4eb402db50e3377f15836b4a782c39}{STBVOX\_VERTEX\_HEIGHT\_half}},}
+\DoxyCodeLine{1039    \mbox{\hyperlink{stb__voxel__render_8h_a70ad55be767ca0a42c9150d24618e4caa092bad5aa4358be71d81eaae4623e94b}{STBVOX\_VERTEX\_HEIGHT\_1}},}
+\DoxyCodeLine{1040    \mbox{\hyperlink{stb__voxel__render_8h_a70ad55be767ca0a42c9150d24618e4caa280c918aae70c240be01dc4de2fb3f86}{STBVOX\_VERTEX\_HEIGHT\_one\_and\_a\_half}},}
+\DoxyCodeLine{1041 \};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{stb__voxel__render_8h_a4b4213b1f9d54da7c7e36bde32fc7c80}\label{stb__voxel__render_8h_a4b4213b1f9d54da7c7e36bde32fc7c80}} 
+\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_TEXLERP\_FACE\_0@{STBVOX\_TEXLERP\_FACE\_0}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_TEXLERP\_FACE\_0@{STBVOX\_TEXLERP\_FACE\_0}}}\mbox{\Hypertarget{stb__voxel__render_8h_a4b4213b1f9d54da7c7e36bde32fc7c80aa70bad6df098dbf1accf2968094dbebb}\label{stb__voxel__render_8h_a4b4213b1f9d54da7c7e36bde32fc7c80aa70bad6df098dbf1accf2968094dbebb}} 
+S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+F\+A\+C\+E\+\_\+0&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_TEXLERP\_FACE\_half@{STBVOX\_TEXLERP\_FACE\_half}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_TEXLERP\_FACE\_half@{STBVOX\_TEXLERP\_FACE\_half}}}\mbox{\Hypertarget{stb__voxel__render_8h_a4b4213b1f9d54da7c7e36bde32fc7c80a0adcec82e25711e882ca2142fcdf9f26}\label{stb__voxel__render_8h_a4b4213b1f9d54da7c7e36bde32fc7c80a0adcec82e25711e882ca2142fcdf9f26}} 
+S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+F\+A\+C\+E\+\_\+half&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_TEXLERP\_FACE\_1@{STBVOX\_TEXLERP\_FACE\_1}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_TEXLERP\_FACE\_1@{STBVOX\_TEXLERP\_FACE\_1}}}\mbox{\Hypertarget{stb__voxel__render_8h_a4b4213b1f9d54da7c7e36bde32fc7c80a0143df9adb613c460bca2a586504f084}\label{stb__voxel__render_8h_a4b4213b1f9d54da7c7e36bde32fc7c80a0143df9adb613c460bca2a586504f084}} 
+S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+F\+A\+C\+E\+\_\+1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_TEXLERP\_FACE\_use\_vert@{STBVOX\_TEXLERP\_FACE\_use\_vert}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_TEXLERP\_FACE\_use\_vert@{STBVOX\_TEXLERP\_FACE\_use\_vert}}}\mbox{\Hypertarget{stb__voxel__render_8h_a4b4213b1f9d54da7c7e36bde32fc7c80a87926e8413a0d08ee2e482d5487772f9}\label{stb__voxel__render_8h_a4b4213b1f9d54da7c7e36bde32fc7c80a87926e8413a0d08ee2e482d5487772f9}} 
+S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+F\+A\+C\+E\+\_\+use\+\_\+vert&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 1117 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1118 \{}
+\DoxyCodeLine{1119    \mbox{\hyperlink{stb__voxel__render_8h_a4b4213b1f9d54da7c7e36bde32fc7c80aa70bad6df098dbf1accf2968094dbebb}{STBVOX\_TEXLERP\_FACE\_0}},}
+\DoxyCodeLine{1120    \mbox{\hyperlink{stb__voxel__render_8h_a4b4213b1f9d54da7c7e36bde32fc7c80a0adcec82e25711e882ca2142fcdf9f26}{STBVOX\_TEXLERP\_FACE\_half}},}
+\DoxyCodeLine{1121    \mbox{\hyperlink{stb__voxel__render_8h_a4b4213b1f9d54da7c7e36bde32fc7c80a0143df9adb613c460bca2a586504f084}{STBVOX\_TEXLERP\_FACE\_1}},}
+\DoxyCodeLine{1122    \mbox{\hyperlink{stb__voxel__render_8h_a4b4213b1f9d54da7c7e36bde32fc7c80a87926e8413a0d08ee2e482d5487772f9}{STBVOX\_TEXLERP\_FACE\_use\_vert}},}
+\DoxyCodeLine{1123 \};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{stb__voxel__render_8h_aa491173a6b1628f4ff82067b2e1ceaa9}\label{stb__voxel__render_8h_aa491173a6b1628f4ff82067b2e1ceaa9}} 
+\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_TEXLERP\_BASE\_0@{STBVOX\_TEXLERP\_BASE\_0}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_TEXLERP\_BASE\_0@{STBVOX\_TEXLERP\_BASE\_0}}}\mbox{\Hypertarget{stb__voxel__render_8h_aa491173a6b1628f4ff82067b2e1ceaa9aaad075e62e6c827472550b0a280d52b9}\label{stb__voxel__render_8h_aa491173a6b1628f4ff82067b2e1ceaa9aaad075e62e6c827472550b0a280d52b9}} 
+S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+B\+A\+S\+E\+\_\+0&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_TEXLERP\_BASE\_2\_7@{STBVOX\_TEXLERP\_BASE\_2\_7}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_TEXLERP\_BASE\_2\_7@{STBVOX\_TEXLERP\_BASE\_2\_7}}}\mbox{\Hypertarget{stb__voxel__render_8h_aa491173a6b1628f4ff82067b2e1ceaa9a0786a482a211591e81641bf5c4121444}\label{stb__voxel__render_8h_aa491173a6b1628f4ff82067b2e1ceaa9a0786a482a211591e81641bf5c4121444}} 
+S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+B\+A\+S\+E\+\_\+2\+\_\+7&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_TEXLERP\_BASE\_5\_7@{STBVOX\_TEXLERP\_BASE\_5\_7}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_TEXLERP\_BASE\_5\_7@{STBVOX\_TEXLERP\_BASE\_5\_7}}}\mbox{\Hypertarget{stb__voxel__render_8h_aa491173a6b1628f4ff82067b2e1ceaa9af8154cb231658e333b0f05883b87170d}\label{stb__voxel__render_8h_aa491173a6b1628f4ff82067b2e1ceaa9af8154cb231658e333b0f05883b87170d}} 
+S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+B\+A\+S\+E\+\_\+5\+\_\+7&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_TEXLERP\_BASE\_1@{STBVOX\_TEXLERP\_BASE\_1}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_TEXLERP\_BASE\_1@{STBVOX\_TEXLERP\_BASE\_1}}}\mbox{\Hypertarget{stb__voxel__render_8h_aa491173a6b1628f4ff82067b2e1ceaa9ab69e6ee711cc4542ea10ad5a16ee18d4}\label{stb__voxel__render_8h_aa491173a6b1628f4ff82067b2e1ceaa9ab69e6ee711cc4542ea10ad5a16ee18d4}} 
+S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P\+\_\+\+B\+A\+S\+E\+\_\+1&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 1125 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1126 \{}
+\DoxyCodeLine{1127    \mbox{\hyperlink{stb__voxel__render_8h_aa491173a6b1628f4ff82067b2e1ceaa9aaad075e62e6c827472550b0a280d52b9}{STBVOX\_TEXLERP\_BASE\_0}},    \textcolor{comment}{// 0.0}}
+\DoxyCodeLine{1128    \mbox{\hyperlink{stb__voxel__render_8h_aa491173a6b1628f4ff82067b2e1ceaa9a0786a482a211591e81641bf5c4121444}{STBVOX\_TEXLERP\_BASE\_2\_7}},  \textcolor{comment}{// 2/7}}
+\DoxyCodeLine{1129    \mbox{\hyperlink{stb__voxel__render_8h_aa491173a6b1628f4ff82067b2e1ceaa9af8154cb231658e333b0f05883b87170d}{STBVOX\_TEXLERP\_BASE\_5\_7}},  \textcolor{comment}{// 4/7}}
+\DoxyCodeLine{1130    \mbox{\hyperlink{stb__voxel__render_8h_aa491173a6b1628f4ff82067b2e1ceaa9ab69e6ee711cc4542ea10ad5a16ee18d4}{STBVOX\_TEXLERP\_BASE\_1}}     \textcolor{comment}{// 1.0}}
+\DoxyCodeLine{1131 \};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbd}\label{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbd}} 
+\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_TEXLERP3\_0\_8@{STBVOX\_TEXLERP3\_0\_8}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_TEXLERP3\_0\_8@{STBVOX\_TEXLERP3\_0\_8}}}\mbox{\Hypertarget{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbdab96a9b5c77f77149dff728aacde0ff16}\label{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbdab96a9b5c77f77149dff728aacde0ff16}} 
+S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P3\+\_\+0\+\_\+8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_TEXLERP3\_1\_8@{STBVOX\_TEXLERP3\_1\_8}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_TEXLERP3\_1\_8@{STBVOX\_TEXLERP3\_1\_8}}}\mbox{\Hypertarget{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbdaea2d40827737c1071f6dc6952a543059}\label{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbdaea2d40827737c1071f6dc6952a543059}} 
+S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P3\+\_\+1\+\_\+8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_TEXLERP3\_2\_8@{STBVOX\_TEXLERP3\_2\_8}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_TEXLERP3\_2\_8@{STBVOX\_TEXLERP3\_2\_8}}}\mbox{\Hypertarget{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbda99d3b9c21f17c66cdbb8665cd0943cd7}\label{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbda99d3b9c21f17c66cdbb8665cd0943cd7}} 
+S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P3\+\_\+2\+\_\+8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_TEXLERP3\_3\_8@{STBVOX\_TEXLERP3\_3\_8}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_TEXLERP3\_3\_8@{STBVOX\_TEXLERP3\_3\_8}}}\mbox{\Hypertarget{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbdacdae7d0ff7353e002ae2eacf6b8aa88a}\label{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbdacdae7d0ff7353e002ae2eacf6b8aa88a}} 
+S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P3\+\_\+3\+\_\+8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_TEXLERP3\_4\_8@{STBVOX\_TEXLERP3\_4\_8}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_TEXLERP3\_4\_8@{STBVOX\_TEXLERP3\_4\_8}}}\mbox{\Hypertarget{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbda7c684dcd79b403475e1d3c4eaf5f25fa}\label{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbda7c684dcd79b403475e1d3c4eaf5f25fa}} 
+S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P3\+\_\+4\+\_\+8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_TEXLERP3\_5\_8@{STBVOX\_TEXLERP3\_5\_8}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_TEXLERP3\_5\_8@{STBVOX\_TEXLERP3\_5\_8}}}\mbox{\Hypertarget{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbdafdc5d19076df6039c2c7b0d70a06e259}\label{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbdafdc5d19076df6039c2c7b0d70a06e259}} 
+S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P3\+\_\+5\+\_\+8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_TEXLERP3\_6\_8@{STBVOX\_TEXLERP3\_6\_8}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_TEXLERP3\_6\_8@{STBVOX\_TEXLERP3\_6\_8}}}\mbox{\Hypertarget{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbda9c2fad89edbd61a6c0b84476658420bb}\label{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbda9c2fad89edbd61a6c0b84476658420bb}} 
+S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P3\+\_\+6\+\_\+8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STBVOX\_TEXLERP3\_7\_8@{STBVOX\_TEXLERP3\_7\_8}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!STBVOX\_TEXLERP3\_7\_8@{STBVOX\_TEXLERP3\_7\_8}}}\mbox{\Hypertarget{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbda87385e4fba94fdb00b6b3d03b5d54f05}\label{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbda87385e4fba94fdb00b6b3d03b5d54f05}} 
+S\+T\+B\+V\+O\+X\+\_\+\+T\+E\+X\+L\+E\+R\+P3\+\_\+7\+\_\+8&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 1133 of file stb\+\_\+voxel\+\_\+render.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1134 \{}
+\DoxyCodeLine{1135    \mbox{\hyperlink{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbdab96a9b5c77f77149dff728aacde0ff16}{STBVOX\_TEXLERP3\_0\_8}},}
+\DoxyCodeLine{1136    \mbox{\hyperlink{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbdaea2d40827737c1071f6dc6952a543059}{STBVOX\_TEXLERP3\_1\_8}},}
+\DoxyCodeLine{1137    \mbox{\hyperlink{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbda99d3b9c21f17c66cdbb8665cd0943cd7}{STBVOX\_TEXLERP3\_2\_8}},}
+\DoxyCodeLine{1138    \mbox{\hyperlink{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbdacdae7d0ff7353e002ae2eacf6b8aa88a}{STBVOX\_TEXLERP3\_3\_8}},}
+\DoxyCodeLine{1139    \mbox{\hyperlink{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbda7c684dcd79b403475e1d3c4eaf5f25fa}{STBVOX\_TEXLERP3\_4\_8}},}
+\DoxyCodeLine{1140    \mbox{\hyperlink{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbdafdc5d19076df6039c2c7b0d70a06e259}{STBVOX\_TEXLERP3\_5\_8}},}
+\DoxyCodeLine{1141    \mbox{\hyperlink{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbda9c2fad89edbd61a6c0b84476658420bb}{STBVOX\_TEXLERP3\_6\_8}},}
+\DoxyCodeLine{1142    \mbox{\hyperlink{stb__voxel__render_8h_a3babbf89cae9b856a12864a41506efbda87385e4fba94fdb00b6b3d03b5d54f05}{STBVOX\_TEXLERP3\_7\_8}},}
+\DoxyCodeLine{1143 \};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{stb__voxel__render_8h_a0ad8a7764f93c0592671bcf0e246dc6e}\label{stb__voxel__render_8h_a0ad8a7764f93c0592671bcf0e246dc6e}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_get\_bounds@{stbvox\_get\_bounds}}
+\index{stbvox\_get\_bounds@{stbvox\_get\_bounds}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_get\_bounds()}{stbvox\_get\_bounds()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} stbvox\+\_\+get\+\_\+bounds (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$}]{mm,  }\item[{float}]{bounds\mbox{[}2\mbox{]}\mbox{[}3\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a3b537bb87f5e14c78f17f0b4d4ac29e9}\label{stb__voxel__render_8h_a3b537bb87f5e14c78f17f0b4d4ac29e9}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_get\_buffer\_count@{stbvox\_get\_buffer\_count}}
+\index{stbvox\_get\_buffer\_count@{stbvox\_get\_buffer\_count}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_get\_buffer\_count()}{stbvox\_get\_buffer\_count()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} int stbvox\+\_\+get\+\_\+buffer\+\_\+count (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$}]{mm }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{stb__voxel__render_8h_afe4a3740055547f625557281f5f56f11}\label{stb__voxel__render_8h_afe4a3740055547f625557281f5f56f11}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_get\_buffer\_size\_per\_quad@{stbvox\_get\_buffer\_size\_per\_quad}}
+\index{stbvox\_get\_buffer\_size\_per\_quad@{stbvox\_get\_buffer\_size\_per\_quad}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_get\_buffer\_size\_per\_quad()}{stbvox\_get\_buffer\_size\_per\_quad()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} int stbvox\+\_\+get\+\_\+buffer\+\_\+size\+\_\+per\+\_\+quad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$}]{mm,  }\item[{int}]{slot }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a21e1e1586c93abcba24be8eb01d8fd3d}\label{stb__voxel__render_8h_a21e1e1586c93abcba24be8eb01d8fd3d}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_get\_fragment\_shader@{stbvox\_get\_fragment\_shader}}
+\index{stbvox\_get\_fragment\_shader@{stbvox\_get\_fragment\_shader}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_get\_fragment\_shader()}{stbvox\_get\_fragment\_shader()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} char$\ast$ stbvox\+\_\+get\+\_\+fragment\+\_\+shader (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{stb__voxel__render_8h_add1d57d13c2dc697f3fc2782abf5c795}\label{stb__voxel__render_8h_add1d57d13c2dc697f3fc2782abf5c795}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_get\_fragment\_shader\_alpha\_only@{stbvox\_get\_fragment\_shader\_alpha\_only}}
+\index{stbvox\_get\_fragment\_shader\_alpha\_only@{stbvox\_get\_fragment\_shader\_alpha\_only}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_get\_fragment\_shader\_alpha\_only()}{stbvox\_get\_fragment\_shader\_alpha\_only()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} char$\ast$ stbvox\+\_\+get\+\_\+fragment\+\_\+shader\+\_\+alpha\+\_\+only (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{stb__voxel__render_8h_adadf81990fab203a9b48c738922899e1}\label{stb__voxel__render_8h_adadf81990fab203a9b48c738922899e1}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_get\_input\_description@{stbvox\_get\_input\_description}}
+\index{stbvox\_get\_input\_description@{stbvox\_get\_input\_description}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_get\_input\_description()}{stbvox\_get\_input\_description()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{structstbvox__input__description}{stbvox\+\_\+input\+\_\+description}}$\ast$ stbvox\+\_\+get\+\_\+input\+\_\+description (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$}]{mm }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{stb__voxel__render_8h_ace18e150b58146e2ec7ecba5ca0517b6}\label{stb__voxel__render_8h_ace18e150b58146e2ec7ecba5ca0517b6}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_get\_quad\_count@{stbvox\_get\_quad\_count}}
+\index{stbvox\_get\_quad\_count@{stbvox\_get\_quad\_count}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_get\_quad\_count()}{stbvox\_get\_quad\_count()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} int stbvox\+\_\+get\+\_\+quad\+\_\+count (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$}]{mm,  }\item[{int}]{mesh }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a0a8668048f7cca70ef7043261761da90}\label{stb__voxel__render_8h_a0a8668048f7cca70ef7043261761da90}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_get\_transform@{stbvox\_get\_transform}}
+\index{stbvox\_get\_transform@{stbvox\_get\_transform}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_get\_transform()}{stbvox\_get\_transform()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} stbvox\+\_\+get\+\_\+transform (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$}]{mm,  }\item[{float}]{transform\mbox{[}3\mbox{]}\mbox{[}3\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{stb__voxel__render_8h_ac6724208eddce3a25e3927abed86426e}\label{stb__voxel__render_8h_ac6724208eddce3a25e3927abed86426e}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_get\_uniform\_info@{stbvox\_get\_uniform\_info}}
+\index{stbvox\_get\_uniform\_info@{stbvox\_get\_uniform\_info}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_get\_uniform\_info()}{stbvox\_get\_uniform\_info()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} int stbvox\+\_\+get\+\_\+uniform\+\_\+info (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structstbvox__uniform__info}{stbvox\+\_\+uniform\+\_\+info}} $\ast$}]{info,  }\item[{int}]{uniform }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a79f9e4c051c53927e0f762910729860b}\label{stb__voxel__render_8h_a79f9e4c051c53927e0f762910729860b}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_get\_vertex\_shader@{stbvox\_get\_vertex\_shader}}
+\index{stbvox\_get\_vertex\_shader@{stbvox\_get\_vertex\_shader}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_get\_vertex\_shader()}{stbvox\_get\_vertex\_shader()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} char$\ast$ stbvox\+\_\+get\+\_\+vertex\+\_\+shader (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a1b8b7770f24477cf39260eac3ade3400}\label{stb__voxel__render_8h_a1b8b7770f24477cf39260eac3ade3400}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_init\_mesh\_maker@{stbvox\_init\_mesh\_maker}}
+\index{stbvox\_init\_mesh\_maker@{stbvox\_init\_mesh\_maker}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_init\_mesh\_maker()}{stbvox\_init\_mesh\_maker()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} stbvox\+\_\+init\+\_\+mesh\+\_\+maker (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$}]{mm }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{stb__voxel__render_8h_ab792b164e02789bce6e2ba96a4b8f935}\label{stb__voxel__render_8h_ab792b164e02789bce6e2ba96a4b8f935}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_make\_mesh@{stbvox\_make\_mesh}}
+\index{stbvox\_make\_mesh@{stbvox\_make\_mesh}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_make\_mesh()}{stbvox\_make\_mesh()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} int stbvox\+\_\+make\+\_\+mesh (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$}]{mm }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a34226517e08ca1da34b39d34a5c31031}\label{stb__voxel__render_8h_a34226517e08ca1da34b39d34a5c31031}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_reset\_buffers@{stbvox\_reset\_buffers}}
+\index{stbvox\_reset\_buffers@{stbvox\_reset\_buffers}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_reset\_buffers()}{stbvox\_reset\_buffers()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} stbvox\+\_\+reset\+\_\+buffers (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$}]{mm }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a3b24ab8855010267a0e93541d1673fb9}\label{stb__voxel__render_8h_a3b24ab8855010267a0e93541d1673fb9}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_set\_buffer@{stbvox\_set\_buffer}}
+\index{stbvox\_set\_buffer@{stbvox\_set\_buffer}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_set\_buffer()}{stbvox\_set\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} stbvox\+\_\+set\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$}]{mm,  }\item[{int}]{mesh,  }\item[{int}]{slot,  }\item[{\mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} $\ast$}]{buffer,  }\item[{size\+\_\+t}]{len }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{stb__voxel__render_8h_aae8b2a3e95db09861fef397aeb7cf10d}\label{stb__voxel__render_8h_aae8b2a3e95db09861fef397aeb7cf10d}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_set\_default\_mesh@{stbvox\_set\_default\_mesh}}
+\index{stbvox\_set\_default\_mesh@{stbvox\_set\_default\_mesh}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_set\_default\_mesh()}{stbvox\_set\_default\_mesh()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} stbvox\+\_\+set\+\_\+default\+\_\+mesh (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$}]{mm,  }\item[{int}]{mesh }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a63fbb8703cf2c2718e6a0b4a90db00e6}\label{stb__voxel__render_8h_a63fbb8703cf2c2718e6a0b4a90db00e6}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_set\_input\_range@{stbvox\_set\_input\_range}}
+\index{stbvox\_set\_input\_range@{stbvox\_set\_input\_range}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_set\_input\_range()}{stbvox\_set\_input\_range()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} stbvox\+\_\+set\+\_\+input\+\_\+range (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$}]{mm,  }\item[{int}]{x0,  }\item[{int}]{y0,  }\item[{int}]{z0,  }\item[{int}]{x1,  }\item[{int}]{y1,  }\item[{int}]{z1 }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a089559775ad9ffc7671d147ef40f6509}\label{stb__voxel__render_8h_a089559775ad9ffc7671d147ef40f6509}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_set\_input\_stride@{stbvox\_set\_input\_stride}}
+\index{stbvox\_set\_input\_stride@{stbvox\_set\_input\_stride}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_set\_input\_stride()}{stbvox\_set\_input\_stride()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} stbvox\+\_\+set\+\_\+input\+\_\+stride (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$}]{mm,  }\item[{int}]{x\+\_\+stride\+\_\+in\+\_\+elements,  }\item[{int}]{y\+\_\+stride\+\_\+in\+\_\+elements }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{stb__voxel__render_8h_a4592b690afe4825bfabdfd9ae29fb35e}\label{stb__voxel__render_8h_a4592b690afe4825bfabdfd9ae29fb35e}} 
+\index{stb\_voxel\_render.h@{stb\_voxel\_render.h}!stbvox\_set\_mesh\_coordinates@{stbvox\_set\_mesh\_coordinates}}
+\index{stbvox\_set\_mesh\_coordinates@{stbvox\_set\_mesh\_coordinates}!stb\_voxel\_render.h@{stb\_voxel\_render.h}}
+\doxysubsubsection{\texorpdfstring{stbvox\_set\_mesh\_coordinates()}{stbvox\_set\_mesh\_coordinates()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stb__voxel__render_8h_a099e6ffd06ac1f49b7d5d4254165623c}{S\+T\+B\+V\+X\+D\+EC}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} stbvox\+\_\+set\+\_\+mesh\+\_\+coordinates (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structstbvox__mesh__maker}{stbvox\+\_\+mesh\+\_\+maker}} $\ast$}]{mm,  }\item[{int}]{x,  }\item[{int}]{y,  }\item[{int}]{z }\end{DoxyParamCaption})}
+

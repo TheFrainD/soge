@@ -1,0 +1,239 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_engine_8c">
+<title>src/vally/core/engine.c File Reference</title>
+<indexterm><primary>src/vally/core/engine.c</primary></indexterm>
+<programlisting>#include &lt;vally/core/engine.h&gt;
+#include &lt;vally/core/assertions.h&gt;
+#include &lt;vally/core/logger.h&gt;
+#include &lt;vally/core/window.h&gt;
+#include &lt;vally/core/event.h&gt;
+#include &lt;vally/core/input.h&gt;
+#include &lt;vally/core/time.h&gt;
+#include &lt;vally/resources/resources.h&gt;
+#include &lt;vally/renderer/renderer.h&gt;
+#include &lt;vally/ecs/ecs.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structengine__state">engine_state</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_engine_8c_1ac1dbeec1d859459d5730ebcade62ef97">engine_create</link> (<link linkend="_include_2vally_2config_8h_1ad309dbcaeea13aa602d686964156ea0b">i16</link> <link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>, <link linkend="_include_2vally_2config_8h_1ad309dbcaeea13aa602d686964156ea0b">i16</link> <link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>, const char *title)</para>
+
+<para>Initializes the vally engine. </para>
+</listitem>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_engine_8c_1ab5083309035e25d580da3da3748bb70e">engine_run</link> (<link linkend="_engine_8h_1a08ecdce65eb5571457cdb141ec5aa149">engine_start</link> <link linkend="_glad_8h_1ac55adc720a3098c1b454d2a4647f4361">start</link>, <link linkend="_engine_8h_1ae089957072efde72d93b362604bae8d4">engine_update</link> <link linkend="_game_8c_1afdf66b907b003137cbc1d6955cfa0baf">update</link>, <link linkend="_engine_8h_1a7b3c70f336a7dd1de171c3a23ed65a08">engine_render</link> <link linkend="_game_8c_1ab26eef233183a6a42dace6673fecbf95">render</link>)</para>
+
+<para>Runs the vally engine. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_engine_8c_1ac1dbeec1d859459d5730ebcade62ef97"/>    <section>
+    <title>engine_create()</title>
+<indexterm><primary>engine_create</primary><secondary>engine.c</secondary></indexterm>
+<indexterm><primary>engine.c</primary><secondary>engine_create</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> engine_create (<link linkend="_include_2vally_2config_8h_1ad309dbcaeea13aa602d686964156ea0b">i16</link> width, <link linkend="_include_2vally_2config_8h_1ad309dbcaeea13aa602d686964156ea0b">i16</link> height, const char * title)</computeroutput></para><para>
+
+<para>Initializes the vally engine. </para>
+</para>
+
+<para>This function initializes the vally engine. Must be called before any other vally function calls.</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>width</entry>
+                                <entry>
+<para>Target window width </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>height</entry>
+                                <entry>
+<para>Target window height </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>title</entry>
+                                <entry>
+<para>Target window title</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>TRUE - if success, FALSE - in case of fatal errors </para>
+</formalpara>
+</para>
+<para>
+Definition at line 58 of file engine.c.</para>
+<programlisting>58 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+59 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(initialized)&#32;{
+60 &#32;&#32;&#32;&#32;<link linkend="_logger_8h_1ae5066a2e77390ed60a2e2a98c374c520">VALLY_ERROR</link>(<emphasis role="stringliteral">&quot;engine_create&#32;cannot&#32;be&#32;called&#32;more&#32;than&#32;once&quot;</emphasis>);
+61 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+62 &#32;&#32;}
+63 
+64 &#32;&#32;state.<link linkend="_structengine__state_1a35f38473e4e944a16d7e830f74b1d1b1">is_runing</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+65 &#32;&#32;state.<link linkend="_structengine__state_1a7b1ea0b42d5a04b5fb07e6a8a1cbe83a">is_suspended</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+66 
+67 &#32;&#32;<emphasis role="comment">//=======Initialze&#32;subsystems===========</emphasis>
+68 &#32;&#32;<link linkend="_logger_8c_1af983bb4c29c37e2ef965bef699dde16d">logger_init</link>();
+69 
+70 &#32;&#32;<link linkend="_logger_8h_1a787875cab0f42571d60be03d1762c00a">VALLY_INFO</link>(<emphasis role="stringliteral">&quot;VALLY&#32;starts&quot;</emphasis>);
+71 
+72 &#32;&#32;state.<link linkend="_structengine__state_1ac7ea088daa6ed7e9cac891fba8bfd0c2">width</link>&#32;=&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>;
+73 &#32;&#32;state.<link linkend="_structengine__state_1a8decb36466adee4bf95034ac45bf3451">height</link>&#32;=&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>;
+74 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_src_2vally_2core_2window_8c_1aa9e11f3c895eb9257a996d77d280c520">window_create</link>(<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>,&#32;title))&#32;{
+75 &#32;&#32;&#32;&#32;<link linkend="_logger_8h_1ab2601211ce77503ba5fac7c144dbfa89">VALLY_FATAL</link>(<emphasis role="stringliteral">&quot;Could&#32;not&#32;initialize&#32;the&#32;window&#32;system!&quot;</emphasis>);
+76 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+77 &#32;&#32;}
+78 
+79 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_event_8h_1a5b0f78273328aee6d4f9ce3949a6b727">event_init</link>())&#32;{
+80 &#32;&#32;&#32;&#32;<link linkend="_logger_8h_1ae5066a2e77390ed60a2e2a98c374c520">VALLY_ERROR</link>(<emphasis role="stringliteral">&quot;Could&#32;not&#32;initialize&#32;the&#32;event&#32;system!&quot;</emphasis>);
+81 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+82 &#32;&#32;}
+83 
+84 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_input_8h_1a593bcbbd513523292f792c80ee8f9e43">input_init</link>())&#32;{
+85 &#32;&#32;&#32;&#32;<link linkend="_logger_8h_1ae5066a2e77390ed60a2e2a98c374c520">VALLY_ERROR</link>(<emphasis role="stringliteral">&quot;Could&#32;not&#32;initialize&#32;the&#32;input&#32;system!&quot;</emphasis>);
+86 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+87 &#32;&#32;}
+88 
+89 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_resources_8c_1a2bdcbd579f013459bcc7f55b7457613b">resources_init</link>())&#32;{
+90 &#32;&#32;&#32;&#32;<link linkend="_logger_8h_1ae5066a2e77390ed60a2e2a98c374c520">VALLY_ERROR</link>(<emphasis role="stringliteral">&quot;Could&#32;not&#32;initialize&#32;the&#32;resource&#32;system!&quot;</emphasis>);
+91 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+92 &#32;&#32;}
+93 
+94 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_renderer_8c_1a4ae2b9fe0b10687f04b90a3d8b2556bd">renderer_init</link>())&#32;{
+95 &#32;&#32;&#32;&#32;<link linkend="_logger_8h_1ae5066a2e77390ed60a2e2a98c374c520">VALLY_ERROR</link>(<emphasis role="stringliteral">&quot;Could&#32;not&#32;initialize&#32;the&#32;renderer&#32;system!&quot;</emphasis>);
+96 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+97 &#32;&#32;}
+98 
+99 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_ecs_8h_1ab40fd1fa64a61a9cc15240e9a5864316">ecs_init</link>())&#32;{
+100 &#32;&#32;&#32;&#32;<link linkend="_logger_8h_1ae5066a2e77390ed60a2e2a98c374c520">VALLY_ERROR</link>(<emphasis role="stringliteral">&quot;Could&#32;not&#32;initialize&#32;ECS!&quot;</emphasis>);
+101 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+102 &#32;&#32;}
+103 &#32;&#32;<emphasis role="comment">//=====================================</emphasis>
+104 
+105 
+106 &#32;&#32;state.<link linkend="_structengine__state_1a709037bcaa8d22ce5422328794f1aa65">last_time</link>&#32;=&#32;<link linkend="_time_8c_1a40c527fa3a4dfe786ce3f977c78e653a">time_now</link>();
+107 
+108 &#32;&#32;initialized&#32;=&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+109 
+110 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+111 }
+</programlisting>    </section><anchor xml:id="_engine_8c_1ab5083309035e25d580da3da3748bb70e"/>    <section>
+    <title>engine_run()</title>
+<indexterm><primary>engine_run</primary><secondary>engine.c</secondary></indexterm>
+<indexterm><primary>engine.c</primary><secondary>engine_run</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> engine_run (<link linkend="_engine_8h_1a08ecdce65eb5571457cdb141ec5aa149">engine_start</link> start, <link linkend="_engine_8h_1ae089957072efde72d93b362604bae8d4">engine_update</link> update, <link linkend="_engine_8h_1a7b3c70f336a7dd1de171c3a23ed65a08">engine_render</link> render)</computeroutput></para><para>
+
+<para>Runs the vally engine. </para>
+</para>
+
+<para>This function runs the vally engine.</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>start</entry>
+                                <entry>
+<para>Function that will be called before main loop </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>update</entry>
+                                <entry>
+<para>Function that will be called before rendering </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>render</entry>
+                                <entry>
+<para>Function that will be called in rendering</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>TRUE - if success, FALSE - in case of fatal errors </para>
+</formalpara>
+</para>
+<para>
+Definition at line 113 of file engine.c.</para>
+<programlisting>113 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+114 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_glad_8h_1ac55adc720a3098c1b454d2a4647f4361">start</link>&#32;||&#32;!<link linkend="_game_8c_1afdf66b907b003137cbc1d6955cfa0baf">update</link>&#32;||&#32;!<link linkend="_game_8c_1ab26eef233183a6a42dace6673fecbf95">render</link>)&#32;{
+115 &#32;&#32;&#32;&#32;<link linkend="_logger_8h_1ab2601211ce77503ba5fac7c144dbfa89">VALLY_FATAL</link>(<emphasis role="stringliteral">&quot;Could&#32;not&#32;run&#32;the&#32;engine!&#32;Functions&#32;must&#32;not&#32;be&#32;NULL!&quot;</emphasis>);
+116 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+117 &#32;&#32;}
+118 
+119 &#32;&#32;<link linkend="_glad_8h_1ac55adc720a3098c1b454d2a4647f4361">start</link>();
+120 
+121 &#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(state.<link linkend="_structengine__state_1a35f38473e4e944a16d7e830f74b1d1b1">is_runing</link>)&#32;{
+122 &#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a94dab5770726ccbef8c7d026cfbdf8e5">f64</link>&#32;current_time&#32;=&#32;<link linkend="_time_8c_1a40c527fa3a4dfe786ce3f977c78e653a">time_now</link>();
+123 &#32;&#32;&#32;&#32;<link linkend="_include_2vally_2config_8h_1a94dab5770726ccbef8c7d026cfbdf8e5">f64</link>&#32;delta_time&#32;=&#32;current_time&#32;-&#32;state.<link linkend="_structengine__state_1a709037bcaa8d22ce5422328794f1aa65">last_time</link>;
+124 
+125 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_src_2vally_2core_2window_8c_1a8eef3112ffc6da9114150e5debc62ea7">window_poll_events</link>())&#32;{
+126 &#32;&#32;&#32;&#32;&#32;&#32;state.<link linkend="_structengine__state_1a35f38473e4e944a16d7e830f74b1d1b1">is_runing</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+127 &#32;&#32;&#32;&#32;}
+128 
+129 &#32;&#32;&#32;&#32;<link linkend="_game_8c_1afdf66b907b003137cbc1d6955cfa0baf">update</link>(delta_time);
+130 
+131 &#32;&#32;&#32;&#32;<link linkend="_animator_8h_1a15f32963c1ac3b6fe5afbc4cdc14b996">ecs_animator_update</link>(delta_time);
+132 
+133 &#32;&#32;&#32;&#32;<link linkend="_renderer_8c_1a96a061c5050e42b8d179249b2e8a8d3d">renderer_clear_screen</link>();
+134 &#32;&#32;&#32;&#32;<link linkend="_renderer_8c_1aa3cb3b8ee10c8cee851289641a7efe1b">renderer_begin_batch</link>();
+135 &#32;&#32;&#32;&#32;<link linkend="_spriterenderer_8h_1ab4ff416b9b83f7e3988b60652cc479b4">ecs_spriterenderer_update</link>();
+136 &#32;&#32;&#32;&#32;<link linkend="_game_8c_1ab26eef233183a6a42dace6673fecbf95">render</link>(delta_time);
+137 &#32;&#32;&#32;&#32;<link linkend="_renderer_8c_1a90ce426230127f65390165eb21e98d67">renderer_end_batch</link>();
+138 &#32;&#32;&#32;&#32;<link linkend="_renderer_8c_1a209ddec86b275bb211896bcf1e7cfafa">renderer_flush</link>();
+139 
+140 &#32;&#32;&#32;&#32;<link linkend="_src_2vally_2core_2window_8c_1a7a456564f5873a0c7d7809278ffc7fed">window_swap_buffers</link>();
+141 
+142 &#32;&#32;&#32;&#32;state.<link linkend="_structengine__state_1a709037bcaa8d22ce5422328794f1aa65">last_time</link>&#32;=&#32;current_time;
+143 &#32;&#32;}
+144 
+145 &#32;&#32;state.<link linkend="_structengine__state_1a35f38473e4e944a16d7e830f74b1d1b1">is_runing</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+146 
+147 &#32;&#32;<emphasis role="comment">//&#32;Termiante&#32;all&#32;systems</emphasis>
+148 &#32;&#32;<link linkend="_event_8h_1af5c0fd0bca4f543c61042cf947de7ef9">event_terminate</link>();
+149 &#32;&#32;<link linkend="_input_8h_1a95fa09da1f1bf6a0fdd462b0d4ae2d8b">input_terminate</link>();
+150 &#32;&#32;<link linkend="_renderer_8c_1aa1882befd9106950e8c2913cc66b093a">renderer_terminate</link>();
+151 &#32;&#32;<link linkend="_resources_8c_1a6105d50e032c659b7403561b1f108195">resources_terminate</link>();
+152 &#32;&#32;<link linkend="_src_2vally_2core_2window_8c_1a01212a4a8353016a1350ee152faeebd3">window_terminate</link>();
+153 &#32;&#32;<link linkend="_logger_8h_1a787875cab0f42571d60be03d1762c00a">VALLY_INFO</link>(<emphasis role="stringliteral">&quot;Shutting&#32;down&quot;</emphasis>);
+154 
+155 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+156 }
+</programlisting></section>
+</section>
+</section>

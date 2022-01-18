@@ -1,5 +1,16 @@
-#ifndef VALLY_RENDERER_SHADER_H_
-#define VALLY_RENDERER_SHADER_H_
+/*********************************************************************
+ * shader.h                                                          *
+ *                                                                   *
+ * Copyright (c) 2022 Dmytro Zykov                                   *
+ *                                                                   *
+ * This file is a part of the vally project, and may only be used,   *
+ * modified and distributed under the terms of the MIT License,      *
+ * LICENSE.md. By continuing to use, modify and distribute this file *
+ * you inidicate that you have read the license and accept it fully. *
+ *********************************************************************/
+
+#ifndef VALLY_SHADER_H_
+#define VALLY_SHADER_H_
 
 #include <cglm/cglm.h>
 #include <cglm/struct.h>
@@ -11,7 +22,7 @@ typedef struct {
   b8 attached;
 } shader;
 
-shader shader_create(const char *vertex_path, const char *fragment_path);
+shader *shader_create(const char *vertex_path, const char *fragment_path);
 void shader_destroy(shader *shdr);
 
 void shader_attach(shader *shdr);
@@ -26,4 +37,4 @@ void shader_send_int(shader *shdr, const char *name, int value);
 void shader_send_int_array(shader *shdr, const char *name, i32 count, const i32 *array);
 void shader_send_mat4(shader *shdr, const char *name, mat4s matrix);
 
-#endif // !VALLY_RENDERER_SHADER_H_
+#endif // VALLY_SHADER_H_

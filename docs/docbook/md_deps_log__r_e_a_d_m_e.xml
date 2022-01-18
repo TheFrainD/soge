@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_md_deps_log__r_e_a_d_m_e">
+
+<para>A simple logging library implemented in C99</para>
+
+<para></para>
+<section xml:id="_md_deps_log__r_e_a_d_m_e_1autotoc_md78">
+<title>Usage</title>
+
+<para><emphasis role="bold"><link xlink:href="src/log.c?raw=1">log.c</link></emphasis> and <emphasis role="bold"><link xlink:href="src/log.h?raw=1">log.h</link></emphasis> should be dropped into an existing project and compiled along with it. The library provides 6 function-like macros for logging:</para>
+
+<para><literallayout><computeroutput>log_trace(const&#32;char&#32;*fmt,&#32;...);
+log_debug(const&#32;char&#32;*fmt,&#32;...);
+log_info(const&#32;char&#32;*fmt,&#32;...);
+log_warn(const&#32;char&#32;*fmt,&#32;...);
+log_error(const&#32;char&#32;*fmt,&#32;...);
+log_fatal(const&#32;char&#32;*fmt,&#32;...);
+</computeroutput></literallayout></para>
+
+<para>Each function takes a printf format string followed by additional arguments:</para>
+
+<para><literallayout><computeroutput>log_trace(&quot;Hello&#32;%s&quot;,&#32;&quot;world&quot;)
+</computeroutput></literallayout></para>
+
+<para>Resulting in a line with the given format printed to stderr:</para>
+
+<para><literallayout><computeroutput>20:18:26&#32;TRACE&#32;src/main.c:11:&#32;Hello&#32;world
+</computeroutput></literallayout></para>
+<section xml:id="_md_deps_log__r_e_a_d_m_e_1autotoc_md79">
+<title>log_set_quiet(bool enable)</title>
+
+<para>Quiet-mode can be enabled by passing <computeroutput>true</computeroutput> to the <computeroutput><link linkend="_log_8c_1a6de5d12252f1b48279d28769b7c130eb">log_set_quiet()</link></computeroutput> function. While this mode is enabled the library will not output anything to <computeroutput>stderr</computeroutput>, but will continue to write to files and callbacks if any are set.</para>
+</section>
+<section xml:id="_md_deps_log__r_e_a_d_m_e_1autotoc_md80">
+<title>log_set_level(int level)</title>
+
+<para>The current logging level can be set by using the <computeroutput><link linkend="_log_8c_1af2493e94f152a28b2ba4e3a2e2bba65d">log_set_level()</link></computeroutput> function. All logs below the given level will not be written to <computeroutput>stderr</computeroutput>. By default the level is <computeroutput>LOG_TRACE</computeroutput>, such that nothing is ignored.</para>
+</section>
+<section xml:id="_md_deps_log__r_e_a_d_m_e_1autotoc_md81">
+<title>log_add_fp(FILE *fp, int level)</title>
+
+<para>One or more file pointers where the log will be written can be provided to the library by using the <computeroutput><link linkend="_log_8c_1afcf2da85fa8a21494dc461d546c50e4b">log_add_fp()</link></computeroutput> function. The data written to the file output is of the following format:</para>
+
+<para><literallayout><computeroutput>2047-03-11&#32;20:18:26&#32;TRACE&#32;src/main.c:11:&#32;Hello&#32;world
+</computeroutput></literallayout></para>
+
+<para>Any messages below the given <computeroutput>level</computeroutput> are ignored. If the library failed to add a file pointer a value less-than-zero is returned.</para>
+</section>
+<section xml:id="_md_deps_log__r_e_a_d_m_e_1autotoc_md82">
+<title>log_add_callback(log_LogFn fn, void *udata, int level)</title>
+
+<para>One or more callback functions which are called with the log data can be provided to the library by using the <computeroutput><link linkend="_log_8c_1a4196855e1cd42700557b6e4fa0715a35">log_add_callback()</link></computeroutput> function. A callback function is passed a <computeroutput><link linkend="_structlog___event">log_Event</link></computeroutput> structure containing the <computeroutput>line</computeroutput> number, <computeroutput>filename</computeroutput>, <computeroutput>fmt</computeroutput> string, <computeroutput>va</computeroutput> printf va_list, <computeroutput>level</computeroutput> and the given <computeroutput>udata</computeroutput>.</para>
+</section>
+<section xml:id="_md_deps_log__r_e_a_d_m_e_1autotoc_md83">
+<title>log_set_lock(log_LockFn fn, void *udata)</title>
+
+<para>If the log will be written to from multiple threads a lock function can be set. The function is passed the boolean <computeroutput>true</computeroutput> if the lock should be acquired or <computeroutput>false</computeroutput> if the lock should be released and the given <computeroutput>udata</computeroutput> value.</para>
+</section>
+<section xml:id="_md_deps_log__r_e_a_d_m_e_1autotoc_md84">
+<title>const char* log_level_string(int level)</title>
+
+<para>Returns the name of the given log level as a string.</para>
+</section>
+<section xml:id="_md_deps_log__r_e_a_d_m_e_1autotoc_md85">
+<title>LOG_USE_COLOR</title>
+
+<para>If the library is compiled with <computeroutput>-DLOG_USE_COLOR</computeroutput> ANSI color escape codes will be used when printing.</para>
+</section>
+</section>
+<section xml:id="_md_deps_log__r_e_a_d_m_e_1autotoc_md86">
+<title>License</title>
+
+<para>This library is free software; you can redistribute it and/or modify it under the terms of the MIT license. See [LICENSE](LICENSE) for details. </para>
+</section>
+</section>

@@ -1,0 +1,138 @@
+\hypertarget{test__project_8h}{}\doxysection{deps/cglm/test/src/test\+\_\+project.h File Reference}
+\label{test__project_8h}\index{deps/cglm/test/src/test\_project.h@{deps/cglm/test/src/test\_project.h}}
+{\ttfamily \#include \char`\"{}test\+\_\+common.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{test__project_8h_ad1632ae237807d814835a90c5d9f546b}{T\+E\+S\+T\+\_\+\+I\+M\+PL}} (\mbox{\hyperlink{tests_8c_ac20fdeb5e2aeda533ce6b026bf324b55}{G\+L\+M\+\_\+\+P\+R\+E\+F\+IX}}, unprojecti)
+\item 
+\mbox{\hyperlink{test__project_8h_ae241535dcc3c6885f74fe8059c563697}{T\+E\+S\+T\+\_\+\+I\+M\+PL}} (\mbox{\hyperlink{tests_8c_ac20fdeb5e2aeda533ce6b026bf324b55}{G\+L\+M\+\_\+\+P\+R\+E\+F\+IX}}, unproject)
+\item 
+\mbox{\hyperlink{test__project_8h_a0de82522ee4d9866409c45d24077675b}{T\+E\+S\+T\+\_\+\+I\+M\+PL}} (\mbox{\hyperlink{tests_8c_ac20fdeb5e2aeda533ce6b026bf324b55}{G\+L\+M\+\_\+\+P\+R\+E\+F\+IX}}, project)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{test__project_8h_a0de82522ee4d9866409c45d24077675b}\label{test__project_8h_a0de82522ee4d9866409c45d24077675b}} 
+\index{test\_project.h@{test\_project.h}!TEST\_IMPL@{TEST\_IMPL}}
+\index{TEST\_IMPL@{TEST\_IMPL}!test\_project.h@{test\_project.h}}
+\doxysubsubsection{\texorpdfstring{TEST\_IMPL()}{TEST\_IMPL()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+I\+M\+PL (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{tests_8c_ac20fdeb5e2aeda533ce6b026bf324b55}{G\+L\+M\+\_\+\+P\+R\+E\+F\+IX}}}]{,  }\item[{project}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 60 of file test\+\_\+project.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{60                                \{}
+\DoxyCodeLine{61   \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} model, view, proj, mvp;}
+\DoxyCodeLine{62   vec4 viewport = \{0.0f, 0.0f, 800.0f, 600.0f\};}
+\DoxyCodeLine{63   \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} pos      = \{13.0f, 45.0f, 0.74f\};}
+\DoxyCodeLine{64   \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} projected, unprojected;}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66   \mbox{\hyperlink{affine_8h_a511b571151c53ecc052f5cf74c6a01b9}{glm\_translate\_make}}(model, (\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}})\{0.0f, 0.0f, -\/10.0f\});}
+\DoxyCodeLine{67   \mbox{\hyperlink{cam_8h_a4161261504385114289708b132fbe7af}{glm\_lookat}}((\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}})\{0.0f, 0.0f, 0.0f\}, pos, \mbox{\hyperlink{vec3_8h_a341e15415e6f734c9e94aa2c7cd05c02}{GLM\_YUP}}, view);}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69   \mbox{\hyperlink{cam_8h_a8b485b278c77a8a0b212ab4ede34a832}{glm\_perspective\_default}}(0.5\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, proj);}
+\DoxyCodeLine{70   \mbox{\hyperlink{mat4_8h_a089e093063d5cfabdb6d32104f7744d4}{glm\_mat4\_mulN}}((\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} *[])\{\&proj, \&view, \&model\}, 3, mvp);}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72   \mbox{\hyperlink{tests_8c_ad5e9109befc2df7d1e17bb4e46610342}{GLM}}(\mbox{\hyperlink{namespaceconf_a45653c983098153b78e33600e39230eb}{project}})(pos, mvp, viewport, projected);}
+\DoxyCodeLine{73   \mbox{\hyperlink{tests_8c_ad5e9109befc2df7d1e17bb4e46610342}{GLM}}(unproject)(projected, mvp, viewport, unprojected);}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75   \textcolor{comment}{/* unprojected of projected vector must be same as original one */}}
+\DoxyCodeLine{76   \textcolor{comment}{/* we used 0.01 because of projection floating point errors */}}
+\DoxyCodeLine{77   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(fabsf(pos[0] -\/ unprojected[0]) < 0.01)}
+\DoxyCodeLine{78   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(fabsf(pos[1] -\/ unprojected[1]) < 0.01)}
+\DoxyCodeLine{79   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(fabsf(pos[2] -\/ unprojected[2]) < 0.01)}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81   \textcolor{comment}{/* test with no projection */}}
+\DoxyCodeLine{82   \mbox{\hyperlink{mat4_8h_a60bca590d72796f07ea1cb0e5a586c5a}{glm\_mat4\_identity}}(mvp);}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84   \mbox{\hyperlink{tests_8c_ad5e9109befc2df7d1e17bb4e46610342}{GLM}}(\mbox{\hyperlink{namespaceconf_a45653c983098153b78e33600e39230eb}{project}})(pos, mvp, viewport, projected);}
+\DoxyCodeLine{85   \mbox{\hyperlink{tests_8c_ad5e9109befc2df7d1e17bb4e46610342}{GLM}}(unproject)(projected, mvp, viewport, unprojected);}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(\mbox{\hyperlink{test__common_8h_a8b5ca35f1cc6f58d128c0adf26c5f44a}{test\_eq}}(pos[0], unprojected[0]))}
+\DoxyCodeLine{88   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(\mbox{\hyperlink{test__common_8h_a8b5ca35f1cc6f58d128c0adf26c5f44a}{test\_eq}}(pos[1], unprojected[1]))}
+\DoxyCodeLine{89   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(\mbox{\hyperlink{test__common_8h_a8b5ca35f1cc6f58d128c0adf26c5f44a}{test\_eq}}(pos[2], unprojected[2]))}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91   \mbox{\hyperlink{test_2include_2common_8h_aee1dc5ecf95c68bc90ba502679668096}{TEST\_SUCCESS}}}
+\DoxyCodeLine{92 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{test__project_8h_ae241535dcc3c6885f74fe8059c563697}\label{test__project_8h_ae241535dcc3c6885f74fe8059c563697}} 
+\index{test\_project.h@{test\_project.h}!TEST\_IMPL@{TEST\_IMPL}}
+\index{TEST\_IMPL@{TEST\_IMPL}!test\_project.h@{test\_project.h}}
+\doxysubsubsection{\texorpdfstring{TEST\_IMPL()}{TEST\_IMPL()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+I\+M\+PL (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{tests_8c_ac20fdeb5e2aeda533ce6b026bf324b55}{G\+L\+M\+\_\+\+P\+R\+E\+F\+IX}}}]{,  }\item[{unproject}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 36 of file test\+\_\+project.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{36                                  \{}
+\DoxyCodeLine{37   \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} model, view, proj, mvp;}
+\DoxyCodeLine{38   vec4 viewport = \{0.0f, 0.0f, 800.0f, 600.0f\};}
+\DoxyCodeLine{39   \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} pos      = \{13.0f, 45.0f, 0.74f\};}
+\DoxyCodeLine{40   \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} projected, unprojected;}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42   \mbox{\hyperlink{affine_8h_a511b571151c53ecc052f5cf74c6a01b9}{glm\_translate\_make}}(model, (\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}})\{0.0f, 0.0f, -\/10.0f\});}
+\DoxyCodeLine{43   \mbox{\hyperlink{cam_8h_a4161261504385114289708b132fbe7af}{glm\_lookat}}((\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}})\{0.0f, 0.0f, 0.0f\}, pos, \mbox{\hyperlink{vec3_8h_a341e15415e6f734c9e94aa2c7cd05c02}{GLM\_YUP}}, view);}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45   \mbox{\hyperlink{cam_8h_a8b485b278c77a8a0b212ab4ede34a832}{glm\_perspective\_default}}(0.5\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, proj);}
+\DoxyCodeLine{46   \mbox{\hyperlink{mat4_8h_a089e093063d5cfabdb6d32104f7744d4}{glm\_mat4\_mulN}}((\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} *[])\{\&proj, \&view, \&model\}, 3, mvp);}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48   \mbox{\hyperlink{tests_8c_ad5e9109befc2df7d1e17bb4e46610342}{GLM}}(\mbox{\hyperlink{namespaceconf_a45653c983098153b78e33600e39230eb}{project}})(pos, mvp, viewport, projected);}
+\DoxyCodeLine{49   \mbox{\hyperlink{tests_8c_ad5e9109befc2df7d1e17bb4e46610342}{GLM}}(unproject)(projected, mvp, viewport, unprojected);}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51   \textcolor{comment}{/* unprojected of projected vector must be same as original one */}}
+\DoxyCodeLine{52   \textcolor{comment}{/* we used 0.01 because of projection floating point errors */}}
+\DoxyCodeLine{53   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(fabsf(pos[0] -\/ unprojected[0]) < 0.01)}
+\DoxyCodeLine{54   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(fabsf(pos[1] -\/ unprojected[1]) < 0.01)}
+\DoxyCodeLine{55   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(fabsf(pos[2] -\/ unprojected[2]) < 0.01)}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57   \mbox{\hyperlink{test_2include_2common_8h_aee1dc5ecf95c68bc90ba502679668096}{TEST\_SUCCESS}}}
+\DoxyCodeLine{58 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{test__project_8h_ad1632ae237807d814835a90c5d9f546b}\label{test__project_8h_ad1632ae237807d814835a90c5d9f546b}} 
+\index{test\_project.h@{test\_project.h}!TEST\_IMPL@{TEST\_IMPL}}
+\index{TEST\_IMPL@{TEST\_IMPL}!test\_project.h@{test\_project.h}}
+\doxysubsubsection{\texorpdfstring{TEST\_IMPL()}{TEST\_IMPL()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+I\+M\+PL (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{tests_8c_ac20fdeb5e2aeda533ce6b026bf324b55}{G\+L\+M\+\_\+\+P\+R\+E\+F\+IX}}}]{,  }\item[{unprojecti}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 10 of file test\+\_\+project.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{10                                   \{}
+\DoxyCodeLine{11   \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} model, view, proj, mvp;}
+\DoxyCodeLine{12   vec4 viewport = \{0.0f, 0.0f, 800.0f, 600.0f\};}
+\DoxyCodeLine{13   \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} pos      = \{13.0f, 45.0f, 0.74f\};}
+\DoxyCodeLine{14   \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} projected, unprojected;}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16   \mbox{\hyperlink{affine_8h_a511b571151c53ecc052f5cf74c6a01b9}{glm\_translate\_make}}(model, (\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}})\{0.0f, 0.0f, -\/10.0f\});}
+\DoxyCodeLine{17   \mbox{\hyperlink{cam_8h_a4161261504385114289708b132fbe7af}{glm\_lookat}}((\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}})\{0.0f, 0.0f, 0.0f\}, pos, \mbox{\hyperlink{vec3_8h_a341e15415e6f734c9e94aa2c7cd05c02}{GLM\_YUP}}, view);}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19   \mbox{\hyperlink{cam_8h_a8b485b278c77a8a0b212ab4ede34a832}{glm\_perspective\_default}}(0.5\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, proj);}
+\DoxyCodeLine{20   \mbox{\hyperlink{mat4_8h_a089e093063d5cfabdb6d32104f7744d4}{glm\_mat4\_mulN}}((\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} *[])\{\&proj, \&view, \&model\}, 3, mvp);}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22   \mbox{\hyperlink{tests_8c_ad5e9109befc2df7d1e17bb4e46610342}{GLM}}(\mbox{\hyperlink{namespaceconf_a45653c983098153b78e33600e39230eb}{project}})(pos, mvp, viewport, projected);}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24   \mbox{\hyperlink{mat4_8h_a546f87f297091529a84557c83cca9b9c}{glm\_mat4\_inv}}(mvp, mvp);}
+\DoxyCodeLine{25   \mbox{\hyperlink{tests_8c_ad5e9109befc2df7d1e17bb4e46610342}{GLM}}(unprojecti)(projected, mvp, viewport, unprojected);}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27   \textcolor{comment}{/* unprojected of projected vector must be same as original one */}}
+\DoxyCodeLine{28   \textcolor{comment}{/* we used 0.01 because of projection floating point errors */}}
+\DoxyCodeLine{29   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(fabsf(pos[0] -\/ unprojected[0]) < 0.01)}
+\DoxyCodeLine{30   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(fabsf(pos[1] -\/ unprojected[1]) < 0.01)}
+\DoxyCodeLine{31   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(fabsf(pos[2] -\/ unprojected[2]) < 0.01)}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33   \mbox{\hyperlink{test_2include_2common_8h_aee1dc5ecf95c68bc90ba502679668096}{TEST\_SUCCESS}}}
+\DoxyCodeLine{34 \}}
+
+\end{DoxyCode}

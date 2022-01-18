@@ -1,0 +1,625 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_wave_8c">
+<title>deps/glfw/examples/wave.c File Reference</title>
+<indexterm><primary>deps/glfw/examples/wave.c</primary></indexterm>
+<programlisting>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;math.h&gt;
+#include &lt;glad/gl.h&gt;
+#include &lt;GLFW/glfw3.h&gt;
+#include &lt;linmath.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_struct_vertex">Vertex</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_wave_8c_1a09f9c3bf094ecaf707c673924ffd615a">GLAD_GL_IMPLEMENTATION</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_wave_8c_1a088324ad8995e3eb76024e3e79083d48">GLFW_INCLUDE_NONE</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_wave_8c_1a82c13b07387b0fa3ab346ad38894e2a7">MAX_DELTA_T</link>   0.01</para>
+</listitem>
+            <listitem><para>#define <link linkend="_wave_8c_1aaa69f89df4c8e47abeb574bfdd11d9f4">ANIMATION_SPEED</link>   10.0</para>
+</listitem>
+            <listitem><para>#define <link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>   50</para>
+</listitem>
+            <listitem><para>#define <link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>   50</para>
+</listitem>
+            <listitem><para>#define <link linkend="_wave_8c_1abd709477ffd7875a410c3e7825811574">VERTEXNUM</link>   (<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>*<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_wave_8c_1ae10902c68cd7f4aaf5bd6a0dcc774f8f">QUADW</link>   (<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link> - 1)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_wave_8c_1a0c865f0be27a2d2ea258170ccdb7e5c3">QUADH</link>   (<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link> - 1)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_wave_8c_1aaaa740511f97d0370a51a9219a806a7b">QUADNUM</link>   (<link linkend="_wave_8c_1ae10902c68cd7f4aaf5bd6a0dcc774f8f">QUADW</link>*<link linkend="_wave_8c_1a0c865f0be27a2d2ea258170ccdb7e5c3">QUADH</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wave_8c_1a903a28082e3bfadf6a7b1fd0be8d4909">init_vertices</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wave_8c_1a61e20756921c698158edcbde49ec1230">init_grid</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wave_8c_1ae370908c38c53e0cad194f03f73aac96">draw_scene</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wave_8c_1a100d8d4de0ba1cb930db3b54ccc92894">init_opengl</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wave_8c_1a59b9ad3ad093089c64996013be9541c7">adjust_grid</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wave_8c_1a60caf84ae85662ac67ab2dfd0da1be89">calc_grid</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wave_8c_1a286930f4e8ede059b83ff6eafa2ff718">key_callback</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int <link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>, int scancode, int action, int mods)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wave_8c_1a5515d805e76ce6728de3c0dc5e187c86">mouse_button_callback</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int button, int action, int mods)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wave_8c_1ab5fb5502317b46f9cecd6379f2ecd210">cursor_position_callback</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, double <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, double <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wave_8c_1a6bec52479312a11696798b50140f227d">scroll_callback</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, double <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>, double <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wave_8c_1a5180f7bf2b71421af837035824a8c8ac">framebuffer_size_callback</link> (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>, int <link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>, int <link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_wave_8c_1a0ddf1224851353fc92bfbff6f499fa97">main</link> (int argc, char *argv[])</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> <link linkend="_wave_8c_1a6487f2034e554d7d012dc0821253e5be">alpha</link> = 210.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> <link linkend="_wave_8c_1aabc9b3ee8fafa62b353f3956f8e3c269">beta</link> = -70.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> <link linkend="_wave_8c_1a5a2149a845f88b6489d3d88845d0f257">zoom</link> = 2.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></para>
+</listitem>
+            <listitem><para>double <link linkend="_wave_8c_1a7dd3022939e7ae3380309dc7364b5e80">cursorX</link></para>
+</listitem>
+            <listitem><para>double <link linkend="_wave_8c_1a34542bdac8d5a952df4c392a78d0b7e8">cursorY</link></para>
+</listitem>
+            <listitem><para><link linkend="_glad_8h_1a68c4714e43d8e827d80759f9cb864f3c">GLuint</link> <link linkend="_wave_8c_1ae633a736679a0ac3460861099a0cf9c2">quad</link> [4 *<link linkend="_wave_8c_1aaaa740511f97d0370a51a9219a806a7b">QUADNUM</link>]</para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_vertex">Vertex</link> <link linkend="_wave_8c_1aeb310e20c71a4ca39015f9553658d290">vertex</link> [<link linkend="_wave_8c_1abd709477ffd7875a410c3e7825811574">VERTEXNUM</link>]</para>
+</listitem>
+            <listitem><para>double <link linkend="_wave_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link></para>
+</listitem>
+            <listitem><para>double <link linkend="_wave_8c_1ab661957592a1103b5021605bb3f17e19">p</link> [<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>][<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>]</para>
+</listitem>
+            <listitem><para>double <link linkend="_wave_8c_1ae0c26d4f5512acab464189507e1a351b">vx</link> [<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>][<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>]</para>
+</listitem>
+            <listitem><para>double <link linkend="_wave_8c_1a1bf63c4490d6d4ad47a0a05b14f806a9">vy</link> [<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>][<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>]</para>
+</listitem>
+            <listitem><para>double <link linkend="_wave_8c_1a5f62e300af876f32e1ceef29663b6ec5">ax</link> [<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>][<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>]</para>
+</listitem>
+            <listitem><para>double <link linkend="_wave_8c_1a9b3620b058f40faa81012a49e0d959e8">ay</link> [<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>][<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>]</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_wave_8c_1aaa69f89df4c8e47abeb574bfdd11d9f4"/>    <section>
+    <title>ANIMATION_SPEED</title>
+<indexterm><primary>ANIMATION_SPEED</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>ANIMATION_SPEED</secondary></indexterm>
+<para><computeroutput>#define ANIMATION_SPEED   10.0</computeroutput></para><para>
+Definition at line 31 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1a09f9c3bf094ecaf707c673924ffd615a"/>    <section>
+    <title>GLAD_GL_IMPLEMENTATION</title>
+<indexterm><primary>GLAD_GL_IMPLEMENTATION</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>GLAD_GL_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define GLAD_GL_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 20 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1a088324ad8995e3eb76024e3e79083d48"/>    <section>
+    <title>GLFW_INCLUDE_NONE</title>
+<indexterm><primary>GLFW_INCLUDE_NONE</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>GLFW_INCLUDE_NONE</secondary></indexterm>
+<para><computeroutput>#define GLFW_INCLUDE_NONE</computeroutput></para><para>
+Definition at line 22 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1a7327eab323c715d04c1fac38cd61d856"/>    <section>
+    <title>GRIDH</title>
+<indexterm><primary>GRIDH</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>GRIDH</secondary></indexterm>
+<para><computeroutput>#define GRIDH   50</computeroutput></para><para>
+Definition at line 46 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1a36f83106cff056abddf55fdc6f803311"/>    <section>
+    <title>GRIDW</title>
+<indexterm><primary>GRIDW</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>GRIDW</secondary></indexterm>
+<para><computeroutput>#define GRIDW   50</computeroutput></para><para>
+Definition at line 45 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1a82c13b07387b0fa3ab346ad38894e2a7"/>    <section>
+    <title>MAX_DELTA_T</title>
+<indexterm><primary>MAX_DELTA_T</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>MAX_DELTA_T</secondary></indexterm>
+<para><computeroutput>#define MAX_DELTA_T   0.01</computeroutput></para><para>
+Definition at line 28 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1a0c865f0be27a2d2ea258170ccdb7e5c3"/>    <section>
+    <title>QUADH</title>
+<indexterm><primary>QUADH</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>QUADH</secondary></indexterm>
+<para><computeroutput>#define QUADH   (<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link> - 1)</computeroutput></para><para>
+Definition at line 50 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1aaaa740511f97d0370a51a9219a806a7b"/>    <section>
+    <title>QUADNUM</title>
+<indexterm><primary>QUADNUM</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>QUADNUM</secondary></indexterm>
+<para><computeroutput>#define QUADNUM   (<link linkend="_wave_8c_1ae10902c68cd7f4aaf5bd6a0dcc774f8f">QUADW</link>*<link linkend="_wave_8c_1a0c865f0be27a2d2ea258170ccdb7e5c3">QUADH</link>)</computeroutput></para><para>
+Definition at line 51 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1ae10902c68cd7f4aaf5bd6a0dcc774f8f"/>    <section>
+    <title>QUADW</title>
+<indexterm><primary>QUADW</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>QUADW</secondary></indexterm>
+<para><computeroutput>#define QUADW   (<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link> - 1)</computeroutput></para><para>
+Definition at line 49 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1abd709477ffd7875a410c3e7825811574"/>    <section>
+    <title>VERTEXNUM</title>
+<indexterm><primary>VERTEXNUM</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>VERTEXNUM</secondary></indexterm>
+<para><computeroutput>#define VERTEXNUM   (<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>*<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>)</computeroutput></para><para>
+Definition at line 47 of file wave.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_wave_8c_1a59b9ad3ad093089c64996013be9541c7"/>    <section>
+    <title>adjust_grid()</title>
+<indexterm><primary>adjust_grid</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>adjust_grid</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> adjust_grid (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 199 of file wave.c.</para>
+<programlisting>200 {
+201 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;pos;
+202 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>;
+203 
+204 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;=&#32;0;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;&lt;&#32;<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>;&#32;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>++)
+205 &#32;&#32;&#32;&#32;{
+206 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;=&#32;0;&#32;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;&lt;&#32;<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>;&#32;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>++)
+207 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+208 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pos&#32;=&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;*&#32;<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>&#32;+&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>;
+209 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structvertex">vertex</link>[pos].z&#32;=&#32;(float)&#32;(<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;*&#32;(1.0&#32;/&#32;50.0));
+210 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+211 &#32;&#32;&#32;&#32;}
+212 }
+</programlisting>    </section><anchor xml:id="_wave_8c_1a60caf84ae85662ac67ab2dfd0da1be89"/>    <section>
+    <title>calc_grid()</title>
+<indexterm><primary>calc_grid</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>calc_grid</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> calc_grid (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 219 of file wave.c.</para>
+<programlisting>220 {
+221 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,&#32;<link linkend="_glext_8h_1a7b907a03236685c534d89d604cff23c8">x2</link>,&#32;<link linkend="_glext_8h_1a2be1135ed68e8d80fa9e130c7814f8c2">y2</link>;
+222 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">double</emphasis>&#32;time_step&#32;=&#32;<link linkend="_wave_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>&#32;*&#32;<link linkend="_wave_8c_1aaa69f89df4c8e47abeb574bfdd11d9f4">ANIMATION_SPEED</link>;
+223 
+224 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Compute&#32;accelerations</emphasis>
+225 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;=&#32;0;&#32;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;&lt;&#32;<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>;&#32;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>++)
+226 &#32;&#32;&#32;&#32;{
+227 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a7b907a03236685c534d89d604cff23c8">x2</link>&#32;=&#32;(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;+&#32;1)&#32;%&#32;<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>;
+228 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;=&#32;0;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;&lt;&#32;<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>++)
+229 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a5f62e300af876f32e1ceef29663b6ec5">ax</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;=&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;-&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>[<link linkend="_glext_8h_1a7b907a03236685c534d89d604cff23c8">x2</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>];
+230 &#32;&#32;&#32;&#32;}
+231 
+232 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;=&#32;0;&#32;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;&lt;&#32;<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>;&#32;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>++)
+233 &#32;&#32;&#32;&#32;{
+234 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a2be1135ed68e8d80fa9e130c7814f8c2">y2</link>&#32;=&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;+&#32;1)&#32;%&#32;<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>;
+235 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;=&#32;0;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;&lt;&#32;<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>++)
+236 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a9b3620b058f40faa81012a49e0d959e8">ay</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;=&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;-&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glext_8h_1a2be1135ed68e8d80fa9e130c7814f8c2">y2</link>];
+237 &#32;&#32;&#32;&#32;}
+238 
+239 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Compute&#32;speeds</emphasis>
+240 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;=&#32;0;&#32;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;&lt;&#32;<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>;&#32;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>++)
+241 &#32;&#32;&#32;&#32;{
+242 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;=&#32;0;&#32;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;&lt;&#32;<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>;&#32;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>++)
+243 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+244 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1ae0c26d4f5512acab464189507e1a351b">vx</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;=&#32;<link linkend="_wave_8c_1ae0c26d4f5512acab464189507e1a351b">vx</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;+&#32;<link linkend="_wave_8c_1a5f62e300af876f32e1ceef29663b6ec5">ax</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;*&#32;time_step;
+245 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a1bf63c4490d6d4ad47a0a05b14f806a9">vy</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;=&#32;<link linkend="_wave_8c_1a1bf63c4490d6d4ad47a0a05b14f806a9">vy</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;+&#32;<link linkend="_wave_8c_1a9b3620b058f40faa81012a49e0d959e8">ay</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;*&#32;time_step;
+246 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+247 &#32;&#32;&#32;&#32;}
+248 
+249 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Compute&#32;pressure</emphasis>
+250 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;=&#32;1;&#32;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;&lt;&#32;<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>;&#32;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>++)
+251 &#32;&#32;&#32;&#32;{
+252 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a7b907a03236685c534d89d604cff23c8">x2</link>&#32;=&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;-&#32;1;
+253 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;=&#32;1;&#32;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;&lt;&#32;<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>;&#32;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>++)
+254 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+255 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a2be1135ed68e8d80fa9e130c7814f8c2">y2</link>&#32;=&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;-&#32;1;
+256 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;=&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;+&#32;(<link linkend="_wave_8c_1ae0c26d4f5512acab464189507e1a351b">vx</link>[<link linkend="_glext_8h_1a7b907a03236685c534d89d604cff23c8">x2</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;-&#32;<link linkend="_wave_8c_1ae0c26d4f5512acab464189507e1a351b">vx</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;+&#32;<link linkend="_wave_8c_1a1bf63c4490d6d4ad47a0a05b14f806a9">vy</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glext_8h_1a2be1135ed68e8d80fa9e130c7814f8c2">y2</link>]&#32;-&#32;<link linkend="_wave_8c_1a1bf63c4490d6d4ad47a0a05b14f806a9">vy</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>])&#32;*&#32;time_step;
+257 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+258 &#32;&#32;&#32;&#32;}
+259 }
+</programlisting>    </section><anchor xml:id="_wave_8c_1ab5fb5502317b46f9cecd6379f2ecd210"/>    <section>
+    <title>cursor_position_callback()</title>
+<indexterm><primary>cursor_position_callback</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>cursor_position_callback</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> cursor_position_callback (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> * window, double x, double y)</computeroutput></para><para>
+Definition at line 338 of file wave.c.</para>
+<programlisting>339 {
+340 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_group__input_1ga1248dd5b1e566b2817e71547564d6af9">glfwGetInputMode</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_glfw3_8h_1aade31da5b884a84a7625c6b059b9132c">GLFW_CURSOR</link>)&#32;==&#32;<link linkend="_glfw3_8h_1a2315b99a329ce53e6a13a9d46fd5ca88">GLFW_CURSOR_DISABLED</link>)
+341 &#32;&#32;&#32;&#32;{
+342 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ac03904b1f7e359bb2acf10a755e97c5a">alpha</link>&#32;+=&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)&#32;(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;-&#32;<link linkend="_wave_8c_1a7dd3022939e7ae3380309dc7364b5e80">cursorX</link>)&#32;/&#32;10.f;
+343 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1aabc9b3ee8fafa62b353f3956f8e3c269">beta</link>&#32;+=&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;-&#32;<link linkend="_wave_8c_1a34542bdac8d5a952df4c392a78d0b7e8">cursorY</link>)&#32;/&#32;10.f;
+344 
+345 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a7dd3022939e7ae3380309dc7364b5e80">cursorX</link>&#32;=&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>;
+346 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a34542bdac8d5a952df4c392a78d0b7e8">cursorY</link>&#32;=&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>;
+347 &#32;&#32;&#32;&#32;}
+348 }
+</programlisting>    </section><anchor xml:id="_wave_8c_1ae370908c38c53e0cad194f03f73aac96"/>    <section>
+    <title>draw_scene()</title>
+<indexterm><primary>draw_scene</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>draw_scene</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> draw_scene (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 150 of file wave.c.</para>
+<programlisting>151 {
+152 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Clear&#32;the&#32;color&#32;and&#32;depth&#32;buffers</emphasis>
+153 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afc250a2b6bf11f24bb73534a2f053c0d">glClear</link>(<link linkend="_glad_8h_1a947db9ff944c4b78e652144c3dd1060c">GL_COLOR_BUFFER_BIT</link>&#32;|&#32;<link linkend="_glad_8h_1aef2a9e9a4b130bc4de57514327847b4f">GL_DEPTH_BUFFER_BIT</link>);
+154 
+155 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;We&#32;don&apos;t&#32;want&#32;to&#32;modify&#32;the&#32;projection&#32;matrix</emphasis>
+156 &#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a984de7349d373e1088d1c31135c3a9fb">glMatrixMode</link>(<link linkend="_gl_8h_1a8c0f92b5d50914825a1424b1cd4480cd">GL_MODELVIEW</link>);
+157 &#32;&#32;&#32;&#32;<link linkend="_gl_8h_1aef09a58ebe88d25712b8a015889e3612">glLoadIdentity</link>();
+158 
+159 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Move&#32;back</emphasis>
+160 &#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a4b8d59e72147f88dd928f570d9a1713a">glTranslatef</link>(0.0,&#32;0.0,&#32;-<link linkend="_wave_8c_1a5a2149a845f88b6489d3d88845d0f257">zoom</link>);
+161 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Rotate&#32;the&#32;view</emphasis>
+162 &#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a9a0010822b3a45b62142878ad90926e6">glRotatef</link>(<link linkend="_wave_8c_1aabc9b3ee8fafa62b353f3956f8e3c269">beta</link>,&#32;1.0,&#32;0.0,&#32;0.0);
+163 &#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a9a0010822b3a45b62142878ad90926e6">glRotatef</link>(<link linkend="_glad_8h_1ac03904b1f7e359bb2acf10a755e97c5a">alpha</link>,&#32;0.0,&#32;0.0,&#32;1.0);
+164 
+165 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a81cf4a101af4a4dba6544c8017b5f75e">glDrawElements</link>(<link linkend="_glad_8h_1a36b428225d54dd9cf2e564e5ada3ad3d">GL_QUADS</link>,&#32;4&#32;*&#32;<link linkend="_wave_8c_1aaaa740511f97d0370a51a9219a806a7b">QUADNUM</link>,&#32;<link linkend="_glad_8h_1a69b1c02ba0bd93c643c6d82e0c16eb99">GL_UNSIGNED_INT</link>,&#32;<link linkend="_wave_8c_1ae633a736679a0ac3460861099a0cf9c2">quad</link>);
+166 
+167 &#32;&#32;&#32;&#32;<link linkend="_group__window_1gafb827800eedbfcbc97b1e5408df668d7">glfwSwapBuffers</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+168 }
+</programlisting>    </section><anchor xml:id="_wave_8c_1a5180f7bf2b71421af837035824a8c8ac"/>    <section>
+    <title>framebuffer_size_callback()</title>
+<indexterm><primary>framebuffer_size_callback</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>framebuffer_size_callback</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> framebuffer_size_callback (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> * window, int width, int height)</computeroutput></para><para>
+Definition at line 367 of file wave.c.</para>
+<programlisting>368 {
+369 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;ratio&#32;=&#32;1.f;
+370 &#32;&#32;&#32;&#32;<link linkend="_linmath_8h_1aea448460b62175f89ed5760877496434">mat4x4</link>&#32;projection;
+371 
+372 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>&#32;&gt;&#32;0)
+373 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ratio&#32;=&#32;(float)&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>&#32;/&#32;(<emphasis role="keywordtype">float</emphasis>)&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>;
+374 
+375 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Setup&#32;viewport</emphasis>
+376 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ab54b002beb984f066acd0dd7fff469dc">glViewport</link>(0,&#32;0,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+377 
+378 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Change&#32;to&#32;the&#32;projection&#32;matrix&#32;and&#32;set&#32;our&#32;viewing&#32;volume</emphasis>
+379 &#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a984de7349d373e1088d1c31135c3a9fb">glMatrixMode</link>(<link linkend="_gl_8h_1a85e93b355494186ced027f1a1142fefb">GL_PROJECTION</link>);
+380 &#32;&#32;&#32;&#32;<link linkend="_linmath_8h_1a94145cd87abb64ac311b7937f5b822b6">mat4x4_perspective</link>(projection,
+381 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;60.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>&#32;*&#32;(<emphasis role="keywordtype">float</emphasis>)&#32;<link linkend="_stb_8h_1ae71449b1cc6e6250b91f539153a7a0d3">M_PI</link>&#32;/&#32;180.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,
+382 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ratio,
+383 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;1024.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+384 &#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a7ca5354d681c38db253679a45b419039">glLoadMatrixf</link>((<emphasis role="keyword">const</emphasis>&#32;<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>*)&#32;projection);
+385 }
+</programlisting>    </section><anchor xml:id="_wave_8c_1a61e20756921c698158edcbde49ec1230"/>    <section>
+    <title>init_grid()</title>
+<indexterm><primary>init_grid</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>init_grid</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> init_grid (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 119 of file wave.c.</para>
+<programlisting>120 {
+121 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>;
+122 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">double</emphasis>&#32;dx,&#32;dy,&#32;d;
+123 
+124 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;=&#32;0;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;&lt;&#32;<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>;&#32;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>++)
+125 &#32;&#32;&#32;&#32;{
+126 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;=&#32;0;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;&lt;&#32;<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>;&#32;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>++)
+127 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+128 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;dx&#32;=&#32;(double)&#32;(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;-&#32;<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>&#32;/&#32;2);
+129 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;dy&#32;=&#32;(double)&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;-&#32;<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>&#32;/&#32;2);
+130 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;d&#32;=&#32;sqrt(dx&#32;*&#32;dx&#32;+&#32;dy&#32;*&#32;dy);
+131 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(d&#32;&lt;&#32;0.1&#32;*&#32;(<emphasis role="keywordtype">double</emphasis>)&#32;(<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>&#32;/&#32;2))
+132 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+133 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;d&#32;=&#32;d&#32;*&#32;10.0;
+134 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;=&#32;-cos(d&#32;*&#32;(<link linkend="_stb_8h_1ae71449b1cc6e6250b91f539153a7a0d3">M_PI</link>&#32;/&#32;(<emphasis role="keywordtype">double</emphasis>)(<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>&#32;*&#32;4)))&#32;*&#32;100.0;
+135 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+137 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;=&#32;0.0;
+138 
+139 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1ae0c26d4f5512acab464189507e1a351b">vx</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;=&#32;0.0;
+140 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a1bf63c4490d6d4ad47a0a05b14f806a9">vy</link>[<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>][<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>]&#32;=&#32;0.0;
+141 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+142 &#32;&#32;&#32;&#32;}
+143 }
+</programlisting>    </section><anchor xml:id="_wave_8c_1a100d8d4de0ba1cb930db3b54ccc92894"/>    <section>
+    <title>init_opengl()</title>
+<indexterm><primary>init_opengl</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>init_opengl</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> init_opengl (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 175 of file wave.c.</para>
+<programlisting>176 {
+177 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Use&#32;Gouraud&#32;(smooth)&#32;shading</emphasis>
+178 &#32;&#32;&#32;&#32;<link linkend="_gl_8h_1ac4ef7ec10ac8d1b6c29ed3809f033c57">glShadeModel</link>(<link linkend="_gl_8h_1a56868bb05cb46aca6f2baf4168b58c63">GL_SMOOTH</link>);
+179 
+180 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Switch&#32;on&#32;the&#32;z-buffer</emphasis>
+181 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a3f7fa0df22505dd09a24a4e1e74eca09">glEnable</link>(<link linkend="_glad_8h_1a4ccf1dc093190cc3798b9abea3655f98">GL_DEPTH_TEST</link>);
+182 
+183 &#32;&#32;&#32;&#32;<link linkend="_gl_8h_1ad7e33f87591d6a70306278adb0a1d0cc">glEnableClientState</link>(<link linkend="_glad_8h_1a76bcbd4f383a8cf41a3a1afa35106a66">GL_VERTEX_ARRAY</link>);
+184 &#32;&#32;&#32;&#32;<link linkend="_gl_8h_1ad7e33f87591d6a70306278adb0a1d0cc">glEnableClientState</link>(<link linkend="_gl_8h_1a2c2627170041cc4330bccee2a71dc6df">GL_COLOR_ARRAY</link>);
+185 &#32;&#32;&#32;&#32;<link linkend="_gl_8h_1ae10d5c82e236146421be3dc39ecaa79d">glVertexPointer</link>(3,&#32;<link linkend="_glad_8h_1a6d19915d4237cb559505bd3e5dcfcf3c">GL_FLOAT</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keyword">struct</emphasis>&#32;<link linkend="_struct_vertex">Vertex</link>),&#32;<link linkend="_structvertex">vertex</link>);
+186 &#32;&#32;&#32;&#32;<link linkend="_gl_8h_1a16e2ee4c097117f04f3a80ad01a95001">glColorPointer</link>(3,&#32;<link linkend="_glad_8h_1a6d19915d4237cb559505bd3e5dcfcf3c">GL_FLOAT</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keyword">struct</emphasis>&#32;<link linkend="_struct_vertex">Vertex</link>),&#32;&amp;<link linkend="_structvertex">vertex</link>[0].<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>);&#32;<emphasis role="comment">//&#32;Pointer&#32;to&#32;the&#32;first&#32;color</emphasis>
+187 
+188 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a7f1f9a0fe9bed11438638a721bd6660d">glPointSize</link>(2.0);
+189 
+190 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Background&#32;color&#32;is&#32;black</emphasis>
+191 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a12060509af7dc9c8353810eb8b7f145c">glClearColor</link>(0,&#32;0,&#32;0,&#32;0);
+192 }
+</programlisting>    </section><anchor xml:id="_wave_8c_1a903a28082e3bfadf6a7b1fd0be8d4909"/>    <section>
+    <title>init_vertices()</title>
+<indexterm><primary>init_vertices</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>init_vertices</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> init_vertices (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 71 of file wave.c.</para>
+<programlisting>72 {
+73 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>,&#32;<link linkend="_wave_8c_1ab661957592a1103b5021605bb3f17e19">p</link>;
+74 
+75 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Place&#32;the&#32;vertices&#32;in&#32;a&#32;grid</emphasis>
+76 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;=&#32;0;&#32;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;&lt;&#32;<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>;&#32;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>++)
+77 &#32;&#32;&#32;&#32;{
+78 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;=&#32;0;&#32;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;&lt;&#32;<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>;&#32;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>++)
+79 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+80 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;=&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;*&#32;<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>&#32;+&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>;
+81 
+82 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structvertex">vertex</link>[<link linkend="_wave_8c_1ab661957592a1103b5021605bb3f17e19">p</link>].x&#32;=&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)&#32;(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;-&#32;<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>&#32;/&#32;2)&#32;/&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)&#32;(<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>&#32;/&#32;2);
+83 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structvertex">vertex</link>[<link linkend="_wave_8c_1ab661957592a1103b5021605bb3f17e19">p</link>].y&#32;=&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;-&#32;<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>&#32;/&#32;2)&#32;/&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)&#32;(<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>&#32;/&#32;2);
+84 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structvertex">vertex</link>[<link linkend="_wave_8c_1ab661957592a1103b5021605bb3f17e19">p</link>].z&#32;=&#32;0;
+85 
+86 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;%&#32;4&#32;&lt;&#32;2)&#32;^&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;%&#32;4&#32;&lt;&#32;2))
+87 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structvertex">vertex</link>[<link linkend="_wave_8c_1ab661957592a1103b5021605bb3f17e19">p</link>].r&#32;=&#32;0.0;
+88 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+89 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structvertex">vertex</link>[<link linkend="_wave_8c_1ab661957592a1103b5021605bb3f17e19">p</link>].r&#32;=&#32;1.0;
+90 
+91 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structvertex">vertex</link>[<link linkend="_wave_8c_1ab661957592a1103b5021605bb3f17e19">p</link>].g&#32;=&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;/&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)&#32;<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>;
+92 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structvertex">vertex</link>[<link linkend="_wave_8c_1ab661957592a1103b5021605bb3f17e19">p</link>].b&#32;=&#32;1.f&#32;-&#32;((<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;/&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)&#32;<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>&#32;+&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;/&#32;(<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>)&#32;<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>)&#32;/&#32;2.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>;
+93 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+94 &#32;&#32;&#32;&#32;}
+95 
+96 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;=&#32;0;&#32;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;&lt;&#32;<link linkend="_wave_8c_1a0c865f0be27a2d2ea258170ccdb7e5c3">QUADH</link>;&#32;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>++)
+97 &#32;&#32;&#32;&#32;{
+98 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;=&#32;0;&#32;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;&lt;&#32;<link linkend="_wave_8c_1ae10902c68cd7f4aaf5bd6a0dcc774f8f">QUADW</link>;&#32;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>++)
+99 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+100 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;=&#32;4&#32;*&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;*&#32;<link linkend="_wave_8c_1ae10902c68cd7f4aaf5bd6a0dcc774f8f">QUADW</link>&#32;+&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>);
+101 
+102 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1ae633a736679a0ac3460861099a0cf9c2">quad</link>[<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;+&#32;0]&#32;=&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;*&#32;<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>&#32;+&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Some&#32;point</emphasis>
+103 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1ae633a736679a0ac3460861099a0cf9c2">quad</link>[<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;+&#32;1]&#32;=&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;*&#32;<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>&#32;+&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;+&#32;1;&#32;<emphasis role="comment">//&#32;Neighbor&#32;at&#32;the&#32;right&#32;side</emphasis>
+104 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1ae633a736679a0ac3460861099a0cf9c2">quad</link>[<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;+&#32;2]&#32;=&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;+&#32;1)&#32;*&#32;<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>&#32;+&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;+&#32;1;&#32;<emphasis role="comment">//&#32;Upper&#32;right&#32;neighbor</emphasis>
+105 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1ae633a736679a0ac3460861099a0cf9c2">quad</link>[<link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>&#32;+&#32;3]&#32;=&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;+&#32;1)&#32;*&#32;<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>&#32;+&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Upper&#32;neighbor</emphasis>
+106 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+107 &#32;&#32;&#32;&#32;}
+108 }
+</programlisting>    </section><anchor xml:id="_wave_8c_1a286930f4e8ede059b83ff6eafa2ff718"/>    <section>
+    <title>key_callback()</title>
+<indexterm><primary>key_callback</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>key_callback</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> key_callback (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> * window, int key, int scancode, int action, int mods)</computeroutput></para><para>
+Definition at line 276 of file wave.c.</para>
+<programlisting>277 {
+278 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(action&#32;!=&#32;<link linkend="_group__input_1ga2485743d0b59df3791c45951c4195265">GLFW_PRESS</link>)
+279 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+280 
+281 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(<link linkend="_gears_8c_1accd6b5b92b78666e36543412d4ac14cd">key</link>)
+282 &#32;&#32;&#32;&#32;{
+283 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__keys_1gaac6596c350b635c245113b81c2123b93">GLFW_KEY_ESCAPE</link>:
+284 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga1cadeda7a1e2f224e06a8415d30741aa">glfwSetWindowShouldClose</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>);
+285 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+286 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__keys_1gaddb2c23772b97fd7e26e8ee66f1ad014">GLFW_KEY_SPACE</link>:
+287 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a61e20756921c698158edcbde49ec1230">init_grid</link>();
+288 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+289 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__keys_1gae12a010d33c309a67ab9460c51eb2462">GLFW_KEY_LEFT</link>:
+290 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ac03904b1f7e359bb2acf10a755e97c5a">alpha</link>&#32;+=&#32;5;
+291 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+292 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__keys_1ga06ba07662e8c291a4a84535379ffc7ac">GLFW_KEY_RIGHT</link>:
+293 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ac03904b1f7e359bb2acf10a755e97c5a">alpha</link>&#32;-=&#32;5;
+294 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+295 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__keys_1ga2f3342b194020d3544c67e3506b6f144">GLFW_KEY_UP</link>:
+296 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1aabc9b3ee8fafa62b353f3956f8e3c269">beta</link>&#32;-=&#32;5;
+297 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+298 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__keys_1gae2e3958c71595607416aa7bf082be2f9">GLFW_KEY_DOWN</link>:
+299 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1aabc9b3ee8fafa62b353f3956f8e3c269">beta</link>&#32;+=&#32;5;
+300 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+301 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__keys_1ga3ab731f9622f0db280178a5f3cc6d586">GLFW_KEY_PAGE_UP</link>:
+302 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a5a2149a845f88b6489d3d88845d0f257">zoom</link>&#32;-=&#32;0.25f;
+303 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_wave_8c_1a5a2149a845f88b6489d3d88845d0f257">zoom</link>&#32;&lt;&#32;0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)
+304 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a5a2149a845f88b6489d3d88845d0f257">zoom</link>&#32;=&#32;0.f;
+305 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+306 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<link linkend="_group__keys_1gaee0a8fa442001cc2147812f84b59041c">GLFW_KEY_PAGE_DOWN</link>:
+307 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a5a2149a845f88b6489d3d88845d0f257">zoom</link>&#32;+=&#32;0.25f;
+308 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+309 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">default</emphasis>:
+310 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+311 &#32;&#32;&#32;&#32;}
+312 }
+</programlisting>    </section><anchor xml:id="_wave_8c_1a0ddf1224851353fc92bfbff6f499fa97"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char * argv[])</computeroutput></para><para>
+Definition at line 392 of file wave.c.</para>
+<programlisting>393 {
+394 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>*&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>;
+395 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">double</emphasis>&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>,&#32;dt_total,&#32;<link linkend="_boing_8c_1a720c9aaf75c956f8d87132112332da97">t_old</link>;
+396 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>;
+397 
+398 &#32;&#32;&#32;&#32;<link linkend="_group__init_1ga746e2757d069eaea423349aca6ae097a">glfwSetErrorCallback</link>(<link linkend="_inputlag_8c_1a4ee391c8bab624943c822faafb2c320e">error_callback</link>);
+399 
+400 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_group__init_1gab41771f0215a2e0afb4cf1cf98082d40">glfwInit</link>())
+401 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+402 
+403 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;<link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link>(640,&#32;480,&#32;<emphasis role="stringliteral">&quot;Wave&#32;Simulation&quot;</emphasis>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+404 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)
+405 &#32;&#32;&#32;&#32;{
+406 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+407 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+408 &#32;&#32;&#32;&#32;}
+409 
+410 &#32;&#32;&#32;&#32;<link linkend="_group__input_1gaa4cbcb81b939b8800e44cea971ddae47">glfwSetKeyCallback</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_wave_8c_1a286930f4e8ede059b83ff6eafa2ff718">key_callback</link>);
+411 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga41d69f9f263d7b33ea03cf58772b4ea0">glfwSetFramebufferSizeCallback</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_wave_8c_1a5180f7bf2b71421af837035824a8c8ac">framebuffer_size_callback</link>);
+412 &#32;&#32;&#32;&#32;<link linkend="_group__input_1gab8f17646f43cdca14e5095512618fdf6">glfwSetMouseButtonCallback</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_wave_8c_1a5515d805e76ce6728de3c0dc5e187c86">mouse_button_callback</link>);
+413 &#32;&#32;&#32;&#32;<link linkend="_group__input_1ga74124d0eff27040fd10e4df9e17d129c">glfwSetCursorPosCallback</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_wave_8c_1ab5fb5502317b46f9cecd6379f2ecd210">cursor_position_callback</link>);
+414 &#32;&#32;&#32;&#32;<link linkend="_group__input_1gaa786b59f19ad8525d251cda8e0d7d29b">glfwSetScrollCallback</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_wave_8c_1a6bec52479312a11696798b50140f227d">scroll_callback</link>);
+415 
+416 &#32;&#32;&#32;&#32;<link linkend="_group__context_1gafd76c93e15ec8b0b90506a9936a46185">glfwMakeContextCurrent</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+417 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a7e9e0ebe65864f5f2bcd289c5736041b">gladLoadGL</link>(<link linkend="_group__context_1ga0e8af175218929615c16e74938c10f2a">glfwGetProcAddress</link>);
+418 &#32;&#32;&#32;&#32;<link linkend="_group__context_1ga12a595c06947cec4967c6e1f14210a8a">glfwSwapInterval</link>(1);
+419 
+420 &#32;&#32;&#32;&#32;<link linkend="_group__window_1gaf7d17f3534b4b6dc9a6f905e3a240b7e">glfwGetFramebufferSize</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;&amp;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;&amp;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+421 &#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a5180f7bf2b71421af837035824a8c8ac">framebuffer_size_callback</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+422 
+423 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Initialize&#32;OpenGL</emphasis>
+424 &#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a100d8d4de0ba1cb930db3b54ccc92894">init_opengl</link>();
+425 
+426 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Initialize&#32;simulation</emphasis>
+427 &#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a903a28082e3bfadf6a7b1fd0be8d4909">init_vertices</link>();
+428 &#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a61e20756921c698158edcbde49ec1230">init_grid</link>();
+429 &#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a59b9ad3ad093089c64996013be9541c7">adjust_grid</link>();
+430 
+431 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Initialize&#32;timer</emphasis>
+432 &#32;&#32;&#32;&#32;<link linkend="_boing_8c_1a720c9aaf75c956f8d87132112332da97">t_old</link>&#32;=&#32;<link linkend="_group__input_1ga03d4a1039b8662c71eeb40beea8cb622">glfwGetTime</link>()&#32;-&#32;0.01;
+433 
+434 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(!<link linkend="_group__window_1gaa6162f67dfa38b8beda2fea623649332">glfwWindowShouldClose</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>))
+435 &#32;&#32;&#32;&#32;{
+436 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>&#32;=&#32;<link linkend="_group__input_1ga03d4a1039b8662c71eeb40beea8cb622">glfwGetTime</link>();
+437 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;dt_total&#32;=&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>&#32;-&#32;<link linkend="_boing_8c_1a720c9aaf75c956f8d87132112332da97">t_old</link>;
+438 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_boing_8c_1a720c9aaf75c956f8d87132112332da97">t_old</link>&#32;=&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>;
+439 
+440 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Safety&#32;-&#32;iterate&#32;if&#32;dt_total&#32;is&#32;too&#32;large</emphasis>
+441 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(dt_total&#32;&gt;&#32;0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>)
+442 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+443 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Select&#32;iteration&#32;time&#32;step</emphasis>
+444 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>&#32;=&#32;dt_total&#32;&gt;&#32;<link linkend="_wave_8c_1a82c13b07387b0fa3ab346ad38894e2a7">MAX_DELTA_T</link>&#32;?&#32;<link linkend="_wave_8c_1a82c13b07387b0fa3ab346ad38894e2a7">MAX_DELTA_T</link>&#32;:&#32;dt_total;
+445 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;dt_total&#32;-=&#32;<link linkend="_wave_8c_1a03e28be41881b703c836edbfe9b51b17">dt</link>;
+446 
+447 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Calculate&#32;wave&#32;propagation</emphasis>
+448 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a60caf84ae85662ac67ab2dfd0da1be89">calc_grid</link>();
+449 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+450 
+451 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Compute&#32;height&#32;of&#32;each&#32;vertex</emphasis>
+452 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a59b9ad3ad093089c64996013be9541c7">adjust_grid</link>();
+453 
+454 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Draw&#32;wave&#32;grid&#32;to&#32;OpenGL&#32;display</emphasis>
+455 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1ae370908c38c53e0cad194f03f73aac96">draw_scene</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+456 
+457 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga872d16e4c77f58c0436f356255920cfc">glfwPollEvents</link>();
+458 &#32;&#32;&#32;&#32;}
+459 
+460 &#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+461 &#32;&#32;&#32;&#32;exit(EXIT_SUCCESS);
+462 }
+</programlisting>    </section><anchor xml:id="_wave_8c_1a5515d805e76ce6728de3c0dc5e187c86"/>    <section>
+    <title>mouse_button_callback()</title>
+<indexterm><primary>mouse_button_callback</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>mouse_button_callback</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> mouse_button_callback (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> * window, int button, int action, int mods)</computeroutput></para><para>
+Definition at line 319 of file wave.c.</para>
+<programlisting>320 {
+321 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(button&#32;!=&#32;<link linkend="_group__buttons_1gaf37100431dcd5082d48f95ee8bc8cd56">GLFW_MOUSE_BUTTON_LEFT</link>)
+322 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+323 
+324 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(action&#32;==&#32;<link linkend="_group__input_1ga2485743d0b59df3791c45951c4195265">GLFW_PRESS</link>)
+325 &#32;&#32;&#32;&#32;{
+326 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__input_1gae1eb729d2dd91dc33fd60e150a6e1684">glfwSetInputMode</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_glfw3_8h_1aade31da5b884a84a7625c6b059b9132c">GLFW_CURSOR</link>,&#32;<link linkend="_glfw3_8h_1a2315b99a329ce53e6a13a9d46fd5ca88">GLFW_CURSOR_DISABLED</link>);
+327 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__input_1gad289438eb7cf53d11eca685373f44105">glfwGetCursorPos</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;&amp;<link linkend="_wave_8c_1a7dd3022939e7ae3380309dc7364b5e80">cursorX</link>,&#32;&amp;<link linkend="_wave_8c_1a34542bdac8d5a952df4c392a78d0b7e8">cursorY</link>);
+328 &#32;&#32;&#32;&#32;}
+329 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+330 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__input_1gae1eb729d2dd91dc33fd60e150a6e1684">glfwSetInputMode</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_glfw3_8h_1aade31da5b884a84a7625c6b059b9132c">GLFW_CURSOR</link>,&#32;<link linkend="_glfw3_8h_1ae04dd25c8577e19fa8c97368561f6c68">GLFW_CURSOR_NORMAL</link>);
+331 }
+</programlisting>    </section><anchor xml:id="_wave_8c_1a6bec52479312a11696798b50140f227d"/>    <section>
+    <title>scroll_callback()</title>
+<indexterm><primary>scroll_callback</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>scroll_callback</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> scroll_callback (<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link> * window, double x, double y)</computeroutput></para><para>
+Definition at line 355 of file wave.c.</para>
+<programlisting>356 {
+357 &#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a5a2149a845f88b6489d3d88845d0f257">zoom</link>&#32;+=&#32;(float)&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;/&#32;4.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>;
+358 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_wave_8c_1a5a2149a845f88b6489d3d88845d0f257">zoom</link>&#32;&lt;&#32;0)
+359 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_wave_8c_1a5a2149a845f88b6489d3d88845d0f257">zoom</link>&#32;=&#32;0;
+360 }
+</programlisting></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_wave_8c_1a6487f2034e554d7d012dc0821253e5be"/>    <section>
+    <title>alpha</title>
+<indexterm><primary>alpha</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>alpha</secondary></indexterm>
+<para><computeroutput><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> <link linkend="_glad_8h_1ac03904b1f7e359bb2acf10a755e97c5a">alpha</link> = 210.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 33 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1a5f62e300af876f32e1ceef29663b6ec5"/>    <section>
+    <title>ax</title>
+<indexterm><primary>ax</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>ax</secondary></indexterm>
+<para><computeroutput>double ax[<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>][<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>]</computeroutput></para><para>
+Definition at line 113 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1a9b3620b058f40faa81012a49e0d959e8"/>    <section>
+    <title>ay</title>
+<indexterm><primary>ay</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>ay</secondary></indexterm>
+<para><computeroutput>double ay[<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>][<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>]</computeroutput></para><para>
+Definition at line 113 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1aabc9b3ee8fafa62b353f3956f8e3c269"/>    <section>
+    <title>beta</title>
+<indexterm><primary>beta</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>beta</secondary></indexterm>
+<para><computeroutput><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> beta = -70.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 33 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1a7dd3022939e7ae3380309dc7364b5e80"/>    <section>
+    <title>cursorX</title>
+<indexterm><primary>cursorX</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>cursorX</secondary></indexterm>
+<para><computeroutput>double cursorX</computeroutput></para><para>
+Definition at line 36 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1a34542bdac8d5a952df4c392a78d0b7e8"/>    <section>
+    <title>cursorY</title>
+<indexterm><primary>cursorY</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>cursorY</secondary></indexterm>
+<para><computeroutput>double cursorY</computeroutput></para><para>
+Definition at line 37 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1a03e28be41881b703c836edbfe9b51b17"/>    <section>
+    <title>dt</title>
+<indexterm><primary>dt</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>dt</secondary></indexterm>
+<para><computeroutput>double dt</computeroutput></para><para>
+Definition at line 110 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1ab661957592a1103b5021605bb3f17e19"/>    <section>
+    <title>p</title>
+<indexterm><primary>p</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>p</secondary></indexterm>
+<para><computeroutput>double <link linkend="_glext_8h_1aa5367c14d90f462230c2611b81b41d23">p</link>[<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>][<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>]</computeroutput></para><para>
+Definition at line 111 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1ae633a736679a0ac3460861099a0cf9c2"/>    <section>
+    <title>quad</title>
+<indexterm><primary>quad</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>quad</secondary></indexterm>
+<para><computeroutput><link linkend="_glad_8h_1a68c4714e43d8e827d80759f9cb864f3c">GLuint</link> quad[4 *<link linkend="_wave_8c_1aaaa740511f97d0370a51a9219a806a7b">QUADNUM</link>]</computeroutput></para><para>
+Definition at line 53 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1aeb310e20c71a4ca39015f9553658d290"/>    <section>
+    <title>vertex</title>
+<indexterm><primary>vertex</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>vertex</secondary></indexterm>
+<para><computeroutput>struct <link linkend="_struct_vertex">Vertex</link> <link linkend="_structvertex">vertex</link>[<link linkend="_wave_8c_1abd709477ffd7875a410c3e7825811574">VERTEXNUM</link>]</computeroutput></para><para>
+Definition at line 54 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1ae0c26d4f5512acab464189507e1a351b"/>    <section>
+    <title>vx</title>
+<indexterm><primary>vx</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>vx</secondary></indexterm>
+<para><computeroutput>double vx[<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>][<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>]</computeroutput></para><para>
+Definition at line 112 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1a1bf63c4490d6d4ad47a0a05b14f806a9"/>    <section>
+    <title>vy</title>
+<indexterm><primary>vy</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>vy</secondary></indexterm>
+<para><computeroutput>double vy[<link linkend="_wave_8c_1a36f83106cff056abddf55fdc6f803311">GRIDW</link>][<link linkend="_wave_8c_1a7327eab323c715d04c1fac38cd61d856">GRIDH</link>]</computeroutput></para><para>
+Definition at line 112 of file wave.c.</para>
+    </section><anchor xml:id="_wave_8c_1a5a2149a845f88b6489d3d88845d0f257"/>    <section>
+    <title>zoom</title>
+<indexterm><primary>zoom</primary><secondary>wave.c</secondary></indexterm>
+<indexterm><primary>wave.c</primary><secondary>zoom</secondary></indexterm>
+<para><computeroutput><link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link> zoom = 2.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link></computeroutput></para><para>
+Definition at line 34 of file wave.c.</para>
+</section>
+</section>
+</section>

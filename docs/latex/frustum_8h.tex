@@ -1,0 +1,559 @@
+\hypertarget{frustum_8h}{}\doxysection{deps/cglm/include/cglm/frustum.h File Reference}
+\label{frustum_8h}\index{deps/cglm/include/cglm/frustum.h@{deps/cglm/include/cglm/frustum.h}}
+{\ttfamily \#include \char`\"{}common.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}plane.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}vec3.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}vec4.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mat4.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{frustum_8h_a324bae2d5d9b79f3a8dbebcd86cce403}{G\+L\+M\+\_\+\+L\+BN}}~0 /$\ast$ \mbox{\hyperlink{glad_8h_a85b8f6c07fbc1fb5d77c2ae090f21995}{left}}  \mbox{\hyperlink{glad_8h_a95fc257e5ddf46f7db9d5e898cdf1991}{bottom}} near $\ast$/
+\item 
+\#define \mbox{\hyperlink{frustum_8h_a6417a813bf54bdeae95a9028f2e2358e}{G\+L\+M\+\_\+\+L\+TN}}~1 /$\ast$ \mbox{\hyperlink{glad_8h_a85b8f6c07fbc1fb5d77c2ae090f21995}{left}}  \mbox{\hyperlink{glext_8h_a5ab323daeacf8dfdb8f91132fecdca23}{top}}    near $\ast$/
+\item 
+\#define \mbox{\hyperlink{frustum_8h_a19e9639c170c59f6fcadbec0d3db1bfd}{G\+L\+M\+\_\+\+R\+TN}}~2 /$\ast$ \mbox{\hyperlink{glext_8h_a5ffadbbacc6b89cf6218bc43b384d3fe}{right}} \mbox{\hyperlink{glext_8h_a5ab323daeacf8dfdb8f91132fecdca23}{top}}    near $\ast$/
+\item 
+\#define \mbox{\hyperlink{frustum_8h_a6b96c6d973936ad3aa667ab6d1a4d0d4}{G\+L\+M\+\_\+\+R\+BN}}~3 /$\ast$ \mbox{\hyperlink{glext_8h_a5ffadbbacc6b89cf6218bc43b384d3fe}{right}} \mbox{\hyperlink{glad_8h_a95fc257e5ddf46f7db9d5e898cdf1991}{bottom}} near $\ast$/
+\item 
+\#define \mbox{\hyperlink{frustum_8h_a4386f50ec24e8ef593bcaa98756840f1}{G\+L\+M\+\_\+\+L\+BF}}~4 /$\ast$ \mbox{\hyperlink{glad_8h_a85b8f6c07fbc1fb5d77c2ae090f21995}{left}}  \mbox{\hyperlink{glad_8h_a95fc257e5ddf46f7db9d5e898cdf1991}{bottom}} far  $\ast$/
+\item 
+\#define \mbox{\hyperlink{frustum_8h_a3a9b751a7b380e3eeef54ac5339cef5b}{G\+L\+M\+\_\+\+L\+TF}}~5 /$\ast$ \mbox{\hyperlink{glad_8h_a85b8f6c07fbc1fb5d77c2ae090f21995}{left}}  \mbox{\hyperlink{glext_8h_a5ab323daeacf8dfdb8f91132fecdca23}{top}}    far  $\ast$/
+\item 
+\#define \mbox{\hyperlink{frustum_8h_a3166cacc6c9b2a9cabf09d239182a9fc}{G\+L\+M\+\_\+\+R\+TF}}~6 /$\ast$ \mbox{\hyperlink{glext_8h_a5ffadbbacc6b89cf6218bc43b384d3fe}{right}} \mbox{\hyperlink{glext_8h_a5ab323daeacf8dfdb8f91132fecdca23}{top}}    far  $\ast$/
+\item 
+\#define \mbox{\hyperlink{frustum_8h_a47662289ab8766445d3cc35746f66357}{G\+L\+M\+\_\+\+R\+BF}}~7 /$\ast$ \mbox{\hyperlink{glext_8h_a5ffadbbacc6b89cf6218bc43b384d3fe}{right}} \mbox{\hyperlink{glad_8h_a95fc257e5ddf46f7db9d5e898cdf1991}{bottom}} far  $\ast$/
+\item 
+\#define \mbox{\hyperlink{frustum_8h_a651dd0a20a6121f29b1f12776a8b9cb9}{G\+L\+M\+\_\+\+L\+E\+FT}}~0
+\item 
+\#define \mbox{\hyperlink{frustum_8h_a4e2988dc8295a0ed2e28f71baeafea5d}{G\+L\+M\+\_\+\+R\+I\+G\+HT}}~1
+\item 
+\#define \mbox{\hyperlink{frustum_8h_afc7cb20afa80659f8e11d58960402a7d}{G\+L\+M\+\_\+\+B\+O\+T\+T\+OM}}~2
+\item 
+\#define \mbox{\hyperlink{frustum_8h_abad9a5b82e70a795ad7aa673bbd05b3c}{G\+L\+M\+\_\+\+T\+OP}}~3
+\item 
+\#define \mbox{\hyperlink{frustum_8h_afcffdcfb75ff210ec6661cc0de38382a}{G\+L\+M\+\_\+\+N\+E\+AR}}~4
+\item 
+\#define \mbox{\hyperlink{frustum_8h_abf1a344e1875e95b01db252666af63ec}{G\+L\+M\+\_\+\+F\+AR}}~5
+\item 
+\#define \mbox{\hyperlink{frustum_8h_ad801db07422760b91b8713f079c153a8}{G\+L\+M\+\_\+\+C\+S\+C\+O\+O\+R\+D\+\_\+\+L\+BN}}~\{-\/1.\+0f, -\/1.\+0f, -\/1.\+0f, 1.\+0f\}
+\item 
+\#define \mbox{\hyperlink{frustum_8h_a5888b75472f4d08b595f038fdc0d96dc}{G\+L\+M\+\_\+\+C\+S\+C\+O\+O\+R\+D\+\_\+\+L\+TN}}~\{-\/1.\+0f,  1.\+0f, -\/1.\+0f, 1.\+0f\}
+\item 
+\#define \mbox{\hyperlink{frustum_8h_a12731de6c439728fd20498d007fbcf61}{G\+L\+M\+\_\+\+C\+S\+C\+O\+O\+R\+D\+\_\+\+R\+TN}}~\{ 1.\+0f,  1.\+0f, -\/1.\+0f, 1.\+0f\}
+\item 
+\#define \mbox{\hyperlink{frustum_8h_a3793809f3d48a65ee255b9124976cb6a}{G\+L\+M\+\_\+\+C\+S\+C\+O\+O\+R\+D\+\_\+\+R\+BN}}~\{ 1.\+0f, -\/1.\+0f, -\/1.\+0f, 1.\+0f\}
+\item 
+\#define \mbox{\hyperlink{frustum_8h_ab0b8afa7b40948a7f85683bec453da36}{G\+L\+M\+\_\+\+C\+S\+C\+O\+O\+R\+D\+\_\+\+L\+BF}}~\{-\/1.\+0f, -\/1.\+0f,  1.\+0f, 1.\+0f\}
+\item 
+\#define \mbox{\hyperlink{frustum_8h_acf394ce86e29b5bd995e3e9165c16a1b}{G\+L\+M\+\_\+\+C\+S\+C\+O\+O\+R\+D\+\_\+\+L\+TF}}~\{-\/1.\+0f,  1.\+0f,  1.\+0f, 1.\+0f\}
+\item 
+\#define \mbox{\hyperlink{frustum_8h_af208a61bc747a0791adb945ce6ef4c4c}{G\+L\+M\+\_\+\+C\+S\+C\+O\+O\+R\+D\+\_\+\+R\+TF}}~\{ 1.\+0f,  1.\+0f,  1.\+0f, 1.\+0f\}
+\item 
+\#define \mbox{\hyperlink{frustum_8h_af9d2f55384813af509d9505552e4b686}{G\+L\+M\+\_\+\+C\+S\+C\+O\+O\+R\+D\+\_\+\+R\+BF}}~\{ 1.\+0f, -\/1.\+0f,  1.\+0f, 1.\+0f\}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{frustum_8h_ac270296e4af87806e080c71537250316}{glm\+\_\+frustum\+\_\+planes}} (\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} \mbox{\hyperlink{glext_8h_af593500c283bf1a787a6f947f503a5c2}{m}}, vec4 dest\mbox{[}6\mbox{]})
+\begin{DoxyCompactList}\small\item\em extracts view frustum planes \end{DoxyCompactList}\item 
+\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{frustum_8h_a177214c2c986de12f5f260e81511d3c0}{glm\+\_\+frustum\+\_\+corners}} (\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} inv\+Mat, vec4 dest\mbox{[}8\mbox{]})
+\begin{DoxyCompactList}\small\item\em extracts view frustum corners using clip-\/space coordinates \end{DoxyCompactList}\item 
+\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{frustum_8h_ad9d46fe7bc6e5954802553f4e3ed06fd}{glm\+\_\+frustum\+\_\+center}} (vec4 corners\mbox{[}8\mbox{]}, vec4 dest)
+\begin{DoxyCompactList}\small\item\em finds center of view frustum \end{DoxyCompactList}\item 
+\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{frustum_8h_a178a550b78cc55ef8b1dcdc10de5d03d}{glm\+\_\+frustum\+\_\+box}} (vec4 corners\mbox{[}8\mbox{]}, \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} \mbox{\hyperlink{glext_8h_af593500c283bf1a787a6f947f503a5c2}{m}}, \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} box\mbox{[}2\mbox{]})
+\begin{DoxyCompactList}\small\item\em finds bounding box of frustum relative to given matrix e.\+g. view mat \end{DoxyCompactList}\item 
+\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} \mbox{\hyperlink{frustum_8h_aaac5b17a0ab5e99a4a168b8dc92b5e9f}{glm\+\_\+frustum\+\_\+corners\+\_\+at}} (vec4 corners\mbox{[}8\mbox{]}, float split\+Dist, float far\+Dist, vec4 plane\+Corners\mbox{[}4\mbox{]})
+\begin{DoxyCompactList}\small\item\em finds planes corners which is between near and far planes (parallel) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{frustum_8h_afc7cb20afa80659f8e11d58960402a7d}\label{frustum_8h_afc7cb20afa80659f8e11d58960402a7d}} 
+\index{frustum.h@{frustum.h}!GLM\_BOTTOM@{GLM\_BOTTOM}}
+\index{GLM\_BOTTOM@{GLM\_BOTTOM}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_BOTTOM}{GLM\_BOTTOM}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+B\+O\+T\+T\+OM~2}
+
+
+
+Definition at line 29 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_ab0b8afa7b40948a7f85683bec453da36}\label{frustum_8h_ab0b8afa7b40948a7f85683bec453da36}} 
+\index{frustum.h@{frustum.h}!GLM\_CSCOORD\_LBF@{GLM\_CSCOORD\_LBF}}
+\index{GLM\_CSCOORD\_LBF@{GLM\_CSCOORD\_LBF}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_CSCOORD\_LBF}{GLM\_CSCOORD\_LBF}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+C\+S\+C\+O\+O\+R\+D\+\_\+\+L\+BF~\{-\/1.\+0f, -\/1.\+0f,  1.\+0f, 1.\+0f\}}
+
+
+
+Definition at line 46 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_ad801db07422760b91b8713f079c153a8}\label{frustum_8h_ad801db07422760b91b8713f079c153a8}} 
+\index{frustum.h@{frustum.h}!GLM\_CSCOORD\_LBN@{GLM\_CSCOORD\_LBN}}
+\index{GLM\_CSCOORD\_LBN@{GLM\_CSCOORD\_LBN}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_CSCOORD\_LBN}{GLM\_CSCOORD\_LBN}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+C\+S\+C\+O\+O\+R\+D\+\_\+\+L\+BN~\{-\/1.\+0f, -\/1.\+0f, -\/1.\+0f, 1.\+0f\}}
+
+
+
+Definition at line 40 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_acf394ce86e29b5bd995e3e9165c16a1b}\label{frustum_8h_acf394ce86e29b5bd995e3e9165c16a1b}} 
+\index{frustum.h@{frustum.h}!GLM\_CSCOORD\_LTF@{GLM\_CSCOORD\_LTF}}
+\index{GLM\_CSCOORD\_LTF@{GLM\_CSCOORD\_LTF}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_CSCOORD\_LTF}{GLM\_CSCOORD\_LTF}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+C\+S\+C\+O\+O\+R\+D\+\_\+\+L\+TF~\{-\/1.\+0f,  1.\+0f,  1.\+0f, 1.\+0f\}}
+
+
+
+Definition at line 47 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_a5888b75472f4d08b595f038fdc0d96dc}\label{frustum_8h_a5888b75472f4d08b595f038fdc0d96dc}} 
+\index{frustum.h@{frustum.h}!GLM\_CSCOORD\_LTN@{GLM\_CSCOORD\_LTN}}
+\index{GLM\_CSCOORD\_LTN@{GLM\_CSCOORD\_LTN}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_CSCOORD\_LTN}{GLM\_CSCOORD\_LTN}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+C\+S\+C\+O\+O\+R\+D\+\_\+\+L\+TN~\{-\/1.\+0f,  1.\+0f, -\/1.\+0f, 1.\+0f\}}
+
+
+
+Definition at line 41 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_af9d2f55384813af509d9505552e4b686}\label{frustum_8h_af9d2f55384813af509d9505552e4b686}} 
+\index{frustum.h@{frustum.h}!GLM\_CSCOORD\_RBF@{GLM\_CSCOORD\_RBF}}
+\index{GLM\_CSCOORD\_RBF@{GLM\_CSCOORD\_RBF}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_CSCOORD\_RBF}{GLM\_CSCOORD\_RBF}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+C\+S\+C\+O\+O\+R\+D\+\_\+\+R\+BF~\{ 1.\+0f, -\/1.\+0f,  1.\+0f, 1.\+0f\}}
+
+
+
+Definition at line 49 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_a3793809f3d48a65ee255b9124976cb6a}\label{frustum_8h_a3793809f3d48a65ee255b9124976cb6a}} 
+\index{frustum.h@{frustum.h}!GLM\_CSCOORD\_RBN@{GLM\_CSCOORD\_RBN}}
+\index{GLM\_CSCOORD\_RBN@{GLM\_CSCOORD\_RBN}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_CSCOORD\_RBN}{GLM\_CSCOORD\_RBN}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+C\+S\+C\+O\+O\+R\+D\+\_\+\+R\+BN~\{ 1.\+0f, -\/1.\+0f, -\/1.\+0f, 1.\+0f\}}
+
+
+
+Definition at line 43 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_af208a61bc747a0791adb945ce6ef4c4c}\label{frustum_8h_af208a61bc747a0791adb945ce6ef4c4c}} 
+\index{frustum.h@{frustum.h}!GLM\_CSCOORD\_RTF@{GLM\_CSCOORD\_RTF}}
+\index{GLM\_CSCOORD\_RTF@{GLM\_CSCOORD\_RTF}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_CSCOORD\_RTF}{GLM\_CSCOORD\_RTF}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+C\+S\+C\+O\+O\+R\+D\+\_\+\+R\+TF~\{ 1.\+0f,  1.\+0f,  1.\+0f, 1.\+0f\}}
+
+
+
+Definition at line 48 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_a12731de6c439728fd20498d007fbcf61}\label{frustum_8h_a12731de6c439728fd20498d007fbcf61}} 
+\index{frustum.h@{frustum.h}!GLM\_CSCOORD\_RTN@{GLM\_CSCOORD\_RTN}}
+\index{GLM\_CSCOORD\_RTN@{GLM\_CSCOORD\_RTN}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_CSCOORD\_RTN}{GLM\_CSCOORD\_RTN}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+C\+S\+C\+O\+O\+R\+D\+\_\+\+R\+TN~\{ 1.\+0f,  1.\+0f, -\/1.\+0f, 1.\+0f\}}
+
+
+
+Definition at line 42 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_abf1a344e1875e95b01db252666af63ec}\label{frustum_8h_abf1a344e1875e95b01db252666af63ec}} 
+\index{frustum.h@{frustum.h}!GLM\_FAR@{GLM\_FAR}}
+\index{GLM\_FAR@{GLM\_FAR}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_FAR}{GLM\_FAR}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+F\+AR~5}
+
+
+
+Definition at line 32 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_a4386f50ec24e8ef593bcaa98756840f1}\label{frustum_8h_a4386f50ec24e8ef593bcaa98756840f1}} 
+\index{frustum.h@{frustum.h}!GLM\_LBF@{GLM\_LBF}}
+\index{GLM\_LBF@{GLM\_LBF}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_LBF}{GLM\_LBF}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+L\+BF~4 /$\ast$ \mbox{\hyperlink{glad_8h_a85b8f6c07fbc1fb5d77c2ae090f21995}{left}}  \mbox{\hyperlink{glad_8h_a95fc257e5ddf46f7db9d5e898cdf1991}{bottom}} far  $\ast$/}
+
+
+
+Definition at line 22 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_a324bae2d5d9b79f3a8dbebcd86cce403}\label{frustum_8h_a324bae2d5d9b79f3a8dbebcd86cce403}} 
+\index{frustum.h@{frustum.h}!GLM\_LBN@{GLM\_LBN}}
+\index{GLM\_LBN@{GLM\_LBN}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_LBN}{GLM\_LBN}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+L\+BN~0 /$\ast$ \mbox{\hyperlink{glad_8h_a85b8f6c07fbc1fb5d77c2ae090f21995}{left}}  \mbox{\hyperlink{glad_8h_a95fc257e5ddf46f7db9d5e898cdf1991}{bottom}} near $\ast$/}
+
+
+
+Definition at line 17 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_a651dd0a20a6121f29b1f12776a8b9cb9}\label{frustum_8h_a651dd0a20a6121f29b1f12776a8b9cb9}} 
+\index{frustum.h@{frustum.h}!GLM\_LEFT@{GLM\_LEFT}}
+\index{GLM\_LEFT@{GLM\_LEFT}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_LEFT}{GLM\_LEFT}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+L\+E\+FT~0}
+
+
+
+Definition at line 27 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_a3a9b751a7b380e3eeef54ac5339cef5b}\label{frustum_8h_a3a9b751a7b380e3eeef54ac5339cef5b}} 
+\index{frustum.h@{frustum.h}!GLM\_LTF@{GLM\_LTF}}
+\index{GLM\_LTF@{GLM\_LTF}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_LTF}{GLM\_LTF}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+L\+TF~5 /$\ast$ \mbox{\hyperlink{glad_8h_a85b8f6c07fbc1fb5d77c2ae090f21995}{left}}  \mbox{\hyperlink{glext_8h_a5ab323daeacf8dfdb8f91132fecdca23}{top}}    far  $\ast$/}
+
+
+
+Definition at line 23 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_a6417a813bf54bdeae95a9028f2e2358e}\label{frustum_8h_a6417a813bf54bdeae95a9028f2e2358e}} 
+\index{frustum.h@{frustum.h}!GLM\_LTN@{GLM\_LTN}}
+\index{GLM\_LTN@{GLM\_LTN}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_LTN}{GLM\_LTN}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+L\+TN~1 /$\ast$ \mbox{\hyperlink{glad_8h_a85b8f6c07fbc1fb5d77c2ae090f21995}{left}}  \mbox{\hyperlink{glext_8h_a5ab323daeacf8dfdb8f91132fecdca23}{top}}    near $\ast$/}
+
+
+
+Definition at line 18 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_afcffdcfb75ff210ec6661cc0de38382a}\label{frustum_8h_afcffdcfb75ff210ec6661cc0de38382a}} 
+\index{frustum.h@{frustum.h}!GLM\_NEAR@{GLM\_NEAR}}
+\index{GLM\_NEAR@{GLM\_NEAR}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_NEAR}{GLM\_NEAR}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+N\+E\+AR~4}
+
+
+
+Definition at line 31 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_a47662289ab8766445d3cc35746f66357}\label{frustum_8h_a47662289ab8766445d3cc35746f66357}} 
+\index{frustum.h@{frustum.h}!GLM\_RBF@{GLM\_RBF}}
+\index{GLM\_RBF@{GLM\_RBF}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_RBF}{GLM\_RBF}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+R\+BF~7 /$\ast$ \mbox{\hyperlink{glext_8h_a5ffadbbacc6b89cf6218bc43b384d3fe}{right}} \mbox{\hyperlink{glad_8h_a95fc257e5ddf46f7db9d5e898cdf1991}{bottom}} far  $\ast$/}
+
+
+
+Definition at line 25 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_a6b96c6d973936ad3aa667ab6d1a4d0d4}\label{frustum_8h_a6b96c6d973936ad3aa667ab6d1a4d0d4}} 
+\index{frustum.h@{frustum.h}!GLM\_RBN@{GLM\_RBN}}
+\index{GLM\_RBN@{GLM\_RBN}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_RBN}{GLM\_RBN}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+R\+BN~3 /$\ast$ \mbox{\hyperlink{glext_8h_a5ffadbbacc6b89cf6218bc43b384d3fe}{right}} \mbox{\hyperlink{glad_8h_a95fc257e5ddf46f7db9d5e898cdf1991}{bottom}} near $\ast$/}
+
+
+
+Definition at line 20 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_a4e2988dc8295a0ed2e28f71baeafea5d}\label{frustum_8h_a4e2988dc8295a0ed2e28f71baeafea5d}} 
+\index{frustum.h@{frustum.h}!GLM\_RIGHT@{GLM\_RIGHT}}
+\index{GLM\_RIGHT@{GLM\_RIGHT}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_RIGHT}{GLM\_RIGHT}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+R\+I\+G\+HT~1}
+
+
+
+Definition at line 28 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_a3166cacc6c9b2a9cabf09d239182a9fc}\label{frustum_8h_a3166cacc6c9b2a9cabf09d239182a9fc}} 
+\index{frustum.h@{frustum.h}!GLM\_RTF@{GLM\_RTF}}
+\index{GLM\_RTF@{GLM\_RTF}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_RTF}{GLM\_RTF}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+R\+TF~6 /$\ast$ \mbox{\hyperlink{glext_8h_a5ffadbbacc6b89cf6218bc43b384d3fe}{right}} \mbox{\hyperlink{glext_8h_a5ab323daeacf8dfdb8f91132fecdca23}{top}}    far  $\ast$/}
+
+
+
+Definition at line 24 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_a19e9639c170c59f6fcadbec0d3db1bfd}\label{frustum_8h_a19e9639c170c59f6fcadbec0d3db1bfd}} 
+\index{frustum.h@{frustum.h}!GLM\_RTN@{GLM\_RTN}}
+\index{GLM\_RTN@{GLM\_RTN}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_RTN}{GLM\_RTN}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+R\+TN~2 /$\ast$ \mbox{\hyperlink{glext_8h_a5ffadbbacc6b89cf6218bc43b384d3fe}{right}} \mbox{\hyperlink{glext_8h_a5ab323daeacf8dfdb8f91132fecdca23}{top}}    near $\ast$/}
+
+
+
+Definition at line 19 of file frustum.\+h.
+
+\mbox{\Hypertarget{frustum_8h_abad9a5b82e70a795ad7aa673bbd05b3c}\label{frustum_8h_abad9a5b82e70a795ad7aa673bbd05b3c}} 
+\index{frustum.h@{frustum.h}!GLM\_TOP@{GLM\_TOP}}
+\index{GLM\_TOP@{GLM\_TOP}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{GLM\_TOP}{GLM\_TOP}}
+{\footnotesize\ttfamily \#define G\+L\+M\+\_\+\+T\+OP~3}
+
+
+
+Definition at line 30 of file frustum.\+h.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{frustum_8h_a178a550b78cc55ef8b1dcdc10de5d03d}\label{frustum_8h_a178a550b78cc55ef8b1dcdc10de5d03d}} 
+\index{frustum.h@{frustum.h}!glm\_frustum\_box@{glm\_frustum\_box}}
+\index{glm\_frustum\_box@{glm\_frustum\_box}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{glm\_frustum\_box()}{glm\_frustum\_box()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} glm\+\_\+frustum\+\_\+box (\begin{DoxyParamCaption}\item[{vec4}]{corners\mbox{[}8\mbox{]},  }\item[{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}}}]{m,  }\item[{\mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}}}]{box\mbox{[}2\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+finds bounding box of frustum relative to given matrix e.\+g. view mat 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em corners} & view frustum corners \\
+\hline
+\mbox{\texttt{ in}}  & {\em m} & matrix to convert existing conners \\
+\hline
+\mbox{\texttt{ out}}  & {\em box} & bounding box as array \mbox{[}min, max\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 185 of file frustum.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{185                                                       \{}
+\DoxyCodeLine{186   vec4 \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}};}
+\DoxyCodeLine{187   \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} \mbox{\hyperlink{stb_8h_abb702d8b501669a23aa0ab3b281b9384}{min}}, \mbox{\hyperlink{stb_8h_ac39d9cef6a5e030ba8d9e11121054268}{max}};}
+\DoxyCodeLine{188   \textcolor{keywordtype}{int}  i;}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190   \mbox{\hyperlink{vec3-ext_8h_a293c1d8b8e7d454ae836dea92de7d8a6}{glm\_vec3\_broadcast}}(FLT\_MAX, \mbox{\hyperlink{stb_8h_abb702d8b501669a23aa0ab3b281b9384}{min}});}
+\DoxyCodeLine{191   \mbox{\hyperlink{vec3-ext_8h_a293c1d8b8e7d454ae836dea92de7d8a6}{glm\_vec3\_broadcast}}(-\/FLT\_MAX, \mbox{\hyperlink{stb_8h_ac39d9cef6a5e030ba8d9e11121054268}{max}});}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193   \textcolor{keywordflow}{for} (i = 0; i < 8; i++) \{}
+\DoxyCodeLine{194     \mbox{\hyperlink{mat4_8h_aa7c3819fd1b1f8a4c9e975848ea648ae}{glm\_mat4\_mulv}}(\mbox{\hyperlink{glext_8h_af593500c283bf1a787a6f947f503a5c2}{m}}, corners[i], \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}});}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196     \mbox{\hyperlink{stb_8h_abb702d8b501669a23aa0ab3b281b9384}{min}}[0] = \mbox{\hyperlink{util_8h_a115c5a8661b6440c57a031567a800cce}{glm\_min}}(\mbox{\hyperlink{stb_8h_abb702d8b501669a23aa0ab3b281b9384}{min}}[0], \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}[0]);}
+\DoxyCodeLine{197     \mbox{\hyperlink{stb_8h_abb702d8b501669a23aa0ab3b281b9384}{min}}[1] = \mbox{\hyperlink{util_8h_a115c5a8661b6440c57a031567a800cce}{glm\_min}}(\mbox{\hyperlink{stb_8h_abb702d8b501669a23aa0ab3b281b9384}{min}}[1], \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}[1]);}
+\DoxyCodeLine{198     \mbox{\hyperlink{stb_8h_abb702d8b501669a23aa0ab3b281b9384}{min}}[2] = \mbox{\hyperlink{util_8h_a115c5a8661b6440c57a031567a800cce}{glm\_min}}(\mbox{\hyperlink{stb_8h_abb702d8b501669a23aa0ab3b281b9384}{min}}[2], \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}[2]);}
+\DoxyCodeLine{199 }
+\DoxyCodeLine{200     \mbox{\hyperlink{stb_8h_ac39d9cef6a5e030ba8d9e11121054268}{max}}[0] = \mbox{\hyperlink{util_8h_a3bc7e88f0c39b455f0c59c8851b71040}{glm\_max}}(\mbox{\hyperlink{stb_8h_ac39d9cef6a5e030ba8d9e11121054268}{max}}[0], \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}[0]);}
+\DoxyCodeLine{201     \mbox{\hyperlink{stb_8h_ac39d9cef6a5e030ba8d9e11121054268}{max}}[1] = \mbox{\hyperlink{util_8h_a3bc7e88f0c39b455f0c59c8851b71040}{glm\_max}}(\mbox{\hyperlink{stb_8h_ac39d9cef6a5e030ba8d9e11121054268}{max}}[1], \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}[1]);}
+\DoxyCodeLine{202     \mbox{\hyperlink{stb_8h_ac39d9cef6a5e030ba8d9e11121054268}{max}}[2] = \mbox{\hyperlink{util_8h_a3bc7e88f0c39b455f0c59c8851b71040}{glm\_max}}(\mbox{\hyperlink{stb_8h_ac39d9cef6a5e030ba8d9e11121054268}{max}}[2], \mbox{\hyperlink{glad_8h_a10a82eabcb59d2fcd74acee063775f90}{v}}[2]);}
+\DoxyCodeLine{203   \}}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205   \mbox{\hyperlink{vec3_8h_a15bcfba5a95e389426accbf8843eb866}{glm\_vec3\_copy}}(\mbox{\hyperlink{stb_8h_abb702d8b501669a23aa0ab3b281b9384}{min}}, box[0]);}
+\DoxyCodeLine{206   \mbox{\hyperlink{vec3_8h_a15bcfba5a95e389426accbf8843eb866}{glm\_vec3\_copy}}(\mbox{\hyperlink{stb_8h_ac39d9cef6a5e030ba8d9e11121054268}{max}}, box[1]);}
+\DoxyCodeLine{207 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{frustum_8h_ad9d46fe7bc6e5954802553f4e3ed06fd}\label{frustum_8h_ad9d46fe7bc6e5954802553f4e3ed06fd}} 
+\index{frustum.h@{frustum.h}!glm\_frustum\_center@{glm\_frustum\_center}}
+\index{glm\_frustum\_center@{glm\_frustum\_center}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{glm\_frustum\_center()}{glm\_frustum\_center()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} glm\+\_\+frustum\+\_\+center (\begin{DoxyParamCaption}\item[{vec4}]{corners\mbox{[}8\mbox{]},  }\item[{vec4}]{dest }\end{DoxyParamCaption})}
+
+
+
+finds center of view frustum 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em corners} & view frustum corners \\
+\hline
+\mbox{\texttt{ out}}  & {\em dest} & view frustum center \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 160 of file frustum.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{160                                                \{}
+\DoxyCodeLine{161   vec4 center;}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163   \mbox{\hyperlink{vec4_8h_a6bc398f48a0f602dff96819a693f154d}{glm\_vec4\_copy}}(corners[0], center);}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165   \mbox{\hyperlink{vec4_8h_aa7ad5efb2d5ec39f85242ad4b57b8ee1}{glm\_vec4\_add}}(corners[1], center, center);}
+\DoxyCodeLine{166   \mbox{\hyperlink{vec4_8h_aa7ad5efb2d5ec39f85242ad4b57b8ee1}{glm\_vec4\_add}}(corners[2], center, center);}
+\DoxyCodeLine{167   \mbox{\hyperlink{vec4_8h_aa7ad5efb2d5ec39f85242ad4b57b8ee1}{glm\_vec4\_add}}(corners[3], center, center);}
+\DoxyCodeLine{168   \mbox{\hyperlink{vec4_8h_aa7ad5efb2d5ec39f85242ad4b57b8ee1}{glm\_vec4\_add}}(corners[4], center, center);}
+\DoxyCodeLine{169   \mbox{\hyperlink{vec4_8h_aa7ad5efb2d5ec39f85242ad4b57b8ee1}{glm\_vec4\_add}}(corners[5], center, center);}
+\DoxyCodeLine{170   \mbox{\hyperlink{vec4_8h_aa7ad5efb2d5ec39f85242ad4b57b8ee1}{glm\_vec4\_add}}(corners[6], center, center);}
+\DoxyCodeLine{171   \mbox{\hyperlink{vec4_8h_aa7ad5efb2d5ec39f85242ad4b57b8ee1}{glm\_vec4\_add}}(corners[7], center, center);}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173   \mbox{\hyperlink{vec4_8h_a1de78b0d470aa3ba9c5335b7495fc763}{glm\_vec4\_scale}}(center, 0.125\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}}, dest);}
+\DoxyCodeLine{174 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{frustum_8h_a177214c2c986de12f5f260e81511d3c0}\label{frustum_8h_a177214c2c986de12f5f260e81511d3c0}} 
+\index{frustum.h@{frustum.h}!glm\_frustum\_corners@{glm\_frustum\_corners}}
+\index{glm\_frustum\_corners@{glm\_frustum\_corners}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{glm\_frustum\_corners()}{glm\_frustum\_corners()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} glm\+\_\+frustum\+\_\+corners (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}}}]{inv\+Mat,  }\item[{vec4}]{dest\mbox{[}8\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+extracts view frustum corners using clip-\/space coordinates 
+
+corners\textquotesingle{} space\+: 1-\/ if m = inv\+View\+Proj\+: World Space 2-\/ if m = inv\+M\+VP\+: Object Space
+
+You probably want to extract corners in world space so use inv\+View\+Proj Computing inv\+View\+Proj\+: glm\+\_\+mat4\+\_\+mul(proj, view, view\+Proj); ... glm\+\_\+mat4\+\_\+inv(view\+Proj, inv\+View\+Proj);
+
+if you have a near coord at i index, you can get it\textquotesingle{}s far coord by i + 4
+
+Find center coordinates\+: for (j = 0; j $<$ 4; j++) \{ glm\+\_\+vec3\+\_\+center(corners\mbox{[}i\mbox{]}, corners\mbox{[}i + 4\mbox{]}, center\+Corners\mbox{[}i\mbox{]}); \}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em inv\+Mat} & matrix (see brief) \\
+\hline
+\mbox{\texttt{ out}}  & {\em dest} & exracted view frustum corners (see brief) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 117 of file frustum.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{117                                                \{}
+\DoxyCodeLine{118   vec4 \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[8];}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120   \textcolor{comment}{/* indexOf(nearCoord) = indexOf(farCoord) + 4 */}}
+\DoxyCodeLine{121   vec4 csCoords[8] = \{}
+\DoxyCodeLine{122     \mbox{\hyperlink{frustum_8h_ad801db07422760b91b8713f079c153a8}{GLM\_CSCOORD\_LBN}},}
+\DoxyCodeLine{123     \mbox{\hyperlink{frustum_8h_a5888b75472f4d08b595f038fdc0d96dc}{GLM\_CSCOORD\_LTN}},}
+\DoxyCodeLine{124     \mbox{\hyperlink{frustum_8h_a12731de6c439728fd20498d007fbcf61}{GLM\_CSCOORD\_RTN}},}
+\DoxyCodeLine{125     \mbox{\hyperlink{frustum_8h_a3793809f3d48a65ee255b9124976cb6a}{GLM\_CSCOORD\_RBN}},}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127     \mbox{\hyperlink{frustum_8h_ab0b8afa7b40948a7f85683bec453da36}{GLM\_CSCOORD\_LBF}},}
+\DoxyCodeLine{128     \mbox{\hyperlink{frustum_8h_acf394ce86e29b5bd995e3e9165c16a1b}{GLM\_CSCOORD\_LTF}},}
+\DoxyCodeLine{129     \mbox{\hyperlink{frustum_8h_af208a61bc747a0791adb945ce6ef4c4c}{GLM\_CSCOORD\_RTF}},}
+\DoxyCodeLine{130     \mbox{\hyperlink{frustum_8h_af9d2f55384813af509d9505552e4b686}{GLM\_CSCOORD\_RBF}}}
+\DoxyCodeLine{131   \};}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133   \mbox{\hyperlink{mat4_8h_aa7c3819fd1b1f8a4c9e975848ea648ae}{glm\_mat4\_mulv}}(invMat, csCoords[0], \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[0]);}
+\DoxyCodeLine{134   \mbox{\hyperlink{mat4_8h_aa7c3819fd1b1f8a4c9e975848ea648ae}{glm\_mat4\_mulv}}(invMat, csCoords[1], \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[1]);}
+\DoxyCodeLine{135   \mbox{\hyperlink{mat4_8h_aa7c3819fd1b1f8a4c9e975848ea648ae}{glm\_mat4\_mulv}}(invMat, csCoords[2], \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[2]);}
+\DoxyCodeLine{136   \mbox{\hyperlink{mat4_8h_aa7c3819fd1b1f8a4c9e975848ea648ae}{glm\_mat4\_mulv}}(invMat, csCoords[3], \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[3]);}
+\DoxyCodeLine{137   \mbox{\hyperlink{mat4_8h_aa7c3819fd1b1f8a4c9e975848ea648ae}{glm\_mat4\_mulv}}(invMat, csCoords[4], \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[4]);}
+\DoxyCodeLine{138   \mbox{\hyperlink{mat4_8h_aa7c3819fd1b1f8a4c9e975848ea648ae}{glm\_mat4\_mulv}}(invMat, csCoords[5], \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[5]);}
+\DoxyCodeLine{139   \mbox{\hyperlink{mat4_8h_aa7c3819fd1b1f8a4c9e975848ea648ae}{glm\_mat4\_mulv}}(invMat, csCoords[6], \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[6]);}
+\DoxyCodeLine{140   \mbox{\hyperlink{mat4_8h_aa7c3819fd1b1f8a4c9e975848ea648ae}{glm\_mat4\_mulv}}(invMat, csCoords[7], \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[7]);}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142   \mbox{\hyperlink{vec4_8h_a1de78b0d470aa3ba9c5335b7495fc763}{glm\_vec4\_scale}}(\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[0], 1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} / \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[0][3], dest[0]);}
+\DoxyCodeLine{143   \mbox{\hyperlink{vec4_8h_a1de78b0d470aa3ba9c5335b7495fc763}{glm\_vec4\_scale}}(\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[1], 1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} / \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[1][3], dest[1]);}
+\DoxyCodeLine{144   \mbox{\hyperlink{vec4_8h_a1de78b0d470aa3ba9c5335b7495fc763}{glm\_vec4\_scale}}(\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[2], 1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} / \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[2][3], dest[2]);}
+\DoxyCodeLine{145   \mbox{\hyperlink{vec4_8h_a1de78b0d470aa3ba9c5335b7495fc763}{glm\_vec4\_scale}}(\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[3], 1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} / \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[3][3], dest[3]);}
+\DoxyCodeLine{146   \mbox{\hyperlink{vec4_8h_a1de78b0d470aa3ba9c5335b7495fc763}{glm\_vec4\_scale}}(\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[4], 1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} / \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[4][3], dest[4]);}
+\DoxyCodeLine{147   \mbox{\hyperlink{vec4_8h_a1de78b0d470aa3ba9c5335b7495fc763}{glm\_vec4\_scale}}(\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[5], 1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} / \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[5][3], dest[5]);}
+\DoxyCodeLine{148   \mbox{\hyperlink{vec4_8h_a1de78b0d470aa3ba9c5335b7495fc763}{glm\_vec4\_scale}}(\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[6], 1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} / \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[6][3], dest[6]);}
+\DoxyCodeLine{149   \mbox{\hyperlink{vec4_8h_a1de78b0d470aa3ba9c5335b7495fc763}{glm\_vec4\_scale}}(\mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[7], 1.0\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} / \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}}[7][3], dest[7]);}
+\DoxyCodeLine{150 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{frustum_8h_aaac5b17a0ab5e99a4a168b8dc92b5e9f}\label{frustum_8h_aaac5b17a0ab5e99a4a168b8dc92b5e9f}} 
+\index{frustum.h@{frustum.h}!glm\_frustum\_corners\_at@{glm\_frustum\_corners\_at}}
+\index{glm\_frustum\_corners\_at@{glm\_frustum\_corners\_at}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{glm\_frustum\_corners\_at()}{glm\_frustum\_corners\_at()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} glm\+\_\+frustum\+\_\+corners\+\_\+at (\begin{DoxyParamCaption}\item[{vec4}]{corners\mbox{[}8\mbox{]},  }\item[{float}]{split\+Dist,  }\item[{float}]{far\+Dist,  }\item[{vec4}]{plane\+Corners\mbox{[}4\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+finds planes corners which is between near and far planes (parallel) 
+
+this will be helpful if you want to split a frustum e.\+g. C\+S\+M/\+P\+S\+SM. This will find planes\textquotesingle{} corners but you will need to one more plane. Actually you have it, it is near, far or created previously with this func ;)
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em corners} & view frustum corners \\
+\hline
+\mbox{\texttt{ in}}  & {\em split\+Dist} & split distance \\
+\hline
+\mbox{\texttt{ in}}  & {\em far\+Dist} & far distance (z\+Far) \\
+\hline
+\mbox{\texttt{ out}}  & {\em plane\+Corners} & plane corners \mbox{[}LB, LT, RT, RB\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 223 of file frustum.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{226                                               \{}
+\DoxyCodeLine{227   vec4  corner;}
+\DoxyCodeLine{228   \textcolor{keywordtype}{float} dist, sc;}
+\DoxyCodeLine{229 }
+\DoxyCodeLine{230   \textcolor{comment}{/* because distance and scale is same for all */}}
+\DoxyCodeLine{231   dist = \mbox{\hyperlink{vec3_8h_ae1fd284a9aaa6588a4a9d3cd0f86e349}{glm\_vec3\_distance}}(corners[\mbox{\hyperlink{frustum_8h_a3166cacc6c9b2a9cabf09d239182a9fc}{GLM\_RTF}}], corners[\mbox{\hyperlink{frustum_8h_a19e9639c170c59f6fcadbec0d3db1bfd}{GLM\_RTN}}]);}
+\DoxyCodeLine{232   sc   = dist * (splitDist / farDist);}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234   \textcolor{comment}{/* left bottom */}}
+\DoxyCodeLine{235   \mbox{\hyperlink{vec4_8h_a60f3179e89fe76347003f7f5125ea326}{glm\_vec4\_sub}}(corners[\mbox{\hyperlink{frustum_8h_a4386f50ec24e8ef593bcaa98756840f1}{GLM\_LBF}}], corners[\mbox{\hyperlink{frustum_8h_a324bae2d5d9b79f3a8dbebcd86cce403}{GLM\_LBN}}], corner);}
+\DoxyCodeLine{236   \mbox{\hyperlink{vec4_8h_a27234c65b5bd5856b5857ddffe56be6f}{glm\_vec4\_scale\_as}}(corner, sc, corner);}
+\DoxyCodeLine{237   \mbox{\hyperlink{vec4_8h_aa7ad5efb2d5ec39f85242ad4b57b8ee1}{glm\_vec4\_add}}(corners[\mbox{\hyperlink{frustum_8h_a324bae2d5d9b79f3a8dbebcd86cce403}{GLM\_LBN}}], corner, planeCorners[0]);}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239   \textcolor{comment}{/* left top */}}
+\DoxyCodeLine{240   \mbox{\hyperlink{vec4_8h_a60f3179e89fe76347003f7f5125ea326}{glm\_vec4\_sub}}(corners[\mbox{\hyperlink{frustum_8h_a3a9b751a7b380e3eeef54ac5339cef5b}{GLM\_LTF}}], corners[\mbox{\hyperlink{frustum_8h_a6417a813bf54bdeae95a9028f2e2358e}{GLM\_LTN}}], corner);}
+\DoxyCodeLine{241   \mbox{\hyperlink{vec4_8h_a27234c65b5bd5856b5857ddffe56be6f}{glm\_vec4\_scale\_as}}(corner, sc, corner);}
+\DoxyCodeLine{242   \mbox{\hyperlink{vec4_8h_aa7ad5efb2d5ec39f85242ad4b57b8ee1}{glm\_vec4\_add}}(corners[\mbox{\hyperlink{frustum_8h_a6417a813bf54bdeae95a9028f2e2358e}{GLM\_LTN}}], corner, planeCorners[1]);}
+\DoxyCodeLine{243 }
+\DoxyCodeLine{244   \textcolor{comment}{/* right top */}}
+\DoxyCodeLine{245   \mbox{\hyperlink{vec4_8h_a60f3179e89fe76347003f7f5125ea326}{glm\_vec4\_sub}}(corners[\mbox{\hyperlink{frustum_8h_a3166cacc6c9b2a9cabf09d239182a9fc}{GLM\_RTF}}], corners[\mbox{\hyperlink{frustum_8h_a19e9639c170c59f6fcadbec0d3db1bfd}{GLM\_RTN}}], corner);}
+\DoxyCodeLine{246   \mbox{\hyperlink{vec4_8h_a27234c65b5bd5856b5857ddffe56be6f}{glm\_vec4\_scale\_as}}(corner, sc, corner);}
+\DoxyCodeLine{247   \mbox{\hyperlink{vec4_8h_aa7ad5efb2d5ec39f85242ad4b57b8ee1}{glm\_vec4\_add}}(corners[\mbox{\hyperlink{frustum_8h_a19e9639c170c59f6fcadbec0d3db1bfd}{GLM\_RTN}}], corner, planeCorners[2]);}
+\DoxyCodeLine{248 }
+\DoxyCodeLine{249   \textcolor{comment}{/* right bottom */}}
+\DoxyCodeLine{250   \mbox{\hyperlink{vec4_8h_a60f3179e89fe76347003f7f5125ea326}{glm\_vec4\_sub}}(corners[\mbox{\hyperlink{frustum_8h_a47662289ab8766445d3cc35746f66357}{GLM\_RBF}}], corners[\mbox{\hyperlink{frustum_8h_a6b96c6d973936ad3aa667ab6d1a4d0d4}{GLM\_RBN}}], corner);}
+\DoxyCodeLine{251   \mbox{\hyperlink{vec4_8h_a27234c65b5bd5856b5857ddffe56be6f}{glm\_vec4\_scale\_as}}(corner, sc, corner);}
+\DoxyCodeLine{252   \mbox{\hyperlink{vec4_8h_aa7ad5efb2d5ec39f85242ad4b57b8ee1}{glm\_vec4\_add}}(corners[\mbox{\hyperlink{frustum_8h_a6b96c6d973936ad3aa667ab6d1a4d0d4}{GLM\_RBN}}], corner, planeCorners[3]);}
+\DoxyCodeLine{253 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{frustum_8h_ac270296e4af87806e080c71537250316}\label{frustum_8h_ac270296e4af87806e080c71537250316}} 
+\index{frustum.h@{frustum.h}!glm\_frustum\_planes@{glm\_frustum\_planes}}
+\index{glm\_frustum\_planes@{glm\_frustum\_planes}!frustum.h@{frustum.h}}
+\doxysubsubsection{\texorpdfstring{glm\_frustum\_planes()}{glm\_frustum\_planes()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} \mbox{\hyperlink{glext_8h_a46df6112013cf583e82b25cebd5cb499}{void}} glm\+\_\+frustum\+\_\+planes (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}}}]{m,  }\item[{vec4}]{dest\mbox{[}6\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+extracts view frustum planes 
+
+planes\textquotesingle{} space\+: 1-\/ if m = proj\+: View Space 2-\/ if m = view\+Proj\+: World Space 3-\/ if m = M\+VP\+: Object Space
+
+You probably want to extract planes in world space so use view\+Proj as m Computing view\+Proj\+: glm\+\_\+mat4\+\_\+mul(proj, view, view\+Proj);
+
+Exracted planes order\+: \mbox{[}left, right, bottom, top, near, far\mbox{]}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em m} & matrix (see brief) \\
+\hline
+\mbox{\texttt{ out}}  & {\em dest} & extracted view frustum planes (see brief) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 72 of file frustum.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{72                                          \{}
+\DoxyCodeLine{73   \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} \mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}};}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75   \mbox{\hyperlink{mat4_8h_ad14bbda8b5be7012462cca81a96c526d}{glm\_mat4\_transpose\_to}}(\mbox{\hyperlink{glext_8h_af593500c283bf1a787a6f947f503a5c2}{m}}, \mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}});}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77   \mbox{\hyperlink{vec4_8h_aa7ad5efb2d5ec39f85242ad4b57b8ee1}{glm\_vec4\_add}}(\mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}}[3], \mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}}[0], dest[0]); \textcolor{comment}{/* left   */}}
+\DoxyCodeLine{78   \mbox{\hyperlink{vec4_8h_a60f3179e89fe76347003f7f5125ea326}{glm\_vec4\_sub}}(\mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}}[3], \mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}}[0], dest[1]); \textcolor{comment}{/* right  */}}
+\DoxyCodeLine{79   \mbox{\hyperlink{vec4_8h_aa7ad5efb2d5ec39f85242ad4b57b8ee1}{glm\_vec4\_add}}(\mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}}[3], \mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}}[1], dest[2]); \textcolor{comment}{/* bottom */}}
+\DoxyCodeLine{80   \mbox{\hyperlink{vec4_8h_a60f3179e89fe76347003f7f5125ea326}{glm\_vec4\_sub}}(\mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}}[3], \mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}}[1], dest[3]); \textcolor{comment}{/* top    */}}
+\DoxyCodeLine{81   \mbox{\hyperlink{vec4_8h_aa7ad5efb2d5ec39f85242ad4b57b8ee1}{glm\_vec4\_add}}(\mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}}[3], \mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}}[2], dest[4]); \textcolor{comment}{/* near   */}}
+\DoxyCodeLine{82   \mbox{\hyperlink{vec4_8h_a60f3179e89fe76347003f7f5125ea326}{glm\_vec4\_sub}}(\mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}}[3], \mbox{\hyperlink{glext_8h_a7d65d00ca3b0630d9b5c52df855b19f5}{t}}[2], dest[5]); \textcolor{comment}{/* far    */}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84   \mbox{\hyperlink{plane_8h_a07bad89839706b91ebd30a4cf99b79b2}{glm\_plane\_normalize}}(dest[0]);}
+\DoxyCodeLine{85   \mbox{\hyperlink{plane_8h_a07bad89839706b91ebd30a4cf99b79b2}{glm\_plane\_normalize}}(dest[1]);}
+\DoxyCodeLine{86   \mbox{\hyperlink{plane_8h_a07bad89839706b91ebd30a4cf99b79b2}{glm\_plane\_normalize}}(dest[2]);}
+\DoxyCodeLine{87   \mbox{\hyperlink{plane_8h_a07bad89839706b91ebd30a4cf99b79b2}{glm\_plane\_normalize}}(dest[3]);}
+\DoxyCodeLine{88   \mbox{\hyperlink{plane_8h_a07bad89839706b91ebd30a4cf99b79b2}{glm\_plane\_normalize}}(dest[4]);}
+\DoxyCodeLine{89   \mbox{\hyperlink{plane_8h_a07bad89839706b91ebd30a4cf99b79b2}{glm\_plane\_normalize}}(dest[5]);}
+\DoxyCodeLine{90 \}}
+
+\end{DoxyCode}

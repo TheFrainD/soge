@@ -1,0 +1,271 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_getopt_8c">
+<title>deps/glfw/deps/getopt.c File Reference</title>
+<indexterm><primary>deps/glfw/deps/getopt.c</primary></indexterm>
+<programlisting>#include &quot;getopt.h&quot;
+#include &lt;stddef.h&gt;
+#include &lt;string.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_getopt_8c_1a5ffa4c677fc71cecd94f140ef9db624c">getopt</link> (int argc, char *const argv[], const char *optstring)</para>
+</listitem>
+            <listitem><para>int <link linkend="_getopt_8c_1a19a25d4c484d212220cad56a69c426b0">getopt_long</link> (int argc, char *const argv[], const char *optstring, const struct <link linkend="_structoption">option</link> *longopts, int *longindex)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>const int <link linkend="_getopt_8c_1a69637a51de0bbacf102f8aae7281f6e0">no_argument</link> = 0</para>
+</listitem>
+            <listitem><para>const int <link linkend="_getopt_8c_1aea125b304b6afc653fa99511629d1e90">required_argument</link> = 1</para>
+</listitem>
+            <listitem><para>const int <link linkend="_getopt_8c_1a7035c1113b17e25706c513375cdfc81a">optional_argument</link> = 2</para>
+</listitem>
+            <listitem><para>char * <link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_getopt_8c_1a475b8db98445da73e5f62a1ef6324b95">optopt</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link> = 1</para>
+</listitem>
+            <listitem><para>int <link linkend="_getopt_8c_1ae30f05ee1e2e5652f174a35c7875d25e">opterr</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_getopt_8c_1a5ffa4c677fc71cecd94f140ef9db624c"/>    <section>
+    <title>getopt()</title>
+<indexterm><primary>getopt</primary><secondary>getopt.c</secondary></indexterm>
+<indexterm><primary>getopt.c</primary><secondary>getopt</secondary></indexterm>
+<para><computeroutput>int getopt (int argc, char *const argv[], const char * optstring)</computeroutput></para><para>
+Definition at line 52 of file getopt.c.</para>
+<programlisting>52 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+53 &#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;optchar&#32;=&#32;-1;
+54 &#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>*&#32;optdecl&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+55 
+56 &#32;&#32;<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+57 &#32;&#32;<link linkend="_getopt_8c_1ae30f05ee1e2e5652f174a35c7875d25e">opterr</link>&#32;=&#32;0;
+58 &#32;&#32;<link linkend="_getopt_8c_1a475b8db98445da73e5f62a1ef6324b95">optopt</link>&#32;=&#32;0;
+59 
+60 &#32;&#32;<emphasis role="comment">/*&#32;Unspecified,&#32;but&#32;we&#32;need&#32;it&#32;to&#32;avoid&#32;overrunning&#32;the&#32;argv&#32;bounds.&#32;*/</emphasis>
+61 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>&#32;&gt;=&#32;argc)
+62 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;no_more_optchars;
+63 
+64 &#32;&#32;<emphasis role="comment">/*&#32;If,&#32;when&#32;getopt()&#32;is&#32;called&#32;argv[optind]&#32;is&#32;a&#32;null&#32;pointer,&#32;getopt()</emphasis>
+65 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;shall&#32;return&#32;-1&#32;without&#32;changing&#32;optind.&#32;*/</emphasis>
+66 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(argv[<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>]&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+67 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;no_more_optchars;
+68 
+69 &#32;&#32;<emphasis role="comment">/*&#32;If,&#32;when&#32;getopt()&#32;is&#32;called&#32;*argv[optind]&#32;&#32;is&#32;not&#32;the&#32;character&#32;&apos;-&apos;,</emphasis>
+70 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;getopt()&#32;shall&#32;return&#32;-1&#32;without&#32;changing&#32;optind.&#32;*/</emphasis>
+71 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(*argv[<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>]&#32;!=&#32;<emphasis role="charliteral">&apos;-&apos;</emphasis>)
+72 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;no_more_optchars;
+73 
+74 &#32;&#32;<emphasis role="comment">/*&#32;If,&#32;when&#32;getopt()&#32;is&#32;called&#32;argv[optind]&#32;points&#32;to&#32;the&#32;string&#32;&quot;-&quot;,</emphasis>
+75 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;getopt()&#32;shall&#32;return&#32;-1&#32;without&#32;changing&#32;optind.&#32;*/</emphasis>
+76 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(argv[<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>],&#32;<emphasis role="stringliteral">&quot;-&quot;</emphasis>)&#32;==&#32;0)
+77 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;no_more_optchars;
+78 
+79 &#32;&#32;<emphasis role="comment">/*&#32;If,&#32;when&#32;getopt()&#32;is&#32;called&#32;argv[optind]&#32;points&#32;to&#32;the&#32;string&#32;&quot;--&quot;,</emphasis>
+80 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;getopt()&#32;shall&#32;return&#32;-1&#32;after&#32;incrementing&#32;optind.&#32;*/</emphasis>
+81 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(argv[<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>],&#32;<emphasis role="stringliteral">&quot;--&quot;</emphasis>)&#32;==&#32;0)&#32;{
+82 &#32;&#32;&#32;&#32;++<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>;
+83 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">goto</emphasis>&#32;no_more_optchars;
+84 &#32;&#32;}
+85 
+86 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(optcursor&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>&#32;||&#32;*optcursor&#32;==&#32;<emphasis role="charliteral">&apos;\0&apos;</emphasis>)
+87 &#32;&#32;&#32;&#32;optcursor&#32;=&#32;argv[<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>]&#32;+&#32;1;
+88 
+89 &#32;&#32;optchar&#32;=&#32;*optcursor;
+90 
+91 &#32;&#32;<emphasis role="comment">/*&#32;FreeBSD:&#32;The&#32;variable&#32;optopt&#32;saves&#32;the&#32;last&#32;known&#32;option&#32;character</emphasis>
+92 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;returned&#32;by&#32;getopt().&#32;*/</emphasis>
+93 &#32;&#32;<link linkend="_getopt_8c_1a475b8db98445da73e5f62a1ef6324b95">optopt</link>&#32;=&#32;optchar;
+94 
+95 &#32;&#32;<emphasis role="comment">/*&#32;The&#32;getopt()&#32;function&#32;shall&#32;return&#32;the&#32;next&#32;option&#32;character&#32;(if&#32;one&#32;is</emphasis>
+96 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;found)&#32;from&#32;argv&#32;that&#32;matches&#32;a&#32;character&#32;in&#32;optstring,&#32;if&#32;there&#32;is</emphasis>
+97 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;one&#32;that&#32;matches.&#32;*/</emphasis>
+98 &#32;&#32;optdecl&#32;=&#32;strchr(optstring,&#32;optchar);
+99 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(optdecl)&#32;{
+100 &#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;[I]f&#32;a&#32;character&#32;is&#32;followed&#32;by&#32;a&#32;colon,&#32;the&#32;option&#32;takes&#32;an</emphasis>
+101 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;argument.&#32;*/</emphasis>
+102 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(optdecl[1]&#32;==&#32;<emphasis role="charliteral">&apos;:&apos;</emphasis>)&#32;{
+103 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>&#32;=&#32;++optcursor;
+104 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(*<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>&#32;==&#32;<emphasis role="charliteral">&apos;\0&apos;</emphasis>)&#32;{
+105 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;GNU&#32;extension:&#32;Two&#32;colons&#32;mean&#32;an&#32;option&#32;takes&#32;an</emphasis>
+106 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;optional&#32;arg;&#32;if&#32;there&#32;is&#32;text&#32;in&#32;the&#32;current&#32;argv-element</emphasis>
+107 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(i.e.,&#32;in&#32;the&#32;same&#32;word&#32;as&#32;the&#32;option&#32;name&#32;itself,&#32;for&#32;example,</emphasis>
+108 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&quot;-oarg&quot;),&#32;then&#32;it&#32;is&#32;returned&#32;in&#32;optarg,&#32;otherwise&#32;optarg&#32;is&#32;set</emphasis>
+109 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;to&#32;zero.&#32;*/</emphasis>
+110 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(optdecl[2]&#32;!=&#32;<emphasis role="charliteral">&apos;:&apos;</emphasis>)&#32;{
+111 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;If&#32;the&#32;option&#32;was&#32;the&#32;last&#32;character&#32;in&#32;the&#32;string&#32;pointed&#32;to&#32;by</emphasis>
+112 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;an&#32;element&#32;of&#32;argv,&#32;then&#32;optarg&#32;shall&#32;contain&#32;the&#32;next&#32;element</emphasis>
+113 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;of&#32;argv,&#32;and&#32;optind&#32;shall&#32;be&#32;incremented&#32;by&#32;2.&#32;If&#32;the&#32;resulting</emphasis>
+114 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;value&#32;of&#32;optind&#32;is&#32;greater&#32;than&#32;argc,&#32;this&#32;indicates&#32;a&#32;missing</emphasis>
+115 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;option-argument,&#32;and&#32;getopt()&#32;shall&#32;return&#32;an&#32;error&#32;indication.</emphasis>
+116 <emphasis role="comment"></emphasis>
+117 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Otherwise,&#32;optarg&#32;shall&#32;point&#32;to&#32;the&#32;string&#32;following&#32;the</emphasis>
+118 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;option&#32;character&#32;in&#32;that&#32;element&#32;of&#32;argv,&#32;and&#32;optind&#32;shall&#32;be</emphasis>
+119 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;incremented&#32;by&#32;1.</emphasis>
+120 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*/</emphasis>
+121 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(++<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>&#32;&lt;&#32;argc)&#32;{
+122 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>&#32;=&#32;argv[<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>];
+123 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+124 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;If&#32;it&#32;detects&#32;a&#32;missing&#32;option-argument,&#32;it&#32;shall&#32;return&#32;the</emphasis>
+125 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;colon&#32;character&#32;(&#32;&apos;:&apos;&#32;)&#32;if&#32;the&#32;first&#32;character&#32;of&#32;optstring</emphasis>
+126 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;was&#32;a&#32;colon,&#32;or&#32;a&#32;question-mark&#32;character&#32;(&#32;&apos;?&apos;&#32;)&#32;otherwise.</emphasis>
+127 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*/</emphasis>
+128 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+129 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;optchar&#32;=&#32;(optstring[0]&#32;==&#32;<emphasis role="charliteral">&apos;:&apos;</emphasis>)&#32;?&#32;<emphasis role="charliteral">&apos;:&apos;</emphasis>&#32;:&#32;<emphasis role="charliteral">&apos;?&apos;</emphasis>;
+130 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+131 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+132 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+133 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+134 &#32;&#32;&#32;&#32;&#32;&#32;}
+135 
+136 &#32;&#32;&#32;&#32;&#32;&#32;optcursor&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+137 &#32;&#32;&#32;&#32;}
+138 &#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+139 &#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;If&#32;getopt()&#32;encounters&#32;an&#32;option&#32;character&#32;that&#32;is&#32;not&#32;contained&#32;in</emphasis>
+140 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;optstring,&#32;it&#32;shall&#32;return&#32;the&#32;question-mark&#32;(&#32;&apos;?&apos;&#32;)&#32;character.&#32;*/</emphasis>
+141 &#32;&#32;&#32;&#32;optchar&#32;=&#32;<emphasis role="charliteral">&apos;?&apos;</emphasis>;
+142 &#32;&#32;}
+143 
+144 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(optcursor&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>&#32;||&#32;*++optcursor&#32;==&#32;<emphasis role="charliteral">&apos;\0&apos;</emphasis>)
+145 &#32;&#32;&#32;&#32;++<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>;
+146 
+147 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;optchar;
+148 
+149 no_more_optchars:
+150 &#32;&#32;optcursor&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+151 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;-1;
+152 }
+</programlisting>    </section><anchor xml:id="_getopt_8c_1a19a25d4c484d212220cad56a69c426b0"/>    <section>
+    <title>getopt_long()</title>
+<indexterm><primary>getopt_long</primary><secondary>getopt.c</secondary></indexterm>
+<indexterm><primary>getopt.c</primary><secondary>getopt_long</secondary></indexterm>
+<para><computeroutput>int getopt_long (int argc, char *const argv[], const char * optstring, const struct <link linkend="_structoption">option</link> * longopts, int * longindex)</computeroutput></para><para>
+Definition at line 158 of file getopt.c.</para>
+<programlisting>159 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+160 &#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keyword">struct&#32;</emphasis><link linkend="_structoption">option</link>*&#32;o&#32;=&#32;longopts;
+161 &#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keyword">struct&#32;</emphasis><link linkend="_structoption">option</link>*&#32;match&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+162 &#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;num_matches&#32;=&#32;0;
+163 &#32;&#32;<emphasis role="keywordtype">size_t</emphasis>&#32;argument_name_length&#32;=&#32;0;
+164 &#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>*&#32;current_argument&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+165 &#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;retval&#32;=&#32;-1;
+166 
+167 &#32;&#32;<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+168 &#32;&#32;<link linkend="_getopt_8c_1a475b8db98445da73e5f62a1ef6324b95">optopt</link>&#32;=&#32;0;
+169 
+170 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>&#32;&gt;=&#32;argc)
+171 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;-1;
+172 
+173 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strlen(argv[<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>])&#32;&lt;&#32;3&#32;||&#32;strncmp(argv[<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>],&#32;<emphasis role="stringliteral">&quot;--&quot;</emphasis>,&#32;2)&#32;!=&#32;0)
+174 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_getopt_8c_1a5ffa4c677fc71cecd94f140ef9db624c">getopt</link>(argc,&#32;argv,&#32;optstring);
+175 
+176 &#32;&#32;<emphasis role="comment">/*&#32;It&apos;s&#32;an&#32;option;&#32;starts&#32;with&#32;--&#32;and&#32;is&#32;longer&#32;than&#32;two&#32;chars.&#32;*/</emphasis>
+177 &#32;&#32;current_argument&#32;=&#32;argv[<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>]&#32;+&#32;2;
+178 &#32;&#32;argument_name_length&#32;=&#32;strcspn(current_argument,&#32;<emphasis role="stringliteral">&quot;=&quot;</emphasis>);
+179 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(;&#32;o-&gt;<link linkend="_structoption_1adc503659d37af8017fb4b86d61c99086">name</link>;&#32;++o)&#32;{
+180 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strncmp(o-&gt;<link linkend="_structoption_1adc503659d37af8017fb4b86d61c99086">name</link>,&#32;current_argument,&#32;argument_name_length)&#32;==&#32;0)&#32;{
+181 &#32;&#32;&#32;&#32;&#32;&#32;match&#32;=&#32;o;
+182 &#32;&#32;&#32;&#32;&#32;&#32;++num_matches;
+183 &#32;&#32;&#32;&#32;}
+184 &#32;&#32;}
+185 
+186 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(num_matches&#32;==&#32;1)&#32;{
+187 &#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;If&#32;longindex&#32;is&#32;not&#32;NULL,&#32;it&#32;points&#32;to&#32;a&#32;variable&#32;which&#32;is&#32;set&#32;to&#32;the</emphasis>
+188 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;index&#32;of&#32;the&#32;long&#32;option&#32;relative&#32;to&#32;longopts.&#32;*/</emphasis>
+189 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(longindex)
+190 &#32;&#32;&#32;&#32;&#32;&#32;*longindex&#32;=&#32;(int)&#32;(match&#32;-&#32;longopts);
+191 
+192 &#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;If&#32;flag&#32;is&#32;NULL,&#32;then&#32;getopt_long()&#32;shall&#32;return&#32;val.</emphasis>
+193 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;Otherwise,&#32;getopt_long()&#32;returns&#32;0,&#32;and&#32;flag&#32;shall&#32;point&#32;to&#32;a&#32;variable</emphasis>
+194 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;which&#32;shall&#32;be&#32;set&#32;to&#32;val&#32;if&#32;the&#32;option&#32;is&#32;found,&#32;but&#32;left&#32;unchanged&#32;if</emphasis>
+195 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;the&#32;option&#32;is&#32;not&#32;found.&#32;*/</emphasis>
+196 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(match-&gt;<link linkend="_structoption_1ab366eea5fe7be25c1928328ba715e353">flag</link>)
+197 &#32;&#32;&#32;&#32;&#32;&#32;*(match-&gt;<link linkend="_structoption_1ab366eea5fe7be25c1928328ba715e353">flag</link>)&#32;=&#32;match-&gt;<link linkend="_structoption_1a13bd155ec3b405d29c41ab8d0793be11">val</link>;
+198 
+199 &#32;&#32;&#32;&#32;retval&#32;=&#32;match-&gt;<link linkend="_structoption_1ab366eea5fe7be25c1928328ba715e353">flag</link>&#32;?&#32;0&#32;:&#32;match-&gt;<link linkend="_structoption_1a13bd155ec3b405d29c41ab8d0793be11">val</link>;
+200 
+201 &#32;&#32;&#32;&#32;if&#32;(match-&gt;<link linkend="_structoption_1a90d7ee9a51eea5c002682dbd0af149e4">has_arg</link>&#32;!=&#32;<link linkend="_getopt_8c_1a69637a51de0bbacf102f8aae7281f6e0">no_argument</link>)&#32;{
+202 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>&#32;=&#32;strchr(argv[<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>],&#32;<emphasis role="charliteral">&apos;=&apos;</emphasis>);
+203 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>&#32;!=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+204 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;++<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>;
+205 
+206 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(match-&gt;<link linkend="_structoption_1a90d7ee9a51eea5c002682dbd0af149e4">has_arg</link>&#32;==&#32;<link linkend="_getopt_8c_1aea125b304b6afc653fa99511629d1e90">required_argument</link>)&#32;{
+207 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;Only&#32;scan&#32;the&#32;next&#32;argv&#32;for&#32;required&#32;arguments.&#32;Behavior&#32;is&#32;not</emphasis>
+208 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;specified,&#32;but&#32;has&#32;been&#32;observed&#32;with&#32;Ubuntu&#32;and&#32;Mac&#32;OSX.&#32;*/</emphasis>
+209 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>&#32;&amp;&amp;&#32;++<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>&#32;&lt;&#32;argc)&#32;{
+210 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>&#32;=&#32;argv[<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>];
+211 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+212 
+213 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</link>&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+214 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;retval&#32;=&#32;<emphasis role="charliteral">&apos;:&apos;</emphasis>;
+215 &#32;&#32;&#32;&#32;&#32;&#32;}
+216 &#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strchr(argv[<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>],&#32;<emphasis role="charliteral">&apos;=&apos;</emphasis>))&#32;{
+217 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;An&#32;argument&#32;was&#32;provided&#32;to&#32;a&#32;non-argument&#32;option.</emphasis>
+218 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;I&#32;haven&apos;t&#32;seen&#32;this&#32;specified&#32;explicitly,&#32;but&#32;both&#32;GNU&#32;and&#32;BSD-based</emphasis>
+219 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;implementations&#32;show&#32;this&#32;behavior.</emphasis>
+220 <emphasis role="comment">&#32;&#32;&#32;&#32;&#32;&#32;*/</emphasis>
+221 &#32;&#32;&#32;&#32;&#32;&#32;retval&#32;=&#32;<emphasis role="charliteral">&apos;?&apos;</emphasis>;
+222 &#32;&#32;&#32;&#32;}
+223 &#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+224 &#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;Unknown&#32;option&#32;or&#32;ambiguous&#32;match.&#32;*/</emphasis>
+225 &#32;&#32;&#32;&#32;retval&#32;=&#32;<emphasis role="charliteral">&apos;?&apos;</emphasis>;
+226 &#32;&#32;}
+227 
+228 &#32;&#32;++<link linkend="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c">optind</link>;
+229 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;retval;
+230 }
+</programlisting></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_getopt_8c_1a69637a51de0bbacf102f8aae7281f6e0"/>    <section>
+    <title>no_argument</title>
+<indexterm><primary>no_argument</primary><secondary>getopt.c</secondary></indexterm>
+<indexterm><primary>getopt.c</primary><secondary>no_argument</secondary></indexterm>
+<para><computeroutput>const int no_argument = 0</computeroutput></para><para>
+Definition at line 32 of file getopt.c.</para>
+    </section><anchor xml:id="_getopt_8c_1adb50a0eab9fed92fc3bfc7dfa4f2c410"/>    <section>
+    <title>optarg</title>
+<indexterm><primary>optarg</primary><secondary>getopt.c</secondary></indexterm>
+<indexterm><primary>getopt.c</primary><secondary>optarg</secondary></indexterm>
+<para><computeroutput>char* optarg</computeroutput></para><para>
+Definition at line 36 of file getopt.c.</para>
+    </section><anchor xml:id="_getopt_8c_1ae30f05ee1e2e5652f174a35c7875d25e"/>    <section>
+    <title>opterr</title>
+<indexterm><primary>opterr</primary><secondary>getopt.c</secondary></indexterm>
+<indexterm><primary>getopt.c</primary><secondary>opterr</secondary></indexterm>
+<para><computeroutput>int opterr</computeroutput></para><para>
+Definition at line 40 of file getopt.c.</para>
+    </section><anchor xml:id="_getopt_8c_1ad5e1c16213bbee2d5e8cc363309f418c"/>    <section>
+    <title>optind</title>
+<indexterm><primary>optind</primary><secondary>getopt.c</secondary></indexterm>
+<indexterm><primary>getopt.c</primary><secondary>optind</secondary></indexterm>
+<para><computeroutput>int optind = 1</computeroutput></para><para>
+Definition at line 39 of file getopt.c.</para>
+    </section><anchor xml:id="_getopt_8c_1a7035c1113b17e25706c513375cdfc81a"/>    <section>
+    <title>optional_argument</title>
+<indexterm><primary>optional_argument</primary><secondary>getopt.c</secondary></indexterm>
+<indexterm><primary>getopt.c</primary><secondary>optional_argument</secondary></indexterm>
+<para><computeroutput>const int optional_argument = 2</computeroutput></para><para>
+Definition at line 34 of file getopt.c.</para>
+    </section><anchor xml:id="_getopt_8c_1a475b8db98445da73e5f62a1ef6324b95"/>    <section>
+    <title>optopt</title>
+<indexterm><primary>optopt</primary><secondary>getopt.c</secondary></indexterm>
+<indexterm><primary>getopt.c</primary><secondary>optopt</secondary></indexterm>
+<para><computeroutput>int optopt</computeroutput></para><para>
+Definition at line 37 of file getopt.c.</para>
+    </section><anchor xml:id="_getopt_8c_1aea125b304b6afc653fa99511629d1e90"/>    <section>
+    <title>required_argument</title>
+<indexterm><primary>required_argument</primary><secondary>getopt.c</secondary></indexterm>
+<indexterm><primary>getopt.c</primary><secondary>required_argument</secondary></indexterm>
+<para><computeroutput>const int required_argument = 1</computeroutput></para><para>
+Definition at line 33 of file getopt.c.</para>
+</section>
+</section>
+</section>

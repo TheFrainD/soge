@@ -20,7 +20,7 @@ else
 	CMAKE_MAKE=cmake --build ./build
 endif
 
-CC=gcc
+CC=clang
 CFLAGS=-g -Wvarargs -Wall -D_CRT_SECURE_NO_WARNINGS -fPIC -DVALLY_DEBUG -DVALLY_BUILD_DLL
 LDFLAGS=-shared deps/glfw/build/src/libglfw3.a deps/glad/src/glad.o deps/log/src/log.o deps/cvec/src/cvec.o
 ifeq ($(UNAME_S), Linux)

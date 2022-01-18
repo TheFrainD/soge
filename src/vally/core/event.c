@@ -1,3 +1,16 @@
+/*********************************************************************
+ * event.c                                                           *
+ *                                                                   *
+ * Copyright (c) 2022 Dmytro Zykov                                   *
+ *                                                                   *
+ * This file is a part of the vally project, and may only be used,   *
+ * modified and distributed under the terms of the MIT License,      *
+ * LICENSE.md. By continuing to use, modify and distribute this file *
+ * you inidicate that you have read the license and accept it fully. *
+ *********************************************************************/
+
+// TODO: write more documentation
+
 #include <vally/core/event.h>
 
 #include <stdlib.h>
@@ -7,6 +20,13 @@
 
 #include <vally/core/logger.h>
 
+/**
+ * @brief Registered event struct.
+ * 
+ * Conatains listener and a callback function
+ * of new event.
+ * 
+ */
 typedef struct {
   void *listener;
   on_event_fun callback;
@@ -32,7 +52,7 @@ b8 event_init() {
 
   memset(&state, 0, sizeof(state));
   initialized = TRUE;
-  VALLY_TRACE("Event system initialized");
+  LOG_TRACE("Event system initialized");
 
   return TRUE;
 }
@@ -44,7 +64,7 @@ void event_terminate() {
       state.registered[i].events = NULL;
     }
   }
-  VALLY_TRACE("Event system terminated");
+  LOG_TRACE("Event system terminated");
 }
 
 b8 event_subscribe(u16 code, void *listener, on_event_fun callback) {

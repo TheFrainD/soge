@@ -1,0 +1,246 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_linux__joystick_8c">
+<title>deps/glfw/src/linux_joystick.c File Reference</title>
+<indexterm><primary>deps/glfw/src/linux_joystick.c</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;sys/inotify.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;dirent.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;unistd.h&gt;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_linux__joystick_8c_1a722eb8b390bbac757caaa2d1f43c62d4">SYN_DROPPED</link>   3</para>
+</listitem>
+            <listitem><para>#define <link linkend="_linux__joystick_8c_1a1ca0e95c17343cd70446cb3cee101d6a">isBitSet</link>(bit,  arr)   (arr[(bit) / 8] &amp; (1 &lt;&lt; ((bit) % 8)))</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_linux__joystick_8c_1ad94630838d7c9d77b8c13518a47fcbef">_glfwDetectJoystickConnectionLinux</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_linux__joystick_8c_1a17dc11e9772c08f5afdbe17d6830a8f5">_glfwInitJoysticksLinux</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_linux__joystick_8c_1a64271879f7bf9f6a9e9631310a7e75f1">_glfwTerminateJoysticksLinux</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_linux__joystick_8c_1a399ffcc99f12447944f2e7c2df237940">_glfwPollJoystickLinux</link> (<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link> *js, int <link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>)</para>
+</listitem>
+            <listitem><para>const char * <link linkend="_linux__joystick_8c_1a3a9d5c327233cb7a3ead13f06928180d">_glfwGetMappingNameLinux</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_linux__joystick_8c_1a4cf7ebdca81871f2a190618877764aa3">_glfwUpdateGamepadGUIDLinux</link> (char *guid)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_linux__joystick_8c_1a1ca0e95c17343cd70446cb3cee101d6a"/>    <section>
+    <title>isBitSet</title>
+<indexterm><primary>isBitSet</primary><secondary>linux_joystick.c</secondary></indexterm>
+<indexterm><primary>linux_joystick.c</primary><secondary>isBitSet</secondary></indexterm>
+<para><computeroutput>#define isBitSet( bit,  arr)   (arr[(bit) / 8] &amp; (1 &lt;&lt; ((bit) % 8)))</computeroutput></para><para>
+Definition at line 123 of file linux_joystick.c.</para>
+    </section><anchor xml:id="_linux__joystick_8c_1a722eb8b390bbac757caaa2d1f43c62d4"/>    <section>
+    <title>SYN_DROPPED</title>
+<indexterm><primary>SYN_DROPPED</primary><secondary>linux_joystick.c</secondary></indexterm>
+<indexterm><primary>linux_joystick.c</primary><secondary>SYN_DROPPED</secondary></indexterm>
+<para><computeroutput>#define SYN_DROPPED   3</computeroutput></para><para>
+Definition at line 45 of file linux_joystick.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_linux__joystick_8c_1ad94630838d7c9d77b8c13518a47fcbef"/>    <section>
+    <title>_glfwDetectJoystickConnectionLinux()</title>
+<indexterm><primary>_glfwDetectJoystickConnectionLinux</primary><secondary>linux_joystick.c</secondary></indexterm>
+<indexterm><primary>linux_joystick.c</primary><secondary>_glfwDetectJoystickConnectionLinux</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwDetectJoystickConnectionLinux (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 267 of file linux_joystick.c.</para>
+<programlisting>268 {
+269 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.linjs.inotify&#32;&lt;=&#32;0)
+270 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+271 
+272 &#32;&#32;&#32;&#32;ssize_t&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>&#32;=&#32;0;
+273 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_structbuffer">buffer</link>[16384];
+274 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;ssize_t&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&#32;=&#32;read(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.linjs.inotify,&#32;<link linkend="_structbuffer">buffer</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_structbuffer">buffer</link>));
+275 
+276 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>&#32;&gt;&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>)
+277 &#32;&#32;&#32;&#32;{
+278 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;regmatch_t&#32;match;
+279 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keyword">struct&#32;</emphasis>inotify_event*&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>&#32;=&#32;(<emphasis role="keyword">struct&#32;</emphasis>inotify_event*)&#32;(<link linkend="_structbuffer">buffer</link>&#32;+&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>);
+280 
+281 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ac915cd848f42b26af51745f204a3b9af">offset</link>&#32;+=&#32;<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keyword">struct&#32;</emphasis>inotify_event)&#32;+&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+282 
+283 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(regexec(&amp;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.linjs.regex,&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;name,&#32;1,&#32;&amp;match,&#32;0)&#32;!=&#32;0)
+284 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+285 
+286 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>[PATH_MAX];
+287 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_rrsprintf_8h_1afebf4922e1c440094d77aeec3657eb12">snprintf</link>(<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>),&#32;<emphasis role="stringliteral">&quot;/dev/input/%s&quot;</emphasis>,&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;name);
+288 
+289 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;mask&#32;&amp;&#32;(IN_CREATE&#32;|&#32;IN_ATTRIB))
+290 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;openJoystickDevice(<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>);
+291 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>-&gt;mask&#32;&amp;&#32;IN_DELETE)
+292 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+293 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;jid&#32;=&#32;0;&#32;&#32;jid&#32;&lt;=&#32;<link linkend="_group__joysticks_1ga9ca13ebf24c331dd98df17d84a4b72c9">GLFW_JOYSTICK_LAST</link>;&#32;&#32;jid++)
+294 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+295 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(strcmp(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7f6b01642d8bc4965fd7b084a01bc401">joysticks</link>[jid].linjs.path,&#32;<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>)&#32;==&#32;0)
+296 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+297 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;closeJoystick(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7f6b01642d8bc4965fd7b084a01bc401">joysticks</link>&#32;+&#32;jid);
+298 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+299 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+300 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+301 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+302 &#32;&#32;&#32;&#32;}
+303 }
+</programlisting>    </section><anchor xml:id="_linux__joystick_8c_1a3a9d5c327233cb7a3ead13f06928180d"/>    <section>
+    <title>_glfwGetMappingNameLinux()</title>
+<indexterm><primary>_glfwGetMappingNameLinux</primary><secondary>linux_joystick.c</secondary></indexterm>
+<indexterm><primary>linux_joystick.c</primary><secondary>_glfwGetMappingNameLinux</secondary></indexterm>
+<para><computeroutput>const char* _glfwGetMappingNameLinux (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 423 of file linux_joystick.c.</para>
+<programlisting>424 {
+425 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="stringliteral">&quot;Linux&quot;</emphasis>;
+426 }
+</programlisting>    </section><anchor xml:id="_linux__joystick_8c_1a17dc11e9772c08f5afdbe17d6830a8f5"/>    <section>
+    <title>_glfwInitJoysticksLinux()</title>
+<indexterm><primary>_glfwInitJoysticksLinux</primary><secondary>linux_joystick.c</secondary></indexterm>
+<indexterm><primary>linux_joystick.c</primary><secondary>_glfwInitJoysticksLinux</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwInitJoysticksLinux (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 310 of file linux_joystick.c.</para>
+<programlisting>311 {
+312 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>*&#32;dirname&#32;=&#32;<emphasis role="stringliteral">&quot;/dev/input&quot;</emphasis>;
+313 
+314 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.linjs.inotify&#32;=&#32;inotify_init1(IN_NONBLOCK&#32;|&#32;IN_CLOEXEC);
+315 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.linjs.inotify&#32;&gt;&#32;0)
+316 &#32;&#32;&#32;&#32;{
+317 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;HACK:&#32;Register&#32;for&#32;IN_ATTRIB&#32;to&#32;get&#32;notified&#32;when&#32;udev&#32;is&#32;done</emphasis>
+318 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;This&#32;works&#32;well&#32;in&#32;practice&#32;but&#32;the&#32;true&#32;way&#32;is&#32;libudev</emphasis>
+319 
+320 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.linjs.watch&#32;=&#32;inotify_add_watch(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.linjs.inotify,
+321 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;dirname,
+322 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;IN_CREATE&#32;|&#32;IN_ATTRIB&#32;|&#32;IN_DELETE);
+323 &#32;&#32;&#32;&#32;}
+324 
+325 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Continue&#32;without&#32;device&#32;connection&#32;notifications&#32;if&#32;inotify&#32;fails</emphasis>
+326 
+327 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(regcomp(&amp;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.linjs.regex,&#32;<emphasis role="stringliteral">&quot;^event[0-9]\\+$&quot;</emphasis>,&#32;0)&#32;!=&#32;0)
+328 &#32;&#32;&#32;&#32;{
+329 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,&#32;<emphasis role="stringliteral">&quot;Linux:&#32;Failed&#32;to&#32;compile&#32;regex&quot;</emphasis>);
+330 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+331 &#32;&#32;&#32;&#32;}
+332 
+333 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;=&#32;0;
+334 
+335 &#32;&#32;&#32;&#32;DIR*&#32;dir&#32;=&#32;opendir(dirname);
+336 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(dir)
+337 &#32;&#32;&#32;&#32;{
+338 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">struct&#32;</emphasis>dirent*&#32;entry;
+339 
+340 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;((entry&#32;=&#32;readdir(dir)))
+341 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+342 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;regmatch_t&#32;match;
+343 
+344 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(regexec(&amp;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.linjs.regex,&#32;entry-&gt;d_name,&#32;1,&#32;&amp;match,&#32;0)&#32;!=&#32;0)
+345 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+346 
+347 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>[PATH_MAX];
+348 
+349 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_rrsprintf_8h_1afebf4922e1c440094d77aeec3657eb12">snprintf</link>(<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>),&#32;<emphasis role="stringliteral">&quot;%s/%s&quot;</emphasis>,&#32;dirname,&#32;entry-&gt;d_name);
+350 
+351 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(openJoystickDevice(<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>))
+352 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>++;
+353 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+354 
+355 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;closedir(dir);
+356 &#32;&#32;&#32;&#32;}
+357 
+358 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Continue&#32;with&#32;no&#32;joysticks&#32;if&#32;enumeration&#32;fails</emphasis>
+359 
+360 &#32;&#32;&#32;&#32;qsort(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7f6b01642d8bc4965fd7b084a01bc401">joysticks</link>,&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link>),&#32;compareJoysticks);
+361 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+362 }
+</programlisting>    </section><anchor xml:id="_linux__joystick_8c_1a399ffcc99f12447944f2e7c2df237940"/>    <section>
+    <title>_glfwPollJoystickLinux()</title>
+<indexterm><primary>_glfwPollJoystickLinux</primary><secondary>linux_joystick.c</secondary></indexterm>
+<indexterm><primary>linux_joystick.c</primary><secondary>_glfwPollJoystickLinux</secondary></indexterm>
+<para><computeroutput>int _glfwPollJoystickLinux (<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link> * js, int mode)</computeroutput></para><para>
+Definition at line 383 of file linux_joystick.c.</para>
+<programlisting>384 {
+385 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Read&#32;all&#32;queued&#32;events&#32;(non-blocking)</emphasis>
+386 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(;;)
+387 &#32;&#32;&#32;&#32;{
+388 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">struct&#32;</emphasis>input_event&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>;
+389 
+390 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;errno&#32;=&#32;0;
+391 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(read(js-&gt;linjs.fd,&#32;&amp;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>))&#32;&lt;&#32;0)
+392 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+393 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Reset&#32;the&#32;joystick&#32;slot&#32;if&#32;the&#32;device&#32;was&#32;disconnected</emphasis>
+394 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(errno&#32;==&#32;ENODEV)
+395 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;closeJoystick(js);
+396 
+397 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+398 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+399 
+400 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>.type&#32;==&#32;EV_SYN)
+401 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+402 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>.code&#32;==&#32;<link linkend="_linux__joystick_8c_1a722eb8b390bbac757caaa2d1f43c62d4">SYN_DROPPED</link>)
+403 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.linjs.dropped&#32;=&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+404 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>.code&#32;==&#32;SYN_REPORT)
+405 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+406 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.linjs.dropped&#32;=&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+407 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;pollAbsState(js);
+408 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+409 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+410 
+411 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.linjs.dropped)
+412 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">continue</emphasis>;
+413 
+414 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>.type&#32;==&#32;EV_KEY)
+415 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;handleKeyEvent(js,&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>.code,&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>.value);
+416 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>.type&#32;==&#32;EV_ABS)
+417 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;handleAbsEvent(js,&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>.code,&#32;<link linkend="_stb__image_8c_1a43133ab631c96e9096c7f34895c05ccc">e</link>.value);
+418 &#32;&#32;&#32;&#32;}
+419 
+420 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a88a2e71ed9c3be6eca850577a104d611">present</link>;
+421 }
+</programlisting>    </section><anchor xml:id="_linux__joystick_8c_1a64271879f7bf9f6a9e9631310a7e75f1"/>    <section>
+    <title>_glfwTerminateJoysticksLinux()</title>
+<indexterm><primary>_glfwTerminateJoysticksLinux</primary><secondary>linux_joystick.c</secondary></indexterm>
+<indexterm><primary>linux_joystick.c</primary><secondary>_glfwTerminateJoysticksLinux</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwTerminateJoysticksLinux (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 364 of file linux_joystick.c.</para>
+<programlisting>365 {
+366 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;jid&#32;=&#32;0;&#32;&#32;jid&#32;&lt;=&#32;<link linkend="_group__joysticks_1ga9ca13ebf24c331dd98df17d84a4b72c9">GLFW_JOYSTICK_LAST</link>;&#32;&#32;jid++)
+367 &#32;&#32;&#32;&#32;{
+368 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wjoystick">_GLFWjoystick</link>*&#32;js&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7f6b01642d8bc4965fd7b084a01bc401">joysticks</link>&#32;+&#32;jid;
+369 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(js-&gt;<link linkend="_struct___g_l_f_wjoystick_1a88a2e71ed9c3be6eca850577a104d611">present</link>)
+370 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;closeJoystick(js);
+371 &#32;&#32;&#32;&#32;}
+372 
+373 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.linjs.inotify&#32;&gt;&#32;0)
+374 &#32;&#32;&#32;&#32;{
+375 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.linjs.watch&#32;&gt;&#32;0)
+376 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;inotify_rm_watch(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.linjs.inotify,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.linjs.watch);
+377 
+378 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;close(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.linjs.inotify);
+379 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;regfree(&amp;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.linjs.regex);
+380 &#32;&#32;&#32;&#32;}
+381 }
+</programlisting>    </section><anchor xml:id="_linux__joystick_8c_1a4cf7ebdca81871f2a190618877764aa3"/>    <section>
+    <title>_glfwUpdateGamepadGUIDLinux()</title>
+<indexterm><primary>_glfwUpdateGamepadGUIDLinux</primary><secondary>linux_joystick.c</secondary></indexterm>
+<indexterm><primary>linux_joystick.c</primary><secondary>_glfwUpdateGamepadGUIDLinux</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwUpdateGamepadGUIDLinux (char * guid)</computeroutput></para><para>
+Definition at line 428 of file linux_joystick.c.</para>
+<programlisting>429 {
+430 }
+</programlisting></section>
+</section>
+</section>

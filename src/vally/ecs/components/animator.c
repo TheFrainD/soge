@@ -1,4 +1,17 @@
+/*********************************************************************
+ * animator.c                                                        *
+ *                                                                   *
+ * Copyright (c) 2022 Dmytro Zykov                                   *
+ *                                                                   *
+ * This file is a part of the vally project, and may only be used,   *
+ * modified and distributed under the terms of the MIT License,      *
+ * LICENSE.md. By continuing to use, modify and distribute this file *
+ * you inidicate that you have read the license and accept it fully. *
+ *********************************************************************/
+
 #include <vally/ecs/components/animator.h>
+
+#include <stddef.h>
 
 typedef struct {
   animator components[ECS_MAX_COMPONENTS];

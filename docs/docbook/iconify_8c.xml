@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_iconify_8c">
+<title>deps/glfw/tests/iconify.c File Reference</title>
+<indexterm><primary>deps/glfw/tests/iconify.c</primary></indexterm>
+<programlisting>#include &lt;glad/gl.h&gt;
+#include &lt;GLFW/glfw3.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &quot;getopt.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_iconify_8c_1a09f9c3bf094ecaf707c673924ffd615a">GLAD_GL_IMPLEMENTATION</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_iconify_8c_1a088324ad8995e3eb76024e3e79083d48">GLFW_INCLUDE_NONE</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_iconify_8c_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_iconify_8c_1a09f9c3bf094ecaf707c673924ffd615a"/>    <section>
+    <title>GLAD_GL_IMPLEMENTATION</title>
+<indexterm><primary>GLAD_GL_IMPLEMENTATION</primary><secondary>iconify.c</secondary></indexterm>
+<indexterm><primary>iconify.c</primary><secondary>GLAD_GL_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define GLAD_GL_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 31 of file iconify.c.</para>
+    </section><anchor xml:id="_iconify_8c_1a088324ad8995e3eb76024e3e79083d48"/>    <section>
+    <title>GLFW_INCLUDE_NONE</title>
+<indexterm><primary>GLFW_INCLUDE_NONE</primary><secondary>iconify.c</secondary></indexterm>
+<indexterm><primary>iconify.c</primary><secondary>GLFW_INCLUDE_NONE</secondary></indexterm>
+<para><computeroutput>#define GLFW_INCLUDE_NONE</computeroutput></para><para>
+Definition at line 33 of file iconify.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_iconify_8c_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>iconify.c</secondary></indexterm>
+<indexterm><primary>iconify.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 201 of file iconify.c.</para>
+<programlisting>202 {
+203 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;ch,&#32;i,&#32;window_count;
+204 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;fullscreen&#32;=&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>,&#32;all_monitors&#32;=&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+205 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>**&#32;windows;
+206 
+207 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;((ch&#32;=&#32;<link linkend="_getopt_8c_1a5ffa4c677fc71cecd94f140ef9db624c">getopt</link>(argc,&#32;argv,&#32;<emphasis role="stringliteral">&quot;afhn&quot;</emphasis>))&#32;!=&#32;-1)
+208 &#32;&#32;&#32;&#32;{
+209 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(ch)
+210 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+211 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;a&apos;</emphasis>:
+212 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;all_monitors&#32;=&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+213 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+214 
+215 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;h&apos;</emphasis>:
+216 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afb85c5d9b1bce96aa3b530d581194d1a">usage</link>();
+217 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_SUCCESS);
+218 
+219 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;<emphasis role="charliteral">&apos;f&apos;</emphasis>:
+220 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fullscreen&#32;=&#32;<link linkend="_group__init_1ga2744fbb29b5631bb28802dbe0cf36eba">GLFW_TRUE</link>;
+221 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+222 
+223 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">default</emphasis>:
+224 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afb85c5d9b1bce96aa3b530d581194d1a">usage</link>();
+225 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+226 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+227 &#32;&#32;&#32;&#32;}
+228 
+229 &#32;&#32;&#32;&#32;<link linkend="_group__init_1ga746e2757d069eaea423349aca6ae097a">glfwSetErrorCallback</link>(<link linkend="_inputlag_8c_1a4ee391c8bab624943c822faafb2c320e">error_callback</link>);
+230 
+231 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_group__init_1gab41771f0215a2e0afb4cf1cf98082d40">glfwInit</link>())
+232 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+233 
+234 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fullscreen&#32;&amp;&amp;&#32;all_monitors)
+235 &#32;&#32;&#32;&#32;{
+236 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;monitor_count;
+237 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link>**&#32;<link linkend="_glext_8h_1a3c0106911a867ae012fd008394e41257">monitors</link>&#32;=&#32;<link linkend="_group__monitor_1gab4d483284c57e28837bc2cd9639e9665">glfwGetMonitors</link>(&amp;monitor_count);
+238 
+239 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;window_count&#32;=&#32;monitor_count;
+240 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;windows&#32;=&#32;calloc(window_count,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>*));
+241 
+242 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;monitor_count;&#32;&#32;i++)
+243 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+244 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;windows[i]&#32;=&#32;create_window(<link linkend="_glext_8h_1a3c0106911a867ae012fd008394e41257">monitors</link>[i]);
+245 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!windows[i])
+246 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+247 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+248 &#32;&#32;&#32;&#32;}
+249 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+250 &#32;&#32;&#32;&#32;{
+251 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link>*&#32;monitor&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+252 
+253 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fullscreen)
+254 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;monitor&#32;=&#32;<link linkend="_group__monitor_1ga59ea49f377fe701dd76764183e64d9f4">glfwGetPrimaryMonitor</link>();
+255 
+256 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;window_count&#32;=&#32;1;
+257 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;windows&#32;=&#32;calloc(window_count,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>*));
+258 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;windows[0]&#32;=&#32;create_window(monitor);
+259 &#32;&#32;&#32;&#32;}
+260 
+261 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;window_count;&#32;&#32;i++)
+262 &#32;&#32;&#32;&#32;{
+263 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__input_1gaa4cbcb81b939b8800e44cea971ddae47">glfwSetKeyCallback</link>(windows[i],&#32;key_callback);
+264 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga41d69f9f263d7b33ea03cf58772b4ea0">glfwSetFramebufferSizeCallback</link>(windows[i],&#32;<link linkend="_wave_8c_1a5180f7bf2b71421af837035824a8c8ac">framebuffer_size_callback</link>);
+265 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1gab0754f8d5c7c4d5cae2a9937a0e00bc5">glfwSetWindowSizeCallback</link>(windows[i],&#32;window_size_callback);
+266 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1gacce1c4dd273b5c4c60b05599f8725b4e">glfwSetWindowFocusCallback</link>(windows[i],&#32;window_focus_callback);
+267 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga3e9f355edb6b9247149ddea2335eda69">glfwSetWindowIconifyCallback</link>(windows[i],&#32;window_iconify_callback);
+268 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1gae77b3960dcd40514fb7b2b8a6eb98137">glfwSetWindowMaximizeCallback</link>(windows[i],&#32;window_maximize_callback);
+269 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga62bfa902c07a03b8ad9be37da31a4be7">glfwSetWindowRefreshCallback</link>(windows[i],&#32;window_refresh_callback);
+270 
+271 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;window_refresh_callback(windows[i]);
+272 
+273 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;printf(<emphasis role="stringliteral">&quot;Window&#32;is&#32;%s&#32;and&#32;%s\n&quot;</emphasis>,
+274 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link>(windows[i],&#32;<link linkend="_group__window_1ga39d44b7c056e55e581355a92d240b58a">GLFW_ICONIFIED</link>)&#32;?&#32;<emphasis role="stringliteral">&quot;iconified&quot;</emphasis>&#32;:&#32;<emphasis role="stringliteral">&quot;restored&quot;</emphasis>,
+275 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga1bb0c7e100418e284dbb800789c63d40">glfwGetWindowAttrib</link>(windows[i],&#32;<link linkend="_group__window_1ga54ddb14825a1541a56e22afb5f832a9e">GLFW_FOCUSED</link>)&#32;?&#32;<emphasis role="stringliteral">&quot;focused&quot;</emphasis>&#32;:&#32;<emphasis role="stringliteral">&quot;defocused&quot;</emphasis>);
+276 &#32;&#32;&#32;&#32;}
+277 
+278 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(;;)
+279 &#32;&#32;&#32;&#32;{
+280 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga6e042d05823c11e11c7339b81a237738">glfwWaitEvents</link>();
+281 
+282 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;window_count;&#32;&#32;i++)
+283 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+284 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_group__window_1gaa6162f67dfa38b8beda2fea623649332">glfwWindowShouldClose</link>(windows[i]))
+285 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+286 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+287 
+288 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(i&#32;&lt;&#32;window_count)
+289 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+290 
+291 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Workaround&#32;for&#32;an&#32;issue&#32;with&#32;msvcrt&#32;and&#32;mintty</emphasis>
+292 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fflush(stdout);
+293 &#32;&#32;&#32;&#32;}
+294 
+295 &#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+296 &#32;&#32;&#32;&#32;exit(EXIT_SUCCESS);
+297 }
+</programlisting></section>
+</section>
+</section>

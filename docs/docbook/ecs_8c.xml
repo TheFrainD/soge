@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_ecs_8c">
+<title>src/vally/ecs/ecs.c File Reference</title>
+<indexterm><primary>src/vally/ecs/ecs.c</primary></indexterm>
+<programlisting>#include &lt;vally/ecs/ecs.h&gt;
+#include &lt;vally/ecs/components/transform.h&gt;
+#include &lt;vally/math/math.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structecs__state">ecs_state</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_ecs_8c_1ab40fd1fa64a61a9cc15240e9a5864316">ecs_init</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> <link linkend="_ecs_8c_1ae8325db76e0f4778f3ed3ae0aab3bc6d">ecs_entity_create</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_ecs_8c_1add5748693481e3179ea4f501252e1584">ecs_component_add</link> (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> <link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>, <link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352">component_mask</link> <link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_ecs_8c_1a29bc10a11442afeb0cf1868f20a951d9">ecs_component_remove</link> (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> <link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>, <link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352">component_mask</link> <link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_ecs_8c_1a8558da821ae97171a28630f8da7414c4">ecs_component_has</link> (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> <link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>, <link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352">component_mask</link> <link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> <link linkend="_ecs_8c_1af2d2c47037654bc3387edf21f7b299c4">ecs_get_last</link> ()</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_ecs_8c_1add5748693481e3179ea4f501252e1584"/>    <section>
+    <title>ecs_component_add()</title>
+<indexterm><primary>ecs_component_add</primary><secondary>ecs.c</secondary></indexterm>
+<indexterm><primary>ecs.c</primary><secondary>ecs_component_add</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> ecs_component_add (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> entity, <link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352">component_mask</link> mask)</computeroutput></para><para>
+Definition at line 38 of file ecs.c.</para>
+<programlisting>38 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+39 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized&#32;||&#32;<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>&#32;==&#32;<link linkend="_ecs_8h_1a590682d0c22ffe315650ba42fae2b231">ECS_NULL_ENTITY</link>)&#32;{
+40 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+41 &#32;&#32;}
+42 
+43 &#32;&#32;state.<link linkend="_structecs__state_1a6ae1ac7926ec809495a567851f19b4b0">masks</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>]&#32;|=&#32;<link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>;
+44 }
+</programlisting>    </section><anchor xml:id="_ecs_8c_1a8558da821ae97171a28630f8da7414c4"/>    <section>
+    <title>ecs_component_has()</title>
+<indexterm><primary>ecs_component_has</primary><secondary>ecs.c</secondary></indexterm>
+<indexterm><primary>ecs.c</primary><secondary>ecs_component_has</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> ecs_component_has (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> entity, <link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352">component_mask</link> mask)</computeroutput></para><para>
+Definition at line 54 of file ecs.c.</para>
+<programlisting>54 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+55 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized&#32;||&#32;<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>&#32;==&#32;<link linkend="_ecs_8h_1a590682d0c22ffe315650ba42fae2b231">ECS_NULL_ENTITY</link>)&#32;{
+56 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+57 &#32;&#32;}
+58 
+59 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;state.<link linkend="_structecs__state_1a6ae1ac7926ec809495a567851f19b4b0">masks</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>]&#32;&amp;&#32;<link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>;
+60 }
+</programlisting>    </section><anchor xml:id="_ecs_8c_1a29bc10a11442afeb0cf1868f20a951d9"/>    <section>
+    <title>ecs_component_remove()</title>
+<indexterm><primary>ecs_component_remove</primary><secondary>ecs.c</secondary></indexterm>
+<indexterm><primary>ecs.c</primary><secondary>ecs_component_remove</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> ecs_component_remove (<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> entity, <link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352">component_mask</link> mask)</computeroutput></para><para>
+Definition at line 46 of file ecs.c.</para>
+<programlisting>46 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+47 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized&#32;||&#32;<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>&#32;==&#32;<link linkend="_ecs_8h_1a590682d0c22ffe315650ba42fae2b231">ECS_NULL_ENTITY</link>)&#32;{
+48 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+49 &#32;&#32;}
+50 
+51 &#32;&#32;state.<link linkend="_structecs__state_1a6ae1ac7926ec809495a567851f19b4b0">masks</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>]&#32;&amp;=&#32;~<link linkend="_glad_8h_1a582594109983c43d7023a28318a0bb3c">mask</link>;
+52 }
+</programlisting>    </section><anchor xml:id="_ecs_8c_1ae8325db76e0f4778f3ed3ae0aab3bc6d"/>    <section>
+    <title>ecs_entity_create()</title>
+<indexterm><primary>ecs_entity_create</primary><secondary>ecs.c</secondary></indexterm>
+<indexterm><primary>ecs.c</primary><secondary>ecs_entity_create</secondary></indexterm>
+<para><computeroutput><link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> ecs_entity_create ( )</computeroutput></para><para>
+Definition at line 25 of file ecs.c.</para>
+<programlisting>25 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+26 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized)&#32;{
+27 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_ecs_8h_1a590682d0c22ffe315650ba42fae2b231">ECS_NULL_ENTITY</link>;
+28 &#32;&#32;}
+29 
+30 &#32;&#32;<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>&#32;<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>&#32;=&#32;state.<link linkend="_structecs__state_1a0ead529863c1de7cebb9aaab7c4d1594">last</link>++;
+31 &#32;&#32;state.<link linkend="_structecs__state_1a6ae1ac7926ec809495a567851f19b4b0">masks</link>[<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>]&#32;=&#32;<link linkend="_ecs__types_8h_1a7cdfb55f8f02e044ad6ab3f8c6cec352a15e130170b8f107bebd5da0de9c5ec44">ECS_ALIVE</link>;
+32 
+33 &#32;&#32;<link linkend="_transform_8h_1a9e531f0dcfac47faa54aff17f33ddbe5">ecs_transform_add</link>(<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>,&#32;<link linkend="_math_8h_1a62eb5919a653ff66ee1078e5f76b708c">vector2f_zero</link>,&#32;<link linkend="_math_8h_1ac8e2e3f8ccd2aec8abf7202baba4ec6a">vector2f_one</link>);
+34 
+35 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link>;
+36 }
+</programlisting>    </section><anchor xml:id="_ecs_8c_1af2d2c47037654bc3387edf21f7b299c4"/>    <section>
+    <title>ecs_get_last()</title>
+<indexterm><primary>ecs_get_last</primary><secondary>ecs.c</secondary></indexterm>
+<indexterm><primary>ecs.c</primary><secondary>ecs_get_last</secondary></indexterm>
+<para><computeroutput><link linkend="_ecs__types_8h_1a4ea73a010095ca6cbf39e33b1c31c42f">entity</link> ecs_get_last ( )</computeroutput></para><para>
+Definition at line 62 of file ecs.c.</para>
+<programlisting>62 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+63 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!initialized)&#32;{
+64 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_ecs_8h_1a590682d0c22ffe315650ba42fae2b231">ECS_NULL_ENTITY</link>;
+65 &#32;&#32;}
+66 
+67 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;state.<link linkend="_structecs__state_1a0ead529863c1de7cebb9aaab7c4d1594">last</link>;
+68 }
+</programlisting>    </section><anchor xml:id="_ecs_8c_1ab40fd1fa64a61a9cc15240e9a5864316"/>    <section>
+    <title>ecs_init()</title>
+<indexterm><primary>ecs_init</primary><secondary>ecs.c</secondary></indexterm>
+<indexterm><primary>ecs.c</primary><secondary>ecs_init</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> ecs_init ( )</computeroutput></para><para>
+Definition at line 14 of file ecs.c.</para>
+<programlisting>14 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+15 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(initialized)&#32;{
+16 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+17 &#32;&#32;}
+18 
+19 &#32;&#32;state.<link linkend="_structecs__state_1a0ead529863c1de7cebb9aaab7c4d1594">last</link>&#32;=&#32;0;
+20 &#32;&#32;initialized&#32;=&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+21 
+22 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+23 }
+</programlisting></section>
+</section>
+</section>

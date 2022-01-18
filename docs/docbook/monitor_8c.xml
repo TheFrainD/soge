@@ -1,0 +1,311 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_monitor_8c">
+<title>deps/glfw/src/monitor.c File Reference</title>
+<indexterm><primary>deps/glfw/src/monitor.c</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+#include &lt;assert.h&gt;
+#include &lt;math.h&gt;
+#include &lt;float.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;limits.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_monitor_8c_1a2a45c0c0677b73011b7364e2cdd9760d">_glfwInputMonitor</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, int action, int placement)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_monitor_8c_1a079c865515272434dc96d0f384beda9e">_glfwInputMonitorWindow</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, <link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> *<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * <link linkend="_monitor_8c_1aba9010067229bd447389b85b22f15b72">_glfwAllocMonitor</link> (const char *<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>, int widthMM, int heightMM)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_monitor_8c_1a5555e8488ac56b446d0a28d3330666f6">_glfwFreeMonitor</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_monitor_8c_1acb6a8b432b06fd0accdfc0e046785109">_glfwAllocGammaArrays</link> (<link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> *ramp, unsigned int <link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_monitor_8c_1a9ec7f45d75c8b6435f49b22b86672806">_glfwFreeGammaArrays</link> (<link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> *ramp)</para>
+</listitem>
+            <listitem><para>const <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> * <link linkend="_monitor_8c_1acf6b57bbbf447209081a27abdc00465c">_glfwChooseVideoMode</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, const <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> *desired)</para>
+</listitem>
+            <listitem><para>int <link linkend="_monitor_8c_1aa4fbaa8f018b65095626fc495a53ba9f">_glfwCompareVideoModes</link> (const <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> *fm, const <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> *sm)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_monitor_8c_1a3f83dfd3a9beffeba9bac74ec15071a0">_glfwSplitBPP</link> (int bpp, int *red, int *<link linkend="_glad_8h_1ac14cda87cf6c751d53b65a3cd41c35a1">green</link>, int *<link linkend="_glad_8h_1a1853b32584a90fa75432925f3e26d0e8">blue</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> ** <link linkend="_group__monitor_1gab4d483284c57e28837bc2cd9639e9665">glfwGetMonitors</link> (int *<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>)</para>
+
+<para>Returns the currently connected monitors. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> * <link linkend="_group__monitor_1ga59ea49f377fe701dd76764183e64d9f4">glfwGetPrimaryMonitor</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+
+<para>Returns the primary monitor. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__monitor_1ga45b5481a614ad7beb2aade9746d07563">glfwGetMonitorPos</link> (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> *handle, int *xpos, int *ypos)</para>
+
+<para>Returns the position of the monitor&apos;s viewport on the virtual screen. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__monitor_1ga5a3ac0f6e3786df47aabccfb5760b31d">glfwGetMonitorWorkarea</link> (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> *handle, int *xpos, int *ypos, int *<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>, int *<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)</para>
+
+<para>Retrieves the work area of the monitor. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__monitor_1gad0e93a9e42b32394369cabbbdc1ab702">glfwGetMonitorPhysicalSize</link> (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> *handle, int *widthMM, int *heightMM)</para>
+
+<para>Returns the physical size of the monitor. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__monitor_1ga28d856d94bea2ce8f09a67bb0346aaff">glfwGetMonitorContentScale</link> (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> *handle, float *xscale, float *yscale)</para>
+
+<para>Retrieves the content scale for the specified monitor. </para>
+</listitem>
+            <listitem><para>const <link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> char * <link linkend="_group__monitor_1ga9bb1b5712a5a4f1478ed74513e02d148">glfwGetMonitorName</link> (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> *handle)</para>
+
+<para>Returns the name of the specified monitor. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__monitor_1ga6d89c74c1c293f0ab78a00c3c6d1ae44">glfwSetMonitorUserPointer</link> (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> *handle, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_glad_8h_1a8e06a460fd89ba3a95ce49119ef7aab2">pointer</link>)</para>
+
+<para>Sets the user pointer of the specified monitor. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * <link linkend="_group__monitor_1ga11bc263d3967b86e2ec3e5e48762206d">glfwGetMonitorUserPointer</link> (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> *handle)</para>
+
+<para>Returns the user pointer of the specified monitor. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_group__monitor_1gaabe16caca8dea952504dfdebdf4cd249">GLFWmonitorfun</link> <link linkend="_group__monitor_1ga9fa7cc37cd79216a7fc0b77af54109a1">glfwSetMonitorCallback</link> (<link linkend="_group__monitor_1gaabe16caca8dea952504dfdebdf4cd249">GLFWmonitorfun</link> cbfun)</para>
+
+<para>Sets the monitor configuration callback. </para>
+</listitem>
+            <listitem><para>const <link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> * <link linkend="_group__monitor_1ga4fcbc9865c18acb7fbf60cb6c156cef7">glfwGetVideoModes</link> (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> *handle, int *<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>)</para>
+
+<para>Returns the available video modes for the specified monitor. </para>
+</listitem>
+            <listitem><para>const <link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> * <link linkend="_group__monitor_1ga27319d7f045c4cbbeae5651696cacd5f">glfwGetVideoMode</link> (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> *handle)</para>
+
+<para>Returns the current mode of the specified monitor. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__monitor_1ga3e4ab484476c935b4cd0bf49a5c429d6">glfwSetGamma</link> (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> *handle, float gamma)</para>
+
+<para>Generates a gamma ramp and sets it for the specified monitor. </para>
+</listitem>
+            <listitem><para>const <link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> * <link linkend="_group__monitor_1gab8c94ec5ac1d43f70ce03a3e845837b2">glfwGetGammaRamp</link> (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> *handle)</para>
+
+<para>Returns the current gamma ramp for the specified monitor. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__monitor_1gac9f36a1cfa10eab191d3029ea8bc9558">glfwSetGammaRamp</link> (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> *handle, const <link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> *ramp)</para>
+
+<para>Sets the current gamma ramp for the specified monitor. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_monitor_8c_1acb6a8b432b06fd0accdfc0e046785109"/>    <section>
+    <title>_glfwAllocGammaArrays()</title>
+<indexterm><primary>_glfwAllocGammaArrays</primary><secondary>monitor.c</secondary></indexterm>
+<indexterm><primary>monitor.c</primary><secondary>_glfwAllocGammaArrays</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwAllocGammaArrays (<link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> * ramp, unsigned int size)</computeroutput></para><para>
+Definition at line 197 of file monitor.c.</para>
+<programlisting>198 {
+199 &#32;&#32;&#32;&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1a2cce5d968734b685623eef913e635138">red</link>&#32;=&#32;<link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link>(<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">short</emphasis>));
+200 &#32;&#32;&#32;&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1affccc6f5df47820b6562d709da3a5a3a">green</link>&#32;=&#32;<link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link>(<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">short</emphasis>));
+201 &#32;&#32;&#32;&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1acf0c836d0efe29c392fe8d1a1042744b">blue</link>&#32;=&#32;<link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link>(<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">short</emphasis>));
+202 &#32;&#32;&#32;&#32;ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1ad620e1cffbff9a32c51bca46301b59a5">size</link>&#32;=&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>;
+203 }
+</programlisting>    </section><anchor xml:id="_monitor_8c_1aba9010067229bd447389b85b22f15b72"/>    <section>
+    <title>_glfwAllocMonitor()</title>
+<indexterm><primary>_glfwAllocMonitor</primary><secondary>monitor.c</secondary></indexterm>
+<indexterm><primary>monitor.c</primary><secondary>_glfwAllocMonitor</secondary></indexterm>
+<para><computeroutput><link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>* _glfwAllocMonitor (const char * name, int widthMM, int heightMM)</computeroutput></para><para>
+Definition at line 168 of file monitor.c.</para>
+<programlisting>169 {
+170 &#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*&#32;monitor&#32;=&#32;<link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link>(1,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>));
+171 &#32;&#32;&#32;&#32;monitor-&gt;<link linkend="_struct___g_l_f_wmonitor_1a4d0e40c8dc4d7913e5e78a81955a834f">widthMM</link>&#32;=&#32;widthMM;
+172 &#32;&#32;&#32;&#32;monitor-&gt;<link linkend="_struct___g_l_f_wmonitor_1ae5f696ed8a038e0aba539cb52a04b887">heightMM</link>&#32;=&#32;heightMM;
+173 
+174 &#32;&#32;&#32;&#32;strncpy(monitor-&gt;<link linkend="_struct___g_l_f_wmonitor_1ad497d3ab00f840ad99f62b3803755b12">name</link>,&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(monitor-&gt;<link linkend="_struct___g_l_f_wmonitor_1ad497d3ab00f840ad99f62b3803755b12">name</link>)&#32;-&#32;1);
+175 
+176 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;monitor;
+177 }
+</programlisting>    </section><anchor xml:id="_monitor_8c_1acf6b57bbbf447209081a27abdc00465c"/>    <section>
+    <title>_glfwChooseVideoMode()</title>
+<indexterm><primary>_glfwChooseVideoMode</primary><secondary>monitor.c</secondary></indexterm>
+<indexterm><primary>monitor.c</primary><secondary>_glfwChooseVideoMode</secondary></indexterm>
+<para><computeroutput>const <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>* _glfwChooseVideoMode (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, const <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> * desired)</computeroutput></para><para>
+Definition at line 218 of file monitor.c.</para>
+<programlisting>220 {
+221 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+222 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;sizeDiff,&#32;leastSizeDiff&#32;=&#32;UINT_MAX;
+223 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;rateDiff,&#32;leastRateDiff&#32;=&#32;UINT_MAX;
+224 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>&#32;colorDiff,&#32;leastColorDiff&#32;=&#32;UINT_MAX;
+225 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>*&#32;current;
+226 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>*&#32;closest&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+227 
+228 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!refreshVideoModes(monitor))
+229 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+230 
+231 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;monitor-&gt;<link linkend="_struct___g_l_f_wmonitor_1a49766384d467b40c9bb362459761418f">modeCount</link>;&#32;&#32;i++)
+232 &#32;&#32;&#32;&#32;{
+233 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;current&#32;=&#32;monitor-&gt;<link linkend="_struct___g_l_f_wmonitor_1a012dd72ff0ab06cf46bb78951adac67f">modes</link>&#32;+&#32;i;
+234 
+235 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;colorDiff&#32;=&#32;0;
+236 
+237 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(desired-&gt;<link linkend="_struct_g_l_f_wvidmode_1a6066c4ecd251098700062d3b735dba1b">redBits</link>&#32;!=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>)
+238 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;colorDiff&#32;+=&#32;abs(current-&gt;<link linkend="_struct_g_l_f_wvidmode_1a6066c4ecd251098700062d3b735dba1b">redBits</link>&#32;-&#32;desired-&gt;<link linkend="_struct_g_l_f_wvidmode_1a6066c4ecd251098700062d3b735dba1b">redBits</link>);
+239 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(desired-&gt;<link linkend="_struct_g_l_f_wvidmode_1a292fdd281f3485fb3ff102a5bda43faa">greenBits</link>&#32;!=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>)
+240 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;colorDiff&#32;+=&#32;abs(current-&gt;<link linkend="_struct_g_l_f_wvidmode_1a292fdd281f3485fb3ff102a5bda43faa">greenBits</link>&#32;-&#32;desired-&gt;<link linkend="_struct_g_l_f_wvidmode_1a292fdd281f3485fb3ff102a5bda43faa">greenBits</link>);
+241 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(desired-&gt;<link linkend="_struct_g_l_f_wvidmode_1af310977f58d2e3b188175b6e3d314047">blueBits</link>&#32;!=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>)
+242 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;colorDiff&#32;+=&#32;abs(current-&gt;<link linkend="_struct_g_l_f_wvidmode_1af310977f58d2e3b188175b6e3d314047">blueBits</link>&#32;-&#32;desired-&gt;<link linkend="_struct_g_l_f_wvidmode_1af310977f58d2e3b188175b6e3d314047">blueBits</link>);
+243 
+244 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;sizeDiff&#32;=&#32;abs((current-&gt;<link linkend="_struct_g_l_f_wvidmode_1a698dcb200562051a7249cb6ae154c71d">width</link>&#32;-&#32;desired-&gt;<link linkend="_struct_g_l_f_wvidmode_1a698dcb200562051a7249cb6ae154c71d">width</link>)&#32;*
+245 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(current-&gt;<link linkend="_struct_g_l_f_wvidmode_1a698dcb200562051a7249cb6ae154c71d">width</link>&#32;-&#32;desired-&gt;<link linkend="_struct_g_l_f_wvidmode_1a698dcb200562051a7249cb6ae154c71d">width</link>)&#32;+
+246 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(current-&gt;<link linkend="_struct_g_l_f_wvidmode_1ac65942a5f6981695517437a9d571d03c">height</link>&#32;-&#32;desired-&gt;<link linkend="_struct_g_l_f_wvidmode_1ac65942a5f6981695517437a9d571d03c">height</link>)&#32;*
+247 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(current-&gt;<link linkend="_struct_g_l_f_wvidmode_1ac65942a5f6981695517437a9d571d03c">height</link>&#32;-&#32;desired-&gt;<link linkend="_struct_g_l_f_wvidmode_1ac65942a5f6981695517437a9d571d03c">height</link>));
+248 
+249 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(desired-&gt;<link linkend="_struct_g_l_f_wvidmode_1a791bdd6c7697b09f7e9c97054bf05649">refreshRate</link>&#32;!=&#32;<link linkend="_glfw3_8h_1a7a2edf2c18446833d27d07f1b7f3d571">GLFW_DONT_CARE</link>)
+250 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rateDiff&#32;=&#32;abs(current-&gt;<link linkend="_struct_g_l_f_wvidmode_1a791bdd6c7697b09f7e9c97054bf05649">refreshRate</link>&#32;-&#32;desired-&gt;<link linkend="_struct_g_l_f_wvidmode_1a791bdd6c7697b09f7e9c97054bf05649">refreshRate</link>);
+251 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+252 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rateDiff&#32;=&#32;UINT_MAX&#32;-&#32;current-&gt;<link linkend="_struct_g_l_f_wvidmode_1a791bdd6c7697b09f7e9c97054bf05649">refreshRate</link>;
+253 
+254 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((colorDiff&#32;&lt;&#32;leastColorDiff)&#32;||
+255 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(colorDiff&#32;==&#32;leastColorDiff&#32;&amp;&amp;&#32;sizeDiff&#32;&lt;&#32;leastSizeDiff)&#32;||
+256 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;(colorDiff&#32;==&#32;leastColorDiff&#32;&amp;&amp;&#32;sizeDiff&#32;==&#32;leastSizeDiff&#32;&amp;&amp;&#32;rateDiff&#32;&lt;&#32;leastRateDiff))
+257 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+258 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;closest&#32;=&#32;current;
+259 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;leastSizeDiff&#32;=&#32;sizeDiff;
+260 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;leastRateDiff&#32;=&#32;rateDiff;
+261 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;leastColorDiff&#32;=&#32;colorDiff;
+262 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+263 &#32;&#32;&#32;&#32;}
+264 
+265 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;closest;
+266 }
+</programlisting>    </section><anchor xml:id="_monitor_8c_1aa4fbaa8f018b65095626fc495a53ba9f"/>    <section>
+    <title>_glfwCompareVideoModes()</title>
+<indexterm><primary>_glfwCompareVideoModes</primary><secondary>monitor.c</secondary></indexterm>
+<indexterm><primary>monitor.c</primary><secondary>_glfwCompareVideoModes</secondary></indexterm>
+<para><computeroutput>int _glfwCompareVideoModes (const <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> * fm, const <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> * sm)</computeroutput></para><para>
+Definition at line 270 of file monitor.c.</para>
+<programlisting>271 {
+272 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;compareVideoModes(fm,&#32;sm);
+273 }
+</programlisting>    </section><anchor xml:id="_monitor_8c_1a9ec7f45d75c8b6435f49b22b86672806"/>    <section>
+    <title>_glfwFreeGammaArrays()</title>
+<indexterm><primary>_glfwFreeGammaArrays</primary><secondary>monitor.c</secondary></indexterm>
+<indexterm><primary>monitor.c</primary><secondary>_glfwFreeGammaArrays</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwFreeGammaArrays (<link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> * ramp)</computeroutput></para><para>
+Definition at line 207 of file monitor.c.</para>
+<programlisting>208 {
+209 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1a2cce5d968734b685623eef913e635138">red</link>);
+210 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1affccc6f5df47820b6562d709da3a5a3a">green</link>);
+211 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(ramp-&gt;<link linkend="_struct_g_l_f_wgammaramp_1acf0c836d0efe29c392fe8d1a1042744b">blue</link>);
+212 
+213 &#32;&#32;&#32;&#32;memset(ramp,&#32;0,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link>));
+214 }
+</programlisting>    </section><anchor xml:id="_monitor_8c_1a5555e8488ac56b446d0a28d3330666f6"/>    <section>
+    <title>_glfwFreeMonitor()</title>
+<indexterm><primary>_glfwFreeMonitor</primary><secondary>monitor.c</secondary></indexterm>
+<indexterm><primary>monitor.c</primary><secondary>_glfwFreeMonitor</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwFreeMonitor (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor)</computeroutput></para><para>
+Definition at line 181 of file monitor.c.</para>
+<programlisting>182 {
+183 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(monitor&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+184 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+185 
+186 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>.<link linkend="_struct___g_l_f_wplatform_1ad87994e7e5e70b8024a5a30791d8e038">freeMonitor</link>(monitor);
+187 
+188 &#32;&#32;&#32;&#32;<link linkend="_monitor_8c_1a9ec7f45d75c8b6435f49b22b86672806">_glfwFreeGammaArrays</link>(&amp;monitor-&gt;<link linkend="_struct___g_l_f_wmonitor_1a64188202c44980245af7cb1ce9a24d44">originalRamp</link>);
+189 &#32;&#32;&#32;&#32;<link linkend="_monitor_8c_1a9ec7f45d75c8b6435f49b22b86672806">_glfwFreeGammaArrays</link>(&amp;monitor-&gt;<link linkend="_struct___g_l_f_wmonitor_1a6761d674e05aecaf0cadf7e127f96d85">currentRamp</link>);
+190 
+191 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(monitor-&gt;<link linkend="_struct___g_l_f_wmonitor_1a012dd72ff0ab06cf46bb78951adac67f">modes</link>);
+192 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(monitor);
+193 }
+</programlisting>    </section><anchor xml:id="_monitor_8c_1a2a45c0c0677b73011b7364e2cdd9760d"/>    <section>
+    <title>_glfwInputMonitor()</title>
+<indexterm><primary>_glfwInputMonitor</primary><secondary>monitor.c</secondary></indexterm>
+<indexterm><primary>monitor.c</primary><secondary>_glfwInputMonitor</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwInputMonitor (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, int action, int placement)</computeroutput></para><para>
+Definition at line 97 of file monitor.c.</para>
+<programlisting>98 {
+99 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(action&#32;==&#32;<link linkend="_glfw3_8h_1abe11513fd1ffbee5bb9b173f06028b9e">GLFW_CONNECTED</link>)
+100 &#32;&#32;&#32;&#32;{
+101 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1ae3f408467579cb3fb517fcd39fa23568">monitorCount</link>++;
+102 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1acb84371972f4d704deb0cdc649a1f1da">monitors</link>&#32;=
+103 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a428a65f03ddd87abacc7db0251b4e9af">_glfw_realloc</link>(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1acb84371972f4d704deb0cdc649a1f1da">monitors</link>,
+104 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*)&#32;*&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1ae3f408467579cb3fb517fcd39fa23568">monitorCount</link>);
+105 
+106 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(placement&#32;==&#32;<link linkend="_internal_8h_1a9455a4c5815aa9184abd69811f939496">_GLFW_INSERT_FIRST</link>)
+107 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+108 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memmove(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1acb84371972f4d704deb0cdc649a1f1da">monitors</link>&#32;+&#32;1,
+109 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1acb84371972f4d704deb0cdc649a1f1da">monitors</link>,
+110 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;((<emphasis role="keywordtype">size_t</emphasis>)&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1ae3f408467579cb3fb517fcd39fa23568">monitorCount</link>&#32;-&#32;1)&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*));
+111 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1acb84371972f4d704deb0cdc649a1f1da">monitors</link>[0]&#32;=&#32;monitor;
+112 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+113 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+114 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1acb84371972f4d704deb0cdc649a1f1da">monitors</link>[<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1ae3f408467579cb3fb517fcd39fa23568">monitorCount</link>&#32;-&#32;1]&#32;=&#32;monitor;
+115 &#32;&#32;&#32;&#32;}
+116 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(action&#32;==&#32;<link linkend="_glfw3_8h_1aab64b25921ef21d89252d6f0a71bfc32">GLFW_DISCONNECTED</link>)
+117 &#32;&#32;&#32;&#32;{
+118 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+119 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link>*&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>;
+120 
+121 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a7859e386c1ff4ed65e13e6ba1e189cfe">windowListHead</link>;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;next)
+122 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+123 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>-&gt;monitor&#32;==&#32;monitor)
+124 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+125 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>,&#32;xoff,&#32;yoff;
+126 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>.<link linkend="_struct___g_l_f_wplatform_1abb483c8d581cba5199ac0f8bbd4776d5">getWindowSize</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;&amp;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;&amp;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+127 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>.<link linkend="_struct___g_l_f_wplatform_1a004d98bc2e1f6fa105c09f63d42850cb">setWindowMonitor</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;0,&#32;0,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>,&#32;0);
+128 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>.<link linkend="_struct___g_l_f_wplatform_1a6d45026146c463123ad8c00c5c94d9e5">getWindowFrameSize</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;&amp;xoff,&#32;&amp;yoff,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+129 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a93b1c9522ac532d94b32072cf4bf1421">platform</link>.<link linkend="_struct___g_l_f_wplatform_1a420f62d3b13da1fba49e60f2be197fb9">setWindowPos</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;xoff,&#32;yoff);
+130 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+131 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+132 
+133 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1ae3f408467579cb3fb517fcd39fa23568">monitorCount</link>;&#32;&#32;i++)
+134 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+135 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1acb84371972f4d704deb0cdc649a1f1da">monitors</link>[i]&#32;==&#32;monitor)
+136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+137 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1ae3f408467579cb3fb517fcd39fa23568">monitorCount</link>--;
+138 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memmove(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1acb84371972f4d704deb0cdc649a1f1da">monitors</link>&#32;+&#32;i,
+139 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1acb84371972f4d704deb0cdc649a1f1da">monitors</link>&#32;+&#32;i&#32;+&#32;1,
+140 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;((<emphasis role="keywordtype">size_t</emphasis>)&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1ae3f408467579cb3fb517fcd39fa23568">monitorCount</link>&#32;-&#32;i)&#32;*&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*));
+141 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+142 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+143 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+144 &#32;&#32;&#32;&#32;}
+145 
+146 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a59fc977d623a780eb748aadcd1485d6c">callbacks</link>.<link linkend="_struct___g_l_f_wlibrary_1acea278bb2641c36a371e9e715b7a8f9a">monitor</link>)
+147 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a59fc977d623a780eb748aadcd1485d6c">callbacks</link>.<link linkend="_struct___g_l_f_wlibrary_1acea278bb2641c36a371e9e715b7a8f9a">monitor</link>((<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link>*)&#32;monitor,&#32;action);
+148 
+149 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(action&#32;==&#32;<link linkend="_glfw3_8h_1aab64b25921ef21d89252d6f0a71bfc32">GLFW_DISCONNECTED</link>)
+150 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_monitor_8c_1a5555e8488ac56b446d0a28d3330666f6">_glfwFreeMonitor</link>(monitor);
+151 }
+</programlisting>    </section><anchor xml:id="_monitor_8c_1a079c865515272434dc96d0f384beda9e"/>    <section>
+    <title>_glfwInputMonitorWindow()</title>
+<indexterm><primary>_glfwInputMonitorWindow</primary><secondary>monitor.c</secondary></indexterm>
+<indexterm><primary>monitor.c</primary><secondary>_glfwInputMonitorWindow</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwInputMonitorWindow (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, <link linkend="_struct___g_l_f_wwindow">_GLFWwindow</link> * window)</computeroutput></para><para>
+Definition at line 156 of file monitor.c.</para>
+<programlisting>157 {
+158 &#32;&#32;&#32;&#32;monitor-&gt;<link linkend="_struct___g_l_f_wmonitor_1aa869aae87a7a75ba89211619ba103aa1">window</link>&#32;=&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>;
+159 }
+</programlisting>    </section><anchor xml:id="_monitor_8c_1a3f83dfd3a9beffeba9bac74ec15071a0"/>    <section>
+    <title>_glfwSplitBPP()</title>
+<indexterm><primary>_glfwSplitBPP</primary><secondary>monitor.c</secondary></indexterm>
+<indexterm><primary>monitor.c</primary><secondary>_glfwSplitBPP</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSplitBPP (int bpp, int * red, int * green, int * blue)</computeroutput></para><para>
+Definition at line 277 of file monitor.c.</para>
+<programlisting>278 {
+279 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;delta;
+280 
+281 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;We&#32;assume&#32;that&#32;by&#32;32&#32;the&#32;user&#32;really&#32;meant&#32;24</emphasis>
+282 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(bpp&#32;==&#32;32)
+283 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;bpp&#32;=&#32;24;
+284 
+285 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Convert&#32;&quot;bits&#32;per&#32;pixel&quot;&#32;to&#32;red,&#32;green&#32;&amp;&#32;blue&#32;sizes</emphasis>
+286 
+287 &#32;&#32;&#32;&#32;*red&#32;=&#32;*<link linkend="_glad_8h_1ac14cda87cf6c751d53b65a3cd41c35a1">green</link>&#32;=&#32;*<link linkend="_glad_8h_1a1853b32584a90fa75432925f3e26d0e8">blue</link>&#32;=&#32;bpp&#32;/&#32;3;
+288 &#32;&#32;&#32;&#32;delta&#32;=&#32;bpp&#32;-&#32;(*red&#32;*&#32;3);
+289 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(delta&#32;&gt;=&#32;1)
+290 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1ac14cda87cf6c751d53b65a3cd41c35a1">green</link>&#32;=&#32;*<link linkend="_glad_8h_1ac14cda87cf6c751d53b65a3cd41c35a1">green</link>&#32;+&#32;1;
+291 
+292 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(delta&#32;==&#32;2)
+293 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*red&#32;=&#32;*red&#32;+&#32;1;
+294 }
+</programlisting></section>
+</section>
+</section>

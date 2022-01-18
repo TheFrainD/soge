@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_window_8h">
+<title>src/vally/core/window.h File Reference</title>
+<indexterm><primary>src/vally/core/window.h</primary></indexterm>
+<programlisting>#include &lt;vally/config.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_window_8h_1aa9e11f3c895eb9257a996d77d280c520">window_create</link> (<link linkend="_include_2vally_2config_8h_1a48d6cd8e4135fb2ff7e7f2dac84089ec">i32</link> <link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>, <link linkend="_include_2vally_2config_8h_1a48d6cd8e4135fb2ff7e7f2dac84089ec">i32</link> <link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>, const char *title)</para>
+</listitem>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> <link linkend="_window_8h_1a8eef3112ffc6da9114150e5debc62ea7">window_poll_events</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_window_8h_1a7a456564f5873a0c7d7809278ffc7fed">window_swap_buffers</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_window_8h_1a01212a4a8353016a1350ee152faeebd3">window_terminate</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_window_8h_1a22abffc596cdf4662e42a888bf0f4ae7">window_set_key_callback</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *callback)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_window_8h_1a5a2328a25f9e25e6959db3d2000490cb">window_set_mouse_button_callback</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *callback)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_window_8h_1a98c8dab3eaabc474c6c190329340e92e">window_set_cursor_position_callback</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *callback)</para>
+</listitem>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a48d6cd8e4135fb2ff7e7f2dac84089ec">i32</link> <link linkend="_window_8h_1a9a21878f1f3853f872975886cfad042b">window_get_width</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_include_2vally_2config_8h_1a48d6cd8e4135fb2ff7e7f2dac84089ec">i32</link> <link linkend="_window_8h_1ae62e808d1beb9de3228ada76016843a4">window_get_height</link> ()</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_window_8h_1aa9e11f3c895eb9257a996d77d280c520"/>    <section>
+    <title>window_create()</title>
+<indexterm><primary>window_create</primary><secondary>window.h</secondary></indexterm>
+<indexterm><primary>window.h</primary><secondary>window_create</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> window_create (<link linkend="_include_2vally_2config_8h_1a48d6cd8e4135fb2ff7e7f2dac84089ec">i32</link> width, <link linkend="_include_2vally_2config_8h_1a48d6cd8e4135fb2ff7e7f2dac84089ec">i32</link> height, const char * title)</computeroutput></para><para>
+Definition at line 34 of file window.c.</para>
+<programlisting>34 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+35 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(initialized)&#32;{
+36 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+37 &#32;&#32;}
+38 &#32;&#32;state.<link linkend="_structwindow__state_1aee286b9436911809b563fc846bb84f74">width</link>&#32;=&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>;
+39 &#32;&#32;state.<link linkend="_structwindow__state_1aeefba8cc3f9ddf5a8e4224dad418c5db">height</link>&#32;=&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>;
+40 &#32;&#32;state.<link linkend="_structwindow__state_1aba3e101d2850e7390adeab57502b4c1f">title</link>&#32;=&#32;title;
+41 
+42 &#32;&#32;<link linkend="_group__init_1ga746e2757d069eaea423349aca6ae097a">glfwSetErrorCallback</link>(window_error_callback);
+43 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_group__init_1gab41771f0215a2e0afb4cf1cf98082d40">glfwInit</link>())&#32;{
+44 &#32;&#32;&#32;&#32;<link linkend="_logger_8h_1ab2601211ce77503ba5fac7c144dbfa89">VALLY_FATAL</link>(<emphasis role="stringliteral">&quot;Could&#32;not&#32;initialize&#32;GLFW!&quot;</emphasis>);
+45 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+46 &#32;&#32;}
+47 &#32;&#32;<link linkend="_logger_8h_1af933c6341b0deeb4ee1a540da61b9536">VALLY_TRACE</link>(<emphasis role="stringliteral">&quot;GLFW&#32;initialized&quot;</emphasis>);
+48 
+49 &#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gafe5e4922de1f9932d7e9849bb053b0c0">GLFW_CONTEXT_VERSION_MAJOR</link>,&#32;3);
+50 &#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga31aca791e4b538c4e4a771eb95cc2d07">GLFW_CONTEXT_VERSION_MINOR</link>,&#32;3);
+51 &#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga44f3a6b4261fbe351e0b950b0f372e12">GLFW_OPENGL_PROFILE</link>,&#32;<link linkend="_glfw3_8h_1af094bb16da76f66ebceb19ee213b3de8">GLFW_OPENGL_CORE_PROFILE</link>);
+52 
+53 &#32;&#32;state.<link linkend="_structwindow__state_1a710665f02d25ccdeb6f51a388b7b784d">window</link>&#32;=&#32;<link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link>(<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>,&#32;title,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+54 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!state.<link linkend="_structwindow__state_1a710665f02d25ccdeb6f51a388b7b784d">window</link>)&#32;{
+55 &#32;&#32;&#32;&#32;<link linkend="_logger_8h_1ab2601211ce77503ba5fac7c144dbfa89">VALLY_FATAL</link>(<emphasis role="stringliteral">&quot;Could&#32;not&#32;create&#32;window!&quot;</emphasis>);
+56 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+57 &#32;&#32;}
+58 &#32;&#32;<link linkend="_logger_8h_1af933c6341b0deeb4ee1a540da61b9536">VALLY_TRACE</link>(<emphasis role="stringliteral">&quot;Window&#32;created&quot;</emphasis>);
+59 &#32;&#32;<link linkend="_group__context_1gafd76c93e15ec8b0b90506a9936a46185">glfwMakeContextCurrent</link>(state.<link linkend="_structwindow__state_1a710665f02d25ccdeb6f51a388b7b784d">window</link>);
+60 &#32;&#32;<link linkend="_group__context_1ga12a595c06947cec4967c6e1f14210a8a">glfwSwapInterval</link>(1);
+61 
+62 &#32;&#32;<link linkend="_group__window_1gab0754f8d5c7c4d5cae2a9937a0e00bc5">glfwSetWindowSizeCallback</link>(state.<link linkend="_structwindow__state_1a710665f02d25ccdeb6f51a388b7b784d">window</link>,&#32;window_size_callback);
+63 
+64 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_glad_8h_1a1f34fdf1c2f94c05c53d2a1cd3d80537">gladLoadGLLoader</link>((<link linkend="_glad_8h_1a4f921f2caf007aba097ee85a9f464bce">GLADloadproc</link>)<link linkend="_group__context_1ga0e8af175218929615c16e74938c10f2a">glfwGetProcAddress</link>))&#32;{
+65 &#32;&#32;&#32;&#32;<link linkend="_logger_8h_1ab2601211ce77503ba5fac7c144dbfa89">VALLY_FATAL</link>(<emphasis role="stringliteral">&quot;Could&#32;not&#32;initialize&#32;glad!&quot;</emphasis>);
+66 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa93f0eb578d23995850d61f7d61c55c1">FALSE</link>;
+67 &#32;&#32;}
+68 &#32;&#32;<link linkend="_logger_8h_1af933c6341b0deeb4ee1a540da61b9536">VALLY_TRACE</link>(<emphasis role="stringliteral">&quot;glad&#32;initialized&quot;</emphasis>);
+69 
+70 &#32;&#32;<link linkend="_glad_8h_1ab54b002beb984f066acd0dd7fff469dc">glViewport</link>(0,&#32;0,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+71 
+72 &#32;&#32;<link linkend="_logger_8h_1a787875cab0f42571d60be03d1762c00a">VALLY_INFO</link>(<emphasis role="stringliteral">&quot;====System&#32;Info====&quot;</emphasis>);
+73 &#32;&#32;<link linkend="_logger_8h_1a787875cab0f42571d60be03d1762c00a">VALLY_INFO</link>(<emphasis role="stringliteral">&quot;Vendor:&#32;%s&quot;</emphasis>,&#32;<link linkend="_glad_8h_1a766db4e4de8f98981e53ea03bd47a004">glGetString</link>(<link linkend="_glad_8h_1aebb8c3cc66d0e8a44e0d320d855ab359">GL_VENDOR</link>));
+74 &#32;&#32;<link linkend="_logger_8h_1a787875cab0f42571d60be03d1762c00a">VALLY_INFO</link>(<emphasis role="stringliteral">&quot;Renderer:&#32;%s,&quot;</emphasis>,&#32;<link linkend="_glad_8h_1a766db4e4de8f98981e53ea03bd47a004">glGetString</link>(<link linkend="_glad_8h_1ad9a4639428d8407083b0c842e8926973">GL_RENDERER</link>));
+75 &#32;&#32;<link linkend="_include_2vally_2config_8h_1a48d6cd8e4135fb2ff7e7f2dac84089ec">i32</link>&#32;major,&#32;minor;
+76 &#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_glad_8h_1a2b2319323c7cfb4ed795be005209d73d">GL_MAJOR_VERSION</link>,&#32;&amp;major);
+77 &#32;&#32;<link linkend="_glad_8h_1a70ad6a21033347a0478dad517dd2bb83">glGetIntegerv</link>(<link linkend="_glad_8h_1ad45fb154a63b2b32a07732388e8251ad">GL_MINOR_VERSION</link>,&#32;&amp;minor);
+78 &#32;&#32;<link linkend="_logger_8h_1a787875cab0f42571d60be03d1762c00a">VALLY_INFO</link>(<emphasis role="stringliteral">&quot;OpenGL&#32;version:&#32;%d.%d&quot;</emphasis>,&#32;major,&#32;minor);
+79 &#32;&#32;<link linkend="_logger_8h_1a787875cab0f42571d60be03d1762c00a">VALLY_INFO</link>(<emphasis role="stringliteral">&quot;===================&quot;</emphasis>);
+80 
+81 
+82 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1aa8cecfc5c5c054d2875c03e77b7be15d">TRUE</link>;
+83 }
+</programlisting>    </section><anchor xml:id="_window_8h_1ae62e808d1beb9de3228ada76016843a4"/>    <section>
+    <title>window_get_height()</title>
+<indexterm><primary>window_get_height</primary><secondary>window.h</secondary></indexterm>
+<indexterm><primary>window.h</primary><secondary>window_get_height</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a48d6cd8e4135fb2ff7e7f2dac84089ec">i32</link> window_get_height ( )</computeroutput></para><para>
+Definition at line 116 of file window.c.</para>
+<programlisting>116 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+117 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;state.<link linkend="_structwindow__state_1aeefba8cc3f9ddf5a8e4224dad418c5db">height</link>;
+118 }
+</programlisting>    </section><anchor xml:id="_window_8h_1a9a21878f1f3853f872975886cfad042b"/>    <section>
+    <title>window_get_width()</title>
+<indexterm><primary>window_get_width</primary><secondary>window.h</secondary></indexterm>
+<indexterm><primary>window.h</primary><secondary>window_get_width</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a48d6cd8e4135fb2ff7e7f2dac84089ec">i32</link> window_get_width ( )</computeroutput></para><para>
+Definition at line 112 of file window.c.</para>
+<programlisting>112 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+113 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;state.<link linkend="_structwindow__state_1aee286b9436911809b563fc846bb84f74">width</link>;
+114 }
+</programlisting>    </section><anchor xml:id="_window_8h_1a8eef3112ffc6da9114150e5debc62ea7"/>    <section>
+    <title>window_poll_events()</title>
+<indexterm><primary>window_poll_events</primary><secondary>window.h</secondary></indexterm>
+<indexterm><primary>window.h</primary><secondary>window_poll_events</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2vally_2config_8h_1a4d99477750540df819f904cf665cbfb4">b8</link> window_poll_events ( )</computeroutput></para><para>
+Definition at line 85 of file window.c.</para>
+<programlisting>85 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+86 &#32;&#32;<link linkend="_group__window_1ga872d16e4c77f58c0436f356255920cfc">glfwPollEvents</link>();
+87 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;!<link linkend="_group__window_1gaa6162f67dfa38b8beda2fea623649332">glfwWindowShouldClose</link>(state.<link linkend="_structwindow__state_1a710665f02d25ccdeb6f51a388b7b784d">window</link>);
+88 }
+</programlisting>    </section><anchor xml:id="_window_8h_1a98c8dab3eaabc474c6c190329340e92e"/>    <section>
+    <title>window_set_cursor_position_callback()</title>
+<indexterm><primary>window_set_cursor_position_callback</primary><secondary>window.h</secondary></indexterm>
+<indexterm><primary>window.h</primary><secondary>window_set_cursor_position_callback</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> window_set_cursor_position_callback (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * callback)</computeroutput></para><para>
+Definition at line 108 of file window.c.</para>
+<programlisting>108 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+109 &#32;&#32;<link linkend="_group__input_1ga74124d0eff27040fd10e4df9e17d129c">glfwSetCursorPosCallback</link>(state.<link linkend="_structwindow__state_1a710665f02d25ccdeb6f51a388b7b784d">window</link>,&#32;callback);
+110 }
+</programlisting>    </section><anchor xml:id="_window_8h_1a22abffc596cdf4662e42a888bf0f4ae7"/>    <section>
+    <title>window_set_key_callback()</title>
+<indexterm><primary>window_set_key_callback</primary><secondary>window.h</secondary></indexterm>
+<indexterm><primary>window.h</primary><secondary>window_set_key_callback</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> window_set_key_callback (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * callback)</computeroutput></para><para>
+Definition at line 100 of file window.c.</para>
+<programlisting>100 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+101 &#32;&#32;<link linkend="_group__input_1gaa4cbcb81b939b8800e44cea971ddae47">glfwSetKeyCallback</link>(state.<link linkend="_structwindow__state_1a710665f02d25ccdeb6f51a388b7b784d">window</link>,&#32;callback);
+102 }
+</programlisting>    </section><anchor xml:id="_window_8h_1a5a2328a25f9e25e6959db3d2000490cb"/>    <section>
+    <title>window_set_mouse_button_callback()</title>
+<indexterm><primary>window_set_mouse_button_callback</primary><secondary>window.h</secondary></indexterm>
+<indexterm><primary>window.h</primary><secondary>window_set_mouse_button_callback</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> window_set_mouse_button_callback (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * callback)</computeroutput></para><para>
+Definition at line 104 of file window.c.</para>
+<programlisting>104 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+105 &#32;&#32;<link linkend="_group__input_1gab8f17646f43cdca14e5095512618fdf6">glfwSetMouseButtonCallback</link>(state.<link linkend="_structwindow__state_1a710665f02d25ccdeb6f51a388b7b784d">window</link>,&#32;callback);
+106 }
+</programlisting>    </section><anchor xml:id="_window_8h_1a7a456564f5873a0c7d7809278ffc7fed"/>    <section>
+    <title>window_swap_buffers()</title>
+<indexterm><primary>window_swap_buffers</primary><secondary>window.h</secondary></indexterm>
+<indexterm><primary>window.h</primary><secondary>window_swap_buffers</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> window_swap_buffers ( )</computeroutput></para><para>
+Definition at line 90 of file window.c.</para>
+<programlisting>90 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+91 &#32;&#32;<link linkend="_group__window_1gafb827800eedbfcbc97b1e5408df668d7">glfwSwapBuffers</link>(state.<link linkend="_structwindow__state_1a710665f02d25ccdeb6f51a388b7b784d">window</link>);
+92 }
+</programlisting>    </section><anchor xml:id="_window_8h_1a01212a4a8353016a1350ee152faeebd3"/>    <section>
+    <title>window_terminate()</title>
+<indexterm><primary>window_terminate</primary><secondary>window.h</secondary></indexterm>
+<indexterm><primary>window.h</primary><secondary>window_terminate</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> window_terminate ( )</computeroutput></para><para>
+Definition at line 94 of file window.c.</para>
+<programlisting>94 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+95 &#32;&#32;<link linkend="_group__window_1ga806747476b7247d292be3711c323ea10">glfwDestroyWindow</link>(state.<link linkend="_structwindow__state_1a710665f02d25ccdeb6f51a388b7b784d">window</link>);
+96 &#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+97 &#32;&#32;<link linkend="_logger_8h_1af933c6341b0deeb4ee1a540da61b9536">VALLY_TRACE</link>(<emphasis role="stringliteral">&quot;Window&#32;subsystem&#32;terminated&quot;</emphasis>);
+98 }
+</programlisting></section>
+</section>
+</section>

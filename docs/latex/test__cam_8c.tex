@@ -1,0 +1,86 @@
+\hypertarget{test__cam_8c}{}\doxysection{deps/cglm/test/src/test\+\_\+cam.c File Reference}
+\label{test__cam_8c}\index{deps/cglm/test/src/test\_cam.c@{deps/cglm/test/src/test\_cam.c}}
+{\ttfamily \#include \char`\"{}test\+\_\+common.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{test__cam_8c_a9e7f268faf691dfd8dfefcb731cd6914}{T\+E\+S\+T\+\_\+\+I\+M\+PL}} (camera\+\_\+lookat)
+\item 
+\mbox{\hyperlink{test__cam_8c_aad78246bfd4a5619746bac65eb77bc5a}{T\+E\+S\+T\+\_\+\+I\+M\+PL}} (camera\+\_\+decomp)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{test__cam_8c_aad78246bfd4a5619746bac65eb77bc5a}\label{test__cam_8c_aad78246bfd4a5619746bac65eb77bc5a}} 
+\index{test\_cam.c@{test\_cam.c}!TEST\_IMPL@{TEST\_IMPL}}
+\index{TEST\_IMPL@{TEST\_IMPL}!test\_cam.c@{test\_cam.c}}
+\doxysubsubsection{\texorpdfstring{TEST\_IMPL()}{TEST\_IMPL()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+I\+M\+PL (\begin{DoxyParamCaption}\item[{camera\+\_\+decomp}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 27 of file test\+\_\+cam.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{27                          \{}
+\DoxyCodeLine{28   \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}}  proj, proj2;}
+\DoxyCodeLine{29   vec4  \mbox{\hyperlink{glad_8h_a9ded28672f8b805d6b467777d0ac7b6f}{sizes}};}
+\DoxyCodeLine{30   \textcolor{keywordtype}{float} aspect, fovy, nearZ, farZ;}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32   aspect  = 0.782f;}
+\DoxyCodeLine{33   fovy    = \mbox{\hyperlink{util_8h_a96ef52a4c391eca254a1d722b9a005e1}{glm\_rad}}(49.984\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}});}
+\DoxyCodeLine{34   nearZ   = 0.1f;}
+\DoxyCodeLine{35   farZ    = 100.0f;}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37   \mbox{\hyperlink{cam_8h_a49a2796a04e4703e1e88c7b7aeb1ac12}{glm\_perspective}}(fovy, aspect, nearZ, farZ, proj);}
+\DoxyCodeLine{38   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(fabsf(aspect  -\/ \mbox{\hyperlink{persp_8h_a15fd64ca7deaaa6d57945c1d0f628202}{glm\_persp\_aspect}}(proj)) < \mbox{\hyperlink{include_2cglm_2common_8h_a9d4d1682b34f0efd224db211b6aa9d8b}{GLM\_FLT\_EPSILON}})}
+\DoxyCodeLine{39   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(fabsf(fovy    -\/ \mbox{\hyperlink{persp_8h_a9ea06ad927503ba882a7baea9c971ec2}{glm\_persp\_fovy}}(proj))   < \mbox{\hyperlink{include_2cglm_2common_8h_a9d4d1682b34f0efd224db211b6aa9d8b}{GLM\_FLT\_EPSILON}})}
+\DoxyCodeLine{40   \mbox{\hyperlink{test_2include_2common_8h_a821326052e3e2bf1fb2d678e9e9a6004}{ASSERT}}(fabsf(49.984\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}} -\/ \mbox{\hyperlink{util_8h_af0eec145d7fbe37bc8b90473eab58c4a}{glm\_deg}}(\mbox{\hyperlink{persp_8h_a9ea06ad927503ba882a7baea9c971ec2}{glm\_persp\_fovy}}(proj))) < \mbox{\hyperlink{include_2cglm_2common_8h_a9d4d1682b34f0efd224db211b6aa9d8b}{GLM\_FLT\_EPSILON}})}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42   \mbox{\hyperlink{cam_8h_ab0e729a6f2e4121b4fa45366c0ae2b33}{glm\_persp\_sizes}}(proj, fovy, \mbox{\hyperlink{glad_8h_a9ded28672f8b805d6b467777d0ac7b6f}{sizes}});}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44   \mbox{\hyperlink{cam_8h_aad0b2a2adaad602ce08e759e6c390fb1}{glm\_frustum}}(-\/\mbox{\hyperlink{glad_8h_a9ded28672f8b805d6b467777d0ac7b6f}{sizes}}[0] * 0.5\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}},}
+\DoxyCodeLine{45                \mbox{\hyperlink{glad_8h_a9ded28672f8b805d6b467777d0ac7b6f}{sizes}}[0] * 0.5\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}},}
+\DoxyCodeLine{46               -\/\mbox{\hyperlink{glad_8h_a9ded28672f8b805d6b467777d0ac7b6f}{sizes}}[1] * 0.5\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}},}
+\DoxyCodeLine{47                \mbox{\hyperlink{glad_8h_a9ded28672f8b805d6b467777d0ac7b6f}{sizes}}[1] * 0.5\mbox{\hyperlink{glad_8h_a691492ec0bd6383f91200e49f6ae40ed}{f}},}
+\DoxyCodeLine{48                nearZ,}
+\DoxyCodeLine{49                farZ,}
+\DoxyCodeLine{50                proj2);}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52   \mbox{\hyperlink{test_2include_2common_8h_a30dae4277b7792b1c641ced79bdfca4e}{ASSERTIFY}}(\mbox{\hyperlink{test__common_8c_ab6c735c5e9684b49694b21d4de506820}{test\_assert\_mat4\_eq}}(proj, proj2))}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54   \mbox{\hyperlink{test_2include_2common_8h_aee1dc5ecf95c68bc90ba502679668096}{TEST\_SUCCESS}}}
+\DoxyCodeLine{55 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{test__cam_8c_a9e7f268faf691dfd8dfefcb731cd6914}\label{test__cam_8c_a9e7f268faf691dfd8dfefcb731cd6914}} 
+\index{test\_cam.c@{test\_cam.c}!TEST\_IMPL@{TEST\_IMPL}}
+\index{TEST\_IMPL@{TEST\_IMPL}!test\_cam.c@{test\_cam.c}}
+\doxysubsubsection{\texorpdfstring{TEST\_IMPL()}{TEST\_IMPL()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+I\+M\+PL (\begin{DoxyParamCaption}\item[{camera\+\_\+lookat}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 10 of file test\+\_\+cam.\+c.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{10                          \{}
+\DoxyCodeLine{11   \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} view1, view2;}
+\DoxyCodeLine{12   \mbox{\hyperlink{types_8h_aa12dddc6c5b49b59657f5b9262d3196c}{vec3}} center,}
+\DoxyCodeLine{13        eye = \{0.024f, 14.6f, 67.04f\},}
+\DoxyCodeLine{14        dir = \{0.0f, 0.0f, -\/1.0f\},}
+\DoxyCodeLine{15        up  = \{0.0f, 1.0f, 0.0f\};}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17   \mbox{\hyperlink{vec3_8h_adbb27548630056eb42f9c87d1fb31823}{glm\_vec3\_add}}(eye, dir, center);}
+\DoxyCodeLine{18   \mbox{\hyperlink{cam_8h_a4161261504385114289708b132fbe7af}{glm\_lookat}}(eye, center, up, view1);}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20   \mbox{\hyperlink{cam_8h_a7dc68e7e9b25ad9195deba19251ea0c5}{glm\_look}}(eye, dir, up, view2);}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22   \mbox{\hyperlink{test_2include_2common_8h_a30dae4277b7792b1c641ced79bdfca4e}{ASSERTIFY}}(\mbox{\hyperlink{test__common_8c_ab6c735c5e9684b49694b21d4de506820}{test\_assert\_mat4\_eq}}(view1, view2))}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24   \mbox{\hyperlink{test_2include_2common_8h_aee1dc5ecf95c68bc90ba502679668096}{TEST\_SUCCESS}}}
+\DoxyCodeLine{25 \}}
+
+\end{DoxyCode}

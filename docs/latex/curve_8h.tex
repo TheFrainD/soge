@@ -1,0 +1,54 @@
+\hypertarget{curve_8h}{}\doxysection{deps/cglm/include/cglm/curve.h File Reference}
+\label{curve_8h}\index{deps/cglm/include/cglm/curve.h@{deps/cglm/include/cglm/curve.h}}
+{\ttfamily \#include \char`\"{}common.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}vec4.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mat4.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} float \mbox{\hyperlink{curve_8h_a0c00658118e13b7bfe0bcab044d59e32}{glm\+\_\+smc}} (float \mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}}, \mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}} \mbox{\hyperlink{glext_8h_af593500c283bf1a787a6f947f503a5c2}{m}}, vec4 \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}})
+\begin{DoxyCompactList}\small\item\em helper function to calculate S$\ast$\+M$\ast$C multiplication for curves \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{curve_8h_a0c00658118e13b7bfe0bcab044d59e32}\label{curve_8h_a0c00658118e13b7bfe0bcab044d59e32}} 
+\index{curve.h@{curve.h}!glm\_smc@{glm\_smc}}
+\index{glm\_smc@{glm\_smc}!curve.h@{curve.h}}
+\doxysubsubsection{\texorpdfstring{glm\_smc()}{glm\_smc()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{include_2cglm_2common_8h_a132eda4e8b82a997831a6c857f7d26c1}{C\+G\+L\+M\+\_\+\+I\+N\+L\+I\+NE}} float glm\+\_\+smc (\begin{DoxyParamCaption}\item[{float}]{s,  }\item[{\mbox{\hyperlink{types_8h_ae30f88fc32dfb3008b133367bbf0c3a1}{mat4}}}]{m,  }\item[{vec4}]{c }\end{DoxyParamCaption})}
+
+
+
+helper function to calculate S$\ast$\+M$\ast$C multiplication for curves 
+
+This function does not encourage you to use S\+MC, instead it is a helper if you use S\+MC.
+
+if you want to specify S as vector then use more generic \mbox{\hyperlink{mat4_8h_a88dcb25a7344226fe1b4a5017754c86e}{glm\+\_\+mat4\+\_\+rmc()}} func.
+
+Example usage\+: B(s) = glm\+\_\+smc(s, G\+L\+M\+\_\+\+B\+E\+Z\+I\+E\+R\+\_\+\+M\+AT, (vec4)\{p0, c0, c1, p1\})
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & parameter between 0 and 1 (this will be \mbox{[}s3, s2, s, 1\mbox{]}) \\
+\hline
+\mbox{\texttt{ in}}  & {\em m} & basis matrix \\
+\hline
+\mbox{\texttt{ in}}  & {\em c} & position/control vector\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+B(s) 
+\end{DoxyReturn}
+
+
+Definition at line 34 of file curve.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{34                                  \{}
+\DoxyCodeLine{35   vec4 vs;}
+\DoxyCodeLine{36   \mbox{\hyperlink{vec4_8h_a5a1d5aad10ee8963a6a78e3e02d52f1a}{glm\_vec4\_cubic}}(\mbox{\hyperlink{glext_8h_a4af680a6c683f88ed67b76f207f2e6e4}{s}}, vs);}
+\DoxyCodeLine{37   \textcolor{keywordflow}{return} \mbox{\hyperlink{mat4_8h_a88dcb25a7344226fe1b4a5017754c86e}{glm\_mat4\_rmc}}(vs, \mbox{\hyperlink{glext_8h_af593500c283bf1a787a6f947f503a5c2}{m}}, \mbox{\hyperlink{glext_8h_a1f2d7f8147412c43ba2303a56f97ee73}{c}});}
+\DoxyCodeLine{38 \}}
+
+\end{DoxyCode}

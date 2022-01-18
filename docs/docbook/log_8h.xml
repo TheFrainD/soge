@@ -1,0 +1,274 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_log_8h">
+<title>deps/log/src/log.h File Reference</title>
+<indexterm><primary>deps/log/src/log.h</primary></indexterm>
+<programlisting>#include &lt;stdio.h&gt;
+#include &lt;stdarg.h&gt;
+#include &lt;stdbool.h&gt;
+#include &lt;time.h&gt;
+</programlisting><simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structlog___event">log_Event</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_log_8h_1aa48b2017856a8a9c33a9935afe604c8d">LOG_VERSION</link>   &quot;0.1.0&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_log_8h_1af89cb876e6e1d43cfeacdd58a7c9b78c">log_trace</link>(...)   <link linkend="_log_8h_1ac008ecbde449b2dd1bc4f8671d9a0e07">log_log</link>(<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47ba5b76dd51db62558b1952158ba38b723f">LOG_TRACE</link>, __FILE__, __LINE__, __VA_ARGS__)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_log_8h_1aa77e596ef13d2f0f75d0ac9540ed358d">log_debug</link>(...)   <link linkend="_log_8h_1ac008ecbde449b2dd1bc4f8671d9a0e07">log_log</link>(<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47bab9f002c6ffbfd511da8090213227454e">LOG_DEBUG</link>, __FILE__, __LINE__, __VA_ARGS__)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_log_8h_1aa1cfe5444875c8eca0ea6f6993977d6d">log_info</link>(...)   <link linkend="_log_8h_1ac008ecbde449b2dd1bc4f8671d9a0e07">log_log</link>(<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47ba6e98ff471e3ce6c4ef2d75c37ee51837">LOG_INFO</link>,  __FILE__, __LINE__, __VA_ARGS__)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_log_8h_1a04af09851c431d178f16b24fa1aac1e9">log_warn</link>(...)   <link linkend="_log_8h_1ac008ecbde449b2dd1bc4f8671d9a0e07">log_log</link>(<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47bac8041ffa22bc823d4726701cdb13fc13">LOG_WARN</link>,  __FILE__, __LINE__, __VA_ARGS__)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_log_8h_1a6ae72553ea9805dd87a463d6f710364d">log_error</link>(...)   <link linkend="_log_8h_1ac008ecbde449b2dd1bc4f8671d9a0e07">log_log</link>(<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47ba230506cce5c68c3bac5a821c42ed3473">LOG_ERROR</link>, __FILE__, __LINE__, __VA_ARGS__)</para>
+</listitem>
+            <listitem><para>#define <link linkend="_log_8h_1a704a43b1e2ff3bb554aff101efdbeecf">log_fatal</link>(...)   <link linkend="_log_8h_1ac008ecbde449b2dd1bc4f8671d9a0e07">log_log</link>(<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47bac630750884d91cb9767ef2200bbb048b">LOG_FATAL</link>, __FILE__, __LINE__, __VA_ARGS__)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Typedefs    </title>
+        <itemizedlist>
+            <listitem><para>typedef <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>(* <link linkend="_log_8h_1a4e1a7e636a6cabe43a851e125ea86a28">log_LogFn</link>) (<link linkend="_structlog___event">log_Event</link> *ev)</para>
+</listitem>
+            <listitem><para>typedef <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>(* <link linkend="_log_8h_1af1c7dea93a5ff832ba11a7a4e3a46c45">log_LockFn</link>) (bool <link linkend="_log_8c_1a9863926e23e26ddb194b82b7fc50756a">lock</link>, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_log_8c_1a697ce711b67313990d351b5c95f87aed">udata</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Enumerations    </title>
+        <itemizedlist>
+            <listitem><para>enum { 
+<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47ba5b76dd51db62558b1952158ba38b723f">LOG_TRACE</link>, 
+<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47bab9f002c6ffbfd511da8090213227454e">LOG_DEBUG</link>, 
+<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47ba6e98ff471e3ce6c4ef2d75c37ee51837">LOG_INFO</link>, 
+<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47bac8041ffa22bc823d4726701cdb13fc13">LOG_WARN</link>, 
+
+<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47ba230506cce5c68c3bac5a821c42ed3473">LOG_ERROR</link>, 
+<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47bac630750884d91cb9767ef2200bbb048b">LOG_FATAL</link>
+ }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>const char * <link linkend="_log_8h_1acf49945d7504646d76917c8efc4f375e">log_level_string</link> (int <link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_log_8h_1a18259d7b87158a91089fd1d081617715">log_set_lock</link> (<link linkend="_log_8h_1af1c7dea93a5ff832ba11a7a4e3a46c45">log_LockFn</link> fn, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_log_8c_1a697ce711b67313990d351b5c95f87aed">udata</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_log_8h_1af2493e94f152a28b2ba4e3a2e2bba65d">log_set_level</link> (int <link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_log_8h_1a6de5d12252f1b48279d28769b7c130eb">log_set_quiet</link> (bool <link linkend="_glext_8h_1ab0b5c7de20095d30091485d2c60a3dd5">enable</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_log_8h_1a4196855e1cd42700557b6e4fa0715a35">log_add_callback</link> (<link linkend="_log_8h_1a4e1a7e636a6cabe43a851e125ea86a28">log_LogFn</link> fn, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_log_8c_1a697ce711b67313990d351b5c95f87aed">udata</link>, int <link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_log_8h_1afcf2da85fa8a21494dc461d546c50e4b">log_add_fp</link> (FILE *fp, int <link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_log_8h_1ac008ecbde449b2dd1bc4f8671d9a0e07">log_log</link> (int <link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link>, const char *file, int line, const char *fmt,...)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_log_8h_1aa77e596ef13d2f0f75d0ac9540ed358d"/>    <section>
+    <title>log_debug</title>
+<indexterm><primary>log_debug</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>log_debug</secondary></indexterm>
+<para><computeroutput>#define log_debug( ...)   <link linkend="_log_8h_1ac008ecbde449b2dd1bc4f8671d9a0e07">log_log</link>(<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47bab9f002c6ffbfd511da8090213227454e">LOG_DEBUG</link>, __FILE__, __LINE__, __VA_ARGS__)</computeroutput></para><para>
+Definition at line 34 of file log.h.</para>
+    </section><anchor xml:id="_log_8h_1a6ae72553ea9805dd87a463d6f710364d"/>    <section>
+    <title>log_error</title>
+<indexterm><primary>log_error</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>log_error</secondary></indexterm>
+<para><computeroutput>#define log_error( ...)   <link linkend="_log_8h_1ac008ecbde449b2dd1bc4f8671d9a0e07">log_log</link>(<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47ba230506cce5c68c3bac5a821c42ed3473">LOG_ERROR</link>, __FILE__, __LINE__, __VA_ARGS__)</computeroutput></para><para>
+Definition at line 37 of file log.h.</para>
+    </section><anchor xml:id="_log_8h_1a704a43b1e2ff3bb554aff101efdbeecf"/>    <section>
+    <title>log_fatal</title>
+<indexterm><primary>log_fatal</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>log_fatal</secondary></indexterm>
+<para><computeroutput>#define log_fatal( ...)   <link linkend="_log_8h_1ac008ecbde449b2dd1bc4f8671d9a0e07">log_log</link>(<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47bac630750884d91cb9767ef2200bbb048b">LOG_FATAL</link>, __FILE__, __LINE__, __VA_ARGS__)</computeroutput></para><para>
+Definition at line 38 of file log.h.</para>
+    </section><anchor xml:id="_log_8h_1aa1cfe5444875c8eca0ea6f6993977d6d"/>    <section>
+    <title>log_info</title>
+<indexterm><primary>log_info</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>log_info</secondary></indexterm>
+<para><computeroutput>#define log_info( ...)   <link linkend="_log_8h_1ac008ecbde449b2dd1bc4f8671d9a0e07">log_log</link>(<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47ba6e98ff471e3ce6c4ef2d75c37ee51837">LOG_INFO</link>,  __FILE__, __LINE__, __VA_ARGS__)</computeroutput></para><para>
+Definition at line 35 of file log.h.</para>
+    </section><anchor xml:id="_log_8h_1af89cb876e6e1d43cfeacdd58a7c9b78c"/>    <section>
+    <title>log_trace</title>
+<indexterm><primary>log_trace</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>log_trace</secondary></indexterm>
+<para><computeroutput>#define log_trace( ...)   <link linkend="_log_8h_1ac008ecbde449b2dd1bc4f8671d9a0e07">log_log</link>(<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47ba5b76dd51db62558b1952158ba38b723f">LOG_TRACE</link>, __FILE__, __LINE__, __VA_ARGS__)</computeroutput></para><para>
+Definition at line 33 of file log.h.</para>
+    </section><anchor xml:id="_log_8h_1aa48b2017856a8a9c33a9935afe604c8d"/>    <section>
+    <title>LOG_VERSION</title>
+<indexterm><primary>LOG_VERSION</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>LOG_VERSION</secondary></indexterm>
+<para><computeroutput>#define LOG_VERSION   &quot;0.1.0&quot;</computeroutput></para>
+<para>Copyright (c) 2020 rxi</para>
+
+<para>This library is free software; you can redistribute it and/or modify it under the terms of the MIT license. See <computeroutput>log.c</computeroutput> for details. </para>
+<para>
+Definition at line 16 of file log.h.</para>
+    </section><anchor xml:id="_log_8h_1a04af09851c431d178f16b24fa1aac1e9"/>    <section>
+    <title>log_warn</title>
+<indexterm><primary>log_warn</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>log_warn</secondary></indexterm>
+<para><computeroutput>#define log_warn( ...)   <link linkend="_log_8h_1ac008ecbde449b2dd1bc4f8671d9a0e07">log_log</link>(<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47bac8041ffa22bc823d4726701cdb13fc13">LOG_WARN</link>,  __FILE__, __LINE__, __VA_ARGS__)</computeroutput></para><para>
+Definition at line 36 of file log.h.</para>
+</section>
+</section>
+<section>
+<title>Typedef Documentation</title>
+<anchor xml:id="_log_8h_1af1c7dea93a5ff832ba11a7a4e3a46c45"/>    <section>
+    <title>log_LockFn</title>
+<indexterm><primary>log_LockFn</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>log_LockFn</secondary></indexterm>
+<para><computeroutput>typedef <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>(* log_LockFn) (bool <link linkend="_log_8c_1a9863926e23e26ddb194b82b7fc50756a">lock</link>, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *<link linkend="_log_8c_1a697ce711b67313990d351b5c95f87aed">udata</link>)</computeroutput></para><para>
+Definition at line 29 of file log.h.</para>
+    </section><anchor xml:id="_log_8h_1a4e1a7e636a6cabe43a851e125ea86a28"/>    <section>
+    <title>log_LogFn</title>
+<indexterm><primary>log_LogFn</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>log_LogFn</secondary></indexterm>
+<para><computeroutput>typedef <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>(* log_LogFn) (<link linkend="_structlog___event">log_Event</link> *ev)</computeroutput></para><para>
+Definition at line 28 of file log.h.</para>
+</section>
+</section>
+<section>
+<title>Enumeration Type Documentation</title>
+<anchor xml:id="_log_8h_1a900dca9b26de42491763226e12dcd47b"/>    <section>
+    <title>anonymous enum</title>
+<para><computeroutput>anonymous enum</computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>LOG_TRACE</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>LOG_TRACE</secondary></indexterm>
+<anchor xml:id="_log_8h_1a900dca9b26de42491763226e12dcd47ba5b76dd51db62558b1952158ba38b723f"/>LOG_TRACE</entry><entry></entry></row><row><entry><indexterm><primary>LOG_DEBUG</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>LOG_DEBUG</secondary></indexterm>
+<anchor xml:id="_log_8h_1a900dca9b26de42491763226e12dcd47bab9f002c6ffbfd511da8090213227454e"/>LOG_DEBUG</entry><entry></entry></row><row><entry><indexterm><primary>LOG_INFO</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>LOG_INFO</secondary></indexterm>
+<anchor xml:id="_log_8h_1a900dca9b26de42491763226e12dcd47ba6e98ff471e3ce6c4ef2d75c37ee51837"/>LOG_INFO</entry><entry></entry></row><row><entry><indexterm><primary>LOG_WARN</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>LOG_WARN</secondary></indexterm>
+<anchor xml:id="_log_8h_1a900dca9b26de42491763226e12dcd47bac8041ffa22bc823d4726701cdb13fc13"/>LOG_WARN</entry><entry></entry></row><row><entry><indexterm><primary>LOG_ERROR</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>LOG_ERROR</secondary></indexterm>
+<anchor xml:id="_log_8h_1a900dca9b26de42491763226e12dcd47ba230506cce5c68c3bac5a821c42ed3473"/>LOG_ERROR</entry><entry></entry></row><row><entry><indexterm><primary>LOG_FATAL</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>LOG_FATAL</secondary></indexterm>
+<anchor xml:id="_log_8h_1a900dca9b26de42491763226e12dcd47bac630750884d91cb9767ef2200bbb048b"/>LOG_FATAL</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 31 of file log.h.</para>
+<programlisting>31 {&#32;<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47ba5b76dd51db62558b1952158ba38b723f">LOG_TRACE</link>,&#32;<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47bab9f002c6ffbfd511da8090213227454e">LOG_DEBUG</link>,&#32;<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47ba6e98ff471e3ce6c4ef2d75c37ee51837">LOG_INFO</link>,&#32;<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47bac8041ffa22bc823d4726701cdb13fc13">LOG_WARN</link>,&#32;<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47ba230506cce5c68c3bac5a821c42ed3473">LOG_ERROR</link>,&#32;<link linkend="_log_8h_1a900dca9b26de42491763226e12dcd47bac630750884d91cb9767ef2200bbb048b">LOG_FATAL</link>&#32;};
+</programlisting></section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_log_8h_1a4196855e1cd42700557b6e4fa0715a35"/>    <section>
+    <title>log_add_callback()</title>
+<indexterm><primary>log_add_callback</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>log_add_callback</secondary></indexterm>
+<para><computeroutput>int log_add_callback (<link linkend="_log_8h_1a4e1a7e636a6cabe43a851e125ea86a28">log_LogFn</link> fn, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * udata, int level)</computeroutput></para><para>
+Definition at line 115 of file log.c.</para>
+<programlisting>115 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+116 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;<link linkend="_log_8c_1aea0bffe478318f476a4bedee63256b2c">MAX_CALLBACKS</link>;&#32;i++)&#32;{
+117 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.callbacks[i].fn)&#32;{
+118 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.callbacks[i]&#32;=&#32;(<link linkend="_struct_callback">Callback</link>)&#32;{&#32;fn,&#32;<link linkend="_log_8c_1a697ce711b67313990d351b5c95f87aed">udata</link>,&#32;<link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link>&#32;};
+119 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;
+120 &#32;&#32;&#32;&#32;}
+121 &#32;&#32;}
+122 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;-1;
+123 }
+</programlisting>    </section><anchor xml:id="_log_8h_1afcf2da85fa8a21494dc461d546c50e4b"/>    <section>
+    <title>log_add_fp()</title>
+<indexterm><primary>log_add_fp</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>log_add_fp</secondary></indexterm>
+<para><computeroutput>int log_add_fp (FILE * fp, int level)</computeroutput></para><para>
+Definition at line 126 of file log.c.</para>
+<programlisting>126 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+127 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_log_8c_1a4196855e1cd42700557b6e4fa0715a35">log_add_callback</link>(file_callback,&#32;fp,&#32;<link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link>);
+128 }
+</programlisting>    </section><anchor xml:id="_log_8h_1acf49945d7504646d76917c8efc4f375e"/>    <section>
+    <title>log_level_string()</title>
+<indexterm><primary>log_level_string</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>log_level_string</secondary></indexterm>
+<para><computeroutput>const char* log_level_string (int level)</computeroutput></para><para>
+Definition at line 94 of file log.c.</para>
+<programlisting>94 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+95 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;level_strings[<link linkend="_log_8c_1acf4d33ee4cff36f69b924471174dcb11">level</link>];
+96 }
+</programlisting>    </section><anchor xml:id="_log_8h_1ac008ecbde449b2dd1bc4f8671d9a0e07"/>    <section>
+    <title>log_log()</title>
+<indexterm><primary>log_log</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>log_log</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> log_log (int level, const char * file, int line, const char * fmt,  ...)</computeroutput></para><para>
+Definition at line 140 of file log.c.</para>
+<programlisting>140 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+141 &#32;&#32;<link linkend="_structlog___event">log_Event</link>&#32;ev&#32;=&#32;{
+142 &#32;&#32;&#32;&#32;.<link linkend="_structlog___event_1a2917e4ca45c418b9b3301252237deac8">fmt</link>&#32;&#32;&#32;=&#32;fmt,
+143 &#32;&#32;&#32;&#32;.file&#32;&#32;=&#32;file,
+144 &#32;&#32;&#32;&#32;.line&#32;&#32;=&#32;line,
+145 &#32;&#32;&#32;&#32;.level&#32;=&#32;<link linkend="_log_8c_1acf4d33ee4cff36f69b924471174dcb11">level</link>,
+146 &#32;&#32;};
+147 
+148 &#32;&#32;<link linkend="_log_8c_1a9863926e23e26ddb194b82b7fc50756a">lock</link>();
+149 
+150 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.quiet&#32;&amp;&amp;&#32;<link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link>&#32;&gt;=&#32;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.level)&#32;{
+151 &#32;&#32;&#32;&#32;init_event(&amp;ev,&#32;stderr);
+152 &#32;&#32;&#32;&#32;va_start(ev.<link linkend="_structlog___event_1adeb420d9154c0bff0fbdca8bb0c3a985">ap</link>,&#32;fmt);
+153 &#32;&#32;&#32;&#32;stdout_callback(&amp;ev);
+154 &#32;&#32;&#32;&#32;va_end(ev.<link linkend="_structlog___event_1adeb420d9154c0bff0fbdca8bb0c3a985">ap</link>);
+155 &#32;&#32;}
+156 
+157 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;<link linkend="_log_8c_1aea0bffe478318f476a4bedee63256b2c">MAX_CALLBACKS</link>&#32;&amp;&amp;&#32;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.callbacks[i].fn;&#32;i++)&#32;{
+158 &#32;&#32;&#32;&#32;<link linkend="_struct_callback">Callback</link>&#32;*cb&#32;=&#32;&amp;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.callbacks[i];
+159 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a2b536fca24f51d6a849aed325793e661">level</link>&#32;&gt;=&#32;cb-&gt;<link linkend="_struct_callback_1ae2d14d16fd04cb9d7aeadae7f17a63d5">level</link>)&#32;{
+160 &#32;&#32;&#32;&#32;&#32;&#32;init_event(&amp;ev,&#32;cb-&gt;<link linkend="_struct_callback_1a8e866a6b66ae600e71a6b280057d8541">udata</link>);
+161 &#32;&#32;&#32;&#32;&#32;&#32;va_start(ev.<link linkend="_structlog___event_1adeb420d9154c0bff0fbdca8bb0c3a985">ap</link>,&#32;fmt);
+162 &#32;&#32;&#32;&#32;&#32;&#32;cb-&gt;<link linkend="_struct_callback_1a14a0a0dda819be431520a0a4a1a9b2e3">fn</link>(&amp;ev);
+163 &#32;&#32;&#32;&#32;&#32;&#32;va_end(ev.<link linkend="_structlog___event_1adeb420d9154c0bff0fbdca8bb0c3a985">ap</link>);
+164 &#32;&#32;&#32;&#32;}
+165 &#32;&#32;}
+166 
+167 &#32;&#32;unlock();
+168 }
+</programlisting>    </section><anchor xml:id="_log_8h_1af2493e94f152a28b2ba4e3a2e2bba65d"/>    <section>
+    <title>log_set_level()</title>
+<indexterm><primary>log_set_level</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>log_set_level</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> log_set_level (int level)</computeroutput></para><para>
+Definition at line 105 of file log.c.</para>
+<programlisting>105 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+106 &#32;&#32;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.level&#32;=&#32;<link linkend="_log_8c_1acf4d33ee4cff36f69b924471174dcb11">level</link>;
+107 }
+</programlisting>    </section><anchor xml:id="_log_8h_1a18259d7b87158a91089fd1d081617715"/>    <section>
+    <title>log_set_lock()</title>
+<indexterm><primary>log_set_lock</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>log_set_lock</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> log_set_lock (<link linkend="_log_8h_1af1c7dea93a5ff832ba11a7a4e3a46c45">log_LockFn</link> fn, <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * udata)</computeroutput></para><para>
+Definition at line 99 of file log.c.</para>
+<programlisting>99 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+100 &#32;&#32;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.lock&#32;=&#32;fn;
+101 &#32;&#32;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.udata&#32;=&#32;<link linkend="_log_8c_1a697ce711b67313990d351b5c95f87aed">udata</link>;
+102 }
+</programlisting>    </section><anchor xml:id="_log_8h_1a6de5d12252f1b48279d28769b7c130eb"/>    <section>
+    <title>log_set_quiet()</title>
+<indexterm><primary>log_set_quiet</primary><secondary>log.h</secondary></indexterm>
+<indexterm><primary>log.h</primary><secondary>log_set_quiet</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> log_set_quiet (bool enable)</computeroutput></para><para>
+Definition at line 110 of file log.c.</para>
+<programlisting>110 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+111 &#32;&#32;<link linkend="_stb__vorbis_8c_1aa73214aa5f2f94f63d90bb4e3d99fe53">L</link>.quiet&#32;=&#32;<link linkend="_glext_8h_1ab0b5c7de20095d30091485d2c60a3dd5">enable</link>;
+112 }
+</programlisting></section>
+</section>
+</section>

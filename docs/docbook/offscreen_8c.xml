@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_offscreen_8c">
+<title>deps/glfw/examples/offscreen.c File Reference</title>
+<indexterm><primary>deps/glfw/examples/offscreen.c</primary></indexterm>
+<programlisting>#include &lt;glad/gl.h&gt;
+#include &lt;GLFW/glfw3.h&gt;
+#include &quot;linmath.h&quot;
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stb_image_write.h&gt;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_offscreen_8c_1a09f9c3bf094ecaf707c673924ffd615a">GLAD_GL_IMPLEMENTATION</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_offscreen_8c_1a088324ad8995e3eb76024e3e79083d48">GLFW_INCLUDE_NONE</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_offscreen_8c_1aefe397a94e8feddc652f92ef40ce9597">STB_IMAGE_WRITE_IMPLEMENTATION</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_offscreen_8c_1a840291bc02cba5474a4cb46a9b9566fe">main</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_offscreen_8c_1a09f9c3bf094ecaf707c673924ffd615a"/>    <section>
+    <title>GLAD_GL_IMPLEMENTATION</title>
+<indexterm><primary>GLAD_GL_IMPLEMENTATION</primary><secondary>offscreen.c</secondary></indexterm>
+<indexterm><primary>offscreen.c</primary><secondary>GLAD_GL_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define GLAD_GL_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 26 of file offscreen.c.</para>
+    </section><anchor xml:id="_offscreen_8c_1a088324ad8995e3eb76024e3e79083d48"/>    <section>
+    <title>GLFW_INCLUDE_NONE</title>
+<indexterm><primary>GLFW_INCLUDE_NONE</primary><secondary>offscreen.c</secondary></indexterm>
+<indexterm><primary>offscreen.c</primary><secondary>GLFW_INCLUDE_NONE</secondary></indexterm>
+<para><computeroutput>#define GLFW_INCLUDE_NONE</computeroutput></para><para>
+Definition at line 28 of file offscreen.c.</para>
+    </section><anchor xml:id="_offscreen_8c_1aefe397a94e8feddc652f92ef40ce9597"/>    <section>
+    <title>STB_IMAGE_WRITE_IMPLEMENTATION</title>
+<indexterm><primary>STB_IMAGE_WRITE_IMPLEMENTATION</primary><secondary>offscreen.c</secondary></indexterm>
+<indexterm><primary>offscreen.c</primary><secondary>STB_IMAGE_WRITE_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define STB_IMAGE_WRITE_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 41 of file offscreen.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_offscreen_8c_1a840291bc02cba5474a4cb46a9b9566fe"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>offscreen.c</secondary></indexterm>
+<indexterm><primary>offscreen.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> )</computeroutput></para><para>
+Definition at line 80 of file offscreen.c.</para>
+<programlisting>81 {
+82 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>*&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>;
+83 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a68c4714e43d8e827d80759f9cb864f3c">GLuint</link>&#32;vertex_buffer,&#32;vertex_shader,&#32;fragment_shader,&#32;<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>;
+84 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1acebcc1c5663f14ebde1d16831e5fed94">GLint</link>&#32;mvp_location,&#32;vpos_location,&#32;vcol_location;
+85 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;ratio;
+86 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>;
+87 &#32;&#32;&#32;&#32;<link linkend="_linmath_8h_1aea448460b62175f89ed5760877496434">mat4x4</link>&#32;mvp;
+88 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>*&#32;<link linkend="_glad_8h_1a76461e97a098d2c9ae20ac193d3825ae">buffer</link>;
+89 
+90 &#32;&#32;&#32;&#32;<link linkend="_group__init_1ga746e2757d069eaea423349aca6ae097a">glfwSetErrorCallback</link>(<link linkend="_inputlag_8c_1a4ee391c8bab624943c822faafb2c320e">error_callback</link>);
+91 
+92 &#32;&#32;&#32;&#32;<link linkend="_group__init_1gac85e41aab1c2bd6fc740f4377d9e7e9f">glfwInitHint</link>(<link linkend="_group__init_1ga71e0b4ce2f2696a84a9b8c5e12dc70cf">GLFW_COCOA_MENUBAR</link>,&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>);
+93 
+94 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_group__init_1gab41771f0215a2e0afb4cf1cf98082d40">glfwInit</link>())
+95 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+96 
+97 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gafe5e4922de1f9932d7e9849bb053b0c0">GLFW_CONTEXT_VERSION_MAJOR</link>,&#32;2);
+98 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga31aca791e4b538c4e4a771eb95cc2d07">GLFW_CONTEXT_VERSION_MINOR</link>,&#32;0);
+99 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gafb3cdc45297e06d8f1eb13adc69ca6c4">GLFW_VISIBLE</link>,&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>);
+100 
+101 &#32;&#32;&#32;&#32;<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>&#32;=&#32;<link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link>(640,&#32;480,&#32;<emphasis role="stringliteral">&quot;Simple&#32;example&quot;</emphasis>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+102 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>)
+103 &#32;&#32;&#32;&#32;{
+104 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+105 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+106 &#32;&#32;&#32;&#32;}
+107 
+108 &#32;&#32;&#32;&#32;<link linkend="_group__context_1gafd76c93e15ec8b0b90506a9936a46185">glfwMakeContextCurrent</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+109 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a7e9e0ebe65864f5f2bcd289c5736041b">gladLoadGL</link>(<link linkend="_group__context_1ga0e8af175218929615c16e74938c10f2a">glfwGetProcAddress</link>);
+110 
+111 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NOTE:&#32;OpenGL&#32;error&#32;checks&#32;have&#32;been&#32;omitted&#32;for&#32;brevity</emphasis>
+112 
+113 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1b33d322b89d94ad4938461db0a0424a">glGenBuffers</link>(1,&#32;&amp;vertex_buffer);
+114 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a3b3a3f8200f094b781e9f61e2f19fc50">glBindBuffer</link>(<link linkend="_glad_8h_1a7180045dcb52b22af2cd0366026bc3ed">GL_ARRAY_BUFFER</link>,&#32;vertex_buffer);
+115 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a9419a03f5c46e2758f884e9c56d92b6a">glBufferData</link>(<link linkend="_glad_8h_1a7180045dcb52b22af2cd0366026bc3ed">GL_ARRAY_BUFFER</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(vertices),&#32;vertices,&#32;<link linkend="_glad_8h_1ab7dffdc215fbbe75b6ccacfecfc14648">GL_STATIC_DRAW</link>);
+116 
+117 &#32;&#32;&#32;&#32;vertex_shader&#32;=&#32;<link linkend="_glad_8h_1a4d3447ff3caf454bc686968fbe5f04bf">glCreateShader</link>(<link linkend="_glad_8h_1aceb29bc16e885f956eb9e351a7dd6276">GL_VERTEX_SHADER</link>);
+118 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a369ec108462c247e3028edc9070117a0">glShaderSource</link>(vertex_shader,&#32;1,&#32;&amp;vertex_shader_text,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+119 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1acf7a528ef1ef237d2a7676dcb0f22473">glCompileShader</link>(vertex_shader);
+120 
+121 &#32;&#32;&#32;&#32;fragment_shader&#32;=&#32;<link linkend="_glad_8h_1a4d3447ff3caf454bc686968fbe5f04bf">glCreateShader</link>(<link linkend="_glad_8h_1a1a0294662b50921555cae95fb20740d4">GL_FRAGMENT_SHADER</link>);
+122 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a369ec108462c247e3028edc9070117a0">glShaderSource</link>(fragment_shader,&#32;1,&#32;&amp;fragment_shader_text,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+123 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1acf7a528ef1ef237d2a7676dcb0f22473">glCompileShader</link>(fragment_shader);
+124 
+125 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>&#32;=&#32;<link linkend="_glad_8h_1acf9d728f2b2be42fbc2fe6dada8bcd2b">glCreateProgram</link>();
+126 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a0cb06d612b3358bfaadbbefd7c51f1cc">glAttachShader</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>,&#32;vertex_shader);
+127 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a0cb06d612b3358bfaadbbefd7c51f1cc">glAttachShader</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>,&#32;fragment_shader);
+128 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad241352c6eee6e79f09942ef0771db47">glLinkProgram</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>);
+129 
+130 &#32;&#32;&#32;&#32;mvp_location&#32;=&#32;<link linkend="_glad_8h_1a10106e4be90a66213839645cf12770f9">glGetUniformLocation</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>,&#32;<emphasis role="stringliteral">&quot;MVP&quot;</emphasis>);
+131 &#32;&#32;&#32;&#32;vpos_location&#32;=&#32;<link linkend="_glad_8h_1a20f33502cbda8885498352fcdbf71fe8">glGetAttribLocation</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>,&#32;<emphasis role="stringliteral">&quot;vPos&quot;</emphasis>);
+132 &#32;&#32;&#32;&#32;vcol_location&#32;=&#32;<link linkend="_glad_8h_1a20f33502cbda8885498352fcdbf71fe8">glGetAttribLocation</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>,&#32;<emphasis role="stringliteral">&quot;vCol&quot;</emphasis>);
+133 
+134 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a6e8ee482001ee8fb9b3d4851116779b4">glEnableVertexAttribArray</link>(vpos_location);
+135 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a8afadc1fe36886688a02097cc63a17cb">glVertexAttribPointer</link>(vpos_location,&#32;2,&#32;<link linkend="_glad_8h_1a6d19915d4237cb559505bd3e5dcfcf3c">GL_FLOAT</link>,&#32;<link linkend="_glad_8h_1abca6d43f43fae31f49dcb883b2f301f6">GL_FALSE</link>,
+136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">sizeof</emphasis>(vertices[0]),&#32;(<emphasis role="keywordtype">void</emphasis>*)&#32;0);
+137 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a6e8ee482001ee8fb9b3d4851116779b4">glEnableVertexAttribArray</link>(vcol_location);
+138 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a8afadc1fe36886688a02097cc63a17cb">glVertexAttribPointer</link>(vcol_location,&#32;3,&#32;<link linkend="_glad_8h_1a6d19915d4237cb559505bd3e5dcfcf3c">GL_FLOAT</link>,&#32;<link linkend="_glad_8h_1abca6d43f43fae31f49dcb883b2f301f6">GL_FALSE</link>,
+139 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">sizeof</emphasis>(vertices[0]),&#32;(<emphasis role="keywordtype">void</emphasis>*)&#32;(<emphasis role="keyword">sizeof</emphasis>(<emphasis role="keywordtype">float</emphasis>)&#32;*&#32;2));
+140 
+141 &#32;&#32;&#32;&#32;<link linkend="_group__window_1gaf7d17f3534b4b6dc9a6f905e3a240b7e">glfwGetFramebufferSize</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;&amp;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;&amp;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+142 &#32;&#32;&#32;&#32;ratio&#32;=&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>&#32;/&#32;(float)&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>;
+143 
+144 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ab54b002beb984f066acd0dd7fff469dc">glViewport</link>(0,&#32;0,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+145 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1afc250a2b6bf11f24bb73534a2f053c0d">glClear</link>(<link linkend="_glad_8h_1a947db9ff944c4b78e652144c3dd1060c">GL_COLOR_BUFFER_BIT</link>);
+146 
+147 &#32;&#32;&#32;&#32;<link linkend="_linmath_8h_1a9d5fe21cb49e77776d3100a0d2e0ce31">mat4x4_ortho</link>(mvp,&#32;-ratio,&#32;ratio,&#32;-1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;-1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+148 
+149 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad8e40c882d63c4671dea2ca2dfcf3046">glUseProgram</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>);
+150 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1cd4c6b9e1fb6b4eb927ab0997de48ef">glUniformMatrix4fv</link>(mvp_location,&#32;1,&#32;<link linkend="_glad_8h_1abca6d43f43fae31f49dcb883b2f301f6">GL_FALSE</link>,&#32;(<emphasis role="keyword">const</emphasis>&#32;<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>*)&#32;mvp);
+151 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a89377449aceadc060b577926b5413bd2">glDrawArrays</link>(<link linkend="_glad_8h_1a6079e7a02a59adad65eb953d9482b1ed">GL_TRIANGLES</link>,&#32;0,&#32;3);
+152 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a655940bd98884547109b757f23a833ce">glFinish</link>();
+153 
+154 <emphasis role="preprocessor">#if&#32;USE_NATIVE_OSMESA</emphasis>
+155 &#32;&#32;&#32;&#32;<link linkend="_osmesa__context_8c_1abdce3d5716b1a4b53266c171c5de4c8c">glfwGetOSMesaColorBuffer</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>,&#32;&amp;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;&amp;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;(<emphasis role="keywordtype">void</emphasis>**)&#32;&amp;<link linkend="_structbuffer">buffer</link>);
+156 <emphasis role="preprocessor">#else</emphasis>
+157 &#32;&#32;&#32;&#32;<link linkend="_structbuffer">buffer</link>&#32;=&#32;calloc(4,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>&#32;*&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+158 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a62d860a543f5aa5813f5789526b6ad23">glReadPixels</link>(0,&#32;0,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>,&#32;<link linkend="_glad_8h_1a9f2854f4a91a0d83d2d54cb8110bfca4">GL_RGBA</link>,&#32;<link linkend="_glad_8h_1a80a33c79f69417372d65d2a65ca36d49">GL_UNSIGNED_BYTE</link>,&#32;<link linkend="_structbuffer">buffer</link>);
+159 <emphasis role="preprocessor">#endif</emphasis>
+160 
+161 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Write&#32;image&#32;Y-flipped&#32;because&#32;OpenGL</emphasis>
+162 &#32;&#32;&#32;&#32;<link linkend="_glfw_2deps_2stb__image__write_8h_1a9c03e5171f6aea47fde6dafcf3249ccf">stbi_write_png</link>(<emphasis role="stringliteral">&quot;offscreen.png&quot;</emphasis>,
+163 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>,&#32;4,
+164 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_structbuffer">buffer</link>&#32;+&#32;(<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>&#32;*&#32;4&#32;*&#32;(<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>&#32;-&#32;1)),
+165 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;-<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>&#32;*&#32;4);
+166 
+167 <emphasis role="preprocessor">#if&#32;USE_NATIVE_OSMESA</emphasis>
+168 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Here&#32;is&#32;where&#32;there&apos;s&#32;nothing</emphasis>
+169 <emphasis role="preprocessor">#else</emphasis>
+170 &#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(<link linkend="_structbuffer">buffer</link>);
+171 <emphasis role="preprocessor">#endif</emphasis>
+172 
+173 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga806747476b7247d292be3711c323ea10">glfwDestroyWindow</link>(<link linkend="_truetype__test__win32_8c_1a773143cded4dde4b20b2c5dc501a5b51">window</link>);
+174 
+175 &#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+176 &#32;&#32;&#32;&#32;exit(EXIT_SUCCESS);
+177 }
+</programlisting></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_offscreen_8c_1a83fc1af92e29717b4513d121b0c72c7d"/>    <section>
+    <title>b</title>
+<indexterm><primary>b</primary><secondary>offscreen.c</secondary></indexterm>
+<indexterm><primary>offscreen.c</primary><secondary>b</secondary></indexterm>
+<para><computeroutput>float <link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link></computeroutput></para><para>
+Definition at line 47 of file offscreen.c.</para>
+    </section><anchor xml:id="_offscreen_8c_1a8cf17d727651616de6f2b79ef32170cd"/>    <section>
+    <title>g</title>
+<indexterm><primary>g</primary><secondary>offscreen.c</secondary></indexterm>
+<indexterm><primary>offscreen.c</primary><secondary>g</secondary></indexterm>
+<para><computeroutput>float <link linkend="_glad_8h_1acaceb3a655ff28b75259860bcb868f9f">g</link></computeroutput></para><para>
+Definition at line 47 of file offscreen.c.</para>
+    </section><anchor xml:id="_offscreen_8c_1a4788d82c901b9367dd5c0daff8a7616b"/>    <section>
+    <title>r</title>
+<indexterm><primary>r</primary><secondary>offscreen.c</secondary></indexterm>
+<indexterm><primary>offscreen.c</primary><secondary>r</secondary></indexterm>
+<para><computeroutput>float <link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link></computeroutput></para><para>
+Definition at line 47 of file offscreen.c.</para>
+    </section><anchor xml:id="_offscreen_8c_1ad0da36b2558901e21e7a30f6c227a45e"/>    <section>
+    <title>x</title>
+<indexterm><primary>x</primary><secondary>offscreen.c</secondary></indexterm>
+<indexterm><primary>offscreen.c</primary><secondary>x</secondary></indexterm>
+<para><computeroutput>float <link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link></computeroutput></para><para>
+Definition at line 46 of file offscreen.c.</para>
+    </section><anchor xml:id="_offscreen_8c_1aa4f0d3eebc3c443f9be81bf48561a217"/>    <section>
+    <title>y</title>
+<indexterm><primary>y</primary><secondary>offscreen.c</secondary></indexterm>
+<indexterm><primary>offscreen.c</primary><secondary>y</secondary></indexterm>
+<para><computeroutput>float <link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link></computeroutput></para><para>
+Definition at line 46 of file offscreen.c.</para>
+</section>
+</section>
+</section>

@@ -1,0 +1,309 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_init_8c">
+<title>deps/glfw/src/init.c File Reference</title>
+<indexterm><primary>deps/glfw/src/init.c</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdarg.h&gt;
+#include &lt;assert.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>size_t <link linkend="_init_8c_1a920bdd09bf605b918b93fbec1993c55b">_glfwEncodeUTF8</link> (char *<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>, <link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link> codepoint)</para>
+</listitem>
+            <listitem><para>char * <link linkend="_init_8c_1a7f0a5b0d879baead229ef5e7381648e8">_glfw_strdup</link> (const char *<link linkend="_glad_8h_1afdd0f0e67e302eefcb4f6b23732e7ea3">source</link>)</para>
+</listitem>
+            <listitem><para>float <link linkend="_init_8c_1af27e3c452fbb2a7133339f77b72fcf37">_glfw_fminf</link> (float <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>, float <link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)</para>
+</listitem>
+            <listitem><para>float <link linkend="_init_8c_1a159e9723ec02405ea951cea91b1cff30">_glfw_fmaxf</link> (float <link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>, float <link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * <link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link> (size_t <link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>, size_t <link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * <link linkend="_init_8c_1a428a65f03ddd87abacc7db0251b4e9af">_glfw_realloc</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *block, size_t <link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> *block)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link> (int code, const char *<link linkend="_glad_8h_1ae2d3db041c6004a67047659b42f73a44">format</link>,...)</para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> int <link linkend="_group__init_1gab41771f0215a2e0afb4cf1cf98082d40">glfwInit</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+
+<para>Initializes the GLFW library. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link> (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>)</para>
+
+<para>Terminates the GLFW library. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__init_1gac85e41aab1c2bd6fc740f4377d9e7e9f">glfwInitHint</link> (int hint, int <link linkend="_glad_8h_1a79169be77d7e02a24f68a5bfe627dc29">value</link>)</para>
+
+<para>Sets the specified init hint to the desired value. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__init_1ga0f4c8556a21d9e774a0ba0332da1748e">glfwInitAllocator</link> (const <link linkend="_struct_g_l_f_wallocator">GLFWallocator</link> *allocator)</para>
+
+<para>Sets the init allocator to the desired value. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_init_8c_1a1712210f34c339a05adda69e3587ec00">glfwInitVulkanLoader</link> (<link linkend="_internal_8h_1afdd5e96faf709042a34a7bb0024e47d9">PFN_vkGetInstanceProcAddr</link> loader)</para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_group__init_1ga2402c7824ac0194c13722790ff9559ff">glfwGetVersion</link> (int *major, int *minor, int *rev)</para>
+
+<para>Retrieves the version of the GLFW library. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> int <link linkend="_group__init_1gaee7bac4c7e1b2769207747c1b5ae2f9e">glfwGetError</link> (const char **description)</para>
+
+<para>Returns and clears the last error for the calling thread. </para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_group__init_1ga8184701785c096b3862a75cda1bf44a3">GLFWerrorfun</link> <link linkend="_group__init_1ga746e2757d069eaea423349aca6ae097a">glfwSetErrorCallback</link> (<link linkend="_group__init_1ga8184701785c096b3862a75cda1bf44a3">GLFWerrorfun</link> cbfun)</para>
+
+<para>Sets the error callback. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_struct___g_l_f_wlibrary">_GLFWlibrary</link> <link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link> = { <link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link> }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f"/>    <section>
+    <title>_glfw_calloc()</title>
+<indexterm><primary>_glfw_calloc</primary><secondary>init.c</secondary></indexterm>
+<indexterm><primary>init.c</primary><secondary>_glfw_calloc</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>* _glfw_calloc (size_t count, size_t size)</computeroutput></para><para>
+Definition at line 206 of file init.c.</para>
+<programlisting>207 {
+208 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;&amp;&amp;&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)
+209 &#32;&#32;&#32;&#32;{
+210 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>*&#32;block;
+211 
+212 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;&gt;&#32;<link linkend="_stdint_8h_1a3c75bb398badb69c7577b21486f9963f">SIZE_MAX</link>&#32;/&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)
+213 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+214 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gaaf2ef9aa8202c2b82ac2d921e554c687">GLFW_INVALID_VALUE</link>,&#32;<emphasis role="stringliteral">&quot;Allocation&#32;size&#32;overflow&quot;</emphasis>);
+215 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+216 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+217 
+218 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;block&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a619cff4c7af731aa58dd3484d7fab761">allocator</link>.<link linkend="_struct_g_l_f_wallocator_1a18a798136f17a9cb105be18312193bf7">allocate</link>(<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;*&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a619cff4c7af731aa58dd3484d7fab761">allocator</link>.<link linkend="_struct_g_l_f_wallocator_1af6153be74dbaf7f0a7e8bd3bfc039910">user</link>);
+219 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(block)
+220 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;memset(block,&#32;0,&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;*&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>);
+221 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+222 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+223 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga9023953a2bcb98c2906afd071d21ee7f">GLFW_OUT_OF_MEMORY</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+224 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+225 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+226 &#32;&#32;&#32;&#32;}
+227 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+228 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+229 }
+</programlisting>    </section><anchor xml:id="_init_8c_1a159e9723ec02405ea951cea91b1cff30"/>    <section>
+    <title>_glfw_fmaxf()</title>
+<indexterm><primary>_glfw_fmaxf</primary><secondary>init.c</secondary></indexterm>
+<indexterm><primary>init.c</primary><secondary>_glfw_fmaxf</secondary></indexterm>
+<para><computeroutput>float _glfw_fmaxf (float a, float b)</computeroutput></para><para>
+Definition at line 194 of file init.c.</para>
+<programlisting>195 {
+196 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>&#32;!=&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)
+197 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>;
+198 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>&#32;!=&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)
+199 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>;
+200 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>&#32;&gt;&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)
+201 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>;
+202 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+203 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>;
+204 }
+</programlisting>    </section><anchor xml:id="_init_8c_1af27e3c452fbb2a7133339f77b72fcf37"/>    <section>
+    <title>_glfw_fminf()</title>
+<indexterm><primary>_glfw_fminf</primary><secondary>init.c</secondary></indexterm>
+<indexterm><primary>init.c</primary><secondary>_glfw_fminf</secondary></indexterm>
+<para><computeroutput>float _glfw_fminf (float a, float b)</computeroutput></para><para>
+Definition at line 182 of file init.c.</para>
+<programlisting>183 {
+184 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>&#32;!=&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>)
+185 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>;
+186 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>&#32;!=&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)
+187 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>;
+188 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>&#32;&lt;&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>)
+189 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a3309789fc188587d666cda5ece79cf82">a</link>;
+190 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+191 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a0f71581a41fd2264c8944126dabbd010">b</link>;
+192 }
+</programlisting>    </section><anchor xml:id="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e"/>    <section>
+    <title>_glfw_free()</title>
+<indexterm><primary>_glfw_free</primary><secondary>init.c</secondary></indexterm>
+<indexterm><primary>init.c</primary><secondary>_glfw_free</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfw_free (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * block)</computeroutput></para><para>
+Definition at line 253 of file init.c.</para>
+<programlisting>254 {
+255 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(block)
+256 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a619cff4c7af731aa58dd3484d7fab761">allocator</link>.<link linkend="_struct_g_l_f_wallocator_1ab74cf9a969e73e6eb65a6112a591a988">deallocate</link>(block,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a619cff4c7af731aa58dd3484d7fab761">allocator</link>.<link linkend="_struct_g_l_f_wallocator_1af6153be74dbaf7f0a7e8bd3bfc039910">user</link>);
+257 }
+</programlisting>    </section><anchor xml:id="_init_8c_1a428a65f03ddd87abacc7db0251b4e9af"/>    <section>
+    <title>_glfw_realloc()</title>
+<indexterm><primary>_glfw_realloc</primary><secondary>init.c</secondary></indexterm>
+<indexterm><primary>init.c</primary><secondary>_glfw_realloc</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link>* _glfw_realloc (<link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> * block, size_t size)</computeroutput></para><para>
+Definition at line 231 of file init.c.</para>
+<programlisting>232 {
+233 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(block&#32;&amp;&amp;&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>)
+234 &#32;&#32;&#32;&#32;{
+235 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>*&#32;resized&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a619cff4c7af731aa58dd3484d7fab761">allocator</link>.<link linkend="_struct_g_l_f_wallocator_1af5a674af9e170095b968f467233437be">reallocate</link>(block,&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>,&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a619cff4c7af731aa58dd3484d7fab761">allocator</link>.<link linkend="_struct_g_l_f_wallocator_1af6153be74dbaf7f0a7e8bd3bfc039910">user</link>);
+236 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(resized)
+237 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;resized;
+238 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+239 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+240 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga9023953a2bcb98c2906afd071d21ee7f">GLFW_OUT_OF_MEMORY</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+241 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+242 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+243 &#32;&#32;&#32;&#32;}
+244 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(block)
+245 &#32;&#32;&#32;&#32;{
+246 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1abcf72962b101a8a5c539da1a278b0e9e">_glfw_free</link>(block);
+247 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+248 &#32;&#32;&#32;&#32;}
+249 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+250 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link>(1,&#32;<link linkend="_glad_8h_1a3d1e3edfcf61ca2d831883e1afbad89e">size</link>);
+251 }
+</programlisting>    </section><anchor xml:id="_init_8c_1a7f0a5b0d879baead229ef5e7381648e8"/>    <section>
+    <title>_glfw_strdup()</title>
+<indexterm><primary>_glfw_strdup</primary><secondary>init.c</secondary></indexterm>
+<indexterm><primary>init.c</primary><secondary>_glfw_strdup</secondary></indexterm>
+<para><computeroutput>char* _glfw_strdup (const char * source)</computeroutput></para><para>
+Definition at line 174 of file init.c.</para>
+<programlisting>175 {
+176 &#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">size_t</emphasis>&#32;<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>&#32;=&#32;strlen(<link linkend="_glad_8h_1afdd0f0e67e302eefcb4f6b23732e7ea3">source</link>);
+177 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>*&#32;<link linkend="_structresult">result</link>&#32;=&#32;<link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link>(<link linkend="_glad_8h_1a921fa83f7755f0139c84ba1831417a2e">length</link>&#32;+&#32;1,&#32;1);
+178 &#32;&#32;&#32;&#32;strcpy(<link linkend="_structresult">result</link>,&#32;<link linkend="_glad_8h_1afdd0f0e67e302eefcb4f6b23732e7ea3">source</link>);
+179 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glext_8h_1a321ff419cd5252e54cf95e64dc6687ee">result</link>;
+180 }
+</programlisting>    </section><anchor xml:id="_init_8c_1a920bdd09bf605b918b93fbec1993c55b"/>    <section>
+    <title>_glfwEncodeUTF8()</title>
+<indexterm><primary>_glfwEncodeUTF8</primary><secondary>init.c</secondary></indexterm>
+<indexterm><primary>init.c</primary><secondary>_glfwEncodeUTF8</secondary></indexterm>
+<para><computeroutput>size_t _glfwEncodeUTF8 (char * s, <link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link> codepoint)</computeroutput></para><para>
+Definition at line 146 of file init.c.</para>
+<programlisting>147 {
+148 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">size_t</emphasis>&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;=&#32;0;
+149 
+150 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(codepoint&#32;&lt;&#32;0x80)
+151 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>[<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>++]&#32;=&#32;(char)&#32;codepoint;
+152 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(codepoint&#32;&lt;&#32;0x800)
+153 &#32;&#32;&#32;&#32;{
+154 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>[<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>++]&#32;=&#32;(codepoint&#32;&gt;&gt;&#32;6)&#32;|&#32;0xc0;
+155 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>[<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>++]&#32;=&#32;(codepoint&#32;&amp;&#32;0x3f)&#32;|&#32;0x80;
+156 &#32;&#32;&#32;&#32;}
+157 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(codepoint&#32;&lt;&#32;0x10000)
+158 &#32;&#32;&#32;&#32;{
+159 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>[<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>++]&#32;=&#32;(codepoint&#32;&gt;&gt;&#32;12)&#32;|&#32;0xe0;
+160 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>[<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>++]&#32;=&#32;((codepoint&#32;&gt;&gt;&#32;6)&#32;&amp;&#32;0x3f)&#32;|&#32;0x80;
+161 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>[<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>++]&#32;=&#32;(codepoint&#32;&amp;&#32;0x3f)&#32;|&#32;0x80;
+162 &#32;&#32;&#32;&#32;}
+163 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(codepoint&#32;&lt;&#32;0x110000)
+164 &#32;&#32;&#32;&#32;{
+165 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>[<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>++]&#32;=&#32;(codepoint&#32;&gt;&gt;&#32;18)&#32;|&#32;0xf0;
+166 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>[<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>++]&#32;=&#32;((codepoint&#32;&gt;&gt;&#32;12)&#32;&amp;&#32;0x3f)&#32;|&#32;0x80;
+167 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>[<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>++]&#32;=&#32;((codepoint&#32;&gt;&gt;&#32;6)&#32;&amp;&#32;0x3f)&#32;|&#32;0x80;
+168 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a4af680a6c683f88ed67b76f207f2e6e4">s</link>[<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>++]&#32;=&#32;(codepoint&#32;&amp;&#32;0x3f)&#32;|&#32;0x80;
+169 &#32;&#32;&#32;&#32;}
+170 
+171 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>;
+172 }
+</programlisting>    </section><anchor xml:id="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5"/>    <section>
+    <title>_glfwInputError()</title>
+<indexterm><primary>_glfwInputError</primary><secondary>init.c</secondary></indexterm>
+<indexterm><primary>init.c</primary><secondary>_glfwInputError</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwInputError (int code, const char * format,  ...)</computeroutput></para><para>
+Definition at line 266 of file init.c.</para>
+<programlisting>267 {
+268 &#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_werror">_GLFWerror</link>*&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>;
+269 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;description[<link linkend="_internal_8h_1af6333ef81718d365141bb1a64ed0c2e3">_GLFW_MESSAGE_SIZE</link>];
+270 
+271 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1ae2d3db041c6004a67047659b42f73a44">format</link>)
+272 &#32;&#32;&#32;&#32;{
+273 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;va_list&#32;vl;
+274 
+275 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;va_start(vl,&#32;<link linkend="_glad_8h_1ae2d3db041c6004a67047659b42f73a44">format</link>);
+276 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_rrsprintf_8h_1a41f45ce4155177a1a55a4260cda655ea">vsnprintf</link>(description,&#32;<emphasis role="keyword">sizeof</emphasis>(description),&#32;<link linkend="_glad_8h_1ae2d3db041c6004a67047659b42f73a44">format</link>,&#32;vl);
+277 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;va_end(vl);
+278 
+279 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;description[<emphasis role="keyword">sizeof</emphasis>(description)&#32;-&#32;1]&#32;=&#32;<emphasis role="charliteral">&apos;\0&apos;</emphasis>;
+280 &#32;&#32;&#32;&#32;}
+281 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+282 &#32;&#32;&#32;&#32;{
+283 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(code&#32;==&#32;<link linkend="_group__errors_1ga2374ee02c177f12e1fa76ff3ed15e14a">GLFW_NOT_INITIALIZED</link>)
+284 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strcpy(description,&#32;<emphasis role="stringliteral">&quot;The&#32;GLFW&#32;library&#32;is&#32;not&#32;initialized&quot;</emphasis>);
+285 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(code&#32;==&#32;<link linkend="_group__errors_1gaa8290386e9528ccb9e42a3a4e16fc0d0">GLFW_NO_CURRENT_CONTEXT</link>)
+286 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strcpy(description,&#32;<emphasis role="stringliteral">&quot;There&#32;is&#32;no&#32;current&#32;context&quot;</emphasis>);
+287 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(code&#32;==&#32;<link linkend="_group__errors_1ga76f6bb9c4eea73db675f096b404593ce">GLFW_INVALID_ENUM</link>)
+288 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strcpy(description,&#32;<emphasis role="stringliteral">&quot;Invalid&#32;argument&#32;for&#32;enum&#32;parameter&quot;</emphasis>);
+289 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(code&#32;==&#32;<link linkend="_group__errors_1gaaf2ef9aa8202c2b82ac2d921e554c687">GLFW_INVALID_VALUE</link>)
+290 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strcpy(description,&#32;<emphasis role="stringliteral">&quot;Invalid&#32;value&#32;for&#32;parameter&quot;</emphasis>);
+291 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(code&#32;==&#32;<link linkend="_group__errors_1ga9023953a2bcb98c2906afd071d21ee7f">GLFW_OUT_OF_MEMORY</link>)
+292 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strcpy(description,&#32;<emphasis role="stringliteral">&quot;Out&#32;of&#32;memory&quot;</emphasis>);
+293 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(code&#32;==&#32;<link linkend="_group__errors_1ga56882b290db23261cc6c053c40c2d08e">GLFW_API_UNAVAILABLE</link>)
+294 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strcpy(description,&#32;<emphasis role="stringliteral">&quot;The&#32;requested&#32;API&#32;is&#32;unavailable&quot;</emphasis>);
+295 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(code&#32;==&#32;<link linkend="_group__errors_1gad16c5565b4a69f9c2a9ac2c0dbc89462">GLFW_VERSION_UNAVAILABLE</link>)
+296 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strcpy(description,&#32;<emphasis role="stringliteral">&quot;The&#32;requested&#32;API&#32;version&#32;is&#32;unavailable&quot;</emphasis>);
+297 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(code&#32;==&#32;<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>)
+298 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strcpy(description,&#32;<emphasis role="stringliteral">&quot;A&#32;platform-specific&#32;error&#32;occurred&quot;</emphasis>);
+299 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(code&#32;==&#32;<link linkend="_group__errors_1ga196e125ef261d94184e2b55c05762f14">GLFW_FORMAT_UNAVAILABLE</link>)
+300 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strcpy(description,&#32;<emphasis role="stringliteral">&quot;The&#32;requested&#32;format&#32;is&#32;unavailable&quot;</emphasis>);
+301 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(code&#32;==&#32;<link linkend="_group__errors_1gacff24d2757da752ae4c80bf452356487">GLFW_NO_WINDOW_CONTEXT</link>)
+302 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strcpy(description,&#32;<emphasis role="stringliteral">&quot;The&#32;specified&#32;window&#32;has&#32;no&#32;context&quot;</emphasis>);
+303 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(code&#32;==&#32;<link linkend="_group__errors_1ga09d6943923a70ddef3a085f5baee786c">GLFW_CURSOR_UNAVAILABLE</link>)
+304 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strcpy(description,&#32;<emphasis role="stringliteral">&quot;The&#32;specified&#32;cursor&#32;shape&#32;is&#32;unavailable&quot;</emphasis>);
+305 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(code&#32;==&#32;<link linkend="_group__errors_1ga526fba20a01504a8086c763b6ca53ce5">GLFW_FEATURE_UNAVAILABLE</link>)
+306 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strcpy(description,&#32;<emphasis role="stringliteral">&quot;The&#32;requested&#32;feature&#32;cannot&#32;be&#32;implemented&#32;for&#32;this&#32;platform&quot;</emphasis>);
+307 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(code&#32;==&#32;<link linkend="_group__errors_1ga5dda77e023e83151e8bd55a6758f946a">GLFW_FEATURE_UNIMPLEMENTED</link>)
+308 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strcpy(description,&#32;<emphasis role="stringliteral">&quot;The&#32;requested&#32;feature&#32;has&#32;not&#32;yet&#32;been&#32;implemented&#32;for&#32;this&#32;platform&quot;</emphasis>);
+309 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(code&#32;==&#32;<link linkend="_group__errors_1ga3608c6c29ab7a72f3bf019f4c3a2563d">GLFW_PLATFORM_UNAVAILABLE</link>)
+310 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strcpy(description,&#32;<emphasis role="stringliteral">&quot;The&#32;requested&#32;platform&#32;is&#32;unavailable&quot;</emphasis>);
+311 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+312 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;strcpy(description,&#32;<emphasis role="stringliteral">&quot;ERROR:&#32;UNKNOWN&#32;GLFW&#32;ERROR&quot;</emphasis>);
+313 &#32;&#32;&#32;&#32;}
+314 
+315 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1aef3b20f1280cca7cae8316626af42c45">initialized</link>)
+316 &#32;&#32;&#32;&#32;{
+317 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;=&#32;<link linkend="_internal_8h_1a0a0787a86bb4e04f17a8d24e70e1f013">_glfwPlatformGetTls</link>(&amp;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a3c64f08c60bd21f7349ec252e65c6aa9">errorSlot</link>);
+318 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>)
+319 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+320 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;=&#32;<link linkend="_init_8c_1afdf24e4f0665535fd3d012b810ffb18f">_glfw_calloc</link>(1,&#32;<emphasis role="keyword">sizeof</emphasis>(<link linkend="_struct___g_l_f_werror">_GLFWerror</link>));
+321 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a302f48b6d4dba6b3579449d8a43cfae7">_glfwPlatformSetTls</link>(&amp;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a3c64f08c60bd21f7349ec252e65c6aa9">errorSlot</link>,&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>);
+322 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a2677e4d211fbe9b2dc96d16e91c98930">_glfwPlatformLockMutex</link>(&amp;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a1bc5de4505509cfb4911760237845ee2">errorLock</link>);
+323 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>-&gt;next&#32;=&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a40ade94f8a327f4439b46314ae84dc98">errorListHead</link>;
+324 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a40ade94f8a327f4439b46314ae84dc98">errorListHead</link>&#32;=&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>;
+325 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a8b7744446237b1c292ba8a0b9d5e7f90">_glfwPlatformUnlockMutex</link>(&amp;<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.<link linkend="_struct___g_l_f_wlibrary_1a1bc5de4505509cfb4911760237845ee2">errorLock</link>);
+326 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+327 &#32;&#32;&#32;&#32;}
+328 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+329 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>&#32;=&#32;&amp;_glfwMainThreadError;
+330 
+331 &#32;&#32;&#32;&#32;<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>-&gt;code&#32;=&#32;code;
+332 &#32;&#32;&#32;&#32;strcpy(<link linkend="_cave__main_8c_1a42c6b1edc1bd763019f0eb5edce18793">error</link>-&gt;description,&#32;description);
+333 
+334 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(_glfwErrorCallback)
+335 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;_glfwErrorCallback(code,&#32;description);
+336 }
+</programlisting>    </section><anchor xml:id="_init_8c_1a1712210f34c339a05adda69e3587ec00"/>    <section>
+    <title>glfwInitVulkanLoader()</title>
+<indexterm><primary>glfwInitVulkanLoader</primary><secondary>init.c</secondary></indexterm>
+<indexterm><primary>init.c</primary><secondary>glfwInitVulkanLoader</secondary></indexterm>
+<para><computeroutput><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> glfwInitVulkanLoader (<link linkend="_internal_8h_1afdd5e96faf709042a34a7bb0024e47d9">PFN_vkGetInstanceProcAddr</link> loader)</computeroutput></para><para>
+Definition at line 438 of file init.c.</para>
+<programlisting>439 {
+440 &#32;&#32;&#32;&#32;_glfwInitHints.<link linkend="_struct___g_l_f_winitconfig_1a2f2e06428712bd200e781849a6281e6d">vulkanLoader</link>&#32;=&#32;loader;
+441 }
+</programlisting></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_init_8c_1a3007bc654ca6468ee69759007f70ba1e"/>    <section>
+    <title>_glfw</title>
+<indexterm><primary>_glfw</primary><secondary>init.c</secondary></indexterm>
+<indexterm><primary>init.c</primary><secondary>_glfw</secondary></indexterm>
+<para><computeroutput><link linkend="_struct___g_l_f_wlibrary">_GLFWlibrary</link> _glfw = { <link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link> }</computeroutput></para><para>
+Definition at line 44 of file init.c.</para>
+</section>
+</section>
+</section>

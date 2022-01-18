@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_cave__parse_8h">
+<title>deps/stb/tests/caveview/cave_parse.h File Reference</title>
+<indexterm><primary>deps/stb/tests/caveview/cave_parse.h</primary></indexterm>
+<simplesect>
+    <title>Data Structures    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structraw__block">raw_block</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structchunk">chunk</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structfast__chunk">fast_chunk</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_cave__parse_8h_1addd7cbe43c46d853f4128514b916b393">NUM_SEGMENTS</link>   16</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_structchunk">chunk</link> * <link linkend="_cave__parse_8h_1a51522b010ba39e42f3a80d04ca6951e3">get_decoded_chunk</link> (int chunk_x, int chunk_z)</para>
+</listitem>
+            <listitem><para><link linkend="_structfast__chunk">fast_chunk</link> * <link linkend="_cave__parse_8h_1a2b070c4bd8a0077f08e0899298b8d032">get_decoded_fastchunk</link> (int chunk_x, int chunk_z)</para>
+</listitem>
+            <listitem><para><link linkend="_structfast__chunk">fast_chunk</link> * <link linkend="_cave__parse_8h_1ac3885b139871d53a3d39cca5380075c9">get_decoded_fastchunk_uncached</link> (int chunk_x, int chunk_z)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_cave__parse_8h_1addd7cbe43c46d853f4128514b916b393"/>    <section>
+    <title>NUM_SEGMENTS</title>
+<indexterm><primary>NUM_SEGMENTS</primary><secondary>cave_parse.h</secondary></indexterm>
+<indexterm><primary>cave_parse.h</primary><secondary>NUM_SEGMENTS</secondary></indexterm>
+<para><computeroutput>#define NUM_SEGMENTS   16</computeroutput></para><para>
+Definition at line 22 of file cave_parse.h.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_cave__parse_8h_1a51522b010ba39e42f3a80d04ca6951e3"/>    <section>
+    <title>get_decoded_chunk()</title>
+<indexterm><primary>get_decoded_chunk</primary><secondary>cave_parse.h</secondary></indexterm>
+<indexterm><primary>cave_parse.h</primary><secondary>get_decoded_chunk</secondary></indexterm>
+<para><computeroutput><link linkend="_structchunk">chunk</link>* get_decoded_chunk (int chunk_x, int chunk_z)</computeroutput></para>    </section><anchor xml:id="_cave__parse_8h_1a2b070c4bd8a0077f08e0899298b8d032"/>    <section>
+    <title>get_decoded_fastchunk()</title>
+<indexterm><primary>get_decoded_fastchunk</primary><secondary>cave_parse.h</secondary></indexterm>
+<indexterm><primary>cave_parse.h</primary><secondary>get_decoded_fastchunk</secondary></indexterm>
+<para><computeroutput><link linkend="_structfast__chunk">fast_chunk</link>* get_decoded_fastchunk (int chunk_x, int chunk_z)</computeroutput></para><para>
+Definition at line 589 of file cave_parse.c.</para>
+<programlisting>590 {
+591 &#32;&#32;&#32;<link linkend="_structdecoded__buffer">decoded_buffer</link>&#32;*db&#32;=&#32;<link linkend="_cave__parse_8c_1a5ff78db273f16901a4c8a02189065159">get_decoded_buffer</link>(chunk_x,&#32;chunk_z);
+592 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;db-&gt;<link linkend="_structdecoded__buffer_1a367c4250ddd897a55a53e12b7be5daba">fc</link>;
+593 }
+</programlisting>    </section><anchor xml:id="_cave__parse_8h_1ac3885b139871d53a3d39cca5380075c9"/>    <section>
+    <title>get_decoded_fastchunk_uncached()</title>
+<indexterm><primary>get_decoded_fastchunk_uncached</primary><secondary>cave_parse.h</secondary></indexterm>
+<indexterm><primary>cave_parse.h</primary><secondary>get_decoded_fastchunk_uncached</secondary></indexterm>
+<para><computeroutput><link linkend="_structfast__chunk">fast_chunk</link>* get_decoded_fastchunk_uncached (int chunk_x, int chunk_z)</computeroutput></para><para>
+Definition at line 525 of file cave_parse.c.</para>
+<programlisting>526 {
+527 &#32;&#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">char</emphasis>&#32;*decoded;
+528 &#32;&#32;&#32;<link linkend="_structcompressed__chunk">compressed_chunk</link>&#32;*cc;
+529 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;inlen;
+530 &#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+531 &#32;&#32;&#32;<link linkend="_structfast__chunk">fast_chunk</link>&#32;*fc;
+532 
+533 &#32;&#32;&#32;<link linkend="_cave__parse_8c_1af4e8c4c0c38242366db62d9936274079">lock_chunk_get_mutex</link>();
+534 &#32;&#32;&#32;cc&#32;=&#32;get_compressed_chunk(chunk_x,&#32;chunk_z);
+535 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cc-&gt;<link linkend="_structcompressed__chunk_1afd6e1777f2ee768315d22f6316a585df">len</link>&#32;!=&#32;0)
+536 &#32;&#32;&#32;&#32;&#32;&#32;++cc-&gt;<link linkend="_structcompressed__chunk_1afd796ba64d7fc4cb1f43a177b6424a45">refcount</link>;
+537 &#32;&#32;&#32;<link linkend="_cave__parse_8c_1afaaad5f587e3275de99ae8ff61b2e18a">unlock_chunk_get_mutex</link>();
+538 
+539 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(cc-&gt;<link linkend="_structcompressed__chunk_1afd6e1777f2ee768315d22f6316a585df">len</link>&#32;==&#32;0)
+540 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+541 
+542 &#32;&#32;&#32;assert(cc&#32;!=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+543 
+544 &#32;&#32;&#32;assert(cc-&gt;<link linkend="_structcompressed__chunk_1a537aaff67064a4c6a6e8ba17efda3233">data</link>[4]&#32;==&#32;2);
+545 
+546 &#32;&#32;&#32;inlen&#32;=&#32;nbt_parse_uint32(cc-&gt;<link linkend="_structcompressed__chunk_1a537aaff67064a4c6a6e8ba17efda3233">data</link>);
+547 &#32;&#32;&#32;decoded&#32;=&#32;<link linkend="_stb__image_8c_1ad58a5fbe941f1cc170dba564f6d2bdc3">stbi_zlib_decode_malloc_guesssize</link>(cc-&gt;<link linkend="_structcompressed__chunk_1a537aaff67064a4c6a6e8ba17efda3233">data</link>+5,&#32;inlen,&#32;inlen*3,&#32;&amp;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>);
+548 &#32;&#32;&#32;assert(decoded&#32;!=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+549 &#32;&#32;&#32;assert(<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;!=&#32;0);
+550 
+551 &#32;&#32;&#32;<link linkend="_cave__parse_8c_1af4e8c4c0c38242366db62d9936274079">lock_chunk_get_mutex</link>();
+552 &#32;&#32;&#32;deref_compressed_chunk(cc);
+553 &#32;&#32;&#32;<link linkend="_cave__parse_8c_1afaaad5f587e3275de99ae8ff61b2e18a">unlock_chunk_get_mutex</link>();
+554 
+555 <emphasis role="preprocessor">&#32;&#32;&#32;#ifdef&#32;FAST_CHUNK</emphasis>
+556 &#32;&#32;&#32;fc&#32;=&#32;minecraft_chunk_parse(decoded,&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>);
+557 <emphasis role="preprocessor">&#32;&#32;&#32;#else</emphasis>
+558 &#32;&#32;&#32;fc&#32;=&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+559 <emphasis role="preprocessor">&#32;&#32;&#32;#endif</emphasis>
+560 &#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(fc&#32;==&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>)
+561 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_stb__leakcheck_8h_1a9d4b5df3530d1bc733070a4669ba6ebc">free</link>(decoded);
+562 &#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;fc;
+563 }
+</programlisting></section>
+</section>
+</section>

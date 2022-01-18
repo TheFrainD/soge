@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_wl__monitor_8c">
+<title>deps/glfw/src/wl_monitor.c File Reference</title>
+<indexterm><primary>deps/glfw/src/wl_monitor.c</primary></indexterm>
+<programlisting>#include &quot;internal.h&quot;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;math.h&gt;
+#include &quot;wayland-client-protocol.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__monitor_8c_1a4061b6ec759c796455591e25a0de8c4b">_glfwAddOutputWayland</link> (<link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link> <link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>, <link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link> version)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__monitor_8c_1acaaad2590b0a15c2588e3d9f12c79863">_glfwFreeMonitorWayland</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__monitor_8c_1a35f10d415428b18f4a8d83e5e308f87f">_glfwGetMonitorPosWayland</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, int *xpos, int *ypos)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__monitor_8c_1ad2feca038ef5480163f360d16b7f6f4b">_glfwGetMonitorContentScaleWayland</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, float *xscale, float *yscale)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__monitor_8c_1afce0463dcba6f72acf3127c094635b47">_glfwGetMonitorWorkareaWayland</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, int *xpos, int *ypos, int *<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>, int *<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> * <link linkend="_wl__monitor_8c_1ab8c6631cf6c4432d0c4d8f10f4fb90fb">_glfwGetVideoModesWayland</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, int *found)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__monitor_8c_1aabd466779c94e6b0bf54f6fece70027c">_glfwGetVideoModeWayland</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> *<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> <link linkend="_wl__monitor_8c_1a70e276054b29b00bb118f4261643c428">_glfwGetGammaRampWayland</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, <link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> *ramp)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_wl__monitor_8c_1afa0e67469f56d48d100cfd1cb1ff25bc">_glfwSetGammaRampWayland</link> (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> *monitor, const <link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> *ramp)</para>
+</listitem>
+            <listitem><para><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> struct wl_output * <link linkend="_wl__monitor_8c_1aae8996af7f2e9e7fee99661ad3651bf4">glfwGetWaylandMonitor</link> (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> *handle)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_wl__monitor_8c_1a4061b6ec759c796455591e25a0de8c4b"/>    <section>
+    <title>_glfwAddOutputWayland()</title>
+<indexterm><primary>_glfwAddOutputWayland</primary><secondary>wl_monitor.c</secondary></indexterm>
+<indexterm><primary>wl_monitor.c</primary><secondary>_glfwAddOutputWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwAddOutputWayland (<link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link> name, <link linkend="_stdint_8h_1a435d1572bf3f880d55459d9805097f62">uint32_t</link> version)</computeroutput></para><para>
+Definition at line 123 of file wl_monitor.c.</para>
+<programlisting>124 {
+125 &#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>&#32;*monitor;
+126 &#32;&#32;&#32;&#32;<emphasis role="keyword">struct&#32;</emphasis>wl_output&#32;*<link linkend="_structoutput">output</link>;
+127 
+128 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_namespaceconf_1ade15c5b54093b64d7c428ec19ca5b1cb">version</link>&#32;&lt;&#32;2)
+129 &#32;&#32;&#32;&#32;{
+130 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1gad44162d78100ea5e87cdd38426b8c7a1">GLFW_PLATFORM_ERROR</link>,
+131 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Unsupported&#32;output&#32;interface&#32;version&quot;</emphasis>);
+132 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+133 &#32;&#32;&#32;&#32;}
+134 
+135 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;actual&#32;name&#32;of&#32;this&#32;output&#32;will&#32;be&#32;set&#32;in&#32;the&#32;geometry&#32;handler.</emphasis>
+136 &#32;&#32;&#32;&#32;monitor&#32;=&#32;<link linkend="_internal_8h_1aba9010067229bd447389b85b22f15b72">_glfwAllocMonitor</link>(<emphasis role="stringliteral">&quot;&quot;</emphasis>,&#32;0,&#32;0);
+137 
+138 &#32;&#32;&#32;&#32;<link linkend="_structoutput">output</link>&#32;=&#32;wl_registry_bind(<link linkend="_init_8c_1a3007bc654ca6468ee69759007f70ba1e">_glfw</link>.wl.registry,
+139 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>,
+140 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&amp;<link linkend="_wl__platform_8h_1a872ee2ea6c856e5d514c00c4f7769c59">wl_output_interface</link>,
+141 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;2);
+142 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_structoutput">output</link>)
+143 &#32;&#32;&#32;&#32;{
+144 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a5555e8488ac56b446d0a28d3330666f6">_glfwFreeMonitor</link>(monitor);
+145 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>;
+146 &#32;&#32;&#32;&#32;}
+147 
+148 &#32;&#32;&#32;&#32;monitor-&gt;wl.scale&#32;=&#32;1;
+149 &#32;&#32;&#32;&#32;monitor-&gt;wl.output&#32;=&#32;<link linkend="_structoutput">output</link>;
+150 &#32;&#32;&#32;&#32;monitor-&gt;wl.<link linkend="_struct___g_l_f_wmonitor_1ad497d3ab00f840ad99f62b3803755b12">name</link>&#32;=&#32;<link linkend="_glad_8h_1ad977737dfc9a274a62741b9500c49a32">name</link>;
+151 
+152 &#32;&#32;&#32;&#32;wl_output_add_listener(<link linkend="_structoutput">output</link>,&#32;&amp;outputListener,&#32;monitor);
+153 }
+</programlisting>    </section><anchor xml:id="_wl__monitor_8c_1acaaad2590b0a15c2588e3d9f12c79863"/>    <section>
+    <title>_glfwFreeMonitorWayland()</title>
+<indexterm><primary>_glfwFreeMonitorWayland</primary><secondary>wl_monitor.c</secondary></indexterm>
+<indexterm><primary>wl_monitor.c</primary><secondary>_glfwFreeMonitorWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwFreeMonitorWayland (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor)</computeroutput></para><para>
+Definition at line 160 of file wl_monitor.c.</para>
+<programlisting>161 {
+162 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(monitor-&gt;wl.output)
+163 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;wl_output_destroy(monitor-&gt;wl.output);
+164 }
+</programlisting>    </section><anchor xml:id="_wl__monitor_8c_1a70e276054b29b00bb118f4261643c428"/>    <section>
+    <title>_glfwGetGammaRampWayland()</title>
+<indexterm><primary>_glfwGetGammaRampWayland</primary><secondary>wl_monitor.c</secondary></indexterm>
+<indexterm><primary>wl_monitor.c</primary><secondary>_glfwGetGammaRampWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_internal_8h_1ac5743c31bece872e24528b5a45e354c5">GLFWbool</link> _glfwGetGammaRampWayland (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, <link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> * ramp)</computeroutput></para><para>
+Definition at line 208 of file wl_monitor.c.</para>
+<programlisting>209 {
+210 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga526fba20a01504a8086c763b6ca53ce5">GLFW_FEATURE_UNAVAILABLE</link>,
+211 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Gamma&#32;ramp&#32;access&#32;is&#32;not&#32;available&quot;</emphasis>);
+212 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_group__init_1gac877fe3b627d21ef3a0a23e0a73ba8c5">GLFW_FALSE</link>;
+213 }
+</programlisting>    </section><anchor xml:id="_wl__monitor_8c_1ad2feca038ef5480163f360d16b7f6f4b"/>    <section>
+    <title>_glfwGetMonitorContentScaleWayland()</title>
+<indexterm><primary>_glfwGetMonitorContentScaleWayland</primary><secondary>wl_monitor.c</secondary></indexterm>
+<indexterm><primary>wl_monitor.c</primary><secondary>_glfwGetMonitorContentScaleWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetMonitorContentScaleWayland (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, float * xscale, float * yscale)</computeroutput></para><para>
+Definition at line 174 of file wl_monitor.c.</para>
+<programlisting>176 {
+177 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xscale)
+178 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*xscale&#32;=&#32;(float)&#32;monitor-&gt;wl.scale;
+179 &#32;&#32;&#32;&#32;if&#32;(yscale)
+180 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*yscale&#32;=&#32;(float)&#32;monitor-&gt;wl.scale;
+181 }
+</programlisting>    </section><anchor xml:id="_wl__monitor_8c_1a35f10d415428b18f4a8d83e5e308f87f"/>    <section>
+    <title>_glfwGetMonitorPosWayland()</title>
+<indexterm><primary>_glfwGetMonitorPosWayland</primary><secondary>wl_monitor.c</secondary></indexterm>
+<indexterm><primary>wl_monitor.c</primary><secondary>_glfwGetMonitorPosWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetMonitorPosWayland (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, int * xpos, int * ypos)</computeroutput></para><para>
+Definition at line 166 of file wl_monitor.c.</para>
+<programlisting>167 {
+168 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xpos)
+169 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*xpos&#32;=&#32;monitor-&gt;wl.x;
+170 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ypos)
+171 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*ypos&#32;=&#32;monitor-&gt;wl.y;
+172 }
+</programlisting>    </section><anchor xml:id="_wl__monitor_8c_1afce0463dcba6f72acf3127c094635b47"/>    <section>
+    <title>_glfwGetMonitorWorkareaWayland()</title>
+<indexterm><primary>_glfwGetMonitorWorkareaWayland</primary><secondary>wl_monitor.c</secondary></indexterm>
+<indexterm><primary>wl_monitor.c</primary><secondary>_glfwGetMonitorWorkareaWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetMonitorWorkareaWayland (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, int * xpos, int * ypos, int * width, int * height)</computeroutput></para><para>
+Definition at line 183 of file wl_monitor.c.</para>
+<programlisting>186 {
+187 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(xpos)
+188 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*xpos&#32;=&#32;monitor-&gt;wl.x;
+189 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ypos)
+190 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*ypos&#32;=&#32;monitor-&gt;wl.y;
+191 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>)
+192 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>&#32;=&#32;monitor-&gt;<link linkend="_struct___g_l_f_wmonitor_1a012dd72ff0ab06cf46bb78951adac67f">modes</link>[monitor-&gt;wl.<link linkend="_struct___g_l_f_wmonitor_1ab2a33bceb848570cca7b213fcddb9e84">currentMode</link>].<link linkend="_struct_g_l_f_wvidmode_1a698dcb200562051a7249cb6ae154c71d">width</link>;
+193 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>)
+194 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>&#32;=&#32;monitor-&gt;<link linkend="_struct___g_l_f_wmonitor_1a012dd72ff0ab06cf46bb78951adac67f">modes</link>[monitor-&gt;wl.<link linkend="_struct___g_l_f_wmonitor_1ab2a33bceb848570cca7b213fcddb9e84">currentMode</link>].<link linkend="_struct_g_l_f_wvidmode_1ac65942a5f6981695517437a9d571d03c">height</link>;
+195 }
+</programlisting>    </section><anchor xml:id="_wl__monitor_8c_1ab8c6631cf6c4432d0c4d8f10f4fb90fb"/>    <section>
+    <title>_glfwGetVideoModesWayland()</title>
+<indexterm><primary>_glfwGetVideoModesWayland</primary><secondary>wl_monitor.c</secondary></indexterm>
+<indexterm><primary>wl_monitor.c</primary><secondary>_glfwGetVideoModesWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link>* _glfwGetVideoModesWayland (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, int * found)</computeroutput></para><para>
+Definition at line 197 of file wl_monitor.c.</para>
+<programlisting>198 {
+199 &#32;&#32;&#32;&#32;*found&#32;=&#32;monitor-&gt;<link linkend="_struct___g_l_f_wmonitor_1a49766384d467b40c9bb362459761418f">modeCount</link>;
+200 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;monitor-&gt;<link linkend="_struct___g_l_f_wmonitor_1a012dd72ff0ab06cf46bb78951adac67f">modes</link>;
+201 }
+</programlisting>    </section><anchor xml:id="_wl__monitor_8c_1aabd466779c94e6b0bf54f6fece70027c"/>    <section>
+    <title>_glfwGetVideoModeWayland()</title>
+<indexterm><primary>_glfwGetVideoModeWayland</primary><secondary>wl_monitor.c</secondary></indexterm>
+<indexterm><primary>wl_monitor.c</primary><secondary>_glfwGetVideoModeWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwGetVideoModeWayland (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, <link linkend="_struct_g_l_f_wvidmode">GLFWvidmode</link> * mode)</computeroutput></para><para>
+Definition at line 203 of file wl_monitor.c.</para>
+<programlisting>204 {
+205 &#32;&#32;&#32;&#32;*<link linkend="_glad_8h_1a1e71d9c196e4683cc06c4b54d53f7ef5">mode</link>&#32;=&#32;monitor-&gt;<link linkend="_struct___g_l_f_wmonitor_1a012dd72ff0ab06cf46bb78951adac67f">modes</link>[monitor-&gt;wl.<link linkend="_struct___g_l_f_wmonitor_1ab2a33bceb848570cca7b213fcddb9e84">currentMode</link>];
+206 }
+</programlisting>    </section><anchor xml:id="_wl__monitor_8c_1afa0e67469f56d48d100cfd1cb1ff25bc"/>    <section>
+    <title>_glfwSetGammaRampWayland()</title>
+<indexterm><primary>_glfwSetGammaRampWayland</primary><secondary>wl_monitor.c</secondary></indexterm>
+<indexterm><primary>wl_monitor.c</primary><secondary>_glfwSetGammaRampWayland</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> _glfwSetGammaRampWayland (<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link> * monitor, const <link linkend="_struct_g_l_f_wgammaramp">GLFWgammaramp</link> * ramp)</computeroutput></para><para>
+Definition at line 215 of file wl_monitor.c.</para>
+<programlisting>216 {
+217 &#32;&#32;&#32;&#32;<link linkend="_init_8c_1a3287b282ec57a4a89127ae51f49f10f5">_glfwInputError</link>(<link linkend="_group__errors_1ga526fba20a01504a8086c763b6ca53ce5">GLFW_FEATURE_UNAVAILABLE</link>,
+218 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;Wayland:&#32;Gamma&#32;ramp&#32;access&#32;is&#32;not&#32;available&quot;</emphasis>);
+219 }
+</programlisting>    </section><anchor xml:id="_wl__monitor_8c_1aae8996af7f2e9e7fee99661ad3651bf4"/>    <section>
+    <title>glfwGetWaylandMonitor()</title>
+<indexterm><primary>glfwGetWaylandMonitor</primary><secondary>wl_monitor.c</secondary></indexterm>
+<indexterm><primary>wl_monitor.c</primary><secondary>glfwGetWaylandMonitor</secondary></indexterm>
+<para><computeroutput><link linkend="_glfw3_8h_1a56da5036b2cc259351ae22fd6439bb47">GLFWAPI</link> struct wl_output* glfwGetWaylandMonitor (<link linkend="_group__monitor_1ga8d9efd1cde9426692c73fe40437d0ae3">GLFWmonitor</link> * handle)</computeroutput></para><para>
+Definition at line 226 of file wl_monitor.c.</para>
+<programlisting>227 {
+228 &#32;&#32;&#32;&#32;<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*&#32;monitor&#32;=&#32;(<link linkend="_struct___g_l_f_wmonitor">_GLFWmonitor</link>*)&#32;handle;
+229 &#32;&#32;&#32;&#32;<link linkend="_internal_8h_1a69563c87fe776d416636a4d1b0e9e599">_GLFW_REQUIRE_INIT_OR_RETURN</link>(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+230 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;monitor-&gt;wl.output;
+231 }
+</programlisting></section>
+</section>
+</section>

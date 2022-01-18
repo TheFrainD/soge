@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_runner_8c">
+<title>deps/cglm/test/runner.c File Reference</title>
+<indexterm><primary>deps/cglm/test/runner.c</primary></indexterm>
+<programlisting>#include &quot;include/common.h&quot;
+#include &quot;tests.h&quot;
+#include &lt;stdlib.h&gt;
+#include &lt;time.h&gt;
+#include &lt;string.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_runner_8c_1ac0f2228420376f4db7e1274f2b41667c">main</link> (int argc, const char *argv[])</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_runner_8c_1ac0f2228420376f4db7e1274f2b41667c"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>runner.c</secondary></indexterm>
+<indexterm><primary>runner.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, const char * argv[])</computeroutput></para><para>
+Definition at line 16 of file runner.c.</para>
+<programlisting>16 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+17 &#32;&#32;<link linkend="_structtest__entry__t">test_entry_t</link>&#32;*entry;
+18 &#32;&#32;<link linkend="_structtest__status__t">test_status_t</link>&#32;st;
+19 &#32;&#32;<link linkend="_stdint_8h_1ab1967d8591af1a4e48c37fd2b0f184d0">int32_t</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;i,&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>,&#32;passed,&#32;failed,&#32;maxlen;
+20 &#32;&#32;<emphasis role="keywordtype">double</emphasis>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ac55adc720a3098c1b454d2a4647f4361">start</link>,&#32;<link linkend="_glad_8h_1a432111147038972f06e049e18a837002">end</link>,&#32;elapsed,&#32;total;
+21 &#32;&#32;(<link linkend="_glad_8h_1aef30cfca5b4a4c292babb2f60f6d3296">void</link>)argc;
+22 &#32;&#32;(<link linkend="_glad_8h_1aef30cfca5b4a4c292babb2f60f6d3296">void</link>)argv;
+23 
+24 &#32;&#32;passed&#32;=&#32;failed&#32;=&#32;maxlen&#32;&#32;=&#32;0;
+25 &#32;&#32;total&#32;&#32;=&#32;0.0;
+26 &#32;&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>&#32;&#32;=&#32;<emphasis role="keyword">sizeof</emphasis>(tests)&#32;/&#32;<emphasis role="keyword">sizeof</emphasis>(tests[0]);
+27 
+28 &#32;&#32;fprintf(stderr,&#32;<link linkend="_test_2include_2common_8h_1ad243f93c16bc4c1d3e0a13b84421d760">CYAN</link>&#32;<emphasis role="stringliteral">&quot;\nWelcome&#32;to&#32;cglm&#32;tests\n\n&quot;</emphasis>&#32;<link linkend="_test_2include_2common_8h_1ab702106cf3b3e96750b6845ded4e0299">RESET</link>);
+29 
+30 &#32;&#32;srand((<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>)time(<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>));
+31 
+32 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;i&#32;&lt;&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>;&#32;i++)&#32;{
+33 &#32;&#32;&#32;&#32;<link linkend="_stdint_8h_1ab1967d8591af1a4e48c37fd2b0f184d0">int32_t</link>&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>;
+34 
+35 &#32;&#32;&#32;&#32;entry&#32;=&#32;tests&#32;+&#32;i;
+36 &#32;&#32;&#32;&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>&#32;&#32;&#32;=&#32;(<link linkend="_stdint_8h_1ab1967d8591af1a4e48c37fd2b0f184d0">int32_t</link>)strlen(entry-&gt;<link linkend="_structtest__entry__t_1ab11d2dca8c1a6697c24c534059fe5b4a">name</link>);
+37 
+38 &#32;&#32;&#32;&#32;maxlen&#32;=&#32;<link linkend="_util_8h_1a6a32c426e572c3500d7e693158c424b5">GLM_MAX</link>(maxlen,&#32;<link linkend="_glext_8h_1a652168017ea9a8bbcead03d5c16269fb">len</link>);
+39 &#32;&#32;}
+40 
+41 &#32;&#32;maxlen&#32;+=&#32;5;
+42 
+43 &#32;&#32;fprintf(stderr,
+44 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_test_2include_2common_8h_1aa4ef051614aa0bd503b0a18ee158c5d7">BOLDWHITE</link>&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;%-*s&#32;&#32;&#32;&#32;%-*s\n&quot;</emphasis>,
+45 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;maxlen,&#32;<emphasis role="stringliteral">&quot;Test&#32;Name&quot;</emphasis>,&#32;maxlen,&#32;<emphasis role="stringliteral">&quot;Elapsed&#32;Time&quot;</emphasis>);
+46 
+47 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;i&#32;&lt;&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>;&#32;i++)&#32;{
+48 &#32;&#32;&#32;&#32;entry&#32;&#32;&#32;=&#32;tests&#32;+&#32;i;
+49 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ac55adc720a3098c1b454d2a4647f4361">start</link>&#32;&#32;&#32;=&#32;clock();
+50 &#32;&#32;&#32;&#32;st&#32;&#32;&#32;&#32;&#32;&#32;=&#32;entry-&gt;<link linkend="_structtest__entry__t_1a7305123018f227e7d3453dad783bd4b4">entry</link>();
+51 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a432111147038972f06e049e18a837002">end</link>&#32;&#32;&#32;&#32;&#32;=&#32;clock();
+52 &#32;&#32;&#32;&#32;elapsed&#32;=&#32;(<link linkend="_glad_8h_1a432111147038972f06e049e18a837002">end</link>&#32;-&#32;<link linkend="_glad_8h_1ac55adc720a3098c1b454d2a4647f4361">start</link>)&#32;/&#32;CLOCKS_PER_SEC;
+53 &#32;&#32;&#32;&#32;total&#32;&#32;+=&#32;elapsed;
+54 
+55 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!st.<link linkend="_structtest__status__t_1aee3e899f37c6bfddee322d8e95ab5912">status</link>)&#32;{
+56 &#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,
+57 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_test_2include_2common_8h_1ab912d02c7998c3d47d05f87be4e2c920">BOLDRED</link>&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&quot;</emphasis>&#32;<link linkend="_test_2include_2common_8h_1a4a521453b6d80c450b2fea32eaa16658">FAIL_TEXT</link>&#32;<link linkend="_test_2include_2common_8h_1aa4ef051614aa0bd503b0a18ee158c5d7">BOLDWHITE</link>&#32;<emphasis role="stringliteral">&quot;&#32;%s&#32;&quot;</emphasis>&#32;<link linkend="_test_2include_2common_8h_1ab702106cf3b3e96750b6845ded4e0299">RESET</link>,&#32;entry-&gt;<link linkend="_structtest__entry__t_1ab11d2dca8c1a6697c24c534059fe5b4a">name</link>);
+58 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(st.<link linkend="_structtest__status__t_1aaefb00957e32a9810fe5449554f25295">msg</link>)&#32;{
+59 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,
+60 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_test_2include_2common_8h_1abf681265909adf3d3e8116c93c0ba179">YELLOW</link>&#32;<emphasis role="stringliteral">&quot;-&#32;%s&quot;</emphasis>&#32;<link linkend="_test_2include_2common_8h_1ab702106cf3b3e96750b6845ded4e0299">RESET</link>,
+61 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;st.<link linkend="_structtest__status__t_1aaefb00957e32a9810fe5449554f25295">msg</link>);
+62 &#32;&#32;&#32;&#32;&#32;&#32;}
+63 
+64 &#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<emphasis role="stringliteral">&quot;\n&quot;</emphasis>);
+65 
+66 &#32;&#32;&#32;&#32;&#32;&#32;failed++;
+67 &#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+68 &#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<link linkend="_test_2include_2common_8h_1acfbc006ea433ad708fdee3e82996e721">GREEN</link>&#32;&#32;<emphasis role="stringliteral">&quot;&#32;&#32;&quot;</emphasis>&#32;<link linkend="_test_2include_2common_8h_1ab27d9ed950c8dc84877de8230866e50a">OK_TEXT</link>&#32;<link linkend="_test_2include_2common_8h_1ab702106cf3b3e96750b6845ded4e0299">RESET</link>&#32;<emphasis role="stringliteral">&quot;&#32;%-*s&#32;&#32;&quot;</emphasis>,&#32;maxlen,&#32;entry-&gt;<link linkend="_structtest__entry__t_1ab11d2dca8c1a6697c24c534059fe5b4a">name</link>);
+69 
+70 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(elapsed&#32;&gt;&#32;0.01)
+71 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<link linkend="_test_2include_2common_8h_1abf681265909adf3d3e8116c93c0ba179">YELLOW</link>&#32;<emphasis role="stringliteral">&quot;%.2fs&quot;</emphasis>,&#32;elapsed);
+72 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+73 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<emphasis role="stringliteral">&quot;0&quot;</emphasis>);
+74 
+75 &#32;&#32;&#32;&#32;&#32;&#32;fprintf(stderr,&#32;<emphasis role="stringliteral">&quot;\n&quot;</emphasis>&#32;<link linkend="_test_2include_2common_8h_1ab702106cf3b3e96750b6845ded4e0299">RESET</link>);
+76 &#32;&#32;&#32;&#32;&#32;&#32;passed++;
+77 &#32;&#32;&#32;&#32;}
+78 &#32;&#32;}
+79 
+80 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(failed&#32;==&#32;0)&#32;{
+81 &#32;&#32;&#32;&#32;fprintf(stderr,
+82 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_test_2include_2common_8h_1a4a6c893a1703c33ede7d702fe5f97c91">BOLDGREEN</link>&#32;<emphasis role="stringliteral">&quot;\n&#32;&#32;All&#32;tests&#32;passed&#32;&quot;</emphasis>&#32;<link linkend="_test_2include_2common_8h_1a753a15aa6534b6c69875f3e7c7bb5d2d">FINAL_TEXT</link>&#32;<emphasis role="stringliteral">&quot;\n&quot;</emphasis>&#32;<link linkend="_test_2include_2common_8h_1ab702106cf3b3e96750b6845ded4e0299">RESET</link>);
+83 &#32;&#32;}
+84 
+85 &#32;&#32;fprintf(stderr,
+86 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_test_2include_2common_8h_1ad243f93c16bc4c1d3e0a13b84421d760">CYAN</link>&#32;<emphasis role="stringliteral">&quot;\ncglm&#32;test&#32;results&#32;(%0.2fs):\n&quot;</emphasis>&#32;<link linkend="_test_2include_2common_8h_1ab702106cf3b3e96750b6845ded4e0299">RESET</link>
+87 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;--------------------------\n&quot;</emphasis>
+88 
+89 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_test_2include_2common_8h_1a6f699060902f800f12aaae150f3a708e">MAGENTA</link>&#32;<emphasis role="stringliteral">&quot;%d&quot;</emphasis>&#32;<link linkend="_test_2include_2common_8h_1ab702106cf3b3e96750b6845ded4e0299">RESET</link>&#32;<emphasis role="stringliteral">&quot;&#32;tests&#32;ran,&#32;&quot;</emphasis>
+90 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_test_2include_2common_8h_1acfbc006ea433ad708fdee3e82996e721">GREEN</link>&#32;&#32;&#32;<emphasis role="stringliteral">&quot;%d&quot;</emphasis>&#32;<link linkend="_test_2include_2common_8h_1ab702106cf3b3e96750b6845ded4e0299">RESET</link>&#32;<emphasis role="stringliteral">&quot;&#32;passed,&#32;&quot;</emphasis>
+91 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_test_2include_2common_8h_1a8d23feea868a983c8c2b661e1e16972f">RED</link>&#32;&#32;&#32;&#32;&#32;<emphasis role="stringliteral">&quot;%d&quot;</emphasis>&#32;<link linkend="_test_2include_2common_8h_1ab702106cf3b3e96750b6845ded4e0299">RESET</link>&#32;<emphasis role="stringliteral">&quot;&#32;failed\n\n&quot;</emphasis>&#32;<link linkend="_test_2include_2common_8h_1ab702106cf3b3e96750b6845ded4e0299">RESET</link>,
+92 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;total,
+93 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a5b40aca7a9682963dd00a8f5aef0a901">count</link>,
+94 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;passed,
+95 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;failed);
+96 
+97 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;failed;
+98 }
+</programlisting></section>
+</section>
+</section>

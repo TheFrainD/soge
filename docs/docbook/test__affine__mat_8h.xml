@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_test__affine__mat_8h">
+<title>deps/cglm/test/src/test_affine_mat.h File Reference</title>
+<indexterm><primary>deps/cglm/test/src/test_affine_mat.h</primary></indexterm>
+<programlisting>#include &quot;test_common.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_include_2cglm_2common_8h_1a132eda4e8b82a997831a6c857f7d26c1">CGLM_INLINE</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_test__affine__mat_8h_1a9da3533441c92e3d693293dcada4410b">glm_inv_tr_raw</link> (<link linkend="_types_8h_1ae30f88fc32dfb3008b133367bbf0c3a1">mat4</link> mat)</para>
+</listitem>
+            <listitem><para><link linkend="_test__affine__mat_8h_1a2dfd6f29371c961d22ae2b27a57dbe01">TEST_IMPL</link> (<link linkend="_tests_8c_1ac20fdeb5e2aeda533ce6b026bf324b55">GLM_PREFIX</link>, mul)</para>
+</listitem>
+            <listitem><para><link linkend="_test__affine__mat_8h_1af7f4df4b59002adf31b73a2d12f8e4b4">TEST_IMPL</link> (<link linkend="_tests_8c_1ac20fdeb5e2aeda533ce6b026bf324b55">GLM_PREFIX</link>, mul_rot)</para>
+</listitem>
+            <listitem><para><link linkend="_test__affine__mat_8h_1a29bff2fc114f961a6a62e432742b1539">TEST_IMPL</link> (<link linkend="_tests_8c_1ac20fdeb5e2aeda533ce6b026bf324b55">GLM_PREFIX</link>, inv_tr)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_test__affine__mat_8h_1a9da3533441c92e3d693293dcada4410b"/>    <section>
+    <title>glm_inv_tr_raw()</title>
+<indexterm><primary>glm_inv_tr_raw</primary><secondary>test_affine_mat.h</secondary></indexterm>
+<indexterm><primary>test_affine_mat.h</primary><secondary>glm_inv_tr_raw</secondary></indexterm>
+<para><computeroutput><link linkend="_include_2cglm_2common_8h_1a132eda4e8b82a997831a6c857f7d26c1">CGLM_INLINE</link> <link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> glm_inv_tr_raw (<link linkend="_types_8h_1ae30f88fc32dfb3008b133367bbf0c3a1">mat4</link> mat)</computeroutput></para><para>
+Definition at line 14 of file test_affine_mat.h.</para>
+<programlisting>14 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+15 &#32;&#32;<link linkend="_types_8h_1a8b0ff7d349466e900282bf2d8d9c98a3">CGLM_ALIGN_MAT</link>&#32;<link linkend="_types_8h_1a68e0f5fed49f769f2fca0e61daeab5f5">mat3</link>&#32;<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>;
+16 &#32;&#32;<link linkend="_types_8h_1a7a85e572ca5b793f224bae1ed1a827a1">CGLM_ALIGN</link>(8)&#32;&#32;<link linkend="_types_8h_1aa12dddc6c5b49b59657f5b9262d3196c">vec3</link>&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>;
+17 
+18 &#32;&#32;<emphasis role="comment">/*&#32;rotate&#32;*/</emphasis>
+19 &#32;&#32;<link linkend="_mat4_8h_1a0d1b2b85f7d1ede6892eec642d9f8f23">glm_mat4_pick3t</link>(mat,&#32;<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>);
+20 &#32;&#32;<link linkend="_mat4_8h_1a820f4c98bd9e535e1d9a81aac2fa7792">glm_mat4_ins3</link>(<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>,&#32;mat);
+21 
+22 &#32;&#32;<emphasis role="comment">/*&#32;translate&#32;*/</emphasis>
+23 &#32;&#32;<link linkend="_mat3_8h_1a5e67abac6a1350b820c919ac5ec7a088">glm_mat3_mulv</link>(<link linkend="_glad_8h_1a42ce7cdc612e53abee15043f80220d97">r</link>,&#32;mat[3],&#32;<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>);
+24 &#32;&#32;<link linkend="_vec3_8h_1a0670d5409499b75435fc5caed9e712aa">glm_vec3_negate</link>(<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>);
+25 &#32;&#32;<link linkend="_vec3_8h_1a15bcfba5a95e389426accbf8843eb866">glm_vec3_copy</link>(<link linkend="_glext_8h_1a7d65d00ca3b0630d9b5c52df855b19f5">t</link>,&#32;mat[3]);
+26 }
+</programlisting>    </section><anchor xml:id="_test__affine__mat_8h_1a29bff2fc114f961a6a62e432742b1539"/>    <section>
+    <title>TEST_IMPL()<computeroutput>[1/3]</computeroutput></title>
+<indexterm><primary>TEST_IMPL</primary><secondary>test_affine_mat.h</secondary></indexterm>
+<indexterm><primary>test_affine_mat.h</primary><secondary>TEST_IMPL</secondary></indexterm>
+<para><computeroutput>TEST_IMPL (<link linkend="_tests_8c_1ac20fdeb5e2aeda533ce6b026bf324b55">GLM_PREFIX</link> , inv_tr )</computeroutput></para><para>
+Definition at line 85 of file test_affine_mat.h.</para>
+<programlisting>85 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+86 &#32;&#32;<link linkend="_types_8h_1ae30f88fc32dfb3008b133367bbf0c3a1">mat4</link>&#32;m1,&#32;m2;
+87 &#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;&#32;i;
+88 
+89 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;i&#32;&lt;&#32;10000;&#32;i++)&#32;{
+90 &#32;&#32;&#32;&#32;<link linkend="_test__common_8c_1a7903e530133707eb3fadd022cd198d18">test_rand_mat4</link>(m1);
+91 
+92 &#32;&#32;&#32;&#32;<link linkend="_mat4_8h_1a124340d9a71e36f20e8ad3400ce53625">glm_mat4_copy</link>(m1,&#32;m2);
+93 
+94 &#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;test&#32;inverse&#32;precise&#32;*/</emphasis>
+95 &#32;&#32;&#32;&#32;<link linkend="_tests_8c_1ad5e9109befc2df7d1e17bb4e46610342">GLM</link>(inv_tr)(m1);
+96 &#32;&#32;&#32;&#32;<link linkend="_tests_8c_1ad5e9109befc2df7d1e17bb4e46610342">GLM</link>(inv_tr)(m1);
+97 &#32;&#32;&#32;&#32;<link linkend="_test_2include_2common_8h_1a30dae4277b7792b1c641ced79bdfca4e">ASSERTIFY</link>(<link linkend="_test__common_8c_1ab6c735c5e9684b49694b21d4de506820">test_assert_mat4_eq</link>(m1,&#32;m2))
+98 
+99 &#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;test&#32;inverse&#32;precise&#32;*/</emphasis>
+100 &#32;&#32;&#32;&#32;<link linkend="_tests_8c_1ad5e9109befc2df7d1e17bb4e46610342">GLM</link>(mat4_inv)(m1,&#32;m2);
+101 &#32;&#32;&#32;&#32;<link linkend="_tests_8c_1ad5e9109befc2df7d1e17bb4e46610342">GLM</link>(inv_tr)(m2);
+102 &#32;&#32;&#32;&#32;<link linkend="_test_2include_2common_8h_1a30dae4277b7792b1c641ced79bdfca4e">ASSERTIFY</link>(<link linkend="_test__common_8c_1ab6c735c5e9684b49694b21d4de506820">test_assert_mat4_eq</link>(m1,&#32;m2))
+103 &#32;&#32;&#32;&#32;
+104 &#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;test&#32;with&#32;raw&#32;*/</emphasis>
+105 &#32;&#32;&#32;&#32;<link linkend="_mat4_8h_1a124340d9a71e36f20e8ad3400ce53625">glm_mat4_copy</link>(m1,&#32;m2);
+106 &#32;&#32;&#32;&#32;<link linkend="_test__affine__mat_8h_1a9da3533441c92e3d693293dcada4410b">glm_inv_tr_raw</link>(m2);
+107 &#32;&#32;&#32;&#32;<link linkend="_tests_8c_1ad5e9109befc2df7d1e17bb4e46610342">GLM</link>(inv_tr)(m1);
+108 &#32;&#32;&#32;&#32;<link linkend="_test_2include_2common_8h_1a30dae4277b7792b1c641ced79bdfca4e">ASSERTIFY</link>(<link linkend="_test__common_8c_1ab6c735c5e9684b49694b21d4de506820">test_assert_mat4_eq</link>(m1,&#32;m2))
+109 &#32;&#32;}
+110 
+111 &#32;&#32;<link linkend="_test_2include_2common_8h_1aee1dc5ecf95c68bc90ba502679668096">TEST_SUCCESS</link>
+112 }
+</programlisting>    </section><anchor xml:id="_test__affine__mat_8h_1a2dfd6f29371c961d22ae2b27a57dbe01"/>    <section>
+    <title>TEST_IMPL()<computeroutput>[2/3]</computeroutput></title>
+<indexterm><primary>TEST_IMPL</primary><secondary>test_affine_mat.h</secondary></indexterm>
+<indexterm><primary>test_affine_mat.h</primary><secondary>TEST_IMPL</secondary></indexterm>
+<para><computeroutput>TEST_IMPL (<link linkend="_tests_8c_1ac20fdeb5e2aeda533ce6b026bf324b55">GLM_PREFIX</link> , mul )</computeroutput></para><para>
+Definition at line 29 of file test_affine_mat.h.</para>
+<programlisting>29 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+30 &#32;&#32;<link linkend="_types_8h_1ae30f88fc32dfb3008b133367bbf0c3a1">mat4</link>&#32;m1&#32;=&#32;<link linkend="_mat4_8h_1abddcd83f6c7501960b21d1118ee5574e">GLM_MAT4_IDENTITY_INIT</link>;
+31 &#32;&#32;<link linkend="_types_8h_1ae30f88fc32dfb3008b133367bbf0c3a1">mat4</link>&#32;m2&#32;=&#32;<link linkend="_mat4_8h_1abddcd83f6c7501960b21d1118ee5574e">GLM_MAT4_IDENTITY_INIT</link>;
+32 &#32;&#32;<link linkend="_types_8h_1ae30f88fc32dfb3008b133367bbf0c3a1">mat4</link>&#32;m3;
+33 &#32;&#32;<link linkend="_types_8h_1ae30f88fc32dfb3008b133367bbf0c3a1">mat4</link>&#32;m4&#32;=&#32;<link linkend="_mat4_8h_1a746cc8be65d5de47edd8ce1c47d4f93e">GLM_MAT4_ZERO_INIT</link>;
+34 &#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;&#32;i,&#32;j,&#32;k;
+35 
+36 &#32;&#32;<link linkend="_test__common_8c_1a7903e530133707eb3fadd022cd198d18">test_rand_mat4</link>(m1);
+37 &#32;&#32;<link linkend="_test__common_8c_1a7903e530133707eb3fadd022cd198d18">test_rand_mat4</link>(m2);
+38 
+39 &#32;&#32;<link linkend="_tests_8c_1ad5e9109befc2df7d1e17bb4e46610342">GLM</link>(mul)(m1,&#32;m2,&#32;m3);
+40 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;i&#32;&lt;&#32;4;&#32;i++)&#32;{
+41 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(j&#32;=&#32;0;&#32;j&#32;&lt;&#32;4;&#32;j++)&#32;{
+42 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(k&#32;=&#32;0;&#32;k&#32;&lt;&#32;4;&#32;k++)
+43 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;column-major&#32;*/</emphasis>
+44 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;m4[i][j]&#32;+=&#32;m1[k][j]&#32;*&#32;m2[i][k];
+45 &#32;&#32;&#32;&#32;}
+46 &#32;&#32;}
+47 
+48 &#32;&#32;<link linkend="_test_2include_2common_8h_1a30dae4277b7792b1c641ced79bdfca4e">ASSERTIFY</link>(<link linkend="_test__common_8c_1ab6c735c5e9684b49694b21d4de506820">test_assert_mat4_eq</link>(m3,&#32;m4))
+49 
+50 &#32;&#32;<emphasis role="comment">/*&#32;test&#32;pre&#32;compiled&#32;*/</emphasis>
+51 &#32;&#32;<link linkend="_tests_8c_1ad5e9109befc2df7d1e17bb4e46610342">GLM</link>(mul)(m1,&#32;m2,&#32;m3);
+52 &#32;&#32;<link linkend="_test_2include_2common_8h_1a30dae4277b7792b1c641ced79bdfca4e">ASSERTIFY</link>(<link linkend="_test__common_8c_1ab6c735c5e9684b49694b21d4de506820">test_assert_mat4_eq</link>(m3,&#32;m4))
+53 
+54 &#32;&#32;<link linkend="_test_2include_2common_8h_1aee1dc5ecf95c68bc90ba502679668096">TEST_SUCCESS</link>
+55 }
+</programlisting>    </section><anchor xml:id="_test__affine__mat_8h_1af7f4df4b59002adf31b73a2d12f8e4b4"/>    <section>
+    <title>TEST_IMPL()<computeroutput>[3/3]</computeroutput></title>
+<indexterm><primary>TEST_IMPL</primary><secondary>test_affine_mat.h</secondary></indexterm>
+<indexterm><primary>test_affine_mat.h</primary><secondary>TEST_IMPL</secondary></indexterm>
+<para><computeroutput>TEST_IMPL (<link linkend="_tests_8c_1ac20fdeb5e2aeda533ce6b026bf324b55">GLM_PREFIX</link> , mul_rot )</computeroutput></para><para>
+Definition at line 57 of file test_affine_mat.h.</para>
+<programlisting>57 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+58 &#32;&#32;<link linkend="_types_8h_1ae30f88fc32dfb3008b133367bbf0c3a1">mat4</link>&#32;m1&#32;=&#32;<link linkend="_mat4_8h_1abddcd83f6c7501960b21d1118ee5574e">GLM_MAT4_IDENTITY_INIT</link>;
+59 &#32;&#32;<link linkend="_types_8h_1ae30f88fc32dfb3008b133367bbf0c3a1">mat4</link>&#32;m2&#32;=&#32;<link linkend="_mat4_8h_1abddcd83f6c7501960b21d1118ee5574e">GLM_MAT4_IDENTITY_INIT</link>;
+60 &#32;&#32;<link linkend="_types_8h_1ae30f88fc32dfb3008b133367bbf0c3a1">mat4</link>&#32;m3;
+61 &#32;&#32;<link linkend="_types_8h_1ae30f88fc32dfb3008b133367bbf0c3a1">mat4</link>&#32;m4&#32;=&#32;<link linkend="_mat4_8h_1a746cc8be65d5de47edd8ce1c47d4f93e">GLM_MAT4_ZERO_INIT</link>;
+62 &#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;&#32;i,&#32;j,&#32;k;
+63 
+64 &#32;&#32;<link linkend="_affine_8h_1aa2cece9335958a3a22540f18a25e9aef">glm_rotate</link>(m1,&#32;drand48(),&#32;(<link linkend="_types_8h_1aa12dddc6c5b49b59657f5b9262d3196c">vec3</link>){drand48(),&#32;drand48(),&#32;drand48()});
+65 &#32;&#32;<link linkend="_affine_8h_1aa2cece9335958a3a22540f18a25e9aef">glm_rotate</link>(m2,&#32;drand48(),&#32;(<link linkend="_types_8h_1aa12dddc6c5b49b59657f5b9262d3196c">vec3</link>){drand48(),&#32;drand48(),&#32;drand48()});
+66 
+67 &#32;&#32;<link linkend="_tests_8c_1ad5e9109befc2df7d1e17bb4e46610342">GLM</link>(mul_rot)(m1,&#32;m2,&#32;m3);
+68 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;i&#32;&lt;&#32;4;&#32;i++)&#32;{
+69 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(j&#32;=&#32;0;&#32;j&#32;&lt;&#32;4;&#32;j++)&#32;{
+70 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(k&#32;=&#32;0;&#32;k&#32;&lt;&#32;4;&#32;k++)
+71 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">/*&#32;column-major&#32;*/</emphasis>
+72 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;m4[i][j]&#32;+=&#32;m1[k][j]&#32;*&#32;m2[i][k];
+73 &#32;&#32;&#32;&#32;}
+74 &#32;&#32;}
+75 
+76 &#32;&#32;<link linkend="_test_2include_2common_8h_1a30dae4277b7792b1c641ced79bdfca4e">ASSERTIFY</link>(<link linkend="_test__common_8c_1ab6c735c5e9684b49694b21d4de506820">test_assert_mat4_eq</link>(m3,&#32;m4))
+77 
+78 &#32;&#32;<emphasis role="comment">/*&#32;test&#32;pre&#32;compiled&#32;*/</emphasis>
+79 &#32;&#32;<link linkend="_tests_8c_1ad5e9109befc2df7d1e17bb4e46610342">GLM</link>(mul_rot)(m1,&#32;m2,&#32;m3);
+80 &#32;&#32;<link linkend="_test_2include_2common_8h_1a30dae4277b7792b1c641ced79bdfca4e">ASSERTIFY</link>(<link linkend="_test__common_8c_1ab6c735c5e9684b49694b21d4de506820">test_assert_mat4_eq</link>(m3,&#32;m4))
+81 
+82 &#32;&#32;<link linkend="_test_2include_2common_8h_1aee1dc5ecf95c68bc90ba502679668096">TEST_SUCCESS</link>
+83 }
+</programlisting></section>
+</section>
+</section>

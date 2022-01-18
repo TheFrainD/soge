@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_image_8c">
+<title>src/vally/resources/image.c File Reference</title>
+<indexterm><primary>src/vally/resources/image.c</primary></indexterm>
+<programlisting>#include &lt;vally/resources/image.h&gt;
+#include &lt;stb_image.h&gt;
+#include &lt;vally/resources/resources.h&gt;
+#include &lt;vally/core/logger.h&gt;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_image_8c_1a18372412ad2fc3ce1e3240b3cf0efe78">STB_IMAGE_IMPLEMENTATION</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_structimage">image</link> * <link linkend="_image_8c_1a63194ce03049bdde1d6389641cec8cf8">image_load</link> (const char *<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> <link linkend="_image_8c_1a731021d773212b9b2e1291e5bd0def46">image_unload</link> (<link linkend="_structimage">image</link> *<link linkend="_glad_8h_1a3455aaa12cecc35ac4a42a9bf1273da8">img</link>)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_image_8c_1a18372412ad2fc3ce1e3240b3cf0efe78"/>    <section>
+    <title>STB_IMAGE_IMPLEMENTATION</title>
+<indexterm><primary>STB_IMAGE_IMPLEMENTATION</primary><secondary>image.c</secondary></indexterm>
+<indexterm><primary>image.c</primary><secondary>STB_IMAGE_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define STB_IMAGE_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 3 of file image.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_image_8c_1a63194ce03049bdde1d6389641cec8cf8"/>    <section>
+    <title>image_load()</title>
+<indexterm><primary>image_load</primary><secondary>image.c</secondary></indexterm>
+<indexterm><primary>image.c</primary><secondary>image_load</secondary></indexterm>
+<para><computeroutput><link linkend="_structimage">image</link>* image_load (const char * path)</computeroutput></para><para>
+Definition at line 9 of file image.c.</para>
+<programlisting>9 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+10 &#32;&#32;<link linkend="_structimage">image</link>&#32;*<link linkend="_glad_8h_1a3455aaa12cecc35ac4a42a9bf1273da8">img</link>&#32;=&#32;(<link linkend="_structimage">image</link>&#32;*)<link linkend="_stb__leakcheck_8h_1ac71ce303a4b993665ae00f1e1293ba8b">malloc</link>(<emphasis role="keyword">sizeof</emphasis>(<link linkend="_structimage">image</link>));
+11 &#32;&#32;<link linkend="_glad_8h_1a3455aaa12cecc35ac4a42a9bf1273da8">img</link>-&gt;buffer&#32;=&#32;<link linkend="_stb__image_8c_1a6e3bfbdf11886669cd2153c1136f29db">stbi_load</link>(<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>,&#32;&amp;<link linkend="_glad_8h_1a3455aaa12cecc35ac4a42a9bf1273da8">img</link>-&gt;width,&#32;&amp;<link linkend="_glad_8h_1a3455aaa12cecc35ac4a42a9bf1273da8">img</link>-&gt;height,&#32;&amp;<link linkend="_glad_8h_1a3455aaa12cecc35ac4a42a9bf1273da8">img</link>-&gt;channels,&#32;<link linkend="_stb__image_8c_1ae6dceca96ec2c7a1b4aa211264a87ef6aa7b1af0c9f0310c3ada2aa29a32de293">STBI_rgb_alpha</link>);
+12 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_glad_8h_1a3455aaa12cecc35ac4a42a9bf1273da8">img</link>-&gt;buffer)&#32;{
+13 &#32;&#32;&#32;&#32;<link linkend="_logger_8h_1ae5066a2e77390ed60a2e2a98c374c520">VALLY_ERROR</link>(<emphasis role="stringliteral">&quot;Could&#32;not&#32;load&#32;image&#32;at&#32;\&quot;%s\&quot;!&quot;</emphasis>,&#32;<link linkend="_glext_8h_1ab25d8cd967ccbd19b630d7100ff8f67e">path</link>);
+14 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>;
+15 &#32;&#32;}
+16 
+17 &#32;&#32;<link linkend="_resources_8c_1a16641af0e8abb4648df5964f32f30adb">resources_add</link>(<link linkend="_glad_8h_1a3455aaa12cecc35ac4a42a9bf1273da8">img</link>,&#32;<link linkend="_image_8c_1a731021d773212b9b2e1291e5bd0def46">image_unload</link>);
+18 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_glad_8h_1a3455aaa12cecc35ac4a42a9bf1273da8">img</link>;
+19 }
+</programlisting>    </section><anchor xml:id="_image_8c_1a731021d773212b9b2e1291e5bd0def46"/>    <section>
+    <title>image_unload()</title>
+<indexterm><primary>image_unload</primary><secondary>image.c</secondary></indexterm>
+<indexterm><primary>image.c</primary><secondary>image_unload</secondary></indexterm>
+<para><computeroutput><link linkend="_glext_8h_1a46df6112013cf583e82b25cebd5cb499">void</link> image_unload (<link linkend="_structimage">image</link> * img)</computeroutput></para><para>
+Definition at line 21 of file image.c.</para>
+<programlisting>21 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+22 &#32;&#32;<link linkend="_stb__image_8c_1ad47e820c6695b0cf5cfb63a29f4452d0">stbi_image_free</link>(<link linkend="_glad_8h_1a3455aaa12cecc35ac4a42a9bf1273da8">img</link>-&gt;buffer);
+23 }
+</programlisting></section>
+</section>
+</section>

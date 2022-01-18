@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_sharing_8c">
+<title>deps/glfw/examples/sharing.c File Reference</title>
+<indexterm><primary>deps/glfw/examples/sharing.c</primary></indexterm>
+<programlisting>#include &lt;glad/gl.h&gt;
+#include &lt;GLFW/glfw3.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &quot;getopt.h&quot;
+#include &quot;linmath.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_sharing_8c_1a09f9c3bf094ecaf707c673924ffd615a">GLAD_GL_IMPLEMENTATION</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_sharing_8c_1a088324ad8995e3eb76024e3e79083d48">GLFW_INCLUDE_NONE</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_sharing_8c_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_sharing_8c_1a09f9c3bf094ecaf707c673924ffd615a"/>    <section>
+    <title>GLAD_GL_IMPLEMENTATION</title>
+<indexterm><primary>GLAD_GL_IMPLEMENTATION</primary><secondary>sharing.c</secondary></indexterm>
+<indexterm><primary>sharing.c</primary><secondary>GLAD_GL_IMPLEMENTATION</secondary></indexterm>
+<para><computeroutput>#define GLAD_GL_IMPLEMENTATION</computeroutput></para><para>
+Definition at line 26 of file sharing.c.</para>
+    </section><anchor xml:id="_sharing_8c_1a088324ad8995e3eb76024e3e79083d48"/>    <section>
+    <title>GLFW_INCLUDE_NONE</title>
+<indexterm><primary>GLFW_INCLUDE_NONE</primary><secondary>sharing.c</secondary></indexterm>
+<indexterm><primary>sharing.c</primary><secondary>GLFW_INCLUDE_NONE</secondary></indexterm>
+<para><computeroutput>#define GLFW_INCLUDE_NONE</computeroutput></para><para>
+Definition at line 28 of file sharing.c.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_sharing_8c_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>sharing.c</secondary></indexterm>
+<indexterm><primary>sharing.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 77 of file sharing.c.</para>
+<programlisting>78 {
+79 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga3c96d80d363e67d13a41b5d1821f3242">GLFWwindow</link>*&#32;windows[2];
+80 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a68c4714e43d8e827d80759f9cb864f3c">GLuint</link>&#32;<link linkend="_glad_8h_1af1de2b5e600991636b673dcda0fa5342">texture</link>,&#32;<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>,&#32;vertex_buffer;
+81 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1acebcc1c5663f14ebde1d16831e5fed94">GLint</link>&#32;mvp_location,&#32;vpos_location,&#32;color_location,&#32;texture_location;
+82 
+83 &#32;&#32;&#32;&#32;<link linkend="_group__init_1ga746e2757d069eaea423349aca6ae097a">glfwSetErrorCallback</link>(<link linkend="_inputlag_8c_1a4ee391c8bab624943c822faafb2c320e">error_callback</link>);
+84 
+85 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!<link linkend="_group__init_1gab41771f0215a2e0afb4cf1cf98082d40">glfwInit</link>())
+86 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+87 
+88 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1gafe5e4922de1f9932d7e9849bb053b0c0">GLFW_CONTEXT_VERSION_MAJOR</link>,&#32;2);
+89 &#32;&#32;&#32;&#32;<link linkend="_group__window_1ga69c40728499720bef8a49aa925ea0efa">glfwWindowHint</link>(<link linkend="_group__window_1ga31aca791e4b538c4e4a771eb95cc2d07">GLFW_CONTEXT_VERSION_MINOR</link>,&#32;0);
+90 
+91 &#32;&#32;&#32;&#32;windows[0]&#32;=&#32;<link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link>(400,&#32;400,&#32;<emphasis role="stringliteral">&quot;First&quot;</emphasis>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+92 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!windows[0])
+93 &#32;&#32;&#32;&#32;{
+94 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+95 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+96 &#32;&#32;&#32;&#32;}
+97 
+98 &#32;&#32;&#32;&#32;<link linkend="_group__input_1gaa4cbcb81b939b8800e44cea971ddae47">glfwSetKeyCallback</link>(windows[0],&#32;key_callback);
+99 
+100 &#32;&#32;&#32;&#32;<link linkend="_group__context_1gafd76c93e15ec8b0b90506a9936a46185">glfwMakeContextCurrent</link>(windows[0]);
+101 
+102 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Only&#32;enable&#32;vsync&#32;for&#32;the&#32;first&#32;of&#32;the&#32;windows&#32;to&#32;be&#32;swapped&#32;to</emphasis>
+103 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;avoid&#32;waiting&#32;out&#32;the&#32;interval&#32;for&#32;each&#32;window</emphasis>
+104 &#32;&#32;&#32;&#32;<link linkend="_group__context_1ga12a595c06947cec4967c6e1f14210a8a">glfwSwapInterval</link>(1);
+105 
+106 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;contexts&#32;are&#32;created&#32;with&#32;the&#32;same&#32;APIs&#32;so&#32;the&#32;function</emphasis>
+107 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;pointers&#32;should&#32;be&#32;re-usable&#32;between&#32;them</emphasis>
+108 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a7e9e0ebe65864f5f2bcd289c5736041b">gladLoadGL</link>(<link linkend="_group__context_1ga0e8af175218929615c16e74938c10f2a">glfwGetProcAddress</link>);
+109 
+110 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Create&#32;the&#32;OpenGL&#32;objects&#32;inside&#32;the&#32;first&#32;context,&#32;created&#32;above</emphasis>
+111 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;All&#32;objects&#32;will&#32;be&#32;shared&#32;with&#32;the&#32;second&#32;context,&#32;created&#32;below</emphasis>
+112 &#32;&#32;&#32;&#32;{
+113 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>,&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>;
+114 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">char</emphasis>&#32;<link linkend="_glad_8h_1ad2818938351edcd54eba6bd5dce29ac3">pixels</link>[16&#32;*&#32;16];
+115 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a68c4714e43d8e827d80759f9cb864f3c">GLuint</link>&#32;vertex_shader,&#32;fragment_shader;
+116 
+117 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a82ac4415f852b8b5bfe7356202ca934e">glGenTextures</link>(1,&#32;&amp;<link linkend="_structtexture">texture</link>);
+118 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a987aecafceffb9afaef11412d42e605b">glBindTexture</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;<link linkend="_structtexture">texture</link>);
+119 
+120 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;srand((<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">int</emphasis>)&#32;<link linkend="_group__input_1gaa00c3e32227eb70b3968fca0bfe4ae26">glfwGetTimerValue</link>());
+121 
+122 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;=&#32;0;&#32;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;&lt;&#32;16;&#32;&#32;<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>++)
+123 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+124 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;=&#32;0;&#32;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>&#32;&lt;&#32;16;&#32;&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>++)
+125 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad2818938351edcd54eba6bd5dce29ac3">pixels</link>[<link linkend="_glad_8h_1af2e2675ea2e0b9a7ec6a98fcb44a938a">y</link>&#32;*&#32;16&#32;+&#32;<link linkend="_glad_8h_1a1af10666aa42292f407f6acc2af11948">x</link>]&#32;=&#32;rand()&#32;%&#32;256;
+126 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+127 
+128 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a7da97095b562f67f161b50104776a66d">glTexImage2D</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;0,&#32;<link linkend="_gl_8h_1a5ebfb7e4321ee2838cb17b10b8d44959">GL_LUMINANCE</link>,&#32;16,&#32;16,&#32;0,&#32;<link linkend="_gl_8h_1a5ebfb7e4321ee2838cb17b10b8d44959">GL_LUMINANCE</link>,&#32;<link linkend="_glad_8h_1a80a33c79f69417372d65d2a65ca36d49">GL_UNSIGNED_BYTE</link>,&#32;<link linkend="_glad_8h_1ad2818938351edcd54eba6bd5dce29ac3">pixels</link>);
+129 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a5817fa85137822142b4951eacd0154e7">glTexParameteri</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;<link linkend="_glad_8h_1a173a2b2453322dd8d613df6cf2e72480">GL_TEXTURE_MIN_FILTER</link>,&#32;<link linkend="_glad_8h_1a7ec02582a9b1c390908a2230c8e26c0b">GL_NEAREST</link>);
+130 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a5817fa85137822142b4951eacd0154e7">glTexParameteri</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;<link linkend="_glad_8h_1acb47a41b5963d44826f44b7370bccc26">GL_TEXTURE_MAG_FILTER</link>,&#32;<link linkend="_glad_8h_1a7ec02582a9b1c390908a2230c8e26c0b">GL_NEAREST</link>);
+131 
+132 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;vertex_shader&#32;=&#32;<link linkend="_glad_8h_1a4d3447ff3caf454bc686968fbe5f04bf">glCreateShader</link>(<link linkend="_glad_8h_1aceb29bc16e885f956eb9e351a7dd6276">GL_VERTEX_SHADER</link>);
+133 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a369ec108462c247e3028edc9070117a0">glShaderSource</link>(vertex_shader,&#32;1,&#32;&amp;vertex_shader_text,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+134 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1acf7a528ef1ef237d2a7676dcb0f22473">glCompileShader</link>(vertex_shader);
+135 
+136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;fragment_shader&#32;=&#32;<link linkend="_glad_8h_1a4d3447ff3caf454bc686968fbe5f04bf">glCreateShader</link>(<link linkend="_glad_8h_1a1a0294662b50921555cae95fb20740d4">GL_FRAGMENT_SHADER</link>);
+137 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a369ec108462c247e3028edc9070117a0">glShaderSource</link>(fragment_shader,&#32;1,&#32;&amp;fragment_shader_text,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+138 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1acf7a528ef1ef237d2a7676dcb0f22473">glCompileShader</link>(fragment_shader);
+139 
+140 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>&#32;=&#32;<link linkend="_glad_8h_1acf9d728f2b2be42fbc2fe6dada8bcd2b">glCreateProgram</link>();
+141 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a0cb06d612b3358bfaadbbefd7c51f1cc">glAttachShader</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>,&#32;vertex_shader);
+142 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a0cb06d612b3358bfaadbbefd7c51f1cc">glAttachShader</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>,&#32;fragment_shader);
+143 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad241352c6eee6e79f09942ef0771db47">glLinkProgram</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>);
+144 
+145 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;mvp_location&#32;=&#32;<link linkend="_glad_8h_1a10106e4be90a66213839645cf12770f9">glGetUniformLocation</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>,&#32;<emphasis role="stringliteral">&quot;MVP&quot;</emphasis>);
+146 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;color_location&#32;=&#32;<link linkend="_glad_8h_1a10106e4be90a66213839645cf12770f9">glGetUniformLocation</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>,&#32;<emphasis role="stringliteral">&quot;color&quot;</emphasis>);
+147 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;texture_location&#32;=&#32;<link linkend="_glad_8h_1a10106e4be90a66213839645cf12770f9">glGetUniformLocation</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>,&#32;<emphasis role="stringliteral">&quot;texture&quot;</emphasis>);
+148 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;vpos_location&#32;=&#32;<link linkend="_glad_8h_1a20f33502cbda8885498352fcdbf71fe8">glGetAttribLocation</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>,&#32;<emphasis role="stringliteral">&quot;vPos&quot;</emphasis>);
+149 
+150 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1b33d322b89d94ad4938461db0a0424a">glGenBuffers</link>(1,&#32;&amp;vertex_buffer);
+151 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a3b3a3f8200f094b781e9f61e2f19fc50">glBindBuffer</link>(<link linkend="_glad_8h_1a7180045dcb52b22af2cd0366026bc3ed">GL_ARRAY_BUFFER</link>,&#32;vertex_buffer);
+152 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a9419a03f5c46e2758f884e9c56d92b6a">glBufferData</link>(<link linkend="_glad_8h_1a7180045dcb52b22af2cd0366026bc3ed">GL_ARRAY_BUFFER</link>,&#32;<emphasis role="keyword">sizeof</emphasis>(vertices),&#32;vertices,&#32;<link linkend="_glad_8h_1ab7dffdc215fbbe75b6ccacfecfc14648">GL_STATIC_DRAW</link>);
+153 &#32;&#32;&#32;&#32;}
+154 
+155 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad8e40c882d63c4671dea2ca2dfcf3046">glUseProgram</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>);
+156 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1abf9380e68d38f458f86a54870846026e">glUniform1i</link>(texture_location,&#32;0);
+157 
+158 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a3f7fa0df22505dd09a24a4e1e74eca09">glEnable</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>);
+159 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a987aecafceffb9afaef11412d42e605b">glBindTexture</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;<link linkend="_structtexture">texture</link>);
+160 
+161 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a3b3a3f8200f094b781e9f61e2f19fc50">glBindBuffer</link>(<link linkend="_glad_8h_1a7180045dcb52b22af2cd0366026bc3ed">GL_ARRAY_BUFFER</link>,&#32;vertex_buffer);
+162 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a6e8ee482001ee8fb9b3d4851116779b4">glEnableVertexAttribArray</link>(vpos_location);
+163 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a8afadc1fe36886688a02097cc63a17cb">glVertexAttribPointer</link>(vpos_location,&#32;2,&#32;<link linkend="_glad_8h_1a6d19915d4237cb559505bd3e5dcfcf3c">GL_FLOAT</link>,&#32;<link linkend="_glad_8h_1abca6d43f43fae31f49dcb883b2f301f6">GL_FALSE</link>,
+164 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">sizeof</emphasis>(vertices[0]),&#32;(<emphasis role="keywordtype">void</emphasis>*)&#32;0);
+165 
+166 &#32;&#32;&#32;&#32;windows[1]&#32;=&#32;<link linkend="_group__window_1ga680a02abe0e4494b6759d5703240713e">glfwCreateWindow</link>(400,&#32;400,&#32;<emphasis role="stringliteral">&quot;Second&quot;</emphasis>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;windows[0]);
+167 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!windows[1])
+168 &#32;&#32;&#32;&#32;{
+169 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+170 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;exit(EXIT_FAILURE);
+171 &#32;&#32;&#32;&#32;}
+172 
+173 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Place&#32;the&#32;second&#32;window&#32;to&#32;the&#32;right&#32;of&#32;the&#32;first</emphasis>
+174 &#32;&#32;&#32;&#32;{
+175 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;xpos,&#32;ypos,&#32;<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>,&#32;<link linkend="_glext_8h_1a5ffadbbacc6b89cf6218bc43b384d3fe">right</link>,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>;
+176 
+177 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga7feb769ebb3f3d21579b5a3fb07be76e">glfwGetWindowSize</link>(windows[0],&#32;&amp;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+178 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1gaad46cdaae2eb732f68d3a1499a7c5409">glfwGetWindowFrameSize</link>(windows[0],&#32;&amp;<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>,&#32;&amp;<link linkend="_glext_8h_1a5ffadbbacc6b89cf6218bc43b384d3fe">right</link>,&#32;<link linkend="_include_2vally_2config_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</link>);
+179 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga0076a8591ef7494d359730cf2250b45b">glfwGetWindowPos</link>(windows[0],&#32;&amp;xpos,&#32;&amp;ypos);
+180 
+181 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga0dc8d880a0d87be16d3ea8114561f6f0">glfwSetWindowPos</link>(windows[1],&#32;xpos&#32;+&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>&#32;+&#32;<link linkend="_glad_8h_1a85b8f6c07fbc1fb5d77c2ae090f21995">left</link>&#32;+&#32;<link linkend="_glext_8h_1a5ffadbbacc6b89cf6218bc43b384d3fe">right</link>,&#32;ypos);
+182 &#32;&#32;&#32;&#32;}
+183 
+184 &#32;&#32;&#32;&#32;<link linkend="_group__input_1gaa4cbcb81b939b8800e44cea971ddae47">glfwSetKeyCallback</link>(windows[1],&#32;key_callback);
+185 
+186 &#32;&#32;&#32;&#32;<link linkend="_group__context_1gafd76c93e15ec8b0b90506a9936a46185">glfwMakeContextCurrent</link>(windows[1]);
+187 
+188 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;While&#32;objects&#32;are&#32;shared,&#32;the&#32;global&#32;context&#32;state&#32;is&#32;not&#32;and&#32;will</emphasis>
+189 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;need&#32;to&#32;be&#32;set&#32;up&#32;for&#32;each&#32;context</emphasis>
+190 
+191 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ad8e40c882d63c4671dea2ca2dfcf3046">glUseProgram</link>(<link linkend="_glad_8h_1ab55c179cd6c84b3f5ddc11d9da0f55b4">program</link>);
+192 
+193 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a3f7fa0df22505dd09a24a4e1e74eca09">glEnable</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>);
+194 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a987aecafceffb9afaef11412d42e605b">glBindTexture</link>(<link linkend="_glad_8h_1ad4de17abefa73fa2ef53379f73b734be">GL_TEXTURE_2D</link>,&#32;<link linkend="_structtexture">texture</link>);
+195 
+196 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a3b3a3f8200f094b781e9f61e2f19fc50">glBindBuffer</link>(<link linkend="_glad_8h_1a7180045dcb52b22af2cd0366026bc3ed">GL_ARRAY_BUFFER</link>,&#32;vertex_buffer);
+197 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a6e8ee482001ee8fb9b3d4851116779b4">glEnableVertexAttribArray</link>(vpos_location);
+198 &#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a8afadc1fe36886688a02097cc63a17cb">glVertexAttribPointer</link>(vpos_location,&#32;2,&#32;<link linkend="_glad_8h_1a6d19915d4237cb559505bd3e5dcfcf3c">GL_FLOAT</link>,&#32;<link linkend="_glad_8h_1abca6d43f43fae31f49dcb883b2f301f6">GL_FALSE</link>,
+199 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">sizeof</emphasis>(vertices[0]),&#32;(<emphasis role="keywordtype">void</emphasis>*)&#32;0);
+200 
+201 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(!<link linkend="_group__window_1gaa6162f67dfa38b8beda2fea623649332">glfwWindowShouldClose</link>(windows[0])&#32;&amp;&amp;
+202 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;!<link linkend="_group__window_1gaa6162f67dfa38b8beda2fea623649332">glfwWindowShouldClose</link>(windows[1]))
+203 &#32;&#32;&#32;&#32;{
+204 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;i;
+205 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">const</emphasis>&#32;<link linkend="_types_8h_1aa12dddc6c5b49b59657f5b9262d3196c">vec3</link>&#32;colors[2]&#32;=
+206 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+207 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;0.8f,&#32;0.4f,&#32;1.f&#32;},
+208 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{&#32;0.3f,&#32;0.4f,&#32;1.f&#32;}
+209 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;};
+210 
+211 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(i&#32;=&#32;0;&#32;&#32;i&#32;&lt;&#32;2;&#32;&#32;i++)
+212 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+213 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>;
+214 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linmath_8h_1aea448460b62175f89ed5760877496434">mat4x4</link>&#32;mvp;
+215 
+216 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1gaf7d17f3534b4b6dc9a6f905e3a240b7e">glfwGetFramebufferSize</link>(windows[i],&#32;&amp;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;&amp;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+217 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__context_1gafd76c93e15ec8b0b90506a9936a46185">glfwMakeContextCurrent</link>(windows[i]);
+218 
+219 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1ab54b002beb984f066acd0dd7fff469dc">glViewport</link>(0,&#32;0,&#32;<link linkend="_glad_8h_1a77a72419a6bb6d8b56f8d9db93a120d0">width</link>,&#32;<link linkend="_glad_8h_1a2e94a4956fa3fc42600a71518b6e6284">height</link>);
+220 
+221 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_linmath_8h_1a9d5fe21cb49e77776d3100a0d2e0ce31">mat4x4_ortho</link>(mvp,&#32;0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;0.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>,&#32;1.<link linkend="_glad_8h_1a691492ec0bd6383f91200e49f6ae40ed">f</link>);
+222 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a1cd4c6b9e1fb6b4eb927ab0997de48ef">glUniformMatrix4fv</link>(mvp_location,&#32;1,&#32;<link linkend="_glad_8h_1abca6d43f43fae31f49dcb883b2f301f6">GL_FALSE</link>,&#32;(<emphasis role="keyword">const</emphasis>&#32;<link linkend="_glad_8h_1a836cf6377099e88abf24c255b5b0ac52">GLfloat</link>*)&#32;mvp);
+223 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a264e119325884947733141031ec9ff68">glUniform3fv</link>(color_location,&#32;1,&#32;colors[i]);
+224 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_glad_8h_1a89377449aceadc060b577926b5413bd2">glDrawArrays</link>(<link linkend="_glad_8h_1a425f188c2bed5dc37bb2b5434388caa9">GL_TRIANGLE_FAN</link>,&#32;0,&#32;4);
+225 
+226 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1gafb827800eedbfcbc97b1e5408df668d7">glfwSwapBuffers</link>(windows[i]);
+227 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+228 
+229 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_group__window_1ga6e042d05823c11e11c7339b81a237738">glfwWaitEvents</link>();
+230 &#32;&#32;&#32;&#32;}
+231 
+232 &#32;&#32;&#32;&#32;<link linkend="_group__init_1gafd90e6fd4819ea9e22e5e739519a6504">glfwTerminate</link>();
+233 &#32;&#32;&#32;&#32;exit(EXIT_SUCCESS);
+234 }
+</programlisting></section>
+</section>
+</section>
